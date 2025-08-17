@@ -1,0 +1,61 @@
+{
+	"name": "nace-codes",
+	"version": "1.0.0",
+	"description": "TypeScript library for NACE and NACEBEL economic activity classification codes",
+	"keywords": [
+		"belgium",
+		"classification",
+		"economic-activity",
+		"europe",
+		"nace",
+		"nacebel"
+	],
+	"homepage": "https://github.com/ingram-technologies/nace-codes#readme",
+	"bugs": {
+		"url": "https://github.com/ingram-technologies/nace-codes/issues"
+	},
+	"license": "MIT",
+	"author": "",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ingram-technologies/nace-codes.git"
+	},
+	"type": "module",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"build": "tsc",
+		"test": "vitest run",
+		"test:coverage": "vitest run --coverage",
+		"lint": "eslint . --ext .ts",
+		"lint:fix": "eslint . --ext .ts --fix",
+		"format": "prettier --write \"src/**/*.ts\"",
+		"format:check": "prettier --check \"src/**/*.ts\"",
+		"typecheck": "tsc --noEmit",
+		"prepare": "npm run build"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.33.0",
+		"@types/node": "^24.3.0",
+		"@typescript-eslint/eslint-plugin": "^8.39.1",
+		"@typescript-eslint/parser": "^8.39.1",
+		"@vitest/coverage-v8": "^3.2.4",
+		"eslint": "^9.33.0",
+		"eslint-config-prettier": "^10.1.8",
+		"jiti": "^2.5.1",
+		"prettier": "^3.6.2",
+		"prettier-plugin-organize-imports": "^4.2.0",
+		"typescript": "^5.9.2",
+		"vitest": "^3.2.4"
+	},
+	"prettier": {
+		"experimentalOperatorPosition": "start",
+		"plugins": [
+			"prettier-plugin-organize-imports"
+		],
+		"printWidth": 88,
+		"tabWidth": 4,
+		"trailingComma": "all",
+		"useTabs": true
+	}
+}
