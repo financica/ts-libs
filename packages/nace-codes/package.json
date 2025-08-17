@@ -20,6 +20,10 @@
 		"type": "git",
 		"url": "git+https://github.com/ingram-technologies/nace-codes.git"
 	},
+	"files": [
+		"dist",
+		"data"
+	],
 	"type": "module",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",

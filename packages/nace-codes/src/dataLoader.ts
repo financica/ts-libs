@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
-import { join } from "path";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 import { parseTSV } from "./parser";
 import type {
 	CodeMap,
@@ -22,7 +23,10 @@ export class DataLoader {
 	private static nacebelCodesCache: NACEBELCodeMap | null = null;
 
 	private static getDataPath(filename: string): string {
-		return join(process.cwd(), "data", filename);
+		const __filename = fileURLToPath(import.meta.url);
+		const __dirname = dirname(__filename);
+		// Navigate from dist/ to the package root, then to data/
+		return join(__dirname, "..", "data", filename);
 	}
 
 	static loadNACEHeadings(): ParsedNACEHeading[] {
