@@ -25,18 +25,18 @@
 	],
 	"type": "module",
 	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
+	"types": "dist/src/index.d.ts",
 	"exports": {
 		".": {
-			"types": "./dist/index.d.ts",
+			"types": "./dist/src/index.d.ts",
 			"import": "./dist/index.js"
 		},
 		"./nace": {
-			"types": "./dist/nace-only.d.ts",
+			"types": "./dist/src/nace-only.d.ts",
 			"import": "./dist/nace.js"
 		},
 		"./nacebel": {
-			"types": "./dist/nacebel-only.d.ts",
+			"types": "./dist/src/nacebel-only.d.ts",
 			"import": "./dist/nacebel.js"
 		}
 	},
