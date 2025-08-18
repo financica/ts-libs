@@ -5,12 +5,26 @@
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./nace": {
+			"types": "./dist/nace-only.d.ts",
+			"import": "./dist/nace.js"
+		},
+		"./nacebel": {
+			"types": "./dist/nacebel-only.d.ts",
+			"import": "./dist/nacebel.js"
+		}
+	},
 	"files": [
-		"dist",
-		"data"
+		"dist"
 	],
 	"scripts": {
-		"build": "tsc",
+		"generate:data": "tsx scripts/generateDataModules.ts",
+		"build": "bun scripts/build.ts",
 		"test": "vitest run",
 		"test:coverage": "vitest run --coverage",
 		"lint": "eslint . --ext .ts",
@@ -50,15 +64,18 @@
 	"homepage": "https://github.com/ingram-technologies/nace-codes#readme",
 	"devDependencies": {
 		"@eslint/js": "^9.33.0",
+		"@types/bun": "^1.2.20",
 		"@types/node": "^24.3.0",
 		"@typescript-eslint/eslint-plugin": "^8.39.1",
 		"@typescript-eslint/parser": "^8.39.1",
 		"@vitest/coverage-v8": "^3.2.4",
+		"esbuild": "^0.25.9",
 		"eslint": "^9.33.0",
 		"eslint-config-prettier": "^10.1.8",
 		"jiti": "^2.5.1",
 		"prettier": "^3.6.2",
 		"prettier-plugin-organize-imports": "^4.2.0",
+		"tsx": "^4.20.4",
 		"typescript": "^5.9.2",
 		"vitest": "^3.2.4"
 	}
