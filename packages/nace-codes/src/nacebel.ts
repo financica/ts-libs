@@ -1,20 +1,18 @@
-import { DataLoader } from "./dataLoader";
-import { NACE } from "./nace";
+import { loadNACEBELCodes } from "./nacebelDataLoader";
 import type {
 	NACEBELCode,
 	NACEBELCodeMap,
 	NACEBELOptions,
 	SearchOptions,
 } from "./types";
-import { determineLevel, normalizeCode } from "./utils";
+import { determineLevel, getParentCode, normalizeCode } from "./utils";
 
-export class NACEBEL extends NACE {
+export class NACEBEL {
 	protected codes: NACEBELCodeMap;
 
 	constructor(options?: NACEBELOptions) {
-		super(options);
 		if (options?.preload === true) {
-			this.codes = DataLoader.loadNACEBELCodes();
+			this.codes = loadNACEBELCodes();
 		} else {
 			this.codes = {};
 		}
@@ -22,7 +20,7 @@ export class NACEBEL extends NACE {
 
 	protected ensureDataLoaded(): void {
 		if (Object.keys(this.codes).length === 0) {
-			this.codes = DataLoader.loadNACEBELCodes();
+			this.codes = loadNACEBELCodes();
 		}
 	}
 
@@ -30,6 +28,17 @@ export class NACEBEL extends NACE {
 		this.ensureDataLoaded();
 		const normalized = normalizeCode(code);
 		return this.codes[normalized] ?? null;
+	}
+
+	getParent(code: string): NACEBELCode | null {
+		const codeObj = this.getCode(code);
+		if (!codeObj) return null;
+
+		const parentCode = getParentCode(codeObj.code);
+		if (parentCode === null || parentCode === undefined || parentCode === "")
+			return null;
+
+		return this.getCode(parentCode);
 	}
 
 	getBelgianExtensions(naceCode: string): NACEBELCode[] {
@@ -74,6 +83,87 @@ export class NACEBEL extends NACE {
 		return children.sort((a, b) => a.code.localeCompare(b.code));
 	}
 
+	protected isChildOf(childCode: string, parentCode: string): boolean {
+		const childLevel = determineLevel(childCode);
+		const parentLevel = determineLevel(parentCode);
+
+		if (childLevel <= parentLevel) return false;
+
+		if (parentLevel === 1) {
+			const sectionCode = childCode[0];
+			return sectionCode === parentCode;
+		}
+
+		if (parentLevel === 2 && childLevel === 3) {
+			return childCode.startsWith(parentCode);
+		}
+
+		if (parentLevel === 3 && childLevel === 4) {
+			return childCode.startsWith(parentCode);
+		}
+
+		if (parentLevel === 4 && childLevel > 4) {
+			return childCode.startsWith(parentCode);
+		}
+
+		return childCode.startsWith(parentCode);
+	}
+
+	getAncestors(code: string): NACEBELCode[] {
+		const ancestors: NACEBELCode[] = [];
+		let current = this.getCode(code);
+
+		while (current) {
+			const parent = this.getParent(current.code);
+			if (!parent) break;
+			ancestors.push(parent);
+			current = parent;
+		}
+
+		return ancestors;
+	}
+
+	getDescendants(code: string): NACEBELCode[] {
+		this.ensureDataLoaded();
+		const normalized = normalizeCode(code);
+		const level = determineLevel(normalized);
+		const descendants: NACEBELCode[] = [];
+
+		for (const [key, value] of Object.entries(this.codes)) {
+			if (value.level > level && this.isChildOf(key, normalized)) {
+				descendants.push(value);
+			}
+		}
+
+		return descendants.sort((a, b) => a.code.localeCompare(b.code));
+	}
+
+	getSiblings(code: string): NACEBELCode[] {
+		const codeObj = this.getCode(code);
+		if (!codeObj) return [];
+
+		const parent = this.getParent(code);
+		if (!parent) return [];
+
+		return this.getChildren(parent.code).filter((c) => c.code !== codeObj.code);
+	}
+
+	getLevel(code: string): number {
+		const codeObj = this.getCode(code);
+		return codeObj?.level ?? 0;
+	}
+
+	getAllCodes(level?: number): NACEBELCode[] {
+		this.ensureDataLoaded();
+		const allCodes = Object.values(this.codes);
+
+		if (level === undefined) {
+			return allCodes;
+		}
+
+		return allCodes.filter((c) => c.level === level);
+	}
+
 	search(query: string, options?: SearchOptions): NACEBELCode[] {
 		this.ensureDataLoaded();
 		const language = options?.language ?? "en";
@@ -114,14 +204,8 @@ export class NACEBEL extends NACE {
 		return results;
 	}
 
-	getAllCodes(level?: number): NACEBELCode[] {
-		this.ensureDataLoaded();
-		const allCodes = Object.values(this.codes);
-
-		if (level === undefined) {
-			return allCodes;
-		}
-
-		return allCodes.filter((c) => c.level === level);
+	protected fuzzyMatch(query: string, text: string): boolean {
+		const queryWords = query.split(/\s+/);
+		return queryWords.every((word) => text.includes(word));
 	}
 }

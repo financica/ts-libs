@@ -1,4 +1,4 @@
-import { DataLoader } from "./dataLoader";
+import { loadNACECodes } from "./naceDataLoader";
 import type { CodeMap, NACECode, NACEOptions, SearchOptions } from "./types";
 import { determineLevel, getParentCode, normalizeCode } from "./utils";
 
@@ -7,7 +7,7 @@ export class NACE {
 
 	constructor(options?: NACEOptions) {
 		if (options?.preload ?? false) {
-			this.codes = DataLoader.loadNACECodes();
+			this.codes = loadNACECodes();
 		} else {
 			this.codes = {};
 		}
@@ -15,7 +15,7 @@ export class NACE {
 
 	protected ensureDataLoaded(): void {
 		if (Object.keys(this.codes).length === 0) {
-			this.codes = DataLoader.loadNACECodes();
+			this.codes = loadNACECodes();
 		}
 	}
 

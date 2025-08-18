@@ -4,6 +4,7 @@
 /node_modules
 /dist
 /coverage
+/src/generated
 
 # misc
 .DS_Store
