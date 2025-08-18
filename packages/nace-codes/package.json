@@ -1,6 +1,6 @@
 {
 	"name": "nace-codes",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "TypeScript library for NACE and NACEBEL economic activity classification codes",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
