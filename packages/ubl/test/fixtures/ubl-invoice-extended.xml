@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+  <cbc:CustomizationID>urn:example:customization:v1</cbc:CustomizationID>
+  <cbc:ProfileID>urn:example:profile:v1</cbc:ProfileID>
+  <cbc:ID>INV-UBL-EXT-1</cbc:ID>
+  <cbc:IssueDate>2026-02-28</cbc:IssueDate>
+  <cbc:DueDate>2026-03-15</cbc:DueDate>
+  <cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
+  <cbc:Note>Long legal note should not be mapped to payment terms</cbc:Note>
+  <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+  <cbc:BuyerReference>BUY-REF-1</cbc:BuyerReference>
+  <cac:InvoicePeriod>
+    <cbc:StartDate>2026-02-01</cbc:StartDate>
+    <cbc:EndDate>2026-02-28</cbc:EndDate>
+    <cbc:DescriptionCode>3</cbc:DescriptionCode>
+  </cac:InvoicePeriod>
+  <cac:OrderReference>
+    <cbc:ID>NA</cbc:ID>
+    <cbc:SalesOrderID>SO-9988</cbc:SalesOrderID>
+  </cac:OrderReference>
+  <cac:AccountingSupplierParty>
+    <cac:Party>
+      <cbc:EndpointID schemeID="0208">0898218515</cbc:EndpointID>
+      <cac:PostalAddress>
+        <cbc:StreetName>Main Street 10</cbc:StreetName>
+        <cbc:CityName>Brussels</cbc:CityName>
+        <cbc:PostalZone>1000</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>BE</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PartyTaxScheme>
+        <cbc:CompanyID>BE0123456789</cbc:CompanyID>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:PartyTaxScheme>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>Acme BV</cbc:RegistrationName>
+        <cbc:CompanyLegalForm>SA/NV</cbc:CompanyLegalForm>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:Name>Supplier Contact</cbc:Name>
+        <cbc:ElectronicMail>supplier@example.com</cbc:ElectronicMail>
+      </cac:Contact>
+    </cac:Party>
+  </cac:AccountingSupplierParty>
+  <cac:AccountingCustomerParty>
+    <cac:Party>
+      <cbc:EndpointID schemeID="0208">1006119434</cbc:EndpointID>
+      <cac:PostalAddress>
+        <cbc:StreetName>Buyer Road 2</cbc:StreetName>
+        <cbc:CityName>Ghent</cbc:CityName>
+        <cbc:PostalZone>9000</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>BE</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PartyTaxScheme>
+        <cbc:CompanyID>BE9876543210</cbc:CompanyID>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:PartyTaxScheme>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>Buyer NV</cbc:RegistrationName>
+        <cbc:CompanyLegalForm>BV</cbc:CompanyLegalForm>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:Name>Buyer Contact</cbc:Name>
+        <cbc:ElectronicMail>buyer@example.com</cbc:ElectronicMail>
+      </cac:Contact>
+    </cac:Party>
+  </cac:AccountingCustomerParty>
+  <cac:Delivery>
+    <cbc:ActualDeliveryDate>2026-02-27</cbc:ActualDeliveryDate>
+    <cac:DeliveryLocation>
+      <cac:Address>
+        <cbc:StreetName>Warehouse 5</cbc:StreetName>
+        <cbc:CityName>Antwerp</cbc:CityName>
+        <cbc:PostalZone>2000</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>BE</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:Address>
+    </cac:DeliveryLocation>
+  </cac:Delivery>
+  <cac:PaymentMeans>
+    <cbc:PaymentMeansCode name="VIREMENT">30</cbc:PaymentMeansCode>
+    <cbc:PaymentID>PM-EXT-1</cbc:PaymentID>
+    <cac:PayeeFinancialAccount>
+      <cbc:ID>BE10000123456789</cbc:ID>
+      <cbc:Name>Bank Account Name</cbc:Name>
+      <cac:FinancialInstitutionBranch>
+        <cbc:ID>GEBA BE BB</cbc:ID>
+      </cac:FinancialInstitutionBranch>
+    </cac:PayeeFinancialAccount>
+  </cac:PaymentMeans>
+  <cac:TaxTotal>
+    <cbc:TaxAmount currencyID="EUR">21.00</cbc:TaxAmount>
+    <cac:TaxSubtotal>
+      <cbc:TaxableAmount currencyID="EUR">100.00</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="EUR">21.00</cbc:TaxAmount>
+      <cac:TaxCategory>
+        <cbc:ID>S</cbc:ID>
+        <cbc:Percent>21.00</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:TaxCategory>
+    </cac:TaxSubtotal>
+  </cac:TaxTotal>
+  <cac:LegalMonetaryTotal>
+    <cbc:LineExtensionAmount currencyID="EUR">100.00</cbc:LineExtensionAmount>
+    <cbc:TaxExclusiveAmount currencyID="EUR">100.00</cbc:TaxExclusiveAmount>
+    <cbc:TaxInclusiveAmount currencyID="EUR">121.00</cbc:TaxInclusiveAmount>
+    <cbc:PayableAmount currencyID="EUR">121.00</cbc:PayableAmount>
+  </cac:LegalMonetaryTotal>
+  <cac:InvoiceLine>
+    <cbc:ID>1</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="C62">2</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="EUR">100.00</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Consulting services</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>CONSULT-01</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+        <cbc:ID>S</cbc:ID>
+        <cbc:Percent>21.00</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="EUR">50.00</cbc:PriceAmount>
+    </cac:Price>
+  </cac:InvoiceLine>
+</Invoice>
