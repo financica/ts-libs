@@ -108,6 +108,11 @@ export interface UblDelivery {
 	address?: UblAddress;
 }
 
+export interface UblBillingReference {
+	invoiceId?: string;
+	invoiceIssueDate?: string;
+}
+
 export interface UblInvoice {
 	documentType: "Invoice" | "CreditNote";
 	customizationId?: string;
@@ -123,6 +128,7 @@ export interface UblInvoice {
 	salesOrderId?: string;
 	contractReference?: string;
 	projectReference?: string;
+	billingReference?: UblBillingReference;
 	seller: UblParty;
 	buyer: UblParty;
 	delivery?: UblDelivery;

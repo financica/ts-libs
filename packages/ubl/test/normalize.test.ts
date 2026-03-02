@@ -154,4 +154,13 @@ describe("normalizeUblResponse", () => {
 		const { extracted } = normalizeUblResponse(xml, "doc");
 		expect(extracted.invoice.amount_paid).toBeNull();
 	});
+
+	it("includes billing_reference in extra for invoices without one", () => {
+		const xml = readFixture("ubl-invoice.xml");
+		const { extracted } = normalizeUblResponse(xml, "doc");
+		const extra = extracted.invoice.extra as {
+			billing_reference?: unknown;
+		};
+		expect(extra.billing_reference).toBeNull();
+	});
 });

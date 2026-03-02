@@ -261,7 +261,14 @@ describe("parseUblInvoice", () => {
             xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
   <cbc:ID>CN-001</cbc:ID>
   <cbc:IssueDate>2026-03-01</cbc:IssueDate>
+  <cbc:CreditNoteTypeCode>381</cbc:CreditNoteTypeCode>
   <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+  <cac:BillingReference>
+    <cac:InvoiceDocumentReference>
+      <cbc:ID>INV-ORIG-100</cbc:ID>
+      <cbc:IssueDate>2026-02-15</cbc:IssueDate>
+    </cac:InvoiceDocumentReference>
+  </cac:BillingReference>
   <cac:AccountingSupplierParty>
     <cac:Party>
       <cac:PartyName><cbc:Name>Seller</cbc:Name></cac:PartyName>
@@ -295,8 +302,55 @@ describe("parseUblInvoice", () => {
 
 		expect(invoice.documentType).toBe("CreditNote");
 		expect(invoice.id).toBe("CN-001");
+		expect(invoice.invoiceTypeCode).toBe("381");
 		expect(invoice.lines).toHaveLength(1);
 		expect(invoice.lines[0]!.description).toBe("Return");
 		expect(invoice.lines[0]!.quantity).toBe(1);
+	});
+
+	it("extracts billing reference from CreditNote", () => {
+		const xml = `<?xml version="1.0"?>
+<CreditNote xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2"
+            xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+            xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+  <cbc:ID>CN-002</cbc:ID>
+  <cbc:IssueDate>2026-03-01</cbc:IssueDate>
+  <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+  <cac:BillingReference>
+    <cac:InvoiceDocumentReference>
+      <cbc:ID>INV-ORIG-200</cbc:ID>
+      <cbc:IssueDate>2026-01-26</cbc:IssueDate>
+    </cac:InvoiceDocumentReference>
+  </cac:BillingReference>
+  <cac:AccountingSupplierParty>
+    <cac:Party>
+      <cac:PartyName><cbc:Name>Seller</cbc:Name></cac:PartyName>
+    </cac:Party>
+  </cac:AccountingSupplierParty>
+  <cac:AccountingCustomerParty>
+    <cac:Party>
+      <cac:PartyName><cbc:Name>Buyer</cbc:Name></cac:PartyName>
+    </cac:Party>
+  </cac:AccountingCustomerParty>
+  <cac:LegalMonetaryTotal>
+    <cbc:LineExtensionAmount currencyID="EUR">10.00</cbc:LineExtensionAmount>
+    <cbc:TaxExclusiveAmount currencyID="EUR">10.00</cbc:TaxExclusiveAmount>
+    <cbc:TaxInclusiveAmount currencyID="EUR">12.10</cbc:TaxInclusiveAmount>
+    <cbc:PayableAmount currencyID="EUR">12.10</cbc:PayableAmount>
+  </cac:LegalMonetaryTotal>
+</CreditNote>`;
+		const invoice = parseUblInvoice(xml)!;
+
+		expect(invoice.billingReference).toMatchObject({
+			invoiceId: "INV-ORIG-200",
+			invoiceIssueDate: "2026-01-26",
+		});
+	});
+
+	it("returns undefined billingReference for invoices without one", () => {
+		const xml = readFixture("ubl-invoice.xml");
+		const invoice = parseUblInvoice(xml)!;
+
+		expect(invoice.billingReference).toBeUndefined();
 	});
 });

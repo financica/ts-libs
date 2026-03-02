@@ -11,6 +11,7 @@ export type {
 	UblAddress,
 	UblAllowanceCharge,
 	UblAttachment,
+	UblBillingReference,
 	UblContact,
 	UblDelivery,
 	UblInvoice,

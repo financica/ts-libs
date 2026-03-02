@@ -276,6 +276,14 @@ export const normalizeUblResponse = (
 				sales_order_id: normalizeText(ubl.salesOrderId),
 				contract_reference: normalizeText(ubl.contractReference),
 				project_reference: normalizeText(ubl.projectReference),
+				billing_reference: ubl.billingReference
+					? {
+							invoice_id: normalizeText(ubl.billingReference.invoiceId),
+							invoice_issue_date: parseDate(
+								ubl.billingReference.invoiceIssueDate,
+							),
+						}
+					: null,
 				tax_point_date: parseDate(ubl.taxPointDate),
 				invoice_period: ubl.invoicePeriod ?? null,
 				note: normalizeText(ubl.note),

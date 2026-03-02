@@ -1,6 +1,6 @@
 {
 	"name": "@ingram-tech/ubl",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "UBL (Universal Business Language) invoice XML parser for TypeScript",
 	"license": "MIT",
 	"type": "module",
@@ -17,6 +17,7 @@
 	],
 	"scripts": {
 		"build": "tsup",
+		"prepack": "npm run build",
 		"lint": "eslint",
 		"format": "prettier --write .",
 		"format:check": "prettier --check .",
