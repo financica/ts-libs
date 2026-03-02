@@ -3,6 +3,7 @@ import type {
 	UblAddress,
 	UblAllowanceCharge,
 	UblAttachment,
+	UblBillingReference,
 	UblDelivery,
 	UblInvoice,
 	UblInvoicePeriod,
@@ -392,6 +393,17 @@ function parseAttachments(root: Element): UblAttachment[] | undefined {
 	return attachments.length > 0 ? attachments : undefined;
 }
 
+function parseBillingReference(root: Element): UblBillingReference | undefined {
+	const billingRef = cacElement(root, "BillingReference");
+	if (!billingRef) return undefined;
+	const invoiceRef = cacElement(billingRef, "InvoiceDocumentReference");
+	if (!invoiceRef) return undefined;
+	const invoiceId = cbcText(invoiceRef, "ID") || undefined;
+	const invoiceIssueDate = cbcText(invoiceRef, "IssueDate") || undefined;
+	if (!invoiceId && !invoiceIssueDate) return undefined;
+	return { invoiceId, invoiceIssueDate };
+}
+
 // --- Main parser ---
 
 export function parseUblInvoice(xml: string): UblInvoice | null {
@@ -428,7 +440,10 @@ export function parseUblInvoice(xml: string): UblInvoice | null {
 			customizationId: cbcText(root, "CustomizationID") || undefined,
 			profileId: cbcText(root, "ProfileID") || undefined,
 			id,
-			invoiceTypeCode: cbcText(root, "InvoiceTypeCode") || undefined,
+			invoiceTypeCode:
+				cbcText(root, "InvoiceTypeCode") ||
+				cbcText(root, "CreditNoteTypeCode") ||
+				undefined,
 			issueDate: cbcText(root, "IssueDate"),
 			dueDate: cbcText(root, "DueDate") || undefined,
 			taxPointDate: cbcText(root, "TaxPointDate") || undefined,
@@ -444,6 +459,7 @@ export function parseUblInvoice(xml: string): UblInvoice | null {
 			projectReference: projectReference
 				? cbcText(projectReference, "ID")
 				: undefined,
+			billingReference: parseBillingReference(root),
 			seller: parseParty(root, "AccountingSupplierParty"),
 			buyer: parseParty(root, "AccountingCustomerParty"),
 			delivery: parseDelivery(root),
