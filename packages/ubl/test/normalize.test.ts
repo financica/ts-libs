@@ -163,4 +163,98 @@ describe("normalizeUblResponse", () => {
 		};
 		expect(extra.billing_reference).toBeNull();
 	});
+
+	describe("Proximus-style invoices", () => {
+		it("surfaces mandate ID in payment means", () => {
+			const xml = readFixture("ubl-invoice-proximus.xml");
+			const { extracted } = normalizeUblResponse(xml, "doc-proximus");
+			const extra = extracted.invoice.extra as {
+				payment_means?: { mandate_id?: string | null };
+				payment_means_list?: Array<{ mandate_id?: string | null }>;
+			};
+			expect(extra.payment_means?.mandate_id).toBe("B013950122");
+			expect(extra.payment_means_list?.[0]?.mandate_id).toBe(
+				"B013950122",
+			);
+		});
+
+		it("surfaces additional item properties as metadata in line extras", () => {
+			const xml = readFixture("ubl-invoice-proximus.xml");
+			const { extracted } = normalizeUblResponse(xml, "doc-proximus");
+			expect(extracted.line_items[0]?.extra).toMatchObject({
+				metadata: { CHARGE_TYPE: "RC" },
+			});
+			expect(extracted.line_items[1]?.extra).toMatchObject({
+				metadata: { CHARGE_TYPE: "USG" },
+			});
+		});
+
+		it("surfaces external attachment URI", () => {
+			const xml = readFixture("ubl-invoice-proximus.xml");
+			const { extracted } = normalizeUblResponse(xml, "doc-proximus");
+			const extra = extracted.invoice.extra as {
+				attachments?: Array<{
+					external_uri?: string | null;
+					size_bytes?: number | null;
+				}>;
+			};
+			expect(extra.attachments).toHaveLength(1);
+			expect(extra.attachments?.[0]?.external_uri).toBe(
+				"7504668440_PEPPOL_20250714153756.pdf",
+			);
+			expect(extra.attachments?.[0]?.size_bytes).toBeNull();
+		});
+
+		it("surfaces text-only document references", () => {
+			const xml = readFixture("ubl-invoice-proximus.xml");
+			const { extracted } = normalizeUblResponse(xml, "doc-proximus");
+			const extra = extracted.invoice.extra as {
+				document_references?: Array<{
+					id: string;
+					description?: string;
+				}>;
+			};
+			expect(extra.document_references).toHaveLength(2);
+			expect(extra.document_references?.[0]?.id).toBe("GTC_SCA_INSERT");
+			expect(extra.document_references?.[1]?.id).toBe("FTC_DUR_TEXT");
+		});
+
+		it("surfaces party identifications and company ID scheme", () => {
+			const xml = readFixture("ubl-invoice-proximus.xml");
+			const { extracted } = normalizeUblResponse(xml, "doc-proximus");
+			const extra = extracted.invoice.extra as {
+				supplier?: {
+					party_identifications?: Array<{
+						id: string;
+						schemeId?: string;
+					}>;
+					company_id_scheme_id?: string | null;
+				};
+				receiver?: {
+					party_identifications?: Array<{
+						id: string;
+						schemeId?: string;
+					}>;
+					company_id_scheme_id?: string | null;
+				};
+			};
+			expect(extra.supplier?.party_identifications).toEqual([
+				{ id: "0202239951", schemeId: "0208" },
+			]);
+			expect(extra.supplier?.company_id_scheme_id).toBe("0208");
+			expect(extra.receiver?.party_identifications).toEqual([
+				{ id: "624080006-1" },
+			]);
+			expect(extra.receiver?.company_id_scheme_id).toBe("0208");
+		});
+
+		it("normalizes N/A buyer reference to null", () => {
+			const xml = readFixture("ubl-invoice-proximus.xml");
+			const { extracted } = normalizeUblResponse(xml, "doc-proximus");
+			const extra = extracted.invoice.extra as {
+				buyer_reference?: string | null;
+			};
+			expect(extra.buyer_reference).toBeNull();
+		});
+	});
 });

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"
+         xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+         xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+         xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+  <cbc:CustomizationID>urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0</cbc:CustomizationID>
+  <cbc:ProfileID>urn:fdc:peppol.eu:2017:poacc:billing:01:1.0</cbc:ProfileID>
+  <cbc:ID>7504668440</cbc:ID>
+  <cbc:IssueDate>2025-07-09</cbc:IssueDate>
+  <cbc:DueDate>2025-07-26</cbc:DueDate>
+  <cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
+  <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+  <cbc:BuyerReference>N/A</cbc:BuyerReference>
+  <cac:InvoicePeriod>
+    <cbc:StartDate>2025-07-01</cbc:StartDate>
+    <cbc:EndDate>2025-07-31</cbc:EndDate>
+  </cac:InvoicePeriod>
+  <cac:AdditionalDocumentReference>
+    <cbc:ID>GTC_SCA_INSERT</cbc:ID>
+    <cbc:DocumentDescription>Scarlet general terms and conditions apply.</cbc:DocumentDescription>
+  </cac:AdditionalDocumentReference>
+  <cac:AdditionalDocumentReference>
+    <cbc:ID>FTC_DUR_TEXT</cbc:ID>
+    <cbc:DocumentDescription>All contracts are for an indefinite period unless stated otherwise.</cbc:DocumentDescription>
+  </cac:AdditionalDocumentReference>
+  <cac:AdditionalDocumentReference>
+    <cbc:ID>ATT</cbc:ID>
+    <cbc:DocumentDescription>Commercial Invoice</cbc:DocumentDescription>
+    <cac:Attachment>
+      <cac:ExternalReference>
+        <cbc:URI>7504668440_PEPPOL_20250714153756.pdf</cbc:URI>
+      </cac:ExternalReference>
+    </cac:Attachment>
+  </cac:AdditionalDocumentReference>
+  <cac:AccountingSupplierParty>
+    <cac:Party>
+      <cbc:EndpointID schemeID="0208">0202239951</cbc:EndpointID>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="0208">0202239951</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>Proximus</cbc:Name>
+      </cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:StreetName>Boulevard du Roi Albert II, 27</cbc:StreetName>
+        <cbc:CityName>Bruxelles</cbc:CityName>
+        <cbc:PostalZone>1030</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>BE</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PartyTaxScheme>
+        <cbc:CompanyID>BE0202239951</cbc:CompanyID>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:PartyTaxScheme>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>Proximus SA de droit public</cbc:RegistrationName>
+        <cbc:CompanyID schemeID="0208">0202239951</cbc:CompanyID>
+        <cbc:CompanyLegalForm>SA</cbc:CompanyLegalForm>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:Name>www.proximus.be</cbc:Name>
+        <cbc:Telephone>0800 22 800</cbc:Telephone>
+        <cbc:ElectronicMail>bsc.reject.digital.invoice@proximus.com</cbc:ElectronicMail>
+      </cac:Contact>
+    </cac:Party>
+  </cac:AccountingSupplierParty>
+  <cac:AccountingCustomerParty>
+    <cac:Party>
+      <cbc:EndpointID schemeID="9925">BE0766280697</cbc:EndpointID>
+      <cac:PartyIdentification>
+        <cbc:ID>624080006-1</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>SRL GOVENI</cbc:Name>
+      </cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:StreetName>Rue Auguste Orts 17</cbc:StreetName>
+        <cbc:CityName>Bruxelles</cbc:CityName>
+        <cbc:PostalZone>1000</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>BE</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PartyTaxScheme>
+        <cbc:CompanyID>BE0766280697</cbc:CompanyID>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:PartyTaxScheme>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>GOVENI</cbc:RegistrationName>
+        <cbc:CompanyID schemeID="0208">0766280697</cbc:CompanyID>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:Name>SRL GOVENI</cbc:Name>
+      </cac:Contact>
+    </cac:Party>
+  </cac:AccountingCustomerParty>
+  <cac:PaymentMeans>
+    <cbc:PaymentMeansCode name="Direct debit">49</cbc:PaymentMeansCode>
+    <cbc:PaymentID>750466844085</cbc:PaymentID>
+    <cac:PayeeFinancialAccount>
+      <cbc:ID>BE82210000088968</cbc:ID>
+      <cac:FinancialInstitutionBranch>
+        <cbc:ID>GEBABEBB</cbc:ID>
+      </cac:FinancialInstitutionBranch>
+    </cac:PayeeFinancialAccount>
+    <cac:PaymentMandate>
+      <cbc:ID>B013950122</cbc:ID>
+    </cac:PaymentMandate>
+  </cac:PaymentMeans>
+  <cac:TaxTotal>
+    <cbc:TaxAmount currencyID="EUR">11.28</cbc:TaxAmount>
+    <cac:TaxSubtotal>
+      <cbc:TaxableAmount currencyID="EUR">53.71</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="EUR">11.28</cbc:TaxAmount>
+      <cac:TaxCategory>
+        <cbc:ID>S</cbc:ID>
+        <cbc:Percent>21.00</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:TaxCategory>
+    </cac:TaxSubtotal>
+  </cac:TaxTotal>
+  <cac:LegalMonetaryTotal>
+    <cbc:LineExtensionAmount currencyID="EUR">53.71</cbc:LineExtensionAmount>
+    <cbc:TaxExclusiveAmount currencyID="EUR">53.71</cbc:TaxExclusiveAmount>
+    <cbc:TaxInclusiveAmount currencyID="EUR">64.99</cbc:TaxInclusiveAmount>
+    <cbc:PayableAmount currencyID="EUR">64.99</cbc:PayableAmount>
+  </cac:LegalMonetaryTotal>
+  <cac:InvoiceLine>
+    <cbc:ID>1</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="EA">1.00</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="EUR">53.71</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Internet Maxi Fiber</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>102612681694</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+        <cbc:ID>S</cbc:ID>
+        <cbc:Percent>21.00</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>CHARGE_TYPE</cbc:Name>
+        <cbc:Value>RC</cbc:Value>
+      </cac:AdditionalItemProperty>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="EUR">53.7100</cbc:PriceAmount>
+    </cac:Price>
+  </cac:InvoiceLine>
+  <cac:InvoiceLine>
+    <cbc:ID>2</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="EA">1.00</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="EUR">0.00</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Internet - Consommation internet fixe</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>102612681694</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+        <cbc:ID>S</cbc:ID>
+        <cbc:Percent>21.00</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>CHARGE_TYPE</cbc:Name>
+        <cbc:Value>USG</cbc:Value>
+      </cac:AdditionalItemProperty>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="EUR">0.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:InvoiceLine>
+  <cac:InvoiceLine>
+    <cbc:ID>3</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="EA">1.00</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="EUR">0.00</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Internet Box</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>EQP000022122223</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+        <cbc:ID>S</cbc:ID>
+        <cbc:Percent>21.00</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+      <cac:AdditionalItemProperty>
+        <cbc:Name>CHARGE_TYPE</cbc:Name>
+        <cbc:Value>RC</cbc:Value>
+      </cac:AdditionalItemProperty>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="EUR">0.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:InvoiceLine>
+</Invoice>

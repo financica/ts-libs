@@ -93,7 +93,10 @@ const sanitizeAttachments = (attachments?: UblAttachment[]) =>
 		filename: normalizeText(attachment.filename),
 		mime_code: normalizeText(attachment.mimeCode),
 		description: normalizeText(attachment.description),
-		size_bytes: base64ByteLength(attachment.base64Content),
+		size_bytes: attachment.base64Content
+			? base64ByteLength(attachment.base64Content)
+			: null,
+		external_uri: normalizeText(attachment.externalUri),
 	}));
 
 const sanitizeAllowanceCharges = (charges?: UblAllowanceCharge[]) =>
@@ -112,6 +115,7 @@ const sanitizeAllowanceCharges = (charges?: UblAllowanceCharge[]) =>
 const sanitizeRawUbl = (ubl: UblInvoice) => ({
 	...ubl,
 	attachments: sanitizeAttachments(ubl.attachments),
+	documentReferences: ubl.documentReferences ?? [],
 });
 
 // --- Summation helpers ---
@@ -208,6 +212,11 @@ export const normalizeUblResponse = (
 			tax_subtotals: line.taxSubtotals ?? [],
 			allowance_charges: sanitizeAllowanceCharges(line.allowanceCharges),
 			charge_amount: toNumberOrNull(line.chargeAmount),
+			metadata: line.additionalItemProperties
+				? Object.fromEntries(
+						line.additionalItemProperties.map((p) => [p.name, p.value]),
+					)
+				: null,
 		},
 	}));
 
@@ -295,6 +304,7 @@ export const normalizeUblResponse = (
 							iban: normalizeText(ubl.paymentMeans.iban),
 							bic: normalizeText(ubl.paymentMeans.bic),
 							account_name: normalizeText(ubl.paymentMeans.accountName),
+							mandate_id: normalizeText(ubl.paymentMeans.mandateId),
 						}
 					: null,
 				payment_means_list: paymentMeansList.map((item) => ({
@@ -304,6 +314,7 @@ export const normalizeUblResponse = (
 					iban: normalizeText(item.iban),
 					bic: normalizeText(item.bic),
 					account_name: normalizeText(item.accountName),
+					mandate_id: normalizeText(item.mandateId),
 				})),
 				delivery: ubl.delivery
 					? {
@@ -318,7 +329,9 @@ export const normalizeUblResponse = (
 					endpoint_scheme_id: normalizeText(ubl.seller.endpointSchemeId),
 					registration_name: normalizeText(ubl.seller.registrationName),
 					company_legal_form: normalizeText(ubl.seller.companyLegalForm),
+					company_id_scheme_id: normalizeText(ubl.seller.companyIdSchemeId),
 					tax_scheme_id: normalizeText(ubl.seller.taxSchemeId),
+					party_identifications: ubl.seller.partyIdentifications ?? [],
 					contact_name: normalizeText(ubl.seller.contact?.name),
 					contact_phone: normalizeText(ubl.seller.contact?.phone),
 					contact_email: normalizeText(ubl.seller.contact?.email),
@@ -328,7 +341,9 @@ export const normalizeUblResponse = (
 					endpoint_scheme_id: normalizeText(ubl.buyer.endpointSchemeId),
 					registration_name: normalizeText(ubl.buyer.registrationName),
 					company_legal_form: normalizeText(ubl.buyer.companyLegalForm),
+					company_id_scheme_id: normalizeText(ubl.buyer.companyIdSchemeId),
 					tax_scheme_id: normalizeText(ubl.buyer.taxSchemeId),
+					party_identifications: ubl.buyer.partyIdentifications ?? [],
 					contact_name: normalizeText(ubl.buyer.contact?.name),
 					contact_phone: normalizeText(ubl.buyer.contact?.phone),
 					contact_email: normalizeText(ubl.buyer.contact?.email),
@@ -338,6 +353,7 @@ export const normalizeUblResponse = (
 				tax_subtotals: ubl.taxSubtotals,
 				allowance_charges: sanitizeAllowanceCharges(ubl.allowanceCharges),
 				attachments: attachmentMetadata,
+				document_references: ubl.documentReferences ?? [],
 			},
 		},
 		line_items: lineItems,

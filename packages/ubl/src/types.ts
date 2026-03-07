@@ -15,6 +15,11 @@ export interface UblContact {
 	email?: string;
 }
 
+export interface UblPartyIdentification {
+	id: string;
+	schemeId?: string;
+}
+
 export interface UblParty {
 	name: string;
 	registrationName?: string;
@@ -22,10 +27,17 @@ export interface UblParty {
 	vatId?: string;
 	taxSchemeId?: string;
 	companyId?: string;
+	companyIdSchemeId?: string;
 	endpointId?: string;
 	endpointSchemeId?: string;
+	partyIdentifications?: UblPartyIdentification[];
 	address?: UblAddress;
 	contact?: UblContact;
+}
+
+export interface UblItemProperty {
+	name: string;
+	value: string;
 }
 
 export interface UblLine {
@@ -46,6 +58,7 @@ export interface UblLine {
 	itemName?: string;
 	sellersItemId?: string;
 	buyersItemId?: string;
+	additionalItemProperties?: UblItemProperty[];
 }
 
 export interface UblAllowanceCharge {
@@ -87,6 +100,7 @@ export interface UblPaymentMeans {
 	iban?: string;
 	bic?: string;
 	accountName?: string;
+	mandateId?: string;
 }
 
 export interface UblInvoicePeriod {
@@ -100,7 +114,13 @@ export interface UblAttachment {
 	filename?: string;
 	mimeCode?: string;
 	description?: string;
-	base64Content: string;
+	base64Content?: string;
+	externalUri?: string;
+}
+
+export interface UblDocumentReference {
+	id: string;
+	description?: string;
 }
 
 export interface UblDelivery {
@@ -141,6 +161,7 @@ export interface UblInvoice {
 	note?: string;
 	paymentTermsNote?: string;
 	attachments?: UblAttachment[];
+	documentReferences?: UblDocumentReference[];
 	allowanceCharges?: UblAllowanceCharge[];
 }
 

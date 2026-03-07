@@ -5,11 +5,14 @@ import type {
 	UblAttachment,
 	UblBillingReference,
 	UblDelivery,
+	UblDocumentReference,
 	UblInvoice,
 	UblInvoicePeriod,
+	UblItemProperty,
 	UblLine,
 	UblMonetaryTotal,
 	UblParty,
+	UblPartyIdentification,
 	UblPaymentMeans,
 	UblTaxSubtotal,
 } from "./types.js";
@@ -116,6 +119,22 @@ function parseContact(party: Element): import("./types.js").UblContact | undefin
 	};
 }
 
+function parsePartyIdentifications(party: Element): UblPartyIdentification[] {
+	const ids = cacElements(party, "PartyIdentification");
+	const result: UblPartyIdentification[] = [];
+	for (const idEl of ids) {
+		const idValue = cbcText(idEl, "ID");
+		if (!idValue) continue;
+		const schemeIdAttr =
+			idEl.getElementsByTagNameNS(CBC_NS, "ID")[0]?.getAttribute("schemeID");
+		result.push({
+			id: idValue,
+			schemeId: schemeIdAttr || undefined,
+		});
+	}
+	return result;
+}
+
 function parseParty(root: Element, role: string): UblParty {
 	const wrapper = cacElement(root, role);
 	const party = wrapper ? cacElement(wrapper, "Party") : null;
@@ -126,6 +145,10 @@ function parseParty(root: Element, role: string): UblParty {
 	const taxScheme = cacElement(party, "PartyTaxScheme");
 	const partyId = cacElement(party, "PartyIdentification");
 	const endpointEl = party.getElementsByTagNameNS(CBC_NS, "EndpointID")[0];
+	const partyIdentifications = parsePartyIdentifications(party);
+	const companyIdEl = legalEntity
+		? legalEntity.getElementsByTagNameNS(CBC_NS, "CompanyID")[0]
+		: null;
 
 	return {
 		name: partyName ? cbcText(partyName, "Name") : "",
@@ -137,13 +160,16 @@ function parseParty(root: Element, role: string): UblParty {
 			: undefined,
 		vatId: taxScheme ? cbcText(taxScheme, "CompanyID") || undefined : undefined,
 		taxSchemeId: parseTaxSchemeId(taxScheme),
-		companyId: legalEntity
-			? cbcText(legalEntity, "CompanyID") || undefined
+		companyId: companyIdEl
+			? companyIdEl.textContent?.trim() || undefined
 			: partyId
 				? cbcText(partyId, "ID") || undefined
 				: undefined,
+		companyIdSchemeId: companyIdEl?.getAttribute("schemeID") || undefined,
 		endpointId: endpointEl?.textContent?.trim() || undefined,
 		endpointSchemeId: endpointEl?.getAttribute("schemeID") || undefined,
+		partyIdentifications:
+			partyIdentifications.length > 0 ? partyIdentifications : undefined,
 		address: parseAddress(party),
 		contact: parseContact(party),
 	};
@@ -239,6 +265,20 @@ function parseLines(root: Element, isCreditNote: boolean): UblLine[] {
 			0,
 		);
 
+		const additionalItemProperties: UblItemProperty[] = [];
+		if (item) {
+			for (const prop of cacElements(item, "AdditionalItemProperty")) {
+				const propName = cbcText(prop, "Name");
+				const propValue = cbcText(prop, "Value");
+				if (propName) {
+					additionalItemProperties.push({
+						name: propName,
+						value: propValue,
+					});
+				}
+			}
+		}
+
 		return {
 			id: cbcText(line, "ID"),
 			description: item ? cbcText(item, "Description") : "",
@@ -267,6 +307,10 @@ function parseLines(root: Element, isCreditNote: boolean): UblLine[] {
 				? cbcText(sellersId, "ID") || undefined
 				: undefined,
 			buyersItemId: buyersId ? cbcText(buyersId, "ID") || undefined : undefined,
+			additionalItemProperties:
+				additionalItemProperties.length > 0
+					? additionalItemProperties
+					: undefined,
 		};
 	});
 }
@@ -297,6 +341,7 @@ function parsePaymentMeansElement(pm: Element): UblPaymentMeans {
 	const account = cacElement(pm, "PayeeFinancialAccount");
 	const branch = account ? cacElement(account, "FinancialInstitutionBranch") : null;
 	const paymentMeansCodeEl = pm.getElementsByTagNameNS(CBC_NS, "PaymentMeansCode")[0];
+	const mandate = cacElement(pm, "PaymentMandate");
 
 	return {
 		code: cbcText(pm, "PaymentMeansCode"),
@@ -305,6 +350,7 @@ function parsePaymentMeansElement(pm: Element): UblPaymentMeans {
 		iban: account ? cbcText(account, "ID") || undefined : undefined,
 		bic: branch ? cbcText(branch, "ID") || undefined : undefined,
 		accountName: (account && cbcText(account, "Name")) || undefined,
+		mandateId: mandate ? cbcText(mandate, "ID") || undefined : undefined,
 	};
 }
 
@@ -364,33 +410,63 @@ function parseNotes(root: Element): string | undefined {
 	return notes.length > 0 ? notes.join("\n") : undefined;
 }
 
-function parseAttachments(root: Element): UblAttachment[] | undefined {
+function parseAttachments(
+	root: Element,
+): {
+	attachments: UblAttachment[] | undefined;
+	documentReferences: UblDocumentReference[] | undefined;
+} {
 	const refs = cacElements(root, "AdditionalDocumentReference");
 	const attachments: UblAttachment[] = [];
+	const documentReferences: UblDocumentReference[] = [];
 
 	for (const ref of refs) {
 		const attachment = cacElement(ref, "Attachment");
-		if (!attachment) continue;
+		const refId = cbcText(ref, "ID");
+		const description = cbcText(ref, "DocumentDescription") || undefined;
+
+		if (!attachment) {
+			// Text-only document reference (e.g. terms & conditions, notices)
+			if (refId || description) {
+				documentReferences.push({ id: refId, description });
+			}
+			continue;
+		}
 
 		const binaryEl = attachment.getElementsByTagNameNS(
 			CBC_NS,
 			"EmbeddedDocumentBinaryObject",
 		)[0];
-		if (!binaryEl) continue;
+		const externalRef = cacElement(attachment, "ExternalReference");
 
-		const content = binaryEl.textContent?.trim();
-		if (!content) continue;
-
-		attachments.push({
-			id: cbcText(ref, "ID"),
-			filename: binaryEl.getAttribute("filename") || undefined,
-			mimeCode: binaryEl.getAttribute("mimeCode") || undefined,
-			description: cbcText(ref, "DocumentDescription") || undefined,
-			base64Content: content,
-		});
+		if (binaryEl) {
+			const content = binaryEl.textContent?.trim();
+			if (content) {
+				attachments.push({
+					id: refId,
+					filename: binaryEl.getAttribute("filename") || undefined,
+					mimeCode: binaryEl.getAttribute("mimeCode") || undefined,
+					description,
+					base64Content: content,
+				});
+			}
+		} else if (externalRef) {
+			const uri = cbcText(externalRef, "URI");
+			if (uri) {
+				attachments.push({
+					id: refId,
+					description,
+					externalUri: uri,
+				});
+			}
+		}
 	}
 
-	return attachments.length > 0 ? attachments : undefined;
+	return {
+		attachments: attachments.length > 0 ? attachments : undefined,
+		documentReferences:
+			documentReferences.length > 0 ? documentReferences : undefined,
+	};
 }
 
 function parseBillingReference(root: Element): UblBillingReference | undefined {
@@ -434,6 +510,7 @@ export function parseUblInvoice(xml: string): UblInvoice | null {
 		const orderReference = cacElement(root, "OrderReference");
 		const contractReference = cacElement(root, "ContractDocumentReference");
 		const projectReference = cacElement(root, "ProjectReference");
+		const { attachments, documentReferences } = parseAttachments(root);
 
 		return {
 			documentType,
@@ -471,7 +548,8 @@ export function parseUblInvoice(xml: string): UblInvoice | null {
 			invoicePeriod: parseInvoicePeriod(root),
 			note: parseNotes(root),
 			paymentTermsNote: parsePaymentTermsNote(root),
-			attachments: parseAttachments(root),
+			attachments,
+			documentReferences,
 			allowanceCharges: parseAllowanceCharges(root),
 		};
 	} catch {

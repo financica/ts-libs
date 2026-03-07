@@ -353,4 +353,93 @@ describe("parseUblInvoice", () => {
 
 		expect(invoice.billingReference).toBeUndefined();
 	});
+
+	describe("Proximus-style invoices", () => {
+		it("extracts external attachment references", () => {
+			const xml = readFixture("ubl-invoice-proximus.xml");
+			const invoice = parseUblInvoice(xml)!;
+
+			expect(invoice.attachments).toHaveLength(1);
+			expect(invoice.attachments![0]).toMatchObject({
+				id: "ATT",
+				description: "Commercial Invoice",
+				externalUri: "7504668440_PEPPOL_20250714153756.pdf",
+			});
+			expect(invoice.attachments![0]!.base64Content).toBeUndefined();
+		});
+
+		it("extracts text-only document references", () => {
+			const xml = readFixture("ubl-invoice-proximus.xml");
+			const invoice = parseUblInvoice(xml)!;
+
+			expect(invoice.documentReferences).toHaveLength(2);
+			expect(invoice.documentReferences![0]).toMatchObject({
+				id: "GTC_SCA_INSERT",
+				description:
+					"Scarlet general terms and conditions apply.",
+			});
+			expect(invoice.documentReferences![1]).toMatchObject({
+				id: "FTC_DUR_TEXT",
+				description:
+					"All contracts are for an indefinite period unless stated otherwise.",
+			});
+		});
+
+		it("extracts payment mandate ID", () => {
+			const xml = readFixture("ubl-invoice-proximus.xml");
+			const invoice = parseUblInvoice(xml)!;
+
+			expect(invoice.paymentMeans).toMatchObject({
+				code: "49",
+				codeName: "Direct debit",
+				paymentId: "750466844085",
+				iban: "BE82210000088968",
+				bic: "GEBABEBB",
+				mandateId: "B013950122",
+			});
+		});
+
+		it("extracts additional item properties as metadata", () => {
+			const xml = readFixture("ubl-invoice-proximus.xml");
+			const invoice = parseUblInvoice(xml)!;
+
+			expect(invoice.lines).toHaveLength(3);
+			expect(invoice.lines[0]!.additionalItemProperties).toEqual([
+				{ name: "CHARGE_TYPE", value: "RC" },
+			]);
+			expect(invoice.lines[1]!.additionalItemProperties).toEqual([
+				{ name: "CHARGE_TYPE", value: "USG" },
+			]);
+		});
+
+		it("extracts party identifications", () => {
+			const xml = readFixture("ubl-invoice-proximus.xml");
+			const invoice = parseUblInvoice(xml)!;
+
+			expect(invoice.seller.partyIdentifications).toEqual([
+				{ id: "0202239951", schemeId: "0208" },
+			]);
+			expect(invoice.buyer.partyIdentifications).toEqual([
+				{ id: "624080006-1" },
+			]);
+		});
+
+		it("extracts company ID scheme ID", () => {
+			const xml = readFixture("ubl-invoice-proximus.xml");
+			const invoice = parseUblInvoice(xml)!;
+
+			expect(invoice.seller.companyId).toBe("0202239951");
+			expect(invoice.seller.companyIdSchemeId).toBe("0208");
+			expect(invoice.buyer.companyId).toBe("0766280697");
+			expect(invoice.buyer.companyIdSchemeId).toBe("0208");
+		});
+
+		it("normalizes N/A buyer reference to undefined", () => {
+			const xml = readFixture("ubl-invoice-proximus.xml");
+			const invoice = parseUblInvoice(xml)!;
+
+			// The raw parser preserves "N/A"; the normalize layer strips it
+			expect(invoice.buyerReference).toBe("N/A");
+		});
+	});
 });
