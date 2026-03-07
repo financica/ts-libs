@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.10">
+    <BkToCstmrStmt>
+        <GrpHdr>
+            <MsgId>MSG-001</MsgId>
+            <CreDtTm>2025-06-15T10:30:00Z</CreDtTm>
+        </GrpHdr>
+        <Stmt>
+            <Id>STMT-001</Id>
+            <CreDtTm>2025-06-15T10:30:00Z</CreDtTm>
+            <FrToDt>
+                <FrDtTm>2025-01-01T00:00:00+01:00</FrDtTm>
+                <ToDtTm>2025-07-01T00:00:00+01:00</ToDtTm>
+            </FrToDt>
+            <Acct>
+                <Id>
+                    <IBAN>BE68539007547034</IBAN>
+                </Id>
+                <Ccy>EUR</Ccy>
+                <Ownr>
+                    <Nm>Test Company BV</Nm>
+                    <PstlAdr>
+                        <AdrTp>
+                            <Cd>ADDR</Cd>
+                        </AdrTp>
+                        <PstCd>1000</PstCd>
+                        <TwnNm>Brussels</TwnNm>
+                        <AdrLine>Rue de la Loi 42</AdrLine>
+                    </PstlAdr>
+                    <Id>
+                        <OrgId>
+                            <Othr>
+                                <Id>0123.456.789</Id>
+                                <SchmeNm>
+                                    <Cd>COID</Cd>
+                                </SchmeNm>
+                            </Othr>
+                        </OrgId>
+                    </Id>
+                </Ownr>
+                <Svcr>
+                    <FinInstnId>
+                        <Nm>Test Bank SA</Nm>
+                        <PstlAdr>
+                            <AdrTp>
+                                <Cd>ADDR</Cd>
+                            </AdrTp>
+                            <PstCd>1050</PstCd>
+                            <TwnNm>Brussels</TwnNm>
+                            <AdrLine>Avenue Louise 100</AdrLine>
+                        </PstlAdr>
+                    </FinInstnId>
+                </Svcr>
+            </Acct>
+            <Bal>
+                <Tp>
+                    <CdOrPrtry>
+                        <Cd>OPBD</Cd>
+                    </CdOrPrtry>
+                </Tp>
+                <Amt Ccy="EUR">1000.00</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <Dt>
+                    <DtTm>2025-01-01T00:00:00+01:00</DtTm>
+                </Dt>
+            </Bal>
+            <Bal>
+                <Tp>
+                    <CdOrPrtry>
+                        <Cd>CLBD</Cd>
+                    </CdOrPrtry>
+                </Tp>
+                <Amt Ccy="EUR">2500.50</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <Dt>
+                    <DtTm>2025-07-01T00:00:00+01:00</DtTm>
+                </Dt>
+            </Bal>
+            <TxsSummry>
+                <TtlNtries>
+                    <NbOfNtries>5</NbOfNtries>
+                    <Sum>3000.00</Sum>
+                    <TtlNetNtry>
+                        <Amt>1500.50</Amt>
+                        <CdtDbtInd>CRDT</CdtDbtInd>
+                    </TtlNetNtry>
+                </TtlNtries>
+                <TtlCdtNtries>
+                    <NbOfNtries>3</NbOfNtries>
+                    <Sum>2250.25</Sum>
+                </TtlCdtNtries>
+                <TtlDbtNtries>
+                    <NbOfNtries>2</NbOfNtries>
+                    <Sum>-749.75</Sum>
+                </TtlDbtNtries>
+            </TxsSummry>
+            <Ntry>
+                <Amt Ccy="EUR">42.50</Amt>
+                <CdtDbtInd>DBIT</CdtDbtInd>
+                <Sts>
+                    <Cd>BOOK</Cd>
+                </Sts>
+                <BookgDt>
+                    <DtTm>2025-03-15T14:30:00+01:00</DtTm>
+                </BookgDt>
+                <BkTxCd>
+                    <Prtry>
+                        <Cd>CARD-1234567890</Cd>
+                    </Prtry>
+                </BkTxCd>
+                <Chrgs>
+                    <TtlChrgsAndTaxAmt Ccy="EUR">0.00</TtlChrgsAndTaxAmt>
+                </Chrgs>
+                <AddtlNtryInf>Card transaction of 42.50 EUR issued by Coffee Shop BRUSSELS</AddtlNtryInf>
+            </Ntry>
+            <Ntry>
+                <NtryRef>INV-2025-001</NtryRef>
+                <Amt Ccy="EUR">1500.00</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <Sts>
+                    <Cd>BOOK</Cd>
+                </Sts>
+                <BookgDt>
+                    <DtTm>2025-04-01T09:15:00+01:00</DtTm>
+                </BookgDt>
+                <BkTxCd>
+                    <Prtry>
+                        <Cd>TRANSFER-9876543210</Cd>
+                    </Prtry>
+                </BkTxCd>
+                <Chrgs>
+                    <TtlChrgsAndTaxAmt Ccy="EUR">0.00</TtlChrgsAndTaxAmt>
+                </Chrgs>
+                <NtryDtls>
+                    <TxDtls>
+                        <RltdPties>
+                            <Cdtr>
+                                <Pty>
+                                    <Nm>Acme Corporation</Nm>
+                                </Pty>
+                            </Cdtr>
+                        </RltdPties>
+                    </TxDtls>
+                </NtryDtls>
+                <AddtlNtryInf>Received money from Acme Corporation with reference INV-2025-001</AddtlNtryInf>
+            </Ntry>
+            <Ntry>
+                <Amt Ccy="EUR">25.99</Amt>
+                <CdtDbtInd>DBIT</CdtDbtInd>
+                <Sts>
+                    <Cd>BOOK</Cd>
+                </Sts>
+                <BookgDt>
+                    <DtTm>2025-05-10T16:45:00+01:00</DtTm>
+                </BookgDt>
+                <BkTxCd>
+                    <Prtry>
+                        <Cd>CARD-5555555555</Cd>
+                    </Prtry>
+                </BkTxCd>
+                <AmtDtls>
+                    <TxAmt>
+                        <Amt Ccy="EUR">25.99</Amt>
+                        <CcyXchg>
+                            <SrcCcy>EUR</SrcCcy>
+                            <TrgtCcy>USD</TrgtCcy>
+                            <UnitCcy>EUR</UnitCcy>
+                            <XchgRate>1.08500</XchgRate>
+                        </CcyXchg>
+                    </TxAmt>
+                </AmtDtls>
+                <Chrgs>
+                    <TtlChrgsAndTaxAmt Ccy="EUR">0.15</TtlChrgsAndTaxAmt>
+                </Chrgs>
+                <AddtlNtryInf>Card transaction of 28.20 USD issued by Cloud Service Inc SAN FRANCISCO</AddtlNtryInf>
+            </Ntry>
+            <Ntry>
+                <NtryRef>DD-MONTHLY-001</NtryRef>
+                <Amt Ccy="EUR">89.99</Amt>
+                <CdtDbtInd>DBIT</CdtDbtInd>
+                <Sts>
+                    <Cd>BOOK</Cd>
+                </Sts>
+                <BookgDt>
+                    <DtTm>2025-06-01T01:00:00+01:00</DtTm>
+                </BookgDt>
+                <BkTxCd>
+                    <Prtry>
+                        <Cd>DIRECT_DEBIT-7777777777</Cd>
+                    </Prtry>
+                </BkTxCd>
+                <Chrgs>
+                    <TtlChrgsAndTaxAmt Ccy="EUR">0.00</TtlChrgsAndTaxAmt>
+                </Chrgs>
+                <NtryDtls>
+                    <TxDtls>
+                        <RltdPties>
+                            <Cdtr>
+                                <Pty>
+                                    <Nm>Telecom Provider NV</Nm>
+                                </Pty>
+                            </Cdtr>
+                        </RltdPties>
+                    </TxDtls>
+                </NtryDtls>
+                <AddtlNtryInf>Paid to Telecom Provider NV</AddtlNtryInf>
+            </Ntry>
+            <Ntry>
+                <NtryRef>SALARY-2025-06</NtryRef>
+                <Amt Ccy="EUR">3500.00</Amt>
+                <CdtDbtInd>DBIT</CdtDbtInd>
+                <Sts>
+                    <Cd>BOOK</Cd>
+                </Sts>
+                <BookgDt>
+                    <DtTm>2025-06-25T03:00:00+01:00</DtTm>
+                </BookgDt>
+                <BkTxCd>
+                    <Prtry>
+                        <Cd>TRANSFER-1111111111</Cd>
+                    </Prtry>
+                </BkTxCd>
+                <Chrgs>
+                    <TtlChrgsAndTaxAmt Ccy="EUR">0.00</TtlChrgsAndTaxAmt>
+                </Chrgs>
+                <NtryDtls>
+                    <TxDtls>
+                        <Refs>
+                            <EndToEndId>SALARY-JUN-2025</EndToEndId>
+                        </Refs>
+                        <RltdPties>
+                            <Cdtr>
+                                <Pty>
+                                    <Nm>John Employee</Nm>
+                                </Pty>
+                            </Cdtr>
+                            <CdtrAcct>
+                                <Id>
+                                    <IBAN>BE71096123456769</IBAN>
+                                </Id>
+                            </CdtrAcct>
+                        </RltdPties>
+                        <RmtInf>
+                            <Ustrd>Salary June 2025</Ustrd>
+                        </RmtInf>
+                    </TxDtls>
+                </NtryDtls>
+                <AddtlNtryInf>Sent money to John Employee</AddtlNtryInf>
+            </Ntry>
+        </Stmt>
+    </BkToCstmrStmt>
+</Document>
