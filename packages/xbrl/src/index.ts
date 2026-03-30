@@ -1,0 +1,21 @@
+export { parseXbrl } from "./parser.js";
+export type {
+	XbrlInstance,
+	XbrlSchemaRef,
+	XbrlLinkbaseRef,
+	XbrlRoleRef,
+	XbrlArcroleRef,
+	XbrlQName,
+	XbrlContext,
+	XbrlEntity,
+	XbrlDimensionMember,
+	XbrlPeriod,
+	XbrlUnit,
+	XbrlFact,
+	XbrlItem,
+	XbrlTuple,
+	XbrlFootnoteLink,
+	XbrlFootnoteLocator,
+	XbrlFootnoteResource,
+	XbrlFootnoteArc,
+} from "./types.js";
