@@ -442,4 +442,75 @@ describe("parseUblInvoice", () => {
 			expect(invoice.buyerReference).toBe("N/A");
 		});
 	});
+
+	describe("E-FFF.BE format", () => {
+		it("parses an E-FFF.BE invoice", () => {
+			const xml = readFixture("ubl-invoice-efff.xml");
+			const invoice = parseUblInvoice(xml);
+
+			expect(invoice).not.toBeNull();
+			expect(invoice!.documentType).toBe("Invoice");
+			expect(invoice!.id).toBe("EFFF-2025-001");
+			expect(invoice!.issueDate).toBe("2025-10-20");
+			expect(invoice!.currency).toBe("EUR");
+			expect(invoice!.customizationId).toBe("1.0");
+			expect(invoice!.profileId).toBe("E-FFF.BE Accountable");
+			expect(invoice!.invoiceTypeCode).toBe("380");
+		});
+
+		it("extracts tax percent from TaxSubtotal (not inside TaxCategory)", () => {
+			const xml = readFixture("ubl-invoice-efff.xml");
+			const invoice = parseUblInvoice(xml)!;
+
+			expect(invoice.taxSubtotals).toHaveLength(1);
+			expect(invoice.taxSubtotals[0]).toMatchObject({
+				taxableAmount: 1500,
+				taxAmount: 315,
+				taxPercent: 21,
+				taxCategoryId: "S",
+			});
+		});
+
+		it("extracts line-level tax percent from TaxSubtotal", () => {
+			const xml = readFixture("ubl-invoice-efff.xml");
+			const invoice = parseUblInvoice(xml)!;
+
+			expect(invoice.lines).toHaveLength(1);
+			expect(invoice.lines[0]).toMatchObject({
+				taxPercent: 21,
+				taxAmount: 315,
+				lineExtensionAmount: 1500,
+			});
+		});
+
+		it("extracts parties without PartyTaxScheme", () => {
+			const xml = readFixture("ubl-invoice-efff.xml");
+			const invoice = parseUblInvoice(xml)!;
+
+			expect(invoice.seller.name).toBe("Supplier BVBA");
+			expect(invoice.seller.vatId).toBeUndefined();
+			expect(invoice.seller.companyId).toBe("BE0123456789");
+			expect(invoice.seller.endpointId).toBe("BE0123456789");
+			expect(invoice.seller.endpointSchemeId).toBe("9925");
+
+			expect(invoice.buyer.name).toBe("Client NV");
+			expect(invoice.buyer.companyId).toBe("BE9876543210");
+			expect(invoice.buyer.contact).toMatchObject({
+				name: "Client NV",
+				email: "billing@client.be",
+			});
+		});
+
+		it("extracts monetary totals", () => {
+			const xml = readFixture("ubl-invoice-efff.xml");
+			const invoice = parseUblInvoice(xml)!;
+
+			expect(invoice.monetaryTotal).toMatchObject({
+				lineExtensionAmount: 1500,
+				taxExclusiveAmount: 1500,
+				taxInclusiveAmount: 1815,
+				payableAmount: 1815,
+			});
+		});
+	});
 });

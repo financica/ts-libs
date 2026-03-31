@@ -180,7 +180,7 @@ function parseTaxSubtotal(sub: Element): UblTaxSubtotal {
 	return {
 		taxableAmount: cbcNumber(sub, "TaxableAmount"),
 		taxAmount: cbcNumber(sub, "TaxAmount"),
-		taxPercent: cat ? cbcNumber(cat, "Percent") : 0,
+		taxPercent: (cat ? cbcNumber(cat, "Percent") : 0) || cbcNumber(sub, "Percent"),
 		taxCategoryId: cat ? cbcText(cat, "ID") || undefined : undefined,
 		taxSchemeId: parseTaxSchemeId(cat),
 		taxExemptionReason: cat
