@@ -513,4 +513,45 @@ describe("parseUblInvoice", () => {
 			});
 		});
 	});
+
+	describe("XXE prevention", () => {
+		it("strips DOCTYPE with external entity and parses the invoice normally", () => {
+			const xml = readFixture("ubl-invoice.xml");
+			// Inject a DOCTYPE with an external entity before the root element
+			const xxePayload = xml.replace(
+				/<Invoice /,
+				`<!DOCTYPE root [<!ENTITY xxe SYSTEM "file:///etc/passwd">]>\n<Invoice `,
+			);
+			expect(xxePayload).toContain("<!DOCTYPE");
+
+			const invoice = parseUblInvoice(xxePayload);
+			expect(invoice).not.toBeNull();
+			expect(invoice!.id).toBe("INV-UBL-1001");
+			// The entity reference should NOT have resolved
+			expect(JSON.stringify(invoice)).not.toContain("/etc/passwd");
+		});
+
+		it("strips DOCTYPE with inline DTD subset", () => {
+			const xml = readFixture("ubl-invoice.xml");
+			const xxePayload = xml.replace(
+				/<Invoice /,
+				`<!DOCTYPE foo [
+					<!ENTITY xxe SYSTEM "http://169.254.169.254/latest/meta-data/">
+					<!ENTITY bomb "&xxe;&xxe;&xxe;&xxe;&xxe;">
+				]>\n<Invoice `,
+			);
+
+			const invoice = parseUblInvoice(xxePayload);
+			expect(invoice).not.toBeNull();
+			expect(invoice!.id).toBe("INV-UBL-1001");
+		});
+
+		it("rejects XML that is only a DOCTYPE with no invoice content", () => {
+			const xml = `<?xml version="1.0"?>
+				<!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///etc/shadow">]>
+				<root>&xxe;</root>`;
+			const invoice = parseUblInvoice(xml);
+			expect(invoice).toBeNull();
+		});
+	});
 });

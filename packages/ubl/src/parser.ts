@@ -482,13 +482,22 @@ function parseBillingReference(root: Element): UblBillingReference | undefined {
 
 // --- Main parser ---
 
+/**
+ * Strip DOCTYPE declarations to prevent XXE (XML External Entity) attacks.
+ * @xmldom/xmldom resolves external entities by default, so we remove
+ * DOCTYPE blocks (including inline DTD subsets) before parsing.
+ */
+const stripDoctype = (xml: string): string =>
+	xml.replace(/<!DOCTYPE\s[^>[]*(?:\[[^\]]*\])?>/gi, "");
+
 export function parseUblInvoice(xml: string): UblInvoice | null {
 	try {
+		const safeXml = stripDoctype(xml);
 		const BrowserDomParser = globalThis.DOMParser as
 			| typeof XmlDomParser
 			| undefined;
 		const parser = BrowserDomParser ? new BrowserDomParser() : new XmlDomParser();
-		const doc = parser.parseFromString(xml, "text/xml");
+		const doc = parser.parseFromString(safeXml, "text/xml");
 		if (doc.getElementsByTagName("parsererror").length > 0) return null;
 
 		const root = doc.documentElement;
