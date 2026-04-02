@@ -1,5 +1,5 @@
 {
-	"name": "@ingram-tech/ubl",
+	"name": "@financica/ubl",
 	"version": "0.3.0",
 	"description": "UBL (Universal Business Language) invoice XML parser for TypeScript",
 	"license": "MIT",
