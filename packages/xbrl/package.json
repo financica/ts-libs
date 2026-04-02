@@ -1,5 +1,5 @@
 {
-	"name": "xbrl",
+	"name": "@financica/xbrl",
 	"version": "0.1.0",
 	"description": "TypeScript parser for XBRL 2.1 instance documents",
 	"license": "MIT",
