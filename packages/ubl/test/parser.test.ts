@@ -148,6 +148,20 @@ describe("parseUblInvoice", () => {
 		expect(invoice.lines[0]!.discountAmount).toBe(10);
 	});
 
+	it("extracts Price/AllowanceCharge discounts", () => {
+		const xml = readFixture("ubl-invoice-price-discount.xml");
+		const invoice = parseUblInvoice(xml)!;
+
+		expect(invoice.lines[0]!.allowanceCharges).toHaveLength(1);
+		expect(invoice.lines[0]!.allowanceCharges![0]).toMatchObject({
+			chargeIndicator: false,
+			amount: 2388,
+			baseAmount: 2388,
+			reason: "100% discount",
+		});
+		expect(invoice.lines[0]!.discountAmount).toBe(2388);
+	});
+
 	it("extracts line-level tax subtotals", () => {
 		const xml = readFixture("ubl-invoice-allowance-charge.xml");
 		const invoice = parseUblInvoice(xml)!;
