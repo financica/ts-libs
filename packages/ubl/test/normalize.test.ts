@@ -66,6 +66,25 @@ describe("normalizeUblResponse", () => {
 		});
 	});
 
+	it("maps Price/AllowanceCharge discounts into line items and discount_total", () => {
+		const xml = readFixture("ubl-invoice-price-discount.xml");
+		const { extracted } = normalizeUblResponse(xml, "doc-price-disc");
+		expect(extracted.invoice.discount_total).toBe(2388);
+		expect(extracted.invoice.total).toBe(0);
+		expect(extracted.line_items).toHaveLength(1);
+		expect(extracted.line_items[0]?.discount_amount).toBe(2388);
+		expect(extracted.line_items[0]?.extra).toMatchObject({
+			allowance_charges: [
+				{
+					charge_indicator: false,
+					amount: 2388,
+					base_amount: 2388,
+					reason: "100% discount",
+				},
+			],
+		});
+	});
+
 	it("captures extended UBL metadata while exposing user-facing invoice fields", () => {
 		const xml = readFixture("ubl-invoice-extended.xml");
 		const { extracted } = normalizeUblResponse(xml, "doc-ubl-extended");

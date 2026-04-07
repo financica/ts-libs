@@ -253,7 +253,9 @@ function parseLines(root: Element, isCreditNote: boolean): UblLine[] {
 			taxPercent !== undefined
 				? Number(((lineExtensionAmount * taxPercent) / 100).toFixed(2))
 				: undefined;
-		const allowanceCharges = parseAllowanceCharges(line);
+		const lineAllowanceCharges = parseAllowanceCharges(line);
+		const priceAllowanceCharges = price ? parseAllowanceCharges(price) : [];
+		const allowanceCharges = [...lineAllowanceCharges, ...priceAllowanceCharges];
 		const discountAmount = allowanceCharges.reduce(
 			(sum, charge) =>
 				charge.chargeIndicator ? sum : sum + Math.abs(charge.amount),
