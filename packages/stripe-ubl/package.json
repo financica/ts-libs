@@ -29,7 +29,7 @@
 		"node": ">=18"
 	},
 	"dependencies": {
-		"@financica/scrada-client": "file:../scrada-client"
+		"@financica/scrada-client": "^0.1.0"
 	},
 	"peerDependencies": {
 		"stripe": ">=18.0.0"
