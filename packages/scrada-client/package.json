@@ -1,6 +1,6 @@
 {
 	"name": "@financica/scrada-client",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "TypeScript HTTP client for the Scrada Peppol API (https://api.scrada.be/v1).",
 	"license": "MIT",
 	"files": [
