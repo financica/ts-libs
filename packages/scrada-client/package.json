@@ -1,0 +1,38 @@
+{
+	"name": "@financica/scrada-client",
+	"version": "0.1.0",
+	"description": "TypeScript HTTP client for the Scrada Peppol API (https://api.scrada.be/v1).",
+	"license": "MIT",
+	"files": [
+		"dist"
+	],
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"scripts": {
+		"build": "tsup",
+		"prepack": "bun run build",
+		"lint": "biome check .",
+		"format": "biome format --write .",
+		"type-check": "tsc --noEmit",
+		"test": "vitest",
+		"test:run": "vitest --run",
+		"ci": "bun run type-check && bun run lint && bun run test:run && bun run build"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.13",
+		"@types/node": "^22.0.0",
+		"tsup": "^8.0.0",
+		"typescript": "^5.9.3",
+		"vitest": "^4.0.18"
+	},
+	"engines": {
+		"node": ">=18"
+	}
+}
