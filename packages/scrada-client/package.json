@@ -1,8 +1,14 @@
 {
 	"name": "@financica/scrada-client",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"description": "TypeScript HTTP client for the Scrada Peppol API (https://api.scrada.be/v1).",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/financica/scrada-client.git"
+	},
+	"bugs": "https://github.com/financica/scrada-client/issues",
+	"homepage": "https://github.com/financica/scrada-client#readme",
 	"type": "module",
 	"exports": {
 		".": {
