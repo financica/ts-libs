@@ -56,6 +56,34 @@ describe("ScradaApiClient", () => {
 		);
 	});
 
+	it("forwards idempotencyKey as the Idempotency-Key header on send", async () => {
+		const fetchSpy = vi.fn(async () =>
+			buildOkResponse({ id: "doc-1" }),
+		) as typeof fetch & ReturnType<typeof vi.fn>;
+		const client = buildClient(fetchSpy);
+
+		await client.sendOutboundSalesInvoice("co-1", buildMinimalInvoice(), {
+			idempotencyKey: "invoice:in_123",
+		});
+
+		const init = vi.mocked(fetchSpy).mock.calls[0]?.[1];
+		const headers = new Headers(init?.headers);
+		expect(headers.get("idempotency-key")).toBe("invoice:in_123");
+	});
+
+	it("omits the Idempotency-Key header when no key is provided", async () => {
+		const fetchSpy = vi.fn(async () =>
+			buildOkResponse({ id: "doc-1" }),
+		) as typeof fetch & ReturnType<typeof vi.fn>;
+		const client = buildClient(fetchSpy);
+
+		await client.sendOutboundSalesInvoice("co-1", buildMinimalInvoice());
+
+		const init = vi.mocked(fetchSpy).mock.calls[0]?.[1];
+		const headers = new Headers(init?.headers);
+		expect(headers.has("idempotency-key")).toBe(false);
+	});
+
 	it("returns the document ID when sendOutboundSalesInvoice succeeds", async () => {
 		const fetchSpy = vi.fn(async () =>
 			buildOkResponse({ id: "doc-abc" }),

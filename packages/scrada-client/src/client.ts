@@ -225,14 +225,27 @@ export class ScradaApiClient {
 
 	// ── Outbound documents ──────────────────────────────────────────────
 
+	/**
+	 * @param options.idempotencyKey  Sent as `Idempotency-Key`. A transient
+	 *   network-error retry with the same key is collapsed by Scrada, so the
+	 *   recipient's Peppol endpoint won't receive the same invoice twice. The
+	 *   caller should pass a deterministic key (typically the invoice ID).
+	 */
 	async sendOutboundSalesInvoice(
 		companyId: string,
 		payload: PeppolOnlyInvoice,
+		options?: { idempotencyKey?: string },
 	): Promise<string> {
+		const headers: Record<string, string> = {
+			"Content-Type": "application/json",
+		};
+		if (options?.idempotencyKey) {
+			headers["Idempotency-Key"] = options.idempotencyKey;
+		}
 		const response = await this.request<unknown>({
 			path: `/company/${companyId}/peppol/outbound/salesInvoice`,
 			method: "POST",
-			headers: { "Content-Type": "application/json" },
+			headers,
 			body: JSON.stringify(payload),
 		});
 		return normalizeDocumentId(response);
