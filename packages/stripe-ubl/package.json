@@ -1,0 +1,45 @@
+{
+	"name": "@financica/scrada-stripe",
+	"version": "0.1.0",
+	"description": "Convert Stripe invoices and credit notes into Scrada Peppol invoice payloads.",
+	"license": "MIT",
+	"type": "module",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsup",
+		"prepack": "bun run build",
+		"lint": "biome check .",
+		"format": "biome format --write .",
+		"type-check": "tsc --noEmit",
+		"test": "vitest",
+		"test:run": "vitest --run",
+		"ci": "bun run type-check && bun run lint && bun run test:run && bun run build"
+	},
+	"engines": {
+		"node": ">=18"
+	},
+	"dependencies": {
+		"@financica/scrada-client": "file:../scrada-client"
+	},
+	"peerDependencies": {
+		"stripe": ">=18.0.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.13",
+		"@types/node": "^22.0.0",
+		"stripe": "^22.0.2",
+		"tsup": "^8.0.0",
+		"typescript": "^5.9.3",
+		"vitest": "^4.0.18"
+	}
+}
