@@ -135,6 +135,17 @@ describe("parseUblInvoice", () => {
 		});
 	});
 
+	it("divides PriceAmount by BaseQuantity to compute unit price", () => {
+		const xml = readFixture("ubl-invoice-base-quantity.xml");
+		const invoice = parseUblInvoice(xml)!;
+
+		expect(invoice.lines[0]).toMatchObject({
+			quantity: 1.5,
+			unitPrice: 50,
+			lineExtensionAmount: 75,
+		});
+	});
+
 	it("extracts line-level allowance charges", () => {
 		const xml = readFixture("ubl-invoice-allowance-charge.xml");
 		const invoice = parseUblInvoice(xml)!;
