@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.2
+
+### Fixed
+
+- **Unit price now divides PriceAmount by BaseQuantity**: When `cac:Price/cbc:BaseQuantity` is present and greater than 1, the effective unit price (BT-146 / BT-149) was previously reported as the raw `PriceAmount`, overstating per-unit cost on invoices that price by a multi-unit basis (e.g. €75.00 per 1.5 hours now correctly reports `unitPrice: 50`, not `75`).
+
 ## 0.2.0
 
 ### Added
