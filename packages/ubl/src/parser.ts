@@ -281,12 +281,24 @@ function parseLines(root: Element, isCreditNote: boolean): UblLine[] {
 			}
 		}
 
+		// EN16931 BT-146 (PriceAmount) is the price for BT-149 (BaseQuantity) units
+		// of the item, not necessarily for one unit. Effective unit price is
+		// PriceAmount / BaseQuantity, with BaseQuantity defaulting to 1 when absent.
+		const priceAmount = price ? cbcNumber(price, "PriceAmount") : 0;
+		const priceBaseQuantity = price
+			? cbcDirectNumber(price, "BaseQuantity")
+			: null;
+		const unitPrice =
+			priceBaseQuantity && priceBaseQuantity > 0
+				? priceAmount / priceBaseQuantity
+				: priceAmount;
+
 		return {
 			id: cbcText(line, "ID"),
 			description: item ? cbcText(item, "Description") : "",
 			quantity: cbcNumber(line, qtyTag),
 			unitCode: qtyEl?.getAttribute("unitCode") ?? "",
-			unitPrice: price ? cbcNumber(price, "PriceAmount") : 0,
+			unitPrice,
 			lineExtensionAmount,
 			taxPercent,
 			taxAmount:
