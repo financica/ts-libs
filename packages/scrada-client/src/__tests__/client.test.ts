@@ -153,6 +153,65 @@ describe("ScradaApiClient", () => {
 		).rejects.toBeInstanceOf(ScradaApiError);
 	});
 
+	it("posts raw UBL with application/xml on sendOutboundDocument", async () => {
+		const fetchSpy = vi.fn(async () =>
+			buildOkResponse({ id: "doc-xml" }),
+		) as typeof fetch & ReturnType<typeof vi.fn>;
+		const client = buildClient(fetchSpy);
+
+		const ubl = '<?xml version="1.0"?><Invoice/>';
+		const id = await client.sendOutboundDocument("co-1", ubl, {
+			idempotencyKey: "ubl:1",
+		});
+
+		expect(id).toBe("doc-xml");
+		const [url, init] = vi.mocked(fetchSpy).mock.calls[0] ?? [];
+		expect(url).toBe(
+			"https://api.scrada.example/v1/company/co-1/peppol/outbound/document",
+		);
+		const headers = new Headers(init?.headers);
+		expect(headers.get("content-type")).toBe("application/xml");
+		expect(headers.get("idempotency-key")).toBe("ubl:1");
+		expect(init?.body).toBe(ubl);
+	});
+
+	it("posts JSON to selfBillingInvoice and forwards idempotency key", async () => {
+		const fetchSpy = vi.fn(async () =>
+			buildOkResponse({ id: "doc-sb" }),
+		) as typeof fetch & ReturnType<typeof vi.fn>;
+		const client = buildClient(fetchSpy);
+
+		const id = await client.sendOutboundSelfBillingInvoice(
+			"co-1",
+			buildMinimalInvoice(),
+			{ idempotencyKey: "sb:1" },
+		);
+
+		expect(id).toBe("doc-sb");
+		const [url, init] = vi.mocked(fetchSpy).mock.calls[0] ?? [];
+		expect(url).toBe(
+			"https://api.scrada.example/v1/company/co-1/peppol/outbound/selfBillingInvoice",
+		);
+		const headers = new Headers(init?.headers);
+		expect(headers.get("content-type")).toBe("application/json");
+		expect(headers.get("idempotency-key")).toBe("sb:1");
+	});
+
+	it("returns the UBL body as text from getOutboundDocumentUbl", async () => {
+		const ubl = '<?xml version="1.0"?><Invoice/>';
+		const fetchSpy = vi.fn(
+			async () =>
+				new Response(ubl, {
+					status: 200,
+					headers: { "content-type": "application/xml" },
+				}),
+		) as unknown as typeof fetch;
+		const client = buildClient(fetchSpy);
+
+		const result = await client.getOutboundDocumentUbl("co-1", "doc-1");
+		expect(result).toBe(ubl);
+	});
+
 	it("URL-encodes scheme and id in deregister/lookup paths", async () => {
 		const fetchSpy = vi.fn(async () => buildOkResponse({})) as typeof fetch &
 			ReturnType<typeof vi.fn>;

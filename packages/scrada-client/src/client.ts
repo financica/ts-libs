@@ -225,6 +225,28 @@ export class ScradaApiClient {
 
 	// ── Outbound documents ──────────────────────────────────────────────
 
+	private async postOutbound(params: {
+		companyId: string;
+		segment: "salesInvoice" | "selfBillingInvoice" | "document";
+		body: BodyInit;
+		contentType: "application/json" | "application/xml";
+		idempotencyKey?: string;
+	}): Promise<string> {
+		const headers: Record<string, string> = {
+			"Content-Type": params.contentType,
+		};
+		if (params.idempotencyKey) {
+			headers["Idempotency-Key"] = params.idempotencyKey;
+		}
+		const response = await this.request<unknown>({
+			path: `/company/${params.companyId}/peppol/outbound/${params.segment}`,
+			method: "POST",
+			headers,
+			body: params.body,
+		});
+		return normalizeDocumentId(response);
+	}
+
 	/**
 	 * @param options.idempotencyKey  Sent as `Idempotency-Key`. A transient
 	 *   network-error retry with the same key is collapsed by Scrada, so the
@@ -236,19 +258,55 @@ export class ScradaApiClient {
 		payload: PeppolOnlyInvoice,
 		options?: { idempotencyKey?: string },
 	): Promise<string> {
-		const headers: Record<string, string> = {
-			"Content-Type": "application/json",
-		};
-		if (options?.idempotencyKey) {
-			headers["Idempotency-Key"] = options.idempotencyKey;
-		}
-		const response = await this.request<unknown>({
-			path: `/company/${companyId}/peppol/outbound/salesInvoice`,
-			method: "POST",
-			headers,
+		return this.postOutbound({
+			companyId,
+			segment: "salesInvoice",
 			body: JSON.stringify(payload),
+			contentType: "application/json",
+			idempotencyKey: options?.idempotencyKey,
 		});
-		return normalizeDocumentId(response);
+	}
+
+	/**
+	 * Send a self-billing invoice or credit note (buyer issues the document
+	 * on behalf of the supplier). Same payload shape as a sales invoice.
+	 *
+	 * @param options.idempotencyKey  See `sendOutboundSalesInvoice`.
+	 */
+	async sendOutboundSelfBillingInvoice(
+		companyId: string,
+		payload: PeppolOnlyInvoice,
+		options?: { idempotencyKey?: string },
+	): Promise<string> {
+		return this.postOutbound({
+			companyId,
+			segment: "selfBillingInvoice",
+			body: JSON.stringify(payload),
+			contentType: "application/json",
+			idempotencyKey: options?.idempotencyKey,
+		});
+	}
+
+	/**
+	 * Deliver a pre-built UBL document directly to Peppol. Use this when you
+	 * already have a UBL XML string (BIS3 invoice, credit note, self-billing,
+	 * Invoice Response, etc.); for JSON payloads use `sendOutboundSalesInvoice`
+	 * or `sendOutboundSelfBillingInvoice` instead.
+	 *
+	 * @param options.idempotencyKey  See `sendOutboundSalesInvoice`.
+	 */
+	async sendOutboundDocument(
+		companyId: string,
+		ubl: string,
+		options?: { idempotencyKey?: string },
+	): Promise<string> {
+		return this.postOutbound({
+			companyId,
+			segment: "document",
+			body: ubl,
+			contentType: "application/xml",
+			idempotencyKey: options?.idempotencyKey,
+		});
 	}
 
 	async getOutboundDocumentInfo(
@@ -257,6 +315,20 @@ export class ScradaApiClient {
 	): Promise<ScradaOutboundDocumentInfo> {
 		return this.request<ScradaOutboundDocumentInfo>({
 			path: `/company/${companyId}/peppol/outbound/document/${documentId}/info`,
+		});
+	}
+
+	/**
+	 * Fetch the rendered UBL XML for an outbound document — useful when the
+	 * document was sent as JSON and Scrada generated the UBL.
+	 */
+	async getOutboundDocumentUbl(
+		companyId: string,
+		documentId: string,
+	): Promise<string> {
+		return this.request<string>({
+			path: `/company/${companyId}/peppol/outbound/document/${documentId}/ubl`,
+			expect: "text",
 		});
 	}
 
