@@ -1,6 +1,6 @@
 {
 	"name": "@financica/scrada-stripe",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Convert Stripe invoices and credit notes into Scrada Peppol invoice payloads.",
 	"license": "MIT",
 	"repository": {
