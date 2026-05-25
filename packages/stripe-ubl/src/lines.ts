@@ -55,22 +55,30 @@ export const buildInvoiceLines = (invoice: Stripe.Invoice): PeppolOnlyInvoiceLin
 
 	return stripeLines.map((line, index) => {
 		const quantity = Math.max(1, toNumber(line.quantity));
+		// Stripe's `line.amount` is the GROSS (pre-discount) amount — it sums to
+		// `invoice.subtotal`. The taxable base is `line.amount - discount_amounts`,
+		// and Stripe computes the line's tax on that net base. So both the VAT rate
+		// and the line's excl-VAT total must be derived from the net, not the gross
+		// — otherwise a discounted line reports the wrong rate (e.g. 14.70% instead
+		// of 21%) and a line total that won't reconcile with the header total.
+		// This mirrors the credit-note path below.
 		const discountCents = getInvoiceLineDiscountAmountCents(line);
-		const grossCents = line.amount + discountCents;
+		const grossCents = line.amount;
+		const netCents = Math.max(grossCents - discountCents, 0);
 		const grossTotalExclVat = centsToDecimal(grossCents);
 		const totalDiscountExclVat = centsToDecimal(discountCents);
-		const totalExclVat = roundCurrency(grossTotalExclVat - totalDiscountExclVat);
+		const totalExclVat = centsToDecimal(netCents);
 		const itemExclVat = roundCurrency(grossTotalExclVat / quantity);
 		const taxAmounts = getInvoiceLineTaxAmounts(line);
 
 		let vatPercentage = 0;
 		if (taxAmounts.length > 0) {
 			const totalTaxCents = taxAmounts.reduce((sum, ta) => sum + ta.amount, 0);
-			if (totalTaxCents > 0 && line.amount > 0) {
-				vatPercentage = roundCurrency((totalTaxCents / line.amount) * 100);
+			if (totalTaxCents > 0 && netCents > 0) {
+				vatPercentage = roundCurrency((totalTaxCents / netCents) * 100);
 			} else {
-				// Either 100% discounted (line.amount = 0) or the tax rounds to zero
-				// on a heavily discounted amount. Use the expanded tax_rate so the
+				// Either 100% discounted (net = 0) or the tax rounds to zero on a
+				// heavily discounted amount. Use the expanded tax_rate so the
 				// line is classified correctly rather than silently becoming
 				// zero-rated.
 				const firstWithRate = taxAmounts.find(
