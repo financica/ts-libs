@@ -341,6 +341,48 @@ describe("buildScradaInvoiceFromStripeInvoice", () => {
 		expect(payload.vatTotals[0]?.totalVat).toBe(31.5);
 	});
 
+	it("uses the post-discount net as the VAT base and line total for discounted lines", () => {
+		// Real-world regression: a 120,00 line with a 36,00 discount and 21% VAT.
+		// Stripe computes the tax (17,64) on the 84,00 net, while `line.amount`
+		// stays at the 120,00 gross. The line's excl-VAT total must be the 84,00
+		// net (so it reconciles with total_excluding_tax) and the rate must be
+		// 17,64 / 84,00 = 21% — not 17,64 / 120,00 = 14,70%, which Scrada rejects
+		// as an invalid standard rate.
+		const payload = buildScradaInvoiceFromStripeInvoice({
+			invoice: buildStripeInvoice({
+				subtotal: 12000,
+				total: 10164,
+				total_excluding_tax: 8400,
+				lines: {
+					object: "list",
+					has_more: false,
+					url: "/v1/invoices/in_test_123/lines",
+					data: [
+						{
+							description: "Consulting",
+							amount: 12000,
+							quantity: 1,
+							tax_amounts: [
+								{ amount: 1764, tax_rate: { percentage: 21 } },
+							],
+							discount_amounts: [{ amount: 3600 }],
+						},
+					],
+				},
+			}),
+			supplier: buildSupplier(),
+		});
+
+		expect(payload.lines[0]?.totalExclVat).toBe(84);
+		expect(payload.lines[0]?.totalDiscountExclVat).toBe(36);
+		expect(payload.lines[0]?.vatPercentage).toBe(21);
+		expect(payload.lines[0]?.vatType).toBe(1);
+		expect(payload.totalExclVat).toBe(84);
+		expect(payload.totalVat).toBe(17.64);
+		expect(payload.totalInclVat).toBe(101.64);
+		expect(payload.vatTotals[0]?.vatPercentage).toBe(21);
+	});
+
 	it("preserves VAT rate for fully-discounted lines via expanded tax_rate", () => {
 		const payload = buildScradaInvoiceFromStripeInvoice({
 			invoice: buildStripeInvoice({
