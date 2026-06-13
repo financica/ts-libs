@@ -1,5 +1,5 @@
 import type Stripe from "stripe";
-import type { TaxAmountInfo } from "./vat";
+import type { TaxAmountInfo } from "./tax-category";
 
 /**
  * Reads the rate percentage from either Stripe shape:
@@ -33,9 +33,8 @@ const readExpandedTaxRatePercentage = (tax: any): number | null => {
  * `lines.data.tax_amounts.tax_rate` covers) and falls back to the newer
  * `taxes` field. Stripe is migrating away from `tax_amounts`, and on
  * accounts where only `taxes` is populated we'd otherwise compute
- * vatPercentage = 0 and silently drop VAT — which the document-level
- * reconcile then pushes into the 0% bucket, triggering Scrada's
- * "VAT difference left for 0% VAT" rejection.
+ * vatPercentage = 0 and silently drop VAT — producing a UBL document whose
+ * VAT breakdown understates the tax due and fails EN 16931 validation.
  *
  * Recommended retrieval:
  * ```ts

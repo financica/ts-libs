@@ -1,12 +1,12 @@
 import type Stripe from "stripe";
 import { describe, expect, it } from "vitest";
 import {
-	buildScradaCreditInvoiceFromStripeCreditNote,
-	buildScradaInvoiceFromStripeInvoice,
-	type ScradaSupplier,
+	buildUblCreditNoteDocument,
+	buildUblInvoiceDocument,
+	type UblSupplier,
 } from "../index";
 
-const buildSupplier = (overrides: Partial<ScradaSupplier> = {}): ScradaSupplier => ({
+const buildSupplier = (overrides: Partial<UblSupplier> = {}): UblSupplier => ({
 	name: "Acme BE",
 	countryCode: "BE",
 	address: {
@@ -18,6 +18,7 @@ const buildSupplier = (overrides: Partial<ScradaSupplier> = {}): ScradaSupplier 
 	companyNumber: "0800279001",
 	vatNumber: "BE0800279001",
 	vatStatus: 1,
+	peppolID: "0208:0800279001",
 	...overrides,
 });
 
@@ -88,354 +89,265 @@ const buildStripeCreditNote = (overrides: Record<string, unknown> = {}) =>
 					amount: 10000,
 					description: "Refunded widget",
 					discount_amount: 0,
-					discount_amounts: [],
-					invoice_line_item: "il_123",
-					livemode: false,
-					metadata: {},
-					pretax_credit_amounts: [],
 					quantity: 2,
-					tax_rates: [],
 					taxes: [{ amount: 2100 }],
 					type: "invoice_line_item",
 					unit_amount: 5000,
-					unit_amount_decimal: "5000",
 				},
 			],
 		},
 		...overrides,
 	}) as unknown as Stripe.CreditNote;
 
-describe("buildScradaInvoiceFromStripeInvoice", () => {
-	it("converts a basic Stripe invoice to a Scrada payload", () => {
-		const payload = buildScradaInvoiceFromStripeInvoice({
+const linesData = (data: unknown[], url = "/v1/invoices/in_test_123/lines") => ({
+	object: "list",
+	has_more: false,
+	url,
+	data,
+});
+
+describe("buildUblInvoiceDocument", () => {
+	it("converts a basic Stripe invoice", () => {
+		const doc = buildUblInvoiceDocument({
 			invoice: buildStripeInvoice(),
 			supplier: buildSupplier(),
 		});
 
-		expect(payload.number).toBe("INV-001");
-		expect(payload.currency).toBe("EUR");
-		expect(payload.creditInvoice).toBe(false);
-		expect(payload.totalExclVat).toBe(100);
-		expect(payload.totalVat).toBe(21);
-		expect(payload.totalInclVat).toBe(121);
-		expect(payload.supplier.name).toBe("Acme BE");
-		expect(payload.customer.name).toBe("Test Customer");
-		expect(payload.customer.vatNumber).toBe("BE0733756597");
+		expect(doc.documentType).toBe("invoice");
+		expect(doc.id).toBe("INV-001");
+		expect(doc.currency).toBe("EUR");
+		expect(doc.monetaryTotal.taxExclusiveAmount).toBe(100);
+		expect(doc.taxTotal.taxAmount).toBe(21);
+		expect(doc.monetaryTotal.taxInclusiveAmount).toBe(121);
+		expect(doc.monetaryTotal.payableAmount).toBe(121);
+		expect(doc.supplier.name).toBe("Acme BE");
+		expect(doc.supplier.endpoint).toEqual({ scheme: "0208", value: "0800279001" });
+		expect(doc.supplier.companyId).toEqual({ value: "0800279001", scheme: "0208" });
+		expect(doc.customer.name).toBe("Test Customer");
+		expect(doc.customer.vatNumber).toBe("BE0733756597");
 	});
 
-	it("sends supplier.vatStatus by default", () => {
-		const payload = buildScradaInvoiceFromStripeInvoice({
-			invoice: buildStripeInvoice(),
-			supplier: buildSupplier(),
-		});
-		expect(payload.supplier.vatStatus).toBe(1);
-	});
-
-	it("propagates a franchise vatStatus", () => {
-		const payload = buildScradaInvoiceFromStripeInvoice({
-			invoice: buildStripeInvoice({
-				lines: {
-					object: "list",
-					has_more: false,
-					url: "/v1/invoices/in_test_123/lines",
-					data: [
-						{
-							description: "Item",
-							amount: 10000,
-							quantity: 1,
-							tax_amounts: [],
-							discount_amounts: [],
-						},
-					],
-				},
-				total: 10000,
-				total_excluding_tax: 10000,
-			}),
-			supplier: buildSupplier({ vatStatus: 3 }),
-		});
-		expect(payload.supplier.vatStatus).toBe(3);
-		expect(payload.totalVat).toBe(0);
-	});
-
-	it("converts amounts from cents to decimals", () => {
-		const payload = buildScradaInvoiceFromStripeInvoice({
+	it("converts amounts to a rate-derived VAT breakdown (BR-CO-17)", () => {
+		const doc = buildUblInvoiceDocument({
 			invoice: buildStripeInvoice({
 				subtotal: 50050,
 				total: 60560,
 				total_excluding_tax: 50050,
-				lines: {
-					object: "list",
-					has_more: false,
-					url: "/v1/invoices/in_test_123/lines",
-					data: [
-						{
-							description: "Widget",
-							amount: 50050,
-							quantity: 1,
-							tax_amounts: [{ amount: 10510 }],
-							discount_amounts: [],
-						},
-					],
-				},
+				lines: linesData([
+					{
+						description: "Widget",
+						amount: 50050,
+						quantity: 1,
+						tax_amounts: [{ amount: 10510 }],
+						discount_amounts: [],
+					},
+				]),
 			}),
 			supplier: buildSupplier(),
 		});
 
-		expect(payload.totalExclVat).toBe(500.5);
-		expect(payload.totalVat).toBe(105.1);
-		expect(payload.totalInclVat).toBe(605.6);
+		expect(doc.monetaryTotal.taxExclusiveAmount).toBe(500.5);
+		// 500.50 × 21% = 105.105 → 105.11 (rounded), not the 105.10 Stripe reports.
+		expect(doc.taxTotal.taxAmount).toBe(105.11);
+		expect(doc.monetaryTotal.taxInclusiveAmount).toBe(605.61);
 	});
 
-	it("uses finalized_at as the invoice date", () => {
-		// 2026-04-30 14:00 UTC
+	it("uses finalized_at as the issue date and due_date as the due date", () => {
 		const finalizedAt = Math.floor(Date.UTC(2026, 3, 30, 14) / 1000);
-		const payload = buildScradaInvoiceFromStripeInvoice({
+		const doc = buildUblInvoiceDocument({
 			invoice: buildStripeInvoice({
 				status_transitions: { finalized_at: finalizedAt },
-				created: finalizedAt - 86400 * 5, // five days earlier
+				created: finalizedAt - 86400 * 5,
 			}),
 			supplier: buildSupplier(),
 		});
-		expect(payload.invoiceDate).toBe("2026-04-30");
-	});
-
-	it("derives the externalReference from the prefix + invoice ID", () => {
-		const payload = buildScradaInvoiceFromStripeInvoice({
-			invoice: buildStripeInvoice({ id: "in_special_123" }),
-			supplier: buildSupplier(),
-		});
-		expect(payload.externalReference).toBe("stripe:in_special_123");
-	});
-
-	it("honors a custom externalReference", () => {
-		const payload = buildScradaInvoiceFromStripeInvoice({
-			invoice: buildStripeInvoice(),
-			supplier: buildSupplier(),
-			externalReference: "peppost:custom",
-		});
-		expect(payload.externalReference).toBe("peppost:custom");
-	});
-
-	it("includes attachment when provided", () => {
-		const payload = buildScradaInvoiceFromStripeInvoice({
-			invoice: buildStripeInvoice(),
-			supplier: buildSupplier(),
-			attachment: {
-				filename: "invoice.pdf",
-				fileType: 1,
-				mimeType: "application/pdf",
-				base64Data: "JVBERg==",
-			},
-		});
-		expect(payload.attachments).toHaveLength(1);
-		expect(payload.attachments?.[0]?.filename).toBe("invoice.pdf");
+		expect(doc.issueDate).toBe("2026-04-30");
+		expect(doc.dueDate).toBe("2024-05-01");
 	});
 
 	it("rejects an invalid currency", () => {
 		expect(() =>
-			buildScradaInvoiceFromStripeInvoice({
+			buildUblInvoiceDocument({
 				invoice: buildStripeInvoice({ currency: "EU" as unknown as string }),
 				supplier: buildSupplier(),
 			}),
 		).toThrowError(/Invalid currency/);
 	});
 
-	it("classifies reverse-charge lines as exempt (vatType 3)", () => {
-		const payload = buildScradaInvoiceFromStripeInvoice({
+	it("classifies reverse-charge lines as category AE with a reason", () => {
+		const doc = buildUblInvoiceDocument({
 			invoice: buildStripeInvoice({
 				subtotal: 10000,
 				total: 10000,
 				total_excluding_tax: 10000,
-				lines: {
-					object: "list",
-					has_more: false,
-					url: "/v1/invoices/in_test_123/lines",
-					data: [
-						{
-							description: "Intra-EU service",
-							amount: 10000,
-							quantity: 1,
-							tax_amounts: [
-								{ amount: 0, taxability_reason: "reverse_charge" },
-							],
-							discount_amounts: [],
-						},
-					],
-				},
+				lines: linesData([
+					{
+						description: "Intra-EU service",
+						amount: 10000,
+						quantity: 1,
+						tax_amounts: [
+							{ amount: 0, taxability_reason: "reverse_charge" },
+						],
+						discount_amounts: [],
+					},
+				]),
 			}),
 			supplier: buildSupplier(),
 		});
 
-		expect(payload.lines[0]?.vatType).toBe(3);
-		expect(payload.lines[0]?.vatPercentage).toBe(0);
+		expect(doc.lines[0]?.taxCategory.id).toBe("AE");
+		expect(doc.lines[0]?.taxCategory.exemptionReason).toBe("Reverse charge");
+		expect(doc.taxTotal.taxAmount).toBe(0);
 	});
 
-	it("classifies zero_rated lines as zero-rated (vatType 2)", () => {
-		const payload = buildScradaInvoiceFromStripeInvoice({
+	it("classifies zero_rated lines as category Z", () => {
+		const doc = buildUblInvoiceDocument({
 			invoice: buildStripeInvoice({
 				subtotal: 10000,
 				total: 10000,
 				total_excluding_tax: 10000,
-				lines: {
-					object: "list",
-					has_more: false,
-					url: "/v1/invoices/in_test_123/lines",
-					data: [
-						{
-							description: "Zero-rated export",
-							amount: 10000,
-							quantity: 1,
-							tax_amounts: [
-								{ amount: 0, taxability_reason: "zero_rated" },
-							],
-							discount_amounts: [],
-						},
-					],
-				},
+				lines: linesData([
+					{
+						description: "Zero-rated export",
+						amount: 10000,
+						quantity: 1,
+						tax_amounts: [{ amount: 0, taxability_reason: "zero_rated" }],
+						discount_amounts: [],
+					},
+				]),
 			}),
 			supplier: buildSupplier(),
 		});
-
-		expect(payload.lines[0]?.vatType).toBe(2);
+		expect(doc.lines[0]?.taxCategory.id).toBe("Z");
 	});
 
 	it("reads VAT from line.taxes when tax_amounts is empty", () => {
-		const payload = buildScradaInvoiceFromStripeInvoice({
+		const doc = buildUblInvoiceDocument({
 			invoice: buildStripeInvoice({
 				subtotal: 15000,
 				total: 18150,
 				total_excluding_tax: 15000,
-				lines: {
-					object: "list",
-					has_more: false,
-					url: "/v1/invoices/in_test_123/lines",
-					data: [
-						{
-							description: "Conference ticket",
-							amount: 15000,
-							quantity: 1,
-							tax_amounts: [],
-							taxes: [
-								{
-									amount: 3150,
-									tax_behavior: "exclusive",
-									tax_rate_details: { tax_rate: "txr_test" },
-									taxability_reason: null,
-									taxable_amount: 15000,
-									type: "tax_rate_details",
-								},
-							],
-							discount_amounts: [],
-						},
-					],
-				},
+				lines: linesData([
+					{
+						description: "Conference ticket",
+						amount: 15000,
+						quantity: 1,
+						tax_amounts: [],
+						taxes: [
+							{
+								amount: 3150,
+								tax_behavior: "exclusive",
+								tax_rate_details: { tax_rate: "txr_test" },
+								taxability_reason: null,
+								taxable_amount: 15000,
+								type: "tax_rate_details",
+							},
+						],
+						discount_amounts: [],
+					},
+				]),
 			}),
 			supplier: buildSupplier(),
 		});
 
-		expect(payload.lines[0]?.vatPercentage).toBe(21);
-		expect(payload.lines[0]?.vatType).toBe(1);
-		expect(payload.totalVat).toBe(31.5);
-		expect(payload.vatTotals).toHaveLength(1);
-		expect(payload.vatTotals[0]?.vatType).toBe(1);
-		expect(payload.vatTotals[0]?.totalVat).toBe(31.5);
+		expect(doc.lines[0]?.taxCategory).toEqual({ id: "S", percent: 21 });
+		expect(doc.taxTotal.taxAmount).toBe(31.5);
+		expect(doc.taxTotal.subtotals).toHaveLength(1);
 	});
 
-	it("uses the post-discount net as the VAT base and line total for discounted lines", () => {
-		// Real-world regression: a 120,00 line with a 36,00 discount and 21% VAT.
-		// Stripe computes the tax (17,64) on the 84,00 net, while `line.amount`
-		// stays at the 120,00 gross. The line's excl-VAT total must be the 84,00
-		// net (so it reconciles with total_excluding_tax) and the rate must be
-		// 17,64 / 84,00 = 21% — not 17,64 / 120,00 = 14,70%, which Scrada rejects
-		// as an invalid standard rate.
-		const payload = buildScradaInvoiceFromStripeInvoice({
+	it("uses the post-discount net as the VAT base and line net for discounted lines", () => {
+		// 120,00 line with a 36,00 discount and 21% VAT. Tax (17,64) is on the
+		// 84,00 net. The line net must be 84,00 and the rate 21% (not 14,70%).
+		const doc = buildUblInvoiceDocument({
 			invoice: buildStripeInvoice({
 				subtotal: 12000,
 				total: 10164,
 				total_excluding_tax: 8400,
-				lines: {
-					object: "list",
-					has_more: false,
-					url: "/v1/invoices/in_test_123/lines",
-					data: [
-						{
-							description: "Consulting",
-							amount: 12000,
-							quantity: 1,
-							tax_amounts: [
-								{ amount: 1764, tax_rate: { percentage: 21 } },
-							],
-							discount_amounts: [{ amount: 3600 }],
-						},
-					],
-				},
+				lines: linesData([
+					{
+						description: "Consulting",
+						amount: 12000,
+						quantity: 1,
+						tax_amounts: [{ amount: 1764, tax_rate: { percentage: 21 } }],
+						discount_amounts: [{ amount: 3600 }],
+					},
+				]),
 			}),
 			supplier: buildSupplier(),
 		});
 
-		expect(payload.lines[0]?.totalExclVat).toBe(84);
-		expect(payload.lines[0]?.totalDiscountExclVat).toBe(36);
-		expect(payload.lines[0]?.vatPercentage).toBe(21);
-		expect(payload.lines[0]?.vatType).toBe(1);
-		expect(payload.totalExclVat).toBe(84);
-		expect(payload.totalVat).toBe(17.64);
-		expect(payload.totalInclVat).toBe(101.64);
-		expect(payload.vatTotals[0]?.vatPercentage).toBe(21);
+		expect(doc.lines[0]?.lineExtensionAmount).toBe(84);
+		expect(doc.lines[0]?.taxCategory).toEqual({ id: "S", percent: 21 });
+		expect(doc.monetaryTotal.taxExclusiveAmount).toBe(84);
+		expect(doc.taxTotal.taxAmount).toBe(17.64);
+		expect(doc.monetaryTotal.taxInclusiveAmount).toBe(101.64);
 	});
 
-	it("preserves VAT rate for fully-discounted lines via expanded tax_rate", () => {
-		const payload = buildScradaInvoiceFromStripeInvoice({
+	it("preserves the VAT rate for fully-discounted lines via expanded tax_rate", () => {
+		const doc = buildUblInvoiceDocument({
 			invoice: buildStripeInvoice({
 				subtotal: 0,
 				total: 0,
 				total_excluding_tax: 0,
-				lines: {
-					object: "list",
-					has_more: false,
-					url: "/v1/invoices/in_test_123/lines",
-					data: [
-						{
-							description: "Fully discounted",
-							amount: 0,
-							quantity: 1,
-							tax_amounts: [{ amount: 0, tax_rate: { percentage: 21 } }],
-							discount_amounts: [{ amount: 10000 }],
-						},
-					],
-				},
+				lines: linesData([
+					{
+						description: "Fully discounted",
+						amount: 0,
+						quantity: 1,
+						tax_amounts: [{ amount: 0, tax_rate: { percentage: 21 } }],
+						discount_amounts: [{ amount: 10000 }],
+					},
+				]),
 			}),
 			supplier: buildSupplier(),
 		});
-
-		expect(payload.lines[0]?.vatPercentage).toBe(21);
-		expect(payload.lines[0]?.vatType).toBe(1);
+		expect(doc.lines[0]?.taxCategory).toEqual({ id: "S", percent: 21 });
 	});
 
 	it("falls back to a single line when invoice.lines is empty", () => {
-		const payload = buildScradaInvoiceFromStripeInvoice({
+		const doc = buildUblInvoiceDocument({
 			invoice: buildStripeInvoice({
 				subtotal: 10000,
 				total: 12100,
 				total_excluding_tax: 10000,
 				description: "Consulting services",
-				lines: {
-					object: "list",
-					has_more: false,
-					url: "/v1/invoices/in_test_123/lines",
-					data: [],
-				},
+				lines: linesData([]),
 			}),
 			supplier: buildSupplier(),
 		});
 
-		expect(payload.lines).toHaveLength(1);
-		expect(payload.lines[0]?.itemName).toBe("Consulting services");
-		expect(payload.lines[0]?.totalExclVat).toBe(100);
-		expect(payload.lines[0]?.vatPercentage).toBe(21);
+		expect(doc.lines).toHaveLength(1);
+		expect(doc.lines[0]?.name).toBe("Consulting services");
+		expect(doc.lines[0]?.lineExtensionAmount).toBe(100);
+		expect(doc.lines[0]?.taxCategory).toEqual({ id: "S", percent: 21 });
 	});
 
-	it("does not silently substitute supplier country when customer country is missing", () => {
-		const payload = buildScradaInvoiceFromStripeInvoice({
+	it("coerces all lines to exempt when the supplier is a franchise (vatStatus 3)", () => {
+		const doc = buildUblInvoiceDocument({
+			invoice: buildStripeInvoice({
+				subtotal: 10000,
+				total: 10000,
+				total_excluding_tax: 10000,
+				lines: linesData([
+					{
+						description: "Item",
+						amount: 10000,
+						quantity: 1,
+						tax_amounts: [],
+						discount_amounts: [],
+					},
+				]),
+			}),
+			supplier: buildSupplier({ vatStatus: 3 }),
+		});
+
+		expect(doc.lines[0]?.taxCategory.id).toBe("E");
+		expect(doc.lines[0]?.taxCategory.exemptionReason).toMatch(/56bis/);
+		expect(doc.taxTotal.taxAmount).toBe(0);
+	});
+
+	it("does not substitute the supplier country when the customer country is missing", () => {
+		const doc = buildUblInvoiceDocument({
 			invoice: buildStripeInvoice({
 				customer_address: {
 					line1: "Unknown Street 1",
@@ -446,57 +358,47 @@ describe("buildScradaInvoiceFromStripeInvoice", () => {
 			}),
 			supplier: buildSupplier(),
 		});
-		expect(payload.customer.address.countryCode).toBeNull();
+		expect(doc.customer.address.countryCode).toBeNull();
 	});
 });
 
-describe("buildScradaCreditInvoiceFromStripeCreditNote", () => {
-	it("marks the document as a credit invoice", () => {
-		const payload = buildScradaCreditInvoiceFromStripeCreditNote({
+describe("buildUblCreditNoteDocument", () => {
+	it("marks the document as a credit note referencing the original invoice", () => {
+		const doc = buildUblCreditNoteDocument({
 			creditNote: buildStripeCreditNote(),
 			invoice: buildStripeInvoice(),
 			supplier: buildSupplier(),
 		});
-		expect(payload.creditInvoice).toBe(true);
-		expect(payload.number).toBe("CN-001");
+		expect(doc.documentType).toBe("creditNote");
+		expect(doc.id).toBe("CN-001");
+		expect(doc.precedingInvoiceId).toBe("INV-001");
+		expect(doc.dueDate).toBeNull();
 	});
 
 	it("derives the customer party from the parent invoice", () => {
-		const payload = buildScradaCreditInvoiceFromStripeCreditNote({
+		const doc = buildUblCreditNoteDocument({
 			creditNote: buildStripeCreditNote(),
 			invoice: buildStripeInvoice(),
 			supplier: buildSupplier(),
 		});
-		expect(payload.customer.name).toBe("Test Customer");
-		expect(payload.customer.vatNumber).toBe("BE0733756597");
+		expect(doc.customer.name).toBe("Test Customer");
+		expect(doc.customer.vatNumber).toBe("BE0733756597");
 	});
 
-	it("uses effective_at as the invoice date", () => {
-		const payload = buildScradaCreditInvoiceFromStripeCreditNote({
+	it("uses effective_at as the issue date", () => {
+		const doc = buildUblCreditNoteDocument({
 			creditNote: buildStripeCreditNote({ effective_at: 1714521600 }),
 			invoice: buildStripeInvoice(),
 			supplier: buildSupplier(),
 		});
-		expect(payload.invoiceDate).toBe("2024-05-01");
-	});
-
-	it("sends supplier.vatStatus from the supplier param", () => {
-		const payload = buildScradaCreditInvoiceFromStripeCreditNote({
-			creditNote: buildStripeCreditNote(),
-			invoice: buildStripeInvoice(),
-			supplier: buildSupplier({ vatStatus: 3 }),
-		});
-		expect(payload.supplier.vatStatus).toBe(3);
+		expect(doc.issueDate).toBe("2024-05-01");
 	});
 
 	it("reads the rate from tax_rate_details.tax_rate (real Stripe shape)", () => {
-		const payload = buildScradaCreditInvoiceFromStripeCreditNote({
+		const doc = buildUblCreditNoteDocument({
 			creditNote: buildStripeCreditNote({
-				lines: {
-					object: "list",
-					has_more: false,
-					url: "/v1/credit_notes/cn_test_123/lines",
-					data: [
+				lines: linesData(
+					[
 						{
 							id: "cnli_real",
 							object: "credit_note_line_item",
@@ -508,9 +410,7 @@ describe("buildScradaCreditInvoiceFromStripeCreditNote", () => {
 								{
 									amount: 0,
 									tax_behavior: "exclusive",
-									tax_rate_details: {
-										tax_rate: { percentage: 21 },
-									},
+									tax_rate_details: { tax_rate: { percentage: 21 } },
 									taxability_reason: null,
 									taxable_amount: 1,
 									type: "tax_rate_details",
@@ -520,13 +420,13 @@ describe("buildScradaCreditInvoiceFromStripeCreditNote", () => {
 							unit_amount: 10000,
 						},
 					],
-				},
+					"/v1/credit_notes/cn_test_123/lines",
+				),
 			}),
 			invoice: buildStripeInvoice(),
 			supplier: buildSupplier(),
 		});
 
-		expect(payload.lines[0]?.vatPercentage).toBe(21);
-		expect(payload.lines[0]?.vatType).toBe(1);
+		expect(doc.lines[0]?.taxCategory).toEqual({ id: "S", percent: 21 });
 	});
 });

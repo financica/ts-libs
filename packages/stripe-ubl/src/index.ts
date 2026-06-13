@@ -1,27 +1,53 @@
-// ── Top-level builders ─────────────────────────────────────────────────
+// ── Top-level builders (Stripe → UBL) ──────────────────────────────────
 
 export {
-	type BuildScradaCreditInvoiceParams,
-	type BuildScradaInvoiceParams,
-	buildScradaCreditInvoiceFromStripeCreditNote,
-	buildScradaInvoiceFromStripeInvoice,
+	type BuildUblCreditNoteParams,
+	type BuildUblInvoiceParams,
+	buildUblCreditNoteDocument,
+	buildUblCreditNoteFromStripeCreditNote,
+	buildUblInvoiceDocument,
+	buildUblInvoiceFromStripeInvoice,
 } from "./build";
 
-// ── Supplier / customer party builders ─────────────────────────────────
+// ── UBL model + serializer ─────────────────────────────────────────────
 
-export { buildCustomerPartyFromStripeInvoice } from "./customer";
-export { buildSupplierParty, type ScradaSupplier } from "./supplier";
+export * from "./ubl/constants";
+export { serializeUblDocument } from "./ubl/serialize";
+export type {
+	UblAddress,
+	UblAttachment,
+	UblCompanyId,
+	UblDocument,
+	UblEndpoint,
+	UblLine,
+	UblMonetaryTotal,
+	UblParty,
+	UblTaxCategory,
+	UblTaxSubtotal,
+	UblTaxTotal,
+} from "./ubl/types";
 
-// ── Re-usable helpers (handy for callers building partial payloads) ────
+// ── Party builders ─────────────────────────────────────────────────────
+
+export {
+	buildCustomerPartyFromStripeInvoice,
+	buildSupplierParty,
+	type SupplierVatStatus,
+	type UblSupplier,
+} from "./party";
+
+// ── Re-usable helpers (handy for callers building partial documents) ───
 
 export { normalizeAddress } from "./address";
-export { buildPdfAttachment, sanitizeScradaPayloadForAudit } from "./attachment";
+export { buildPdfAttachment, sanitizeUblDocumentForAudit } from "./attachment";
 export {
+	buildCompanyId,
 	type CustomerTaxIdentifiers,
 	extractCustomerTaxIdentifiers,
 	listPeppolReceiverIdentifierCandidates,
 	normalizeCompanyNumberForCountry,
-	resolveTaxNumberType,
+	parsePeppolEndpoint,
+	resolveCompanyIdScheme,
 } from "./identifiers";
 export { buildCreditNoteLines, buildInvoiceLines } from "./lines";
 export { centsToDecimal, roundCurrency } from "./numeric";
@@ -32,8 +58,16 @@ export {
 } from "./tax-amounts";
 export {
 	EXEMPT_TAXABILITY_REASONS,
-	resolveVatTypeFromTaxAmounts,
+	resolveTaxCategoryFromTaxAmounts,
 	type TaxAmountInfo,
-	vatTypeFromCategoryOrRate,
-} from "./vat";
-export { type BuildVatTotalsResult, buildVatTotals } from "./vat-totals";
+	taxCategoryFromReasonOrRate,
+} from "./tax-category";
+export {
+	type BuildTaxTotalsResult,
+	buildTaxTotals,
+	reconcileLinesToExclTotal,
+} from "./tax-totals";
+
+// ── Low-level XML primitives (for advanced/custom serialization) ───────
+
+export { el, serializeDocument, type XmlAttrs, type XmlElement } from "./xml";

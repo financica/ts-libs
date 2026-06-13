@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
+	buildCompanyId,
 	extractCustomerTaxIdentifiers,
 	listPeppolReceiverIdentifierCandidates,
 	normalizeCompanyNumberForCountry,
-	resolveTaxNumberType,
+	parsePeppolEndpoint,
+	resolveCompanyIdScheme,
 } from "../identifiers";
 
 describe("normalizeCompanyNumberForCountry", () => {
@@ -24,33 +26,62 @@ describe("normalizeCompanyNumberForCountry", () => {
 	});
 });
 
-describe("resolveTaxNumberType", () => {
-	it("maps BE/NL/FR country codes", () => {
+describe("resolveCompanyIdScheme", () => {
+	it("maps BE/NL/FR country codes to ICD schemes", () => {
 		expect(
-			resolveTaxNumberType({ countryCode: "BE", taxNumber: "0793904121" }),
-		).toBe(1);
-		expect(resolveTaxNumberType({ countryCode: "NL", taxNumber: "12345678" })).toBe(
-			2,
-		);
+			resolveCompanyIdScheme({ countryCode: "BE", companyNumber: "0793904121" }),
+		).toBe("0208");
 		expect(
-			resolveTaxNumberType({ countryCode: "FR", taxNumber: "123456789" }),
-		).toBe(3);
+			resolveCompanyIdScheme({ countryCode: "NL", companyNumber: "12345678" }),
+		).toBe("0106");
+		expect(
+			resolveCompanyIdScheme({ countryCode: "FR", companyNumber: "123456789" }),
+		).toBe("0002");
 	});
 
-	it("infers from the tax-number prefix when country is unknown", () => {
+	it("infers from the number prefix when country is unknown", () => {
 		expect(
-			resolveTaxNumberType({ countryCode: null, taxNumber: "BE0793904121" }),
-		).toBe(1);
+			resolveCompanyIdScheme({
+				countryCode: null,
+				companyNumber: "BE0793904121",
+			}),
+		).toBe("0208");
 	});
 
-	it("returns null when no tax number is provided", () => {
-		expect(resolveTaxNumberType({ countryCode: "BE", taxNumber: null })).toBeNull();
-	});
-
-	it("returns null for unsupported countries", () => {
+	it("returns null for unsupported countries and empty input", () => {
 		expect(
-			resolveTaxNumberType({ countryCode: "DE", taxNumber: "12345" }),
+			resolveCompanyIdScheme({ countryCode: "DE", companyNumber: "12345" }),
 		).toBeNull();
+		expect(
+			resolveCompanyIdScheme({ countryCode: "BE", companyNumber: null }),
+		).toBeNull();
+	});
+});
+
+describe("buildCompanyId", () => {
+	it("normalizes the value and attaches the scheme", () => {
+		expect(
+			buildCompanyId({ countryCode: "BE", companyNumber: "BE 0793.904.121" }),
+		).toEqual({ value: "0793904121", scheme: "0208" });
+	});
+
+	it("returns null when there is no company number", () => {
+		expect(buildCompanyId({ countryCode: "BE", companyNumber: null })).toBeNull();
+	});
+});
+
+describe("parsePeppolEndpoint", () => {
+	it("splits scheme:value", () => {
+		expect(parsePeppolEndpoint("0208:0800279001")).toEqual({
+			scheme: "0208",
+			value: "0800279001",
+		});
+	});
+
+	it("returns null without an explicit scheme", () => {
+		expect(parsePeppolEndpoint("0800279001")).toBeNull();
+		expect(parsePeppolEndpoint(null)).toBeNull();
+		expect(parsePeppolEndpoint(":value")).toBeNull();
 	});
 });
 

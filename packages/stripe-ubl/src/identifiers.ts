@@ -1,4 +1,4 @@
-import type { CompanyInvoiceTaxNumberType } from "@financica/scrada-client";
+import type { UblCompanyId, UblEndpoint } from "./ubl/types";
 import { isRecord, normalizeString } from "./utils";
 
 const cleanIdentifierValue = (value: string) =>
@@ -27,26 +27,28 @@ export const normalizeCompanyNumberForCountry = (
 };
 
 /**
- * Country code → Scrada CompanyInvoiceTaxNumberType code.
+ * Country code → Peppol/ISO 6523 ICD scheme for a legal registration number
+ * (`cac:PartyLegalEntity/cbc:CompanyID/@schemeID`).
  *
- *   1 — Belgium (KBO/BCE / Numéro d'entreprise)
- *   2 — Netherlands (KvK)
- *   3 — France (SIRENE)
+ *   BE → 0208 (Belgian enterprise number, CBE/KBO/BCE)
+ *   NL → 0106 (Netherlands KvK)
+ *   FR → 0002 (France SIRENE)
  *
- * If the country is not in the table, falls back to inspecting the
- * tax-number prefix (e.g. `BE0793904121` → 1).
+ * Falls back to inspecting the number's country prefix (e.g. `BE0793904121`).
+ * Returns `null` when the scheme can't be determined, in which case the
+ * CompanyID is emitted without a `schemeID` attribute.
  */
-export const resolveTaxNumberType = (params: {
+export const resolveCompanyIdScheme = (params: {
 	countryCode: string | null;
-	taxNumber: string | null;
-}): CompanyInvoiceTaxNumberType | null => {
-	const taxNumber = normalizeString(params.taxNumber);
-	if (!taxNumber) return null;
+	companyNumber: string | null;
+}): string | null => {
+	const companyNumber = normalizeString(params.companyNumber);
+	if (!companyNumber) return null;
 
-	const TABLE: Record<string, CompanyInvoiceTaxNumberType> = {
-		BE: 1,
-		NL: 2,
-		FR: 3,
+	const TABLE: Record<string, string> = {
+		BE: "0208",
+		NL: "0106",
+		FR: "0002",
 	};
 
 	const normalizedCountry =
@@ -55,13 +57,50 @@ export const resolveTaxNumberType = (params: {
 		return TABLE[normalizedCountry] ?? null;
 	}
 
-	const normalizedTaxNumber = cleanIdentifierValue(taxNumber).toUpperCase();
-	const countryPrefix = normalizedTaxNumber.slice(0, 2);
-	if (countryPrefix in TABLE) {
-		return TABLE[countryPrefix] ?? null;
-	}
+	const countryPrefix = cleanIdentifierValue(companyNumber).toUpperCase().slice(0, 2);
+	return countryPrefix in TABLE ? (TABLE[countryPrefix] ?? null) : null;
+};
 
-	return null;
+/**
+ * Build the `cac:PartyLegalEntity/cbc:CompanyID` value for a party, with the
+ * country-appropriate ICD scheme when known. Returns `null` when there is no
+ * company number.
+ */
+export const buildCompanyId = (params: {
+	countryCode: string | null;
+	companyNumber: string | null;
+}): UblCompanyId | null => {
+	const normalized = normalizeString(
+		normalizeCompanyNumberForCountry(params.countryCode, params.companyNumber),
+	);
+	if (!normalized) return null;
+	return {
+		value: normalized,
+		scheme: resolveCompanyIdScheme({
+			countryCode: params.countryCode,
+			companyNumber: normalized,
+		}),
+	};
+};
+
+/**
+ * Parse a Peppol participant identifier into a {@link UblEndpoint}.
+ *
+ * Accepts the canonical `scheme:value` form (e.g. `0208:0800279001`). Returns
+ * `null` for values without an explicit scheme, since `cbc:EndpointID` requires
+ * a `schemeID` and guessing one would mis-route the document.
+ */
+export const parsePeppolEndpoint = (
+	peppolId: string | null | undefined,
+): UblEndpoint | null => {
+	const normalized = normalizeString(peppolId);
+	if (!normalized) return null;
+	const separatorIndex = normalized.indexOf(":");
+	if (separatorIndex <= 0) return null;
+	const scheme = normalized.slice(0, separatorIndex).trim();
+	const value = normalized.slice(separatorIndex + 1).trim();
+	if (!scheme || !value) return null;
+	return { scheme, value };
 };
 
 export interface CustomerTaxIdentifiers {
