@@ -125,8 +125,9 @@ function parsePartyIdentifications(party: Element): UblPartyIdentification[] {
 	for (const idEl of ids) {
 		const idValue = cbcText(idEl, "ID");
 		if (!idValue) continue;
-		const schemeIdAttr =
-			idEl.getElementsByTagNameNS(CBC_NS, "ID")[0]?.getAttribute("schemeID");
+		const schemeIdAttr = idEl
+			.getElementsByTagNameNS(CBC_NS, "ID")[0]
+			?.getAttribute("schemeID");
 		result.push({
 			id: idValue,
 			schemeId: schemeIdAttr || undefined,
@@ -285,9 +286,7 @@ function parseLines(root: Element, isCreditNote: boolean): UblLine[] {
 		// of the item, not necessarily for one unit. Effective unit price is
 		// PriceAmount / BaseQuantity, with BaseQuantity defaulting to 1 when absent.
 		const priceAmount = price ? cbcNumber(price, "PriceAmount") : 0;
-		const priceBaseQuantity = price
-			? cbcDirectNumber(price, "BaseQuantity")
-			: null;
+		const priceBaseQuantity = price ? cbcDirectNumber(price, "BaseQuantity") : null;
 		const unitPrice =
 			priceBaseQuantity && priceBaseQuantity > 0
 				? priceAmount / priceBaseQuantity
@@ -424,9 +423,7 @@ function parseNotes(root: Element): string | undefined {
 	return notes.length > 0 ? notes.join("\n") : undefined;
 }
 
-function parseAttachments(
-	root: Element,
-): {
+function parseAttachments(root: Element): {
 	attachments: UblAttachment[] | undefined;
 	documentReferences: UblDocumentReference[] | undefined;
 } {

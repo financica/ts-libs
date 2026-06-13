@@ -192,9 +192,7 @@ describe("normalizeUblResponse", () => {
 				payment_means_list?: Array<{ mandate_id?: string | null }>;
 			};
 			expect(extra.payment_means?.mandate_id).toBe("B013950122");
-			expect(extra.payment_means_list?.[0]?.mandate_id).toBe(
-				"B013950122",
-			);
+			expect(extra.payment_means_list?.[0]?.mandate_id).toBe("B013950122");
 		});
 
 		it("surfaces additional item properties as metadata in line extras", () => {

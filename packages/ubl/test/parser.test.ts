@@ -400,8 +400,7 @@ describe("parseUblInvoice", () => {
 			expect(invoice.documentReferences).toHaveLength(2);
 			expect(invoice.documentReferences![0]).toMatchObject({
 				id: "GTC_SCA_INSERT",
-				description:
-					"Scarlet general terms and conditions apply.",
+				description: "Scarlet general terms and conditions apply.",
 			});
 			expect(invoice.documentReferences![1]).toMatchObject({
 				id: "FTC_DUR_TEXT",
@@ -444,9 +443,7 @@ describe("parseUblInvoice", () => {
 			expect(invoice.seller.partyIdentifications).toEqual([
 				{ id: "0202239951", schemeId: "0208" },
 			]);
-			expect(invoice.buyer.partyIdentifications).toEqual([
-				{ id: "624080006-1" },
-			]);
+			expect(invoice.buyer.partyIdentifications).toEqual([{ id: "624080006-1" }]);
 		});
 
 		it("extracts company ID scheme ID", () => {
