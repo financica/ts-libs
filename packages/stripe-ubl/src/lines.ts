@@ -1,13 +1,16 @@
+import {
+	centsToDecimal,
+	DEFAULT_UNIT_CODE,
+	resolveTaxCategoryFromTaxAmounts,
+	roundCurrency,
+	type UblLine,
+} from "@financica/ubl/build";
 import type Stripe from "stripe";
-import { centsToDecimal, roundCurrency } from "./numeric";
 import {
 	getCreditNoteLineTaxAmounts,
 	getInvoiceLineDiscountAmountCents,
 	getInvoiceLineTaxAmounts,
 } from "./tax-amounts";
-import { resolveTaxCategoryFromTaxAmounts } from "./tax-category";
-import { DEFAULT_UNIT_CODE } from "./ubl/constants";
-import type { UblLine } from "./ubl/types";
 import { normalizeString, toNumber } from "./utils";
 
 /**

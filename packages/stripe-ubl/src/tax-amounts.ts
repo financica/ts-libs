@@ -1,5 +1,5 @@
+import type { TaxAmountInfo } from "@financica/ubl/build";
 import type Stripe from "stripe";
-import type { TaxAmountInfo } from "./tax-category";
 
 /**
  * Reads the rate percentage from either Stripe shape:
