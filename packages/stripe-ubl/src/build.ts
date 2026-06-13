@@ -1,15 +1,18 @@
+import {
+	buildSupplierParty,
+	buildTaxTotals,
+	centsToDecimal,
+	reconcileLinesToExclTotal,
+	type SupplierVatStatus,
+	serializeUblDocument,
+	type UblAttachment,
+	type UblDocument,
+	type UblLine,
+	type UblSupplier,
+} from "@financica/ubl/build";
 import type Stripe from "stripe";
 import { buildCreditNoteLines, buildInvoiceLines } from "./lines";
-import { centsToDecimal } from "./numeric";
-import {
-	buildCustomerPartyFromStripeInvoice,
-	buildSupplierParty,
-	type SupplierVatStatus,
-	type UblSupplier,
-} from "./party";
-import { buildTaxTotals, reconcileLinesToExclTotal } from "./tax-totals";
-import { serializeUblDocument } from "./ubl/serialize";
-import type { UblAttachment, UblDocument, UblLine } from "./ubl/types";
+import { buildCustomerPartyFromStripeInvoice } from "./party";
 import { normalizeString } from "./utils";
 
 const validateCurrency = (currency: string): string => {

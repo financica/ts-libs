@@ -1,5 +1,11 @@
-// ── Top-level builders (Stripe → UBL) ──────────────────────────────────
+// @financica/stripe-ubl — a Stripe → Peppol BIS Billing 3.0 UBL adapter on top
+// of the @financica/ubl build core. The generic UBL document model, serializer,
+// and party/tax/identifier/attachment builders are re-exported from
+// @financica/ubl/build so existing import paths keep working.
 
+// ── UBL build core (re-exported from @financica/ubl/build) ─────────────
+export * from "@financica/ubl/build";
+// ── Stripe → UBL builders ──────────────────────────────────────────────
 export {
 	type BuildUblCreditNoteParams,
 	type BuildUblInvoiceParams,
@@ -8,66 +14,10 @@ export {
 	buildUblInvoiceDocument,
 	buildUblInvoiceFromStripeInvoice,
 } from "./build";
-
-// ── UBL model + serializer ─────────────────────────────────────────────
-
-export * from "./ubl/constants";
-export { serializeUblDocument } from "./ubl/serialize";
-export type {
-	UblAddress,
-	UblAttachment,
-	UblCompanyId,
-	UblDocument,
-	UblEndpoint,
-	UblLine,
-	UblMonetaryTotal,
-	UblParty,
-	UblTaxCategory,
-	UblTaxSubtotal,
-	UblTaxTotal,
-} from "./ubl/types";
-
-// ── Party builders ─────────────────────────────────────────────────────
-
-export {
-	buildCustomerPartyFromStripeInvoice,
-	buildSupplierParty,
-	type SupplierVatStatus,
-	type UblSupplier,
-} from "./party";
-
-// ── Re-usable helpers (handy for callers building partial documents) ───
-
-export { normalizeAddress } from "./address";
-export { buildPdfAttachment, sanitizeUblDocumentForAudit } from "./attachment";
-export {
-	buildCompanyId,
-	type CustomerTaxIdentifiers,
-	extractCustomerTaxIdentifiers,
-	listPeppolReceiverIdentifierCandidates,
-	normalizeCompanyNumberForCountry,
-	parsePeppolEndpoint,
-	resolveCompanyIdScheme,
-} from "./identifiers";
 export { buildCreditNoteLines, buildInvoiceLines } from "./lines";
-export { centsToDecimal, roundCurrency } from "./numeric";
+export { buildCustomerPartyFromStripeInvoice } from "./party";
 export {
 	getCreditNoteLineTaxAmounts,
 	getInvoiceLineDiscountAmountCents,
 	getInvoiceLineTaxAmounts,
 } from "./tax-amounts";
-export {
-	EXEMPT_TAXABILITY_REASONS,
-	resolveTaxCategoryFromTaxAmounts,
-	type TaxAmountInfo,
-	taxCategoryFromReasonOrRate,
-} from "./tax-category";
-export {
-	type BuildTaxTotalsResult,
-	buildTaxTotals,
-	reconcileLinesToExclTotal,
-} from "./tax-totals";
-
-// ── Low-level XML primitives (for advanced/custom serialization) ───────
-
-export { el, serializeDocument, type XmlAttrs, type XmlElement } from "./xml";
