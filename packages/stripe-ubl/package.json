@@ -1,14 +1,14 @@
 {
-	"name": "@financica/scrada-stripe",
-	"version": "0.1.2",
-	"description": "Convert Stripe invoices and credit notes into Scrada Peppol invoice payloads.",
+	"name": "@financica/stripe-ubl",
+	"version": "0.1.0",
+	"description": "Convert Stripe invoices and credit notes into Peppol BIS Billing 3.0 UBL documents.",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/financica/scrada-stripe.git"
+		"url": "git+https://github.com/financica/stripe-ubl.git"
 	},
-	"bugs": "https://github.com/financica/scrada-stripe/issues",
-	"homepage": "https://github.com/financica/scrada-stripe#readme",
+	"bugs": "https://github.com/financica/stripe-ubl/issues",
+	"homepage": "https://github.com/financica/stripe-ubl#readme",
 	"type": "module",
 	"exports": {
 		".": {
@@ -33,9 +33,6 @@
 	},
 	"engines": {
 		"node": ">=18"
-	},
-	"dependencies": {
-		"@financica/scrada-client": "^0.2.1"
 	},
 	"peerDependencies": {
 		"stripe": ">=18.0.0"

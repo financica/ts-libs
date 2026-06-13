@@ -1,49 +1,33 @@
-import {
-	SCRADA_ATTACHMENT_FILE_TYPE_INVOICE,
-	type ScradaInvoiceAttachment,
-} from "@financica/scrada-client";
+import type { UblAttachment, UblDocument } from "./ubl/types";
 
-/** Build a Scrada PDF attachment payload from raw bytes. */
+/**
+ * Build a UBL embedded-document attachment (BG-24) from raw bytes — e.g. the
+ * rendered PDF of the invoice. Emitted as a `cac:AdditionalDocumentReference`
+ * with an inline base64 `cbc:EmbeddedDocumentBinaryObject`.
+ */
 export const buildPdfAttachment = (params: {
 	filename: string;
 	bytes: Uint8Array;
-	externalReference?: string;
-}): ScradaInvoiceAttachment => ({
+	/** Document reference ID (BT-122). Defaults to the filename. */
+	id?: string;
+}): UblAttachment => ({
+	id: params.id ?? params.filename,
 	filename: params.filename,
-	fileType: SCRADA_ATTACHMENT_FILE_TYPE_INVOICE,
-	mimeType: "application/pdf",
-	base64Data: Buffer.from(params.bytes).toString("base64"),
-	externalReference: params.externalReference,
+	mimeCode: "application/pdf",
+	base64: Buffer.from(params.bytes).toString("base64"),
 });
 
 /**
- * Replace the `base64Data` of every attachment with `[omitted]` plus a length
- * field, so the payload is safe to log or persist for audit.
+ * Replace each attachment's base64 payload with `[omitted]` plus a length, so a
+ * {@link UblDocument} is safe to log or persist for audit.
  */
-export const sanitizeScradaPayloadForAudit = <TPayload extends Record<string, unknown>>(
-	payload: TPayload,
-): TPayload => {
-	if (!Array.isArray(payload.attachments)) return payload;
-
+export const sanitizeUblDocumentForAudit = (doc: UblDocument): UblDocument => {
+	if (doc.attachments.length === 0) return doc;
 	return {
-		...payload,
-		attachments: payload.attachments.map((attachment) => {
-			if (
-				!attachment ||
-				typeof attachment !== "object" ||
-				Array.isArray(attachment)
-			) {
-				return attachment;
-			}
-			const record = attachment as Record<string, unknown>;
-			const base64Data =
-				typeof record.base64Data === "string" ? record.base64Data : null;
-			if (!base64Data) return attachment;
-			return {
-				...record,
-				base64Data: "[omitted]",
-				base64Length: base64Data.length,
-			};
-		}),
-	} as TPayload;
+		...doc,
+		attachments: doc.attachments.map((attachment) => ({
+			...attachment,
+			base64: `[omitted ${attachment.base64.length} chars]`,
+		})),
+	};
 };
