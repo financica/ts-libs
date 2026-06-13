@@ -1,13 +1,17 @@
 {
 	"name": "@financica/ubl",
-	"version": "0.4.0",
-	"description": "UBL (Universal Business Language) invoice XML parser for TypeScript",
+	"version": "0.5.0",
+	"description": "UBL (Universal Business Language) invoice toolkit for TypeScript: parse, build, and serialize Peppol BIS Billing 3.0 documents.",
 	"license": "MIT",
 	"type": "module",
 	"exports": {
 		".": {
 			"import": "./dist/index.js",
 			"types": "./dist/index.d.ts"
+		},
+		"./build": {
+			"import": "./dist/build/index.js",
+			"types": "./dist/build/index.d.ts"
 		}
 	},
 	"main": "./dist/index.js",
