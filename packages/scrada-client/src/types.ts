@@ -225,3 +225,35 @@ export interface ScradaPeppolLookupResponse {
 		} | null;
 	}> | null;
 }
+
+/**
+ * Peppol routing for `sendOutboundDocument`. The raw-UBL outbound endpoint does
+ * not parse the document for routing, so the sender, receiver, document type
+ * and process must be supplied as `x-scrada-peppol-*` request headers. All
+ * fields are required by Scrada; `externalReference` is optional (portal- and
+ * webhook-only, not used for Peppol).
+ *
+ * @see POST /company/{companyID}/peppol/outbound/document
+ */
+export interface PeppolOutboundDocumentRouting {
+	/** Sender participant scheme — always `iso6523-actorid-upis`. */
+	senderScheme: string;
+	/** Sender participant id, e.g. `0208:0800279001`. */
+	senderId: string;
+	/** Receiver participant scheme — always `iso6523-actorid-upis`. */
+	receiverScheme: string;
+	/** Receiver participant id, e.g. `9925:BE0206582284`. */
+	receiverId: string;
+	/** ISO 3166-1 alpha-2 country where the sender is legally present (C1), e.g. `BE`. */
+	c1CountryCode: string;
+	/** Document type scheme, e.g. `busdox-docid-qns`. */
+	documentTypeScheme: string;
+	/** Document type value (the BIS Billing 3.0 Invoice or CreditNote doc-type id). */
+	documentTypeValue: string;
+	/** Process scheme, e.g. `cenbii-procid-ubl`. */
+	processScheme: string;
+	/** Process value, e.g. `urn:fdc:peppol.eu:2017:poacc:billing:01:1.0`. */
+	processValue: string;
+	/** Optional caller reference surfaced in the Scrada portal and webhooks. */
+	externalReference?: string;
+}

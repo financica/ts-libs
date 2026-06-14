@@ -2,11 +2,33 @@ import { DEFAULT_SCRADA_API_BASE_URL, SCRADA_LANGUAGE_HEADER } from "./constants
 import { scradaApiErrorFromResponse } from "./errors";
 import type {
 	PeppolOnlyInvoice,
+	PeppolOutboundDocumentRouting,
 	ScradaInboundDocumentResponse,
 	ScradaInboundUnconfirmedResponse,
 	ScradaOutboundDocumentInfo,
 	ScradaPeppolLookupResponse,
 } from "./types";
+
+/** Map {@link PeppolOutboundDocumentRouting} to the `x-scrada-peppol-*` headers. */
+const routingHeaders = (
+	routing: PeppolOutboundDocumentRouting,
+): Record<string, string> => {
+	const headers: Record<string, string> = {
+		"x-scrada-peppol-sender-scheme": routing.senderScheme,
+		"x-scrada-peppol-sender-id": routing.senderId,
+		"x-scrada-peppol-receiver-scheme": routing.receiverScheme,
+		"x-scrada-peppol-receiver-id": routing.receiverId,
+		"x-scrada-peppol-c1-country-code": routing.c1CountryCode,
+		"x-scrada-peppol-document-type-scheme": routing.documentTypeScheme,
+		"x-scrada-peppol-document-type-value": routing.documentTypeValue,
+		"x-scrada-peppol-process-scheme": routing.processScheme,
+		"x-scrada-peppol-process-value": routing.processValue,
+	};
+	if (routing.externalReference) {
+		headers["x-scrada-external-reference"] = routing.externalReference;
+	}
+	return headers;
+};
 
 type ScradaRequestMethod = "GET" | "POST" | "PUT" | "DELETE";
 
@@ -231,9 +253,11 @@ export class ScradaApiClient {
 		body: BodyInit;
 		contentType: "application/json" | "application/xml";
 		idempotencyKey?: string;
+		extraHeaders?: Record<string, string>;
 	}): Promise<string> {
 		const headers: Record<string, string> = {
 			"Content-Type": params.contentType,
+			...params.extraHeaders,
 		};
 		if (params.idempotencyKey) {
 			headers["Idempotency-Key"] = params.idempotencyKey;
@@ -293,19 +317,28 @@ export class ScradaApiClient {
 	 * Invoice Response, etc.); for JSON payloads use `sendOutboundSalesInvoice`
 	 * or `sendOutboundSelfBillingInvoice` instead.
 	 *
+	 * The endpoint does not parse the UBL for routing, so `options.routing`
+	 * (sender, receiver, document type and process) is required and sent as
+	 * `x-scrada-peppol-*` headers — without it Scrada rejects the request with
+	 * "Http header 'x-scrada-peppol-sender-scheme' is missing".
+	 *
 	 * @param options.idempotencyKey  See `sendOutboundSalesInvoice`.
 	 */
 	async sendOutboundDocument(
 		companyId: string,
 		ubl: string,
-		options?: { idempotencyKey?: string },
+		options: {
+			routing: PeppolOutboundDocumentRouting;
+			idempotencyKey?: string;
+		},
 	): Promise<string> {
 		return this.postOutbound({
 			companyId,
 			segment: "document",
 			body: ubl,
 			contentType: "application/xml",
-			idempotencyKey: options?.idempotencyKey,
+			idempotencyKey: options.idempotencyKey,
+			extraHeaders: routingHeaders(options.routing),
 		});
 	}
 

@@ -29,6 +29,7 @@ export type {
 	PeppolOnlyInvoice,
 	PeppolOnlyInvoiceLine,
 	PeppolOnlyInvoiceParty,
+	PeppolOutboundDocumentRouting,
 	SalesInvoiceVatTotal,
 	ScradaAddress,
 	ScradaInboundDocumentResponse,

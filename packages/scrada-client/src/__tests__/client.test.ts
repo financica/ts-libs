@@ -162,6 +162,18 @@ describe("ScradaApiClient", () => {
 		const ubl = '<?xml version="1.0"?><Invoice/>';
 		const id = await client.sendOutboundDocument("co-1", ubl, {
 			idempotencyKey: "ubl:1",
+			routing: {
+				senderScheme: "iso6523-actorid-upis",
+				senderId: "0208:0800279001",
+				receiverScheme: "iso6523-actorid-upis",
+				receiverId: "9925:BE0206582284",
+				c1CountryCode: "BE",
+				documentTypeScheme: "busdox-docid-qns",
+				documentTypeValue:
+					"urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0::2.1",
+				processScheme: "cenbii-procid-ubl",
+				processValue: "urn:fdc:peppol.eu:2017:poacc:billing:01:1.0",
+			},
 		});
 
 		expect(id).toBe("doc-xml");
@@ -172,6 +184,16 @@ describe("ScradaApiClient", () => {
 		const headers = new Headers(init?.headers);
 		expect(headers.get("content-type")).toBe("application/xml");
 		expect(headers.get("idempotency-key")).toBe("ubl:1");
+		// The raw-UBL endpoint routes purely off these headers.
+		expect(headers.get("x-scrada-peppol-sender-id")).toBe("0208:0800279001");
+		expect(headers.get("x-scrada-peppol-receiver-id")).toBe("9925:BE0206582284");
+		expect(headers.get("x-scrada-peppol-receiver-scheme")).toBe(
+			"iso6523-actorid-upis",
+		);
+		expect(headers.get("x-scrada-peppol-c1-country-code")).toBe("BE");
+		expect(headers.get("x-scrada-peppol-process-value")).toBe(
+			"urn:fdc:peppol.eu:2017:poacc:billing:01:1.0",
+		);
 		expect(init?.body).toBe(ubl);
 	});
 
