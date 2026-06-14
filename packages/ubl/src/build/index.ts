@@ -35,6 +35,7 @@ export {
 	normalizeCompanyNumberForCountry,
 	parsePeppolEndpoint,
 	resolveCompanyIdScheme,
+	resolveVatEndpoint,
 } from "./identifiers";
 export { centsToDecimal, roundCurrency } from "./numeric";
 export {
