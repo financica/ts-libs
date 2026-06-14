@@ -125,6 +125,12 @@ describe("buildUblInvoiceDocument", () => {
 		expect(doc.supplier.companyId).toEqual({ value: "0800279001", scheme: "0208" });
 		expect(doc.customer.name).toBe("Test Customer");
 		expect(doc.customer.vatNumber).toBe("BE0733756597");
+		// The VAT-only customer must still get a routable Peppol endpoint: the
+		// Belgian VAT maps to EAS scheme 9925.
+		expect(doc.customer.endpoint).toEqual({
+			scheme: "9925",
+			value: "BE0733756597",
+		});
 	});
 
 	it("converts amounts to a rate-derived VAT breakdown (BR-CO-17)", () => {
@@ -428,5 +434,60 @@ describe("buildUblCreditNoteDocument", () => {
 		});
 
 		expect(doc.lines[0]?.taxCategory).toEqual({ id: "S", percent: 21 });
+	});
+});
+
+describe("customer Peppol endpoint resolution", () => {
+	const endpointOf = (overrides: Record<string, unknown>, opts = {}) =>
+		buildUblInvoiceDocument({
+			invoice: buildStripeInvoice(overrides),
+			supplier: buildSupplier(),
+			...opts,
+		}).customer.endpoint;
+
+	it("prefers an explicit Peppol ID over the VAT number", () => {
+		expect(
+			endpointOf({
+				customer_tax_ids: [
+					{ type: "eu_vat", value: "BE0733756597" },
+					{ type: "peppol_id", value: "0208:0733756597" },
+				],
+			}),
+		).toEqual({ scheme: "0208", value: "0733756597" });
+	});
+
+	it("falls back to a GLN under EAS 0088", () => {
+		expect(
+			endpointOf({
+				customer_tax_ids: [{ type: "gln", value: "5400112000011" }],
+			}),
+		).toEqual({ scheme: "0088", value: "5400112000011" });
+	});
+
+	it("maps a Dutch VAT number to EAS 9944", () => {
+		expect(
+			endpointOf({
+				customer_address: { country: "NL" },
+				customer_tax_ids: [{ type: "eu_vat", value: "NL123456789B01" }],
+			}),
+		).toEqual({ scheme: "9944", value: "NL123456789B01" });
+	});
+
+	it("honours an explicit endpoint override (e.g. the registered identifier)", () => {
+		expect(
+			endpointOf(
+				{ customer_tax_ids: [{ type: "eu_vat", value: "BE0733756597" }] },
+				{ customerEndpoint: { scheme: "0208", value: "0733756597" } },
+			),
+		).toEqual({ scheme: "0208", value: "0733756597" });
+	});
+
+	it("leaves the endpoint null when no identifier resolves to a scheme", () => {
+		expect(
+			endpointOf({
+				customer_address: { country: "US" },
+				customer_tax_ids: [],
+			}),
+		).toBeNull();
 	});
 });

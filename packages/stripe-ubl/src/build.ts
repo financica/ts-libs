@@ -7,6 +7,7 @@ import {
 	serializeUblDocument,
 	type UblAttachment,
 	type UblDocument,
+	type UblEndpoint,
 	type UblLine,
 	type UblSupplier,
 } from "@financica/ubl/build";
@@ -60,6 +61,13 @@ export interface BuildUblInvoiceParams {
 	attachment?: UblAttachment;
 	/** Optional buyer reference (BT-10). */
 	buyerReference?: string | null;
+	/**
+	 * Override the customer Peppol `EndpointID` (BT-49). Set this to the
+	 * identifier a caller resolved as registered on the network (e.g. after a
+	 * participant lookup), so the routed document matches what was confirmed
+	 * reachable. When omitted, the endpoint is derived from the invoice.
+	 */
+	customerEndpoint?: UblEndpoint | null;
 }
 
 /**
@@ -81,7 +89,10 @@ export const buildUblInvoiceDocument = (params: BuildUblInvoiceParams): UblDocum
 		isoDateFromUnixSeconds(invoiceDateTimestamp) ??
 		new Date().toISOString().slice(0, 10);
 
-	const { customer } = buildCustomerPartyFromStripeInvoice(invoice);
+	const { customer } = buildCustomerPartyFromStripeInvoice(
+		invoice,
+		params.customerEndpoint,
+	);
 
 	let lines = coerceForVatStatus(buildInvoiceLines(invoice), supplier.vatStatus);
 	const authExcl = authoritativeExclVat(invoice.total_excluding_tax);
@@ -119,6 +130,8 @@ export interface BuildUblCreditNoteParams {
 	supplier: UblSupplier;
 	attachment?: UblAttachment;
 	buyerReference?: string | null;
+	/** See {@link BuildUblInvoiceParams.customerEndpoint}. */
+	customerEndpoint?: UblEndpoint | null;
 }
 
 /**
@@ -138,7 +151,10 @@ export const buildUblCreditNoteDocument = (
 		? new Date(creditNote.effective_at * 1000).toISOString().slice(0, 10)
 		: new Date(creditNote.created * 1000).toISOString().slice(0, 10);
 
-	const { customer } = buildCustomerPartyFromStripeInvoice(invoice);
+	const { customer } = buildCustomerPartyFromStripeInvoice(
+		invoice,
+		params.customerEndpoint,
+	);
 
 	let lines = coerceForVatStatus(
 		buildCreditNoteLines(
