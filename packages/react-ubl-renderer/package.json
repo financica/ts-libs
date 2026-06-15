@@ -1,0 +1,65 @@
+{
+	"name": "@financica/react-ubl-renderer",
+	"version": "0.1.0",
+	"description": "Render parsed UBL / Peppol BIS Billing 3.0 invoices as a React component or a standalone HTML document.",
+	"keywords": [
+		"e-invoicing",
+		"einvoice",
+		"en16931",
+		"invoice",
+		"peppol",
+		"react",
+		"ubl"
+	],
+	"homepage": "https://github.com/financica/react-ubl-renderer#readme",
+	"bugs": "https://github.com/financica/react-ubl-renderer/issues",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/financica/react-ubl-renderer.git"
+	},
+	"files": [
+		"dist"
+	],
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		},
+		"./styles.css": "./dist/styles.css"
+	},
+	"scripts": {
+		"build": "tsup && node scripts/emit-css.mjs",
+		"prepack": "bun run build",
+		"lint": "biome check .",
+		"format": "biome format --write .",
+		"type-check": "tsc --noEmit",
+		"test": "vitest",
+		"test:run": "vitest --run",
+		"ci": "bun run type-check && bun run lint && bun run test:run && bun run build"
+	},
+	"dependencies": {
+		"@financica/ubl": "^0.6.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.13",
+		"@types/node": "^22.0.0",
+		"@types/react": "^19.0.0",
+		"@types/react-dom": "^19.0.0",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0",
+		"tsup": "^8.0.0",
+		"typescript": "^5.9.3",
+		"vitest": "^4.0.18"
+	},
+	"peerDependencies": {
+		"react": ">=18",
+		"react-dom": ">=18"
+	},
+	"engines": {
+		"node": ">=18"
+	}
+}
