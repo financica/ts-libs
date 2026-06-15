@@ -1,12 +1,13 @@
-import type {
-	UblAddress,
-	UblInvoice as UblInvoiceData,
-	UblLine,
-	UblParty,
-	UblPaymentMeans,
-	UblTaxSubtotal,
+import {
+	parseUblInvoice,
+	type UblAddress,
+	type UblInvoice as UblInvoiceData,
+	type UblLine,
+	type UblParty,
+	type UblPaymentMeans,
+	type UblTaxSubtotal,
 } from "@financica/ubl";
-import { Fragment } from "react";
+import { Fragment, useMemo } from "react";
 import {
 	finite,
 	formatDate,
@@ -16,13 +17,24 @@ import {
 } from "./format";
 
 export type UblInvoiceProps = {
-	/** Parsed UBL invoice, e.g. from `parseUblInvoice` in `@financica/ubl`. */
-	invoice: UblInvoiceData;
 	/** Locale for currency formatting. Defaults to `en-US`. */
 	locale?: string;
 	/** Extra class names appended to the `.ubl-invoice` root. */
 	className?: string;
-};
+	/** Rendered when `xml` is provided but cannot be parsed. Defaults to `null`. */
+	fallback?: React.ReactNode;
+} & (
+	| {
+			/** Raw UBL / Peppol invoice XML. Parsed internally. */
+			xml: string;
+			invoice?: never;
+	  }
+	| {
+			/** Pre-parsed UBL invoice, e.g. from `parseUblInvoice`. */
+			invoice: UblInvoiceData;
+			xml?: never;
+	  }
+);
 
 const TAX_CATEGORY_LABELS: Record<string, string> = {
 	S: "Standard rate",
@@ -232,15 +244,22 @@ const PaymentSection: React.FC<{
 };
 
 /**
- * Render a parsed UBL / Peppol BIS Billing 3.0 invoice as a human-readable
- * document. All text is React-escaped; the markup is scoped under the
- * `.ubl-invoice` class (import the package stylesheet to style it).
+ * Render a UBL / Peppol BIS Billing 3.0 invoice as a human-readable document.
+ * Pass raw `xml` (parsed internally) or a pre-parsed `invoice` object. All text
+ * is React-escaped; the markup is scoped under the `.ubl-invoice` class (import
+ * the package stylesheet to style it).
  */
-export const UblInvoice: React.FC<UblInvoiceProps> = ({
-	invoice,
-	locale = "en-US",
-	className,
-}) => {
+export const UblInvoice: React.FC<UblInvoiceProps> = (props) => {
+	const { locale = "en-US", className } = props;
+	const xml = "xml" in props ? props.xml : undefined;
+	const provided = "invoice" in props ? props.invoice : undefined;
+	const invoice = useMemo(
+		() => (xml !== undefined ? parseUblInvoice(xml) : (provided ?? null)),
+		[xml, provided],
+	);
+
+	if (!invoice) return <>{props.fallback ?? null}</>;
+
 	const currency = invoice.currency || "EUR";
 	const money = (value: number) => formatMoney(currency, value, locale);
 	const isCreditNote = invoice.documentType === "CreditNote";

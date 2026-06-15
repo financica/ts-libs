@@ -119,6 +119,20 @@ describe("UblInvoice", () => {
 	});
 });
 
+describe("UblInvoice xml input", () => {
+	it("renders the fallback when xml cannot be parsed", () => {
+		const html = renderToStaticMarkup(
+			<UblInvoice xml="not valid ubl" fallback={<p>broken</p>} />,
+		);
+		expect(html).toBe("<p>broken</p>");
+	});
+
+	it("renders nothing when xml is unparseable and no fallback is given", () => {
+		const html = renderToStaticMarkup(<UblInvoice xml="not valid ubl" />);
+		expect(html).toBe("");
+	});
+});
+
 describe("renderUblInvoiceHtml", () => {
 	it("returns a self-contained HTML document with inlined styles", () => {
 		const html = renderUblInvoiceHtml(baseInvoice);
@@ -127,5 +141,9 @@ describe("renderUblInvoiceHtml", () => {
 		expect(html).toContain(".ubl-invoice");
 		expect(html).toContain('<article class="ubl-invoice">');
 		expect(html).toContain("Acme BV");
+	});
+
+	it("throws when given unparseable xml", () => {
+		expect(() => renderUblInvoiceHtml("not valid ubl")).toThrow(/could not parse/i);
 	});
 });
