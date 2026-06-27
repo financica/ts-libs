@@ -1,6 +1,11 @@
 # @financica/ubl
 
-TypeScript parser for [UBL (Universal Business Language)](https://www.oasis-open.org/committees/ubl/) invoice XML documents. Parses UBL 2.1 Invoice and CreditNote documents into typed objects, with an optional normalization layer that produces a flat DTO suitable for database storage or API responses.
+TypeScript toolkit for [UBL (Universal Business Language)](https://www.oasis-open.org/committees/ubl/) invoice XML documents. Parses UBL 2.1 Invoice and CreditNote documents into typed objects, with an optional normalization layer that produces a flat DTO suitable for database storage or API responses, and builds Peppol BIS Billing 3.0 documents from a vendor-neutral model.
+
+The package is split into two entry points:
+
+- `@financica/ubl` — the parse side: read UBL XML into typed objects (`parseUblInvoice`, `normalizeUblResponse`, MLR parsing).
+- `@financica/ubl/build` — the build side: assemble a `UblDocument` and serialize it to Peppol BIS Billing 3.0 XML.
 
 ## Installation
 
@@ -54,6 +59,90 @@ const result = parseUblInvoiceDocument({
 ```
 
 Handles UTF-8 BOM stripping automatically.
+
+### Build UBL XML
+
+Construct a `UblDocument` — a thin, vendor-neutral mirror of the Peppol BIS
+Billing 3.0 fields — and serialize it with `serializeUblDocument`. Builders and
+helpers for parties, tax totals, identifiers, and attachments are exported from
+the same subpath.
+
+```typescript
+import { serializeUblDocument, type UblDocument } from "@financica/ubl/build";
+
+const doc: UblDocument = {
+	documentType: "invoice",
+	id: "INV-001",
+	issueDate: "2026-01-15",
+	dueDate: "2026-02-14",
+	note: null,
+	currency: "EUR",
+	buyerReference: null,
+	precedingInvoiceId: null,
+	supplier: {
+		endpoint: { scheme: "0208", value: "0800279001" },
+		name: "Acme BV",
+		legalName: "Acme BV",
+		vatNumber: "BE0800279001",
+		companyId: { value: "0800279001", scheme: "0208" },
+		address: {
+			street: "Rue de la Loi 1",
+			additionalStreet: null,
+			city: "Brussels",
+			postalZone: "1000",
+			countrySubentity: null,
+			countryCode: "BE",
+		},
+	},
+	customer: {
+		endpoint: { scheme: "0208", value: "0123456789" },
+		name: "Globex SA",
+		legalName: "Globex SA",
+		vatNumber: "BE0123456789",
+		companyId: { value: "0123456789", scheme: "0208" },
+		address: {
+			street: "Avenue Louise 50",
+			additionalStreet: null,
+			city: "Brussels",
+			postalZone: "1050",
+			countrySubentity: null,
+			countryCode: "BE",
+		},
+	},
+	lines: [
+		{
+			id: "1",
+			name: "Consulting services",
+			quantity: 1,
+			unitCode: "C62",
+			lineExtensionAmount: 100,
+			priceAmount: 100,
+			taxCategory: { id: "S", percent: 21 },
+		},
+	],
+	taxTotal: {
+		taxAmount: 21,
+		subtotals: [
+			{ taxableAmount: 100, taxAmount: 21, category: { id: "S", percent: 21 } },
+		],
+	},
+	monetaryTotal: {
+		lineExtensionAmount: 100,
+		taxExclusiveAmount: 100,
+		taxInclusiveAmount: 121,
+		payableAmount: 121,
+	},
+	attachments: [],
+};
+
+const xml = serializeUblDocument(doc);
+```
+
+Set `documentType: "creditNote"` (with `precedingInvoiceId` referencing the
+original invoice) to emit a `CreditNote` instead. The build subpath also exports
+helpers such as `buildSupplierParty`, `buildTaxTotals`, `buildCompanyId`,
+`buildPdfAttachment`, and Peppol identifier utilities (`resolveVatEndpoint`,
+`parsePeppolEndpoint`, `listPeppolReceiverIdentifierCandidates`).
 
 ## Supported document types
 
