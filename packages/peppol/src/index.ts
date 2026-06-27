@@ -16,8 +16,10 @@ export {
 export {
 	buildCanonicalParticipantId,
 	buildParticipantId,
-	buildSmpHostname,
+	buildSmlHostname,
 	lookupPeppolParticipant,
 	parseServiceGroupDocumentTypes,
+	parseSmpUrlFromNaptrRegexp,
 	type PeppolLookupResult,
+	type PeppolSmlEnvironment,
 } from "./smp-lookup";
