@@ -3,8 +3,9 @@ import { classifyPeppolDocumentType } from "../src/document-types";
 import {
 	buildCanonicalParticipantId,
 	buildParticipantId,
-	buildSmpHostname,
+	buildSmlHostname,
 	parseServiceGroupDocumentTypes,
+	parseSmpUrlFromNaptrRegexp,
 } from "../src/smp-lookup";
 
 describe("buildParticipantId", () => {
@@ -19,18 +20,47 @@ describe("buildParticipantId", () => {
 	});
 });
 
-describe("buildSmpHostname", () => {
-	// Expected hash derived independently with `md5sum`, not the production code:
-	//   printf '%s' 'iso6523-actorid-upis::9915:test' | md5sum
-	const EXPECTED =
-		"B-26a4b512669c6f336bb538fbd2624809.iso6523-actorid-upis.edelivery.tech.ec.europa.eu";
+describe("buildSmlHostname", () => {
+	// The exact hostname OpenPeppol publishes for the SMK test participant
+	// `9915:test` (see the CNAME→NAPTR migration spec). Derived independently as
+	//   strip-pad(base32(sha256(lowercase("9915:test")))) = eh5boav…dw6a
+	const TEST_HASH = "eh5boavaktmbgzyh2a63dz4qov33fvp5nsdvqklucfraayoodw6a";
 
-	it("follows the OpenPeppol SML hostname algorithm", () => {
-		expect(buildSmpHostname("iso6523-actorid-upis::9915:test")).toBe(EXPECTED);
+	it("follows the OpenPeppol NAPTR SML hostname algorithm (test SMK)", () => {
+		expect(buildSmlHostname("9915:test", "test")).toBe(
+			`${TEST_HASH}.iso6523-actorid-upis.participant.sml.test.tech.peppol.org`,
+		);
+	});
+
+	it("targets the production SML zone by default", () => {
+		expect(buildSmlHostname("9915:test")).toBe(
+			`${TEST_HASH}.iso6523-actorid-upis.participant.sml.prod.tech.peppol.org`,
+		);
 	});
 
 	it("lowercases the identifier before hashing", () => {
-		expect(buildSmpHostname("iso6523-actorid-upis::9915:TEST")).toBe(EXPECTED);
+		expect(buildSmlHostname("9915:TEST", "test")).toBe(
+			buildSmlHostname("9915:test", "test"),
+		);
+	});
+});
+
+describe("parseSmpUrlFromNaptrRegexp", () => {
+	it("extracts the SMP URL from a Meta:SMP U-NAPTR regexp", () => {
+		expect(parseSmpUrlFromNaptrRegexp("!.*!https://smp.onfact.be!")).toBe(
+			"https://smp.onfact.be",
+		);
+	});
+
+	it("strips a trailing slash", () => {
+		expect(parseSmpUrlFromNaptrRegexp("!.*!https://smp.elma-smp.no/!")).toBe(
+			"https://smp.elma-smp.no",
+		);
+	});
+
+	it("rejects a regexp without an http(s) replacement", () => {
+		expect(parseSmpUrlFromNaptrRegexp("!.*!!")).toBeNull();
+		expect(parseSmpUrlFromNaptrRegexp("")).toBeNull();
 	});
 });
 

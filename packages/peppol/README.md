@@ -14,9 +14,10 @@ npm install @financica/peppol
 
 ## Participant reachability (SML → SMP)
 
-Resolve a participant's SML hostname and read its SMP `ServiceGroup` to confirm
-registration and list the document types it can receive. **Node only** (uses
-`node:crypto` and reads the SMP over HTTP).
+Resolve a participant's SML `NAPTR` record to its SMP, then read the SMP's
+`ServiceGroup` to confirm registration and list the document types it can
+receive. **Node only** (uses `node:crypto` for the SML hash and `node:dns` for
+the NAPTR lookup).
 
 ```ts
 import { lookupPeppolParticipant } from "@financica/peppol";
@@ -25,11 +26,16 @@ const result = await lookupPeppolParticipant({ scheme: "9925", value: "BE0123456
 // → { status: "registered", participantId: "9925:BE0123456789", documentTypes: ["invoice", "credit-note"] }
 //   { status: "not_registered", participantId }
 //   { status: "error", participantId, message }
+
+// Pass `environment: "test"` to query the test SMK instead of production.
 ```
 
-A failed DNS resolution means the participant is not registered; transport
-errors return `status: "error"` so callers can distinguish "absent" from
-"couldn't check".
+This targets the **OpenPeppol-operated SML** (`…sml.prod.tech.peppol.org`),
+which replaced the retired EC `edelivery.tech.ec.europa.eu` zone — and the
+modern **NAPTR** discovery that superseded the old CNAME scheme. A DNS name that
+doesn't exist (or carries no NAPTR) means the participant is not registered;
+any other DNS/transport failure returns `status: "error"` so callers can
+distinguish "absent" from "couldn't check".
 
 ## Directory enrichment
 
