@@ -1,11 +1,11 @@
-# @ingram-tech/ubl
+# @financica/ubl
 
 TypeScript parser for [UBL (Universal Business Language)](https://www.oasis-open.org/committees/ubl/) invoice XML documents. Parses UBL 2.1 Invoice and CreditNote documents into typed objects, with an optional normalization layer that produces a flat DTO suitable for database storage or API responses.
 
 ## Installation
 
 ```bash
-npm install @ingram-tech/ubl
+npm install @financica/ubl
 ```
 
 ## Usage
@@ -13,7 +13,7 @@ npm install @ingram-tech/ubl
 ### Parse UBL XML
 
 ```typescript
-import { parseUblInvoice } from "@ingram-tech/ubl";
+import { parseUblInvoice } from "@financica/ubl";
 
 const xml = `<?xml version="1.0"?>
 <Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" ...>
@@ -33,7 +33,7 @@ Returns a typed `UblInvoice` object, or `null` if the XML is not a valid UBL Inv
 ### Normalize to DTO
 
 ```typescript
-import { normalizeUblResponse } from "@ingram-tech/ubl";
+import { normalizeUblResponse } from "@financica/ubl";
 
 const { extracted, rawPayload } = normalizeUblResponse(xml, "doc-123");
 // extracted.invoice.invoice_number => "INV-001"
@@ -44,7 +44,7 @@ const { extracted, rawPayload } = normalizeUblResponse(xml, "doc-123");
 ### Parse from raw bytes
 
 ```typescript
-import { parseUblInvoiceDocument } from "@ingram-tech/ubl";
+import { parseUblInvoiceDocument } from "@financica/ubl";
 
 const result = parseUblInvoiceDocument({
 	bytes: new Uint8Array(buffer),
