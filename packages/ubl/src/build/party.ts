@@ -1,6 +1,10 @@
 import { normalizeAddress } from "./address";
-import { buildCompanyId, parsePeppolEndpoint } from "./identifiers";
-import type { UblParty } from "./ubl/types";
+import {
+	buildCompanyId,
+	parsePeppolEndpoint,
+	resolveVatEndpoint,
+} from "./identifiers";
+import type { UblAddress, UblEndpoint, UblParty } from "./ubl/types";
 import { normalizeString } from "./utils";
 
 /**
@@ -58,5 +62,67 @@ export const buildSupplierParty = (supplier: UblSupplier): UblParty => {
 	};
 };
 
-// buildCustomerPartyFromStripeInvoice lives in @financica/stripe-ubl (it is
-// Stripe-specific); this module is the generic UBL build core.
+/**
+ * Caller-provided customer (buyer) data, normalized into a stable shape.
+ *
+ * Each consumer (the Stripe adapter, app-specific row builders) resolves its
+ * own identifiers and address, then hands this generic shape to
+ * {@link buildCustomerParty}, so the Peppol routing logic lives in one place.
+ */
+export interface UblCustomer {
+	/** Display + legal name shown on the invoice. */
+	name: string;
+	/** Customer address, already normalized by the caller. */
+	address: UblAddress;
+	/**
+	 * The customer's ISO 3166-1 alpha-2 country, used to resolve VAT/registration
+	 * schemes for identifiers that don't carry a country prefix. Pass the
+	 * customer's *own* country (never the supplier's) so the document is not
+	 * mis-routed; falls back to the address country when omitted.
+	 */
+	countryCode?: string | null;
+	/** Peppol participant identifier in `scheme:value` form (e.g. `"0208:0793904121"`). */
+	peppolID?: string | null;
+	/** Global Location Number (resolved under EAS `0088`). */
+	glnNumber?: string | null;
+	/** Generic tax/registration number (no VAT prefix). */
+	taxNumber?: string | null;
+	/** VAT number with country prefix (e.g. `"BE0793904121"`). */
+	vatNumber?: string | null;
+}
+
+/**
+ * Convert a {@link UblCustomer} into the customer (buyer) party.
+ *
+ * The Peppol `EndpointID` (BT-49) — which routes the document — is resolved in
+ * priority order: an explicit `endpointOverride` (e.g. a confirmed-registered
+ * identifier), then an explicit Peppol ID, then a GLN (scheme `0088`), then the
+ * VAT number mapped to its country's VAT EAS scheme (e.g. BE → `9925`). That
+ * last step matters because most data stores hold a customer's VAT without a
+ * scheme, so without it a VAT-only customer would have no endpoint and the
+ * document would be unroutable.
+ */
+export const buildCustomerParty = (
+	customer: UblCustomer,
+	endpointOverride?: UblEndpoint | null,
+): UblParty => {
+	const countryCode =
+		normalizeString(customer.countryCode) ?? customer.address.countryCode;
+	const endpoint =
+		endpointOverride ??
+		parsePeppolEndpoint(customer.peppolID) ??
+		(customer.glnNumber ? { scheme: "0088", value: customer.glnNumber } : null) ??
+		resolveVatEndpoint({ vatNumber: customer.vatNumber, countryCode });
+
+	return {
+		endpoint,
+		name: customer.name,
+		address: customer.address,
+		vatNumber: normalizeString(customer.vatNumber),
+		legalName: customer.name,
+		companyId: buildCompanyId({
+			countryCode,
+			companyNumber: customer.taxNumber ?? null,
+		}),
+	};
+};

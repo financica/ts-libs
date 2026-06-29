@@ -21,8 +21,14 @@ export type {
 	UblTaxTotal,
 } from "./ubl/types";
 
-// ── Party builder ──────────────────────────────────────────────────────
-export { buildSupplierParty, type SupplierVatStatus, type UblSupplier } from "./party";
+// ── Party builders ─────────────────────────────────────────────────────
+export {
+	buildCustomerParty,
+	buildSupplierParty,
+	type SupplierVatStatus,
+	type UblCustomer,
+	type UblSupplier,
+} from "./party";
 
 // ── Re-usable helpers ──────────────────────────────────────────────────
 export { normalizeAddress } from "./address";
