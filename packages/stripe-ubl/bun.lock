@@ -5,7 +5,7 @@
     "": {
       "name": "@financica/scrada-stripe",
       "dependencies": {
-        "@financica/ubl": "^0.6.0",
+        "@financica/ubl": "^0.7.0",
       },
       "devDependencies": {
         "@biomejs/biome": "^2.4.13",
@@ -97,7 +97,7 @@
 
     "@esbuild/win32-x64": ["@esbuild/win32-x64@0.27.7", "", { "os": "win32", "cpu": "x64" }, "sha512-56hiAJPhwQ1R4i+21FVF7V8kSD5zZTdHcVuRFMW0hn753vVfQN8xlx4uOPT4xoGH0Z/oVATuR82AiqSTDIpaHg=="],
 
-    "@financica/ubl": ["@financica/ubl@0.6.0", "", { "dependencies": { "@xmldom/xmldom": "^0.8.11" } }, "sha512-YuXqvno7wy6dMXyKTXJKcCe3ozGJCsKHOm/e9FuMIQQMDmOZSjb8KKr0HF3F+6FNqHIKos7sDx47257LVu6ZIg=="],
+    "@financica/ubl": ["@financica/ubl@0.7.0", "", { "dependencies": { "@xmldom/xmldom": "^0.8.11" } }, "sha512-OfO+Aa7FN7pdv2ONAZNtvKWqEi2HeUb6OFpAWvSe86jjBo6633m8U8z3EtWewbgju+tYHL/OxJB6+KD7p3qmNw=="],
 
     "@jridgewell/gen-mapping": ["@jridgewell/gen-mapping@0.3.13", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.0", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA=="],
 
