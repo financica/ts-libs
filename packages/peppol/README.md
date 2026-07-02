@@ -54,7 +54,10 @@ const entry = await lookupPeppolDirectory(
 ## EAS schemes by country
 
 ```ts
-import { getPeppolCountryScheme, PEPPOL_COUNTRY_SCHEMES } from "@financica/peppol/schemes";
+import {
+	getPeppolCountryScheme,
+	PEPPOL_COUNTRY_SCHEMES,
+} from "@financica/peppol/schemes";
 
 getPeppolCountryScheme("DE"); // → { country: "DE", scheme: "9930", example: "DE123456789" }
 ```
