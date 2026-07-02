@@ -21,6 +21,16 @@ export {
 	scradaApiErrorFromResponse,
 	summarizeScradaErrorDetails,
 } from "./errors";
+export {
+	advertisesPeppolCreditNote,
+	advertisesPeppolInvoice,
+	isPeppolParticipantRegistered,
+	type PeppolBillingDocumentType,
+	type PeppolParticipantLookupClient,
+	type PeppolParticipantMatch,
+	peppolLookupSupportsDocument,
+	probePeppolParticipant,
+} from "./lookup";
 
 export type {
 	CompanyInvoiceLineVatType,

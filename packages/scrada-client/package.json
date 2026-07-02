@@ -1,6 +1,6 @@
 {
 	"name": "@financica/scrada-client",
-	"version": "0.4.0",
+	"version": "0.5.0",
 	"description": "TypeScript HTTP client for the Scrada Peppol API (https://api.scrada.be/v1).",
 	"homepage": "https://github.com/financica/scrada-client#readme",
 	"bugs": "https://github.com/financica/scrada-client/issues",
