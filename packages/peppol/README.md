@@ -59,10 +59,28 @@ import { getPeppolCountryScheme, PEPPOL_COUNTRY_SCHEMES } from "@financica/peppo
 getPeppolCountryScheme("DE"); // → { country: "DE", scheme: "9930", example: "DE123456789" }
 ```
 
-`@financica/peppol/schemes` and `@financica/peppol/document-types` are free of
-Node built-ins, so they are safe to import in a browser bundle (e.g. to build a
-country dropdown or label document types). The main entry pulls in the Node-only
-lookups.
+`@financica/peppol/schemes`, `@financica/peppol/document-types`, and
+`@financica/peppol/countries` are free of Node built-ins, so they are safe to
+import in a browser bundle (e.g. to build a country dropdown or label document
+types). The main entry pulls in the Node-only lookups.
+
+## Country e-invoicing profiles
+
+Provider-neutral, hand-verified per-country facts for building an e-invoicing
+integration: the legal delivery network, the company and (separate, when one
+exists) VAT participant EAS schemes, where the VAT/registration number is
+validated (VIES vs BRREG), statutory archival years, and the org-number length
+to gate onboarding inputs on.
+
+```ts
+import { getCountryEInvoicingProfile } from "@financica/peppol/countries";
+
+getCountryEInvoicingProfile("NO");
+// → { network: "peppol", companyIdentifierScheme: "0192", vatIdentifierScheme: null, … }
+```
+
+A test pins these profiles to the addressing table in `./schemes` so the two
+views cannot drift.
 
 ## Document type classification
 
@@ -71,6 +89,10 @@ import { classifyPeppolDocumentType } from "@financica/peppol/document-types";
 
 classifyPeppolDocumentType(rawBusdoxId); // → "invoice" | "credit-note" | "order" | … | "other"
 ```
+
+`document-types` also exports the canonical BIS Billing 3.0, Self-Billing 3.0,
+and Invoice Response document type and process identifiers for registration
+payloads.
 
 ## License
 

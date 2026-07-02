@@ -1,6 +1,6 @@
 {
 	"name": "@financica/peppol",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "Peppol network toolkit for TypeScript: participant discovery via SML/SMP, Peppol Directory lookups, EAS schemes, and document-type classification.",
 	"keywords": [
 		"peppol",
@@ -33,6 +33,10 @@
 		"./document-types": {
 			"import": "./dist/document-types.js",
 			"types": "./dist/document-types.d.ts"
+		},
+		"./countries": {
+			"import": "./dist/countries.js",
+			"types": "./dist/countries.d.ts"
 		}
 	},
 	"main": "./dist/index.js",
