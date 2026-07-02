@@ -1,3 +1,8 @@
+export {
+	extractUblEmbeddedAttachments,
+	isPdfLikeAttachment,
+	type UblEmbeddedAttachment,
+} from "./attachments.js";
 export { parseUblInvoice } from "./parser.js";
 export {
 	isPeppolMessageLevelResponse,
