@@ -103,7 +103,11 @@ export const buildUblInvoiceDocument = (params: BuildUblInvoiceParams): UblDocum
 		documentType: "invoice",
 		id: invoice.number ?? invoice.id,
 		issueDate,
-		dueDate: isoDateFromUnixSeconds(invoice.due_date),
+		// BT-9. Peppol BR-CO-25 requires a payment due date (or payment terms)
+		// whenever a positive amount is payable. Stripe `charge_automatically`
+		// invoices carry no `due_date`, so fall back to the issue date (due on
+		// receipt) — keeping every invoice, paid or open, schematron-valid.
+		dueDate: isoDateFromUnixSeconds(invoice.due_date) ?? issueDate,
 		note: normalizeString(invoice.description),
 		currency: validateCurrency(invoice.currency),
 		buyerReference: normalizeString(params.buyerReference),
