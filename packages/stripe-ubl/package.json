@@ -1,6 +1,6 @@
 {
 	"name": "@financica/stripe-ubl",
-	"version": "0.5.0",
+	"version": "0.5.1",
 	"description": "Convert Stripe invoices and credit notes into Peppol BIS Billing 3.0 UBL documents.",
 	"license": "MIT",
 	"repository": {

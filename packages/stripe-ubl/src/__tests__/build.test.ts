@@ -171,6 +171,25 @@ describe("buildUblInvoiceDocument", () => {
 		expect(doc.dueDate).toBe("2024-05-01");
 	});
 
+	it("falls back the due date to the issue date when Stripe has none (BR-CO-25)", () => {
+		// `charge_automatically` invoices carry no due_date; without a fallback the
+		// UBL would omit BT-9 and BT-20 and Peppol rejects any positive payable.
+		const finalizedAt = Math.floor(Date.UTC(2026, 3, 11, 9) / 1000);
+		const doc = buildUblInvoiceDocument({
+			invoice: buildStripeInvoice({
+				collection_method: "charge_automatically",
+				due_date: null,
+				status: "paid",
+				amount_due: 12100,
+				amount_paid: 12100,
+				status_transitions: { finalized_at: finalizedAt },
+			}),
+			supplier: buildSupplier(),
+		});
+		expect(doc.issueDate).toBe("2026-04-11");
+		expect(doc.dueDate).toBe("2026-04-11");
+	});
+
 	it("rejects an invalid currency", () => {
 		expect(() =>
 			buildUblInvoiceDocument({
