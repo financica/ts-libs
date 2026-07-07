@@ -1,4 +1,4 @@
-import type { Environment } from "./types.js";
+import type { Environment } from "./types";
 
 const ENDPOINTS = {
 	test: {
@@ -45,4 +45,8 @@ export function myminfinDocumentsUrl(env: Environment): string {
 
 export function intervatVatUrl(env: Environment, vatNumber: string): string {
 	return `${apiBase(env)}/Intervat/api/OAU/v1/declaration/vat/${vatNumber}`;
+}
+
+export function intervatOpenApiUrl(env: Environment): string {
+	return `${apiBase(env)}/Intervat/api/OAU/v1/doc/intervat-external-api.yaml`;
 }

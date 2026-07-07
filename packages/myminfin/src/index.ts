@@ -1,6 +1,6 @@
-export { MyMinFinAuth } from "./auth.js";
-export { MyMinFinClient } from "./client.js";
-export { IntervatClient } from "./intervat.js";
+export { MyMinFinAuth } from "./auth";
+export { MyMinFinClient } from "./client";
+export { IntervatClient } from "./intervat";
 export {
 	apiBase,
 	oidcBase,
@@ -11,7 +11,8 @@ export {
 	issuerUrl,
 	myminfinDocumentsUrl,
 	intervatVatUrl,
-} from "./endpoints.js";
+	intervatOpenApiUrl,
+} from "./endpoints";
 export type {
 	Environment,
 	AuthConfig,
@@ -32,5 +33,5 @@ export type {
 	ProblemDetail,
 	BusinessRuleError,
 	BusinessValidationError,
-} from "./types.js";
-export { MyMinFinApiError } from "./types.js";
+} from "./types";
+export { MyMinFinApiError } from "./types";
