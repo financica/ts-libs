@@ -1,6 +1,6 @@
 import { createHash, randomBytes } from "node:crypto";
 import { importPKCS8, SignJWT } from "jose";
-import { authorizeUrl, tokenUrl } from "./endpoints.js";
+import { authorizeUrl, tokenUrl } from "./endpoints";
 import type {
 	AuthConfig,
 	AuthorizationUrlParams,
@@ -8,8 +8,8 @@ import type {
 	RefreshParams,
 	TokenExchangeParams,
 	TokenSet,
-} from "./types.js";
-import { MyMinFinApiError } from "./types.js";
+} from "./types";
+import { MyMinFinApiError } from "./types";
 
 /**
  * Handles OIDC/OAuth2 authentication with the SPF Finances Authorization Server.
@@ -33,7 +33,7 @@ export class MyMinFinAuth {
 	getAuthorizationUrl(params: AuthorizationUrlParams): AuthorizationUrlResult {
 		const state = generateRandom();
 		const nonce = generateRandom();
-		const codeVerifier = generateCodeVerifier();
+		const codeVerifier = generateRandom();
 		const codeChallenge = computeCodeChallenge(codeVerifier);
 
 		const baseScopes = ["openid", "profile"];
@@ -177,10 +177,6 @@ export class MyMinFinAuth {
 // ---------------------------------------------------------------------------
 
 function generateRandom(): string {
-	return base64UrlEncode(randomBytes(32));
-}
-
-function generateCodeVerifier(): string {
 	return base64UrlEncode(randomBytes(32));
 }
 

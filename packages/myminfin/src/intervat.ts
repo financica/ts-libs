@@ -1,11 +1,10 @@
-import { intervatVatUrl } from "./endpoints.js";
-import { assertOk } from "./client.js";
+import { intervatOpenApiUrl, intervatVatUrl } from "./endpoints";
+import { assertOk, authorizedFetch } from "./http";
 import type {
 	ClientConfig,
-	BusinessValidationError,
+	Environment,
 	VatSubmissionResult,
-} from "./types.js";
-import { MyMinFinApiError } from "./types.js";
+} from "./types";
 
 /**
  * Client for the Intervat VAT return submission API.
@@ -15,11 +14,11 @@ import { MyMinFinApiError } from "./types.js";
  */
 export class IntervatClient {
 	private readonly accessToken: string;
-	private readonly config: ClientConfig;
+	private readonly environment: Environment;
 
 	constructor(config: ClientConfig) {
 		this.accessToken = config.accessToken;
-		this.config = config;
+		this.environment = config.environment;
 	}
 
 	/**
@@ -29,39 +28,8 @@ export class IntervatClient {
 	 * @param xml - The VAT return XML content (conforming to the Intervat XSD)
 	 * @returns Submission result including the proof UUID
 	 */
-	async submitVatReturn(
-		vatNumber: string,
-		xml: string,
-	): Promise<VatSubmissionResult> {
-		const url = intervatVatUrl(this.config.environment, vatNumber);
-
-		const res = await fetch(url, {
-			method: "POST",
-			headers: {
-				Authorization: `Bearer ${this.accessToken}`,
-				"Content-Type": "application/xml",
-				Accept: "application/json",
-			},
-			body: xml,
-		});
-
-		if (!res.ok) {
-			let problem: BusinessValidationError | undefined;
-			try {
-				problem = (await res.json()) as BusinessValidationError;
-			} catch {
-				// Not JSON
-			}
-
-			const message =
-				problem?.detail ??
-				problem?.title ??
-				`HTTP ${res.status} ${res.statusText}`;
-			throw new MyMinFinApiError(message, res.status, problem);
-		}
-
-		const json = (await res.json()) as VatSubmissionResult;
-		return json;
+	submitVatReturn(vatNumber: string, xml: string): Promise<VatSubmissionResult> {
+		return this.submit(vatNumber, xml, "application/xml");
 	}
 
 	/**
@@ -71,61 +39,46 @@ export class IntervatClient {
 	 * @param file - File content as a Buffer or Uint8Array
 	 * @param contentType - MIME type ("application/xml" or "application/zip")
 	 */
-	async submitVatReturnFile(
+	submitVatReturnFile(
 		vatNumber: string,
 		file: Buffer | Uint8Array,
 		contentType: "application/xml" | "application/zip" = "application/xml",
 	): Promise<VatSubmissionResult> {
-		const url = intervatVatUrl(this.config.environment, vatNumber);
-
-		const res = await fetch(url, {
-			method: "POST",
-			headers: {
-				Authorization: `Bearer ${this.accessToken}`,
-				"Content-Type": contentType,
-				Accept: "application/json",
-			},
-			body: Buffer.from(file),
-		});
-
-		if (!res.ok) {
-			let problem: BusinessValidationError | undefined;
-			try {
-				problem = (await res.json()) as BusinessValidationError;
-			} catch {
-				// Not JSON
-			}
-
-			const message =
-				problem?.detail ??
-				problem?.title ??
-				`HTTP ${res.status} ${res.statusText}`;
-			throw new MyMinFinApiError(message, res.status, problem);
-		}
-
-		const json = (await res.json()) as VatSubmissionResult;
-		return json;
+		return this.submit(vatNumber, Buffer.from(file), contentType);
 	}
 
 	/**
 	 * Download the OpenAPI specification YAML for the Intervat API.
 	 */
 	async getOpenApiSpec(): Promise<string> {
-		const base =
-			this.config.environment === "test"
-				? "https://wsapi-a.minfin.be"
-				: "https://wsapi.fgov.minfin.be";
-
-		const url = `${base}/Intervat/api/OAU/v1/doc/intervat-external-api.yaml`;
-
-		const res = await fetch(url, {
-			headers: {
-				Authorization: `Bearer ${this.accessToken}`,
-				Accept: "application/octet-stream",
-			},
-		});
-
+		const res = await authorizedFetch(
+			intervatOpenApiUrl(this.environment),
+			this.accessToken,
+			{ headers: { Accept: "application/octet-stream" } },
+		);
 		await assertOk(res);
 		return res.text();
+	}
+
+	private async submit(
+		vatNumber: string,
+		body: BodyInit,
+		contentType: string,
+	): Promise<VatSubmissionResult> {
+		const res = await authorizedFetch(
+			intervatVatUrl(this.environment, vatNumber),
+			this.accessToken,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": contentType,
+					Accept: "application/json",
+				},
+				body,
+			},
+		);
+
+		await assertOk(res);
+		return (await res.json()) as VatSubmissionResult;
 	}
 }
