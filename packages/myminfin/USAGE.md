@@ -3,6 +3,7 @@
 TypeScript client for the Belgian SPF Finances MyMinFin and Intervat APIs.
 
 Provides typed access to:
+
 - **MyMinFin API** — Search and download documents from MyDoc / MyDocPro
 - **Intervat API** — Submit VAT returns via XML
 - **OIDC Authentication** — Full OAuth2 + PKCE flow with JWT client authentication
@@ -22,6 +23,7 @@ All API calls require an OAuth2 access token obtained through the SPF Finances O
 ### Prerequisites
 
 You need:
+
 - A **client ID** from SPF Finances registration
 - An **RS256 private key** (PEM format) whose public key is published at your JWKS URL
 - The **key ID (kid)** matching your public key
@@ -33,17 +35,17 @@ You need:
 import { MyMinFinAuth } from "@ingram-tech/myminfin";
 
 const auth = new MyMinFinAuth({
-  clientId: "YourClientId",
-  privateKey: process.env.PRIVATE_KEY!, // PEM string
-  keyId: "your-key-id",
-  redirectUri: "https://yourapp.com/callback",
-  environment: "test", // or "production"
+	clientId: "YourClientId",
+	privateKey: process.env.PRIVATE_KEY!, // PEM string
+	keyId: "your-key-id",
+	redirectUri: "https://yourapp.com/callback",
+	environment: "test", // or "production"
 });
 
 // Generate the URL to redirect the legal representative to
 const { url, state, nonce, codeVerifier } = auth.getAuthorizationUrl({
-  ecb: "0123456789", // 10-digit enterprise number
-  scopes: ["myminfin_docs_read"], // API-specific scopes
+	ecb: "0123456789", // 10-digit enterprise number
+	scopes: ["myminfin_docs_read"], // API-specific scopes
 });
 
 // Store state, nonce, codeVerifier in the user's session
@@ -55,9 +57,9 @@ const { url, state, nonce, codeVerifier } = auth.getAuthorizationUrl({
 ```ts
 // In your callback handler, after the user is redirected back:
 const tokens = await auth.exchangeCode({
-  code: callbackParams.code,
-  codeVerifier: session.codeVerifier,
-  redirectUri: "https://yourapp.com/callback",
+	code: callbackParams.code,
+	codeVerifier: session.codeVerifier,
+	redirectUri: "https://yourapp.com/callback",
 });
 
 // tokens.accessToken  — use for API calls
@@ -72,7 +74,7 @@ Access tokens expire after ~5 minutes. Refresh tokens last 7 days but are single
 
 ```ts
 const newTokens = await auth.refreshToken({
-  refreshToken: storedRefreshToken,
+	refreshToken: storedRefreshToken,
 });
 // Use newTokens.accessToken for subsequent API calls
 // Store newTokens.refreshToken (the old one is now invalid)
@@ -86,8 +88,8 @@ Search and download documents available on MyMinFin for companies you have manda
 import { MyMinFinClient } from "@ingram-tech/myminfin";
 
 const client = new MyMinFinClient({
-  accessToken: tokens.accessToken,
-  environment: "test",
+	accessToken: tokens.accessToken,
+	environment: "test",
 });
 ```
 
@@ -96,20 +98,20 @@ const client = new MyMinFinClient({
 ```ts
 // Search all documents for the connected company + mandated entities
 const result = await client.searchDocuments({
-  since: "2024-10-01",
+	since: "2024-10-01",
 });
 
 for (const doc of result.documents) {
-  console.log(doc.uuid, doc.type, doc.title, doc.publishDate);
+	console.log(doc.uuid, doc.type, doc.title, doc.publishDate);
 }
 ```
 
 ```ts
 // Search only for a specific company
 const result = await client.searchDocuments({
-  since: "2024-10-01",
-  ownerType: "CBE",
-  ownerIdentifier: "0662348959",
+	since: "2024-10-01",
+	ownerType: "CBE",
+	ownerIdentifier: "0662348959",
 });
 ```
 
@@ -120,7 +122,7 @@ import { writeFileSync } from "fs";
 
 // Download a document owned by the connected company
 const { content, contentType } = await client.downloadDocument(
-  "662c6014-9f62-4956-acdc-0e25a233107d"
+	"662c6014-9f62-4956-acdc-0e25a233107d",
 );
 
 writeFileSync("document.pdf", Buffer.from(content));
@@ -129,11 +131,11 @@ writeFileSync("document.pdf", Buffer.from(content));
 ```ts
 // Download a document owned by a mandated entity
 const { content } = await client.downloadDocument(
-  "63c407ac-f56f-4b28-b36b-4e1336d6be89",
-  {
-    ownerType: "SSIN",
-    ownerIdentifier: "01520605978",
-  }
+	"63c407ac-f56f-4b28-b36b-4e1336d6be89",
+	{
+		ownerType: "SSIN",
+		ownerIdentifier: "01520605978",
+	},
 );
 ```
 
@@ -146,8 +148,8 @@ import { IntervatClient } from "@ingram-tech/myminfin";
 import { readFileSync } from "fs";
 
 const intervat = new IntervatClient({
-  accessToken: tokens.accessToken,
-  environment: "test",
+	accessToken: tokens.accessToken,
+	environment: "test",
 });
 
 // Submit XML string
@@ -158,9 +160,9 @@ console.log("Submission proof UUID:", result.uuid);
 // Submit a file (XML or ZIP with annexes)
 const file = readFileSync("vat-return.zip");
 const zipResult = await intervat.submitVatReturnFile(
-  "0806153934",
-  file,
-  "application/zip"
+	"0806153934",
+	file,
+	"application/zip",
 );
 ```
 
@@ -170,9 +172,9 @@ Submission receipts (PDF/XML) are not available through the Intervat API. Use th
 
 ```ts
 const receiptDocs = await client.searchDocuments({
-  since: "2024-10-02", // day after submission
-  ownerType: "CBE",
-  ownerIdentifier: "0806153934",
+	since: "2024-10-02", // day after submission
+	ownerType: "CBE",
+	ownerIdentifier: "0806153934",
 });
 ```
 
@@ -184,14 +186,14 @@ All API errors throw `MyMinFinApiError` with structured problem details:
 import { MyMinFinApiError } from "@ingram-tech/myminfin";
 
 try {
-  await client.searchDocuments({ since: "2020-01-01" });
+	await client.searchDocuments({ since: "2020-01-01" });
 } catch (e) {
-  if (e instanceof MyMinFinApiError) {
-    console.error(e.status);           // 400
-    console.error(e.message);          // "Search filtering invalid"
-    console.error(e.problem?.detail);  // Full problem detail
-    console.error(e.problem?.instance); // Tracking UUID for support
-  }
+	if (e instanceof MyMinFinApiError) {
+		console.error(e.status); // 400
+		console.error(e.message); // "Search filtering invalid"
+		console.error(e.problem?.detail); // Full problem detail
+		console.error(e.problem?.instance); // Tracking UUID for support
+	}
 }
 ```
 
@@ -199,13 +201,13 @@ For Intervat business rule errors, the problem includes `businessrules` with mul
 
 ```ts
 try {
-  await intervat.submitVatReturn(vatNumber, xml);
+	await intervat.submitVatReturn(vatNumber, xml);
 } catch (e) {
-  if (e instanceof MyMinFinApiError && e.problem && "businessrules" in e.problem) {
-    for (const rule of e.problem.businessrules) {
-      console.error(rule.errorIdentifier, rule.descriptions.en);
-    }
-  }
+	if (e instanceof MyMinFinApiError && e.problem && "businessrules" in e.problem) {
+		for (const rule of e.problem.businessrules) {
+			console.error(rule.errorIdentifier, rule.descriptions.en);
+		}
+	}
 }
 ```
 
@@ -220,9 +222,9 @@ When rate-limited, the API returns HTTP 429 with a `Retry-After` header.
 
 ## Environments
 
-| Environment | API base | OIDC base |
-|---|---|---|
-| `test` | `https://wsapi-a.minfin.be` | `https://fediamapi-a.minfin.be` |
+| Environment  | API base                       | OIDC base                          |
+| ------------ | ------------------------------ | ---------------------------------- |
+| `test`       | `https://wsapi-a.minfin.be`    | `https://fediamapi-a.minfin.be`    |
 | `production` | `https://wsapi.minfin.fgov.be` | `https://fediamapi.minfin.fgov.be` |
 
 ## Endpoint helpers
@@ -231,9 +233,15 @@ All endpoint URLs are available as functions for advanced use cases:
 
 ```ts
 import {
-  apiBase, oidcBase, authorizeUrl, tokenUrl,
-  jwksUrl, discoveryUrl, issuerUrl,
-  myminfinDocumentsUrl, intervatVatUrl,
+	apiBase,
+	oidcBase,
+	authorizeUrl,
+	tokenUrl,
+	jwksUrl,
+	discoveryUrl,
+	issuerUrl,
+	myminfinDocumentsUrl,
+	intervatVatUrl,
 } from "@ingram-tech/myminfin";
 
 console.log(discoveryUrl("test"));
@@ -244,37 +252,89 @@ console.log(discoveryUrl("test"));
 
 ### `MyMinFinAuth`
 
-| Method | Parameters | Returns |
-|---|---|---|
-| `getAuthorizationUrl(params)` | `{ ecb, scopes? }` | `{ url, state, nonce, codeVerifier }` |
-| `exchangeCode(params)` | `{ code, codeVerifier, redirectUri }` | `Promise<TokenSet>` |
-| `refreshToken(params)` | `{ refreshToken }` | `Promise<TokenSet>` |
+| Method                        | Parameters                            | Returns                               |
+| ----------------------------- | ------------------------------------- | ------------------------------------- |
+| `getAuthorizationUrl(params)` | `{ ecb, scopes? }`                    | `{ url, state, nonce, codeVerifier }` |
+| `exchangeCode(params)`        | `{ code, codeVerifier, redirectUri }` | `Promise<TokenSet>`                   |
+| `refreshToken(params)`        | `{ refreshToken }`                    | `Promise<TokenSet>`                   |
 
 ### `MyMinFinClient`
 
-| Method | Parameters | Returns |
-|---|---|---|
-| `searchDocuments(params)` | `{ since, until?, ownerType?, ownerIdentifier? }` | `Promise<DocumentSearchResult>` |
-| `downloadDocument(uuid, params?)` | UUID string, `{ ownerType?, ownerIdentifier? }` | `Promise<{ content: ArrayBuffer, contentType: string }>` |
+| Method                            | Parameters                                        | Returns                                                  |
+| --------------------------------- | ------------------------------------------------- | -------------------------------------------------------- |
+| `searchDocuments(params)`         | `{ since, until?, ownerType?, ownerIdentifier? }` | `Promise<DocumentSearchResult>`                          |
+| `downloadDocument(uuid, params?)` | UUID string, `{ ownerType?, ownerIdentifier? }`   | `Promise<{ content: ArrayBuffer, contentType: string }>` |
 
 ### `IntervatClient`
 
-| Method | Parameters | Returns |
-|---|---|---|
-| `submitVatReturn(vatNumber, xml)` | VAT number, XML string | `Promise<VatSubmissionResult>` |
+| Method                                               | Parameters                               | Returns                        |
+| ---------------------------------------------------- | ---------------------------------------- | ------------------------------ |
+| `submitVatReturn(vatNumber, xml)`                    | VAT number, XML string                   | `Promise<VatSubmissionResult>` |
 | `submitVatReturnFile(vatNumber, file, contentType?)` | VAT number, Buffer/Uint8Array, MIME type | `Promise<VatSubmissionResult>` |
-| `getOpenApiSpec()` | — | `Promise<string>` |
+| `getOpenApiSpec()`                                   | —                                        | `Promise<string>`              |
 
 ### `TokenSet`
 
-| Field | Type | Description |
-|---|---|---|
-| `accessToken` | `string` | Bearer token for API calls |
-| `refreshToken` | `string` | Single-use token for renewal |
-| `idToken` | `string` | JWT with user identity claims |
-| `scope` | `string` | Authorized scopes |
-| `tokenType` | `string` | Always `"Bearer"` |
-| `expiresIn` | `number` | Lifetime in seconds |
+| Field          | Type     | Description                   |
+| -------------- | -------- | ----------------------------- |
+| `accessToken`  | `string` | Bearer token for API calls    |
+| `refreshToken` | `string` | Single-use token for renewal  |
+| `idToken`      | `string` | JWT with user identity claims |
+| `scope`        | `string` | Authorized scopes             |
+| `tokenType`    | `string` | Always `"Bearer"`             |
+| `expiresIn`    | `number` | Lifetime in seconds           |
+
+## Document generators
+
+Besides the API clients, the package generates the Intervat XML documents you
+submit. These are pure functions — no auth or network — so they are trivially
+testable and can run anywhere.
+
+### Periodic VAT return
+
+`buildBelgianVatReturn` maps semantic figures onto the Belgian grid and renders
+`VATConsignment` XML. The balance lands in box 71 (payable) or 72 (refundable),
+and a refund is requested automatically when in credit.
+
+```ts
+import { buildBelgianVatReturn } from "@ingram-tech/myminfin";
+
+const { xml, grid, warnings } = buildBelgianVatReturn({
+	declarant: { vatNumber: "BE0806.153.934", name: "Acme BV", countryCode: "BE" },
+	period: { year: 2026, quarter: 2 },
+	figures: {
+		standardRatedSales: [{ rate: 21, base: 1000, vat: 210 }],
+		purchaseBase: 400,
+		deductibleVat: 84,
+	},
+});
+```
+
+Today's mapping covers domestic standard-rated sales (boxes 01/02/03 + 54) and
+deductible domestic purchases (boxes 82 + 59). Intra-community, exports, reverse
+charge, corrections, investment goods and prepayments are not modelled yet;
+`warnings` flags anything that could not be mapped. Use `serializeVatReturn` if
+you already have explicit grid box amounts, or `computeBelgianVatGrid` for just
+the grid.
+
+### Annual client listing
+
+```ts
+import { generateClientListingXml } from "@ingram-tech/myminfin";
+
+const xml = generateClientListingXml({
+	declarant: { vatNumber: "0806153934", name: "Acme BV", countryCode: "BE" },
+	period: 2025,
+	clients: [
+		{
+			vatNumber: "0766280697",
+			countryCode: "BE",
+			turnover: 10500,
+			vatAmount: 2205,
+		},
+	],
+});
+```
 
 ## Development
 
