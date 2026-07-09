@@ -146,7 +146,7 @@ function asArray<T>(val: T | T[] | undefined | null): T[] {
 
 function getTagName(node: unknown): string | undefined {
 	if (typeof node !== "object" || node === null) return undefined;
-	const keys = Object.keys(node as Record<string, unknown>);
+	const keys = Object.keys(node);
 	return keys.find((k) => !k.startsWith(":") && !k.startsWith("@"));
 }
 
