@@ -42,16 +42,16 @@
 		"ci": "bun run type-check && bun run lint && bun run test:run && bun run build"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.4.13",
-		"@financica/ubl": "^0.6.0",
-		"@types/node": "^22.0.0",
-		"@types/react": "^19.0.0",
-		"@types/react-dom": "^19.0.0",
-		"react": "^19.0.0",
-		"react-dom": "^19.0.0",
-		"tsup": "^8.0.0",
+		"@biomejs/biome": "^2.5.3",
+		"@financica/ubl": "^0.8.0",
+		"@types/node": "^26.1.1",
+		"@types/react": "^19.2.17",
+		"@types/react-dom": "^19.2.3",
+		"react": "^19.2.7",
+		"react-dom": "^19.2.7",
+		"tsup": "^8.5.1",
 		"typescript": "^5.9.3",
-		"vitest": "^4.0.18"
+		"vitest": "^4.1.10"
 	},
 	"peerDependencies": {
 		"@financica/ubl": ">=0.6.0 <1.0.0",
