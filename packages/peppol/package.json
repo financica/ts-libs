@@ -61,16 +61,16 @@
 		"ci": "npm run type-check && npm run lint && npm run test:run && npm run build"
 	},
 	"dependencies": {
-		"fast-xml-parser": "^5.8.0"
+		"fast-xml-parser": "^5.9.3"
 	},
 	"devDependencies": {
-		"@types/node": "^22.0.0",
-		"eslint": "^9.0.0",
-		"prettier": "^3.8.1",
-		"tsup": "^8.0.0",
+		"@types/node": "^26.1.1",
+		"eslint": "^10.6.0",
+		"prettier": "^3.9.4",
+		"tsup": "^8.5.1",
 		"typescript": "^5.9.3",
-		"typescript-eslint": "^8.0.0",
-		"vitest": "^4.0.18"
+		"typescript-eslint": "^8.63.0",
+		"vitest": "^4.1.10"
 	},
 	"publishConfig": {
 		"access": "public"
