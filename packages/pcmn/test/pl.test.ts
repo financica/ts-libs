@@ -18,10 +18,10 @@ describe("plCategoryForCode", () => {
 		["610000", "services"],
 		["620200", "personnel"],
 		["630000", "depreciation"],
-		["640000", "otherOperatingCharges"],
+		["640000", "otherCharges"],
 		["650000", "financialCharges"],
 		["660000", "exceptionalCharges"],
-		["740000", "otherOperatingIncome"],
+		["740000", "otherIncome"],
 		["750000", "financialIncome"],
 		["760000", "exceptionalIncome"],
 	];

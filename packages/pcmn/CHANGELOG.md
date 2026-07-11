@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1
+
+- Rename the `otherOperatingCharges` / `otherOperatingIncome` categories to
+  `otherCharges` / `otherIncome` to match the suite's existing bucket names, so
+  aggregation is a direct category lookup with no adapter.
+
 ## 0.1.0
 
 Initial release. Belgian PCMN class taxonomy:

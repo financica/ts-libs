@@ -1,6 +1,6 @@
 {
 	"name": "@financica/pcmn",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Zero-dependency Belgian PCMN (Plan Comptable Minimum Normalisé) class taxonomy: maps income-statement and fixed-asset account classes to economic categories, with the statutory director-remuneration (618) rule.",
 	"keywords": [
 		"accounting",

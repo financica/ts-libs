@@ -14,8 +14,8 @@ export type PlCategory =
 	| "services"
 	| "personnel"
 	| "depreciation"
-	| "otherOperatingCharges"
-	| "otherOperatingIncome"
+	| "otherCharges"
+	| "otherIncome"
 	| "financialCharges"
 	| "financialIncome"
 	| "exceptionalCharges"
@@ -65,7 +65,7 @@ export const PCMN_PL_CLASSES: Readonly<Record<string, PcmnPlClass>> = {
 	},
 	"64": {
 		code: "64",
-		category: "otherOperatingCharges",
+		category: "otherCharges",
 		side: "debit",
 		label: "Autres charges d'exploitation",
 	},
@@ -89,7 +89,7 @@ export const PCMN_PL_CLASSES: Readonly<Record<string, PcmnPlClass>> = {
 	},
 	"74": {
 		code: "74",
-		category: "otherOperatingIncome",
+		category: "otherIncome",
 		side: "credit",
 		label: "Autres produits d'exploitation",
 	},
