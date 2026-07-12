@@ -72,8 +72,7 @@ describe("IntervatClient", () => {
 								vatNumber: "0806153934",
 								sequenceNumber: 1,
 								type: "ERROR",
-								errorIdentifier:
-									"E_TVA_DECLARANT_REGIME_NOT_ALLOWED",
+								errorIdentifier: "E_TVA_DECLARANT_REGIME_NOT_ALLOWED",
 								descriptions: {
 									en: "Tax regime does not allow submission",
 								},
@@ -83,8 +82,7 @@ describe("IntervatClient", () => {
 						title: "Business validation error detected",
 						status: 400,
 						detail: "One or multiple business rules occurs",
-						instance:
-							"error:uuid:EC57A32618844DC49AEF90329E5085BD",
+						instance: "error:uuid:EC57A32618844DC49AEF90329E5085BD",
 					}),
 			});
 

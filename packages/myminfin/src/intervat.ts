@@ -1,10 +1,6 @@
 import { intervatOpenApiUrl, intervatVatUrl } from "./endpoints";
 import { assertOk, authorizedFetch } from "./http";
-import type {
-	ClientConfig,
-	Environment,
-	VatSubmissionResult,
-} from "./types";
+import type { ClientConfig, Environment, VatSubmissionResult } from "./types";
 
 /**
  * Client for the Intervat VAT return submission API.

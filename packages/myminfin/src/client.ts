@@ -31,14 +31,11 @@ export class MyMinFinClient {
 	 * If ownerType/ownerIdentifier are omitted, returns documents for the
 	 * connected entity plus any mandated entities.
 	 */
-	async searchDocuments(
-		params: DocumentSearchParams,
-	): Promise<DocumentSearchResult> {
+	async searchDocuments(params: DocumentSearchParams): Promise<DocumentSearchResult> {
 		const qs = new URLSearchParams({ since: params.since });
 		if (params.until) qs.set("until", params.until);
 		if (params.ownerType) qs.set("ownerType", params.ownerType);
-		if (params.ownerIdentifier)
-			qs.set("ownerIdentifier", params.ownerIdentifier);
+		if (params.ownerIdentifier) qs.set("ownerIdentifier", params.ownerIdentifier);
 
 		const url = `${this.baseUrl}?${qs.toString()}`;
 		const res = await this.request(url);
@@ -70,8 +67,7 @@ export class MyMinFinClient {
 	): Promise<{ content: ArrayBuffer; contentType: string }> {
 		const qs = new URLSearchParams();
 		if (params?.ownerType) qs.set("ownerType", params.ownerType);
-		if (params?.ownerIdentifier)
-			qs.set("ownerIdentifier", params.ownerIdentifier);
+		if (params?.ownerIdentifier) qs.set("ownerIdentifier", params.ownerIdentifier);
 
 		const query = qs.toString();
 		const url = query
@@ -82,7 +78,8 @@ export class MyMinFinClient {
 		await assertOk(res);
 
 		const content = await res.arrayBuffer();
-		const contentType = res.headers.get("content-type") ?? "application/octet-stream";
+		const contentType =
+			res.headers.get("content-type") ?? "application/octet-stream";
 
 		return { content, contentType };
 	}

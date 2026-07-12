@@ -179,9 +179,9 @@ describe("MyMinFinClient", () => {
 					}),
 			});
 
-			await expect(
-				client.downloadDocument("some-uuid"),
-			).rejects.toThrow(MyMinFinApiError);
+			await expect(client.downloadDocument("some-uuid")).rejects.toThrow(
+				MyMinFinApiError,
+			);
 		});
 	});
 

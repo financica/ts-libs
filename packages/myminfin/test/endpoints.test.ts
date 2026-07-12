@@ -46,9 +46,7 @@ describe("endpoints", () => {
 		});
 
 		it("returns correct issuer URL", () => {
-			expect(issuerUrl("test")).toBe(
-				"https://fediamapi-a.minfin.be/sso/oauth2",
-			);
+			expect(issuerUrl("test")).toBe("https://fediamapi-a.minfin.be/sso/oauth2");
 		});
 
 		it("returns correct MyMinFin documents URL", () => {
@@ -70,9 +68,7 @@ describe("endpoints", () => {
 		});
 
 		it("returns correct OIDC base", () => {
-			expect(oidcBase("production")).toBe(
-				"https://fediamapi.minfin.fgov.be",
-			);
+			expect(oidcBase("production")).toBe("https://fediamapi.minfin.fgov.be");
 		});
 
 		it("returns correct authorize URL", () => {

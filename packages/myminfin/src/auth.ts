@@ -37,9 +37,9 @@ export class MyMinFinAuth {
 		const codeChallenge = computeCodeChallenge(codeVerifier);
 
 		const baseScopes = ["openid", "profile"];
-		const allScopes = [
-			...new Set([...baseScopes, ...(params.scopes ?? [])]),
-		].join(" ");
+		const allScopes = [...new Set([...baseScopes, ...(params.scopes ?? [])])].join(
+			" ",
+		);
 
 		const ecbClaim = JSON.stringify({ ecb: params.ecb });
 
@@ -142,10 +142,7 @@ export class MyMinFinAuth {
 		if (this.resolvedKey) return this.resolvedKey;
 
 		if (typeof this.config.privateKey === "string") {
-			this.resolvedKey = await importPKCS8(
-				this.config.privateKey,
-				"RS256",
-			);
+			this.resolvedKey = await importPKCS8(this.config.privateKey, "RS256");
 		} else {
 			this.resolvedKey = this.config.privateKey;
 		}

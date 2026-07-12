@@ -1,14 +1,14 @@
 # The Intervat API
 
-*Version 09/07/2025*
+_Version 09/07/2025_
 
 ## Versioning
 
 We will continuously improve our documentation and APIs. Consequently, you can find here what has changed from previous versions of the documentation and/or API.
 
-| Date | Change |
-|---|---|
-| 25/02/2025 | Initial version for PRD |
+| Date       | Change                                                                            |
+| ---------- | --------------------------------------------------------------------------------- |
+| 25/02/2025 | Initial version for PRD                                                           |
 | 09/07/2025 | Additional info on the testing before production & removal of faulty redirect URL |
 
 ## What is the Intervat API?
@@ -41,7 +41,7 @@ The OpenAPI specification of Intervat can be found via the following URLs:
 1. **ACC**: `https://wsapi-a.minfin.be/Intervat/api/OAU/v1/doc/intervat-external-api.yaml`
 2. **PROD**: `https://wsapi.fgov.minfin.be/Intervat/api/OAU/v1/doc/intervat-external-api.yaml`
 
-For the previous solutions and more info about the access of our API's, please read the specific article about the security of our *API's: How to access SPF Fin API's* before.
+For the previous solutions and more info about the access of our API's, please read the specific article about the security of our _API's: How to access SPF Fin API's_ before.
 
 In case a doubt arises on which specification is up-to-date, the most up-to-date is always the one exposed using the swagger-ui or the exposed yaml file.
 
@@ -84,8 +84,8 @@ Via this version of the Intervat API it's possible to submit VAT returns via XML
 The submission will be limited to the following rules:
 
 - The file that can be used must be in the XML format linked to the XSD description, see links:
-  - Technische documentatie - Intervat | FOD Financien (belgium.be)
-  - Documentation technique - Intervat | SPF Finances (belgium.be)
+    - Technische documentatie - Intervat | FOD Financien (belgium.be)
+    - Documentation technique - Intervat | SPF Finances (belgium.be)
 - Submissions are only possible via correct electronical VAT mandates
 - The part "Representative" is no longer an obligation, Intervat will determine if the link mandate-holder <-> mandate issuer is ok.
 - The submission will be one at the time and logically only by file (XML or renamed zip file)
@@ -112,7 +112,7 @@ In a future version of our APIs, we will look at whether and how we can make thi
 In the event of an error occurring on our side, a tracking uuid will be in the response.
 For example: `ca357af0-5ae2-3cca-9983-851e809e9c19`
 
-Every error, problem or issue can be reported via our helpdesk by using the specific support-ticket: *"Problem or incident with the intervat-API"*
+Every error, problem or issue can be reported via our helpdesk by using the specific support-ticket: _"Problem or incident with the intervat-API"_
 
 Please enter as much information as possible so that we can analyze the problem thoroughly.
 
@@ -126,25 +126,25 @@ Example:
 
 ```json
 {
-  "businessrules": [
-    {
-      "vatNumber": "0806153934",
-      "sequenceNumber": 1,
-      "type": "ERROR",
-      "errorIdentifier": "E_TVA_DECLARANT_REGIME_NOT_ALLOWED",
-      "descriptions": {
-        "fr": "Le régime d'imposition à la TVA de l'assujetti ne lui permet pas de déposer une déclaration périodique à la TVA. Veuillez prendre contact avec le bureau de contrôle.",
-        "de": "Die MwSt.-Regelung erlaubt es dem Steuerpflichtigen nicht, eine vierteljährliche periodische MwSt.-Erklärung zu hinterlegen. Berichtigen Sie bitte den Zeitraum oder setzen Sie sich mit dem MwSt.-Amt in Verbindung.",
-        "nl": "Het belastingregime van de belastingplichtige laat hem niet toe een driemaandelijkse periodieke btw-aangifte in te dienen. Gelieve uw btw-controlekantoor te contacteren.",
-        "en": "The taxpayer's tax regime does not allow him to submit a quarterly periodic VAT return. Please contact your VAT inspection office."
-      }
-    }
-  ],
-  "type": "about:blank",
-  "title": "Business validation error detected",
-  "status": 400,
-  "detail": "One or multiple business rules occurs",
-  "instance": "error:uuid:EC57A32618844DC49AEF90329E5085BD"
+	"businessrules": [
+		{
+			"vatNumber": "0806153934",
+			"sequenceNumber": 1,
+			"type": "ERROR",
+			"errorIdentifier": "E_TVA_DECLARANT_REGIME_NOT_ALLOWED",
+			"descriptions": {
+				"fr": "Le régime d'imposition à la TVA de l'assujetti ne lui permet pas de déposer une déclaration périodique à la TVA. Veuillez prendre contact avec le bureau de contrôle.",
+				"de": "Die MwSt.-Regelung erlaubt es dem Steuerpflichtigen nicht, eine vierteljährliche periodische MwSt.-Erklärung zu hinterlegen. Berichtigen Sie bitte den Zeitraum oder setzen Sie sich mit dem MwSt.-Amt in Verbindung.",
+				"nl": "Het belastingregime van de belastingplichtige laat hem niet toe een driemaandelijkse periodieke btw-aangifte in te dienen. Gelieve uw btw-controlekantoor te contacteren.",
+				"en": "The taxpayer's tax regime does not allow him to submit a quarterly periodic VAT return. Please contact your VAT inspection office."
+			}
+		}
+	],
+	"type": "about:blank",
+	"title": "Business validation error detected",
+	"status": 400,
+	"detail": "One or multiple business rules occurs",
+	"instance": "error:uuid:EC57A32618844DC49AEF90329E5085BD"
 }
 ```
 
@@ -207,13 +207,13 @@ Type of tests:
 - Enter Corrective VAT Returns until status "Success"
 - Enter VAT Returns with probability errors until status "Success"
 
-To get a permission to go to the production environment **all** the previous test must be successful. You have to initiate the validation-test by filling in the form: *"Validation-test to use INT-API in PRD"*
+To get a permission to go to the production environment **all** the previous test must be successful. You have to initiate the validation-test by filling in the form: _"Validation-test to use INT-API in PRD"_
 
 **Important:**
 
 > To perform those tests you need VAT numbers which weren't used before in our testing-environment otherwise you will receive blocking errors due to the period in which the VAT Return can be entered (New VAT Chain).
 
-You can request those VAT numbers by using the form *"Problem/Incident with the Intervat API"*.
+You can request those VAT numbers by using the form _"Problem/Incident with the Intervat API"_.
 
 Each testing entity will receive 1 VAT number with a quarterly obligation and 1 with a monthly obligation.
 
@@ -224,36 +224,36 @@ Dates:
 
 If the tests are OK Intervat will inform the other SPF services to open the API in Production for your company and update your credentials on our side. The Intervat team will send you a message as well with the confirmation of the validation. Then there is still one step left to take:
 
-You have to send us one last time an update of your OIDC-client by filling out the form: *"REQUEST TO UPDATE INFORMATION OIDC CLIENT"*.
+You have to send us one last time an update of your OIDC-client by filling out the form: _"REQUEST TO UPDATE INFORMATION OIDC CLIENT"_.
 
 For more info about the steps in the registration, integration or validation-process, you can always check the dedicated knowledge article: **"Overview of the registration, integration and validation-process of the SPFFIN-API('s)"** that is to be found as well in our API-portal.
 
 ## Annexe 1: Validation key + calculation
 
-| # | Key | Rule |
-|---|---|---|
-| 1 | W_TVA_GRID_54O_INCORRECT_VALUE | Si G54 contient une valeur et que (((G1\*0,06)+(G2\*0,12)+(G3\*0,21))-54) > 62 => Erreur |
-| 2 | W_TVA_GRID_5657_INCORRECT_VALUE | Si G87 différent de 0 et G56 =0 et G57=0 et G87 > 250 => Erreur |
-| 3 | W_TVA_GRID_5657_INCORRECT_VALUE_2 | Si (G56+G57)+((G85+G87)\*0,21) > 150 => Erreur |
-| 4 | W_TVA_GRID_55_INCORRECT_VALUE | Si G55 = null et (G86 est différent de null ou G88 est différent null) et (G86+G88)>250 => Erreur |
-| 5 | W_TVA_GRID_59_INCORRECT_VALUE | Si G59- ((G81+G82+G83+G84+G85)\*0,21) >= 100000 OU (G59- ((G81+G82+G83+G84+G85)\*0,21)>= 300000 et (G59- ((G81+G82+G83+G84+G85)\*0,21)>= 300000 |
-| 6 | W_TVA_GRID_64_INCORRECT_VALUE | Si G64 contient une donnée et (G64- ((G81+G82+G83+G84+G85)\*0,21) /(G81+G82+G83+G84+G85)) >= 0,05 => Erreur |
-| 7 | W_TVA_GRID_55_INCORRECT_VALUE_3 | Si (((G86+G88)\*0,06)-G55) > 150 => Erreur |
-| 8 | W_TVA_GRID_5657_INCORRECT_VALUE_3 | Si ((G87\*0,06)-(G56+G57))>150 => Erreur |
-| 9 | W_TVA_GRID_55_INCORRECT_VALUE_2 | Si (G55-((G84+G86+G88)\*0,21)) >150 => Erreur |
+| #   | Key                               | Rule                                                                                                                                            |
+| --- | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | W_TVA_GRID_54O_INCORRECT_VALUE    | Si G54 contient une valeur et que (((G1\*0,06)+(G2\*0,12)+(G3\*0,21))-54) > 62 => Erreur                                                        |
+| 2   | W_TVA_GRID_5657_INCORRECT_VALUE   | Si G87 différent de 0 et G56 =0 et G57=0 et G87 > 250 => Erreur                                                                                 |
+| 3   | W_TVA_GRID_5657_INCORRECT_VALUE_2 | Si (G56+G57)+((G85+G87)\*0,21) > 150 => Erreur                                                                                                  |
+| 4   | W_TVA_GRID_55_INCORRECT_VALUE     | Si G55 = null et (G86 est différent de null ou G88 est différent null) et (G86+G88)>250 => Erreur                                               |
+| 5   | W_TVA_GRID_59_INCORRECT_VALUE     | Si G59- ((G81+G82+G83+G84+G85)\*0,21) >= 100000 OU (G59- ((G81+G82+G83+G84+G85)\*0,21)>= 300000 et (G59- ((G81+G82+G83+G84+G85)\*0,21)>= 300000 |
+| 6   | W_TVA_GRID_64_INCORRECT_VALUE     | Si G64 contient une donnée et (G64- ((G81+G82+G83+G84+G85)\*0,21) /(G81+G82+G83+G84+G85)) >= 0,05 => Erreur                                     |
+| 7   | W_TVA_GRID_55_INCORRECT_VALUE_3   | Si (((G86+G88)\*0,06)-G55) > 150 => Erreur                                                                                                      |
+| 8   | W_TVA_GRID_5657_INCORRECT_VALUE_3 | Si ((G87\*0,06)-(G56+G57))>150 => Erreur                                                                                                        |
+| 9   | W_TVA_GRID_55_INCORRECT_VALUE_2   | Si (G55-((G84+G86+G88)\*0,21)) >150 => Erreur                                                                                                   |
 
 ### Annexe 1: Text shown in the normal Intervat after validation
 
-| # | Frans | Nederlands | Duits | Engels |
-|---|---|---|---|---|
-| 1 | Le montant total de TVA que indiqué dans la grille 54 ne correspond pas aux taux de TVA appliqués respectivement sur les bases imposables indiquées dans les grilles 01, 02 et 03. Merci de corriger ou de justifier votre calcul (déclarant (0)). | Het totale verschuldigde BTW-bedrag dat in rooster 54 is vermeld, komt niet overeen met de BTW-tarieven die respectievelijk worden toegepast op de in de roosters 01, 02 en 03 vermelde bedragen. Gelieve uw berekening te corrigeren of te verantwoorden (BTW nr (0)). | Der in Raster 54 eingetragene Gesamtbetrag der zu zahlenden Mehrwertsteuer entspricht nicht den Mehrwertsteuersätzen, die jeweils auf die in den Rastern 01, 02 und 03 eingetragenen Beträge angewendet werden. Bitte korrigieren oder begründen Sie Ihre Berechnung (MwSt.-Nr. (0)). | The total amount of VAT due entered in grid 54 does not correspond to the VAT rates applied respectively to the amounts entered in grids 01, 02 and 03. Please correct or justify your calculation (VAT No (0)). |
-| 2 | Vous avez introduit un montant dans la grille 87 (montant hors TVA). Vous devez en principe indiquer la TVA due dans les grilles 56 et/ou 57. Merci de justifier ou de compléter au moins une de ces deux grilles (déclarant (0)). | U heeft een bedrag ingevuld in rooster 87 (bedrag exclusief BTW). In principe moet u de verschuldigde BTW in de roosters 56 en/of 57 invoeren. Gelieve minstens één van deze twee roosters te verantwoorden of in te vullen (BTW nr (0)). | Sie haben einen Betrag im Raster 87 eingegeben (Betrag ohne Mehrwertsteuer). Im Prinzip müssen Sie die geschuldete Mehrwertsteuer im Raster 56 und/oder 57 eintragen. Bitte begründen Sie mindestens eines dieser beiden Raster oder füllen Sie mindestens eines dieser beiden Raster aus (MwSt.-Nr. (0)). | You have entered an amount in grid 87 (amount excluding VAT). In principle, you must enter the VAT due in grid 56 and/or 57. Please justify or fill in at least one of these two grids (VAT No (0)). |
-| 3 | Le montant des grilles 56 et/ou 57 (TVA due à l'Etat) est supérieur à 21% de la somme introduite dans les grilles B5 et/ou B7 (montant hors TVA). Merci de corriger ou de justifier votre calcul (déclarant (0)). | Het bedrag in de roosters 56 en/of 57 (aan de Staat verschuldigde BTW) is groter dan 21% van het bedrag dat in de roosters B5 en/of B7 (bedrag exclusief BTW) is opgenomen. Gelieve uw berekening te corrigeren of te verantwoorden (BTW nr (0)). | Der Betrag in den Rastern 56 und/oder 57 (dem Staat geschuldete Mehrwertsteuer) ist größer als 21% des in den Rastern B5 und/oder B7 enthaltenen Betrags (Betrag ohne Mehrwertsteuer). Bitte korrigieren oder begründen Sie Ihre Berechnung (MwSt.-Nr. (0)). | The amount in grids 56 and/or 57 (VAT due to the State) is greater than 21% of the amount included in grids B5 and/or B7 (amount excluding VAT). Please correct or justify your calculation (VAT No (0)). |
-| 4 | Vous avez introduit un montant dans la grille 86 et/ou 88 (montant hors TVA). Vous devez en principe indiquer la TVA due dans la grille 55. Merci de justifier ou de compléter cette grille (déclarant (0)). | U heeft een bedrag ingevuld in rooster 86 en/of 88 (bedrag exclusief BTW). In principe moet u de verschuldigde BTW in rooster 55 invoeren. Gelieve dit rooster te verantwoorden of aan te vullen (BTW nr (0)). | Sie haben einen Betrag im Raster 86 und/oder 88 eingegeben (Betrag ohne Mehrwertsteuer). Im Prinzip müssen Sie die fällige Mehrwertsteuer im Raster 55 eintragen. Bitte begründen oder ergänzen Sie dieses Raster (MwSt.-Nr. (0)). | You have entered an amount in grid 86 and/or 88 (amount excluding VAT). In principle, you must enter the VAT due in grid 55. Please justify or complete this grid (VAT No (0)). |
-| 5 | Le montant de la grille 59 (TVA déductible) est supérieur à 21% du montant total des grilles 81 à 85 (base imposable). Merci de corriger ou de justifier votre calcul (déclarant (0)). | Het bedrag van rooster 59 (Aftrek) is hoger dan 21% van het totale bedrag van de roosters 81 tot 85 (basis van heffing). Gelieve uw berekening te corrigeren of te verantwoorden (BTW nr (0)). | Die Menge des Rasters 59 (Abzug) ist höher als 21% der Gesamtmenge der Raster 81 bis 85 (Steuerbasis). Bitte korrigieren oder begründen Sie Ihre Berechnung (MwSt.-Nr. (0)). | The amount of grid 59 (Deduction) is higher than 21% of the total amount of grids 81 to 85 (tax base). Please correct or justify your calculation (VAT No (0)). |
-| 6 | Le montant de la grille 54 (TVA déclarée) est supérieur à 21% du montant total des grilles 01 à 03 (base imposable). Merci de corriger ou de justifier votre calcul (déclarant (0)). | Het bedrag in rooster 54 (aftrekbare BTW) is hoger dan 21% van het totale bedrag in de roosters 84, 86 en 88 (basis van heffing). Gelieve uw berekening te corrigeren of te verantwoorden (BTW nr (0)). | Der Betrag in Raster 54 (abzugsfähige MwSt.) ist höher als 21% des Gesamtbetrags in Raster 84, 86 en 88 (Steuerbasis). Bitte korrigieren oder begründen Sie Ihre Berechnung (MwSt.-Nr. (0)). | The amount in grid 54 (deductible VAT) is higher than 21% of the total amount of grids 84, 86 and 88 (tax base). Please correct or justify your calculation (VAT No (0)). |
-| 7 | Le montant de la grille 55 (TVA due) est inférieur à 6% du montant total des grilles 86 et 88 (base imposable). Merci de corriger ou de justifier votre calcul (déclarant (0)). | Het bedrag des Raster 55 (verschuldigde BTW) is kleiner dan 6% van het totale bedrag van de roosters 86 en 88 (basis van heffing). Gelieve uw berekening te corrigeren of te verantwoorden (BTW nr (0)). | Der Betrag des Raster 55 (geschuldete Mehrwertsteuer) ist kleiner als 6% des Gesamtbetrags der Raster 86 und 88 (Steuerbasis). Bitte korrigieren oder begründen Sie Ihre Berechnung (MwSt.-Nr. (0)). | The amount of grid 55 (VAT due) is lower than 6% of the total amount of grids 86 and 88 (tax base). Please correct or justify your calculation (VAT No (0)). |
-| 8 | Le montant des grilles 56 et/ou 57 (TVA due à l'Etat) est inférieur à 6% de la somme introduite dans la grille 87 (montant hors TVA). Merci de corriger ou de justifier votre calcul (déclarant (0)). | Het bedrag in de roosters 56 en/of 57 (aan de Staat geschuldigde BTW) is kleiner dan 6% des in rooster 87 enthaltenen Betrags (Betrag ohne Mehrwertsteuer). Gelieve uw berekening te corrigeren of te verantwoorden (BTW nr (0)). | Der Betrag in den Rastern 56 und/oder 57 (dem Staat geschuldete Mehrwertsteuer) ist kleiner als 6% des in Raster 87 enthaltenen Betrags (Betrag ohne Mehrwertsteuer). Bitte korrigieren oder begründen Sie Ihre Berechnung (MwSt.-Nr. (0)). | The amount in grids 56 and/or 57 (VAT due to the State) is lower than 6% of the amount included in grid 87 (amount excluding VAT). Please correct or justify your calculation (VAT No (0)). |
-| 9 | Le montant de la grille 55 (TVA due) est supérieur à 21% du montant total des grilles 84, 86 et 88 (base imposable). Merci de corriger ou de justifier votre calcul (déclarant (0)). | Het bedrag van rooster 55 (verschuldigde BTW) is hoger dan 21% van het totale bedrag van de roosters 84, 86 en 88 (basis). Gelieve uw berekening te corrigeren of te verantwoorden (BTW nr (0)). | Der Betrag des Raster 55 (geschuldete Mehrwertsteuer) ist höher als 21% des Gesamtbetrags der Raster 84, 86 und 88 (Steuerbasis). Bitte korrigieren oder begründen Sie Ihre Berechnung (MwSt.-Nr. (0)). | The amount of grid 55 (VAT due) is higher than 21% of the total amount of grids 84, 86 and 88 (tax base). Please correct or justify your calculation (VAT No (0)). |
+| #   | Frans                                                                                                                                                                                                                                              | Nederlands                                                                                                                                                                                                                                                              | Duits                                                                                                                                                                                                                                                                                                      | Engels                                                                                                                                                                                                           |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Le montant total de TVA que indiqué dans la grille 54 ne correspond pas aux taux de TVA appliqués respectivement sur les bases imposables indiquées dans les grilles 01, 02 et 03. Merci de corriger ou de justifier votre calcul (déclarant (0)). | Het totale verschuldigde BTW-bedrag dat in rooster 54 is vermeld, komt niet overeen met de BTW-tarieven die respectievelijk worden toegepast op de in de roosters 01, 02 en 03 vermelde bedragen. Gelieve uw berekening te corrigeren of te verantwoorden (BTW nr (0)). | Der in Raster 54 eingetragene Gesamtbetrag der zu zahlenden Mehrwertsteuer entspricht nicht den Mehrwertsteuersätzen, die jeweils auf die in den Rastern 01, 02 und 03 eingetragenen Beträge angewendet werden. Bitte korrigieren oder begründen Sie Ihre Berechnung (MwSt.-Nr. (0)).                      | The total amount of VAT due entered in grid 54 does not correspond to the VAT rates applied respectively to the amounts entered in grids 01, 02 and 03. Please correct or justify your calculation (VAT No (0)). |
+| 2   | Vous avez introduit un montant dans la grille 87 (montant hors TVA). Vous devez en principe indiquer la TVA due dans les grilles 56 et/ou 57. Merci de justifier ou de compléter au moins une de ces deux grilles (déclarant (0)).                 | U heeft een bedrag ingevuld in rooster 87 (bedrag exclusief BTW). In principe moet u de verschuldigde BTW in de roosters 56 en/of 57 invoeren. Gelieve minstens één van deze twee roosters te verantwoorden of in te vullen (BTW nr (0)).                               | Sie haben einen Betrag im Raster 87 eingegeben (Betrag ohne Mehrwertsteuer). Im Prinzip müssen Sie die geschuldete Mehrwertsteuer im Raster 56 und/oder 57 eintragen. Bitte begründen Sie mindestens eines dieser beiden Raster oder füllen Sie mindestens eines dieser beiden Raster aus (MwSt.-Nr. (0)). | You have entered an amount in grid 87 (amount excluding VAT). In principle, you must enter the VAT due in grid 56 and/or 57. Please justify or fill in at least one of these two grids (VAT No (0)).             |
+| 3   | Le montant des grilles 56 et/ou 57 (TVA due à l'Etat) est supérieur à 21% de la somme introduite dans les grilles B5 et/ou B7 (montant hors TVA). Merci de corriger ou de justifier votre calcul (déclarant (0)).                                  | Het bedrag in de roosters 56 en/of 57 (aan de Staat verschuldigde BTW) is groter dan 21% van het bedrag dat in de roosters B5 en/of B7 (bedrag exclusief BTW) is opgenomen. Gelieve uw berekening te corrigeren of te verantwoorden (BTW nr (0)).                       | Der Betrag in den Rastern 56 und/oder 57 (dem Staat geschuldete Mehrwertsteuer) ist größer als 21% des in den Rastern B5 und/oder B7 enthaltenen Betrags (Betrag ohne Mehrwertsteuer). Bitte korrigieren oder begründen Sie Ihre Berechnung (MwSt.-Nr. (0)).                                               | The amount in grids 56 and/or 57 (VAT due to the State) is greater than 21% of the amount included in grids B5 and/or B7 (amount excluding VAT). Please correct or justify your calculation (VAT No (0)).        |
+| 4   | Vous avez introduit un montant dans la grille 86 et/ou 88 (montant hors TVA). Vous devez en principe indiquer la TVA due dans la grille 55. Merci de justifier ou de compléter cette grille (déclarant (0)).                                       | U heeft een bedrag ingevuld in rooster 86 en/of 88 (bedrag exclusief BTW). In principe moet u de verschuldigde BTW in rooster 55 invoeren. Gelieve dit rooster te verantwoorden of aan te vullen (BTW nr (0)).                                                          | Sie haben einen Betrag im Raster 86 und/oder 88 eingegeben (Betrag ohne Mehrwertsteuer). Im Prinzip müssen Sie die fällige Mehrwertsteuer im Raster 55 eintragen. Bitte begründen oder ergänzen Sie dieses Raster (MwSt.-Nr. (0)).                                                                         | You have entered an amount in grid 86 and/or 88 (amount excluding VAT). In principle, you must enter the VAT due in grid 55. Please justify or complete this grid (VAT No (0)).                                  |
+| 5   | Le montant de la grille 59 (TVA déductible) est supérieur à 21% du montant total des grilles 81 à 85 (base imposable). Merci de corriger ou de justifier votre calcul (déclarant (0)).                                                             | Het bedrag van rooster 59 (Aftrek) is hoger dan 21% van het totale bedrag van de roosters 81 tot 85 (basis van heffing). Gelieve uw berekening te corrigeren of te verantwoorden (BTW nr (0)).                                                                          | Die Menge des Rasters 59 (Abzug) ist höher als 21% der Gesamtmenge der Raster 81 bis 85 (Steuerbasis). Bitte korrigieren oder begründen Sie Ihre Berechnung (MwSt.-Nr. (0)).                                                                                                                               | The amount of grid 59 (Deduction) is higher than 21% of the total amount of grids 81 to 85 (tax base). Please correct or justify your calculation (VAT No (0)).                                                  |
+| 6   | Le montant de la grille 54 (TVA déclarée) est supérieur à 21% du montant total des grilles 01 à 03 (base imposable). Merci de corriger ou de justifier votre calcul (déclarant (0)).                                                               | Het bedrag in rooster 54 (aftrekbare BTW) is hoger dan 21% van het totale bedrag in de roosters 84, 86 en 88 (basis van heffing). Gelieve uw berekening te corrigeren of te verantwoorden (BTW nr (0)).                                                                 | Der Betrag in Raster 54 (abzugsfähige MwSt.) ist höher als 21% des Gesamtbetrags in Raster 84, 86 en 88 (Steuerbasis). Bitte korrigieren oder begründen Sie Ihre Berechnung (MwSt.-Nr. (0)).                                                                                                               | The amount in grid 54 (deductible VAT) is higher than 21% of the total amount of grids 84, 86 and 88 (tax base). Please correct or justify your calculation (VAT No (0)).                                        |
+| 7   | Le montant de la grille 55 (TVA due) est inférieur à 6% du montant total des grilles 86 et 88 (base imposable). Merci de corriger ou de justifier votre calcul (déclarant (0)).                                                                    | Het bedrag des Raster 55 (verschuldigde BTW) is kleiner dan 6% van het totale bedrag van de roosters 86 en 88 (basis van heffing). Gelieve uw berekening te corrigeren of te verantwoorden (BTW nr (0)).                                                                | Der Betrag des Raster 55 (geschuldete Mehrwertsteuer) ist kleiner als 6% des Gesamtbetrags der Raster 86 und 88 (Steuerbasis). Bitte korrigieren oder begründen Sie Ihre Berechnung (MwSt.-Nr. (0)).                                                                                                       | The amount of grid 55 (VAT due) is lower than 6% of the total amount of grids 86 and 88 (tax base). Please correct or justify your calculation (VAT No (0)).                                                     |
+| 8   | Le montant des grilles 56 et/ou 57 (TVA due à l'Etat) est inférieur à 6% de la somme introduite dans la grille 87 (montant hors TVA). Merci de corriger ou de justifier votre calcul (déclarant (0)).                                              | Het bedrag in de roosters 56 en/of 57 (aan de Staat geschuldigde BTW) is kleiner dan 6% des in rooster 87 enthaltenen Betrags (Betrag ohne Mehrwertsteuer). Gelieve uw berekening te corrigeren of te verantwoorden (BTW nr (0)).                                       | Der Betrag in den Rastern 56 und/oder 57 (dem Staat geschuldete Mehrwertsteuer) ist kleiner als 6% des in Raster 87 enthaltenen Betrags (Betrag ohne Mehrwertsteuer). Bitte korrigieren oder begründen Sie Ihre Berechnung (MwSt.-Nr. (0)).                                                                | The amount in grids 56 and/or 57 (VAT due to the State) is lower than 6% of the amount included in grid 87 (amount excluding VAT). Please correct or justify your calculation (VAT No (0)).                      |
+| 9   | Le montant de la grille 55 (TVA due) est supérieur à 21% du montant total des grilles 84, 86 et 88 (base imposable). Merci de corriger ou de justifier votre calcul (déclarant (0)).                                                               | Het bedrag van rooster 55 (verschuldigde BTW) is hoger dan 21% van het totale bedrag van de roosters 84, 86 en 88 (basis). Gelieve uw berekening te corrigeren of te verantwoorden (BTW nr (0)).                                                                        | Der Betrag des Raster 55 (geschuldete Mehrwertsteuer) ist höher als 21% des Gesamtbetrags der Raster 84, 86 und 88 (Steuerbasis). Bitte korrigieren oder begründen Sie Ihre Berechnung (MwSt.-Nr. (0)).                                                                                                    | The amount of grid 55 (VAT due) is higher than 21% of the total amount of grids 84, 86 and 88 (tax base). Please correct or justify your calculation (VAT No (0)).                                               |
 
 ---
