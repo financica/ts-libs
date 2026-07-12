@@ -6,7 +6,7 @@ import type Stripe from "stripe";
  *   - `tax_amounts[].tax_rate.percentage`             (legacy invoice field, when expanded)
  *   - `taxes[].tax_rate_details.tax_rate.percentage`  (newer field, when expanded)
  */
-// biome-ignore lint/suspicious/noExplicitAny: runtime shape varies across Stripe API versions
+// `any`: runtime shape varies across Stripe API versions.
 const readExpandedTaxRatePercentage = (tax: any): number | null => {
 	const detailRate = tax?.tax_rate_details?.tax_rate;
 	if (
@@ -49,10 +49,10 @@ const readExpandedTaxRatePercentage = (tax: any): number | null => {
 export const getInvoiceLineTaxAmounts = (
 	line: Stripe.InvoiceLineItem,
 ): TaxAmountInfo[] => {
-	// biome-ignore lint/suspicious/noExplicitAny: Stripe SDK types don't expose tax_amounts on InvoiceLineItem (legacy field)
+	// `any`: Stripe SDK types don't expose tax_amounts on InvoiceLineItem (legacy field).
 	const rawTaxAmounts = (line as any).tax_amounts;
 	if (Array.isArray(rawTaxAmounts) && rawTaxAmounts.length > 0) {
-		// biome-ignore lint/suspicious/noExplicitAny: runtime shape from Stripe API
+		// `any`: runtime shape from Stripe API.
 		return rawTaxAmounts.map((ta: any) => ({
 			amount: typeof ta.amount === "number" ? ta.amount : 0,
 			taxability_reason: ta.taxability_reason ?? null,
@@ -91,7 +91,7 @@ export const getCreditNoteLineTaxAmounts = (
 export const getInvoiceLineDiscountAmountCents = (
 	line: Stripe.InvoiceLineItem,
 ): number => {
-	// biome-ignore lint/suspicious/noExplicitAny: Stripe SDK types don't expose discount_amounts on InvoiceLineItem
+	// `any`: Stripe SDK types don't expose discount_amounts on InvoiceLineItem.
 	const raw = (line as any).discount_amounts;
 	if (!Array.isArray(raw)) return 0;
 	return raw.reduce(

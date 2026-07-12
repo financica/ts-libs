@@ -125,22 +125,22 @@ Stripe sometimes reports per-line tax differently from the document header (roun
 
 Lines are classified into UNCL5305 VAT categories from the Stripe tax data:
 
-| Category | Meaning | From |
-| --- | --- | --- |
-| `S`  | Standard rate | a positive rate |
-| `Z`  | Zero-rated | rate 0 / `zero_rated` |
-| `E`  | Exempt | `customer_exempt`, `product_exempt`, `not_subject_to_tax`, … |
-| `AE` | Reverse charge | `reverse_charge` |
+| Category | Meaning        | From                                                         |
+| -------- | -------------- | ------------------------------------------------------------ |
+| `S`      | Standard rate  | a positive rate                                              |
+| `Z`      | Zero-rated     | rate 0 / `zero_rated`                                        |
+| `E`      | Exempt         | `customer_exempt`, `product_exempt`, `not_subject_to_tax`, … |
+| `AE`     | Reverse charge | `reverse_charge`                                             |
 
 EN 16931 requires an exemption reason on the non-`S`/`Z` categories, which the library fills in automatically.
 
 `supplier.vatStatus` covers the seller side:
 
-| Value | Meaning |
-| --- | --- |
-| `1` | Subject to VAT — line categories come from the data (the normal case) |
-| `2` | Not subject to VAT |
-| `3` | Small business / franchise (e.g. Belgian Article 56bis) |
+| Value | Meaning                                                               |
+| ----- | --------------------------------------------------------------------- |
+| `1`   | Subject to VAT — line categories come from the data (the normal case) |
+| `2`   | Not subject to VAT                                                    |
+| `3`   | Small business / franchise (e.g. Belgian Article 56bis)               |
 
 For `2` and `3`, every line is coerced to category `E` with an appropriate exemption reason so no VAT is reported.
 
