@@ -1,5 +1,6 @@
 import { naceHeadings, naceStructure } from "./generated/naceData";
 import { nacebelData } from "./generated/nacebelData";
+import { nacebelDescriptions } from "./generated/nacebelDescriptions";
 import { processNACEData } from "./naceProcessor";
 import type { CodeMap, NACEBELCode, NACEBELCodeMap, ParsedNACEBEL } from "./types";
 import { normalizeCode } from "./utils";
@@ -34,6 +35,7 @@ function processNACEBELData(
 			includesAlso: baseNaceCode?.includesAlso,
 			excludes: baseNaceCode?.excludes,
 			implementationRule: baseNaceCode?.implementationRule,
+			explanatoryNote: nacebelDescriptions[normalizedCode],
 		};
 
 		codeMap[normalizedCode] = nacebelCode;
@@ -49,6 +51,7 @@ function processNACEBELData(
 				de: "",
 				en: naceCode.description.en,
 			},
+			explanatoryNote: nacebelDescriptions[code] ?? naceCode.explanatoryNote,
 		};
 	}
 

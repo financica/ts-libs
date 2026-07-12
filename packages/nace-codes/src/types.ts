@@ -60,6 +60,14 @@ export interface NACECode {
 	includesAlso?: string;
 	excludes?: string;
 	implementationRule?: string;
+	/**
+	 * Full explanatory note ("Explication" / "Toelichting"), as Markdown, per
+	 * language. Cross-references to other codes are local wikilinks, e.g.
+	 * `see [[10.32]]`. Derived from the EU NACE Rev. 2.1 explanatory notes (the
+	 * source KBO itself serves) and translated. Present only for codes that have
+	 * a note; `en` is always set when present.
+	 */
+	explanatoryNote?: LanguageDescriptions;
 }
 
 export interface NACEBELCode extends NACECode {

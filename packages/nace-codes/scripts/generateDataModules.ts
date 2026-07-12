@@ -66,7 +66,35 @@ export const nacebelData: ParsedNACEBEL[] = ${serialize(nacebel)};
 	console.log("✓ Generated nacebelData.ts");
 }
 
+/**
+ * NACEBEL explanatory notes ("Explication" / "Toelichting") as Markdown, per
+ * language, with cross-references rendered as `[[code]]` wikilinks. Keyed by
+ * normalized code. Built from the EU NACE Rev. 2.1 notes (levels 1-4, the source
+ * KBO serves) plus sole-child subclass propagation, then translated to FR/NL/DE.
+ */
+function generateNACEBELDescriptionsModule(): void {
+	console.log("Generating NACEBEL descriptions module...");
+
+	const raw = readData("nacebel/nacebel-descriptions-2025.json");
+	const descriptions = JSON.parse(raw) as Record<
+		string,
+		{ en: string; fr?: string; nl?: string; de?: string }
+	>;
+
+	const module = `${HEADER}
+import type { LanguageDescriptions } from "../types";
+
+export const nacebelDescriptions: Record<string, LanguageDescriptions> = ${serialize(descriptions)};
+`;
+
+	writeFileSync(join(generatedDir, "nacebelDescriptions.ts"), module);
+	console.log(
+		`✓ Generated nacebelDescriptions.ts (${Object.keys(descriptions).length} notes)`,
+	);
+}
+
 console.log("Starting data module generation...\n");
 generateNACEDataModule();
 generateNACEBELDataModule();
+generateNACEBELDescriptionsModule();
 console.log("\n✓ Data modules generated in", generatedDir);
