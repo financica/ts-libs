@@ -1,6 +1,6 @@
 {
 	"name": "@ingram-tech/myminfin",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "TypeScript client and document generators for the Belgian SPF Finances MyMinFin and Intervat APIs",
 	"license": "MIT",
 	"files": [

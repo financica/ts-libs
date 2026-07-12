@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { XMLParser } from "fast-xml-parser";
 import {
 	generateClientListingXml,
+	MIN_TURNOVER_THRESHOLD,
+	type ClientListingClient,
 	type ClientListingInput,
 } from "../src/client-listing";
 
@@ -131,6 +133,16 @@ describe("generateClientListingXml", () => {
 		expect(listing["@_TurnOverSum"]).toBe("0.00");
 		expect(listing["@_VATAmountSum"]).toBe("0.00");
 		expect(listing.Client).toBeUndefined();
+	});
+
+	it("MIN_TURNOVER_THRESHOLD selects the customers that must be reported", () => {
+		const clients: ClientListingClient[] = [
+			{ vatNumber: "0111111111", countryCode: "BE", turnover: 100, vatAmount: 21 },
+			{ vatNumber: "0222222222", countryCode: "BE", turnover: 250, vatAmount: 52 },
+			{ vatNumber: "0333333333", countryCode: "BE", turnover: 251, vatAmount: 53 },
+		];
+		const reportable = clients.filter((c) => c.turnover > MIN_TURNOVER_THRESHOLD);
+		expect(reportable.map((c) => c.vatNumber)).toEqual(["0333333333"]);
 	});
 
 	it("escapes XML special characters in declarant text content", () => {
