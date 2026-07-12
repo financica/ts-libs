@@ -84,7 +84,10 @@ const serviceGroup = (refs: string[]) =>
 describe("parseServiceGroupDocumentTypes", () => {
 	it("decodes every ServiceMetadataReference href back to its document type id", () => {
 		const result = parseServiceGroupDocumentTypes(
-			serviceGroup([reference(INVOICE_DOC_TYPE), reference(CREDIT_NOTE_DOC_TYPE)]),
+			serviceGroup([
+				reference(INVOICE_DOC_TYPE),
+				reference(CREDIT_NOTE_DOC_TYPE),
+			]),
 		);
 		expect(result).toEqual([INVOICE_DOC_TYPE, CREDIT_NOTE_DOC_TYPE]);
 	});

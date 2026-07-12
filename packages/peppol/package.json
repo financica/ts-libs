@@ -3,24 +3,30 @@
 	"version": "0.3.0",
 	"description": "Peppol network toolkit for TypeScript: participant discovery via SML/SMP, Peppol Directory lookups, EAS schemes, and document-type classification.",
 	"keywords": [
-		"peppol",
 		"e-invoicing",
+		"eas",
 		"einvoice",
+		"en16931",
+		"peppol",
 		"sml",
 		"smp",
 		"ubl",
-		"en16931",
-		"eas",
 		"vat"
 	],
+	"homepage": "https://github.com/financica/peppol#readme",
+	"bugs": "https://github.com/financica/peppol/issues",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/financica/peppol.git"
 	},
-	"bugs": "https://github.com/financica/peppol/issues",
-	"homepage": "https://github.com/financica/peppol#readme",
+	"files": [
+		"dist"
+	],
 	"type": "module",
+	"sideEffects": false,
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
 			"import": "./dist/index.js",
@@ -39,54 +45,34 @@
 			"types": "./dist/countries.d.ts"
 		}
 	},
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"sideEffects": false,
-	"files": [
-		"dist"
-	],
-	"engines": {
-		"node": ">=18"
+	"publishConfig": {
+		"access": "public"
 	},
 	"scripts": {
-		"build": "tsup",
-		"prepack": "npm run build",
-		"lint": "eslint",
-		"format": "prettier --write .",
-		"format:check": "prettier --check .",
+		"build": "tsdown",
+		"prepack": "bun run build",
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check",
 		"type-check": "tsc --noEmit",
 		"test": "vitest",
 		"test:run": "vitest --run",
 		"test:coverage": "vitest --coverage",
-		"ci": "npm run type-check && npm run lint && npm run test:run && npm run build"
+		"ci": "bun run type-check && bun run lint && bun run test:run && bun run build"
 	},
 	"dependencies": {
-		"fast-xml-parser": "^5.9.3"
+		"fast-xml-parser": "^5.10.0"
 	},
 	"devDependencies": {
 		"@types/node": "^26.1.1",
-		"eslint": "^10.6.0",
-		"prettier": "^3.9.4",
-		"tsup": "^8.5.1",
-		"typescript": "^5.9.3",
-		"typescript-eslint": "^8.63.0",
+		"oxfmt": "^0.58.0",
+		"oxlint": "^1.73.0",
+		"tsdown": "^0.22.5",
+		"typescript": "^7.0.2",
 		"vitest": "^4.1.10"
 	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"prettier": {
-		"printWidth": 88,
-		"tabWidth": 4,
-		"useTabs": true,
-		"overrides": [
-			{
-				"files": "*.{yml,yaml}",
-				"options": {
-					"tabWidth": 2,
-					"useTabs": false
-				}
-			}
-		]
+	"engines": {
+		"node": ">=18"
 	}
 }

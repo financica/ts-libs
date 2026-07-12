@@ -1,7 +1,10 @@
 import { createHash } from "node:crypto";
 import { Resolver } from "node:dns/promises";
 import { XMLParser } from "fast-xml-parser";
-import { classifyPeppolDocumentType, type PeppolDocumentTypeKind } from "./document-types";
+import {
+	classifyPeppolDocumentType,
+	type PeppolDocumentTypeKind,
+} from "./document-types";
 import { isRecord, toErrorMessage } from "./internal";
 
 /** The only participant identifier scheme in Peppol production use. */
@@ -125,7 +128,9 @@ export const parseServiceGroupDocumentTypes = (xml: string): string[] => {
 		const marker = "/services/";
 		const index = href.lastIndexOf(marker);
 		const encoded =
-			index >= 0 ? href.slice(index + marker.length) : (href.split("/").pop() ?? "");
+			index >= 0
+				? href.slice(index + marker.length)
+				: (href.split("/").pop() ?? "");
 		if (!encoded) continue;
 		try {
 			docTypes.add(decodeURIComponent(encoded));
@@ -169,7 +174,8 @@ const resolveSmpBaseUrl = async (
 	const smpRecords = records
 		.filter(
 			(record) =>
-				record.service === "Meta:SMP" && record.flags.toUpperCase().includes("U"),
+				record.service === "Meta:SMP" &&
+				record.flags.toUpperCase().includes("U"),
 		)
 		.sort((a, b) => a.order - b.order || a.preference - b.preference);
 	for (const record of smpRecords) {
@@ -187,7 +193,8 @@ const resolveSmpBaseUrl = async (
  * not be mistaken for "absent".
  */
 const isDnsNotFound = (error: unknown): boolean => {
-	const direct = isRecord(error) && typeof error.code === "string" ? error.code : null;
+	const direct =
+		isRecord(error) && typeof error.code === "string" ? error.code : null;
 	const cause =
 		isRecord(error) && isRecord(error.cause) && typeof error.cause.code === "string"
 			? error.cause.code
@@ -217,7 +224,10 @@ export const lookupPeppolParticipant = async (params: {
 	const participantId = buildParticipantId(params.scheme, params.value);
 	const canonical = buildCanonicalParticipantId(params.scheme, params.value);
 	const timeoutMs = params.timeoutMs ?? DEFAULT_TIMEOUT_MS;
-	const hostname = buildSmlHostname(participantId, params.environment ?? "production");
+	const hostname = buildSmlHostname(
+		participantId,
+		params.environment ?? "production",
+	);
 
 	let smpBaseUrl: string | null;
 	try {

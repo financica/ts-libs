@@ -15,8 +15,7 @@ export const PEPPOL_BIS_CREDIT_NOTE_DOCUMENT_TYPE =
 	"urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2::CreditNote##urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0::2.1";
 
 /** Peppol BIS Billing 3.0 process (profile) identifier. */
-export const PEPPOL_BIS_BILLING_PROCESS =
-	"urn:fdc:peppol.eu:2017:poacc:billing:01:1.0";
+export const PEPPOL_BIS_BILLING_PROCESS = "urn:fdc:peppol.eu:2017:poacc:billing:01:1.0";
 
 /** Peppol BIS Self-Billing 3.0 invoice document type identifier. */
 export const PEPPOL_BIS_SELFBILLING_INVOICE_DOCUMENT_TYPE =
@@ -87,7 +86,8 @@ export const classifyPeppolDocumentType = (rawId: string): PeppolDocumentTypeKin
 	}
 	if (haystack.includes(":orderresponse")) return "order-response";
 	if (haystack.includes(":order-2::order")) return "order";
-	if (haystack.includes(":despatchadvice-2::despatchadvice")) return "despatch-advice";
+	if (haystack.includes(":despatchadvice-2::despatchadvice"))
+		return "despatch-advice";
 	if (haystack.includes(":catalogue-2::catalogue")) return "catalogue";
 	if (haystack.includes(":reminder-2::reminder")) return "reminder";
 	return "other";

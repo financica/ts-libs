@@ -17,10 +17,7 @@ export {
 	PEPPOL_BIS_SELFBILLING_PROCESS,
 	type PeppolDocumentTypeKind,
 } from "./document-types";
-export {
-	type PeppolDirectoryEntry,
-	lookupPeppolDirectory,
-} from "./directory-lookup";
+export { type PeppolDirectoryEntry, lookupPeppolDirectory } from "./directory-lookup";
 export {
 	getPeppolCountryScheme,
 	PEPPOL_COUNTRY_SCHEMES,
