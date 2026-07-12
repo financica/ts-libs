@@ -1,4 +1,8 @@
-import { DOMParser as XmlDomParser } from "@xmldom/xmldom";
+import {
+	type Document,
+	DOMParser as XmlDomParser,
+	type Element,
+} from "@xmldom/xmldom";
 
 const CBC_NS = "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2";
 const CAC_NS =
@@ -43,7 +47,8 @@ const stripDoctype = (xml: string): string =>
 
 const parseXmlDocument = (xml: string): Document | null => {
 	const safeXml = stripDoctype(xml);
-	const BrowserDomParser = globalThis.DOMParser as typeof XmlDomParser | undefined;
+	const BrowserDomParser = (globalThis as { DOMParser?: typeof XmlDomParser })
+		.DOMParser;
 	const parser = BrowserDomParser ? new BrowserDomParser() : new XmlDomParser();
 	const doc = parser.parseFromString(safeXml, "text/xml");
 	if (doc.getElementsByTagName("parsererror").length > 0) return null;

@@ -1,4 +1,4 @@
-import { DOMParser as XmlDomParser } from "@xmldom/xmldom";
+import { DOMParser as XmlDomParser, type Element } from "@xmldom/xmldom";
 import type {
 	UblAddress,
 	UblAllowanceCharge,
@@ -504,14 +504,14 @@ const stripDoctype = (xml: string): string =>
 export function parseUblInvoice(xml: string): UblInvoice | null {
 	try {
 		const safeXml = stripDoctype(xml);
-		const BrowserDomParser = globalThis.DOMParser as
-			| typeof XmlDomParser
-			| undefined;
+		const BrowserDomParser = (globalThis as { DOMParser?: typeof XmlDomParser })
+			.DOMParser;
 		const parser = BrowserDomParser ? new BrowserDomParser() : new XmlDomParser();
 		const doc = parser.parseFromString(safeXml, "text/xml");
 		if (doc.getElementsByTagName("parsererror").length > 0) return null;
 
 		const root = doc.documentElement;
+		if (!root) return null;
 		const localName = root.localName;
 
 		let documentType: "Invoice" | "CreditNote";
