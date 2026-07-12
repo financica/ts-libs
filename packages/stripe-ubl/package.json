@@ -2,50 +2,53 @@
 	"name": "@financica/stripe-ubl",
 	"version": "0.5.1",
 	"description": "Convert Stripe invoices and credit notes into Peppol BIS Billing 3.0 UBL documents.",
+	"homepage": "https://github.com/financica/stripe-ubl#readme",
+	"bugs": "https://github.com/financica/stripe-ubl/issues",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/financica/stripe-ubl.git"
 	},
-	"bugs": "https://github.com/financica/stripe-ubl/issues",
-	"homepage": "https://github.com/financica/stripe-ubl#readme",
+	"files": [
+		"dist"
+	],
 	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
 			"import": "./dist/index.js",
 			"types": "./dist/index.d.ts"
 		}
 	},
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"files": [
-		"dist"
-	],
 	"scripts": {
-		"build": "tsup",
+		"build": "tsdown",
 		"prepack": "bun run build",
-		"lint": "biome check .",
-		"format": "biome format --write .",
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check",
 		"type-check": "tsc --noEmit",
 		"test": "vitest",
 		"test:run": "vitest --run",
 		"ci": "bun run type-check && bun run lint && bun run test:run && bun run build"
 	},
-	"engines": {
-		"node": ">=18"
-	},
 	"dependencies": {
 		"@financica/ubl": "^0.8.0"
+	},
+	"devDependencies": {
+		"@types/node": "^26.1.1",
+		"oxfmt": "^0.58.0",
+		"oxlint": "^1.73.0",
+		"stripe": "^22.3.1",
+		"tsdown": "^0.22.5",
+		"typescript": "^7.0.2",
+		"vitest": "^4.1.10"
 	},
 	"peerDependencies": {
 		"stripe": ">=18.0.0"
 	},
-	"devDependencies": {
-		"@biomejs/biome": "^2.5.3",
-		"@types/node": "^26.1.1",
-		"stripe": "^22.3.0",
-		"tsup": "^8.5.1",
-		"typescript": "^5.9.3",
-		"vitest": "^4.1.10"
+	"engines": {
+		"node": ">=18"
 	}
 }
