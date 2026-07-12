@@ -1,9 +1,5 @@
 import { normalizeAddress } from "./address";
-import {
-	buildCompanyId,
-	parsePeppolEndpoint,
-	resolveVatEndpoint,
-} from "./identifiers";
+import { buildCompanyId, parsePeppolEndpoint, resolveVatEndpoint } from "./identifiers";
 import type { UblAddress, UblEndpoint, UblParty } from "./ubl/types";
 import { normalizeString } from "./utils";
 

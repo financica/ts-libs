@@ -2,37 +2,38 @@
 	"name": "@financica/ubl",
 	"version": "0.8.0",
 	"description": "UBL (Universal Business Language) invoice toolkit for TypeScript: parse, build, and serialize Peppol BIS Billing 3.0 documents.",
+	"homepage": "https://github.com/financica/ubl-ts#readme",
+	"bugs": {
+		"url": "https://github.com/financica/ubl-ts/issues"
+	},
 	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/financica/ubl-ts.git"
 	},
-	"homepage": "https://github.com/financica/ubl-ts#readme",
-	"bugs": {
-		"url": "https://github.com/financica/ubl-ts/issues"
-	},
-	"type": "module",
-	"exports": {
-		".": {
-			"import": "./dist/index.js",
-			"types": "./dist/index.d.ts"
-		},
-		"./build": {
-			"import": "./dist/build/index.js",
-			"types": "./dist/build/index.d.ts"
-		}
-	},
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
 	"files": [
 		"dist"
 	],
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./build": {
+			"types": "./dist/build/index.d.ts",
+			"import": "./dist/build/index.js"
+		}
+	},
 	"scripts": {
-		"build": "tsup",
+		"build": "tsdown",
 		"prepack": "npm run build",
-		"lint": "eslint",
-		"format": "prettier --write .",
-		"format:check": "prettier --check .",
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check",
 		"type-check": "tsc --noEmit",
 		"test": "vitest",
 		"test:run": "vitest --run",
@@ -44,25 +45,10 @@
 	},
 	"devDependencies": {
 		"@types/node": "^26.1.1",
-		"eslint": "^10.6.0",
-		"prettier": "^3.9.4",
-		"tsup": "^8.5.1",
-		"typescript": "^5.9.3",
-		"typescript-eslint": "^8.63.0",
+		"oxfmt": "^0.58.0",
+		"oxlint": "^1.73.0",
+		"tsdown": "^0.22.5",
+		"typescript": "^7.0.2",
 		"vitest": "^4.1.10"
-	},
-	"prettier": {
-		"printWidth": 88,
-		"tabWidth": 4,
-		"useTabs": true,
-		"overrides": [
-			{
-				"files": "*.{yml,yaml}",
-				"options": {
-					"tabWidth": 2,
-					"useTabs": false
-				}
-			}
-		]
 	}
 }

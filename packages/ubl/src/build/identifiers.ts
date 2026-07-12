@@ -298,12 +298,18 @@ export const listPeppolReceiverIdentifierCandidates = (
 	// 4. Belgium also reaches parties by enterprise number under EAS 0208; it is
 	// the VAT digits without the `BE` prefix, and some entities register only so.
 	if (vat?.scheme === "9925") {
-		add(buildCompanyId({ countryCode: "BE", companyNumber: customer.vatNumber ?? null }));
+		add(
+			buildCompanyId({
+				countryCode: "BE",
+				companyNumber: customer.vatNumber ?? null,
+			}),
+		);
 	}
 
 	// 5. A generic tax/registration number → its country's company-ID scheme.
 	const tax = normalizeString(customer.taxNumber);
-	if (tax) add(buildCompanyId({ countryCode: countryCode ?? null, companyNumber: tax }));
+	if (tax)
+		add(buildCompanyId({ countryCode: countryCode ?? null, companyNumber: tax }));
 
 	return Array.from(new Set(candidates));
 };
