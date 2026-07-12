@@ -48,20 +48,20 @@ getByCode("USD");
 //     kind: "fiat",
 //   }
 
-getByCode("usd")?.alphabeticCode;      // "USD"  — case-insensitive
+getByCode("usd")?.alphabeticCode; // "USD"  — case-insensitive
 getByNumericCode("840")?.alphabeticCode; // "USD"
-getByNumericCode(840)?.alphabeticCode;   // "USD"
-getByNumericCode(8)?.alphabeticCode;     // "ALL" — unpadded input is normalised
+getByNumericCode(840)?.alphabeticCode; // "USD"
+getByNumericCode(8)?.alphabeticCode; // "ALL" — unpadded input is normalised
 
 getByCountry("CH").map((c) => c.alphabeticCode);
 // ["CHE", "CHF", "CHW"]
 
 formatAmount(1234.5, "USD", { locale: "en-US" }); // "$1,234.50"
 formatAmount(1234.5, "JPY", { locale: "en-US" }); // "¥1,235"     (0 minor units)
-formatAmount(1.5,    "BHD", { locale: "en-US" }); // "BHD 1.500"  (3 minor units)
+formatAmount(1.5, "BHD", { locale: "en-US" }); // "BHD 1.500"  (3 minor units)
 
-CURRENCIES.length;     // 178 (as of 2026-01-01)
-PUBLISHED_AT;          // "2026-01-01"
+CURRENCIES.length; // 178 (as of 2026-01-01)
+PUBLISHED_AT; // "2026-01-01"
 ```
 
 ### Type guards
@@ -93,47 +93,47 @@ getHistoricByCode("ANG").map((c) => c.withdrawalDate);
 
 ### Lookups
 
-| Function | Returns |
-| --- | --- |
-| `getByCode(code: string)` | `Currency \| undefined` |
-| `getByNumericCode(code: string \| number)` | `Currency \| undefined` |
-| `getByCountry(countryCode: string)` | `readonly Currency[]` (possibly empty) |
+| Function                                   | Returns                                |
+| ------------------------------------------ | -------------------------------------- |
+| `getByCode(code: string)`                  | `Currency \| undefined`                |
+| `getByNumericCode(code: string \| number)` | `Currency \| undefined`                |
+| `getByCountry(countryCode: string)`        | `readonly Currency[]` (possibly empty) |
 
 ### Type guards
 
-| Function | Signature |
-| --- | --- |
+| Function              | Signature             |
+| --------------------- | --------------------- |
 | `isAlphabeticCode(s)` | `s is AlphabeticCode` |
-| `isNumericCode(s)` | `s is NumericCode` |
-| `isCountryCode(s)` | `s is CountryCode` |
+| `isNumericCode(s)`    | `s is NumericCode`    |
+| `isCountryCode(s)`    | `s is CountryCode`    |
 
 ### Formatting
 
-| Function | Signature |
-| --- | --- |
+| Function                               | Signature                            |
+| -------------------------------------- | ------------------------------------ |
 | `formatAmount(amount, code, options?)` | `string` (wraps `Intl.NumberFormat`) |
 
 ### Data
 
-| Export | Shape |
-| --- | --- |
-| `CURRENCIES` | `readonly Currency[]` — sorted by alphabetic code |
-| `ALPHABETIC_CODES` | `readonly AlphabeticCode[]` |
-| `NUMERIC_CODES` | `readonly NumericCode[]` |
-| `COUNTRY_CODES` | `readonly CountryCode[]` (ISO 3166-1 alpha-2 union) |
-| `PUBLISHED_AT` | `"YYYY-MM-DD"` date of the embedded SIX Group revision |
+| Export             | Shape                                                  |
+| ------------------ | ------------------------------------------------------ |
+| `CURRENCIES`       | `readonly Currency[]` — sorted by alphabetic code      |
+| `ALPHABETIC_CODES` | `readonly AlphabeticCode[]`                            |
+| `NUMERIC_CODES`    | `readonly NumericCode[]`                               |
+| `COUNTRY_CODES`    | `readonly CountryCode[]` (ISO 3166-1 alpha-2 union)    |
+| `PUBLISHED_AT`     | `"YYYY-MM-DD"` date of the embedded SIX Group revision |
 
 ### Types
 
 ```ts
 interface Currency {
-  readonly alphabeticCode: AlphabeticCode;   // e.g. "USD"
-  readonly numericCode:    NumericCode;      // e.g. "840"
-  readonly minorUnits:     number | null;    // null for metals and N.A. codes
-  readonly name:           string;
-  readonly countryCodes:   readonly CountryCode[];
-  readonly isFund:         boolean;
-  readonly kind:           "fiat" | "fund" | "metal" | "special";
+  readonly alphabeticCode: AlphabeticCode; // e.g. "USD"
+  readonly numericCode: NumericCode; // e.g. "840"
+  readonly minorUnits: number | null; // null for metals and N.A. codes
+  readonly name: string;
+  readonly countryCodes: readonly CountryCode[];
+  readonly isFund: boolean;
+  readonly kind: "fiat" | "fund" | "metal" | "special";
 }
 
 type CurrencyKind = "fiat" | "fund" | "metal" | "special";
