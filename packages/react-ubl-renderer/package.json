@@ -32,25 +32,28 @@
 		"./styles.css": "./dist/styles.css"
 	},
 	"scripts": {
-		"build": "tsup && node scripts/emit-css.mjs",
+		"build": "tsdown && node scripts/emit-css.mjs",
 		"prepack": "bun run build",
-		"lint": "biome check .",
-		"format": "biome format --write .",
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check",
 		"type-check": "tsc --noEmit",
 		"test": "vitest",
 		"test:run": "vitest --run",
 		"ci": "bun run type-check && bun run lint && bun run test:run && bun run build"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.5.3",
 		"@financica/ubl": "^0.8.0",
 		"@types/node": "^26.1.1",
 		"@types/react": "^19.2.17",
 		"@types/react-dom": "^19.2.3",
+		"oxfmt": "^0.58.0",
+		"oxlint": "^1.73.0",
 		"react": "^19.2.7",
 		"react-dom": "^19.2.7",
-		"tsup": "^8.5.1",
-		"typescript": "^5.9.3",
+		"tsdown": "^0.22.5",
+		"typescript": "^7.0.2",
 		"vitest": "^4.1.10"
 	},
 	"peerDependencies": {
