@@ -18,8 +18,8 @@ Requires Node 18+ for the global `fetch`.
 import { ScradaApiClient } from "@financica/scrada-client";
 
 const scrada = new ScradaApiClient({
-    apiKey: process.env.SCRADA_API_KEY!,
-    password: process.env.SCRADA_PASSWORD!,
+	apiKey: process.env.SCRADA_API_KEY!,
+	password: process.env.SCRADA_PASSWORD!,
 });
 
 const documentId = await scrada.sendOutboundSalesInvoice(companyId, invoice);
@@ -37,18 +37,18 @@ const scrada = createScradaApiClientFromEnv();
 
 ## Methods
 
-| Method | HTTP | Path |
-| --- | --- | --- |
-| `registerCompany` | POST | `/company/{id}/peppol/register` |
-| `deregisterCompany` | DELETE | `/company/{id}/peppol/deregister/{scheme}/{id}` |
-| `getUnconfirmedInboundDocuments` | GET | `/company/{id}/peppol/inbound/document/unconfirmed` |
-| `getInboundDocument` | GET | `/company/{id}/peppol/inbound/document/{docId}` |
-| `getInboundDocumentPdf` | GET | `/company/{id}/peppol/inbound/document/{docId}/pdf` |
-| `confirmInboundDocument` | PUT | `/company/{id}/peppol/inbound/document/{docId}/confirm` |
-| `sendOutboundSalesInvoice` | POST | `/company/{id}/peppol/outbound/salesInvoice` |
-| `getOutboundDocumentInfo` | GET | `/company/{id}/peppol/outbound/document/{docId}/info` |
-| `lookupPeppolParticipant` | GET | `/company/{id}/peppol/lookup/{scheme}/{id}` |
-| `lookupPeppolParty` | POST | `/company/{id}/peppol/lookup` |
+| Method                           | HTTP   | Path                                                    |
+| -------------------------------- | ------ | ------------------------------------------------------- |
+| `registerCompany`                | POST   | `/company/{id}/peppol/register`                         |
+| `deregisterCompany`              | DELETE | `/company/{id}/peppol/deregister/{scheme}/{id}`         |
+| `getUnconfirmedInboundDocuments` | GET    | `/company/{id}/peppol/inbound/document/unconfirmed`     |
+| `getInboundDocument`             | GET    | `/company/{id}/peppol/inbound/document/{docId}`         |
+| `getInboundDocumentPdf`          | GET    | `/company/{id}/peppol/inbound/document/{docId}/pdf`     |
+| `confirmInboundDocument`         | PUT    | `/company/{id}/peppol/inbound/document/{docId}/confirm` |
+| `sendOutboundSalesInvoice`       | POST   | `/company/{id}/peppol/outbound/salesInvoice`            |
+| `getOutboundDocumentInfo`        | GET    | `/company/{id}/peppol/outbound/document/{docId}/info`   |
+| `lookupPeppolParticipant`        | GET    | `/company/{id}/peppol/lookup/{scheme}/{id}`             |
+| `lookupPeppolParty`              | POST   | `/company/{id}/peppol/lookup`                           |
 
 ## Errors
 
@@ -58,16 +58,16 @@ All non-2xx responses surface as `ScradaApiError`:
 import { ScradaApiClient, ScradaApiError } from "@financica/scrada-client";
 
 try {
-    await scrada.sendOutboundSalesInvoice(companyId, invoice);
+	await scrada.sendOutboundSalesInvoice(companyId, invoice);
 } catch (err) {
-    if (err instanceof ScradaApiError) {
-        console.error(err.status, err.message, err.details);
-    }
-    throw err;
+	if (err instanceof ScradaApiError) {
+		console.error(err.status, err.message, err.details);
+	}
+	throw err;
 }
 ```
 
-The `message` is extracted from the response body using `summarizeScradaErrorDetails`, which walks Scrada's variable error shapes (`{message}`, `{errors: [{detail}]}`, `{modelState}`, `{defaultFormat}`, …) and joins the human-readable strings with ` | `. The full original body is preserved on `err.details`.
+The `message` is extracted from the response body using `summarizeScradaErrorDetails`, which walks Scrada's variable error shapes (`{message}`, `{errors: [{detail}]}`, `{modelState}`, `{defaultFormat}`, …) and joins the human-readable strings with `|`. The full original body is preserved on `err.details`.
 
 ## Types
 
