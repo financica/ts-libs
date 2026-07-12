@@ -128,25 +128,3 @@ export function getParentCode(code: string): string | null {
 			return null;
 	}
 }
-
-export function formatCodeForDisplay(code: string, level: number): string {
-	if (level === 1) {
-		return code;
-	}
-	if (level === 2) {
-		return code;
-	}
-	if (level === 3) {
-		return `${code.substring(0, 2)}.${code.substring(2)}`;
-	}
-	if (level === 4) {
-		return `${code.substring(0, 2)}.${code.substring(2)}`;
-	}
-	if (level === 5) {
-		return `${code.substring(0, 2)}.${code.substring(2)}`;
-	}
-	if (level === 7) {
-		return `${code.substring(0, 2)}.${code.substring(2)}`;
-	}
-	return code;
-}

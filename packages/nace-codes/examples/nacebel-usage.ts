@@ -1,4 +1,4 @@
-import { NACEBEL } from "nace-codes";
+import { NACEBEL } from "nace-codes/nacebel";
 
 // Initialize NACEBEL classifier
 const nacebel = new NACEBEL();

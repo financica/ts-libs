@@ -12,6 +12,9 @@ A TypeScript library for working with NACE and NACEBEL economic activity classif
 - **Rich Metadata**: Access includes/excludes rules and explanatory notes
 - **Type-Safe**: Full TypeScript support with strict typing
 - **Lightweight**: Efficient data loading with lazy initialization
+- **Tree-Shakeable**: Core NACE and the Belgian NACEBEL extension are separate
+  entry points with disjoint data. Importing NACE never pulls Belgian data into
+  your bundle.
 - **Zero Dependencies**: No external runtime dependencies
 
 ## Installation
@@ -20,10 +23,21 @@ A TypeScript library for working with NACE and NACEBEL economic activity classif
 npm install nace-codes
 ```
 
+## Entry Points
+
+| Import               | Contents                                        |
+| -------------------- | ----------------------------------------------- |
+| `nace-codes`         | Core NACE Rev. 2.1 (EU) — the `NACE` class      |
+| `nace-codes/nacebel` | Belgian NACEBEL extension — the `NACEBEL` class |
+
+Only reach for `nace-codes/nacebel` when you need the Belgian national codes; it
+bundles the NACE core data plus the Belgian delta.
+
 ## Quick Start
 
 ```typescript
-import { NACE, NACEBEL } from "nace-codes";
+import { NACE } from "nace-codes";
+import { NACEBEL } from "nace-codes/nacebel";
 
 // Initialize the NACE classifier
 const nace = new NACE();
@@ -59,7 +73,6 @@ Initialize a new NACE classifier instance.
 
 ```typescript
 interface NACEOptions {
-	dataPath?: string; // Custom path to NACE data files
 	preload?: boolean; // Load all data on initialization (default: false)
 }
 ```
@@ -311,6 +324,27 @@ This library uses official classification data from:
 
 - **NACE Rev. 2.1**: European Union statistical classification
 - **NACEBEL 2025**: Belgian national extension of NACE
+
+## Development
+
+This repo uses [Bun](https://bun.sh) and the [oxc](https://oxc.rs) toolchain:
+oxlint, oxfmt, and [tsdown](https://tsdown.dev) (rolldown-powered bundler).
+
+```bash
+bun install
+bun run generate:data   # regenerate src/generated/* from data/
+bun run build           # generate data + bundle with tsdown
+bun run test            # vitest
+bun run typecheck       # tsc --noEmit
+bun run lint            # oxlint
+bun run format          # oxfmt --write
+bun run ci              # typecheck + lint + test + build
+```
+
+The classification data lives in `data/` as TSV. `generate:data` compiles it
+into `src/generated/*.ts` (git-ignored). Core NACE data is emitted to
+`naceData.ts`; each national extension (e.g. NACEBEL) is emitted as a separate
+delta module so the entry points stay tree-shakeable.
 
 ## License
 

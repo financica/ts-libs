@@ -9,7 +9,6 @@ export function parseTSV<T = Record<string, string>>(content: string): T[] {
 	}
 
 	const firstLine = lines[0];
-	// eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
 	if (!firstLine) {
 		return [];
 	}
@@ -49,7 +48,6 @@ function parseRow(line: string): string[] {
 	let i = 0;
 
 	while (i < line.length) {
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const char = line[i]!;
 		const nextChar = line[i + 1];
 

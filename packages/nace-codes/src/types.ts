@@ -79,13 +79,11 @@ export interface SearchOptions {
 }
 
 export interface NACEOptions {
-	dataPath?: string;
+	/** Load and index all codes eagerly in the constructor (default: false). */
 	preload?: boolean;
 }
 
-export interface NACEBELOptions extends NACEOptions {
-	nacebelDataPath?: string;
-}
+export type NACEBELOptions = NACEOptions;
 
 export interface ParsedNACEHeading {
 	NACE_CODE: string;
@@ -137,13 +135,6 @@ export interface ParsedNACEBEL {
 	NATIONAL_TITLE_BE_FR: string;
 	NATIONAL_TITLE_BE_DE: string;
 	NATIONAL_TITLE_BE_EN: string;
-}
-
-export interface MIGsAggregate {
-	MIGs_URI: string;
-	MIGs_Aggregate: string;
-	NACE_URI: string;
-	NACE_Rev2_1_Position: string;
 }
 
 export type CodeMap = Record<string, NACECode>;

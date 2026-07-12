@@ -107,7 +107,6 @@ describe("NACEBEL", () => {
 
 	describe("hierarchy navigation", () => {
 		it("should navigate from NACEBEL to NACE codes", () => {
-			const code = nacebel.getCode("01.11001");
 			const ancestors = nacebel.getAncestors("01.11001");
 
 			expect(ancestors.length).toBeGreaterThan(3);

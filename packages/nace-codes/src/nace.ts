@@ -30,7 +30,6 @@ export class NACE {
 		if (!codeObj) return null;
 
 		const parentCode = getParentCode(codeObj.code);
-		// eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
 		if (!parentCode) return null;
 
 		return this.getCode(parentCode);
@@ -90,7 +89,6 @@ export class NACE {
 		const toProcess: string[] = [normalizeCode(code)];
 
 		while (toProcess.length > 0) {
-			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			const current = toProcess.shift()!;
 			const children = this.getChildren(current);
 
@@ -142,7 +140,6 @@ export class NACE {
 
 		for (const code of Object.values(this.codes)) {
 			const description = code.description[language];
-			// eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
 			if (!description) continue;
 
 			const lowerDescription = description.toLowerCase();
