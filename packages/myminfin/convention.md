@@ -25,40 +25,40 @@
 
 Dans la présente Convention, les termes écrits avec une majuscule initiale sont définis comme suit. Pour faciliter la lecture du document, le masculin générique est utilisé comme forme neutre.
 
-| Terme | Description |
-|---|---|
-| API | signifie « application programming interface » (interface de programmation d'application) et fait l'objet de cette Convention. L'API a été développée par le SPF Finances. |
-| Jeton API | désigne la clé unique avec laquelle l'Utilisateur agréé et l'Utilisateur final peuvent s'identifier et avec laquelle l'API peut être utilisée. |
-| Authentification | consiste à établir l'identité de quelqu'un. |
-| Autorisation | renvoie au contrôle effectué par le SPF Finances pour vérifier si un Utilisateur final authentifié peut effectivement avoir accès à la Plateforme du SPF. |
-| RGPD | Le règlement (UE) 2016/679 du Parlement européen et du Conseil du 27 avril 2016 relatif à la protection des personnes physiques à l'égard du traitement des données à caractère personnel et à la libre circulation de ces données, et abrogeant la directive 95/46/CE (règlement général sur la protection des données). |
-| Incident de cybersécurité | désigne un événement, quelle qu'en soit la cause, lors duquel la sécurité de l'API, des systèmes d'information, des réseaux ou des données de l'une des Parties est menacée et par lequel la confidentialité, l'intégrité ou la disponibilité de l'API ou des systèmes est compromise, avec ou sans Fuite de données. |
-| Fuite de données | désigne une violation de données à caractère personnel au sens de l'article 4, 12), du RGPD. Plus précisément : une violation de la sécurité entraînant, de manière accidentelle ou illicite la destruction, la perte, l'altération, la divulgation non autorisée de données transmises, conservées ou traitées d'une autre manière, ou l'accès non autorisé à de telles données. |
-| Utilisateur agréé | désigne toute Entreprise de logiciels qui a signé la présente Convention et qui est ensuite enregistrée comme Utilisateur agréé auprès du SPF Finances. L'Utilisateur agréé prendra les mesures nécessaires pour utiliser l'API. |
-| Utilisateur final | désigne toute entreprise ou personne physique qui utilise directement le Progiciel de l'Utilisateur agréé et est par conséquent le client de l'Utilisateur agréé. Cet Utilisateur final pourra utiliser les fonctionnalités issues de l'API soit pour consulter ses propres documents sur une Plateforme du SPF soit pour consulter les documents de son mandant sur une Plateforme du SPF à laquelle il peut avoir accès en vertu d'un mandat. |
-| Plateforme du SPF | désigne une plateforme électronique sécurisée gérée par le SPF Finances à laquelle l'Utilisateur final a accès, comme MyMinFin. |
-| Journalisation | désigne l'enregistrement chronologique, le suivi et la visualisation de données numériques à propos des événements d'un processus. Grâce à ces données de connexion, un événement numérique particulier peut être reconstitué et analysé. |
-| Convention | renvoie à la présente Convention d'utilisation API. |
-| Entreprise de logiciels | désigne toute entreprise qui développe un Progiciel et le propose aux Utilisateurs finaux afin de regrouper, structurer, visualiser, simplifier et/ou automatiser leurs tâches administratives et/ou numériques. |
-| Progiciel | désigne un programme spécifique qui vise à regrouper, structurer, visualiser, simplifier et/ou automatiser ses tâches administratives et/ou numériques de l'Utilisateur final. Il peut notamment s'agir d'un programme de comptabilité qui effectue automatiquement des calculs pour l'Utilisateur final ou visualise ses recettes et dépenses. |
+| Terme                     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| API                       | signifie « application programming interface » (interface de programmation d'application) et fait l'objet de cette Convention. L'API a été développée par le SPF Finances.                                                                                                                                                                                                                                                                      |
+| Jeton API                 | désigne la clé unique avec laquelle l'Utilisateur agréé et l'Utilisateur final peuvent s'identifier et avec laquelle l'API peut être utilisée.                                                                                                                                                                                                                                                                                                  |
+| Authentification          | consiste à établir l'identité de quelqu'un.                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Autorisation              | renvoie au contrôle effectué par le SPF Finances pour vérifier si un Utilisateur final authentifié peut effectivement avoir accès à la Plateforme du SPF.                                                                                                                                                                                                                                                                                       |
+| RGPD                      | Le règlement (UE) 2016/679 du Parlement européen et du Conseil du 27 avril 2016 relatif à la protection des personnes physiques à l'égard du traitement des données à caractère personnel et à la libre circulation de ces données, et abrogeant la directive 95/46/CE (règlement général sur la protection des données).                                                                                                                       |
+| Incident de cybersécurité | désigne un événement, quelle qu'en soit la cause, lors duquel la sécurité de l'API, des systèmes d'information, des réseaux ou des données de l'une des Parties est menacée et par lequel la confidentialité, l'intégrité ou la disponibilité de l'API ou des systèmes est compromise, avec ou sans Fuite de données.                                                                                                                           |
+| Fuite de données          | désigne une violation de données à caractère personnel au sens de l'article 4, 12), du RGPD. Plus précisément : une violation de la sécurité entraînant, de manière accidentelle ou illicite la destruction, la perte, l'altération, la divulgation non autorisée de données transmises, conservées ou traitées d'une autre manière, ou l'accès non autorisé à de telles données.                                                               |
+| Utilisateur agréé         | désigne toute Entreprise de logiciels qui a signé la présente Convention et qui est ensuite enregistrée comme Utilisateur agréé auprès du SPF Finances. L'Utilisateur agréé prendra les mesures nécessaires pour utiliser l'API.                                                                                                                                                                                                                |
+| Utilisateur final         | désigne toute entreprise ou personne physique qui utilise directement le Progiciel de l'Utilisateur agréé et est par conséquent le client de l'Utilisateur agréé. Cet Utilisateur final pourra utiliser les fonctionnalités issues de l'API soit pour consulter ses propres documents sur une Plateforme du SPF soit pour consulter les documents de son mandant sur une Plateforme du SPF à laquelle il peut avoir accès en vertu d'un mandat. |
+| Plateforme du SPF         | désigne une plateforme électronique sécurisée gérée par le SPF Finances à laquelle l'Utilisateur final a accès, comme MyMinFin.                                                                                                                                                                                                                                                                                                                 |
+| Journalisation            | désigne l'enregistrement chronologique, le suivi et la visualisation de données numériques à propos des événements d'un processus. Grâce à ces données de connexion, un événement numérique particulier peut être reconstitué et analysé.                                                                                                                                                                                                       |
+| Convention                | renvoie à la présente Convention d'utilisation API.                                                                                                                                                                                                                                                                                                                                                                                             |
+| Entreprise de logiciels   | désigne toute entreprise qui développe un Progiciel et le propose aux Utilisateurs finaux afin de regrouper, structurer, visualiser, simplifier et/ou automatiser leurs tâches administratives et/ou numériques.                                                                                                                                                                                                                                |
+| Progiciel                 | désigne un programme spécifique qui vise à regrouper, structurer, visualiser, simplifier et/ou automatiser ses tâches administratives et/ou numériques de l'Utilisateur final. Il peut notamment s'agir d'un programme de comptabilité qui effectue automatiquement des calculs pour l'Utilisateur final ou visualise ses recettes et dépenses.                                                                                                 |
 
 ## Article 2 : Parties concernées
 
 La présente Convention est conclue entre :
 
 - Le Service public fédéral Finances
-  - adresse : Boulevard du Roi Albert II 33 1030 Bruxelles
-  - numéro d'entreprise : 0308.357.159
-  - représenté par : Filip Van de Velde, Président du Comité de direction
+    - adresse : Boulevard du Roi Albert II 33 1030 Bruxelles
+    - numéro d'entreprise : 0308.357.159
+    - représenté par : Filip Van de Velde, Président du Comité de direction
 
 Dénommé dans cette convention **SPF Finances**
 
 ET
 
 - Entreprise de logiciels : Ingram Technologies
-  - adresse : Rue du Poinçon 51A 1000 Bruxelles
-  - Numéro BCE : 0766.280.697
-  - représentant légal : Jerome Leclanche
+    - adresse : Rue du Poinçon 51A 1000 Bruxelles
+    - Numéro BCE : 0766.280.697
+    - représentant légal : Jerome Leclanche
 
 Dénommée dans cette convention **Utilisateur agréé**
 
@@ -205,11 +205,11 @@ Les différents partenaires de la chaîne sont :
 - l'Utilisateur agréé ;
 - l'Utilisateur final.
 
-Le SPF Finances enregistre toutes les opérations qui sont effectuées par le biais des API ainsi que par le biais des composants qui permettent le fonctionnement des API. L'on entend ici par composants entre autres : *au niveau du composant ESB (Enterprise Service Bus), le composant d'authentification et d'identification, le composant de gestion du mandat et le composant de gestion des documents.*
+Le SPF Finances enregistre toutes les opérations qui sont effectuées par le biais des API ainsi que par le biais des composants qui permettent le fonctionnement des API. L'on entend ici par composants entre autres : _au niveau du composant ESB (Enterprise Service Bus), le composant d'authentification et d'identification, le composant de gestion du mandat et le composant de gestion des documents._
 
 Ces informations sont également traitées de manière anonyme à des fins statistiques et pour l'amélioration de ce service. Les données ne sont en aucun cas liées aux données personnelles collectées au cours des procédures.
 
-L'Utilisateur agréé doit enregistrer toutes les données et transactions nécessaires pour établir une reconstitution complète de quelle personne s'est adressée à quel service et de quand quelle information ou quel document a été consulté. Cette demande de reconstruction peut faire suite à une enquête, à l'initiative d'une autorité ou d'un organisme de contrôle concerné ou à une plainte. Cela nécessite au minimum l'enregistrement et la conservation des données et transactions suivantes : *Les authentifications, tentatives d'authentification (date, heure, numéro d'identification et un message ID afin de pouvoir établir un lien avec l'adresse IP, le navigateur et un système d'exploitation) ainsi que les transactions avec l'API.*
+L'Utilisateur agréé doit enregistrer toutes les données et transactions nécessaires pour établir une reconstitution complète de quelle personne s'est adressée à quel service et de quand quelle information ou quel document a été consulté. Cette demande de reconstruction peut faire suite à une enquête, à l'initiative d'une autorité ou d'un organisme de contrôle concerné ou à une plainte. Cela nécessite au minimum l'enregistrement et la conservation des données et transactions suivantes : _Les authentifications, tentatives d'authentification (date, heure, numéro d'identification et un message ID afin de pouvoir établir un lien avec l'adresse IP, le navigateur et un système d'exploitation) ainsi que les transactions avec l'API._
 
 L'Utilisateur agréé doit conserver ces données pendant une période de minimum 12 mois. Dans le cadre d'un audit, l'Utilisateur agréé doit être en mesure de fournir ces données dans les 72 heures.
 
