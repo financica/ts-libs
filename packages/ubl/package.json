@@ -41,7 +41,7 @@
 		"ci": "npm run type-check && npm run lint && npm run test:run && npm run build"
 	},
 	"dependencies": {
-		"@xmldom/xmldom": "^0.8.11"
+		"@xmldom/xmldom": "^0.9.10"
 	},
 	"devDependencies": {
 		"@types/node": "^26.1.1",
