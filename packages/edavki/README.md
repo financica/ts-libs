@@ -23,18 +23,18 @@ bun add @financica/edavki
 import { buildDdvOEnvelope, serializeDdvO } from "@financica/edavki";
 
 const ret = {
-  taxPeriodStart: "2026-01-01",
-  taxPeriodEnd: "2026-01-31",
-  rates: { higher: 22, lower: 9.5, reduced: 5 },
-  appliesDeductibleProportion: false,
-  claimsRefund: false,
-  fields: {
-    f11: 10000, // taxable supplies (base)
-    f21: 2200,  // output VAT @ 22 %
-    f31: 4000,  // purchases (base)
-    f41: 880,   // input VAT @ 22 %
-    f51: 1320,  // VAT liability
-  },
+	taxPeriodStart: "2026-01-01",
+	taxPeriodEnd: "2026-01-31",
+	rates: { higher: 22, lower: 9.5, reduced: 5 },
+	appliesDeductibleProportion: false,
+	claimsRefund: false,
+	fields: {
+		f11: 10000, // taxable supplies (base)
+		f21: 2200, // output VAT @ 22 %
+		f31: 4000, // purchases (base)
+		f41: 880, // input VAT @ 22 %
+		f51: 1320, // VAT liability
+	},
 };
 
 // Just the <DDV-O> document:
@@ -42,8 +42,8 @@ const doc = serializeDdvO(ret);
 
 // A full <Envelope> ready for manual eDavki import:
 const xml = buildDdvOEnvelope({
-  return: ret,
-  taxpayer: { vatNumber: "SI12345678", name: "Test d.o.o.", taxpayerType: "PO" },
+	return: ret,
+	taxpayer: { vatNumber: "SI12345678", name: "Test d.o.o.", taxpayerType: "PO" },
 });
 ```
 

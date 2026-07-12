@@ -25,25 +25,25 @@
 		}
 	},
 	"scripts": {
-		"build": "tsup",
-		"prepack": "npm run build",
-		"lint": "eslint",
-		"format": "prettier --write .",
-		"format:check": "prettier --check .",
+		"build": "tsdown",
+		"prepack": "bun run build",
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check",
 		"type-check": "tsc --noEmit",
 		"test": "vitest",
 		"test:run": "vitest --run",
 		"test:coverage": "vitest --coverage",
-		"ci": "npm run type-check && npm run lint && npm run test:run && npm run build"
+		"ci": "bun run type-check && bun run lint && bun run test:run && bun run build"
 	},
 	"devDependencies": {
 		"@types/node": "^26.1.1",
-		"eslint": "^10.6.0",
-		"fast-xml-parser": "^5.9.3",
-		"prettier": "^3.9.4",
-		"tsup": "^8.5.1",
-		"typescript": "^5.9.3",
-		"typescript-eslint": "^8.63.0",
+		"fast-xml-parser": "^5.10.0",
+		"oxfmt": "^0.58.0",
+		"oxlint": "^1.73.0",
+		"tsdown": "^0.22.5",
+		"typescript": "^7.0.2",
 		"vitest": "^4.1.10"
 	}
 }
