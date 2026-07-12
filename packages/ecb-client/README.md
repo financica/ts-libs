@@ -55,12 +55,12 @@ const snapshot = await ecb.getRates("2024-01-15", ["USD", "GBP", "CHF"]);
 
 ### `new EcbClient(options?)`
 
-| option      | default                                      | description                                              |
-| ----------- | -------------------------------------------- | -------------------------------------------------------- |
-| `baseUrl`   | `https://data-api.ecb.europa.eu/service`     | ECB data API base URL.                                   |
-| `fetch`     | global `fetch`                               | Custom fetch (testing, proxying).                        |
-| `cache`     | unbounded in-process `Map`                   | Snapshot cache keyed by request. Pass `null` to disable. |
-| `timeoutMs` | `15000`                                      | Per-request timeout. `0` disables it.                    |
+| option      | default                                  | description                                              |
+| ----------- | ---------------------------------------- | -------------------------------------------------------- |
+| `baseUrl`   | `https://data-api.ecb.europa.eu/service` | ECB data API base URL.                                   |
+| `fetch`     | global `fetch`                           | Custom fetch (testing, proxying).                        |
+| `cache`     | unbounded in-process `Map`               | Snapshot cache keyed by request. Pass `null` to disable. |
+| `timeoutMs` | `15000`                                  | Per-request timeout. `0` disables it.                    |
 
 ### `getRate(currency, date) → Promise<ReferenceRate>`
 

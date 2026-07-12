@@ -1,4 +1,4 @@
-import { defineConfig } from "tsup";
+import { defineConfig } from "tsdown";
 
 export default defineConfig({
 	entry: ["src/index.ts"],
@@ -7,8 +7,9 @@ export default defineConfig({
 	sourcemap: true,
 	clean: true,
 	treeshake: true,
-	minify: false,
 	target: "es2022",
-	splitting: false,
-	outDir: "dist",
+	outExtensions: ({ format }) => ({
+		js: format === "cjs" ? ".cjs" : ".js",
+		dts: ".d.ts",
+	}),
 });
