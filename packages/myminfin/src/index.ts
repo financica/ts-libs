@@ -20,7 +20,7 @@ export type {
 	BuildBelgianVatReturnInput,
 	BuildBelgianVatReturnResult,
 } from "./vat-return";
-export { generateClientListingXml } from "./client-listing";
+export { generateClientListingXml, MIN_TURNOVER_THRESHOLD } from "./client-listing";
 export type {
 	ClientListingDeclarant,
 	ClientListingClient,

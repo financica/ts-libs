@@ -13,6 +13,15 @@ import { escapeXmlAttr, escapeXmlText } from "./xml-escape";
 const LISTING_NS = "http://www.minfin.fgov.be/ClientListingConsignment";
 const COMMON_NS = "http://www.minfin.fgov.be/InputCommon";
 
+/**
+ * Minimum yearly turnover (excl. VAT, in EUR) at which a Belgian VAT-registered
+ * customer must appear on the annual client listing. Customers at or below this
+ * amount may be omitted. Callers filter their own rows against this before
+ * passing `clients` to {@link generateClientListingXml}; the generator itself
+ * lists whatever it is given.
+ */
+export const MIN_TURNOVER_THRESHOLD = 250;
+
 export interface ClientListingDeclarant {
 	/** VAT number without the `BE` prefix. Emitted verbatim (may be empty). */
 	vatNumber: string;
