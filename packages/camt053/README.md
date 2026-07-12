@@ -17,27 +17,31 @@ const xml = fs.readFileSync("statement.xml", "utf8");
 const report = parseCamt053(xml);
 
 if (report) {
-    console.log(report.messageId);
-    for (const stmt of report.statements) {
-        console.log(`Account: ${stmt.account.iban}`);
-        console.log(`Owner: ${stmt.account.owner?.name}`);
-        console.log(`Bank: ${stmt.account.servicer?.name}`);
+	console.log(report.messageId);
+	for (const stmt of report.statements) {
+		console.log(`Account: ${stmt.account.iban}`);
+		console.log(`Owner: ${stmt.account.owner?.name}`);
+		console.log(`Bank: ${stmt.account.servicer?.name}`);
 
-        for (const balance of stmt.balances) {
-            console.log(`${balance.type}: ${balance.amount} ${balance.currency}`);
-        }
+		for (const balance of stmt.balances) {
+			console.log(`${balance.type}: ${balance.amount} ${balance.currency}`);
+		}
 
-        for (const entry of stmt.entries) {
-            console.log(`${entry.creditDebitIndicator} ${entry.amount} ${entry.currency}`);
-            console.log(`  Status: ${entry.status}`);
-            console.log(`  Info: ${entry.additionalInformation}`);
+		for (const entry of stmt.entries) {
+			console.log(
+				`${entry.creditDebitIndicator} ${entry.amount} ${entry.currency}`,
+			);
+			console.log(`  Status: ${entry.status}`);
+			console.log(`  Info: ${entry.additionalInformation}`);
 
-            if (entry.amountDetails?.currencyExchange) {
-                const fx = entry.amountDetails.currencyExchange;
-                console.log(`  FX: ${fx.sourceCurrency}/${fx.targetCurrency} @ ${fx.exchangeRate}`);
-            }
-        }
-    }
+			if (entry.amountDetails?.currencyExchange) {
+				const fx = entry.amountDetails.currencyExchange;
+				console.log(
+					`  FX: ${fx.sourceCurrency}/${fx.targetCurrency} @ ${fx.exchangeRate}`,
+				);
+			}
+		}
+	}
 }
 ```
 

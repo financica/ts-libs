@@ -58,7 +58,6 @@ const xmlParser = new XMLParser({
 // XML node access helpers
 // ---------------------------------------------------------------------------
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type XmlNode = Record<string, any>;
 
 /** Safely access a text value from a node, returning undefined if absent. */
