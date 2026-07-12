@@ -544,7 +544,7 @@ function parseFact(
 
 	// Check if this looks like a tuple (has children with contextRef)
 	const children = getChildren(node, tag);
-	if (children.length > 0 && hasFacts(children, namespaces)) {
+	if (children.length > 0 && hasFacts(children)) {
 		return parseTuple(node, tag, attrs, children, namespaces);
 	}
 
@@ -623,7 +623,7 @@ function parseTuple(
 	};
 }
 
-function hasFacts(children: unknown[], namespaces: Record<string, string>): boolean {
+function hasFacts(children: unknown[]): boolean {
 	for (const child of children) {
 		const childTag = getTagName(child);
 		if (!childTag) continue;
@@ -633,7 +633,7 @@ function hasFacts(children: unknown[], namespaces: Record<string, string>): bool
 
 		// Check nested children recursively
 		const grandChildren = getChildren(child, childTag);
-		if (grandChildren.length > 0 && hasFacts(grandChildren, namespaces)) {
+		if (grandChildren.length > 0 && hasFacts(grandChildren)) {
 			return true;
 		}
 	}

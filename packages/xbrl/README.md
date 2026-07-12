@@ -20,35 +20,38 @@ const xml = readFileSync("filing.xbrl", "utf-8");
 const instance = parseXbrl(xml);
 
 if (instance) {
-    // Schema references
-    for (const ref of instance.schemaRefs) {
-        console.log(`Taxonomy: ${ref.href}`);
-    }
+	// Schema references
+	for (const ref of instance.schemaRefs) {
+		console.log(`Taxonomy: ${ref.href}`);
+	}
 
-    // Contexts
-    for (const [id, ctx] of Object.entries(instance.contexts)) {
-        console.log(`Context ${id}: ${ctx.entity.value} (${ctx.period.type})`);
-    }
+	// Contexts
+	for (const [id, ctx] of Object.entries(instance.contexts)) {
+		console.log(`Context ${id}: ${ctx.entity.value} (${ctx.period.type})`);
+	}
 
-    // Units
-    for (const [id, unit] of Object.entries(instance.units)) {
-        const label = unit.measures?.map((m) => m.localName).join("*")
-            ?? `${unit.divide?.numerator.map((m) => m.localName).join("*")}/${unit.divide?.denominator.map((m) => m.localName).join("*")}`;
-        console.log(`Unit ${id}: ${label}`);
-    }
+	// Units
+	for (const [id, unit] of Object.entries(instance.units)) {
+		const label =
+			unit.measures?.map((m) => m.localName).join("*") ??
+			`${unit.divide?.numerator.map((m) => m.localName).join("*")}/${unit.divide?.denominator.map((m) => m.localName).join("*")}`;
+		console.log(`Unit ${id}: ${label}`);
+	}
 
-    // Facts (recursive traversal)
-    function printFacts(facts: typeof instance.facts, indent = "") {
-        for (const fact of facts) {
-            if (fact.type === "item") {
-                console.log(`${indent}${fact.name.localName} = ${fact.value} [${fact.contextRef}]`);
-            } else {
-                console.log(`${indent}${fact.name.localName} (tuple)`);
-                printFacts(fact.children, indent + "  ");
-            }
-        }
-    }
-    printFacts(instance.facts);
+	// Facts (recursive traversal)
+	function printFacts(facts: typeof instance.facts, indent = "") {
+		for (const fact of facts) {
+			if (fact.type === "item") {
+				console.log(
+					`${indent}${fact.name.localName} = ${fact.value} [${fact.contextRef}]`,
+				);
+			} else {
+				console.log(`${indent}${fact.name.localName} (tuple)`);
+				printFacts(fact.children, indent + "  ");
+			}
+		}
+	}
+	printFacts(instance.facts);
 }
 ```
 
@@ -75,13 +78,17 @@ Detailed API documentation lives in [`docs/api_reference.md`](docs/api_reference
 
 ## Development
 
+This repo uses [Bun](https://bun.sh) and the [oxc](https://oxc.rs) toolchain:
+oxlint, oxfmt, and [tsdown](https://tsdown.dev) (rolldown-powered bundler).
+
 ```bash
-npm test          # run tests in watch mode
-npm run test:run  # run tests once
-npm run lint      # eslint
-npm run format    # prettier
-npm run build     # build to dist/
-npm run ci        # type-check + lint + test + build
+bun run test        # run tests once (vitest)
+bun run test:watch  # run tests in watch mode
+bun run lint        # oxlint
+bun run format      # oxfmt
+bun run typecheck   # tsc --noEmit
+bun run build       # bundle to dist/ with tsdown
+bun run ci          # typecheck + lint + test + build
 ```
 
 ## License
