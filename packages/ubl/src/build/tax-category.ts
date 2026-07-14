@@ -16,6 +16,8 @@ export const EXEMPT_TAXABILITY_REASONS = new Set([
 /** Human-readable EN 16931 exemption reasons (BR-E-10 / BR-AE-10 / …). */
 const EXEMPTION_REASON_TEXT: Record<string, string> = {
 	reverse_charge: "Reverse charge",
+	intra_community: "Intra-community supply",
+	export: "Export outside the EU",
 	customer_exempt: "Exempt based on customer status",
 	product_exempt: "Exempt based on the supplied goods or services",
 	portion_product_exempt: "Exempt based on the supplied goods or services",
@@ -41,6 +43,8 @@ const normalizeTaxCategoryId = (value: unknown) => {
  * numeric rate into a {@link UblTaxCategory}.
  *
  *   - Reverse charge          → `AE` (0%, with exemption reason)
+ *   - Intra-community supply  → `K`  (0%, with exemption reason)
+ *   - Export outside the EU   → `G`  (0%, with exemption reason)
  *   - Any other exempt reason → `E`  (0%, with exemption reason)
  *   - Category `Z` / rate ≤ 0 → `Z`  (zero-rated, 0%)
  *   - Otherwise               → `S`  (standard, the line's rate)
@@ -58,6 +62,20 @@ export const taxCategoryFromReasonOrRate = (params: {
 			id: "AE",
 			percent: 0,
 			exemptionReason: EXEMPTION_REASON_TEXT.reverse_charge,
+		};
+	}
+	if (categoryHint === "K" || reason === "intra_community") {
+		return {
+			id: "K",
+			percent: 0,
+			exemptionReason: EXEMPTION_REASON_TEXT.intra_community,
+		};
+	}
+	if (categoryHint === "G" || reason === "export") {
+		return {
+			id: "G",
+			percent: 0,
+			exemptionReason: EXEMPTION_REASON_TEXT.export,
 		};
 	}
 	if (categoryHint === "E" || (reason && EXEMPT_TAXABILITY_REASONS.has(reason))) {
