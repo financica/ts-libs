@@ -227,6 +227,74 @@ describe("computeBelgianVatGrid", () => {
 		});
 		expect(grid[71]).toBe(0);
 	});
+
+	it("maps special sales regimes to boxes 00/44/45/46/47", () => {
+		const { grid, warnings } = computeBelgianVatGrid({
+			standardRatedSales: [],
+			zeroRatedSales: 100,
+			icServicesSales: 200,
+			domesticReverseChargeSales: 300,
+			icGoodsSales: 400,
+			exportSales: 500,
+			purchaseBase: 0,
+			deductibleVat: 0,
+		});
+		expect(warnings).toHaveLength(0);
+		expect(grid[0]).toBe(100);
+		expect(grid[44]).toBe(200);
+		expect(grid[45]).toBe(300);
+		expect(grid[46]).toBe(400);
+		expect(grid[47]).toBe(500);
+		expect(grid[54]).toBeUndefined();
+		expect(grid[71]).toBe(0); // no VAT due on any of these
+	});
+
+	it("maps reverse-charge purchases to 86/88/87 with VAT in 55/56/57", () => {
+		const { grid, warnings } = computeBelgianVatGrid({
+			standardRatedSales: [],
+			purchaseBase: 600, // 100 + 200 + 300, also reported in 82
+			deductibleVat: 126,
+			icGoodsPurchaseBase: 100,
+			icServicesPurchaseBase: 200,
+			otherReverseChargePurchaseBase: 300,
+			icOutputVat: 63, // 21% of 100 + 200
+			domesticReverseChargeOutputVat: 42,
+			importOutputVat: 21,
+		});
+		expect(warnings).toHaveLength(0);
+		expect(grid[82]).toBe(600);
+		expect(grid[86]).toBe(100);
+		expect(grid[88]).toBe(200);
+		expect(grid[87]).toBe(300);
+		expect(grid[55]).toBe(63);
+		expect(grid[56]).toBe(42);
+		expect(grid[57]).toBe(21);
+		expect(grid[59]).toBe(126);
+		// 55 + 56 + 57 = 126 self-assessed, fully deducted in 59
+		expect(grid[71]).toBe(0);
+	});
+
+	it("includes self-assessed VAT in the payable balance", () => {
+		const { grid } = computeBelgianVatGrid({
+			standardRatedSales: [{ rate: 21, base: 1000, vat: 210 }],
+			purchaseBase: 100,
+			deductibleVat: 10, // partial deduction of the self-assessed VAT
+			icServicesPurchaseBase: 100,
+			icOutputVat: 21,
+		});
+		expect(grid[71]).toBe(221); // 210 + 21 - 10
+	});
+
+	it("clamps a negative special-regime box with a warning", () => {
+		const { grid, warnings } = computeBelgianVatGrid({
+			standardRatedSales: [],
+			icGoodsSales: -250,
+			purchaseBase: 0,
+			deductibleVat: 0,
+		});
+		expect(grid[46]).toBeUndefined();
+		expect(warnings.some((w) => w.includes("grid 46"))).toBe(true);
+	});
 });
 
 describe("buildBelgianVatReturn", () => {

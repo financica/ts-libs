@@ -227,18 +227,42 @@ export interface BelgianStandardRatedSale {
 }
 
 /**
- * The figures this library maps onto the Belgian grid today. Deliberately
- * narrow: it covers domestic standard-rated sales and deductible domestic
- * purchases. Intra-community, exports, reverse charge, corrections, investment
- * goods and prepayments are not modelled yet.
+ * The figures this library maps onto the Belgian grid. Covers domestic
+ * standard-rated sales, deductible purchases, intra-community supplies and
+ * acquisitions, exports, domestic reverse charge and imports with postponed
+ * accounting. Credit-note correction boxes (48/49/84/85), the goods/investment
+ * purchase split (81/83), corrections (61/62) and prepayments (91) are not
+ * modelled yet.
  */
 export interface BelgianVatReturnFigures {
 	/** Domestic standard-rated sales, one entry per rate (6/12/21). */
 	standardRatedSales: BelgianStandardRatedSale[];
+	/** Net base of zero-rated or otherwise 0% domestic sales (grid 00). */
+	zeroRatedSales?: number;
+	/** Net base of intra-community services supplied, VAT due by the EU customer (grid 44). */
+	icServicesSales?: number;
+	/** Net base of domestic reverse-charge sales, VAT due by the Belgian co-contractor (grid 45). */
+	domesticReverseChargeSales?: number;
+	/** Net base of exempt intra-community supplies of goods (grid 46). */
+	icGoodsSales?: number;
+	/** Net base of exports outside the EU and other exempt sales (grid 47). */
+	exportSales?: number;
 	/** Total net base of purchases carrying deductible VAT. */
 	purchaseBase: number;
 	/** Total deductible input VAT. */
 	deductibleVat: number;
+	/** Net base of intra-community acquisitions of goods (grid 86). */
+	icGoodsPurchaseBase?: number;
+	/** Net base of intra-community services received (grid 88). */
+	icServicesPurchaseBase?: number;
+	/** Net base of other reverse-charge purchases: imports with postponed accounting and domestic reverse charge (grid 87). */
+	otherReverseChargePurchaseBase?: number;
+	/** Self-assessed VAT due on intra-community acquisitions and services (grid 55). */
+	icOutputVat?: number;
+	/** Self-assessed VAT due on domestic reverse-charge purchases (grid 56). */
+	domesticReverseChargeOutputVat?: number;
+	/** Self-assessed VAT due on imports with postponed accounting (grid 57). */
+	importOutputVat?: number;
 }
 
 export interface BelgianVatGridResult {
@@ -257,11 +281,18 @@ function round2(value: number): number {
 /**
  * Map semantic Belgian VAT figures onto grid boxes.
  *
- * - Sales bases land in boxes 01/02/03 by rate; output VAT sums into box 54.
+ * - Sales bases land in boxes 00/01/02/03 by rate; output VAT sums into box 54.
+ *   Special sales regimes land in their own boxes: intra-community services in
+ *   44, domestic reverse charge (co-contractor) in 45, intra-community goods in
+ *   46, exports and other exempt sales in 47.
  * - Purchase base lands in box 82 (services & misc goods — the goods/investment
  *   split across 81/83 is not modelled) and deductible VAT in box 59.
- * - The balance goes to box 71 (payable) or 72 (refundable). One of the two is
- *   always emitted, so a nihil period still produces a valid declaration.
+ *   Reverse-charge purchase bases additionally land in 86 (IC goods), 88 (IC
+ *   services) and 87 (imports + domestic reverse charge), with the self-assessed
+ *   VAT in 55/56/57.
+ * - The balance (54+55+56+57 minus 59) goes to box 71 (payable) or 72
+ *   (refundable). One of the two is always emitted, so a nihil period still
+ *   produces a valid declaration.
  *
  * Amounts must be non-negative; a net-negative box (e.g. credit notes exceeding
  * invoices in the period) is clamped to 0 with a warning, since Intervat has no
@@ -274,7 +305,7 @@ export function computeBelgianVatGrid(
 	const grid: VatReturnGrid = {};
 
 	const baseByBox = new Map<VatGridNumber, number>();
-	let outputVat = 0;
+	let standardOutputVat = 0;
 	for (const sale of figures.standardRatedSales) {
 		const box = RATE_TO_BASE_GRID[sale.rate];
 		if (box === undefined) {
@@ -284,7 +315,7 @@ export function computeBelgianVatGrid(
 			continue;
 		}
 		baseByBox.set(box, (baseByBox.get(box) ?? 0) + sale.base);
-		outputVat += sale.vat;
+		standardOutputVat += sale.vat;
 	}
 
 	const clampNonNegative = (value: number, label: string): number => {
@@ -297,27 +328,55 @@ export function computeBelgianVatGrid(
 		return round2(value);
 	};
 
+	const setBox = (
+		box: VatGridNumber,
+		value: number | undefined,
+		label: string,
+	): number => {
+		if (value === undefined) return 0;
+		const rounded = clampNonNegative(value, label);
+		if (rounded > 0) grid[box] = rounded;
+		return rounded;
+	};
+
 	for (const [box, base] of baseByBox) {
 		const rounded = clampNonNegative(base, `Grid ${box} base`);
 		if (rounded > 0) grid[box] = rounded;
 	}
 
-	outputVat = clampNonNegative(outputVat, "Output VAT (grid 54)");
-	if (outputVat > 0) grid[54] = outputVat;
-
-	const purchaseBase = clampNonNegative(
-		figures.purchaseBase,
-		"Purchase base (grid 82)",
+	setBox(0, figures.zeroRatedSales, "Zero-rated sales (grid 00)");
+	setBox(44, figures.icServicesSales, "Intra-community services (grid 44)");
+	setBox(
+		45,
+		figures.domesticReverseChargeSales,
+		"Domestic reverse-charge sales (grid 45)",
 	);
-	if (purchaseBase > 0) grid[82] = purchaseBase;
+	setBox(46, figures.icGoodsSales, "Intra-community goods (grid 46)");
+	setBox(47, figures.exportSales, "Exports and other exempt sales (grid 47)");
 
-	const deductibleVat = clampNonNegative(
-		figures.deductibleVat,
-		"Deductible VAT (grid 59)",
+	const outputVat = setBox(54, standardOutputVat, "Output VAT (grid 54)");
+
+	setBox(82, figures.purchaseBase, "Purchase base (grid 82)");
+	const deductibleVat = setBox(59, figures.deductibleVat, "Deductible VAT (grid 59)");
+
+	setBox(86, figures.icGoodsPurchaseBase, "IC goods acquisitions (grid 86)");
+	setBox(88, figures.icServicesPurchaseBase, "IC services received (grid 88)");
+	setBox(
+		87,
+		figures.otherReverseChargePurchaseBase,
+		"Other reverse-charge purchases (grid 87)",
 	);
-	if (deductibleVat > 0) grid[59] = deductibleVat;
+	const icOutputVat = setBox(55, figures.icOutputVat, "IC acquisition VAT (grid 55)");
+	const rcOutputVat = setBox(
+		56,
+		figures.domesticReverseChargeOutputVat,
+		"Domestic reverse-charge VAT (grid 56)",
+	);
+	const importVat = setBox(57, figures.importOutputVat, "Import VAT (grid 57)");
 
-	const balance = round2(outputVat - deductibleVat);
+	const balance = round2(
+		outputVat + icOutputVat + rcOutputVat + importVat - deductibleVat,
+	);
 	if (balance >= 0) {
 		grid[71] = balance;
 	} else {
