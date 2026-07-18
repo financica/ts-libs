@@ -230,9 +230,9 @@ export interface BelgianStandardRatedSale {
  * The figures this library maps onto the Belgian grid. Covers domestic
  * standard-rated sales, deductible purchases, intra-community supplies and
  * acquisitions, exports, domestic reverse charge and imports with postponed
- * accounting. Credit-note correction boxes (48/49/84/85), the goods/investment
- * purchase split (81/83), corrections (61/62) and prepayments (91) are not
- * modelled yet.
+ * accounting, credit-note corrections (48/49/84/85 with the VAT in 63/64) and
+ * miscellaneous VAT regularisations (61/62). The goods/investment purchase
+ * split (81/83) and prepayments (91) are not modelled yet.
  */
 export interface BelgianVatReturnFigures {
 	/** Domestic standard-rated sales, one entry per rate (6/12/21). */
@@ -247,6 +247,10 @@ export interface BelgianVatReturnFigures {
 	icGoodsSales?: number;
 	/** Net base of exports outside the EU and other exempt sales (grid 47). */
 	exportSales?: number;
+	/** Net base of credit notes issued relating to grids 44 and 46 (grid 48). */
+	icSalesCreditNoteBase?: number;
+	/** Net base of credit notes issued relating to the other frame II operations (grid 49). */
+	otherSalesCreditNoteBase?: number;
 	/** Total net base of purchases carrying deductible VAT. */
 	purchaseBase: number;
 	/** Total deductible input VAT. */
@@ -257,12 +261,24 @@ export interface BelgianVatReturnFigures {
 	icServicesPurchaseBase?: number;
 	/** Net base of other reverse-charge purchases: imports with postponed accounting and domestic reverse charge (grid 87). */
 	otherReverseChargePurchaseBase?: number;
+	/** Net base of credit notes received relating to grids 86 and 88 (grid 84). */
+	icPurchaseCreditNoteBase?: number;
+	/** Net base of credit notes received relating to the other frame III operations (grid 85). */
+	otherPurchaseCreditNoteBase?: number;
 	/** Self-assessed VAT due on intra-community acquisitions and services (grid 55). */
 	icOutputVat?: number;
 	/** Self-assessed VAT due on domestic reverse-charge purchases (grid 56). */
 	domesticReverseChargeOutputVat?: number;
 	/** Self-assessed VAT due on imports with postponed accounting (grid 57). */
 	importOutputVat?: number;
+	/** Miscellaneous VAT regularisations in favour of the State (grid 61). */
+	vatCorrectionsDue?: number;
+	/** Miscellaneous VAT regularisations in favour of the declarant (grid 62). */
+	vatCorrectionsRecoverable?: number;
+	/** VAT to pay back on credit notes received (grid 63). */
+	purchaseCreditNoteVat?: number;
+	/** VAT to recover on credit notes issued (grid 64). */
+	salesCreditNoteVat?: number;
 }
 
 export interface BelgianVatGridResult {
@@ -290,13 +306,18 @@ function round2(value: number): number {
  *   Reverse-charge purchase bases additionally land in 86 (IC goods), 88 (IC
  *   services) and 87 (imports + domestic reverse charge), with the self-assessed
  *   VAT in 55/56/57.
- * - The balance (54+55+56+57 minus 59) goes to box 71 (payable) or 72
- *   (refundable). One of the two is always emitted, so a nihil period still
+ * - Credit-note bases land in the dedicated correction boxes: issued in 48
+ *   (relating to 44/46) or 49 (other frame II), received in 84 (relating to
+ *   86/88) or 85 (other frame III). The VAT on received credit notes goes to
+ *   63 (to pay back) and on issued credit notes to 64 (to recover);
+ *   miscellaneous regularisations go to 61/62.
+ * - The balance (54+55+56+57+61+63 minus 59+62+64) goes to box 71 (payable) or
+ *   72 (refundable). One of the two is always emitted, so a nihil period still
  *   produces a valid declaration.
  *
  * Amounts must be non-negative; a net-negative box (e.g. credit notes exceeding
- * invoices in the period) is clamped to 0 with a warning, since Intervat has no
- * negative grids and the dedicated correction boxes are not modelled yet.
+ * invoices in the period) is clamped to 0 with a warning — Intervat accepts no
+ * negative grids, so the excess must be carried into the next period manually.
  */
 export function computeBelgianVatGrid(
 	figures: BelgianVatReturnFigures,
@@ -321,7 +342,7 @@ export function computeBelgianVatGrid(
 	const clampNonNegative = (value: number, label: string): number => {
 		if (value < 0) {
 			warnings.push(
-				`${label} netted to a negative amount (${round2(value).toFixed(2)}); clamped to 0.00. Credit-note correction boxes are not modelled yet.`,
+				`${label} netted to a negative amount (${round2(value).toFixed(2)}); clamped to 0.00. Intervat accepts no negative grids — carry the excess into the next period.`,
 			);
 			return 0;
 		}
@@ -353,6 +374,16 @@ export function computeBelgianVatGrid(
 	);
 	setBox(46, figures.icGoodsSales, "Intra-community goods (grid 46)");
 	setBox(47, figures.exportSales, "Exports and other exempt sales (grid 47)");
+	setBox(
+		48,
+		figures.icSalesCreditNoteBase,
+		"Credit notes issued on IC supplies (grid 48)",
+	);
+	setBox(
+		49,
+		figures.otherSalesCreditNoteBase,
+		"Credit notes issued on other sales (grid 49)",
+	);
 
 	const outputVat = setBox(54, standardOutputVat, "Output VAT (grid 54)");
 
@@ -366,6 +397,16 @@ export function computeBelgianVatGrid(
 		figures.otherReverseChargePurchaseBase,
 		"Other reverse-charge purchases (grid 87)",
 	);
+	setBox(
+		84,
+		figures.icPurchaseCreditNoteBase,
+		"Credit notes received on IC acquisitions (grid 84)",
+	);
+	setBox(
+		85,
+		figures.otherPurchaseCreditNoteBase,
+		"Credit notes received on other purchases (grid 85)",
+	);
 	const icOutputVat = setBox(55, figures.icOutputVat, "IC acquisition VAT (grid 55)");
 	const rcOutputVat = setBox(
 		56,
@@ -373,9 +414,37 @@ export function computeBelgianVatGrid(
 		"Domestic reverse-charge VAT (grid 56)",
 	);
 	const importVat = setBox(57, figures.importOutputVat, "Import VAT (grid 57)");
+	const correctionsDue = setBox(
+		61,
+		figures.vatCorrectionsDue,
+		"VAT regularisations in favour of the State (grid 61)",
+	);
+	const correctionsRecoverable = setBox(
+		62,
+		figures.vatCorrectionsRecoverable,
+		"VAT regularisations in favour of the declarant (grid 62)",
+	);
+	const purchaseCreditNoteVat = setBox(
+		63,
+		figures.purchaseCreditNoteVat,
+		"VAT on credit notes received (grid 63)",
+	);
+	const salesCreditNoteVat = setBox(
+		64,
+		figures.salesCreditNoteVat,
+		"VAT on credit notes issued (grid 64)",
+	);
 
 	const balance = round2(
-		outputVat + icOutputVat + rcOutputVat + importVat - deductibleVat,
+		outputVat +
+			icOutputVat +
+			rcOutputVat +
+			importVat +
+			correctionsDue +
+			purchaseCreditNoteVat -
+			deductibleVat -
+			correctionsRecoverable -
+			salesCreditNoteVat,
 	);
 	if (balance >= 0) {
 		grid[71] = balance;

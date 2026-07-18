@@ -285,6 +285,56 @@ describe("computeBelgianVatGrid", () => {
 		expect(grid[71]).toBe(221); // 210 + 21 - 10
 	});
 
+	it("maps credit-note corrections to 48/49/84/85 with the VAT in 63/64", () => {
+		const { grid, warnings } = computeBelgianVatGrid({
+			standardRatedSales: [{ rate: 21, base: 1000, vat: 210 }],
+			icSalesCreditNoteBase: 150,
+			otherSalesCreditNoteBase: 300,
+			salesCreditNoteVat: 63,
+			purchaseBase: 400,
+			deductibleVat: 84,
+			icPurchaseCreditNoteBase: 120,
+			otherPurchaseCreditNoteBase: 200,
+			purchaseCreditNoteVat: 42,
+		});
+		expect(warnings).toHaveLength(0);
+		expect(grid[48]).toBe(150);
+		expect(grid[49]).toBe(300);
+		expect(grid[64]).toBe(63);
+		expect(grid[84]).toBe(120);
+		expect(grid[85]).toBe(200);
+		expect(grid[63]).toBe(42);
+		// (210 + 42) - (84 + 63)
+		expect(grid[71]).toBe(105);
+	});
+
+	it("includes regularisations 61/62 in the balance", () => {
+		const { grid } = computeBelgianVatGrid({
+			standardRatedSales: [{ rate: 21, base: 1000, vat: 210 }],
+			purchaseBase: 0,
+			deductibleVat: 0,
+			vatCorrectionsDue: 30,
+			vatCorrectionsRecoverable: 50,
+		});
+		expect(grid[61]).toBe(30);
+		expect(grid[62]).toBe(50);
+		expect(grid[71]).toBe(190); // 210 + 30 - 50
+	});
+
+	it("puts a credit-note-driven refund in box 72", () => {
+		const { grid } = computeBelgianVatGrid({
+			standardRatedSales: [],
+			otherSalesCreditNoteBase: 1000,
+			salesCreditNoteVat: 210,
+			purchaseBase: 0,
+			deductibleVat: 0,
+		});
+		expect(grid[49]).toBe(1000);
+		expect(grid[64]).toBe(210);
+		expect(grid[71]).toBeUndefined();
+		expect(grid[72]).toBe(210);
+	});
+
 	it("clamps a negative special-regime box with a warning", () => {
 		const { grid, warnings } = computeBelgianVatGrid({
 			standardRatedSales: [],

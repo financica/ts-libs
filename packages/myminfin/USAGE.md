@@ -310,10 +310,13 @@ const { xml, grid, warnings } = buildBelgianVatReturn({
 });
 ```
 
-Today's mapping covers domestic standard-rated sales (boxes 01/02/03 + 54) and
-deductible domestic purchases (boxes 82 + 59). Intra-community, exports, reverse
-charge, corrections, investment goods and prepayments are not modelled yet;
-`warnings` flags anything that could not be mapped. Use `serializeVatReturn` if
+Today's mapping covers domestic standard-rated sales (boxes 00/01/02/03 + 54),
+deductible domestic purchases (boxes 82 + 59), intra-community supplies and
+acquisitions, exports, domestic reverse charge and imports with postponed
+accounting (44/45/46/47, 86/87/88 + 55/56/57), credit-note corrections
+(48/49/84/85 with the VAT in 63/64) and miscellaneous regularisations (61/62).
+The goods/investment purchase split (81/83) and prepayments (91) are not
+modelled yet; `warnings` flags anything that could not be mapped. Use `serializeVatReturn` if
 you already have explicit grid box amounts, or `computeBelgianVatGrid` for just
 the grid.
 
