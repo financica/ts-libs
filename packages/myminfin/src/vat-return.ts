@@ -231,8 +231,8 @@ export interface BelgianStandardRatedSale {
  * standard-rated sales, deductible purchases, intra-community supplies and
  * acquisitions, exports, domestic reverse charge and imports with postponed
  * accounting, credit-note corrections (48/49/84/85 with the VAT in 63/64) and
- * miscellaneous VAT regularisations (61/62). The goods/investment purchase
- * split (81/83) and prepayments (91) are not modelled yet.
+ * miscellaneous VAT regularisations (61/62) and the December advance (91).
+ * The goods/investment purchase split (81/83) is not modelled yet.
  */
 export interface BelgianVatReturnFigures {
 	/** Domestic standard-rated sales, one entry per rate (6/12/21). */
@@ -279,6 +279,15 @@ export interface BelgianVatReturnFigures {
 	purchaseCreditNoteVat?: number;
 	/** VAT to recover on credit notes issued (grid 64). */
 	salesCreditNoteVat?: number;
+	/**
+	 * December advance paid under the actual-figures method (grid 91). Only
+	 * valid on the December or Q4 declaration. Set it (even to 0.00 — a zero is
+	 * meaningful and emitted) only when electing that method; a filled grid 91
+	 * tells Intervat the advance was computed from the Dec 1-20 (or Oct 1-Dec
+	 * 20) actuals rather than the previous period's amount. Not part of the
+	 * 71/72 balance.
+	 */
+	prepayment?: number;
 }
 
 export interface BelgianVatGridResult {
@@ -314,6 +323,9 @@ function round2(value: number): number {
  * - The balance (54+55+56+57+61+63 minus 59+62+64) goes to box 71 (payable) or
  *   72 (refundable). One of the two is always emitted, so a nihil period still
  *   produces a valid declaration.
+ * - The December advance (`prepayment`) goes to box 91 whenever it is set,
+ *   including at 0.00 (a zero grid 91 declares "actual-figures method, nothing
+ *   due"). It does not enter the 71/72 balance.
  *
  * Amounts must be non-negative; a net-negative box (e.g. credit notes exceeding
  * invoices in the period) is clamped to 0 with a warning — Intervat accepts no
@@ -434,6 +446,13 @@ export function computeBelgianVatGrid(
 		figures.salesCreditNoteVat,
 		"VAT on credit notes issued (grid 64)",
 	);
+
+	// Grid 91 is emitted even at 0.00 (unlike every other box): a zero declares
+	// the actual-figures method with nothing due, while omission means the
+	// advance was based on the previous period (or no advance applies).
+	if (figures.prepayment !== undefined) {
+		grid[91] = clampNonNegative(figures.prepayment, "December advance (grid 91)");
+	}
 
 	const balance = round2(
 		outputVat +

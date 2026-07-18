@@ -335,6 +335,47 @@ describe("computeBelgianVatGrid", () => {
 		expect(grid[72]).toBe(210);
 	});
 
+	it("puts the December advance in box 91 without touching the balance", () => {
+		const { grid } = computeBelgianVatGrid({
+			standardRatedSales: [{ rate: 21, base: 1000, vat: 210 }],
+			purchaseBase: 0,
+			deductibleVat: 0,
+			prepayment: 150.5,
+		});
+		expect(grid[91]).toBe(150.5);
+		expect(grid[71]).toBe(210);
+	});
+
+	it("emits a zero grid 91 when the prepayment is set to 0", () => {
+		const { grid } = computeBelgianVatGrid({
+			standardRatedSales: [],
+			purchaseBase: 0,
+			deductibleVat: 0,
+			prepayment: 0,
+		});
+		expect(grid[91]).toBe(0);
+	});
+
+	it("omits grid 91 when no prepayment is set", () => {
+		const { grid } = computeBelgianVatGrid({
+			standardRatedSales: [],
+			purchaseBase: 0,
+			deductibleVat: 0,
+		});
+		expect(grid[91]).toBeUndefined();
+	});
+
+	it("clamps a negative prepayment to 0.00 with a warning", () => {
+		const { grid, warnings } = computeBelgianVatGrid({
+			standardRatedSales: [],
+			purchaseBase: 0,
+			deductibleVat: 0,
+			prepayment: -10,
+		});
+		expect(grid[91]).toBe(0);
+		expect(warnings.some((w) => w.includes("grid 91"))).toBe(true);
+	});
+
 	it("clamps a negative special-regime box with a warning", () => {
 		const { grid, warnings } = computeBelgianVatGrid({
 			standardRatedSales: [],
@@ -362,5 +403,22 @@ describe("buildBelgianVatReturn", () => {
 		expect(grid[72]).toBe(189);
 		const ask = node(declaration(xml)["ns2:Ask"]);
 		expect(ask["@_Restitution"]).toBe("YES");
+	});
+
+	it("serializes a zero December advance as an explicit 0.00 in grid 91", () => {
+		const { xml } = buildBelgianVatReturn({
+			declarant,
+			period: { year: 2026, month: 12 },
+			figures: {
+				standardRatedSales: [],
+				purchaseBase: 0,
+				deductibleVat: 0,
+				prepayment: 0,
+			},
+		});
+		const data = node(declaration(xml)["ns2:Data"]);
+		const amounts = [data["ns2:Amount"]].flat().map(node);
+		const box91 = amounts.find((a) => a["@_GridNumber"] === "91");
+		expect(box91?.["#text"]).toBe("0.00");
 	});
 });
