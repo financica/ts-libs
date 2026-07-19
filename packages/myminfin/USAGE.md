@@ -43,7 +43,7 @@ const auth = new MyMinFinAuth({
 });
 
 // Generate the URL to redirect the legal representative to
-const { url, state, nonce, codeVerifier } = auth.getAuthorizationUrl({
+const { url, state, nonce, codeVerifier } = await auth.getAuthorizationUrl({
 	ecb: "0123456789", // 10-digit enterprise number
 	scopes: ["myminfin_docs_read"], // API-specific scopes
 });
@@ -254,7 +254,7 @@ console.log(discoveryUrl("test"));
 
 | Method                        | Parameters                            | Returns                               |
 | ----------------------------- | ------------------------------------- | ------------------------------------- |
-| `getAuthorizationUrl(params)` | `{ ecb, scopes? }`                    | `{ url, state, nonce, codeVerifier }` |
+| `getAuthorizationUrl(params)` | `{ ecb, scopes? }`                    | `Promise<{ url, state, nonce, codeVerifier }>` |
 | `exchangeCode(params)`        | `{ code, codeVerifier, redirectUri }` | `Promise<TokenSet>`                   |
 | `refreshToken(params)`        | `{ refreshToken }`                    | `Promise<TokenSet>`                   |
 

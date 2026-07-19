@@ -1,5 +1,4 @@
-import { createHash, randomBytes } from "node:crypto";
-import { importPKCS8, SignJWT } from "jose";
+import { base64url, importPKCS8, SignJWT } from "jose";
 import { authorizeUrl, tokenUrl } from "./endpoints";
 import type {
 	AuthConfig,
@@ -30,11 +29,13 @@ export class MyMinFinAuth {
 	 * Returns the URL along with PKCE and state values that must be stored
 	 * for the subsequent token exchange.
 	 */
-	getAuthorizationUrl(params: AuthorizationUrlParams): AuthorizationUrlResult {
+	async getAuthorizationUrl(
+		params: AuthorizationUrlParams,
+	): Promise<AuthorizationUrlResult> {
 		const state = generateRandom();
 		const nonce = generateRandom();
 		const codeVerifier = generateRandom();
-		const codeChallenge = computeCodeChallenge(codeVerifier);
+		const codeChallenge = await computeCodeChallenge(codeVerifier);
 
 		const baseScopes = ["openid", "profile"];
 		const allScopes = [...new Set([...baseScopes, ...(params.scopes ?? [])])].join(
@@ -174,18 +175,13 @@ export class MyMinFinAuth {
 // ---------------------------------------------------------------------------
 
 function generateRandom(): string {
-	return base64UrlEncode(randomBytes(32));
+	return base64url.encode(crypto.getRandomValues(new Uint8Array(32)));
 }
 
-function computeCodeChallenge(verifier: string): string {
-	const hash = createHash("sha256").update(verifier).digest();
-	return base64UrlEncode(hash);
-}
-
-function base64UrlEncode(buf: Buffer | Uint8Array): string {
-	return Buffer.from(buf)
-		.toString("base64")
-		.replace(/\+/g, "-")
-		.replace(/\//g, "_")
-		.replace(/=+$/, "");
+async function computeCodeChallenge(verifier: string): Promise<string> {
+	const digest = await crypto.subtle.digest(
+		"SHA-256",
+		new TextEncoder().encode(verifier),
+	);
+	return base64url.encode(new Uint8Array(digest));
 }

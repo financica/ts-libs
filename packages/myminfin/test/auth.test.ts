@@ -40,8 +40,8 @@ describe("MyMinFinAuth", () => {
 	});
 
 	describe("getAuthorizationUrl", () => {
-		it("returns a valid authorization URL", () => {
-			const result = auth.getAuthorizationUrl({
+		it("returns a valid authorization URL", async () => {
+			const result = await auth.getAuthorizationUrl({
 				ecb: "0123456789",
 				scopes: ["myminfin_docs_read"],
 			});
@@ -57,23 +57,23 @@ describe("MyMinFinAuth", () => {
 			expect(result.codeVerifier).toBeTruthy();
 		});
 
-		it("includes ECB claim in URL", () => {
-			const result = auth.getAuthorizationUrl({ ecb: "0662348959" });
+		it("includes ECB claim in URL", async () => {
+			const result = await auth.getAuthorizationUrl({ ecb: "0662348959" });
 			const url = new URL(result.url);
 			const claims = url.searchParams.get("claims");
 			expect(claims).toBe('{"ecb":"0662348959"}');
 		});
 
-		it("always includes openid and profile scopes", () => {
-			const result = auth.getAuthorizationUrl({ ecb: "0123456789" });
+		it("always includes openid and profile scopes", async () => {
+			const result = await auth.getAuthorizationUrl({ ecb: "0123456789" });
 			const url = new URL(result.url);
 			const scope = url.searchParams.get("scope")!;
 			expect(scope).toContain("openid");
 			expect(scope).toContain("profile");
 		});
 
-		it("includes custom scopes", () => {
-			const result = auth.getAuthorizationUrl({
+		it("includes custom scopes", async () => {
+			const result = await auth.getAuthorizationUrl({
 				ecb: "0123456789",
 				scopes: ["myminfin_docs_read", "intervat_write"],
 			});
@@ -83,8 +83,8 @@ describe("MyMinFinAuth", () => {
 			expect(scope).toContain("intervat_write");
 		});
 
-		it("deduplicates scopes", () => {
-			const result = auth.getAuthorizationUrl({
+		it("deduplicates scopes", async () => {
+			const result = await auth.getAuthorizationUrl({
 				ecb: "0123456789",
 				scopes: ["openid", "profile", "custom"],
 			});
@@ -95,15 +95,15 @@ describe("MyMinFinAuth", () => {
 			expect(parts.length).toBe(unique.size);
 		});
 
-		it("generates unique state and nonce per call", () => {
-			const r1 = auth.getAuthorizationUrl({ ecb: "0123456789" });
-			const r2 = auth.getAuthorizationUrl({ ecb: "0123456789" });
+		it("generates unique state and nonce per call", async () => {
+			const r1 = await auth.getAuthorizationUrl({ ecb: "0123456789" });
+			const r2 = await auth.getAuthorizationUrl({ ecb: "0123456789" });
 			expect(r1.state).not.toBe(r2.state);
 			expect(r1.nonce).not.toBe(r2.nonce);
 			expect(r1.codeVerifier).not.toBe(r2.codeVerifier);
 		});
 
-		it("uses production URLs when configured", () => {
+		it("uses production URLs when configured", async () => {
 			const prodAuth = new MyMinFinAuth({
 				clientId: "ProdClient",
 				privateKey: FAKE_PRIVATE_KEY,
@@ -112,14 +112,14 @@ describe("MyMinFinAuth", () => {
 				environment: "production",
 			});
 
-			const result = prodAuth.getAuthorizationUrl({ ecb: "0123456789" });
+			const result = await prodAuth.getAuthorizationUrl({ ecb: "0123456789" });
 			expect(result.url).toContain(
 				"https://fediamapi.minfin.fgov.be/sso/oauth2/authorize",
 			);
 		});
 
-		it("code_challenge is 43 characters (no padding)", () => {
-			const result = auth.getAuthorizationUrl({ ecb: "0123456789" });
+		it("code_challenge is 43 characters (no padding)", async () => {
+			const result = await auth.getAuthorizationUrl({ ecb: "0123456789" });
 			const url = new URL(result.url);
 			const challenge = url.searchParams.get("code_challenge")!;
 			expect(challenge.length).toBe(43);
