@@ -3,6 +3,8 @@ export {
 	type EInvoicingNetwork,
 	EINVOICING_PROFILE_COUNTRIES,
 	getCountryEInvoicingProfile,
+	getPeppolIdentifierSchemes,
+	type PeppolIdentifierSchemes,
 	type VatRegistrySource,
 } from "./countries";
 export {

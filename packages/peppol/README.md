@@ -85,6 +85,21 @@ getCountryEInvoicingProfile("NO");
 A test pins these profiles to the addressing table in `./schemes` so the two
 views cannot drift.
 
+To resolve the participant identifier schemes for **any** Peppol country —
+using the verified profile when there is one and falling back to the
+VAT-based addressing scheme otherwise — use `getPeppolIdentifierSchemes`:
+
+```ts
+import { getPeppolIdentifierSchemes } from "@financica/peppol/countries";
+
+getPeppolIdentifierSchemes("BE"); // profiled → { companyIdentifierScheme: "0208", vatIdentifierScheme: "9925" }
+getPeppolIdentifierSchemes("LU"); // unprofiled → { companyIdentifierScheme: null, vatIdentifierScheme: "9938" }
+getPeppolIdentifierSchemes("CA"); // outside Peppol → null
+```
+
+This is what keeps an unprofiled sender's VAT id addressed under its own
+country scheme (Luxembourg `9938`) instead of a provider's Belgian default.
+
 ## Document type classification
 
 ```ts

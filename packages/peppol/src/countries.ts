@@ -15,6 +15,8 @@
  * Free of Node built-ins, so it is safe to import in a browser bundle.
  */
 
+import { getPeppolCountryScheme } from "./schemes";
+
 /** Primary network the country's legal mandate routes over. */
 export type EInvoicingNetwork = "peppol" | "nemhandel" | "finvoice";
 
@@ -140,3 +142,51 @@ export const getCountryEInvoicingProfile = (
 	country: string | null | undefined,
 ): CountryEInvoicingProfile | null =>
 	EINVOICING_PROFILES[(country ?? "").trim().toUpperCase()] ?? null;
+
+/** The Peppol participant identifier schemes used to address a country's businesses. */
+export interface PeppolIdentifierSchemes {
+	/**
+	 * Peppol EAS for the legal-entity / company-registration identifier, or null
+	 * when no verified company scheme is known for the country (i.e. it has no
+	 * full profile — only its VAT-based addressing scheme is known).
+	 */
+	companyIdentifierScheme: string | null;
+	/**
+	 * Peppol EAS for a *separate* VAT participant identifier, or null when the
+	 * country routes on the company scheme alone (Norway, Denmark).
+	 */
+	vatIdentifierScheme: string | null;
+}
+
+/**
+ * The Peppol identifier schemes for addressing a participant in `country`.
+ *
+ * Resolution combines the two country tables: a hand-verified
+ * {@link CountryEInvoicingProfile} is authoritative (it distinguishes the
+ * company-registration scheme from a separate VAT scheme, and encodes the
+ * countries that route on the company scheme alone); for a country without a
+ * full profile we fall back to the {@link PEPPOL_COUNTRY_SCHEMES} addressing
+ * table, whose scheme is VAT-based for every unprofiled country (only Norway
+ * and Denmark use a registry scheme, and both are profiled). This is what
+ * keeps an unprofiled sender — a Luxembourg VAT, say — addressed under its own
+ * scheme (`9938`) instead of a provider's Belgian default (`9925`).
+ *
+ * Returns null only for a country in neither table (outside Peppol's reach),
+ * where the caller should apply its provider default.
+ */
+export const getPeppolIdentifierSchemes = (
+	country: string | null | undefined,
+): PeppolIdentifierSchemes | null => {
+	const profile = getCountryEInvoicingProfile(country);
+	if (profile) {
+		return {
+			companyIdentifierScheme: profile.companyIdentifierScheme,
+			vatIdentifierScheme: profile.vatIdentifierScheme,
+		};
+	}
+	const scheme = getPeppolCountryScheme(country);
+	if (scheme) {
+		return { companyIdentifierScheme: null, vatIdentifierScheme: scheme.scheme };
+	}
+	return null;
+};

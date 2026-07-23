@@ -1,6 +1,6 @@
 {
 	"name": "@financica/peppol",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"description": "Peppol network toolkit for TypeScript: participant discovery via SML/SMP, Peppol Directory lookups, EAS schemes, and document-type classification.",
 	"keywords": [
 		"e-invoicing",
