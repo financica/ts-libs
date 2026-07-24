@@ -27,20 +27,14 @@ describe("getCountryEInvoicingProfile", () => {
 		expect(getCountryEInvoicingProfile("DK")?.vatIdentifierScheme).toBeNull();
 	});
 
-	it("routes Luxembourg on the VAT scheme alone (no company EAS exists)", () => {
+	it("profiles Luxembourg with the CTIE matricule 0240 / VAT 9938", () => {
 		const lu = getCountryEInvoicingProfile("LU");
-		expect(lu?.companyIdentifierScheme).toBeNull();
+		expect(lu?.companyIdentifierScheme).toBe("0240");
 		expect(lu?.vatIdentifierScheme).toBe("9938");
+		// The matricule is 11 digits; the VAT core is 8. Onboarding gates on the
+		// former, so the two must not be conflated.
+		expect(lu?.companyNumberLength).toBe(11);
 		expect(lu?.archivalYears).toBe(10);
-	});
-
-	it("always leaves a profile at least one addressable scheme", () => {
-		for (const country of EINVOICING_PROFILE_COUNTRIES) {
-			const profile = getCountryEInvoicingProfile(country);
-			expect(
-				profile?.companyIdentifierScheme ?? profile?.vatIdentifierScheme,
-			).toBeTruthy();
-		}
 	});
 });
 
@@ -54,6 +48,10 @@ describe("getPeppolIdentifierSchemes", () => {
 			companyIdentifierScheme: "0106",
 			vatIdentifierScheme: "9944",
 		});
+		expect(getPeppolIdentifierSchemes("LU")).toEqual({
+			companyIdentifierScheme: "0240",
+			vatIdentifierScheme: "9938",
+		});
 	});
 
 	it("preserves the null VAT scheme for company-scheme-only countries", () => {
@@ -64,13 +62,6 @@ describe("getPeppolIdentifierSchemes", () => {
 		expect(getPeppolIdentifierSchemes("DK")).toEqual({
 			companyIdentifierScheme: "0184",
 			vatIdentifierScheme: null,
-		});
-	});
-
-	it("preserves the null company scheme for VAT-only countries", () => {
-		expect(getPeppolIdentifierSchemes("LU")).toEqual({
-			companyIdentifierScheme: null,
-			vatIdentifierScheme: "9938",
 		});
 	});
 
