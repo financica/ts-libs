@@ -37,8 +37,13 @@ export interface CountryEInvoicingProfile {
 	 * reaches only part of the market and a bridging provider is needed.
 	 */
 	peppolReachesFullMarket: boolean;
-	/** Peppol EAS for the legal entity identifier. */
-	companyIdentifierScheme: string;
+	/**
+	 * Peppol EAS for the legal entity identifier, or null when the country has
+	 * no company-registry scheme on the EAS code list (Luxembourg: only its VAT
+	 * scheme `9938` exists, so a participant is addressed by VAT alone and no
+	 * company identifier may be registered).
+	 */
+	companyIdentifierScheme: string | null;
 	/**
 	 * Peppol EAS for a *separate* VAT participant identifier, or null when the
 	 * country routes on the company scheme alone (e.g. Norway's org.nr under
@@ -58,6 +63,12 @@ export interface CountryEInvoicingProfile {
 	 */
 	companyNumberLength: number;
 }
+
+/**
+ * Invariant: at least one of `companyIdentifierScheme` / `vatIdentifierScheme`
+ * is non-null — a profile with neither could not address the participant at
+ * all. A test pins it.
+ */
 
 /**
  * Countries with an authoritative, hand-verified profile. Absence from this
@@ -128,6 +139,19 @@ const EINVOICING_PROFILES: Record<string, CountryEInvoicingProfile> = {
 		archivalYears: 7,
 		companyNumberLength: 8, // KvK number
 	},
+	LU: {
+		country: "LU",
+		network: "peppol",
+		peppolReachesFullMarket: true,
+		// `9938` (Luxembourg VAT) is the country's only entry on the EAS code
+		// list: the RCS `B` number has no scheme, so participants are addressed
+		// by VAT alone and no company identifier is registered.
+		companyIdentifierScheme: null,
+		vatIdentifierScheme: "9938",
+		vatRegistrySource: "vies",
+		archivalYears: 10, // Code de commerce art. 16
+		companyNumberLength: 8, // VAT core: LU + 8 digits (what VIES takes)
+	},
 };
 
 /** The countries with a verified profile, for enumeration. */
@@ -147,8 +171,11 @@ export const getCountryEInvoicingProfile = (
 export interface PeppolIdentifierSchemes {
 	/**
 	 * Peppol EAS for the legal-entity / company-registration identifier, or null
-	 * when no verified company scheme is known for the country (i.e. it has no
-	 * full profile — only its VAT-based addressing scheme is known).
+	 * when none applies: either the country has no company scheme at all
+	 * (Luxembourg) or it has no full profile, so only its VAT-based addressing
+	 * scheme is known. Callers must treat null as "register no company
+	 * identifier" rather than substituting a provider default, which would put a
+	 * foreign identifier under another country's scheme.
 	 */
 	companyIdentifierScheme: string | null;
 	/**
@@ -164,12 +191,13 @@ export interface PeppolIdentifierSchemes {
  * Resolution combines the two country tables: a hand-verified
  * {@link CountryEInvoicingProfile} is authoritative (it distinguishes the
  * company-registration scheme from a separate VAT scheme, and encodes the
- * countries that route on the company scheme alone); for a country without a
- * full profile we fall back to the {@link PEPPOL_COUNTRY_SCHEMES} addressing
- * table, whose scheme is VAT-based for every unprofiled country (only Norway
- * and Denmark use a registry scheme, and both are profiled). This is what
- * keeps an unprofiled sender — a Luxembourg VAT, say — addressed under its own
- * scheme (`9938`) instead of a provider's Belgian default (`9925`).
+ * countries that route on the company scheme alone, and the ones with no
+ * company scheme at all); for a country without a full profile we fall back to
+ * the {@link PEPPOL_COUNTRY_SCHEMES} addressing table, whose scheme is
+ * VAT-based for every unprofiled country (only Norway and Denmark use a
+ * registry scheme, and both are profiled). This is what keeps an unprofiled
+ * sender — a German VAT, say — addressed under its own scheme (`9930`) instead
+ * of a provider's Belgian default (`9925`).
  *
  * Returns null only for a country in neither table (outside Peppol's reach),
  * where the caller should apply its provider default.

@@ -93,12 +93,18 @@ VAT-based addressing scheme otherwise — use `getPeppolIdentifierSchemes`:
 import { getPeppolIdentifierSchemes } from "@financica/peppol/countries";
 
 getPeppolIdentifierSchemes("BE"); // profiled → { companyIdentifierScheme: "0208", vatIdentifierScheme: "9925" }
-getPeppolIdentifierSchemes("LU"); // unprofiled → { companyIdentifierScheme: null, vatIdentifierScheme: "9938" }
+getPeppolIdentifierSchemes("LU"); // VAT-only → { companyIdentifierScheme: null, vatIdentifierScheme: "9938" }
+getPeppolIdentifierSchemes("DE"); // unprofiled → { companyIdentifierScheme: null, vatIdentifierScheme: "9930" }
 getPeppolIdentifierSchemes("CA"); // outside Peppol → null
 ```
 
 This is what keeps an unprofiled sender's VAT id addressed under its own
-country scheme (Luxembourg `9938`) instead of a provider's Belgian default.
+country scheme instead of a provider's Belgian default.
+
+Either scheme can be null, and null means **register nothing under it** — not
+"substitute a default". Norway and Denmark route on the company scheme alone;
+Luxembourg is the mirror case, with `9938` (VAT) its only entry on the EAS code
+list, so a Luxembourg participant is addressed by VAT only.
 
 ## Document type classification
 

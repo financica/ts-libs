@@ -26,6 +26,22 @@ describe("getCountryEInvoicingProfile", () => {
 		expect(getCountryEInvoicingProfile("NO")?.vatIdentifierScheme).toBeNull();
 		expect(getCountryEInvoicingProfile("DK")?.vatIdentifierScheme).toBeNull();
 	});
+
+	it("routes Luxembourg on the VAT scheme alone (no company EAS exists)", () => {
+		const lu = getCountryEInvoicingProfile("LU");
+		expect(lu?.companyIdentifierScheme).toBeNull();
+		expect(lu?.vatIdentifierScheme).toBe("9938");
+		expect(lu?.archivalYears).toBe(10);
+	});
+
+	it("always leaves a profile at least one addressable scheme", () => {
+		for (const country of EINVOICING_PROFILE_COUNTRIES) {
+			const profile = getCountryEInvoicingProfile(country);
+			expect(
+				profile?.companyIdentifierScheme ?? profile?.vatIdentifierScheme,
+			).toBeTruthy();
+		}
+	});
 });
 
 describe("getPeppolIdentifierSchemes", () => {
@@ -51,13 +67,16 @@ describe("getPeppolIdentifierSchemes", () => {
 		});
 	});
 
-	it("falls back to the country's own VAT-based addressing scheme when unprofiled", () => {
-		// Luxembourg: no full profile, so its VAT scheme must be its own 9938 —
-		// never a provider's Belgian 9925 default.
+	it("preserves the null company scheme for VAT-only countries", () => {
 		expect(getPeppolIdentifierSchemes("LU")).toEqual({
 			companyIdentifierScheme: null,
 			vatIdentifierScheme: "9938",
 		});
+	});
+
+	it("falls back to the country's own VAT-based addressing scheme when unprofiled", () => {
+		// An unprofiled sender must still be addressed under its own scheme —
+		// never a provider's Belgian 9925 default.
 		expect(getPeppolIdentifierSchemes("DE")?.vatIdentifierScheme).toBe("9930");
 		expect(getPeppolIdentifierSchemes("fr")?.vatIdentifierScheme).toBe("9957");
 	});
