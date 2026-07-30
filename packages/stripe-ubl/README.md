@@ -16,7 +16,7 @@ For the reverse direction (parsing inbound UBL), see [`@financica/ubl`](https://
 npm install @financica/stripe-ubl stripe
 ```
 
-`stripe` is a peer dependency — install whichever Stripe SDK version your app already uses (≥18). There are no runtime dependencies; the UBL serializer is self-contained.
+`stripe` is a peer dependency — install whichever Stripe SDK version your app already uses (≥22). There are no runtime dependencies beyond `@financica/ubl`, which carries the UBL model and serializer.
 
 ## Usage
 
@@ -120,6 +120,19 @@ Stripe sometimes reports per-line tax differently from the document header (roun
 - **Per-line VAT** falls back from `tax_amounts` to `taxes` when only the newer shape is populated, so the rate isn't silently lost on accounts mid-migration.
 - **Discounted lines** use the post-discount net as both the VAT base and the line net, so a discounted standard-rated line keeps its true rate (e.g. 21%, not 14.70%). Line discounts are folded into the net rather than emitted as a `cac:AllowanceCharge`.
 - **Fully-discounted lines** read the rate from the expanded `tax_rate.percentage` so a 100%-discounted standard-rated line stays category `S` instead of collapsing to zero-rated.
+
+## Settled amounts (BT-113)
+
+`cbc:PayableAmount` is the **outstanding** amount per BIS Billing 3.0, so a document for an already-paid invoice must not present its full gross total as still owed — a receiver's AP system has nothing else in the document to go on. What has been settled is emitted as `cbc:PrepaidAmount` (BT-113) and the payable amount derives from it per **BR-CO-16** (`BT-115 = BT-112 − BT-113 + BT-114`).
+
+- **Invoices** take BT-113 from `invoice.amount_paid` — deliberately _not_ `total - amount_due`, because Stripe also reduces `amount_due` by `pre_payment_credit_notes_amount` / `post_payment_credit_notes_amount`, and a credit-note reduction is not a prepayment. The credit note travels as its own Peppol document and the receiver nets the two via BT-25.
+- **Credit notes** take BT-113 from `credit_note.post_payment_amount` — the part refunded to the customer, credited to their balance, or credited outside Stripe. The `pre_payment_amount` portion returned nothing to the buyer (it only reduced an open invoice's balance), so it stays payable. This is the case that mattered most: a refund already settled through Stripe would otherwise go out as a fresh demand for the full amount.
+- **A fully-settled document snaps to the derived BT-112**, not Stripe's gross total. The two can differ by a cent (see BR-CO-17 above), and passing Stripe's figure would leave a settled document reporting 0.01 payable — enough to re-trigger BR-CO-25.
+- **Nothing settled means nothing emitted.** `cbc:PrepaidAmount` is omitted entirely, so an unpaid invoice serializes exactly as it did before this behaviour existed.
+
+Because a settled invoice reports a payable amount of 0, **BR-CO-25 no longer applies to it** and no due date is invented. `charge_automatically` invoices that are still open keep the issue-date fallback, since they do have a positive payable to cover.
+
+The coarse `credit_note.type` is deliberately **not** used as a fallback for the amount split. Both the split and `type`'s `mixed` value arrived in the same Stripe API version (`2025-05-28.basil`, stripe-node 18.2.0), so on any version old enough to lack the amounts a genuinely mixed credit note reports as plain `pre_payment` / `post_payment`. Reading that as fully settled would emit BT-113 for the whole total and understate what is still outstanding, leaving the buyer to overpay the open invoice. The peer range requires `stripe >=22`, so the split is always present.
 
 ## VAT categories & `vatStatus`
 

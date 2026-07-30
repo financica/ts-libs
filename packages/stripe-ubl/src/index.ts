@@ -18,6 +18,12 @@ export { buildCreditNoteLines, buildInvoiceLines } from "./lines";
 export { buildCustomerPartyFromStripeInvoice } from "./party";
 export { retrieveStripeInvoiceForUbl, STRIPE_INVOICE_UBL_EXPAND } from "./retrieve";
 export {
+	type ResolvePrepaidAmountParams,
+	resolveCreditNoteSettledCents,
+	resolveInvoiceSettledCents,
+	resolvePrepaidAmount,
+} from "./settlement";
+export {
 	getCreditNoteLineTaxAmounts,
 	getInvoiceLineDiscountAmountCents,
 	getInvoiceLineTaxAmounts,
