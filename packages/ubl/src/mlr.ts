@@ -1,8 +1,4 @@
-import {
-	type Document,
-	DOMParser as XmlDomParser,
-	type Element,
-} from "@xmldom/xmldom";
+import { type Document, DOMParser as XmlDomParser, type Element } from "@xmldom/xmldom";
 
 const CBC_NS = "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2";
 const CAC_NS =

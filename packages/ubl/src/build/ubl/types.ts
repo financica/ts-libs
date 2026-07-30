@@ -103,7 +103,17 @@ export interface UblMonetaryTotal {
 	taxExclusiveAmount: number;
 	/** BT-112 — total with VAT. */
 	taxInclusiveAmount: number;
-	/** BT-115 — amount due for payment. */
+	/**
+	 * BT-113 — sum of amounts paid in advance. **Gross (VAT-inclusive)**, since
+	 * BR-CO-16 subtracts it directly from BT-112. Omitted when absent or zero.
+	 */
+	prepaidAmount?: number;
+	/** BT-114 — rounding applied to the payable amount. Omitted when absent or zero. */
+	payableRoundingAmount?: number;
+	/**
+	 * BT-115 — amount due for payment, i.e. the *outstanding* amount.
+	 * BR-CO-16: `BT-115 = BT-112 − BT-113 + BT-114`.
+	 */
 	payableAmount: number;
 }
 

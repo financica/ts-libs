@@ -139,7 +139,23 @@ const xml = serializeUblDocument(doc);
 ```
 
 Set `documentType: "creditNote"` (with `precedingInvoiceId` referencing the
-original invoice) to emit a `CreditNote` instead. The build subpath also exports
+original invoice) to emit a `CreditNote` instead.
+
+For a document that is already paid, pass the settled gross amount as
+`prepaidAmount` (BT-113) so `payableAmount` (BT-115) reports what is actually
+outstanding rather than the full gross total:
+
+```ts
+const { taxTotal, monetaryTotal } = buildTaxTotals(lines, { prepaidAmount: 121 });
+// monetaryTotal.payableAmount => 0
+```
+
+`buildTaxTotals` derives `payableAmount` as
+`taxInclusiveAmount - prepaidAmount + payableRoundingAmount` (BR-CO-16) and does
+not clamp it, so an overpayment shows up as a negative figure instead of being
+silently hidden.
+
+The build subpath also exports
 helpers such as `buildSupplierParty`, `buildTaxTotals`, `buildCompanyId`,
 `buildPdfAttachment`, and Peppol identifier utilities (`resolveVatEndpoint`,
 `parsePeppolEndpoint`, `listPeppolReceiverIdentifierCandidates`).

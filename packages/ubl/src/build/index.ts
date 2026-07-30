@@ -51,6 +51,7 @@ export {
 	taxCategoryFromReasonOrRate,
 } from "./tax-category";
 export {
+	type BuildTaxTotalsOptions,
 	type BuildTaxTotalsResult,
 	buildTaxTotals,
 	reconcileLinesToExclTotal,
