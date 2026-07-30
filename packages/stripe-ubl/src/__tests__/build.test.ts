@@ -3,6 +3,9 @@ import { describe, expect, it } from "vitest";
 import {
 	buildUblCreditNoteDocument,
 	buildUblInvoiceDocument,
+	buildUblInvoiceFromStripeInvoice,
+	resolveCreditNoteSettledCents,
+	resolvePrepaidAmount,
 	type UblSupplier,
 } from "../index";
 
@@ -174,20 +177,51 @@ describe("buildUblInvoiceDocument", () => {
 	it("falls back the due date to the issue date when Stripe has none (BR-CO-25)", () => {
 		// `charge_automatically` invoices carry no due_date; without a fallback the
 		// UBL would omit BT-9 and BT-20 and Peppol rejects any positive payable.
+		// Still open here, so there *is* a positive payable to cover.
 		const finalizedAt = Math.floor(Date.UTC(2026, 3, 11, 9) / 1000);
 		const doc = buildUblInvoiceDocument({
 			invoice: buildStripeInvoice({
 				collection_method: "charge_automatically",
 				due_date: null,
-				status: "paid",
+				status: "open",
 				amount_due: 12100,
-				amount_paid: 12100,
+				amount_paid: 0,
 				status_transitions: { finalized_at: finalizedAt },
 			}),
 			supplier: buildSupplier(),
 		});
 		expect(doc.issueDate).toBe("2026-04-11");
 		expect(doc.dueDate).toBe("2026-04-11");
+		expect(doc.monetaryTotal.payableAmount).toBe(121);
+	});
+
+	it("invents no due date for a settled invoice with none (BR-CO-25 moot)", () => {
+		// Once BT-113 is emitted a paid invoice reports a payable amount of 0, so
+		// BR-CO-25 no longer applies and fabricating a due date would put a date
+		// on the wire for an invoice that is not due.
+		const finalizedAt = Math.floor(Date.UTC(2026, 3, 11, 9) / 1000);
+		const doc = buildUblInvoiceDocument({
+			invoice: buildStripeInvoice({
+				collection_method: "charge_automatically",
+				due_date: null,
+				status: "paid",
+				amount_due: 0,
+				amount_paid: 12100,
+				status_transitions: { finalized_at: finalizedAt },
+			}),
+			supplier: buildSupplier(),
+		});
+		expect(doc.monetaryTotal.payableAmount).toBe(0);
+		expect(doc.dueDate).toBeNull();
+	});
+
+	it("keeps a due date Stripe did supply even once settled", () => {
+		const doc = buildUblInvoiceDocument({
+			invoice: buildStripeInvoice({ status: "paid", amount_paid: 12100 }),
+			supplier: buildSupplier(),
+		});
+		expect(doc.monetaryTotal.payableAmount).toBe(0);
+		expect(doc.dueDate).toBe("2024-05-01");
 	});
 
 	it("rejects an invalid currency", () => {
@@ -508,5 +542,211 @@ describe("customer Peppol endpoint resolution", () => {
 				customer_tax_ids: [],
 			}),
 		).toBeNull();
+	});
+});
+
+describe("prepaid amount (BT-113)", () => {
+	it("reports nothing prepaid for an unpaid invoice", () => {
+		const doc = buildUblInvoiceDocument({
+			invoice: buildStripeInvoice({ amount_paid: 0 }),
+			supplier: buildSupplier(),
+		});
+		expect(doc.monetaryTotal.prepaidAmount).toBeUndefined();
+		expect(doc.monetaryTotal.payableAmount).toBe(121);
+	});
+
+	it("reports a fully paid invoice as settled (BR-CO-16)", () => {
+		const doc = buildUblInvoiceDocument({
+			invoice: buildStripeInvoice({ status: "paid", amount_paid: 12100 }),
+			supplier: buildSupplier(),
+		});
+		expect(doc.monetaryTotal.taxInclusiveAmount).toBe(121);
+		expect(doc.monetaryTotal.prepaidAmount).toBe(121);
+		expect(doc.monetaryTotal.payableAmount).toBe(0);
+	});
+
+	it("reports a partially paid invoice as the outstanding remainder", () => {
+		const doc = buildUblInvoiceDocument({
+			invoice: buildStripeInvoice({ amount_paid: 5000, amount_due: 7100 }),
+			supplier: buildSupplier(),
+		});
+		expect(doc.monetaryTotal.prepaidAmount).toBe(50);
+		expect(doc.monetaryTotal.payableAmount).toBe(71);
+	});
+
+	it("excludes credit-note reductions from BT-113", () => {
+		// `amount_due` is also reduced by credit notes, so `total - amount_due`
+		// would report 121 prepaid here. Only the 50 actually paid is BT-113; the
+		// 21 credited travels as its own document and is netted via BT-25.
+		const doc = buildUblInvoiceDocument({
+			invoice: buildStripeInvoice({
+				amount_paid: 5000,
+				amount_due: 5000,
+				post_payment_credit_notes_amount: 2100,
+			}),
+			supplier: buildSupplier(),
+		});
+		expect(doc.monetaryTotal.prepaidAmount).toBe(50);
+		expect(doc.monetaryTotal.payableAmount).toBe(71);
+	});
+
+	it("snaps a settled document to the derived BT-112, not Stripe's total", () => {
+		// Derived VAT is 105.11 (BR-CO-17) against Stripe's reported 605.60 total.
+		// Passing Stripe's gross figure would leave 0.01 payable — positive, so
+		// BR-CO-25 would demand a due date again.
+		const doc = buildUblInvoiceDocument({
+			invoice: buildStripeInvoice({
+				subtotal: 50050,
+				total: 60560,
+				total_excluding_tax: 50050,
+				status: "paid",
+				amount_paid: 60560,
+				due_date: null,
+				lines: linesData([
+					{
+						description: "Widget",
+						amount: 50050,
+						quantity: 1,
+						tax_amounts: [{ amount: 10510 }],
+						discount_amounts: [],
+					},
+				]),
+			}),
+			supplier: buildSupplier(),
+		});
+		expect(doc.monetaryTotal.taxInclusiveAmount).toBe(605.61);
+		expect(doc.monetaryTotal.prepaidAmount).toBe(605.61);
+		expect(doc.monetaryTotal.payableAmount).toBe(0);
+		expect(doc.dueDate).toBeNull();
+	});
+
+	it("serializes cbc:PrepaidAmount before cbc:PayableAmount", () => {
+		const xml = buildUblInvoiceFromStripeInvoice({
+			invoice: buildStripeInvoice({ status: "paid", amount_paid: 12100 }),
+			supplier: buildSupplier(),
+		});
+		expect(xml).toContain(
+			'<cbc:PrepaidAmount currencyID="EUR">121.00</cbc:PrepaidAmount>',
+		);
+		expect(xml.indexOf("cbc:PrepaidAmount")).toBeLessThan(
+			xml.indexOf("cbc:PayableAmount"),
+		);
+	});
+
+	it("treats a refunded credit note as settled", () => {
+		// post_payment: the money already went back via refund / balance credit /
+		// out-of-band. Emitting the full total as payable is the double-pay risk.
+		const doc = buildUblCreditNoteDocument({
+			creditNote: buildStripeCreditNote({
+				type: "post_payment",
+				pre_payment_amount: 0,
+				post_payment_amount: 12100,
+			}),
+			invoice: buildStripeInvoice(),
+			supplier: buildSupplier(),
+		});
+		expect(doc.monetaryTotal.prepaidAmount).toBe(121);
+		expect(doc.monetaryTotal.payableAmount).toBe(0);
+	});
+
+	it("leaves a pre-payment credit note fully payable so BT-25 netting works", () => {
+		// Nothing was returned to the buyer; the credit only reduced the open
+		// invoice's balance. The receiver nets the two documents via BT-25, so the
+		// credit note must carry the full amount as payable — see below.
+		const doc = buildUblCreditNoteDocument({
+			creditNote: buildStripeCreditNote({
+				type: "pre_payment",
+				pre_payment_amount: 12100,
+				post_payment_amount: 0,
+			}),
+			invoice: buildStripeInvoice(),
+			supplier: buildSupplier(),
+		});
+		expect(doc.monetaryTotal.prepaidAmount).toBeUndefined();
+		expect(doc.monetaryTotal.payableAmount).toBe(121);
+	});
+
+	it("nets a pre-payment credit note against its parent invoice to zero", () => {
+		// The decisive case for excluding pre_payment_amount from BT-113. Both
+		// documents go over Peppol; the receiver settles invoice minus credit
+		// note. Emitting BT-113 here would make the credit note payable 0 and the
+		// buyer would still owe 121 despite having been credited in full.
+		const invoice = buildStripeInvoice({ amount_paid: 0 });
+		const invoiceDoc = buildUblInvoiceDocument({
+			invoice,
+			supplier: buildSupplier(),
+		});
+		const creditNoteDoc = buildUblCreditNoteDocument({
+			creditNote: buildStripeCreditNote({
+				type: "pre_payment",
+				pre_payment_amount: 12100,
+				post_payment_amount: 0,
+			}),
+			invoice,
+			supplier: buildSupplier(),
+		});
+
+		expect(creditNoteDoc.precedingInvoiceId).toBe("INV-001");
+		expect(
+			invoiceDoc.monetaryTotal.payableAmount -
+				creditNoteDoc.monetaryTotal.payableAmount,
+		).toBe(0);
+	});
+
+	it("splits a mixed credit note on post_payment_amount", () => {
+		const doc = buildUblCreditNoteDocument({
+			creditNote: buildStripeCreditNote({
+				type: "mixed",
+				pre_payment_amount: 7100,
+				post_payment_amount: 5000,
+			}),
+			invoice: buildStripeInvoice(),
+			supplier: buildSupplier(),
+		});
+		expect(doc.monetaryTotal.prepaidAmount).toBe(50);
+		expect(doc.monetaryTotal.payableAmount).toBe(71);
+	});
+});
+
+describe("settlement resolvers", () => {
+	it("reads the settled amount from the split, ignoring `type`", () => {
+		// `type` is never consulted: it cannot express a mixed credit note on any
+		// API version that lacks the split, so trusting it would overstate BT-113.
+		expect(
+			resolveCreditNoteSettledCents({
+				type: "post_payment",
+				total: 12100,
+				post_payment_amount: 5000,
+			} as unknown as Stripe.CreditNote),
+		).toBe(5000);
+	});
+
+	it("asserts no settlement when the split is missing at runtime", () => {
+		expect(
+			resolveCreditNoteSettledCents({
+				type: "post_payment",
+				total: 12100,
+			} as unknown as Stripe.CreditNote),
+		).toBe(0);
+	});
+
+	it("returns undefined when nothing is settled", () => {
+		expect(
+			resolvePrepaidAmount({
+				settledCents: 0,
+				grossCents: 12100,
+				taxInclusiveAmount: 121,
+			}),
+		).toBeUndefined();
+	});
+
+	it("absorbs an overpayment into a zero payable rather than a negative one", () => {
+		expect(
+			resolvePrepaidAmount({
+				settledCents: 20000,
+				grossCents: 12100,
+				taxInclusiveAmount: 121,
+			}),
+		).toBe(121);
 	});
 });

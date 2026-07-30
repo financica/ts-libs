@@ -14,7 +14,12 @@ import {
 import type Stripe from "stripe";
 import { buildCreditNoteLines, buildInvoiceLines } from "./lines";
 import { buildCustomerPartyFromStripeInvoice } from "./party";
-import { normalizeString } from "./utils";
+import {
+	resolveCreditNoteSettledCents,
+	resolveInvoiceSettledCents,
+	resolvePrepaidAmount,
+} from "./settlement";
+import { normalizeString, toNumber } from "./utils";
 
 const validateCurrency = (currency: string): string => {
 	const upper = currency?.toUpperCase();
@@ -51,6 +56,32 @@ const authoritativeExclVat = (
 	totalExcludingTax: number | null | undefined,
 ): number | null =>
 	totalExcludingTax != null ? centsToDecimal(totalExcludingTax) : null;
+
+/**
+ * Build the VAT breakdown and monetary totals, folding in BT-113 when the
+ * document is partly or fully settled.
+ *
+ * The prepaid figure is fed back through `buildTaxTotals` rather than having
+ * `payableAmount` adjusted here, so BR-CO-16
+ * (BT-115 = BT-112 − BT-113 + BT-114) stays owned by one place. That needs
+ * BT-112 up front to resolve the fully-settled case, hence the two passes; both
+ * are pure.
+ */
+const buildTotalsWithSettlement = (
+	lines: UblLine[],
+	settledCents: number,
+	grossCents: number,
+) => {
+	const totals = buildTaxTotals(lines);
+	const prepaidAmount = resolvePrepaidAmount({
+		settledCents,
+		grossCents,
+		taxInclusiveAmount: totals.monetaryTotal.taxInclusiveAmount,
+	});
+	return prepaidAmount === undefined
+		? totals
+		: buildTaxTotals(lines, { prepaidAmount });
+};
 
 export interface BuildUblInvoiceParams {
 	/** Fully-retrieved Stripe invoice. See the README for the recommended `expand`. */
@@ -97,7 +128,11 @@ export const buildUblInvoiceDocument = (params: BuildUblInvoiceParams): UblDocum
 	let lines = coerceForVatStatus(buildInvoiceLines(invoice), supplier.vatStatus);
 	const authExcl = authoritativeExclVat(invoice.total_excluding_tax);
 	if (authExcl != null) lines = reconcileLinesToExclTotal(lines, authExcl);
-	const { taxTotal, monetaryTotal } = buildTaxTotals(lines);
+	const { taxTotal, monetaryTotal } = buildTotalsWithSettlement(
+		lines,
+		resolveInvoiceSettledCents(invoice),
+		toNumber(invoice.total),
+	);
 
 	return {
 		documentType: "invoice",
@@ -106,8 +141,13 @@ export const buildUblInvoiceDocument = (params: BuildUblInvoiceParams): UblDocum
 		// BT-9. Peppol BR-CO-25 requires a payment due date (or payment terms)
 		// whenever a positive amount is payable. Stripe `charge_automatically`
 		// invoices carry no `due_date`, so fall back to the issue date (due on
-		// receipt) — keeping every invoice, paid or open, schematron-valid.
-		dueDate: isoDateFromUnixSeconds(invoice.due_date) ?? issueDate,
+		// receipt) to keep such an invoice schematron-valid. A fully-settled
+		// invoice reports a payable amount of 0, so BR-CO-25 does not apply and
+		// no due date is invented — it would put a date on the wire for an
+		// invoice that is not due.
+		dueDate:
+			isoDateFromUnixSeconds(invoice.due_date) ??
+			(monetaryTotal.payableAmount > 0 ? issueDate : null),
 		note: normalizeString(invoice.description),
 		currency: validateCurrency(invoice.currency),
 		buyerReference: normalizeString(params.buyerReference),
@@ -169,7 +209,11 @@ export const buildUblCreditNoteDocument = (
 	);
 	const authExcl = authoritativeExclVat(creditNote.total_excluding_tax);
 	if (authExcl != null) lines = reconcileLinesToExclTotal(lines, authExcl);
-	const { taxTotal, monetaryTotal } = buildTaxTotals(lines);
+	const { taxTotal, monetaryTotal } = buildTotalsWithSettlement(
+		lines,
+		resolveCreditNoteSettledCents(creditNote),
+		toNumber(creditNote.total),
+	);
 
 	return {
 		documentType: "creditNote",
