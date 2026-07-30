@@ -1,19 +1,21 @@
 # xbrl
 
-`xbrl` is a TypeScript library for parsing [XBRL 2.1](https://www.xbrl.org/Specification/XBRL-2.1/REC-2003-12-31/XBRL-2.1-REC-2003-12-31+corrected-errata-2013-02-20.html) instance documents into typed JavaScript objects. It focuses on practical extraction of reporting data such as contexts, units, facts, schema references, and footnotes.
+`xbrl` is a TypeScript library for reading and writing [XBRL 2.1](https://www.xbrl.org/Specification/XBRL-2.1/REC-2003-12-31/XBRL-2.1-REC-2003-12-31+corrected-errata-2013-02-20.html) instance documents as typed JavaScript objects. It focuses on practical reporting data: contexts, units, facts, schema references, and footnotes.
 
-The library is designed for application code that needs a dependable parser rather than a full validation pipeline. It resolves QNames, preserves reported values as strings, represents tuples recursively, and returns `null` instead of throwing when the input is empty, malformed, or not an XBRL instance document.
+The library is designed for application code that needs a dependable parser and serialiser rather than a full validation pipeline. It resolves QNames, preserves reported values as strings, represents tuples recursively, and returns `null` instead of throwing when the input is empty, malformed, or not an XBRL instance document.
+
+Parsing and writing are symmetric: `parseXbrl(serializeXbrl(doc))` gives back `doc`.
 
 ## Installation
 
 ```bash
-npm install xbrl
+npm install @financica/xbrl
 ```
 
 ## Usage
 
 ```typescript
-import { parseXbrl } from "xbrl";
+import { parseXbrl } from "@financica/xbrl";
 import { readFileSync } from "node:fs";
 
 const xml = readFileSync("filing.xbrl", "utf-8");
@@ -54,6 +56,62 @@ if (instance) {
 	printFacts(instance.facts);
 }
 ```
+
+## Writing
+
+```typescript
+import { buildXbrlInstance, serializeXbrl } from "@financica/xbrl";
+
+const doc = buildXbrlInstance({
+	schemaRefs: [{ href: "http://example.com/taxonomy.xsd" }],
+	contexts: [
+		{
+			id: "d1",
+			entity: { scheme: "http://example.com/scheme", value: "123" },
+			period: {
+				type: "duration",
+				startDate: "2025-01-01",
+				endDate: "2025-12-31",
+			},
+		},
+	],
+	units: [
+		{
+			id: "EUR",
+			measures: [
+				{ namespace: "http://www.xbrl.org/2003/iso4217", localName: "EUR" },
+			],
+		},
+	],
+	facts: [
+		{
+			type: "item",
+			name: {
+				namespace: "http://example.com/taxonomy",
+				localName: "Revenue",
+				prefix: "ex",
+			},
+			contextRef: "d1",
+			unitRef: "EUR",
+			decimals: 2,
+			value: "1000.00",
+			isNil: false,
+		},
+	],
+});
+
+const xml = serializeXbrl(doc);
+```
+
+`buildXbrlInstance` normalises the document and rejects one that could not be
+serialised: duplicate context or unit IDs, facts pointing at a context or unit
+that is not there, items carrying both `decimals` and `precision`. Namespace
+declarations are worked out from the QNames actually used, so you only declare
+a prefix when you care which one it is.
+
+Output is deterministic. The same document always produces the same bytes, and
+contexts, units and facts are written in document order — filers regenerate and
+diff their filings, so stable output matters.
 
 ## What The Library Parses
 

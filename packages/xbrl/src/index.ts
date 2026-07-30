@@ -1,6 +1,9 @@
 export { parseXbrl } from "./parser.js";
+export { buildXbrlInstance, serializeXbrl } from "./writer.js";
 export type {
 	XbrlInstance,
+	XbrlInstanceInput,
+	XbrlSerializeOptions,
 	XbrlSchemaRef,
 	XbrlLinkbaseRef,
 	XbrlRoleRef,

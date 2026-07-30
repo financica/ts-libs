@@ -427,10 +427,17 @@ function parseDimensionMembers(
 		} else if (resolved.localName === "typedMember") {
 			const dimAttrs = getAttrs(child, childTag);
 			const dimName = dimAttrs["dimension"];
-			const text = getTextContent(child, childTag);
+			// A typed dimension's value lives in a child element declared by
+			// its typed domain, so read that rather than this element's text.
+			const valueEl = getChildren(child, childTag).find((c) => getTagName(c));
+			const valueTag = valueEl ? getTagName(valueEl) : undefined;
+			const text = valueTag
+				? getTextContent(valueEl, valueTag)
+				: getTextContent(child, childTag);
 			members.push({
 				dimension: dimName ? resolveQName(dimName, namespaces) : undefined,
 				typedValue: text || undefined,
+				typedElement: valueTag ? resolveQName(valueTag, namespaces) : undefined,
 				elementName: childTag,
 			});
 		} else {

@@ -28,6 +28,38 @@ export interface XbrlInstance {
 	footnoteLinks: XbrlFootnoteLink[];
 }
 
+/**
+ * The parts of an instance document, as handed to {@link buildXbrlInstance}.
+ *
+ * Contexts and units may be given as arrays or as id-keyed records; the built
+ * document always holds records. Namespace declarations are optional: any
+ * namespace a QName needs is declared automatically, and the ones given here
+ * simply fix the prefix used for it.
+ */
+export interface XbrlInstanceInput {
+	/** Prefix-to-URI mappings to declare on the root element. */
+	namespaces?: Record<string, string>;
+	/** Taxonomy schema references. At least one is required by XBRL 2.1. */
+	schemaRefs: XbrlSchemaRef[];
+	linkbaseRefs?: XbrlLinkbaseRef[];
+	roleRefs?: XbrlRoleRef[];
+	arcroleRefs?: XbrlArcroleRef[];
+	contexts: XbrlContext[] | Record<string, XbrlContext>;
+	units?: XbrlUnit[] | Record<string, XbrlUnit>;
+	facts?: XbrlFact[];
+	footnoteLinks?: XbrlFootnoteLink[];
+}
+
+/** Options for {@link serializeXbrl}. */
+export interface XbrlSerializeOptions {
+	/** Indentation for one nesting level. Defaults to a tab. */
+	indent?: string;
+	/** Whether to emit the XML declaration. Defaults to `true`. */
+	xmlDeclaration?: boolean;
+	/** Value for `xml:lang` on the root element. */
+	lang?: string;
+}
+
 /** A simple XLink reference to a taxonomy schema. */
 export interface XbrlSchemaRef {
 	/** URI of the taxonomy schema (xlink:href). */
@@ -105,8 +137,17 @@ export interface XbrlDimensionMember {
 	dimension?: XbrlQName;
 	/** Member QName for explicit dimensions. */
 	member?: XbrlQName;
-	/** Typed value for typed dimensions. */
+	/**
+	 * Text of the element carrying a typed dimension's value.
+	 *
+	 * A typed dimension holds its value in a child element declared by the
+	 * dimension's typed domain, not in the `xbrldi:typedMember` element
+	 * itself, so this is the child's text content. See {@link typedElement}
+	 * for which element that was.
+	 */
 	typedValue?: string;
+	/** Name of the element carrying a typed dimension's value. */
+	typedElement?: XbrlQName;
 	/** Raw element name if not a recognized dimension. */
 	elementName?: string;
 	/** Raw text content. */

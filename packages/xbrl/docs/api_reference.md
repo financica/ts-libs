@@ -13,6 +13,49 @@ The function returns `null` for:
 
 Both prefixed (`<xbrli:xbrl>`) and unprefixed (`<xbrl>`) root elements are supported.
 
+## `buildXbrlInstance(input: XbrlInstanceInput): XbrlInstance`
+
+Assembles a typed instance document from its parts. Contexts and units may be
+given as arrays or as ID-keyed records; the result always holds records.
+
+The function fills in the namespace declarations implied by the QNames actually
+used, and rewrites every QName to carry the prefix it will be written with, so
+that a built document round-trips exactly rather than merely equivalently.
+
+It throws when the document could not be serialised into a well-formed
+instance:
+
+- Duplicate context or unit IDs
+- A fact referring to a context or unit that is not present
+- An item carrying both `decimals` and `precision`
+
+Facts nested inside tuples are checked too.
+
+## `serializeXbrl(doc: XbrlInstance, options?: XbrlSerializeOptions): string`
+
+Serialises an instance document to XBRL 2.1 XML.
+
+Output is deterministic: the same document always produces the same bytes, and
+contexts, units and facts are written in document order. Filers regenerate and
+diff their filings, so stability matters more than any particular ordering.
+
+Handles instant, duration and forever periods; entity segments and scenarios;
+explicit and typed dimensions; simple, multi-measure and divide units;
+`decimals` and `precision`; `xsi:nil`; and nested tuples.
+
+```typescript
+const doc = buildXbrlInstance({ schemaRefs, contexts, units, facts });
+const xml = serializeXbrl(doc, { lang: "fr" });
+```
+
+### `XbrlSerializeOptions`
+
+| Field            | Type       | Description                                  |
+| ---------------- | ---------- | -------------------------------------------- |
+| `indent`         | `string?`  | Indentation per level. Defaults to a tab     |
+| `xmlDeclaration` | `boolean?` | Emit the XML declaration. Defaults to `true` |
+| `lang`           | `string?`  | Value for `xml:lang` on the root element     |
+
 ## Exported Types
 
 ### `XbrlInstance`
@@ -86,13 +129,19 @@ Both prefixed (`<xbrli:xbrl>`) and unprefixed (`<xbrl>`) root elements are suppo
 
 ### `XbrlDimensionMember`
 
-| Field         | Type         | Description                               |
-| ------------- | ------------ | ----------------------------------------- |
-| `dimension`   | `XbrlQName?` | Dimension QName                           |
-| `member`      | `XbrlQName?` | Explicit member QName                     |
-| `typedValue`  | `string?`    | Typed member value                        |
-| `elementName` | `string?`    | Raw element name for unrecognized members |
-| `textContent` | `string?`    | Raw text content                          |
+| Field          | Type         | Description                                         |
+| -------------- | ------------ | --------------------------------------------------- |
+| `dimension`    | `XbrlQName?` | Dimension QName                                     |
+| `member`       | `XbrlQName?` | Explicit member QName                               |
+| `typedValue`   | `string?`    | Text of the element carrying a typed member's value |
+| `typedElement` | `XbrlQName?` | Name of the element carrying that value             |
+| `elementName`  | `string?`    | Raw element name for unrecognized members           |
+| `textContent`  | `string?`    | Raw text content                                    |
+
+A typed dimension holds its value in a child element declared by the
+dimension's typed domain, not in `xbrldi:typedMember` itself. `typedValue` is
+that child's text and `typedElement` is its name; both are needed to write the
+member back out.
 
 ### `XbrlPeriod`
 
