@@ -42,7 +42,7 @@
 
 ### Changed
 
-- Package renamed to `@financica/ubl`; repository moved to `github.com/financica/ubl-ts`.
+- Repository moved to `github.com/financica/ubl-ts`; package metadata and README updated to match.
 
 ### Documentation
 
@@ -78,6 +78,10 @@
 
 - **Real-world Peppol invoice features** seen in telco invoices: `AdditionalDocumentReference` without an attachment (text-only references such as terms & conditions), `ExternalReference/URI` for externally hosted attachments, `PaymentMandate/ID` for SEPA Direct Debit mandates, `AdditionalItemProperty` on lines as key-value metadata, multiple `PartyIdentification` elements with scheme IDs, and the `schemeID` attribute on `PartyLegalEntity/CompanyID`.
 
+### Changed
+
+- **Package renamed** from `@ingram-tech/ubl` to `@financica/ubl`. 0.3.0 was published under both names — as `@ingram-tech/ubl` on 2026-03-07 (tagged `v0.3.0`), then republished unchanged apart from the rename as `@financica/ubl` on 2026-04-02. `@financica/ubl` starts at 0.3.0; 0.1.0 through 0.2.0 exist only under the old name.
+
 ## 0.2.0
 
 ### Added
@@ -88,9 +92,12 @@
 
 ## 0.1.1
 
+Published as `@ingram-tech/ubl` from an uncommitted version bump, so no commit
+carries this version and it has no release tag.
+
 ### Changed
 
-- Added `prepack` script to ensure build runs before publish.
+- Added `prepack` script to ensure build runs before publish. (Committed later, with 0.2.0.)
 
 ## 0.1.0
 
