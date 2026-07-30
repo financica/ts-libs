@@ -6,7 +6,7 @@ This package builds, validates and renders the `.xbrl` instance document a filer
 
 Belgian knowledge lives here. The generic XBRL 2.1 reading and writing lives in [`@financica/xbrl`](https://github.com/financica/xbrl), which this package builds on.
 
-> **Status: early.** This release publishes the typed input contract below, so consumers can code against it. The taxonomy code generation, the instance writer and the validator are in progress.
+> **Status: early but working end to end.** A micro filing builds, validates and renders to a `.xbrl` that round-trips through a parser. Read [Check coverage](#check-coverage) before relying on validation: the validator is sound but not yet complete.
 
 ## Scope
 
@@ -68,12 +68,45 @@ EUR, as plain numbers. Negative values take a minus sign. No thousands separator
 ## API
 
 ```typescript
-buildNbbFiling(input: NbbFilingInput): NbbFiling
-validateNbbFiling(filing: NbbFiling): ValidationResult
-renderNbbFiling(filing: NbbFiling): string
+import {
+	buildNbbFiling,
+	validateNbbFiling,
+	renderNbbFiling,
+} from "@financica/nbb-cbso";
+
+const filing = buildNbbFiling(input);
+const { errors, warnings, skipped } = validateNbbFiling(filing);
+if (errors.length === 0) {
+	const xbrl = renderNbbFiling(filing); // write this to <name>.xbrl
+}
 ```
 
-`validateNbbFiling` separates `errors` from `warnings` along the NBB's own line: statutory checks are disqualifying and land in `errors`, Annex 1.2 checks are not and land in `warnings`. Each `Finding` carries the NBB's own check identifier, the rubric codes involved, and expected versus actual.
+`buildNbbFiling` resolves each rubric code against the taxonomy, so an unknown code throws rather than silently dropping a figure.
+
+`validateNbbFiling` separates `errors` from `warnings` along the NBB's own line: statutory checks are disqualifying and land in `errors`, Annex 1.2 and social balance sheet checks are not and land in `warnings`. Each `Finding` carries the NBB's own check identifier, the rubric codes involved, and a message naming the figures that broke the rule. `skipped` lists checks that were not evaluated, which is deliberate — see below.
+
+`renderNbbFiling` produces the instance document, following the conventions of accepted filings: one instant context per fact at the closing date, the preceding exercise as a period dimension, `decimals="INF"`, a single EUR unit, no segments, and none of the prohibited `linkbaseRef` / `roleRef` / `arcroleRef` / `footnoteLink` elements. Output is byte-stable across runs.
+
+## Check coverage
+
+The datapoint table and the check list are both generated from the taxonomy by `scripts/generate-taxonomy.ts`, which reads the table linkbases for rubric codes and the formula linkbases for the published assertions. For `m87-f` that yields **936 datapoints, 523 of them carrying a statutory rubric code, and 171 checks**.
+
+Of those 171, **51 resolve unambiguously** to one rubric per variable and are evaluated. The rest are skipped and reported in `skipped`:
+
+- **40 are ambiguous.** The taxonomy filters some variables loosely enough to match several rubrics, and disambiguates through `implicitFiltering`. The generator applies implicit filtering and an exact-match preference, which resolves many but not all.
+- **80 have a variable that reaches no coded rubric** in this model.
+
+Skipping is the deliberate choice. Guessing which rubric an ambiguous variable meant would invent failures on filings that are in fact correct, and the whole point of this package is to stop a filing being rejected — a validator that cries wolf is worse than one that says what it did not check.
+
+Every statutory check that _is_ evaluated has been verified against the equations published in Appendix 2.1 of the technical guide. All six reproduce the published form exactly, for example `va_03.01.0_0014` → `20/58 = 20 + 21/28 + 29/58`.
+
+Alongside the generated checks, these are asserted directly: the balance sheet balancing (`20/58 = 10/49`, stated too loosely in the taxonomy to resolve), DAT 26 date consistency, DAT 31 decimal places, the enterprise number's modulo-97 check digits, non-empty valuation rules, and the requirement that at least one balance sheet figure be reported for the exercise.
+
+## Known gaps
+
+- The software producer is **not** written into the annual accounts instance. Its section belongs to the `m101-r` module, which is a separate filing and is not published; only `m87-f` is generated so far.
+- Directors (section 2.1) and the accountant declaration (section 2.2) are accepted by the contract but not yet rendered — they sit in open tables addressed by typed dimensions.
+- DAT 39, duplicate filing, cannot be checked locally: it depends on what the NBB already holds.
 
 ## Filing facts worth knowing
 
