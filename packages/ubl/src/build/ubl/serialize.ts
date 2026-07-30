@@ -111,6 +111,28 @@ const taxSubtotal = (subtotal: UblTaxSubtotal, currency: string): XmlElement =>
 		taxCategory("cac:TaxCategory", subtotal.category),
 	]);
 
+/**
+ * `cac:LegalMonetaryTotal` children, in UBL sequence order. `cbc:PrepaidAmount`
+ * (BT-113) and `cbc:PayableRoundingAmount` (BT-114) precede `cbc:PayableAmount`
+ * — emitting them after it produces schema-invalid XML.
+ */
+const legalMonetaryTotalChildren = (doc: UblDocument): XmlElement[] => {
+	const { currency, monetaryTotal: total } = doc;
+	const children: (XmlElement | null)[] = [
+		money("cbc:LineExtensionAmount", total.lineExtensionAmount, currency),
+		money("cbc:TaxExclusiveAmount", total.taxExclusiveAmount, currency),
+		money("cbc:TaxInclusiveAmount", total.taxInclusiveAmount, currency),
+		total.prepaidAmount
+			? money("cbc:PrepaidAmount", total.prepaidAmount, currency)
+			: null,
+		total.payableRoundingAmount
+			? money("cbc:PayableRoundingAmount", total.payableRoundingAmount, currency)
+			: null,
+		money("cbc:PayableAmount", total.payableAmount, currency),
+	];
+	return children.filter((child): child is XmlElement => Boolean(child));
+};
+
 const line = (
 	source: UblLine,
 	currency: string,
@@ -182,24 +204,7 @@ export const serializeUblDocument = (doc: UblDocument): string => {
 				taxSubtotal(subtotal, doc.currency),
 			),
 		]),
-		el("cac:LegalMonetaryTotal", null, [
-			money(
-				"cbc:LineExtensionAmount",
-				doc.monetaryTotal.lineExtensionAmount,
-				doc.currency,
-			),
-			money(
-				"cbc:TaxExclusiveAmount",
-				doc.monetaryTotal.taxExclusiveAmount,
-				doc.currency,
-			),
-			money(
-				"cbc:TaxInclusiveAmount",
-				doc.monetaryTotal.taxInclusiveAmount,
-				doc.currency,
-			),
-			money("cbc:PayableAmount", doc.monetaryTotal.payableAmount, doc.currency),
-		]),
+		el("cac:LegalMonetaryTotal", null, legalMonetaryTotalChildren(doc)),
 		...doc.lines.map((source) => line(source, doc.currency, doc.documentType)),
 	];
 

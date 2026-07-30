@@ -63,6 +63,53 @@ describe("buildTaxTotals", () => {
 		expect(taxTotal.taxAmount).toBe(105.11);
 		expect(monetaryTotal.taxInclusiveAmount).toBe(605.61);
 	});
+
+	it("omits BT-113/BT-114 and leaves BT-115 gross when no options are given", () => {
+		const { monetaryTotal } = buildTaxTotals([line()]);
+		expect(monetaryTotal.prepaidAmount).toBeUndefined();
+		expect(monetaryTotal.payableRoundingAmount).toBeUndefined();
+		expect(monetaryTotal.payableAmount).toBe(monetaryTotal.taxInclusiveAmount);
+	});
+
+	it("subtracts a gross prepayment from the payable amount (BR-CO-16)", () => {
+		const { monetaryTotal } = buildTaxTotals([line()], { prepaidAmount: 50 });
+		expect(monetaryTotal.taxInclusiveAmount).toBe(121);
+		expect(monetaryTotal.prepaidAmount).toBe(50);
+		expect(monetaryTotal.payableAmount).toBe(71);
+	});
+
+	it("reports nothing outstanding for a fully settled document", () => {
+		const { monetaryTotal } = buildTaxTotals([line()], { prepaidAmount: 121 });
+		expect(monetaryTotal.payableAmount).toBe(0);
+	});
+
+	it("adds the rounding amount (BT-114)", () => {
+		const { monetaryTotal } = buildTaxTotals(
+			[line({ lineExtensionAmount: 100.5 })],
+			{
+				payableRoundingAmount: 0.03,
+			},
+		);
+		// 100.50 + 21.11 VAT = 121.61, + 0.03 rounding.
+		expect(monetaryTotal.taxInclusiveAmount).toBe(121.61);
+		expect(monetaryTotal.payableRoundingAmount).toBe(0.03);
+		expect(monetaryTotal.payableAmount).toBe(121.64);
+	});
+
+	it("does not clamp an overpayment — a negative payable surfaces the error", () => {
+		const { monetaryTotal } = buildTaxTotals([line()], { prepaidAmount: 200 });
+		expect(monetaryTotal.payableAmount).toBe(-79);
+	});
+
+	it("treats a zero prepayment as absent", () => {
+		const { monetaryTotal } = buildTaxTotals([line()], {
+			prepaidAmount: 0,
+			payableRoundingAmount: 0,
+		});
+		expect(monetaryTotal.prepaidAmount).toBeUndefined();
+		expect(monetaryTotal.payableRoundingAmount).toBeUndefined();
+		expect(monetaryTotal.payableAmount).toBe(121);
+	});
 });
 
 describe("reconcileLinesToExclTotal", () => {

@@ -55,6 +55,17 @@ export interface BuildTaxTotalsResult {
 	monetaryTotal: UblMonetaryTotal;
 }
 
+export interface BuildTaxTotalsOptions {
+	/**
+	 * BT-113 — amount already paid, **gross (VAT-inclusive)**. Subtracted from
+	 * BT-112 to derive the outstanding `payableAmount` (BR-CO-16). Pass the full
+	 * gross total for a settled document so it reports a payable amount of 0.
+	 */
+	prepaidAmount?: number;
+	/** BT-114 — rounding applied to the payable amount. */
+	payableRoundingAmount?: number;
+}
+
 /**
  * Group lines by `(category, percent)` into a VAT breakdown and compute the
  * document monetary totals.
@@ -65,8 +76,16 @@ export interface BuildTaxTotalsResult {
  * consistent and passes validation; it can differ by a cent from the figure a
  * payment processor reported, which is an unavoidable artifact of representing
  * a cents-rounded system as a rate-based VAT breakdown.
+ *
+ * `payableAmount` is derived per BR-CO-16 (`BT-112 − BT-113 + BT-114`) so the
+ * invariant holds by construction. The result is *not* clamped: a prepayment
+ * exceeding the total yields a negative payable amount, surfacing the upstream
+ * overpayment rather than hiding it.
  */
-export const buildTaxTotals = (lines: UblLine[]): BuildTaxTotalsResult => {
+export const buildTaxTotals = (
+	lines: UblLine[],
+	options?: BuildTaxTotalsOptions,
+): BuildTaxTotalsResult => {
 	const groups = new Map<
 		string,
 		{ category: UblTaxCategory; taxableAmount: number }
@@ -98,13 +117,21 @@ export const buildTaxTotals = (lines: UblLine[]): BuildTaxTotalsResult => {
 	);
 	const taxInclusiveAmount = roundCurrency(lineExtensionAmount + taxAmount);
 
+	const prepaidAmount = roundCurrency(options?.prepaidAmount ?? 0);
+	const payableRoundingAmount = roundCurrency(options?.payableRoundingAmount ?? 0);
+	const payableAmount = roundCurrency(
+		taxInclusiveAmount - prepaidAmount + payableRoundingAmount,
+	);
+
 	return {
 		taxTotal: { taxAmount, subtotals },
 		monetaryTotal: {
 			lineExtensionAmount,
 			taxExclusiveAmount: lineExtensionAmount,
 			taxInclusiveAmount,
-			payableAmount: taxInclusiveAmount,
+			...(prepaidAmount ? { prepaidAmount } : {}),
+			...(payableRoundingAmount ? { payableRoundingAmount } : {}),
+			payableAmount,
 		},
 	};
 };

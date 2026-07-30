@@ -60,6 +60,16 @@ const doc = (overrides: Partial<UblDocument> = {}): UblDocument => ({
 	...overrides,
 });
 
+/**
+ * Opening-tag names inside `parent`, in document order. Only valid for parents
+ * whose children are leaves — `cac:LegalMonetaryTotal` is one.
+ */
+const childOrder = (xml: string, parent: string): string[] => {
+	const body = xml.match(new RegExp(`<${parent}>([\\s\\S]*?)</${parent}>`))?.[1];
+	if (body === undefined) throw new Error(`<${parent}> not found`);
+	return Array.from(body.matchAll(/<([\w:]+)[\s>]/g), (match) => match[1] as string);
+};
+
 describe("serializeUblDocument", () => {
 	it("emits a BIS Billing 3.0 invoice", () => {
 		const xml = serializeUblDocument(doc());
@@ -126,6 +136,57 @@ describe("serializeUblDocument", () => {
 		);
 		expect(xml).toContain("Tom &amp; Jerry &lt;Ltd&gt;");
 		expect(xml).not.toContain("Tom & Jerry <Ltd>");
+	});
+
+	it("emits BT-113/BT-114 before cbc:PayableAmount in the UBL sequence", () => {
+		const xml = serializeUblDocument(
+			doc({
+				monetaryTotal: {
+					lineExtensionAmount: 100,
+					taxExclusiveAmount: 100,
+					taxInclusiveAmount: 121,
+					prepaidAmount: 121,
+					payableRoundingAmount: 0.02,
+					payableAmount: 0.02,
+				},
+			}),
+		);
+
+		expect(childOrder(xml, "cac:LegalMonetaryTotal")).toEqual([
+			"cbc:LineExtensionAmount",
+			"cbc:TaxExclusiveAmount",
+			"cbc:TaxInclusiveAmount",
+			"cbc:PrepaidAmount",
+			"cbc:PayableRoundingAmount",
+			"cbc:PayableAmount",
+		]);
+		expect(xml).toContain(
+			'<cbc:PrepaidAmount currencyID="EUR">121.00</cbc:PrepaidAmount>',
+		);
+		expect(xml).toContain(
+			'<cbc:PayableRoundingAmount currencyID="EUR">0.02</cbc:PayableRoundingAmount>',
+		);
+	});
+
+	it("omits BT-113/BT-114 when absent or zero", () => {
+		const xml = serializeUblDocument(
+			doc({
+				monetaryTotal: {
+					lineExtensionAmount: 100,
+					taxExclusiveAmount: 100,
+					taxInclusiveAmount: 121,
+					prepaidAmount: 0,
+					payableAmount: 121,
+				},
+			}),
+		);
+
+		expect(childOrder(xml, "cac:LegalMonetaryTotal")).toEqual([
+			"cbc:LineExtensionAmount",
+			"cbc:TaxExclusiveAmount",
+			"cbc:TaxInclusiveAmount",
+			"cbc:PayableAmount",
+		]);
 	});
 
 	it("includes an exemption reason for non-charging categories", () => {
