@@ -8,17 +8,27 @@ import {
 } from "./expression.js";
 
 /**
- * Result of validating a filing, plus what could not be checked.
+ * Result of validating a filing, plus an account of what was not checked.
  *
- * A check is skipped when one of its variables does not resolve to a rubric in
- * the chosen model — the taxonomy filters some variables loosely enough that
- * they match nothing addressable. Skipped checks are reported rather than
- * silently dropped, because a validator that quietly ignores rules is worse
- * than one that says which it could not run.
+ * Two very different things get called "not checked" and they are kept apart
+ * here. A check is *not applicable* when it is about a section this model does
+ * not have, which is the taxonomy's own doing. A check is *skipped* when the
+ * filing reports nothing it reads, or when we could not work out which rubrics
+ * it means — the second of which is a gap in this package, and is worth
+ * knowing about rather than burying in a total.
  */
 export interface NbbValidationResult extends ValidationResult {
-	/** Identifiers of checks that could not be evaluated. */
+	/** Identifiers of checks evaluated against the filing. */
+	evaluated: readonly string[];
+	/** Identifiers of checks the filing gave nothing to evaluate. */
 	skipped: readonly string[];
+	/** Identifiers of checks belonging to sections this model does not have. */
+	notApplicable: readonly string[];
+	/**
+	 * Identifiers of checks whose rubrics we could not determine. A release
+	 * where this is not empty is one where some rules go unenforced.
+	 */
+	unresolved: readonly string[];
 }
 
 /**
@@ -32,14 +42,22 @@ export interface NbbValidationResult extends ValidationResult {
 export function validateNbbFiling(filing: NbbFiling): NbbValidationResult {
 	const errors: Finding[] = [];
 	const warnings: Finding[] = [];
+	const evaluated: string[] = [];
 	const skipped: string[] = [];
+	const notApplicable: string[] = [];
+	const unresolved: string[] = [];
 
 	for (const check of filing.module.checks) {
+		if (!check.bindings) {
+			(check.notApplicable ? notApplicable : unresolved).push(check.id);
+			continue;
+		}
 		const outcome = runCheck(filing, check);
 		if (outcome === "skipped") {
 			skipped.push(check.id);
 			continue;
 		}
+		evaluated.push(check.id);
 		if (outcome === "passed") continue;
 		(check.kind === "legal" ? errors : warnings).push(outcome);
 	}
@@ -48,7 +66,7 @@ export function validateNbbFiling(filing: NbbFiling): NbbValidationResult {
 		(finding.severity === "error" ? errors : warnings).push(finding);
 	}
 
-	return { errors, warnings, skipped };
+	return { errors, warnings, evaluated, skipped, notApplicable, unresolved };
 }
 
 /** Severity a check's failure carries. */
@@ -59,148 +77,83 @@ function severityOf(kind: CheckKind): "error" | "warning" {
 type CheckOutcome = "passed" | "skipped" | Finding;
 
 /**
- * Reduce codes that name the same datapoint to the one the filing reports.
+ * Run one check over every assignment of rubrics the taxonomy permits.
  *
- * Two labels on one metric-and-dimension combination are the same cell of the
- * model, so a variable naming both is pinned, not open. Where the filing
- * reports neither, any of them stands in: they all read as the same fallback.
+ * The assignments come from the generated table rather than being reconstructed
+ * here, because working out which rubrics a variable means needs the taxonomy
+ * itself — the dimension filters, and the equation the NBB states in the
+ * message it shows when the check fails.
  */
-function aliasesCollapsed(
-	filing: NbbFiling,
-	codes: readonly string[],
-): readonly string[] {
-	if (codes.length <= 1) return codes;
-	const datapointOf = (code: string) =>
-		filing.module.datapoints.find((datapoint) => datapoint.code === code);
-	const first = datapointOf(codes[0] ?? "");
-	if (!first) return codes;
-	const alias = codes.every((code) => {
-		const datapoint = datapointOf(code);
-		return (
-			datapoint !== undefined &&
-			datapoint.metric === first.metric &&
-			sameDimensions(datapoint.dimensions, first.dimensions)
-		);
-	});
-	if (!alias) return codes;
-	const reported = codes.find(
-		(code) =>
-			filingValue(filing, code, "current") !== undefined ||
-			filingValue(filing, code, "previous") !== undefined,
-	);
-	return [reported ?? codes[0] ?? ""];
-}
-
-const sameDimensions = (
-	left: Record<string, string>,
-	right: Record<string, string>,
-): boolean => {
-	const keys = Object.keys(left);
-	return (
-		keys.length === Object.keys(right).length &&
-		keys.every((key) => left[key] === right[key])
-	);
-};
-
 function runCheck(filing: NbbFiling, check: Check): CheckOutcome {
-	// Each variable binds to every rubric its filter reaches. Where a filter is
-	// loose enough to reach several, the check has to hold for all of them.
-	const bindings: { name: string; values: { code: string; value: number }[] }[] = [];
-	let reported = false;
+	let ran = false;
+	for (const binding of check.bindings ?? []) {
+		const values: Record<string, number> = {};
+		let reported = false;
+		let usable = true;
 
-	for (const variable of check.variables) {
-		// A variable the generator could not pin to exactly one rubric is not
-		// safe to evaluate: guessing which one it meant would invent failures
-		// on filings that are in fact correct, and a validator whose job is to
-		// prevent rejection must never do that.
-		//
-		// Several codes on one datapoint are not that case. A rubric can carry
-		// more than one label — `14` before the appropriation and `(14)` after
-		// it are the same metric and the same dimensions — and a filing reports
-		// at most one of them. Aliases are not ambiguity, so they collapse
-		// rather than silence the check.
-		const codes = aliasesCollapsed(filing, variable.codes);
-		if (codes.length !== 1) return "skipped";
-		const period = variable.period === "prd:m2" ? "previous" : "current";
-		const values = codes.map((code) => {
+		for (const variable of check.variables) {
+			const code = binding[variable.name];
+			if (code === undefined) {
+				usable = false;
+				break;
+			}
+			const period =
+				variable.period === "prd:m2" ||
+				check.precedingColumn?.includes(variable.name)
+					? "previous"
+					: "current";
 			const value = filingValue(filing, code, period);
 			if (value !== undefined) reported = true;
-			return { code, value: value ?? fallbackOf(variable.fallback) };
-		});
-		if (values.some((entry) => Number.isNaN(entry.value))) return "skipped";
-		bindings.push({ name: variable.name, values });
-	}
-	if (bindings.length === 0) return "skipped";
-	// Every value fell back, so the filing says nothing about this part of the
-	// model. Reporting a failure there would flag sections left out on purpose.
-	if (!reported) return "skipped";
+			const resolved = value ?? fallbackOf(variable.fallback);
+			if (Number.isNaN(resolved)) {
+				usable = false;
+				break;
+			}
+			values[variable.name] = resolved;
+		}
+		// Every value fell back, so the filing says nothing about this part of
+		// the model. Reporting a failure there would flag sections left out on
+		// purpose — a micro filing omits most of the annexes by right.
+		if (!usable || !reported) continue;
 
-	for (const combination of combinations(bindings)) {
 		let result: boolean;
 		try {
-			const evaluated = evaluateExpression(check.test, combination.values);
-			if (typeof evaluated !== "boolean") return "skipped";
+			const evaluated = evaluateExpression(check.test, values);
+			if (typeof evaluated !== "boolean") continue;
 			result = evaluated;
 		} catch (error) {
-			if (error instanceof ExpressionError) return "skipped";
+			if (error instanceof ExpressionError) continue;
 			throw error;
 		}
+		ran = true;
 		if (result) continue;
 
-		const codes = [...new Set(Object.values(combination.codes))];
+		const named = Object.fromEntries(
+			check.variables.map((v) => [v.name, [binding[v.name] ?? v.name]]),
+		);
 		return {
 			severity: severityOf(check.kind),
 			check: check.id,
-			rule: describeExpression(
-				check.test,
-				Object.fromEntries(check.variables.map((v) => [v.name, v.codes])),
-			),
-			codes,
+			rule: check.equation ?? describeExpression(check.test, named),
+			codes: [...new Set(Object.values(binding))],
 			message: `${check.id}: ${describeExpression(
 				check.test,
 				Object.fromEntries(
 					check.variables.map((v) => [
 						v.name,
-						[`${combination.codes[v.name]}=${combination.values[v.name]}`],
+						[`${binding[v.name]}=${values[v.name]}`],
 					]),
 				),
 			)} does not hold`,
 		};
 	}
-	return "passed";
+	return ran ? "passed" : "skipped";
 }
 
 function fallbackOf(fallback: string | undefined): number {
 	if (fallback === undefined) return Number.NaN;
 	const value = Number(fallback);
 	return Number.isFinite(value) ? value : Number.NaN;
-}
-
-/** Cartesian product over the values each variable can bind to. */
-function* combinations(
-	bindings: { name: string; values: { code: string; value: number }[] }[],
-): Generator<{ values: Record<string, number>; codes: Record<string, string> }> {
-	if (bindings.length === 0) return;
-	const indices: number[] = Array.from({ length: bindings.length }, () => 0);
-	for (;;) {
-		const values: Record<string, number> = {};
-		const codes: Record<string, string> = {};
-		bindings.forEach((binding, position) => {
-			const chosen = binding.values[indices[position]!]!;
-			values[binding.name] = chosen.value;
-			codes[binding.name] = chosen.code;
-		});
-		yield { values, codes };
-
-		let position = bindings.length - 1;
-		for (;;) {
-			if (position < 0) return;
-			indices[position]!++;
-			if (indices[position]! < bindings[position]!.values.length) break;
-			indices[position] = 0;
-			position--;
-		}
-	}
 }
 
 /**

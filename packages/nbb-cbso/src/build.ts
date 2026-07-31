@@ -62,6 +62,45 @@ function signature(dimensions: Readonly<Record<string, string>>): string {
 }
 
 /**
+ * What makes two datapoints the same reported fact.
+ *
+ * The model prints one figure in more than one place: the closing net value of
+ * a fixed-asset class is `(22/27)` in the statement of fixed assets and
+ * `22/27` on the face of the balance sheet, and the result carried forward is
+ * `14` under equity and `(14)` in the appropriation account. Those are one
+ * metric with one set of dimensions, so an instance carries them once. The
+ * section differs and is deliberately not part of the key.
+ */
+function factKey(datapoint: Datapoint, period: string | undefined): string {
+	return `${datapoint.metric}|${signature(datapoint.dimensions)}|${period ?? ""}`;
+}
+
+/**
+ * The cell of the model a rubric names in the column asked for.
+ *
+ * A rubric can have a cell per column, and the two are separate datapoints:
+ * the annexes mark the preceding exercise with a member of their own, so
+ * `22/27` this year and `22/27` last year differ by more than the period.
+ *
+ * Where the rubric has no cell in the column asked for it has only one cell,
+ * and that is what is meant. An opening balance is numbered as its own rubric
+ * — `8199P` beside `8199` — and exists only in the preceding exercise's
+ * column, being last year's close, so a caller reporting "the opening balance
+ * for this year" is reporting that cell.
+ */
+function columnOf(
+	variants: readonly Datapoint[],
+	asked: "current" | "previous",
+): [Datapoint, NbbFact["period"]] {
+	const wanted = asked === "current" ? "currentPeriod" : "previousPeriod";
+	const exact = variants.find((variant) => variant[wanted]);
+	if (exact) return [exact, asked];
+	const only = variants[0]!;
+	if (only.previousPeriod) return [only, "previous"];
+	return [only, only.currentPeriod ? "current" : undefined];
+}
+
+/**
  * Assemble a filing from the caller's input and a taxonomy release.
  *
  * Rubric codes are resolved against the generated datapoint table, so an
@@ -83,10 +122,10 @@ export function buildNbbFiling(input: NbbFilingInput): NbbFiling {
 		);
 	}
 
-	const byCode = new Map<string, Datapoint>();
+	const byCode = new Map<string, Datapoint[]>();
 	for (const datapoint of taxonomyModule.datapoints) {
-		if (datapoint.code && !byCode.has(datapoint.code))
-			byCode.set(datapoint.code, datapoint);
+		if (!datapoint.code) continue;
+		byCode.set(datapoint.code, [...(byCode.get(datapoint.code) ?? []), datapoint]);
 	}
 	const bySignature = new Map<string, Datapoint>();
 	for (const datapoint of taxonomyModule.datapoints) {
@@ -131,27 +170,43 @@ export function buildNbbFiling(input: NbbFilingInput): NbbFiling {
 	// instance and is not published; putting it in the annual accounts would
 	// report a datapoint the entry point does not declare.
 
+	// One fact per datapoint and period, however many rubrics name it.
+	const reported = new Map<string, NbbFact>();
 	const addRubrics = (amounts: RubricAmounts | undefined, section: string): void => {
 		for (const [code, amount] of Object.entries(amounts ?? {})) {
-			const datapoint = byCode.get(code);
-			if (!datapoint) {
+			const variants = byCode.get(code);
+			if (!variants || variants.length === 0) {
 				throw new Error(`unknown rubric code "${code}" in ${section}`);
 			}
-			if (amount.current !== undefined && amount.current !== null) {
-				facts.push({
+			const add = (asked: "current" | "previous", value: number): void => {
+				const [datapoint, period] = columnOf(variants, asked);
+				const fact: NbbFact = {
 					datapoint,
-					period: datapoint.currentPeriod ? "current" : undefined,
-					value: formatAmount(amount.current),
+					...(period ? { period } : {}),
+					value: formatAmount(value),
 					code,
-				});
+				};
+				const key = factKey(datapoint, period);
+				const existing = reported.get(key);
+				if (!existing) {
+					reported.set(key, fact);
+					facts.push(fact);
+					return;
+				}
+				// The same figure reached twice under two of its names is fine
+				// and reported once. Two different figures is a contradiction
+				// the filer has to settle, not something to pick between.
+				if (existing.value !== fact.value) {
+					throw new Error(
+						`"${code}" and "${existing.code}" are the same figure but were given as ${fact.value} and ${existing.value}`,
+					);
+				}
+			};
+			if (amount.current !== undefined && amount.current !== null) {
+				add("current", amount.current);
 			}
 			if (amount.previous !== undefined && amount.previous !== null) {
-				facts.push({
-					datapoint,
-					period: "previous",
-					value: formatAmount(amount.previous),
-					code,
-				});
+				add("previous", amount.previous);
 			}
 		}
 	};
@@ -172,15 +227,26 @@ function formatAmount(value: number): string {
 	return value.toFixed(2);
 }
 
-/** Value reported for a rubric in a given column, if the filing has one. */
+/**
+ * Value reported for a rubric in a given column, if the filing has one.
+ *
+ * Looked up by the datapoint the rubric names rather than by the rubric
+ * itself, so a figure given as `(14)` answers a check written against `14`.
+ * They are one fact, and a filer should not have to state it twice.
+ */
 export function filingValue(
 	filing: NbbFiling,
 	code: string,
 	period: "current" | "previous",
 ): number | undefined {
+	const variants = filing.module.datapoints.filter(
+		(datapoint) => datapoint.code === code,
+	);
+	if (variants.length === 0) return undefined;
+	const [wanted, column] = columnOf(variants, period);
+	const key = factKey(wanted, column);
 	const fact = filing.facts.find(
-		(candidate) =>
-			candidate.code === code && (candidate.period ?? "current") === period,
+		(candidate) => factKey(candidate.datapoint, candidate.period) === key,
 	);
 	return fact ? Number(fact.value) : undefined;
 }

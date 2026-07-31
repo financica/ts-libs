@@ -79,6 +79,12 @@ export interface CheckVariable {
 	fallback?: string;
 }
 
+/**
+ * One assignment of rubric codes to a check's variables, keyed by variable
+ * name. Every code named here exists in the model.
+ */
+export type CheckBinding = Readonly<Record<string, string>>;
+
 /** One published check, as a test expression over named fact variables. */
 export interface Check {
 	/** The NBB's own identifier, e.g. `"va_03.01.0_0014"`. */
@@ -92,7 +98,55 @@ export interface Check {
 	 */
 	test: string;
 	variables: readonly CheckVariable[];
+	/**
+	 * The equation in rubric codes, as the taxonomy states it in the message it
+	 * shows when the check fails: `9904 = 9903 + 780 - 680 - 67/77`. Absent for
+	 * the checks whose message is prose rather than an equation.
+	 */
+	equation?: string;
+	/**
+	 * Every assignment of rubrics to variables the taxonomy's implicit
+	 * filtering permits. The check has to hold for each of them.
+	 *
+	 * A check is rarely one equation over one set of rubrics. The statement of
+	 * fixed assets writes `$am1 eq $am12 + $am13 - $am14 + $am2` once and means
+	 * it once per asset class, so the variables are *correlated*: `8199` pairs
+	 * with `8169` and `8179`, never with `8029`. Taking each variable's rubrics
+	 * independently and testing the product would compare one class's total
+	 * against another's movements and report a failure on a filing that is
+	 * correct.
+	 *
+	 * Absent when the enumeration exceeded {@link MAX_CHECK_BINDINGS}, in which
+	 * case the check is reported as skipped rather than guessed at.
+	 */
+	bindings?: readonly CheckBinding[];
+	/**
+	 * Variables read at the preceding exercise's column even though nothing in
+	 * their own filter says so.
+	 *
+	 * A check can compare last year's figures with each other — `22/27P =
+	 * 8199P + 8259P - 8329P` — and where the model does not number that column
+	 * as a rubric of its own, only the stated equation says which year is
+	 * meant.
+	 */
+	precedingColumn?: readonly string[];
+	/**
+	 * Set when the check is about a section this model does not have — the
+	 * social balance sheet, for a micro filing — so none of the rubrics it
+	 * names exist here. Such a check is not evaluated, and that is the
+	 * taxonomy's doing rather than a gap in ours.
+	 */
+	notApplicable?: boolean;
 }
+
+/**
+ * Cap on the assignments recorded for one check.
+ *
+ * A handful of checks in the taxonomy are written loosely enough to reach most
+ * of the model. Enumerating those is neither useful nor cheap, and a check we
+ * cannot pin down is reported as skipped rather than approximated.
+ */
+export const MAX_CHECK_BINDINGS = 512;
 
 /** Everything generated for one model and part of one taxonomy release. */
 export interface TaxonomyModule {
