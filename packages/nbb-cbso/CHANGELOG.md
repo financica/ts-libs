@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.4.0
+
+Breaking: `validateNbbFiling` returns `evaluated`, `notApplicable` and
+`unresolved` alongside `skipped`, which now means only "the filing reported
+nothing to check". A check that could not be pinned to its rubrics is
+`unresolved`, and one belonging to a section the model does not have is
+`notApplicable`; lumping the three together made a validator running four
+rules look like one running a hundred and seventy.
+
+- Checks are pinned to the rubrics the taxonomy says they are about. The
+  formula linkbases ship the message shown when an assertion fails, and for
+  the arithmetic checks that message is the equation in rubric codes —
+  `9904 = 9903 + 780 - 680 - 67/77`. Read as the anchor, with dimensional
+  inference supplying the repetitions of an equation the model applies once
+  per asset class. 4 checks evaluated against the reference filing before,
+  69 now, and 1 unresolved.
+- The metric is inherited down a breakdown, so the detail rows a model
+  aggregates are no longer dropped: 1027 datapoints, 586 with a rubric code.
+- Section 1 reports the legal form, postal code, country, business court and
+  date of the articles of association. All five were accepted and none were
+  written. Four are members of a closed list, reported in an element of that
+  list's own namespace (`lgf-enum:list2` carrying `lgf:m610`), so `Datapoint`
+  gained `metricPrefix`.
+- An opening balance such as `8199P` is reported only in the preceding
+  exercise's column. The current-exercise cell the table walk also produced
+  is an artifact, and reporting it is what the NBB refuses as dimensionally
+  invalid.
+- One fact per datapoint, however many rubrics name it. `(14)` and `14` are
+  one figure the model prints twice; giving them different values now raises
+  instead of emitting a contradiction.
+
 ## 0.3.0
 
 - `previousExercise` is optional. A first exercise has no comparative column,
