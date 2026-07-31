@@ -33,6 +33,19 @@ describe("buildNbbFiling", () => {
 		expect(name?.code).toBeUndefined();
 	});
 
+	it("writes the valuation rules, which the model makes mandatory", () => {
+		// Section 6.5 carries the text on met:str1 under bas:m107/part:m6.
+		// Validating the field but not reporting it would file it away empty.
+		const fact = built().facts.find(
+			(candidate) => candidate.value === MICRO_FILING.valuationRules,
+		);
+		expect(fact?.datapoint.metric).toBe("str1");
+		expect(fact?.datapoint.dimensions).toMatchObject({
+			"dim:bas": "bas:m107",
+			"dim:part": "part:m6",
+		});
+	});
+
 	it("keeps the software producer out of the annual accounts", () => {
 		// Its section belongs to the m101-r module, filed as its own instance.
 		expect(built().facts.some((fact) => fact.value === "Financica")).toBe(false);

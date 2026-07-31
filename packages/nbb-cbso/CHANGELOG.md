@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1
+
+- Report the valuation rules. `validateNbbFiling` made the field mandatory, but
+  `buildNbbFiling` never wrote it, so section 6.5 was filed empty.
+
 ## 0.2.0
 
 End-to-end filing generation and validation for the micro model without capital (`m87-f`).

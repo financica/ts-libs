@@ -46,6 +46,13 @@ const IDENTIFICATION = {
 	inLiquidation: "dim:bas=bas:m28,dim:dcl=dcl:m39,dim:part=part:m2",
 } as const;
 
+/**
+ * Section 6.5, the valuation rules, addressed the same way: free text with no
+ * rubric code. The model also offers the section as a PDF (`bsb1`); we file the
+ * text form, which is what an accepted filing carries.
+ */
+const VALUATION_RULES = "dim:bas=bas:m107,dim:part=part:m6";
+
 /** Sorted `dimension=member` signature of a datapoint. */
 function signature(dimensions: Readonly<Record<string, string>>): string {
 	return Object.entries(dimensions)
@@ -115,6 +122,10 @@ export function buildNbbFiling(input: NbbFilingInput): NbbFiling {
 	);
 	identify("isCorrection", String(input.identification.isCorrection ?? false));
 	identify("inLiquidation", String(input.identification.inLiquidation ?? false));
+	const valuationRules = bySignature.get(VALUATION_RULES);
+	if (valuationRules) {
+		facts.push({ datapoint: valuationRules, value: input.valuationRules });
+	}
 	// The software producer is deliberately not written here. Its section
 	// (s.01.00.4) belongs to the m101-r module, which is filed as its own
 	// instance and is not published; putting it in the annual accounts would
