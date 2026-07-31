@@ -400,7 +400,12 @@ describe("identification", () => {
 		);
 	};
 
-	it.each([
+	const cases: {
+		what: string;
+		dimensions: Record<string, string>;
+		element: string;
+		value: string;
+	}[] = [
 		{
 			what: "legal form",
 			dimensions: {
@@ -449,16 +454,21 @@ describe("identification", () => {
 			element: "met:dte1",
 			value: "2019-03-22",
 		},
-	])("reports the $what as $element", ({ dimensions, element, value }) => {
-		const fact = factFor(dimensions);
-		expect(fact?.value).toBe(value);
-		const [prefix, localName] = element.split(":");
-		expect(fact?.datapoint.metricPrefix ?? "met").toBe(prefix);
-		expect(fact?.datapoint.metric).toBe(localName);
-		expect(renderNbbFiling(buildNbbFiling(withCourt))).toContain(
-			`<${element} contextRef=`,
-		);
-	});
+	];
+
+	it.each(cases)(
+		"reports the $what as $element",
+		({ dimensions, element, value }) => {
+			const fact = factFor(dimensions);
+			expect(fact?.value).toBe(value);
+			const [prefix, localName] = element.split(":");
+			expect(fact?.datapoint.metricPrefix ?? "met").toBe(prefix);
+			expect(fact?.datapoint.metric).toBe(localName);
+			expect(renderNbbFiling(buildNbbFiling(withCourt))).toContain(
+				`<${element} contextRef=`,
+			);
+		},
+	);
 
 	it("leaves out the business court when there is none to report", () => {
 		const filing = buildNbbFiling(MICRO_FILING);
