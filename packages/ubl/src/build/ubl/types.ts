@@ -79,6 +79,13 @@ export interface UblLine {
 	lineExtensionAmount: number;
 	/** `cac:Price/cbc:PriceAmount` (BT-146) — net unit price. */
 	priceAmount: number;
+	/**
+	 * `cac:Price/cbc:BaseQuantity` (BT-149) — the number of units `priceAmount`
+	 * covers. Omitted means 1. Set it when the net doesn't divide evenly into
+	 * cents, so `quantity × (priceAmount ÷ baseQuantity)` reproduces the line
+	 * net exactly (PEPPOL-EN16931-R120); see `deriveUnitPrice`.
+	 */
+	baseQuantity?: number;
 	taxCategory: UblTaxCategory;
 }
 

@@ -151,7 +151,18 @@ const line = (
 			el("cbc:Name", null, source.name),
 			taxCategory("cac:ClassifiedTaxCategory", source.taxCategory),
 		]),
-		el("cac:Price", null, [money("cbc:PriceAmount", source.priceAmount, currency)]),
+		// BT-149's unit code must match the invoiced/credited quantity's
+		// (PEPPOL-EN16931-R130).
+		el("cac:Price", null, [
+			money("cbc:PriceAmount", source.priceAmount, currency),
+			source.baseQuantity != null
+				? el(
+						"cbc:BaseQuantity",
+						{ unitCode: source.unitCode },
+						String(source.baseQuantity),
+					)
+				: null,
+		]),
 	]);
 };
 

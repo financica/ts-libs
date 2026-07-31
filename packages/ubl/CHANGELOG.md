@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.11.0
+
+### Added
+
+- **`deriveUnitPrice` and `UblLine.baseQuantity` (BT-149)**: the serializer now emits `cbc:BaseQuantity` inside `cac:Price`, carrying the quantity's unit code as PEPPOL-EN16931-R130 requires.
+
+### Fixed
+
+- **Line prices no longer violate PEPPOL-EN16931-R120.** A line's net price was derived as `net ÷ quantity` rounded to cents, which breaks the rule whenever the division doesn't land on a cent: 940.00 over 14 units gives 67.142857…, and 14 × 67.14 = 939.96 — 0.04 out against a 0.02 tolerance, rejected as a _fatal_ validation error, so the document is never transmitted. `deriveUnitPrice` keeps the cent-rounded unit price only when it reproduces the net exactly, and otherwise prices the line as a whole via BT-149 (`priceAmount` = the net, `baseQuantity` = the quantity). That is exact at any magnitude, rather than merely within tolerance — the residual of a rounded unit price grows with quantity and would eventually breach 0.02 at any fixed precision.
+- **`reconcileLinesToExclTotal` re-derives the price after adjusting a line's net.** It previously re-divided at cent precision, reintroducing the same R120 violation on the very line it had just corrected. It now routes through `deriveUnitPrice` and clears a stale `baseQuantity` when the adjusted net divides evenly.
+
 ## 0.10.0
 
 ### Added
