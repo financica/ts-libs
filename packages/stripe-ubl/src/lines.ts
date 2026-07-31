@@ -1,6 +1,7 @@
 import {
 	centsToDecimal,
 	DEFAULT_UNIT_CODE,
+	deriveUnitPrice,
 	resolveTaxCategoryFromTaxAmounts,
 	roundCurrency,
 	type UblLine,
@@ -13,15 +14,15 @@ import {
 } from "./tax-amounts";
 import { normalizeString, toNumber } from "./utils";
 
-/**
- * The net unit price (BT-146): the line's net total spread over its quantity.
- * Keeping `priceAmount × quantity ≈ lineExtensionAmount` keeps the document
- * internally consistent; line-level discounts are folded into the net amount
- * rather than emitted as a separate `cac:AllowanceCharge` (which would require
- * its own reason code under EN 16931).
- */
-const unitPrice = (netTotal: number, quantity: number): number =>
-	roundCurrency(netTotal / Math.max(quantity, 1));
+// Stripe gives a line *total*, not a unit price, so every line's `cac:Price` is
+// derived from it by `deriveUnitPrice` (BT-146, plus BT-149 when the net doesn't
+// divide evenly into cents) — which is what keeps
+// `quantity × (priceAmount ÷ baseQuantity) = lineExtensionAmount` and satisfies
+// PEPPOL-EN16931-R120.
+//
+// Line-level discounts are folded into the net amount rather than emitted as a
+// separate `cac:AllowanceCharge`, which would require its own reason code under
+// EN 16931.
 
 /**
  * Convert `Stripe.Invoice` line items into {@link UblLine}s.
@@ -74,6 +75,7 @@ export const buildInvoiceLines = (invoice: Stripe.Invoice): UblLine[] => {
 		const netCents = Math.max(grossCents - discountCents, 0);
 		const netTotal = centsToDecimal(netCents);
 		const taxAmounts = getInvoiceLineTaxAmounts(line);
+		const price = deriveUnitPrice(netTotal, quantity);
 
 		let vatPercentage = 0;
 		if (taxAmounts.length > 0) {
@@ -97,7 +99,8 @@ export const buildInvoiceLines = (invoice: Stripe.Invoice): UblLine[] => {
 			quantity,
 			unitCode: DEFAULT_UNIT_CODE,
 			lineExtensionAmount: netTotal,
-			priceAmount: unitPrice(netTotal, quantity),
+			priceAmount: price.priceAmount,
+			baseQuantity: price.baseQuantity,
 			taxCategory: resolveTaxCategoryFromTaxAmounts(taxAmounts, vatPercentage),
 		};
 	});
@@ -142,6 +145,7 @@ export const buildCreditNoteLines = (
 		const netCents = Math.max(grossCents - discountCents, 0);
 		const netTotal = centsToDecimal(netCents);
 		const taxAmounts = getCreditNoteLineTaxAmounts(line);
+		const price = deriveUnitPrice(netTotal, quantity);
 		const totalTaxCents = taxAmounts.reduce((sum, ta) => sum + ta.amount, 0);
 
 		let vatPercentage = 0;
@@ -162,7 +166,8 @@ export const buildCreditNoteLines = (
 			quantity,
 			unitCode: DEFAULT_UNIT_CODE,
 			lineExtensionAmount: netTotal,
-			priceAmount: unitPrice(netTotal, quantity),
+			priceAmount: price.priceAmount,
+			baseQuantity: price.baseQuantity,
 			taxCategory: resolveTaxCategoryFromTaxAmounts(taxAmounts, vatPercentage),
 		};
 	});

@@ -5,7 +5,7 @@
     "": {
       "name": "@financica/scrada-stripe",
       "dependencies": {
-        "@financica/ubl": "^0.10.0",
+        "@financica/ubl": "^0.11.0",
       },
       "devDependencies": {
         "@types/node": "^26.1.1",
@@ -17,7 +17,7 @@
         "vitest": "^4.1.10",
       },
       "peerDependencies": {
-        "stripe": ">=18.0.0",
+        "stripe": ">=22.0.0",
       },
     },
   },
@@ -80,7 +80,7 @@
 
     "@esbuild/win32-x64": ["@esbuild/win32-x64@0.27.7", "", { "os": "win32", "cpu": "x64" }, "sha512-56hiAJPhwQ1R4i+21FVF7V8kSD5zZTdHcVuRFMW0hn753vVfQN8xlx4uOPT4xoGH0Z/oVATuR82AiqSTDIpaHg=="],
 
-    "@financica/ubl": ["@financica/ubl@0.10.0", "", { "dependencies": { "@xmldom/xmldom": "^0.9.10" } }, "sha512-z+XwciC+notV1RUZyeZc2RS5yHrOExSQtgzQYyR7MCFImyO1KXZKNUeidqYK4QJt1KVsqgF440YupUna5ogTYQ=="],
+    "@financica/ubl": ["@financica/ubl@0.11.0", "", { "dependencies": { "@xmldom/xmldom": "^0.9.10" } }, "sha512-LD1xf1ULqVAddkj1KArGnRrvHe/A/u/NrDHUh+1uPO6FBdE6ITZjjtbT2AunAQPT9O5/Aej0KOKuD8nOgxpByQ=="],
 
     "@jridgewell/sourcemap-codec": ["@jridgewell/sourcemap-codec@1.5.5", "", {}, "sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og=="],
 
