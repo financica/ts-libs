@@ -289,9 +289,10 @@ function structuralFindings(filing: NbbFiling): Finding[] {
 		);
 	}
 
-	if (identification.pageCount <= 0) {
-		findings.push(finding("warning", "page-count", "the filing declares no pages"));
-	}
+	// No page count is checked. The taxonomy has no datapoint for one — it is a
+	// concept of the PDF filing route, where the pages of the printed model are
+	// counted — so an XBRL instance never carries it and warning about it only
+	// gives the filer something they cannot act on.
 
 	return findings;
 }

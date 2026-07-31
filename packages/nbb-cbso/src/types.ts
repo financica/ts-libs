@@ -132,8 +132,13 @@ export interface Identification {
 	isCorrection?: boolean;
 	/** Whether the entity is in liquidation. */
 	inLiquidation?: boolean;
-	/** Total number of pages in the filing. */
-	pageCount: number;
+	/**
+	 * Total number of pages in the filing.
+	 *
+	 * Only meaningful when filing on paper or as a PDF. The XBRL taxonomy has no
+	 * datapoint for it, so it is never reported in an instance document.
+	 */
+	pageCount?: number;
 	/**
 	 * Sections of the model that are not filed because they do not apply.
 	 * Section numbers as printed in the model, e.g. `["6.6", "9"]`.
