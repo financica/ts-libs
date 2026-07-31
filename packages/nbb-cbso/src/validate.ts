@@ -177,26 +177,28 @@ function structuralFindings(filing: NbbFiling): Finding[] {
 			),
 		);
 	}
-	if (
-		identification.previousExercise.startDate >=
-		identification.previousExercise.endDate
-	) {
-		findings.push(
-			finding(
-				"error",
-				"DAT 26",
-				`preceding exercise starts on ${identification.previousExercise.startDate}, on or after its end on ${identification.previousExercise.endDate}`,
-			),
-		);
-	}
-	if (identification.previousExercise.endDate >= identification.exercise.startDate) {
-		findings.push(
-			finding(
-				"error",
-				"DAT 26",
-				`the preceding exercise ends on ${identification.previousExercise.endDate}, on or after the exercise being filed starts on ${identification.exercise.startDate}`,
-			),
-		);
+	// A first exercise has no preceding one, and then there are no dates to
+	// check against: the checks below apply only once one is declared.
+	const preceding = identification.previousExercise;
+	if (preceding) {
+		if (preceding.startDate >= preceding.endDate) {
+			findings.push(
+				finding(
+					"error",
+					"DAT 26",
+					`preceding exercise starts on ${preceding.startDate}, on or after its end on ${preceding.endDate}`,
+				),
+			);
+		}
+		if (preceding.endDate >= identification.exercise.startDate) {
+			findings.push(
+				finding(
+					"error",
+					"DAT 26",
+					`the preceding exercise ends on ${preceding.endDate}, on or after the exercise being filed starts on ${identification.exercise.startDate}`,
+				),
+			);
+		}
 	}
 	if (identification.generalMeetingDate < identification.exercise.endDate) {
 		findings.push(

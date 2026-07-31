@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0
+
+- `previousExercise` is optional. A first exercise has no comparative column,
+  and declaring one it never had is a misstatement the date checks exist to
+  catch. The preceding-exercise dates are not reported when it is absent, and
+  the DAT 26 checks that compare against it only run once one is declared.
+- Stop warning about the page count: the taxonomy has no datapoint for it.
+
 ## 0.2.1
 
 - Report the valuation rules. `validateNbbFiling` made the field mandatory, but

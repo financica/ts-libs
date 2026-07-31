@@ -114,8 +114,8 @@ export function buildNbbFiling(input: NbbFilingInput): NbbFiling {
 	identify("generalMeetingDate", input.identification.generalMeetingDate);
 	identify("exerciseStart", input.identification.exercise.startDate);
 	identify("exerciseEnd", input.identification.exercise.endDate);
-	identify("previousExerciseStart", input.identification.previousExercise.startDate);
-	identify("previousExerciseEnd", input.identification.previousExercise.endDate);
+	identify("previousExerciseStart", input.identification.previousExercise?.startDate);
+	identify("previousExerciseEnd", input.identification.previousExercise?.endDate);
 	identify(
 		"previousPeriodDataUnchanged",
 		String(input.identification.previousPeriodDataUnchanged),

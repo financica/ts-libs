@@ -119,8 +119,14 @@ export interface Exercise {
 export interface Identification {
 	/** Exercise being filed. */
 	exercise: Exercise;
-	/** Preceding exercise, whose figures form the comparative column. */
-	previousExercise: Exercise;
+	/**
+	 * Preceding exercise, whose figures form the comparative column.
+	 *
+	 * Absent for a first exercise. A company has no comparative column before it
+	 * has a year behind it, and stating one it never had is a misstatement the
+	 * date checks are there to catch.
+	 */
+	previousExercise?: Exercise;
 	/** Date the general meeting approved the accounts. */
 	generalMeetingDate: IsoDate;
 	/**

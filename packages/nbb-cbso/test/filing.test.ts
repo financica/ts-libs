@@ -241,6 +241,23 @@ describe("structural checks", () => {
 		).toBe(true);
 	});
 
+	it("accepts a first exercise, which has no preceding one", () => {
+		const identification = { ...MICRO_FILING.identification };
+		delete identification.previousExercise;
+		const result = validateNbbFiling(
+			buildNbbFiling({ ...MICRO_FILING, identification }),
+		);
+		expect(result.errors.filter((f) => f.check === "DAT 26")).toEqual([]);
+	});
+
+	it("reports no preceding-exercise dates when there is no preceding exercise", () => {
+		const identification = { ...MICRO_FILING.identification };
+		delete identification.previousExercise;
+		const facts = buildNbbFiling({ ...MICRO_FILING, identification }).facts;
+		expect(facts.some((f) => f.value === "2024-01-01")).toBe(false);
+		expect(facts.some((f) => f.value === "2024-12-31")).toBe(false);
+	});
+
 	it("rejects a filing with no balance sheet figure for the exercise", () => {
 		const result = validateNbbFiling(
 			buildNbbFiling({ ...MICRO_FILING, balanceSheet: {} }),
