@@ -23,3 +23,4 @@ export {
 	PCMN_FIXED_ASSET_CLASSES,
 	type PcmnFixedAssetClass,
 } from "./assets.js";
+export { type ContraSide, contraSideForCode, isContraCode } from "./contra.js";

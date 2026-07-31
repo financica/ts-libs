@@ -39,6 +39,12 @@ against real bookkeeping.
 - `CASH_CLASSES`, `isCashClass(code)` — liquidity classes 54/55/57.
 - `FixedAssetGroup`, `PCMN_FIXED_ASSET_CLASSES`, `fixedAssetGroupForCode(code)`
   — balance-sheet fixed-asset classes 20-28.
+- `ContraSide`, `contraSideForCode(code)`, `isContraCode(code)` — the rubrics
+  the chart prints with a trailing "(–)", and the side their balance sits on.
+  Uncalled capital (101) is debit-side equity, amounts written down (419) are
+  credit-side assets, rebates allowed (708) are debit-side income. Covers the …9
+  accumulated-depreciation convention, so 2409 resolves against a 240 cost
+  account without being listed.
 
 Account codes may be passed at any length (2-digit class up to a full leaf
 code); classification uses the leading digits.
