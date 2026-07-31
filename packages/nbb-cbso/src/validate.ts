@@ -58,6 +58,50 @@ function severityOf(kind: CheckKind): "error" | "warning" {
 
 type CheckOutcome = "passed" | "skipped" | Finding;
 
+/**
+ * Reduce codes that name the same datapoint to the one the filing reports.
+ *
+ * Two labels on one metric-and-dimension combination are the same cell of the
+ * model, so a variable naming both is pinned, not open. Where the filing
+ * reports neither, any of them stands in: they all read as the same fallback.
+ */
+function aliasesCollapsed(
+	filing: NbbFiling,
+	codes: readonly string[],
+): readonly string[] {
+	if (codes.length <= 1) return codes;
+	const datapointOf = (code: string) =>
+		filing.module.datapoints.find((datapoint) => datapoint.code === code);
+	const first = datapointOf(codes[0] ?? "");
+	if (!first) return codes;
+	const alias = codes.every((code) => {
+		const datapoint = datapointOf(code);
+		return (
+			datapoint !== undefined &&
+			datapoint.metric === first.metric &&
+			sameDimensions(datapoint.dimensions, first.dimensions)
+		);
+	});
+	if (!alias) return codes;
+	const reported = codes.find(
+		(code) =>
+			filingValue(filing, code, "current") !== undefined ||
+			filingValue(filing, code, "previous") !== undefined,
+	);
+	return [reported ?? codes[0] ?? ""];
+}
+
+const sameDimensions = (
+	left: Record<string, string>,
+	right: Record<string, string>,
+): boolean => {
+	const keys = Object.keys(left);
+	return (
+		keys.length === Object.keys(right).length &&
+		keys.every((key) => left[key] === right[key])
+	);
+};
+
 function runCheck(filing: NbbFiling, check: Check): CheckOutcome {
 	// Each variable binds to every rubric its filter reaches. Where a filter is
 	// loose enough to reach several, the check has to hold for all of them.
@@ -69,9 +113,16 @@ function runCheck(filing: NbbFiling, check: Check): CheckOutcome {
 		// safe to evaluate: guessing which one it meant would invent failures
 		// on filings that are in fact correct, and a validator whose job is to
 		// prevent rejection must never do that.
-		if (variable.codes.length !== 1) return "skipped";
+		//
+		// Several codes on one datapoint are not that case. A rubric can carry
+		// more than one label — `14` before the appropriation and `(14)` after
+		// it are the same metric and the same dimensions — and a filing reports
+		// at most one of them. Aliases are not ambiguity, so they collapse
+		// rather than silence the check.
+		const codes = aliasesCollapsed(filing, variable.codes);
+		if (codes.length !== 1) return "skipped";
 		const period = variable.period === "prd:m2" ? "previous" : "current";
-		const values = variable.codes.map((code) => {
+		const values = codes.map((code) => {
 			const value = filingValue(filing, code, period);
 			if (value !== undefined) reported = true;
 			return { code, value: value ?? fallbackOf(variable.fallback) };

@@ -32,10 +32,19 @@ export const MICRO_FILING: NbbFilingInput = {
 	},
 	producer: { name: "Financica" },
 	balanceSheet: {
-		// Fixed assets. 21/28 is reported without its own breakdown, which the
-		// micro model allows.
+		// Fixed assets: 21/28 = (21) + (22/27) + (28).
 		"20": { current: 0, previous: 0 },
 		"21/28": { current: 40000, previous: 30000 },
+		"(21)": { current: 0, previous: 0 },
+		// (22/27) = 22 + 23 + 24 + 25 + 26 + 27, all of it furniture.
+		"(22/27)": { current: 40000, previous: 30000 },
+		"22": { current: 0, previous: 0 },
+		"23": { current: 0, previous: 0 },
+		"24": { current: 40000, previous: 30000 },
+		"25": { current: 0, previous: 0 },
+		"26": { current: 0, previous: 0 },
+		"27": { current: 0, previous: 0 },
+		"(28)": { current: 0, previous: 0 },
 
 		// Current assets: 29/58 = 29 + 3 + 40/41 + 50/53 + 54/58 + 490/1
 		"29": { current: 0, previous: 0 },
@@ -55,8 +64,18 @@ export const MICRO_FILING: NbbFilingInput = {
 
 		// Equity: 10/15 = 10/11 + 12 + 13 + (14) + 15 - 19
 		"10/11": { current: 20000, previous: 20000 },
+		// 10/11 = 110 + 111, and 13 = 130/1 + 132 + 133. The micro model prints
+		// only the totals, but its own checks read the detail beneath them, so a
+		// filing that reports the total alone fails at the NBB.
+		"110": { current: 20000, previous: 20000 },
+		"111": { current: 0, previous: 0 },
 		"12": { current: 0, previous: 0 },
 		"13": { current: 5000, previous: 5000 },
+		// On 133, so that 130/1 = 1311 + 1312 + 1313 + 1319 holds at nil: the
+		// checks run all the way down the breakdown, not just one level.
+		"130/1": { current: 0, previous: 0 },
+		"132": { current: 0, previous: 0 },
+		"133": { current: 5000, previous: 5000 },
 		"(14)": { current: 30000, previous: 20000 },
 		"15": { current: 0, previous: 0 },
 		"19": { current: 0, previous: 0 },

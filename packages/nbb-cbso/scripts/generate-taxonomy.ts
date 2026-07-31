@@ -201,7 +201,11 @@ function readTable(path: string): Axis[] {
 			const leaves: Axis["leaves"] = [];
 			const openDimensions: string[] = [];
 
-			const visit = (label: string, inherited: Record<string, string>) => {
+			const visit = (
+				label: string,
+				inherited: Record<string, string>,
+				inheritedConcept: string | undefined,
+			) => {
 				const open = aspectNodes.get(label);
 				if (open) {
 					if (!openDimensions.includes(open)) openDimensions.push(open);
@@ -210,17 +214,27 @@ function readTable(path: string): Axis[] {
 				const node = nodes.get(label);
 				if (!node) return;
 				const dimensions = { ...inherited, ...node.dimensions };
+				// The metric is inherited exactly like the dimensions are. A
+				// breakdown states it once on the line that introduces it and
+				// leaves the detail beneath silent: `10/11` carries `met:am1`
+				// and its children `110` and `111` carry none. Dropping those
+				// for want of a metric loses every rubric a model aggregates,
+				// which is most of them — and with them the statutory checks
+				// that read the detail, since a variable that resolves to no
+				// rubric cannot be evaluated.
+				const concept = node.concept ?? inheritedConcept;
+				const resolved = concept ? { ...node, concept } : node;
 				const kids = subtree.get(label) ?? [];
 				// A node with children contributes its aspects to them; only
 				// the leaves are datapoints in their own right.
 				if (kids.length > 0) {
-					for (const kid of kids) visit(kid, dimensions);
+					for (const kid of kids) visit(kid, dimensions, concept);
 					if (node.abstract) return;
 				}
-				if (!node.abstract) leaves.push({ node, dimensions });
+				if (!node.abstract) leaves.push({ node: resolved, dimensions });
 			};
 
-			for (const label of roots.get(breakdown) ?? []) visit(label, {});
+			for (const label of roots.get(breakdown) ?? []) visit(label, {}, undefined);
 			axes.push({ axis, leaves, openDimensions });
 		}
 	}
