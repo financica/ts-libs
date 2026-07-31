@@ -369,3 +369,137 @@ describe("renderNbbFiling", () => {
 		expect(render()).toContain('xml:lang="fr"');
 	});
 });
+
+/**
+ * The identification section is checked against a real filing the NBB
+ * accepted, anonymised and kept as a fixture. Four of these fields are
+ * reported not as text but as a member of a closed list, in an element of that
+ * list's own namespace, and getting either half wrong produces an instance the
+ * NBB refuses without saying which fact was at fault.
+ */
+describe("identification", () => {
+	const withCourt: NbbFilingInput = {
+		...MICRO_FILING,
+		entity: {
+			...MICRO_FILING.entity,
+			businessCourt: "10",
+			statutesDate: "2019-03-22",
+		},
+	};
+
+	const factFor = (dimensions: Record<string, string>) => {
+		const filing = buildNbbFiling(withCourt);
+		return filing.facts.find(
+			(fact) =>
+				Object.entries(dimensions).every(
+					([dimension, member]) =>
+						fact.datapoint.dimensions[dimension] === member,
+				) &&
+				Object.keys(fact.datapoint.dimensions).length ===
+					Object.keys(dimensions).length,
+		);
+	};
+
+	it.each([
+		{
+			what: "legal form",
+			dimensions: {
+				"dim:bas": "bas:m30",
+				"dim:part": "part:m2",
+				"dim:psn": "psn:m1",
+			},
+			element: "lgf-enum:list2",
+			value: "lgf:m610",
+		},
+		{
+			what: "postal code",
+			dimensions: {
+				"dim:bas": "bas:m31",
+				"dim:ctc": "ctc:m4",
+				"dim:part": "part:m2",
+				"dim:psn": "psn:m1",
+			},
+			element: "pcd-enum:list1",
+			value: "pcd:m5000",
+		},
+		{
+			what: "country",
+			dimensions: {
+				"dim:bas": "bas:m31",
+				"dim:ctc": "ctc:m6",
+				"dim:part": "part:m2",
+				"dim:psn": "psn:m1",
+			},
+			element: "cty-enum:list1",
+			value: "cty:mBE",
+		},
+		{
+			what: "business court",
+			dimensions: { "dim:bas": "bas:m32", "dim:part": "part:m2" },
+			element: "cct-enum:list1",
+			value: "cct:m10",
+		},
+		{
+			what: "date of the articles of association",
+			dimensions: {
+				"dim:bas": "bas:m27",
+				"dim:evt": "evt:m2",
+				"dim:part": "part:m2",
+			},
+			element: "met:dte1",
+			value: "2019-03-22",
+		},
+	])("reports the $what as $element", ({ dimensions, element, value }) => {
+		const fact = factFor(dimensions);
+		expect(fact?.value).toBe(value);
+		const [prefix, localName] = element.split(":");
+		expect(fact?.datapoint.metricPrefix ?? "met").toBe(prefix);
+		expect(fact?.datapoint.metric).toBe(localName);
+		expect(renderNbbFiling(buildNbbFiling(withCourt))).toContain(
+			`<${element} contextRef=`,
+		);
+	});
+
+	it("leaves out the business court when there is none to report", () => {
+		const filing = buildNbbFiling(MICRO_FILING);
+		expect(
+			filing.facts.some(
+				(fact) => fact.datapoint.dimensions["dim:bas"] === "bas:m32",
+			),
+		).toBe(false);
+	});
+});
+
+/**
+ * What the validator could and could not do, stated as a number.
+ *
+ * A validator that quietly runs four rules out of a hundred and seventy looks
+ * exactly like one that runs them all. These assertions are the tripwire: they
+ * fail when a taxonomy release, or a change here, stops a rule being enforced.
+ */
+describe("check coverage", () => {
+	const result = validateNbbFiling(built());
+
+	it("leaves no check unresolved but the one known to be prose", () => {
+		// cx_11.00.0_0001 is stated as prose over a rubric this model does not
+		// carry, so there is nothing to pin it to.
+		expect(result.unresolved).toEqual(["cx_11.00.0_0001"]);
+	});
+
+	it("evaluates the arithmetic of every section the filing reports", () => {
+		expect(result.evaluated.length).toBeGreaterThanOrEqual(69);
+	});
+
+	it("accounts for every published check exactly once", () => {
+		const seen = [
+			...result.evaluated,
+			...result.skipped,
+			...result.notApplicable,
+			...result.unresolved,
+		];
+		expect(new Set(seen).size).toBe(seen.length);
+		expect(seen.length).toBe(MICRO_FILING_CHECK_COUNT);
+	});
+});
+
+const MICRO_FILING_CHECK_COUNT = built().module.checks.length;

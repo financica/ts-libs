@@ -44,7 +44,39 @@ const IDENTIFICATION = {
 	previousPeriodDataUnchanged: "dim:bas=bas:m28,dim:dcl=dcl:m1,dim:part=part:m2",
 	isCorrection: "dim:bas=bas:m28,dim:dcl=dcl:m2,dim:part=part:m2",
 	inLiquidation: "dim:bas=bas:m28,dim:dcl=dcl:m39,dim:part=part:m2",
+	statutesDate: "dim:bas=bas:m27,dim:evt=evt:m2,dim:part=part:m2",
+	legalForm: "dim:bas=bas:m30,dim:part=part:m2,dim:psn=psn:m1",
+	postalCode: "dim:bas=bas:m31,dim:ctc=ctc:m4,dim:part=part:m2,dim:psn=psn:m1",
+	country: "dim:bas=bas:m31,dim:ctc=ctc:m6,dim:part=part:m2,dim:psn=psn:m1",
+	businessCourt: "dim:bas=bas:m32,dim:part=part:m2",
 } as const;
+
+/**
+ * The enumeration each identification field draws its value from.
+ *
+ * These are reported not as text but as a member of a closed list, in an
+ * element of that list's own namespace — the legal form as `lgf-enum:list2`
+ * carrying `lgf:m610`. The datapoint knows the element; this says what the
+ * value has to look like.
+ */
+const ENUMERATED = {
+	legalForm: "lgf",
+	postalCode: "pcd",
+	country: "cty",
+	businessCourt: "cct",
+} as const;
+
+/**
+ * A caller's code as the taxonomy's member QName.
+ *
+ * Members are the code with an `m` in front — postal code 5000 is `pcd:m5000`
+ * and Belgium is `cty:mBE` — and a caller who has already written the `m` is
+ * taken at their word.
+ */
+function enumMember(domain: string, value: string): string {
+	const trimmed = value.trim();
+	return `${domain}:${trimmed.startsWith("m") ? trimmed : `m${trimmed}`}`;
+}
 
 /**
  * Section 6.5, the valuation rules, addressed the same way: free text with no
@@ -161,6 +193,22 @@ export function buildNbbFiling(input: NbbFilingInput): NbbFiling {
 	);
 	identify("isCorrection", String(input.identification.isCorrection ?? false));
 	identify("inLiquidation", String(input.identification.inLiquidation ?? false));
+	identify("statutesDate", input.entity.statutesDate);
+	identify("legalForm", enumMember(ENUMERATED.legalForm, input.entity.legalForm));
+	identify(
+		"postalCode",
+		enumMember(ENUMERATED.postalCode, input.entity.address.postalCode),
+	);
+	identify(
+		"country",
+		enumMember(ENUMERATED.country, input.entity.address.country ?? "BE"),
+	);
+	if (input.entity.businessCourt !== undefined) {
+		identify(
+			"businessCourt",
+			enumMember(ENUMERATED.businessCourt, input.entity.businessCourt),
+		);
+	}
 	const valuationRules = bySignature.get(VALUATION_RULES);
 	if (valuationRules) {
 		facts.push({ datapoint: valuationRules, value: input.valuationRules });

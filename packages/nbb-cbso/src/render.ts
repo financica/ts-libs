@@ -72,9 +72,12 @@ export function renderNbbFiling(filing: NbbFiling): string {
 		facts.push({
 			type: "item",
 			name: {
-				namespace: taxonomy.metricNamespace,
+				namespace:
+					fact.datapoint.metricPrefix === undefined
+						? taxonomy.metricNamespace
+						: (taxonomy.namespaces[fact.datapoint.metricPrefix] ?? ""),
 				localName: fact.datapoint.metric,
-				prefix: "met",
+				prefix: fact.datapoint.metricPrefix ?? "met",
 			},
 			id: `f${index + 1}`,
 			contextRef: contextId,

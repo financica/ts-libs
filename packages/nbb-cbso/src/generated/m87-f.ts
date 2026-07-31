@@ -416,6 +416,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.01.00.1",
 			metric: "list1",
+			metricPrefix: "lge-enum",
 			dimensions: {
 				"dim:bas": "bas:m36",
 				"dim:part": "part:m2",
@@ -425,6 +426,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.01.00.1",
 			metric: "list1",
+			metricPrefix: "lge-enum",
 			dimensions: {
 				"dim:bas": "bas:m36",
 				"dim:part": "part:m2",
@@ -445,6 +447,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.01.00.2",
 			metric: "list2",
+			metricPrefix: "lgf-enum",
 			dimensions: {
 				"dim:bas": "bas:m30",
 				"dim:psn": "psn:m1",
@@ -498,6 +501,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.01.00.2",
 			metric: "list1",
+			metricPrefix: "pcd-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:psn": "psn:m1",
@@ -531,6 +535,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.01.00.2",
 			metric: "list1",
+			metricPrefix: "cty-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:psn": "psn:m1",
@@ -553,6 +558,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.01.00.2",
 			metric: "list1",
+			metricPrefix: "cct-enum",
 			dimensions: {
 				"dim:bas": "bas:m32",
 				"dim:part": "part:m2",
@@ -603,6 +609,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmt-enum",
 			dimensions: {
 				"dim:bas": "bas:m26",
 				"dim:dcl": "dcl:m7",
@@ -627,6 +634,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m26",
 				"dim:dcl": "dcl:m6",
@@ -717,6 +725,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmt-enum",
 			dimensions: {
 				"dim:bas": "bas:m26",
 				"dim:dcl": "dcl:m7",
@@ -741,6 +750,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:dcl": "dcl:m6",
@@ -839,6 +849,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmt-enum",
 			dimensions: {
 				"dim:bas": "bas:m26",
 				"dim:dcl": "dcl:m7",
@@ -863,6 +874,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmt-enum",
 			dimensions: {
 				"dim:bas": "bas:m26",
 				"dim:dcl": "dcl:m7",
@@ -887,6 +899,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmt-enum",
 			dimensions: {
 				"dim:bas": "bas:m26",
 				"dim:dcl": "dcl:m7",
@@ -911,6 +924,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmt-enum",
 			dimensions: {
 				"dim:bas": "bas:m26",
 				"dim:dcl": "dcl:m7",
@@ -935,6 +949,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:dcl": "dcl:m6",
@@ -1201,6 +1216,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m26",
 				"dim:qlt": "qlt:m1",
@@ -1317,6 +1333,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:qlt": "qlt:m1",
@@ -1513,6 +1530,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:qlt": "qlt:m1",
@@ -1613,6 +1631,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "atc-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:dcl": "dcl:m7",
@@ -1637,6 +1656,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:dcl": "dcl:m6",
@@ -1727,6 +1747,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "atc-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:dcl": "dcl:m7",
@@ -1751,6 +1772,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "atc-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:dcl": "dcl:m7",
@@ -1775,6 +1797,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "atc-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:dcl": "dcl:m7",
@@ -1799,6 +1822,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "atc-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:dcl": "dcl:m7",
@@ -1823,6 +1847,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "atc-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:dcl": "dcl:m7",
@@ -2015,6 +2040,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m1",
@@ -2131,6 +2157,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:ctc": "ctc:m1",
@@ -2327,6 +2354,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:ctc": "ctc:m1",
@@ -2451,6 +2479,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m2",
@@ -2567,6 +2596,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:ctc": "ctc:m2",
@@ -2763,6 +2793,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:ctc": "ctc:m2",
@@ -2887,6 +2918,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m3",
@@ -3003,6 +3035,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:ctc": "ctc:m3",
@@ -3199,6 +3232,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:ctc": "ctc:m3",
@@ -3299,6 +3333,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "pcd-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m4",
@@ -3323,6 +3358,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m4",
@@ -3415,6 +3451,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "pcd-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m4",
@@ -3439,6 +3476,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:ctc": "ctc:m4",
@@ -3539,6 +3577,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "pcd-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m4",
@@ -3563,6 +3602,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "pcd-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m4",
@@ -3587,6 +3627,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "pcd-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m4",
@@ -3611,6 +3652,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "pcd-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m4",
@@ -3635,6 +3677,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:ctc": "ctc:m4",
@@ -3903,6 +3946,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m5",
@@ -4019,6 +4063,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:ctc": "ctc:m5",
@@ -4215,6 +4260,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:ctc": "ctc:m5",
@@ -4315,6 +4361,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "cty-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m6",
@@ -4339,6 +4386,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m6",
@@ -4431,6 +4479,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "cty-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m6",
@@ -4455,6 +4504,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:ctc": "ctc:m6",
@@ -4555,6 +4605,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "cty-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m6",
@@ -4579,6 +4630,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "cty-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m6",
@@ -4603,6 +4655,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "cty-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m6",
@@ -4627,6 +4680,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "cty-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m6",
@@ -4651,6 +4705,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:ctc": "ctc:m6",
@@ -4919,6 +4974,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:dcl": "dcl:m6",
 				"dim:bas": "bas:m28",
@@ -5253,6 +5309,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m34",
 				"dim:qlt": "qlt:m5",
@@ -5369,6 +5426,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:qlt": "qlt:m5",
@@ -5565,6 +5623,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.01.0.abcdef",
 			metric: "list1",
+			metricPrefix: "fct-enum",
 			dimensions: {
 				"dim:bas": "bas:m115",
 				"dim:qlt": "qlt:m5",
@@ -5741,6 +5800,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmc-enum",
 			dimensions: {
 				"dim:bas": "bas:m28",
 				"dim:part": "part:m2",
@@ -5760,6 +5820,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmt-enum",
 			dimensions: {
 				"dim:bas": "bas:m26",
 				"dim:dcl": "dcl:m7",
@@ -5777,6 +5838,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmt-enum",
 			dimensions: {
 				"dim:bas": "bas:m26",
 				"dim:dcl": "dcl:m7",
@@ -5796,6 +5858,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmt-enum",
 			dimensions: {
 				"dim:bas": "bas:m26",
 				"dim:dcl": "dcl:m7",
@@ -5815,6 +5878,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmt-enum",
 			dimensions: {
 				"dim:bas": "bas:m26",
 				"dim:dcl": "dcl:m7",
@@ -5982,6 +6046,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmc-enum",
 			dimensions: {
 				"dim:bas": "bas:m28",
 				"dim:qlt": "qlt:m1",
@@ -6076,6 +6141,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmc-enum",
 			dimensions: {
 				"dim:bas": "bas:m28",
 				"dim:qlt": "qlt:m5",
@@ -6096,6 +6162,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "atc-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:dcl": "dcl:m7",
@@ -6113,6 +6180,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "atc-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:dcl": "dcl:m7",
@@ -6132,6 +6200,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "atc-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:dcl": "dcl:m7",
@@ -6151,6 +6220,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "atc-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:dcl": "dcl:m7",
@@ -6318,6 +6388,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmc-enum",
 			dimensions: {
 				"dim:bas": "bas:m28",
 				"dim:ctc": "ctc:m1",
@@ -6412,6 +6483,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmc-enum",
 			dimensions: {
 				"dim:bas": "bas:m28",
 				"dim:ctc": "ctc:m2",
@@ -6506,6 +6578,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmc-enum",
 			dimensions: {
 				"dim:bas": "bas:m28",
 				"dim:ctc": "ctc:m3",
@@ -6526,6 +6599,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "pcd-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m4",
@@ -6543,6 +6617,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "pcd-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m4",
@@ -6562,6 +6637,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "pcd-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m4",
@@ -6581,6 +6657,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "pcd-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m4",
@@ -6600,6 +6677,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmc-enum",
 			dimensions: {
 				"dim:bas": "bas:m28",
 				"dim:ctc": "ctc:m4",
@@ -6768,6 +6846,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmc-enum",
 			dimensions: {
 				"dim:bas": "bas:m28",
 				"dim:ctc": "ctc:m5",
@@ -6788,6 +6867,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "cty-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m6",
@@ -6805,6 +6885,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "cty-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m6",
@@ -6824,6 +6905,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "cty-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m6",
@@ -6843,6 +6925,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "cty-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m6",
@@ -6862,6 +6945,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.02.02.0.abcdef",
 			metric: "list1",
+			metricPrefix: "nmc-enum",
 			dimensions: {
 				"dim:bas": "bas:m28",
 				"dim:ctc": "ctc:m6",
@@ -12040,6 +12124,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.07.01.0.cdef",
 			metric: "list1",
+			metricPrefix: "nmt-enum",
 			dimensions: {
 				"dim:bas": "bas:m26",
 				"dim:dcl": "dcl:m7",
@@ -12337,6 +12422,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.07.01.0.cdef",
 			metric: "list1",
+			metricPrefix: "pcd-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m4",
@@ -12464,6 +12550,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.07.01.0.cdef",
 			metric: "list1",
+			metricPrefix: "cty-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m6",
@@ -12534,6 +12621,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.07.01.0.cdef",
 			metric: "list1",
+			metricPrefix: "lgf-enum",
 			dimensions: {
 				"dim:bas": "bas:m30",
 				"dim:psn": "psn:m1",
@@ -12647,6 +12735,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.07.01.0.cdef",
 			metric: "list1",
+			metricPrefix: "ccy-enum",
 			dimensions: {
 				"dim:psn": "psn:m1",
 				"dim:part": "part:m7",
@@ -12772,6 +12861,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.07.02.0.ef",
 			metric: "list1",
+			metricPrefix: "nmt-enum",
 			dimensions: {
 				"dim:bas": "bas:m26",
 				"dim:dcl": "dcl:m7",
@@ -12850,6 +12940,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.07.02.0.ef",
 			metric: "list1",
+			metricPrefix: "pcd-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m4",
@@ -12889,6 +12980,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.07.02.0.ef",
 			metric: "list1",
+			metricPrefix: "cty-enum",
 			dimensions: {
 				"dim:bas": "bas:m31",
 				"dim:ctc": "ctc:m6",
@@ -12915,6 +13007,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.07.02.0.ef",
 			metric: "list1",
+			metricPrefix: "lgf-enum",
 			dimensions: {
 				"dim:bas": "bas:m30",
 				"dim:psn": "psn:m1",
@@ -12939,6 +13032,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.07.02.0.ef",
 			metric: "list2",
+			metricPrefix: "pub-enum",
 			dimensions: {
 				"dim:bas": "bas:m28",
 				"dim:dcl": "dcl:m40",
@@ -13043,6 +13137,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.10.00.0.ef",
 			metric: "list1",
+			metricPrefix: "opn-enum",
 			dimensions: {
 				"dim:bkd": "bkd:m10",
 				"dim:bas": "bas:m109",
@@ -13108,6 +13203,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:part": "part:m8",
 				"dim:gdr": "gdr:m1",
@@ -13259,6 +13355,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:part": "part:m8",
 				"dim:gdr": "gdr:m1",
@@ -13410,6 +13507,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:part": "part:m8",
 				"dim:gdr": "gdr:m1",
@@ -13561,6 +13659,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -13635,6 +13734,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -13714,6 +13814,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -13793,6 +13894,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -13872,6 +13974,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -13951,6 +14054,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -14035,6 +14139,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -14119,6 +14224,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -14203,6 +14309,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -14287,6 +14394,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -14366,6 +14474,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -14450,6 +14559,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -14534,6 +14644,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -14618,6 +14729,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -14702,6 +14814,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -14781,6 +14894,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -14860,6 +14974,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -14939,6 +15054,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -15018,6 +15134,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -15097,6 +15214,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -15166,6 +15284,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:bas": "bas:m73",
 				"dim:part": "part:m8",
@@ -15235,6 +15354,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:part": "part:m8",
 				"dim:wkr": "wkr:m1",
@@ -15350,6 +15470,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:part": "part:m8",
 				"dim:wkr": "wkr:m1",
@@ -15503,6 +15624,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:part": "part:m8",
 				"dim:wkr": "wkr:m1",
@@ -15666,6 +15788,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:part": "part:m8",
 				"dim:wkr": "wkr:m1",
@@ -15839,6 +15962,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:part": "part:m8",
 				"dim:wkr": "wkr:m1",
@@ -16002,6 +16126,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:part": "part:m8",
 				"dim:wkr": "wkr:m1",
@@ -16155,6 +16280,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:part": "part:m8",
 				"dim:wkr": "wkr:m1",
@@ -16270,6 +16396,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:part": "part:m8",
 				"dim:wkr": "wkr:m1",
@@ -16423,6 +16550,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:part": "part:m8",
 				"dim:wkr": "wkr:m1",
@@ -16576,6 +16704,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:part": "part:m8",
 				"dim:wkr": "wkr:m1",
@@ -16691,6 +16820,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:part": "part:m8",
 				"dim:wkr": "wkr:m1",
@@ -16844,6 +16974,7 @@ const module: TaxonomyModule = {
 		{
 			section: "s.11.00.0.ef",
 			metric: "list1",
+			metricPrefix: "jcc-enum",
 			dimensions: {
 				"dim:part": "part:m8",
 				"dim:wkr": "wkr:m1",

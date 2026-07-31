@@ -18,8 +18,18 @@
 export interface Datapoint {
 	/** Section of the model this datapoint belongs to, e.g. `"s.03.01.0.cdefhi"`. */
 	section: string;
-	/** Metric element's local name, e.g. `"am1"`. Namespace is the metric dictionary. */
+	/** Metric element's local name, e.g. `"am1"`. */
 	metric: string;
+	/**
+	 * Namespace prefix of the metric element, where it is not `met`.
+	 *
+	 * Most metrics come from the one dictionary, but a value drawn from a
+	 * closed list is reported as an element of that list's own namespace: the
+	 * legal form is `lgf-enum:list2` carrying `lgf:m610`, and the postal code
+	 * `pcd-enum:list1` carrying `pcd:m5000`. Writing those under `met` produces
+	 * an element the entry point never declares.
+	 */
+	metricPrefix?: string;
 	/**
 	 * Explicit dimension members, keyed by dimension QName, excluding the
 	 * period dimension. For example `{ "dim:bas": "bas:m25" }`.

@@ -117,6 +117,12 @@ function local(tag: string): string {
 	return colon === -1 ? tag : tag.slice(colon + 1);
 }
 
+/** Namespace prefix of a tag, or `"met"` where it carries none. */
+function prefixOf(tag: string): string {
+	const colon = tag.indexOf(":");
+	return colon === -1 ? "met" : tag.slice(0, colon);
+}
+
 /** Every descendant element, with its tag name. */
 function* walk(node: Node, tag = ""): Generator<{ tag: string; node: Node }> {
 	if (tag) yield { tag, node };
@@ -750,6 +756,9 @@ function generateModule(options: Options, model: string, part: string) {
 					({
 						section,
 						metric: local(metric),
+						...(prefixOf(metric) === "met"
+							? {}
+							: { metricPrefix: prefixOf(metric) }),
 						dimensions: merged,
 						...(openDimensions.length ? { openDimensions } : {}),
 						...(label?.rubric ? { code: label.rubric } : {}),
