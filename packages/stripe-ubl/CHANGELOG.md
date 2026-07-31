@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1
+
+### Fixed
+
+- **Lines whose total doesn't divide evenly into cents no longer fail PEPPOL-EN16931-R120.** Stripe reports a line _total_ and a quantity but no exact unit price, so `cac:Price` is always derived — and rounding `net ÷ quantity` to cents breaks the rule whenever the division doesn't land on a cent. A credit note of 940.00 over 14 units emitted a price of 67.14, and 14 × 67.14 = 939.96 — 0.04 out against a 0.02 tolerance, a _fatal_ validation error, so the document was rejected at the access point and never transmitted. Line pricing now goes through `deriveUnitPrice` from `@financica/ubl`, which falls back to BT-149 (`cbc:BaseQuantity`) when the net doesn't divide evenly. Requires `@financica/ubl` ≥ 0.11.0.
+
 ## 1.0.0
 
 ### Added
