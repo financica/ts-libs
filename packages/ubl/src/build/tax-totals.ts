@@ -1,4 +1,4 @@
-import { roundCurrency } from "./numeric";
+import { deriveUnitPrice, roundCurrency } from "./numeric";
 import type {
 	UblLine,
 	UblMonetaryTotal,
@@ -39,10 +39,16 @@ export const reconcileLinesToExclTotal = (
 	return lines.map((line, idx) => {
 		if (idx !== largestIdx) return line;
 		const adjusted = roundCurrency(line.lineExtensionAmount + diff);
+		// Re-derive the price from the adjusted net through the shared helper —
+		// nudging the net without re-deriving BT-146/BT-149 to match is exactly
+		// what PEPPOL-EN16931-R120 rejects. Assign `baseQuantity` unconditionally
+		// so a line that no longer needs one doesn't keep a stale value.
+		const { priceAmount, baseQuantity } = deriveUnitPrice(adjusted, line.quantity);
 		return {
 			...line,
 			lineExtensionAmount: adjusted,
-			priceAmount: roundCurrency(adjusted / Math.max(line.quantity, 1)),
+			priceAmount,
+			baseQuantity,
 		};
 	});
 };

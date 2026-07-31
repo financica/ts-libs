@@ -43,7 +43,12 @@ export {
 	resolveCompanyIdScheme,
 	resolveVatEndpoint,
 } from "./identifiers";
-export { centsToDecimal, roundCurrency } from "./numeric";
+export {
+	centsToDecimal,
+	deriveUnitPrice,
+	roundCurrency,
+	type UnitPrice,
+} from "./numeric";
 export {
 	EXEMPT_TAXABILITY_REASONS,
 	resolveTaxCategoryFromTaxAmounts,
