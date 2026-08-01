@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0
+
+- `110901` and `111901` are debit contras. The CSA left the SRL and the SC with
+  a contribution rather than capital, and the balance sheet scheme for
+  companies without capital has no uncalled line of its own — so the part not
+  yet called is a debit sub-account of the contribution it belongs to, and the
+  rubric is reported net. CNC/CBN advice 2019/14 numbers the unavailable one
+  `111901` under `1119`; `110901` is its available counterpart. Without them a
+  wrong-side check reports a correctly kept SRL as an anomaly, which `101`
+  already covered for a company with capital.
+
 ## 0.2.0
 
 - Add the contra-account taxonomy: `contraSideForCode` / `isContraCode` name the

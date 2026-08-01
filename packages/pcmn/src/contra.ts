@@ -28,6 +28,14 @@ export type ContraSide = "debit" | "credit";
 const CONTRA_CODES: Readonly<Record<string, ContraSide>> = {
 	// Class 1 — equity, normally credit
 	"101": "debit", // Capital non appelé
+	// The same thing for a company without capital. The CSA left the SRL and
+	// the SC with a contribution rather than capital, and the balance sheet
+	// scheme for those has no uncalled line of its own — so the part not yet
+	// called is a debit sub-account of the contribution it belongs to, and the
+	// rubric is reported net. CNC/CBN advice 2019/14 numbers the unavailable
+	// one `111901` under `1119`; `110901` is its available counterpart.
+	"110901": "debit", // Apport disponible hors capital non appelé
+	"111901": "debit", // Apport indisponible hors capital non appelé
 	// Bénéfice (Perte) reporté(e). The whole rubric is listed, not just 141: a
 	// result carried forward is legitimately credit when it is a profit and
 	// debit when it is a loss, so neither side is an anomaly.
