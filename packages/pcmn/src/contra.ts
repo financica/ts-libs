@@ -28,14 +28,14 @@ export type ContraSide = "debit" | "credit";
 const CONTRA_CODES: Readonly<Record<string, ContraSide>> = {
 	// Class 1 — equity, normally credit
 	"101": "debit", // Capital non appelé
-	// The same thing for a company without capital. The CSA left the SRL and
-	// the SC with a contribution rather than capital, and the balance sheet
-	// scheme for those has no uncalled line of its own — so the part not yet
-	// called is a debit sub-account of the contribution it belongs to, and the
-	// rubric is reported net. CNC/CBN advice 2019/14 numbers the unavailable
-	// one `111901` under `1119`; `110901` is its available counterpart.
-	"110901": "debit", // Apport disponible hors capital non appelé
-	"111901": "debit", // Apport indisponible hors capital non appelé
+	// A company without capital has the same thing and no rubric for it: the
+	// scheme stops at 110/111 and the part of a contribution not yet called is
+	// a debit sub-account the company numbers itself. CNC/CBN advice 2019/14
+	// illustrates it as `111901`, but that is the advice's own numbering and
+	// not a rubric of the chart, which goes no deeper than `1119`. It is not
+	// listed here: this table is the statutory rubrics, which is what makes
+	// prefix inheritance sound. An account that is a contra by choice rather
+	// than by rubric has to say so itself.
 	// Bénéfice (Perte) reporté(e). The whole rubric is listed, not just 141: a
 	// result carried forward is legitimately credit when it is a profit and
 	// debit when it is a loss, so neither side is an anomaly.

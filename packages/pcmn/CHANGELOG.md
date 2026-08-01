@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.1
+
+- Reverts the `110901` / `111901` entries added in 0.3.0. They are the CNC's own
+  numbering in advice 2019/14, not rubrics of the chart, which goes no deeper
+  than `1119` under 11 — so a company that numbers its uncalled contribution
+  differently was still reported, and the table stopped being what its contract
+  says it is. The principle stands (the uncalled part of a contribution is a
+  debit sub-account and the rubric reports net); it belongs on the account, not
+  in a table of statutory rubrics.
+
 ## 0.3.0
 
 - `110901` and `111901` are debit contras. The CSA left the SRL and the SC with
