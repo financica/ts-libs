@@ -1,0 +1,21 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Generated directories
+/node_modules
+/dist
+/coverage
+/src/generated
+
+# misc
+.DS_Store
+*.pem
+*:Zone.Identifier
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# typescript
+*.tsbuildinfo
