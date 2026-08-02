@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://edavki.durs.si/Documents/Schemas/DDV_O_11.xsd" elementFormDefault="qualified" xmlns="http://edavki.durs.si/Documents/Schemas/DDV_O_11.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:edp="http://edavki.durs.si/Documents/Schemas/EDP-Common-1.xsd">
+  <xs:import namespace="http://edavki.durs.si/Documents/Schemas/EDP-Common-1.xsd" schemaLocation="EDP-Common-1.xsd" id="EDP-Common-1" />
+  <xs:element name="DDV-O">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="n_ddv" type="xs:decimal" minOccurs="0" >
+          <xs:annotation>
+            <xs:documentation xml:lang="sl">
+              Nižja stopnja DDV
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="v_ddv" type="xs:decimal" minOccurs="0" >
+          <xs:annotation>
+            <xs:documentation xml:lang="sl">
+              Višja stopnja DDV
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="z_ddv" type="xs:decimal" minOccurs="0" >
+          <xs:annotation>
+            <xs:documentation xml:lang="sl">
+              Znižana stopnja DDV
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="taxPeriodStart" type="xs:string">
+          <xs:annotation>
+            <xs:documentation xml:lang="sl">
+              Začetek davčnega obdobja (datum): YYYY-MM-DD
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="taxPeriodEnd" type="xs:string">
+          <xs:annotation>
+            <xs:documentation xml:lang="sl">
+              Konec davčnega obdobja (datum): YYYY-MM-DD
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="selfReport" type="xs:boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation xml:lang="sl">
+              Samoprijava
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="depositAfterDeadline" type="xs:boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation xml:lang="sl">
+              Vloga za predložitev po roku
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="selfReportDoNotUseInstitute" type="xs:boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation xml:lang="sl">
+              Ne želim izkoristiti možnosti uporabe instituta samoprijave
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="idEvidenc" type="xs:string" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation xml:lang="sl">
+              Id evidenc
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="contactPersonFullName" type="xs:string" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation xml:lang="sl">
+              Ime in priimek kontaktne osebe
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="contactPersonPhoneNumber" type="xs:string" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation xml:lang="sl">
+              Telefonska stevilka kontaktne osebe
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>        
+        <xs:element name="representedForeigner" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              Zastopani tujec
+            </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="idNumber" type="xs:string">
+                <xs:annotation>
+                  <xs:documentation>
+                    Identifikacijska številka
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="name" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Naziv
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="address" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Naslov
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="f02" type="xs:positiveInteger" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation xml:lang="sl">
+            Davčna številka zastopnika
+          </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="f03" type="xs:boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation xml:lang="sl">
+              Izračunavam odbitni delež (obvezno izberite)
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="f04" type="xs:boolean" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation xml:lang="sl">
+              Zahtevam vračilo presežkov (obvezno izberite)
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="f11" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f11a" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f12" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f13" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f14" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f15" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f21" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f22" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f22a" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f23" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f23a" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f24" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f24a" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f24b" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f24c" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f25" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f25a" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f25b" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f26" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f31" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f31a" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f32" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f32a" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f33" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f34" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f35" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f41" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f42" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f42a" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f43" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f51" type="xs:decimal" minOccurs="0" />
+        <xs:element name="f52" type="xs:decimal" minOccurs="0" />
+
+        <xs:element name="selfReportOrCorrection" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation xml:lang="sl">
+              Samoprijava/popravek
+            </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="periodStart" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation xml:lang="sl">
+                    Davčno obdobje - začetek
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="periodEnd" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation xml:lang="sl">
+                    Davčno obdobje - konec
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="amount" type="xs:decimal" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation xml:lang="sl">
+                    Vrednost DDV
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="interest" type="xs:decimal" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation xml:lang="sl">
+                    Obresti
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Envelope">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="edp:Header" />
+        <xs:element ref="edp:AttachmentList" minOccurs="0" />
+        <xs:element ref="edp:Signatures" />
+        <xs:element name="body">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="edp:bodyContent" />
+              <xs:element ref="DDV-O" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,49 @@
+{
+	"name": "@financica/edavki",
+	"version": "0.1.0",
+	"description": "TypeScript toolkit for Slovenian eDavki (FURS) tax documents: build and serialize the DDV-O VAT return as schema-faithful EDP XML.",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/financica/edavki-ts.git"
+	},
+	"files": [
+		"dist",
+		"schemas"
+	],
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		},
+		"./ddv-o": {
+			"import": "./dist/ddv-o/index.js",
+			"types": "./dist/ddv-o/index.d.ts"
+		}
+	},
+	"scripts": {
+		"build": "tsdown",
+		"prepack": "bun run build",
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check",
+		"type-check": "tsc --noEmit",
+		"test": "vitest",
+		"test:run": "vitest --run",
+		"test:coverage": "vitest --coverage",
+		"ci": "bun run type-check && bun run lint && bun run test:run && bun run build"
+	},
+	"devDependencies": {
+		"@types/node": "^26.1.1",
+		"fast-xml-parser": "^5.10.0",
+		"oxfmt": "^0.58.0",
+		"oxlint": "^1.73.0",
+		"tsdown": "^0.22.5",
+		"typescript": "^7.0.2",
+		"vitest": "^4.1.10"
+	}
+}
