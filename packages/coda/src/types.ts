@@ -1,0 +1,180 @@
+/** Top-level result of parsing a CODA file. */
+export interface CodaFile {
+	/** One or more statements contained in the file. */
+	statements: CodaStatement[];
+}
+
+/** A single bank statement within a CODA file. */
+export interface CodaStatement {
+	// ── Header record (0) ─────────────────────────────────────────────
+
+	/** File creation date. */
+	creationDate: Date;
+	/** Bank identification number (3 digits). */
+	bankId: number;
+	/** Whether this is a duplicate file. */
+	isDuplicate: boolean;
+	/** File reference assigned by the bank. */
+	fileReference?: string;
+	/** Name of the addressee. */
+	addressee: string;
+	/** BIC of the bank holding the account. */
+	bic?: string;
+	/** Identification number of the Belgium-based account holder. */
+	companyId?: string;
+	/** Separate application code (5 positions). */
+	separateApplication: string;
+	/** Transaction reference (MT940 tag 20). */
+	transactionReference?: string;
+	/** Related reference (MT940 tag 21). */
+	relatedReference?: string;
+	/** CODA standard version number. */
+	version: number;
+
+	// ── Old balance record (1) ────────────────────────────────────────
+
+	/** Account details. */
+	account: CodaAccount;
+	/** Paper statement sequence number. */
+	paperStatementSequence: number;
+	/** CODA statement sequence number. */
+	codaStatementSequence: number;
+	/** Name of the account holder (from old balance record). */
+	accountHolderName?: string;
+	/** Account description text. */
+	accountDescription?: string;
+	/** Opening balance. */
+	oldBalance: CodaBalance;
+
+	// ── New balance record (8) ────────────────────────────────────────
+
+	/** Closing balance. Absent in empty files without record 8. */
+	newBalance?: CodaBalance;
+
+	// ── Movements ─────────────────────────────────────────────────────
+
+	/** Transaction movements (records 2.x with linked 3.x). */
+	movements: CodaMovement[];
+
+	// ── Free communications (record 4) ────────────────────────────────
+
+	/** Free communication texts. */
+	freeCommunications: string[];
+
+	// ── Trailer record (9) ────────────────────────────────────────────
+
+	/** Sum of debit movement amounts. */
+	totalDebit: number;
+	/** Sum of credit movement amounts. */
+	totalCredit: number;
+}
+
+/** Account number and currency information. */
+export interface CodaAccount {
+	/** Account number structure type. */
+	structure: "belgian-bban" | "foreign-bban" | "belgian-iban" | "foreign-iban";
+	/** Account number (BBAN or IBAN). */
+	number: string;
+	/** ISO currency code. */
+	currency?: string;
+	/** ISO country code (available for Belgian BBAN). */
+	countryCode?: string;
+}
+
+/** A balance (old or new) with amount and date. */
+export interface CodaBalance {
+	/** Signed amount: positive for credit, negative for debit. */
+	amount: number;
+	/** Balance date. */
+	date: Date;
+}
+
+/** A single transaction movement assembled from records 2.1, 2.2, 2.3. */
+export interface CodaMovement {
+	/** Continuous sequence number (groups related records). */
+	sequenceNumber: number;
+	/** Detail number within the sequence. */
+	detailNumber: number;
+	/** Bank reference number (informative). */
+	bankReference: string;
+	/** Signed amount: positive for credit, negative for debit. */
+	amount: number;
+	/** Value date. Undefined if not known (000000). */
+	valueDate?: Date;
+	/** Entry/booking date. */
+	entryDate: Date;
+	/** 8-digit transaction code broken into type/family/transaction/category. */
+	transactionCode: CodaTransactionCode;
+	/** Full communication text concatenated from all record parts. */
+	communication: string;
+	/** Whether the communication uses structured or free format. */
+	communicationType: "structured" | "unstructured";
+	/** 3-digit structured communication type code (e.g. 101, 102, 127). */
+	structuredCommunicationType?: number;
+	/** Paper statement sequence number. */
+	paperStatementSequence: number;
+	/** Globalisation code (1-9). Undefined if not set. */
+	globalisationCode?: number;
+
+	// ── From record 2.2 ──────────────────────────────────────────────
+
+	/** Customer reference (up to 35 chars). */
+	customerReference?: string;
+	/** BIC of the counterparty's bank. */
+	counterpartyBic?: string;
+	/**
+	 * R-transaction type.
+	 * 1=reject, 2=return, 3=refund, 4=reversal, 5=cancellation.
+	 */
+	rTransactionType?: number;
+	/** ISO reason return code for R-transactions. */
+	rTransactionReason?: string;
+	/** SEPA CategoryPurpose code. */
+	categoryPurpose?: string;
+	/** SEPA Purpose code. */
+	purpose?: string;
+
+	// ── From record 2.3 ──────────────────────────────────────────────
+
+	/** Counterparty account number. */
+	counterpartyAccountNumber?: string;
+	/** Counterparty account currency. */
+	counterpartyAccountCurrency?: string;
+	/** Counterparty name. */
+	counterpartyName?: string;
+
+	// ── Linked information records ───────────────────────────────────
+
+	/** Information records (3.x) linked to this movement. */
+	information: CodaInformation[];
+}
+
+/** 8-digit CODA transaction code. */
+export interface CodaTransactionCode {
+	/** Type digit (0-9): simple, totalised by customer/bank, detail, etc. */
+	type: number;
+	/** Family code (01-89): broad category (transfers, cards, etc.). */
+	family: number;
+	/** Transaction code within the family. */
+	transaction: number;
+	/** Category code (000-999): additional detail. */
+	category: number;
+}
+
+/** An information record group assembled from records 3.1, 3.2, 3.3. */
+export interface CodaInformation {
+	/** Continuous sequence number (matches the parent movement). */
+	sequenceNumber: number;
+	/** Detail number. */
+	detailNumber: number;
+	/** Bank reference. */
+	bankReference: string;
+	/** Transaction code. */
+	transactionCode: CodaTransactionCode;
+	/** Full communication text concatenated from all parts. */
+	communication: string;
+	/** Whether the communication uses structured or free format. */
+	communicationType: "structured" | "unstructured";
+	/** 3-digit structured communication type code. */
+	structuredCommunicationType?: number;
+}
