@@ -1,0 +1,78 @@
+{
+	"name": "@financica/peppol",
+	"version": "0.6.0",
+	"description": "Peppol network toolkit for TypeScript: participant discovery via SML/SMP, Peppol Directory lookups, EAS schemes, and document-type classification.",
+	"keywords": [
+		"e-invoicing",
+		"eas",
+		"einvoice",
+		"en16931",
+		"peppol",
+		"sml",
+		"smp",
+		"ubl",
+		"vat"
+	],
+	"homepage": "https://github.com/financica/peppol#readme",
+	"bugs": "https://github.com/financica/peppol/issues",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/financica/peppol.git"
+	},
+	"files": [
+		"dist"
+	],
+	"type": "module",
+	"sideEffects": false,
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		},
+		"./schemes": {
+			"import": "./dist/schemes.js",
+			"types": "./dist/schemes.d.ts"
+		},
+		"./document-types": {
+			"import": "./dist/document-types.js",
+			"types": "./dist/document-types.d.ts"
+		},
+		"./countries": {
+			"import": "./dist/countries.js",
+			"types": "./dist/countries.d.ts"
+		}
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "tsdown",
+		"prepack": "bun run build",
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check",
+		"type-check": "tsc --noEmit",
+		"test": "vitest",
+		"test:run": "vitest --run",
+		"test:coverage": "vitest --coverage",
+		"ci": "bun run type-check && bun run lint && bun run test:run && bun run build"
+	},
+	"dependencies": {
+		"fast-xml-parser": "^5.10.0"
+	},
+	"devDependencies": {
+		"@types/node": "^26.1.1",
+		"oxfmt": "^0.58.0",
+		"oxlint": "^1.73.0",
+		"tsdown": "^0.22.5",
+		"typescript": "^7.0.2",
+		"vitest": "^4.1.10"
+	},
+	"engines": {
+		"node": ">=18"
+	}
+}
