@@ -1,5 +1,6 @@
 import type { TaxAmountInfo } from "@financica/ubl/build";
 import type Stripe from "stripe";
+import { toNumber } from "./utils";
 
 /**
  * Reads the rate percentage from either Stripe shape:
@@ -54,7 +55,7 @@ export const getInvoiceLineTaxAmounts = (
 	if (Array.isArray(rawTaxAmounts) && rawTaxAmounts.length > 0) {
 		// `any`: runtime shape from Stripe API.
 		return rawTaxAmounts.map((ta: any) => ({
-			amount: typeof ta.amount === "number" ? ta.amount : 0,
+			amount: toNumber(ta.amount),
 			taxability_reason: ta.taxability_reason ?? null,
 			tax_rate_percentage: readExpandedTaxRatePercentage(ta),
 		}));
@@ -63,7 +64,7 @@ export const getInvoiceLineTaxAmounts = (
 	const rawTaxes = line.taxes;
 	if (!Array.isArray(rawTaxes)) return [];
 	return rawTaxes.map((tax) => ({
-		amount: typeof tax.amount === "number" ? tax.amount : 0,
+		amount: toNumber(tax.amount),
 		taxability_reason: tax.taxability_reason ?? null,
 		tax_rate_percentage: readExpandedTaxRatePercentage(tax),
 	}));
@@ -76,7 +77,7 @@ export const getCreditNoteLineTaxAmounts = (
 	const taxes = line.taxes;
 	if (!Array.isArray(taxes)) return [];
 	return taxes.map((tax) => ({
-		amount: typeof tax.amount === "number" ? tax.amount : 0,
+		amount: toNumber(tax.amount),
 		taxability_reason: tax.taxability_reason ?? null,
 		tax_rate_percentage: readExpandedTaxRatePercentage(tax),
 	}));
@@ -95,7 +96,7 @@ export const getInvoiceLineDiscountAmountCents = (
 	const raw = (line as any).discount_amounts;
 	if (!Array.isArray(raw)) return 0;
 	return raw.reduce(
-		(sum: number, discount: { amount: number }) => sum + discount.amount,
+		(sum: number, discount: { amount: unknown }) => sum + toNumber(discount.amount),
 		0,
 	);
 };
