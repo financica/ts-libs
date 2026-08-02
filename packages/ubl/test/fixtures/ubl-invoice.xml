@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+  <cbc:ID>INV-UBL-1001</cbc:ID>
+  <cbc:IssueDate>2026-02-25</cbc:IssueDate>
+  <cbc:DueDate>2026-03-10</cbc:DueDate>
+  <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+  <cac:OrderReference>
+    <cbc:ID>PO-42</cbc:ID>
+  </cac:OrderReference>
+  <cac:AccountingSupplierParty>
+    <cac:Party>
+      <cac:PartyName>
+        <cbc:Name>Acme BV</cbc:Name>
+      </cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:StreetName>Main Street 10</cbc:StreetName>
+        <cbc:CityName>Brussels</cbc:CityName>
+        <cbc:PostalZone>1000</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>BE</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PartyTaxScheme>
+        <cbc:CompanyID>BE0123456789</cbc:CompanyID>
+      </cac:PartyTaxScheme>
+    </cac:Party>
+  </cac:AccountingSupplierParty>
+  <cac:AccountingCustomerParty>
+    <cac:Party>
+      <cac:PartyName>
+        <cbc:Name>Buyer NV</cbc:Name>
+      </cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:StreetName>Customer Road 5</cbc:StreetName>
+        <cbc:CityName>Ghent</cbc:CityName>
+        <cbc:PostalZone>9000</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>BE</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PartyTaxScheme>
+        <cbc:CompanyID>BE9876543210</cbc:CompanyID>
+      </cac:PartyTaxScheme>
+    </cac:Party>
+  </cac:AccountingCustomerParty>
+  <cac:PaymentMeans>
+    <cbc:PaymentMeansCode>30</cbc:PaymentMeansCode>
+    <cbc:PaymentID>PM-001</cbc:PaymentID>
+    <cac:PayeeFinancialAccount>
+      <cbc:ID>BE10000123456789</cbc:ID>
+      <cac:FinancialInstitutionBranch>
+        <cbc:ID>GEBA BE BB</cbc:ID>
+      </cac:FinancialInstitutionBranch>
+    </cac:PayeeFinancialAccount>
+  </cac:PaymentMeans>
+  <cac:PaymentMeans>
+    <cbc:PaymentMeansCode>31</cbc:PaymentMeansCode>
+    <cbc:PaymentID>PM-002</cbc:PaymentID>
+    <cac:PayeeFinancialAccount>
+      <cbc:ID>NL20INGB0001234567</cbc:ID>
+      <cac:FinancialInstitutionBranch>
+        <cbc:ID>INGB NL 2A</cbc:ID>
+      </cac:FinancialInstitutionBranch>
+    </cac:PayeeFinancialAccount>
+  </cac:PaymentMeans>
+  <cac:PaymentTerms>
+    <cbc:Note>Net 14 days</cbc:Note>
+  </cac:PaymentTerms>
+  <cac:TaxTotal>
+    <cbc:TaxAmount currencyID="EUR">21.00</cbc:TaxAmount>
+    <cac:TaxSubtotal>
+      <cbc:TaxableAmount currencyID="EUR">100.00</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="EUR">21.00</cbc:TaxAmount>
+      <cac:TaxCategory>
+        <cbc:ID>S</cbc:ID>
+        <cbc:Percent>21.00</cbc:Percent>
+      </cac:TaxCategory>
+    </cac:TaxSubtotal>
+  </cac:TaxTotal>
+  <cac:LegalMonetaryTotal>
+    <cbc:LineExtensionAmount currencyID="EUR">100.00</cbc:LineExtensionAmount>
+    <cbc:TaxExclusiveAmount currencyID="EUR">100.00</cbc:TaxExclusiveAmount>
+    <cbc:TaxInclusiveAmount currencyID="EUR">121.00</cbc:TaxInclusiveAmount>
+    <cbc:PayableAmount currencyID="EUR">121.00</cbc:PayableAmount>
+  </cac:LegalMonetaryTotal>
+  <cac:InvoiceLine>
+    <cbc:ID>1</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="C62">2</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="EUR">100.00</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Description>Consulting services</cbc:Description>
+      <cbc:Name>Consulting</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>CONSULT-01</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+        <cbc:ID>S</cbc:ID>
+        <cbc:Percent>21.00</cbc:Percent>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="EUR">50.00</cbc:PriceAmount>
+    </cac:Price>
+  </cac:InvoiceLine>
+</Invoice>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+  <cbc:ID>INV-UBL-1003</cbc:ID>
+  <cbc:IssueDate>2026-02-27</cbc:IssueDate>
+  <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+  <cac:AccountingSupplierParty>
+    <cac:Party>
+      <cac:PartyName>
+        <cbc:Name>Acme BV</cbc:Name>
+      </cac:PartyName>
+    </cac:Party>
+  </cac:AccountingSupplierParty>
+  <cac:AccountingCustomerParty>
+    <cac:Party>
+      <cac:PartyName>
+        <cbc:Name>Buyer NV</cbc:Name>
+      </cac:PartyName>
+    </cac:Party>
+  </cac:AccountingCustomerParty>
+  <cac:TaxTotal>
+    <cbc:TaxAmount currencyID="EUR">18.90</cbc:TaxAmount>
+    <cac:TaxSubtotal>
+      <cbc:TaxableAmount currencyID="EUR">90.00</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="EUR">18.90</cbc:TaxAmount>
+      <cac:TaxCategory>
+        <cbc:ID>S</cbc:ID>
+        <cbc:Percent>21.00</cbc:Percent>
+      </cac:TaxCategory>
+    </cac:TaxSubtotal>
+  </cac:TaxTotal>
+  <cac:LegalMonetaryTotal>
+    <cbc:LineExtensionAmount currencyID="EUR">90.00</cbc:LineExtensionAmount>
+    <cbc:TaxExclusiveAmount currencyID="EUR">90.00</cbc:TaxExclusiveAmount>
+    <cbc:TaxInclusiveAmount currencyID="EUR">108.90</cbc:TaxInclusiveAmount>
+    <cbc:AllowanceTotalAmount currencyID="EUR">10.00</cbc:AllowanceTotalAmount>
+    <cbc:PayableAmount currencyID="EUR">108.90</cbc:PayableAmount>
+  </cac:LegalMonetaryTotal>
+  <cac:InvoiceLine>
+    <cbc:ID>1</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="C62">2</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="EUR">90.00</cbc:LineExtensionAmount>
+    <cac:AllowanceCharge>
+      <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+      <cbc:AllowanceChargeReason>Line discount</cbc:AllowanceChargeReason>
+      <cbc:Amount currencyID="EUR">10.00</cbc:Amount>
+    </cac:AllowanceCharge>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="EUR">18.90</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxableAmount currencyID="EUR">90.00</cbc:TaxableAmount>
+        <cbc:TaxAmount currencyID="EUR">18.90</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cbc:ID>S</cbc:ID>
+          <cbc:Percent>21.00</cbc:Percent>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:Item>
+      <cbc:Description>Discounted services</cbc:Description>
+      <cbc:Name>Discounted consulting</cbc:Name>
+      <cac:ClassifiedTaxCategory>
+        <cbc:ID>S</cbc:ID>
+        <cbc:Percent>21.00</cbc:Percent>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="EUR">50.00</cbc:PriceAmount>
+    </cac:Price>
+  </cac:InvoiceLine>
+</Invoice>
