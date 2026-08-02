@@ -175,3 +175,30 @@ export interface TaxonomyModule {
 	datapoints: readonly Datapoint[];
 	checks: readonly Check[];
 }
+
+/**
+ * One member of a closed list the filer picks from, such as a business court.
+ *
+ * The taxonomy publishes these as a domain of `nonnum:domainItemType` elements
+ * with a label per language, which is what makes them presentable: a filer
+ * chooses "Bruxelles, francophone", not `m31`.
+ */
+export interface EnumerationMember {
+	/**
+	 * Member code as it appears in the QName, `m` prefix included — `m31`, or
+	 * `mBE` for a country. This is the value a caller passes.
+	 */
+	code: string;
+	/** Label per language, keyed by the taxonomy's own `xml:lang`. */
+	labels: Readonly<Record<string, string>>;
+}
+
+/**
+ * The closed lists a filer chooses a member of, keyed by dictionary prefix
+ * (`cct` for the business court, `lgf` for the legal form).
+ *
+ * Only the lists a human picks from are generated. `pcd` and `cty` are
+ * enumerations too, but an address determines them, so carrying 1,146 postal
+ * codes would be weight with no reader.
+ */
+export type Enumerations = Readonly<Record<string, readonly EnumerationMember[]>>;

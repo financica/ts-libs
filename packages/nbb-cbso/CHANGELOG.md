@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.5.0
+
+Breaking: a filing with no `entity.businessCourt` is now an error. The business
+court is a mandatory mention, and the filing application refuses the deposit
+over it ("Le tribunal d'entreprise est une mention obligatoire") without any
+taxonomy formula stating so, which meant a filing could pass validation here
+and be refused on upload.
+
+- `ENUMERATIONS` exports the closed lists a filer picks a member of, generated
+  from the taxonomy's own domains with the label the NBB publishes in each of
+  the four filing languages. `cct` (29 business courts) and `lgf` (83 legal
+  forms). Only the lists a human chooses from: an address determines `pcd` and
+  `cty`, so their 1,396 members are not carried.
+
 ## 0.4.0
 
 Breaking: `validateNbbFiling` returns `evaluated`, `notApplicable` and

@@ -171,6 +171,20 @@ function structuralFindings(filing: NbbFiling): Finding[] {
 		codes: string[] = [],
 	): Finding => ({ severity, check, rule: check, codes, message });
 
+	// The business court is a mandatory mention. The taxonomy has no formula for
+	// it — it is a rule of the filing application, which refuses the deposit with
+	// "Le tribunal d'entreprise est une mention obligatoire" — so it is asserted
+	// here rather than being discovered on upload.
+	if (!entity.businessCourt) {
+		findings.push(
+			finding(
+				"error",
+				"mandatory-mention",
+				"the business court is a mandatory mention and is absent",
+			),
+		);
+	}
+
 	// DAT 26: the exercise dates have to be consistent with each other.
 	if (identification.exercise.startDate >= identification.exercise.endDate) {
 		findings.push(

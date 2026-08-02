@@ -7,6 +7,7 @@ export {
 	ExpressionError,
 } from "./expression.js";
 export { TAXONOMY_MODULES } from "./generated/index.js";
+export { ENUMERATIONS } from "./generated/enumerations.js";
 
 export type { NbbFact, NbbFiling } from "./build.js";
 export type { NbbValidationResult } from "./validate.js";
@@ -16,6 +17,8 @@ export type {
 	CheckKind,
 	CheckVariable,
 	Datapoint,
+	EnumerationMember,
+	Enumerations,
 	TaxonomyModule,
 } from "./taxonomy.js";
 export type {

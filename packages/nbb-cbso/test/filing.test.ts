@@ -6,6 +6,7 @@ import {
 	renderNbbFiling,
 	validateNbbFiling,
 	ENTERPRISE_NUMBER_SCHEME,
+	ENUMERATIONS,
 } from "../src/index.js";
 import type { NbbFilingInput } from "../src/index.js";
 import { MICRO_FILING, withBalanceSheet } from "./filing.js";
@@ -471,7 +472,10 @@ describe("identification", () => {
 	);
 
 	it("leaves out the business court when there is none to report", () => {
-		const filing = buildNbbFiling(MICRO_FILING);
+		// Absent is invalid for a deposit, which `validateNbbFiling` reports; the
+		// builder still has to omit the fact rather than write an empty one.
+		const { businessCourt, ...entity } = MICRO_FILING.entity;
+		const filing = buildNbbFiling({ ...MICRO_FILING, entity });
 		expect(
 			filing.facts.some(
 				(fact) => fact.datapoint.dimensions["dim:bas"] === "bas:m32",
@@ -513,3 +517,29 @@ describe("check coverage", () => {
 });
 
 const MICRO_FILING_CHECK_COUNT = built().module.checks.length;
+
+describe("ENUMERATIONS", () => {
+	it("carries the business courts a filer picks from, labelled per language", () => {
+		const courts = ENUMERATIONS["cct"] ?? [];
+		// The two Brussels courts are the reason the court is a declaration at
+		// all: one address, two courts, and only the company knows which.
+		expect(courts.map((court) => court.code)).toEqual(
+			expect.arrayContaining(["m31", "m32"]),
+		);
+		expect(courts.find((court) => court.code === "m31")?.labels).toMatchObject({
+			fr: "Bruxelles, francophone",
+			nl: "Brussel, Franstalige",
+		});
+	});
+
+	it("labels every member in all four filing languages", () => {
+		for (const [name, members] of Object.entries(ENUMERATIONS)) {
+			for (const member of members) {
+				expect(
+					Object.keys(member.labels).sort(),
+					`${name}:${member.code}`,
+				).toEqual(["de", "en", "fr", "nl"]);
+			}
+		}
+	});
+});

@@ -22,6 +22,9 @@ export const MICRO_FILING: NbbFilingInput = {
 			postbox: "7",
 			postalCode: "5000",
 		},
+		// A mandatory mention: the filing application refuses a deposit without
+		// one. Namur, for the registered office above.
+		businessCourt: "m22",
 	},
 	identification: {
 		exercise: { startDate: "2025-01-01", endDate: "2025-12-31" },
