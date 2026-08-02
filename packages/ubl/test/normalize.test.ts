@@ -274,4 +274,80 @@ describe("normalizeUblResponse", () => {
 			expect(extra.buyer_reference).toBeNull();
 		});
 	});
+
+	describe("payable rounding (BT-114)", () => {
+		// Belgian cash rounding to the nearest 0.05. BR-CO-16:
+		// PayableAmount = TaxInclusiveAmount - PrepaidAmount + PayableRoundingAmount.
+		const invoiceXml = (monetaryTotal: string) => `<?xml version="1.0"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+	xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+	xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+	<cbc:ID>TICKET-1</cbc:ID>
+	<cbc:IssueDate>2026-08-02</cbc:IssueDate>
+	<cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+	<cac:AccountingSupplierParty><cac:Party><cac:PartyName><cbc:Name>Winkel</cbc:Name></cac:PartyName></cac:Party></cac:AccountingSupplierParty>
+	<cac:AccountingCustomerParty><cac:Party><cac:PartyName><cbc:Name>Klant</cbc:Name></cac:PartyName></cac:Party></cac:AccountingCustomerParty>
+	<cac:TaxTotal><cbc:TaxAmount currencyID="EUR">4.71</cbc:TaxAmount></cac:TaxTotal>
+	<cac:LegalMonetaryTotal>${monetaryTotal}</cac:LegalMonetaryTotal>
+</Invoice>`;
+
+		it("carries a rounded-up payable without inventing a prepayment", () => {
+			const { extracted } = normalizeUblResponse(
+				invoiceXml(`
+					<cbc:LineExtensionAmount currencyID="EUR">22.42</cbc:LineExtensionAmount>
+					<cbc:TaxExclusiveAmount currencyID="EUR">22.42</cbc:TaxExclusiveAmount>
+					<cbc:TaxInclusiveAmount currencyID="EUR">27.13</cbc:TaxInclusiveAmount>
+					<cbc:PayableRoundingAmount currencyID="EUR">0.02</cbc:PayableRoundingAmount>
+					<cbc:PayableAmount currencyID="EUR">27.15</cbc:PayableAmount>`),
+				"doc-up",
+			);
+			expect(extracted.invoice).toMatchObject({
+				total: 27.13,
+				amount_due: 27.15,
+				rounding_total: 0.02,
+				amount_paid: null,
+			});
+		});
+
+		it("does not read a rounded-down payable as a partial prepayment", () => {
+			const { extracted } = normalizeUblResponse(
+				invoiceXml(`
+					<cbc:LineExtensionAmount currencyID="EUR">22.42</cbc:LineExtensionAmount>
+					<cbc:TaxExclusiveAmount currencyID="EUR">22.42</cbc:TaxExclusiveAmount>
+					<cbc:TaxInclusiveAmount currencyID="EUR">27.17</cbc:TaxInclusiveAmount>
+					<cbc:PayableRoundingAmount currencyID="EUR">-0.02</cbc:PayableRoundingAmount>
+					<cbc:PayableAmount currencyID="EUR">27.15</cbc:PayableAmount>`),
+				"doc-down",
+			);
+			expect(extracted.invoice.rounding_total).toBe(-0.02);
+			expect(extracted.invoice.amount_paid).toBeNull();
+		});
+
+		it("infers a prepayment net of the rounding amount", () => {
+			const { extracted } = normalizeUblResponse(
+				invoiceXml(`
+					<cbc:LineExtensionAmount currencyID="EUR">22.42</cbc:LineExtensionAmount>
+					<cbc:TaxExclusiveAmount currencyID="EUR">22.42</cbc:TaxExclusiveAmount>
+					<cbc:TaxInclusiveAmount currencyID="EUR">27.13</cbc:TaxInclusiveAmount>
+					<cbc:PayableRoundingAmount currencyID="EUR">0.02</cbc:PayableRoundingAmount>
+					<cbc:PayableAmount currencyID="EUR">17.15</cbc:PayableAmount>`),
+				"doc-both",
+			);
+			// 10.00 was prepaid, not 9.98.
+			expect(extracted.invoice.amount_paid).toBe(10);
+		});
+
+		it("still infers a prepayment when no rounding is present", () => {
+			const { extracted } = normalizeUblResponse(
+				invoiceXml(`
+					<cbc:LineExtensionAmount currencyID="EUR">100.00</cbc:LineExtensionAmount>
+					<cbc:TaxExclusiveAmount currencyID="EUR">100.00</cbc:TaxExclusiveAmount>
+					<cbc:TaxInclusiveAmount currencyID="EUR">121.00</cbc:TaxInclusiveAmount>
+					<cbc:PayableAmount currencyID="EUR">21.00</cbc:PayableAmount>`),
+				"doc-plain",
+			);
+			expect(extracted.invoice.rounding_total).toBeNull();
+			expect(extracted.invoice.amount_paid).toBe(100);
+		});
+	});
 });

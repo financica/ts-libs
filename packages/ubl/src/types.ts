@@ -182,6 +182,8 @@ export interface InvoiceExtractionDTO {
 		amount_paid: number | null;
 		discount_total: number | null;
 		shipping_total: number | null;
+		/** EN 16931 BT-114, signed. Outside the VAT breakdown (BR-CO-16). */
+		rounding_total: number | null;
 		payment_terms: string | null;
 		po_number: string | null;
 		supplier: {

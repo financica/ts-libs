@@ -23,6 +23,8 @@ const normalizeText = (value?: string | null): string | null => {
 const toNumberOrNull = (value: number | null | undefined): number | null =>
 	Number.isFinite(value ?? Number.NaN) ? (value as number) : null;
 
+const roundToCents = (value: number): number => Math.round(value * 100) / 100;
+
 export const normalizeCurrency = (value?: string | null): string | null => {
 	if (!value) return null;
 	const trimmed = value.trim();
@@ -174,11 +176,20 @@ export const normalizeUblResponse = (
 		toNumberOrNull(ubl.monetaryTotal.payableAmount);
 	const amountDue = toNumberOrNull(ubl.monetaryTotal.payableAmount);
 	const prepaidAmount = toNumberOrNull(ubl.monetaryTotal.prepaidAmount);
+	const roundingAmount = toNumberOrNull(ubl.monetaryTotal.payableRoundingAmount) ?? 0;
+	// BR-CO-16: payable = total - prepaid + rounding. With no declared
+	// PrepaidAmount we invert that to infer what was paid, but the rounding
+	// term has to come out first — a cash-rounded payable (BT-114) is a
+	// total-vs-payable gap by design, and reading it as a prepayment reports
+	// an unpaid invoice as partially settled. Rounded before the sign test so
+	// the float residue of undoing it cannot pass as a sub-cent prepayment.
+	const inferredPaid =
+		total !== null && amountDue !== null
+			? roundToCents(total - (amountDue - roundingAmount))
+			: null;
 	const amountPaid =
 		prepaidAmount ??
-		(total !== null && amountDue !== null && total > amountDue
-			? toNumberOrNull(total - amountDue)
-			: null);
+		(inferredPaid !== null && inferredPaid > 0 ? inferredPaid : null);
 	const taxTotal = toNumberOrNull(sumTaxTotal(ubl));
 	const hasHeaderAllowanceCharges = (ubl.allowanceCharges?.length ?? 0) > 0;
 	const headerDiscountTotal = sumAllowanceChargesByType(ubl.allowanceCharges, false);
@@ -253,6 +264,7 @@ export const normalizeUblResponse = (
 			shipping_total:
 				toNumberOrNull(ubl.monetaryTotal.chargeTotalAmount) ??
 				(hasHeaderAllowanceCharges ? toNumberOrNull(headerChargeTotal) : null),
+			rounding_total: toNumberOrNull(ubl.monetaryTotal.payableRoundingAmount),
 			payment_terms: paymentTerms,
 			po_number: poNumber,
 			supplier: {
