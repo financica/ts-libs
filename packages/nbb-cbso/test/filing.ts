@@ -23,8 +23,8 @@ export const MICRO_FILING: NbbFilingInput = {
 			postalCode: "5000",
 		},
 		// A mandatory mention: the filing application refuses a deposit without
-		// one. Namur, for the registered office above.
-		businessCourt: "m22",
+		// one. Liège, division Namur, for the registered office above.
+		businessCourt: "m19",
 	},
 	identification: {
 		exercise: { startDate: "2025-01-01", endDate: "2025-12-31" },
