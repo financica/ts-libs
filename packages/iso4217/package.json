@@ -1,0 +1,81 @@
+{
+	"name": "@financica/iso4217",
+	"version": "0.1.0",
+	"description": "ISO 4217 currency codes, numeric codes, minor units, and entities — fully typed, zero dependencies, O(1) lookups.",
+	"keywords": [
+		"currencies",
+		"currency",
+		"currency-codes",
+		"finance",
+		"iso-4217",
+		"iso4217",
+		"money",
+		"typescript"
+	],
+	"homepage": "https://github.com/financica/iso4217",
+	"bugs": {
+		"url": "https://github.com/financica/iso4217/issues"
+	},
+	"license": "MIT",
+	"author": "Financica",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/financica/iso4217.git"
+	},
+	"files": [
+		"dist",
+		"src",
+		"!src/**/*.test.ts",
+		"CHANGELOG.md",
+		"LICENSE",
+		"README.md"
+	],
+	"type": "module",
+	"sideEffects": false,
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		},
+		"./historic": {
+			"types": "./dist/historic.d.ts",
+			"import": "./dist/historic.js",
+			"require": "./dist/historic.cjs"
+		},
+		"./package.json": "./package.json"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "tsdown",
+		"clean": "rm -rf dist",
+		"generate": "tsx scripts/generate.ts",
+		"fetch-data": "tsx scripts/fetch.ts",
+		"typecheck": "tsc --noEmit",
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"prepublishOnly": "npm run clean && npm run build && npm test"
+	},
+	"devDependencies": {
+		"@types/node": "^26.1.1",
+		"fast-xml-parser": "^5.10.0",
+		"oxfmt": "^0.58.0",
+		"oxlint": "^1.73.0",
+		"tsdown": "^0.22.5",
+		"tsx": "^4.23.0",
+		"typescript": "^7.0.2",
+		"vitest": "^4.1.10"
+	},
+	"engines": {
+		"node": ">=18"
+	}
+}
