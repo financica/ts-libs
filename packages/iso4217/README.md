@@ -28,12 +28,12 @@ Requires Node 18+.
 
 ```ts
 import {
-  getByCode,
-  getByNumericCode,
-  getByCountry,
-  formatAmount,
-  CURRENCIES,
-  PUBLISHED_AT,
+	getByCode,
+	getByNumericCode,
+	getByCountry,
+	formatAmount,
+	CURRENCIES,
+	PUBLISHED_AT,
 } from "@financica/iso4217";
 
 getByCode("USD");
@@ -70,9 +70,9 @@ PUBLISHED_AT; // "2026-01-01"
 import { isAlphabeticCode, isNumericCode, isCountryCode } from "@financica/iso4217";
 
 function logCurrency(code: string) {
-  if (!isAlphabeticCode(code)) return;
-  // `code` is now narrowed to AlphabeticCode.
-  console.log(getByCode(code)?.name);
+	if (!isAlphabeticCode(code)) return;
+	// `code` is now narrowed to AlphabeticCode.
+	console.log(getByCode(code)?.name);
 }
 ```
 
@@ -127,13 +127,13 @@ getHistoricByCode("ANG").map((c) => c.withdrawalDate);
 
 ```ts
 interface Currency {
-  readonly alphabeticCode: AlphabeticCode; // e.g. "USD"
-  readonly numericCode: NumericCode; // e.g. "840"
-  readonly minorUnits: number | null; // null for metals and N.A. codes
-  readonly name: string;
-  readonly countryCodes: readonly CountryCode[];
-  readonly isFund: boolean;
-  readonly kind: "fiat" | "fund" | "metal" | "special";
+	readonly alphabeticCode: AlphabeticCode; // e.g. "USD"
+	readonly numericCode: NumericCode; // e.g. "840"
+	readonly minorUnits: number | null; // null for metals and N.A. codes
+	readonly name: string;
+	readonly countryCodes: readonly CountryCode[];
+	readonly isFund: boolean;
+	readonly kind: "fiat" | "fund" | "metal" | "special";
 }
 
 type CurrencyKind = "fiat" | "fund" | "metal" | "special";

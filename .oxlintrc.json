@@ -1,0 +1,25 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"plugins": ["typescript", "unicorn", "oxc", "react"],
+	"categories": {
+		"correctness": "error",
+		"suspicious": "warn",
+		"perf": "warn"
+	},
+	"rules": {
+		"unicorn/no-array-sort": "off",
+		"react/react-in-jsx-scope": "off",
+		"react/no-array-index-key": "off"
+	},
+	"ignorePatterns": [
+		"**/dist",
+		"**/src/generated",
+		"packages/iso4217/src/codes.ts",
+		"packages/iso4217/src/data.ts",
+		"packages/iso4217/src/historic-data.ts",
+		"packages/nace-codes/examples",
+		"packages/ecb-client/examples",
+		"packages/facturx/src/render/fonts.ts",
+		"packages/facturx/src/pdf/icc.ts"
+	]
+}

@@ -474,7 +474,7 @@ describe("identification", () => {
 	it("leaves out the business court when there is none to report", () => {
 		// Absent is invalid for a deposit, which `validateNbbFiling` reports; the
 		// builder still has to omit the fact rather than write an empty one.
-		const { businessCourt, ...entity } = MICRO_FILING.entity;
+		const { businessCourt: _businessCourt, ...entity } = MICRO_FILING.entity;
 		const filing = buildNbbFiling({ ...MICRO_FILING, entity });
 		expect(
 			filing.facts.some(

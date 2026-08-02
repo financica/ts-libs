@@ -1,4 +1,4 @@
-# @ingram-tech/coda
+# @financica/coda
 
 TypeScript parser for [CODA](https://www.febelfin.be/en/expertise/electronic-banking/standards) (Coded statement of account) bank files. CODA is the Belgian standard (maintained by Febelfin) for electronic bank-to-customer account statements, used by all Belgian banks and widely supported across Europe.
 
@@ -7,13 +7,13 @@ Parses CODA v2.x files into fully typed objects. Returns `null` on invalid input
 ## Installation
 
 ```bash
-npm install @ingram-tech/coda
+npm install @financica/coda
 ```
 
 ## Usage
 
 ```typescript
-import { parseCoda } from "@ingram-tech/coda";
+import { parseCoda } from "@financica/coda";
 import { readFileSync } from "node:fs";
 
 const content = readFileSync("statement.cod", "utf-8");

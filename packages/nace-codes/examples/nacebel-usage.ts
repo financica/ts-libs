@@ -1,4 +1,4 @@
-import { NACEBEL } from "nace-codes/nacebel";
+import { NACEBEL } from "@financica/nace-codes/nacebel";
 
 // Initialize NACEBEL classifier
 const nacebel = new NACEBEL();

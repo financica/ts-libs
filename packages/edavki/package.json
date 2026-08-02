@@ -2,10 +2,13 @@
 	"name": "@financica/edavki",
 	"version": "0.1.0",
 	"description": "TypeScript toolkit for Slovenian eDavki (FURS) tax documents: build and serialize the DDV-O VAT return as schema-faithful EDP XML.",
+	"homepage": "https://github.com/financica/ts-libs/tree/main/packages/edavki#readme",
+	"bugs": "https://github.com/financica/ts-libs/issues",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/financica/edavki-ts.git"
+		"url": "git+https://github.com/financica/ts-libs.git",
+		"directory": "packages/edavki"
 	},
 	"files": [
 		"dist",
@@ -24,26 +27,27 @@
 			"types": "./dist/ddv-o/index.d.ts"
 		}
 	},
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {
 		"build": "tsdown",
-		"prepack": "bun run build",
+		"clean": "rm -rf dist",
+		"typecheck": "tsc --noEmit",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
-		"type-check": "tsc --noEmit",
-		"test": "vitest",
-		"test:run": "vitest --run",
-		"test:coverage": "vitest --coverage",
-		"ci": "bun run type-check && bun run lint && bun run test:run && bun run build"
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"ci": "bun run lint && bun run format:check && bun run build && bun run typecheck && bun run test",
+		"prepack": "bun run build"
 	},
 	"devDependencies": {
-		"@types/node": "^26.1.1",
-		"fast-xml-parser": "^5.10.0",
-		"oxfmt": "^0.58.0",
-		"oxlint": "^1.73.0",
-		"tsdown": "^0.22.5",
-		"typescript": "^7.0.2",
-		"vitest": "^4.1.10"
+		"fast-xml-parser": "^5.10.1"
+	},
+	"engines": {
+		"node": ">=24"
 	}
 }

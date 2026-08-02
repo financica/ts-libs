@@ -1,4 +1,4 @@
-import { NACE } from "nace-codes";
+import { NACE } from "@financica/nace-codes";
 
 // Initialize NACE classifier
 const nace = new NACE();

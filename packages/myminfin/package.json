@@ -1,8 +1,15 @@
 {
-	"name": "@ingram-tech/myminfin",
+	"name": "@financica/myminfin",
 	"version": "0.7.0",
 	"description": "TypeScript client and document generators for the Belgian SPF Finances MyMinFin and Intervat APIs",
+	"homepage": "https://github.com/financica/ts-libs/tree/main/packages/myminfin#readme",
+	"bugs": "https://github.com/financica/ts-libs/issues",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/financica/ts-libs.git",
+		"directory": "packages/myminfin"
+	},
 	"files": [
 		"dist"
 	],
@@ -15,29 +22,30 @@
 			"types": "./dist/index.d.ts"
 		}
 	},
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {
 		"build": "tsdown",
-		"prepack": "bun run build",
+		"clean": "rm -rf dist",
+		"typecheck": "tsc --noEmit",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
-		"type-check": "tsc --noEmit",
-		"test": "vitest",
-		"test:run": "vitest --run",
-		"test:coverage": "vitest --coverage",
-		"ci": "bun run type-check && bun run lint && bun run test:run && bun run build"
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"ci": "bun run lint && bun run format:check && bun run build && bun run typecheck && bun run test",
+		"prepack": "bun run build"
 	},
 	"dependencies": {
 		"jose": "^6.2.3"
 	},
 	"devDependencies": {
-		"@types/node": "^26.1.1",
-		"fast-xml-parser": "^5.10.0",
-		"oxfmt": "^0.58.0",
-		"oxlint": "^1.73.0",
-		"tsdown": "^0.22.5",
-		"typescript": "^7.0.2",
-		"vitest": "^4.1.10"
+		"fast-xml-parser": "^5.10.1"
+	},
+	"engines": {
+		"node": ">=24"
 	}
 }

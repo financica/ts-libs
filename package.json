@@ -1,0 +1,43 @@
+{
+	"name": "@financica/ts-libs",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Financica's TypeScript libraries for European e-invoicing, accounting and financial data standards.",
+	"homepage": "https://github.com/financica/ts-libs#readme",
+	"bugs": "https://github.com/financica/ts-libs/issues",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/financica/ts-libs.git"
+	},
+	"workspaces": [
+		"packages/*"
+	],
+	"type": "module",
+	"scripts": {
+		"build": "bun run --filter '*' build",
+		"clean": "bun run --filter '*' clean",
+		"typecheck": "bun run --filter '*' typecheck",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check",
+		"ci": "bun run lint && bun run format:check && bun run build && bun run typecheck && bun run test"
+	},
+	"devDependencies": {
+		"@types/node": "^26.1.1",
+		"@vitest/coverage-v8": "^4.1.10",
+		"oxfmt": "^0.58.0",
+		"oxlint": "^1.73.0",
+		"tsdown": "^0.22.5",
+		"typescript": "^7.0.2",
+		"vitest": "^4.1.10"
+	},
+	"engines": {
+		"node": ">=24"
+	},
+	"packageManager": "bun@1.3.14"
+}

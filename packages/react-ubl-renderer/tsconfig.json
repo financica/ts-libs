@@ -1,23 +1,8 @@
 {
+	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
-		"target": "ESNext",
-		"lib": ["ESNext", "DOM", "DOM.Iterable"],
-		"module": "ESNext",
-		"moduleResolution": "bundler",
 		"jsx": "react-jsx",
-		"types": ["node"],
-		"strict": true,
-		"noUncheckedIndexedAccess": true,
-		"forceConsistentCasingInFileNames": true,
-		"esModuleInterop": true,
-		"isolatedModules": true,
-		"resolveJsonModule": true,
-		"declaration": true,
-		"declarationMap": true,
-		"sourceMap": true,
-		"outDir": "./dist",
-		"skipLibCheck": true,
-		"noEmit": true
+		"lib": ["ESNext", "DOM", "DOM.Iterable"]
 	},
 	"include": ["src/**/*.ts", "src/**/*.tsx"],
 	"exclude": ["node_modules", "dist"]

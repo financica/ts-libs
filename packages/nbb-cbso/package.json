@@ -13,15 +13,14 @@
 		"typescript",
 		"xbrl"
 	],
-	"homepage": "https://github.com/financica/nbb-cbso#readme",
-	"bugs": {
-		"url": "https://github.com/financica/nbb-cbso/issues"
-	},
+	"homepage": "https://github.com/financica/ts-libs/tree/main/packages/nbb-cbso#readme",
+	"bugs": "https://github.com/financica/ts-libs/issues",
 	"license": "MIT",
 	"author": "Financica",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/financica/nbb-cbso.git"
+		"url": "git+https://github.com/financica/ts-libs.git",
+		"directory": "packages/nbb-cbso"
 	},
 	"files": [
 		"dist",
@@ -48,29 +47,24 @@
 	"scripts": {
 		"build": "tsdown",
 		"clean": "rm -rf dist",
+		"typecheck": "tsc --noEmit",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
-		"typecheck": "tsc --noEmit",
 		"test": "vitest run",
 		"test:watch": "vitest",
-		"ci": "bun run typecheck && bun run lint && bun run test && bun run build",
-		"prepublishOnly": "bun run clean && bun run build"
+		"test:coverage": "vitest run --coverage",
+		"ci": "bun run lint && bun run format:check && bun run build && bun run typecheck && bun run test",
+		"prepack": "bun run build"
 	},
 	"dependencies": {
-		"@financica/xbrl": "^0.2.0"
+		"@financica/xbrl": "workspace:*"
 	},
 	"devDependencies": {
-		"@types/node": "^26.1.1",
-		"fast-xml-parser": "^5.10.1",
-		"oxfmt": "^0.58.0",
-		"oxlint": "^1.73.0",
-		"tsdown": "^0.22.5",
-		"typescript": "^7.0.2",
-		"vitest": "^4.1.10"
+		"fast-xml-parser": "^5.10.1"
 	},
 	"engines": {
-		"node": ">=18"
+		"node": ">=24"
 	}
 }

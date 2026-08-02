@@ -2,7 +2,14 @@
 	"name": "@financica/xbrl",
 	"version": "0.2.0",
 	"description": "TypeScript parser for XBRL 2.1 instance documents",
+	"homepage": "https://github.com/financica/ts-libs/tree/main/packages/xbrl#readme",
+	"bugs": "https://github.com/financica/ts-libs/issues",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/financica/ts-libs.git",
+		"directory": "packages/xbrl"
+	},
 	"files": [
 		"dist",
 		"docs"
@@ -16,29 +23,27 @@
 			"import": "./dist/index.js"
 		}
 	},
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {
 		"build": "tsdown",
 		"clean": "rm -rf dist",
-		"test": "vitest run",
-		"test:watch": "vitest",
-		"test:coverage": "vitest run --coverage",
+		"typecheck": "tsc --noEmit",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
-		"typecheck": "tsc --noEmit",
-		"ci": "bun run typecheck && bun run lint && bun run test && bun run build",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"ci": "bun run lint && bun run format:check && bun run build && bun run typecheck && bun run test",
 		"prepack": "bun run build"
 	},
 	"dependencies": {
-		"fast-xml-parser": "^5.10.0"
+		"fast-xml-parser": "^5.10.1"
 	},
-	"devDependencies": {
-		"@types/node": "^26.1.1",
-		"oxfmt": "^0.58.0",
-		"oxlint": "^1.73.0",
-		"tsdown": "^0.22.5",
-		"typescript": "^7.0.2",
-		"vitest": "^4.1.10"
+	"engines": {
+		"node": ">=24"
 	}
 }

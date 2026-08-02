@@ -19,15 +19,15 @@ That QR is a compact JWS (RS256) signed by the IRP. It attests to ten header
 fields, which makes it the one part of an Indian invoice PDF you can trust
 without trusting the sender:
 
-| QR field | Meaning |
-| --- | --- |
-| `SellerGstin` | Supplier GSTIN |
-| `BuyerGstin` | Buyer GSTIN, or `URP` if unregistered / an export |
-| `DocNo`, `DocTyp`, `DocDt` | Document number, type (`INV`/`CRN`/`DBN`), date |
-| `TotInvVal` | Total including tax, INR |
-| `ItemCnt` | Line count |
-| `MainHsnCode` | HSN/SAC of the highest-value line |
-| `Irn`, `IrnDt` | The IRN and when it was minted |
+| QR field                   | Meaning                                           |
+| -------------------------- | ------------------------------------------------- |
+| `SellerGstin`              | Supplier GSTIN                                    |
+| `BuyerGstin`               | Buyer GSTIN, or `URP` if unregistered / an export |
+| `DocNo`, `DocTyp`, `DocDt` | Document number, type (`INV`/`CRN`/`DBN`), date   |
+| `TotInvVal`                | Total including tax, INR                          |
+| `ItemCnt`                  | Line count                                        |
+| `MainHsnCode`              | HSN/SAC of the highest-value line                 |
+| `Irn`, `IrnDt`             | The IRN and when it was minted                    |
 
 **It is not an embedded document.** Unlike Factur-X or ZUGFeRD you cannot
 reconstruct the invoice from it, only confirm that the IRP saw those ten values.
@@ -64,14 +64,14 @@ bytes, so re-encoding it breaks verification.
 
 `signatureVerification` distinguishes outcomes that a `false` would flatten:
 
-| Status | Meaning |
-| --- | --- |
-| `verified` | A supplied certificate cryptographically verified it. |
-| `invalid_signature` | We hold the signer's certificate and the signature does not check out. Treat as forged or corrupted. |
-| `unknown_key` | The header names a signer we hold no certificate for. **We could not check** — not evidence of anything. |
-| `not_checked` | No certificates supplied. |
-| `unsupported_algorithm` | The header asked for something other than RS256. |
-| `certificate_expired` | The matched certificate was outside its validity window at `at`. |
+| Status                  | Meaning                                                                                                  |
+| ----------------------- | -------------------------------------------------------------------------------------------------------- |
+| `verified`              | A supplied certificate cryptographically verified it.                                                    |
+| `invalid_signature`     | We hold the signer's certificate and the signature does not check out. Treat as forged or corrupted.     |
+| `unknown_key`           | The header names a signer we hold no certificate for. **We could not check** — not evidence of anything. |
+| `not_checked`           | No certificates supplied.                                                                                |
+| `unsupported_algorithm` | The header asked for something other than RS256.                                                         |
+| `certificate_expired`   | The matched certificate was outside its validity window at `at`.                                         |
 
 `verified` is true only after a real cryptographic check passed, so gating on it
 directly is safe.
@@ -81,8 +81,8 @@ directly is safe.
 **No certificates are bundled, on purpose.** Six IRPs are authorised (NIC's two
 plus IRIS, Cygnet, Clear and EY), each signs with its own key, and those keys
 rotate. A bundled list goes stale silently, and the failure mode is the bad one:
-an invoice cleared through an IRP you have no key for looks *forged* rather than
-*uncheckable*. So you supply the certificates you trust and decide how to
+an invoice cleared through an IRP you have no key for looks _forged_ rather than
+_uncheckable_. So you supply the certificates you trust and decide how to
 refresh them.
 
 Selection is by SHA-1 thumbprint: the JWS header carries it as `kid` (uppercase
@@ -135,7 +135,11 @@ exact comparison. Amounts use a `±0.01` tolerance by default.
 ## GSTIN utilities
 
 ```ts
-import { isValidGstin, parseGstin, isSameLegalEntity } from "@financica/gst-einvoice-qr";
+import {
+	isValidGstin,
+	parseGstin,
+	isSameLegalEntity,
+} from "@financica/gst-einvoice-qr";
 
 isValidGstin("27AAPFU0939F1ZV"); // true — format and base-36 checksum
 parseGstin("27AAPFU0939F1ZV");

@@ -2,14 +2,13 @@
 	"name": "@financica/ubl",
 	"version": "0.12.0",
 	"description": "UBL (Universal Business Language) invoice toolkit for TypeScript: parse, build, and serialize Peppol BIS Billing 3.0 documents.",
-	"homepage": "https://github.com/financica/ubl-ts#readme",
-	"bugs": {
-		"url": "https://github.com/financica/ubl-ts/issues"
-	},
+	"homepage": "https://github.com/financica/ts-libs/tree/main/packages/ubl#readme",
+	"bugs": "https://github.com/financica/ts-libs/issues",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/financica/ubl-ts.git"
+		"url": "git+https://github.com/financica/ts-libs.git",
+		"directory": "packages/ubl"
 	},
 	"files": [
 		"dist"
@@ -27,28 +26,27 @@
 			"import": "./dist/build/index.js"
 		}
 	},
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {
 		"build": "tsdown",
-		"prepack": "npm run build",
+		"clean": "rm -rf dist",
+		"typecheck": "tsc --noEmit",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
-		"type-check": "tsc --noEmit",
-		"test": "vitest",
-		"test:run": "vitest --run",
-		"test:coverage": "vitest --coverage",
-		"ci": "npm run type-check && npm run lint && npm run test:run && npm run build"
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"ci": "bun run lint && bun run format:check && bun run build && bun run typecheck && bun run test",
+		"prepack": "bun run build"
 	},
 	"dependencies": {
 		"@xmldom/xmldom": "^0.9.10"
 	},
-	"devDependencies": {
-		"@types/node": "^26.1.1",
-		"oxfmt": "^0.58.0",
-		"oxlint": "^1.73.0",
-		"tsdown": "^0.22.5",
-		"typescript": "^7.0.2",
-		"vitest": "^4.1.10"
+	"engines": {
+		"node": ">=24"
 	}
 }

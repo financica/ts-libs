@@ -14,15 +14,14 @@
 		"reference-rates",
 		"typescript"
 	],
-	"homepage": "https://github.com/financica/ecb-client#readme",
-	"bugs": {
-		"url": "https://github.com/financica/ecb-client/issues"
-	},
+	"homepage": "https://github.com/financica/ts-libs/tree/main/packages/ecb-client#readme",
+	"bugs": "https://github.com/financica/ts-libs/issues",
 	"license": "MIT",
 	"author": "Financica",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/financica/ecb-client.git"
+		"url": "git+https://github.com/financica/ts-libs.git",
+		"directory": "packages/ecb-client"
 	},
 	"files": [
 		"dist",
@@ -51,25 +50,18 @@
 	"scripts": {
 		"build": "tsdown",
 		"clean": "rm -rf dist",
+		"typecheck": "tsc --noEmit",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
-		"type-check": "tsc --noEmit",
 		"test": "vitest run",
 		"test:watch": "vitest",
-		"ci": "bun run type-check && bun run lint && bun run test && bun run build",
-		"prepublishOnly": "bun run clean && bun run build && bun run test"
-	},
-	"devDependencies": {
-		"@types/node": "^26.1.1",
-		"oxfmt": "^0.58.0",
-		"oxlint": "^1.73.0",
-		"tsdown": "^0.22.5",
-		"typescript": "^7.0.2",
-		"vitest": "^4.1.10"
+		"test:coverage": "vitest run --coverage",
+		"ci": "bun run lint && bun run format:check && bun run build && bun run typecheck && bun run test",
+		"prepack": "bun run build"
 	},
 	"engines": {
-		"node": ">=18"
+		"node": ">=24"
 	}
 }

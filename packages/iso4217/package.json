@@ -12,15 +12,14 @@
 		"money",
 		"typescript"
 	],
-	"homepage": "https://github.com/financica/iso4217",
-	"bugs": {
-		"url": "https://github.com/financica/iso4217/issues"
-	},
+	"homepage": "https://github.com/financica/ts-libs/tree/main/packages/iso4217#readme",
+	"bugs": "https://github.com/financica/ts-libs/issues",
 	"license": "MIT",
 	"author": "Financica",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/financica/iso4217.git"
+		"url": "git+https://github.com/financica/ts-libs.git",
+		"directory": "packages/iso4217"
 	},
 	"files": [
 		"dist",
@@ -52,10 +51,10 @@
 		"access": "public"
 	},
 	"scripts": {
-		"build": "tsdown",
-		"clean": "rm -rf dist",
 		"generate": "tsx scripts/generate.ts",
 		"fetch-data": "tsx scripts/fetch.ts",
+		"build": "tsdown",
+		"clean": "rm -rf dist",
 		"typecheck": "tsc --noEmit",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
@@ -63,19 +62,15 @@
 		"format:check": "oxfmt --check",
 		"test": "vitest run",
 		"test:watch": "vitest",
-		"prepublishOnly": "npm run clean && npm run build && npm test"
+		"test:coverage": "vitest run --coverage",
+		"ci": "bun run lint && bun run format:check && bun run build && bun run typecheck && bun run test",
+		"prepack": "bun run build"
 	},
 	"devDependencies": {
-		"@types/node": "^26.1.1",
-		"fast-xml-parser": "^5.10.0",
-		"oxfmt": "^0.58.0",
-		"oxlint": "^1.73.0",
-		"tsdown": "^0.22.5",
-		"tsx": "^4.23.0",
-		"typescript": "^7.0.2",
-		"vitest": "^4.1.10"
+		"fast-xml-parser": "^5.10.1",
+		"tsx": "^4.23.0"
 	},
 	"engines": {
-		"node": ">=18"
+		"node": ">=24"
 	}
 }

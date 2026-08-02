@@ -1,4 +1,4 @@
-# @ingram-tech/myminfin
+# @financica/myminfin
 
 TypeScript client for the Belgian SPF Finances MyMinFin and Intervat APIs.
 
@@ -11,7 +11,7 @@ Provides typed access to:
 ## Installation
 
 ```sh
-npm install @ingram-tech/myminfin
+npm install @financica/myminfin
 ```
 
 Requires Node.js 20+ (uses native `fetch` and `crypto`).
@@ -32,7 +32,7 @@ You need:
 ### Step 1: Build the authorization URL
 
 ```ts
-import { MyMinFinAuth } from "@ingram-tech/myminfin";
+import { MyMinFinAuth } from "@financica/myminfin";
 
 const auth = new MyMinFinAuth({
 	clientId: "YourClientId",
@@ -85,7 +85,7 @@ const newTokens = await auth.refreshToken({
 Search and download documents available on MyMinFin for companies you have mandates for.
 
 ```ts
-import { MyMinFinClient } from "@ingram-tech/myminfin";
+import { MyMinFinClient } from "@financica/myminfin";
 
 const client = new MyMinFinClient({
 	accessToken: tokens.accessToken,
@@ -144,7 +144,7 @@ const { content } = await client.downloadDocument(
 Submit VAT returns in XML format conforming to the Intervat XSD.
 
 ```ts
-import { IntervatClient } from "@ingram-tech/myminfin";
+import { IntervatClient } from "@financica/myminfin";
 import { readFileSync } from "fs";
 
 const intervat = new IntervatClient({
@@ -183,7 +183,7 @@ const receiptDocs = await client.searchDocuments({
 All API errors throw `MyMinFinApiError` with structured problem details:
 
 ```ts
-import { MyMinFinApiError } from "@ingram-tech/myminfin";
+import { MyMinFinApiError } from "@financica/myminfin";
 
 try {
 	await client.searchDocuments({ since: "2020-01-01" });
@@ -242,7 +242,7 @@ import {
 	issuerUrl,
 	myminfinDocumentsUrl,
 	intervatVatUrl,
-} from "@ingram-tech/myminfin";
+} from "@financica/myminfin";
 
 console.log(discoveryUrl("test"));
 // https://fediamapi-a.minfin.be/sso/oauth2/.well-known/openid-configuration
@@ -252,11 +252,11 @@ console.log(discoveryUrl("test"));
 
 ### `MyMinFinAuth`
 
-| Method                        | Parameters                            | Returns                               |
-| ----------------------------- | ------------------------------------- | ------------------------------------- |
+| Method                        | Parameters                            | Returns                                        |
+| ----------------------------- | ------------------------------------- | ---------------------------------------------- |
 | `getAuthorizationUrl(params)` | `{ ecb, scopes? }`                    | `Promise<{ url, state, nonce, codeVerifier }>` |
-| `exchangeCode(params)`        | `{ code, codeVerifier, redirectUri }` | `Promise<TokenSet>`                   |
-| `refreshToken(params)`        | `{ refreshToken }`                    | `Promise<TokenSet>`                   |
+| `exchangeCode(params)`        | `{ code, codeVerifier, redirectUri }` | `Promise<TokenSet>`                            |
+| `refreshToken(params)`        | `{ refreshToken }`                    | `Promise<TokenSet>`                            |
 
 ### `MyMinFinClient`
 
@@ -297,7 +297,7 @@ testable and can run anywhere.
 and a refund is requested automatically when in credit.
 
 ```ts
-import { buildBelgianVatReturn } from "@ingram-tech/myminfin";
+import { buildBelgianVatReturn } from "@financica/myminfin";
 
 const { xml, grid, warnings } = buildBelgianVatReturn({
 	declarant: { vatNumber: "BE0806.153.934", name: "Acme BV", countryCode: "BE" },
@@ -323,7 +323,7 @@ the grid.
 ### Annual client listing
 
 ```ts
-import { generateClientListingXml } from "@ingram-tech/myminfin";
+import { generateClientListingXml } from "@financica/myminfin";
 
 const xml = generateClientListingXml({
 	declarant: { vatNumber: "0806153934", name: "Acme BV", countryCode: "BE" },

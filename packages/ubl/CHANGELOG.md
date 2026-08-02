@@ -8,7 +8,7 @@
 
 ### Fixed
 
-- **A rounded payable is no longer mistaken for a prepayment.** With no declared `cbc:PrepaidAmount`, `amount_paid` was inferred from any `TaxInclusiveAmount > PayableAmount` gap — but under BR-CO-16 a rounding amount is exactly such a gap by design. An invoice rounded *down* (27.17 → 27.15, the Belgian nearest-0.05 cash rule) imported as 0.02 already paid, reporting an untouched invoice as partially settled; one rounded *up* left the total and the amount due disagreeing with nothing to explain it. The rounding term is now removed before the inference, and the result is rounded to cents before the sign test so the float residue of undoing it cannot pass as a sub-cent prepayment. A declared `PrepaidAmount` is still authoritative and is untouched.
+- **A rounded payable is no longer mistaken for a prepayment.** With no declared `cbc:PrepaidAmount`, `amount_paid` was inferred from any `TaxInclusiveAmount > PayableAmount` gap — but under BR-CO-16 a rounding amount is exactly such a gap by design. An invoice rounded _down_ (27.17 → 27.15, the Belgian nearest-0.05 cash rule) imported as 0.02 already paid, reporting an untouched invoice as partially settled; one rounded _up_ left the total and the amount due disagreeing with nothing to explain it. The rounding term is now removed before the inference, and the result is rounded to cents before the sign test so the float residue of undoing it cannot pass as a sub-cent prepayment. A declared `PrepaidAmount` is still authoritative and is untouched.
 
 ## 0.11.0
 

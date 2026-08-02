@@ -13,15 +13,14 @@
 		"pcmn",
 		"typescript"
 	],
-	"homepage": "https://github.com/financica/pcmn#readme",
-	"bugs": {
-		"url": "https://github.com/financica/pcmn/issues"
-	},
+	"homepage": "https://github.com/financica/ts-libs/tree/main/packages/pcmn#readme",
+	"bugs": "https://github.com/financica/ts-libs/issues",
 	"license": "MIT",
 	"author": "Financica",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/financica/pcmn.git"
+		"url": "git+https://github.com/financica/ts-libs.git",
+		"directory": "packages/pcmn"
 	},
 	"files": [
 		"dist",
@@ -50,26 +49,18 @@
 	"scripts": {
 		"build": "tsdown",
 		"clean": "rm -rf dist",
+		"typecheck": "tsc --noEmit",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
-		"type-check": "tsc --noEmit",
-		"typecheck": "tsc --noEmit",
 		"test": "vitest run",
 		"test:watch": "vitest",
-		"ci": "npm run typecheck && npm run lint && npm run test && npm run build",
-		"prepublishOnly": "npm run clean && npm run build && npm test"
-	},
-	"devDependencies": {
-		"@types/node": "^26.1.1",
-		"oxfmt": "^0.58.0",
-		"oxlint": "^1.73.0",
-		"tsdown": "^0.22.5",
-		"typescript": "^7.0.2",
-		"vitest": "^4.1.10"
+		"test:coverage": "vitest run --coverage",
+		"ci": "bun run lint && bun run format:check && bun run build && bun run typecheck && bun run test",
+		"prepack": "bun run build"
 	},
 	"engines": {
-		"node": ">=18"
+		"node": ">=24"
 	}
 }

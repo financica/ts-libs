@@ -1,8 +1,15 @@
 {
-	"name": "@ingram-tech/camt053",
+	"name": "@financica/camt053",
 	"version": "0.1.0",
 	"description": "TypeScript parser for ISO 20022 CAMT.053 (Bank-to-Customer Statement) XML",
+	"homepage": "https://github.com/financica/ts-libs/tree/main/packages/camt053#readme",
+	"bugs": "https://github.com/financica/ts-libs/issues",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/financica/ts-libs.git",
+		"directory": "packages/camt053"
+	},
 	"files": [
 		"dist"
 	],
@@ -15,28 +22,27 @@
 			"types": "./dist/index.d.ts"
 		}
 	},
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {
 		"build": "tsdown",
-		"prepack": "bun run build",
+		"clean": "rm -rf dist",
+		"typecheck": "tsc --noEmit",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
-		"type-check": "tsc --noEmit",
-		"test": "vitest",
-		"test:run": "vitest --run",
-		"test:coverage": "vitest --coverage",
-		"ci": "bun run type-check && bun run lint && bun run test:run && bun run build"
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"ci": "bun run lint && bun run format:check && bun run build && bun run typecheck && bun run test",
+		"prepack": "bun run build"
 	},
 	"dependencies": {
-		"fast-xml-parser": "^5.10.0"
+		"fast-xml-parser": "^5.10.1"
 	},
-	"devDependencies": {
-		"@types/node": "^26.1.1",
-		"oxfmt": "^0.58.0",
-		"oxlint": "^1.73.0",
-		"tsdown": "^0.22.5",
-		"typescript": "^7.0.2",
-		"vitest": "^4.1.10"
+	"engines": {
+		"node": ">=24"
 	}
 }

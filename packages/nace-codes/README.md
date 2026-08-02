@@ -36,8 +36,8 @@ bundles the NACE core data plus the Belgian delta.
 ## Quick Start
 
 ```typescript
-import { NACE } from "nace-codes";
-import { NACEBEL } from "nace-codes/nacebel";
+import { NACE } from "@financica/nace-codes";
+import { NACEBEL } from "@financica/nace-codes/nacebel";
 
 // Initialize the NACE classifier
 const nace = new NACE();

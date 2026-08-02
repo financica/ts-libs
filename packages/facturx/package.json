@@ -15,15 +15,14 @@
 		"xrechnung",
 		"zugferd"
 	],
-	"homepage": "https://github.com/financica/facturx-ts#readme",
-	"bugs": {
-		"url": "https://github.com/financica/facturx-ts/issues"
-	},
+	"homepage": "https://github.com/financica/ts-libs/tree/main/packages/facturx#readme",
+	"bugs": "https://github.com/financica/ts-libs/issues",
 	"license": "MIT",
 	"author": "Financica",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/financica/facturx-ts.git"
+		"url": "git+https://github.com/financica/ts-libs.git",
+		"directory": "packages/facturx"
 	},
 	"files": [
 		"dist",
@@ -64,32 +63,23 @@
 	"scripts": {
 		"build": "tsdown",
 		"clean": "rm -rf dist",
+		"typecheck": "tsc --noEmit",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
-		"type-check": "tsc --noEmit",
-		"test": "vitest",
-		"test:run": "vitest --run",
-		"test:coverage": "vitest --coverage",
-		"ci": "npm run type-check && npm run lint && npm run test:run && npm run build",
-		"prepack": "npm run build",
-		"prepublishOnly": "npm run ci"
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"ci": "bun run lint && bun run format:check && bun run build && bun run typecheck && bun run test",
+		"prepack": "bun run build"
 	},
 	"dependencies": {
-		"@cantoo/pdf-lib": "^2.7.2",
+		"@cantoo/pdf-lib": "~2.7.2",
 		"@pdf-lib/fontkit": "^1.1.1",
-		"fast-xml-parser": "^5.10.0"
-	},
-	"devDependencies": {
-		"@types/node": "^26.1.1",
-		"oxfmt": "^0.58.0",
-		"oxlint": "^1.73.0",
-		"tsdown": "^0.22.5",
-		"typescript": "^7.0.2",
-		"vitest": "^4.1.10"
+		"fast-xml-parser": "^5.10.1"
 	},
 	"engines": {
-		"node": ">=18"
+		"node": ">=24"
 	}
 }

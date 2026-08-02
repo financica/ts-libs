@@ -7,7 +7,7 @@ serialize it as schema-faithful [EDP](https://edavki.durs.si/) XML, either
 standalone or wrapped in a full submission envelope, for **manual import** into
 the eDavki portal.
 
-It is the Slovenian counterpart to `@ingram-tech/myminfin` (Belgian SPF Finances
+It is the Slovenian counterpart to `@financica/myminfin` (Belgian SPF Finances
 / Intervat) and follows the same shape as the other `@financica/*` format
 libraries (`ubl`, `coda`, `camt053`).
 

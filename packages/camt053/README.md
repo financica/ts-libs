@@ -1,17 +1,17 @@
-# @ingram-tech/camt053
+# @financica/camt053
 
 TypeScript parser for [ISO 20022](https://www.iso20022.org/) CAMT.053 (Bank-to-Customer Statement) XML documents. Parses CAMT.053.001.x (any version) into fully typed objects, extracting every data element from the standard.
 
 ## Installation
 
 ```bash
-npm install @ingram-tech/camt053
+npm install @financica/camt053
 ```
 
 ## Usage
 
 ```typescript
-import { parseCamt053 } from "@ingram-tech/camt053";
+import { parseCamt053 } from "@financica/camt053";
 
 const xml = fs.readFileSync("statement.xml", "utf8");
 const report = parseCamt053(xml);
