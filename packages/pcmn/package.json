@@ -1,0 +1,75 @@
+{
+	"name": "@financica/pcmn",
+	"version": "0.3.1",
+	"description": "Zero-dependency Belgian PCMN (Plan Comptable Minimum Normalisé) class taxonomy: maps income-statement and fixed-asset account classes to economic categories, with the statutory director-remuneration (618) rule.",
+	"keywords": [
+		"accounting",
+		"belgian",
+		"belgium",
+		"bookkeeping",
+		"chart-of-accounts",
+		"income-statement",
+		"minimum-normalise",
+		"pcmn",
+		"typescript"
+	],
+	"homepage": "https://github.com/financica/pcmn#readme",
+	"bugs": {
+		"url": "https://github.com/financica/pcmn/issues"
+	},
+	"license": "MIT",
+	"author": "Financica",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/financica/pcmn.git"
+	},
+	"files": [
+		"dist",
+		"src",
+		"!src/**/*.test.ts",
+		"CHANGELOG.md",
+		"LICENSE",
+		"README.md"
+	],
+	"type": "module",
+	"sideEffects": false,
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		},
+		"./package.json": "./package.json"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "tsdown",
+		"clean": "rm -rf dist",
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check",
+		"type-check": "tsc --noEmit",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"ci": "npm run typecheck && npm run lint && npm run test && npm run build",
+		"prepublishOnly": "npm run clean && npm run build && npm test"
+	},
+	"devDependencies": {
+		"@types/node": "^26.1.1",
+		"oxfmt": "^0.58.0",
+		"oxlint": "^1.73.0",
+		"tsdown": "^0.22.5",
+		"typescript": "^7.0.2",
+		"vitest": "^4.1.10"
+	},
+	"engines": {
+		"node": ">=18"
+	}
+}
