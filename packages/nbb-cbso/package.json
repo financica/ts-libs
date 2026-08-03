@@ -59,7 +59,7 @@
 		"prepack": "bun run build"
 	},
 	"dependencies": {
-		"@financica/xbrl": "workspace:*"
+		"@financica/xbrl": "^0.2.0"
 	},
 	"devDependencies": {
 		"fast-xml-parser": "^5.10.1"

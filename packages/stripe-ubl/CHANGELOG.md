@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2
+
+### Changed
+
+- **`@financica/ubl` requirement widened to `^0.12.0`.** The 1.0.1 range was `^0.11.0`, which on a 0.x line excludes 0.12.0 entirely, so consumers were pinned to 0.11.x and could not pick up its fix: with no declared `cbc:PrepaidAmount`, a cash-rounded payable (the Belgian nearest-0.05 rule) was inferred as a partial prepayment, importing an untouched invoice as already partly settled. Nothing in this package's own behaviour changes.
+
 ## 1.0.1
 
 ### Fixed
