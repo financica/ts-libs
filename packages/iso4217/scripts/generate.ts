@@ -17,11 +17,13 @@
  * map to `null` in `./iso-3166.ts` and are stripped.
  */
 
+import { existsSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { XMLParser } from "fast-xml-parser";
+import { type FormatConfig, format } from "oxfmt";
 
 import { ENTITY_TO_COUNTRY_CODE } from "./iso-3166.js";
 
@@ -31,6 +33,46 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "..");
 const DATA_DIR = resolve(ROOT, "data");
 const SRC_DIR = resolve(ROOT, "src");
+
+// ── Output ───────────────────────────────────────────────────────────────────
+
+/**
+ * oxfmt's programmatic API does not discover `.oxfmtrc.json` the way its CLI
+ * does, so find the repo config and pass it through. Reading the real file
+ * rather than hardcoding options is what keeps emitted source byte-identical to
+ * whatever `oxfmt --check` expects.
+ */
+async function loadFormatConfig(): Promise<FormatConfig> {
+	let directory = HERE;
+
+	for (;;) {
+		const candidate = resolve(directory, ".oxfmtrc.json");
+		if (existsSync(candidate)) {
+			return JSON.parse(await readFile(candidate, "utf8")) as FormatConfig;
+		}
+
+		const parent = dirname(directory);
+		if (parent === directory) {
+			throw new Error(`no .oxfmtrc.json found above ${HERE}`);
+		}
+		directory = parent;
+	}
+}
+
+/** Resolved once and reused: the config cannot change mid-run. */
+const formatConfig = loadFormatConfig();
+
+/** Writes emitted source already formatted, so no later pass has to fix it. */
+async function writeModule(path: string, source: string): Promise<void> {
+	const { code, errors } = await format(path, source, await formatConfig);
+
+	if (errors.length > 0) {
+		const detail = errors.map((error) => error.message).join("\n");
+		throw new Error(`oxfmt could not format ${path}:\n${detail}`);
+	}
+
+	await writeFile(path, code, "utf8");
+}
 
 // ── Classification ───────────────────────────────────────────────────────────
 
@@ -392,16 +434,14 @@ async function main(): Promise<void> {
 	const currencies = buildCurrencies(active.entries);
 	const historicCurrencies = buildHistoric(historic.entries);
 
-	await writeFile(resolve(SRC_DIR, "codes.ts"), emitCodes(currencies), "utf8");
-	await writeFile(
+	await writeModule(resolve(SRC_DIR, "codes.ts"), emitCodes(currencies));
+	await writeModule(
 		resolve(SRC_DIR, "data.ts"),
 		emitData(currencies, active.publishedAt),
-		"utf8",
 	);
-	await writeFile(
+	await writeModule(
 		resolve(SRC_DIR, "historic-data.ts"),
 		emitHistoricData(historicCurrencies, historic.publishedAt),
-		"utf8",
 	);
 
 	console.log(
