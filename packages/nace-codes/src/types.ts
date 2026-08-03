@@ -1,54 +1,29 @@
-export type Language =
-	| "en"
-	| "fr"
-	| "de"
-	| "nl"
-	| "es"
-	| "it"
-	| "pt"
-	| "bg"
-	| "cs"
-	| "da"
-	| "el"
-	| "et"
-	| "fi"
-	| "ga"
-	| "hr"
-	| "hu"
-	| "lt"
-	| "lv"
-	| "mt"
-	| "pl"
-	| "ro"
-	| "sk"
-	| "sl"
-	| "sv";
+import type { LanguageCode, OptionalLanguage } from "./languageList";
 
-export interface LanguageDescriptions {
-	en: string;
-	fr?: string;
-	de?: string;
-	nl?: string;
-	es?: string;
-	it?: string;
-	pt?: string;
-	bg?: string;
-	cs?: string;
-	da?: string;
-	el?: string;
-	et?: string;
-	fi?: string;
-	ga?: string;
-	hr?: string;
-	hu?: string;
-	lt?: string;
-	lv?: string;
-	mt?: string;
-	pl?: string;
-	ro?: string;
-	sk?: string;
-	sl?: string;
-	sv?: string;
+export type { OptionalLanguage } from "./languageList";
+
+export type Language = LanguageCode;
+
+/**
+ * Descriptions keyed by language. `en` is always present because it ships in the
+ * default bundle; every other language is populated only when the matching
+ * `nace-codes/lang/<code>` pack is passed via {@link NACEOptions.languages}.
+ */
+export type LanguageDescriptions = { en: string } & Partial<
+	Record<OptionalLanguage, string>
+>;
+
+/**
+ * An opt-in bundle of translations for one language, imported from
+ * `nace-codes/lang/<code>` (headings) or `nace-codes/nacebel/lang/<code>`
+ * (NACEBEL explanatory notes) and passed to the constructor.
+ */
+export interface LanguagePack {
+	language: OptionalLanguage;
+	/** NACE heading descriptions, keyed by normalized code. */
+	descriptions?: Record<string, string>;
+	/** NACEBEL explanatory notes as Markdown, keyed by normalized code. */
+	explanatoryNotes?: Record<string, string>;
 }
 
 export interface NACECode {
@@ -89,6 +64,16 @@ export interface SearchOptions {
 export interface NACEOptions {
 	/** Load and index all codes eagerly in the constructor (default: false). */
 	preload?: boolean;
+	/**
+	 * Translations to layer on top of the bundled English data. Only the
+	 * languages passed here are available from `description` and `search()`.
+	 *
+	 * ```ts
+	 * import da from "@financica/nace-codes/lang/da";
+	 * const nace = new NACE({ languages: [da] });
+	 * ```
+	 */
+	languages?: readonly LanguagePack[];
 }
 
 export type NACEBELOptions = NACEOptions;

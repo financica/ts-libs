@@ -1,13 +1,22 @@
 import { loadNACECodes } from "./naceDataLoader";
-import type { CodeMap, NACECode, NACEOptions, SearchOptions } from "./types";
+import type {
+	CodeMap,
+	LanguagePack,
+	NACECode,
+	NACEOptions,
+	SearchOptions,
+} from "./types";
 import { determineLevel, getParentCode, normalizeCode } from "./utils";
 
 export class NACE {
 	protected codes: CodeMap;
+	protected readonly languages: readonly LanguagePack[];
 
 	constructor(options?: NACEOptions) {
+		this.languages = options?.languages ?? [];
+
 		if (options?.preload ?? false) {
-			this.codes = loadNACECodes();
+			this.codes = loadNACECodes(this.languages);
 		} else {
 			this.codes = {};
 		}
@@ -15,7 +24,7 @@ export class NACE {
 
 	protected ensureDataLoaded(): void {
 		if (Object.keys(this.codes).length === 0) {
-			this.codes = loadNACECodes();
+			this.codes = loadNACECodes(this.languages);
 		}
 	}
 

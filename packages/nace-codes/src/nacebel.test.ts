@@ -1,5 +1,16 @@
 import { beforeAll, describe, expect, it } from "vitest";
+import coreFr from "./generated/lang/fr";
+import nacebelFr from "./generated/nacebel/lang/fr";
 import { NACEBEL } from "./nacebel";
+import type { NACEBELCode } from "./types";
+
+function firstNoteCode(instance: NACEBEL): NACEBELCode {
+	const code = instance
+		.getAllCodes()
+		.find((candidate) => candidate.explanatoryNote !== undefined);
+	if (!code) throw new Error("no code carries an explanatory note");
+	return code;
+}
 
 describe("NACEBEL", () => {
 	let nacebel: NACEBEL;
@@ -134,6 +145,46 @@ describe("NACEBEL", () => {
 		it("should search in French descriptions", () => {
 			const results = nacebel.search("culture", { language: "fr" });
 			expect(results.length).toBeGreaterThan(0);
+		});
+	});
+
+	describe("language packs", () => {
+		it("should ship national titles without any pack", () => {
+			// nationalTitles stay eager: they are the primary Belgian display
+			// strings and only cover three languages.
+			const code = nacebel.getCode("01.11");
+			expect(code?.nationalTitles.nl).toBeTruthy();
+			expect(code?.nationalTitles.fr).toBeTruthy();
+			expect(code?.nationalTitles.de).toBeTruthy();
+		});
+
+		it("should expose English-only explanatory notes by default", () => {
+			expect(Object.keys(firstNoteCode(nacebel).explanatoryNote ?? {})).toEqual([
+				"en",
+			]);
+		});
+
+		it("should expose translated notes once the pack is passed", () => {
+			const translated = new NACEBEL({ languages: [nacebelFr] });
+			const code = translated.getCode(firstNoteCode(nacebel).code);
+			expect(code?.explanatoryNote?.fr).toBeTruthy();
+			expect(code?.explanatoryNote?.en).toBeTruthy();
+		});
+
+		it("should accept heading and note packs together", () => {
+			const translated = new NACEBEL({ languages: [coreFr, nacebelFr] });
+			const code = translated.getCode(firstNoteCode(nacebel).code);
+			expect(code?.description.fr).toBeTruthy();
+			expect(code?.explanatoryNote?.fr).toBeTruthy();
+		});
+
+		it("should not leak a pack into instances that did not ask for it", () => {
+			const sample = firstNoteCode(nacebel).code;
+			expect(
+				new NACEBEL({ languages: [nacebelFr] }).getCode(sample)?.explanatoryNote
+					?.fr,
+			).toBeTruthy();
+			expect(new NACEBEL().getCode(sample)?.explanatoryNote?.fr).toBeUndefined();
 		});
 	});
 });

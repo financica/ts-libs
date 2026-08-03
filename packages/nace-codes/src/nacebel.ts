@@ -1,5 +1,6 @@
 import { loadNACEBELCodes } from "./nacebelDataLoader";
 import type {
+	LanguagePack,
 	NACEBELCode,
 	NACEBELCodeMap,
 	NACEBELOptions,
@@ -9,10 +10,13 @@ import { determineLevel, getParentCode, normalizeCode } from "./utils";
 
 export class NACEBEL {
 	protected codes: NACEBELCodeMap;
+	protected readonly languages: readonly LanguagePack[];
 
 	constructor(options?: NACEBELOptions) {
+		this.languages = options?.languages ?? [];
+
 		if (options?.preload === true) {
-			this.codes = loadNACEBELCodes();
+			this.codes = loadNACEBELCodes(this.languages);
 		} else {
 			this.codes = {};
 		}
@@ -20,7 +24,7 @@ export class NACEBEL {
 
 	protected ensureDataLoaded(): void {
 		if (Object.keys(this.codes).length === 0) {
-			this.codes = loadNACEBELCodes();
+			this.codes = loadNACEBELCodes(this.languages);
 		}
 	}
 

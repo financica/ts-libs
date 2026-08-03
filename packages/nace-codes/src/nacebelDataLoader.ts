@@ -1,8 +1,15 @@
 import { naceHeadings, naceStructure } from "./generated/naceData";
 import { nacebelData } from "./generated/nacebelData";
 import { nacebelDescriptions } from "./generated/nacebelDescriptions";
+import { applyLanguagePacks } from "./languages";
 import { processNACEData } from "./naceProcessor";
-import type { CodeMap, NACEBELCode, NACEBELCodeMap, ParsedNACEBEL } from "./types";
+import type {
+	CodeMap,
+	LanguagePack,
+	NACEBELCode,
+	NACEBELCodeMap,
+	ParsedNACEBEL,
+} from "./types";
 import { normalizeCode } from "./utils";
 
 function processNACEBELData(
@@ -60,12 +67,12 @@ function processNACEBELData(
 
 let nacebelCodesCache: NACEBELCodeMap | null = null;
 
-export function loadNACEBELCodes(): NACEBELCodeMap {
+export function loadNACEBELCodes(packs: readonly LanguagePack[] = []): NACEBELCodeMap {
 	if (!nacebelCodesCache) {
 		const naceCodes = processNACEData(naceHeadings, naceStructure);
 		nacebelCodesCache = processNACEBELData(nacebelData, naceCodes);
 	}
-	return nacebelCodesCache;
+	return applyLanguagePacks(nacebelCodesCache, packs);
 }
 
 export function clearNACEBELCache(): void {

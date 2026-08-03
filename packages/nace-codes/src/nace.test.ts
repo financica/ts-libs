@@ -1,4 +1,6 @@
 import { beforeAll, describe, expect, it } from "vitest";
+import da from "./generated/lang/da";
+import fr from "./generated/lang/fr";
 import { NACE } from "./nace";
 
 describe("NACE", () => {
@@ -224,8 +226,15 @@ describe("NACE", () => {
 			expect(results.some((r) => r.code === "A")).toBe(true);
 		});
 
-		it("should respect language option", () => {
-			const results = nace.search("agriculture", { language: "fr" });
+		it("should find nothing in a language whose pack was not loaded", () => {
+			// Only English ships in the default bundle, so searching an unloaded
+			// language has nothing to match against.
+			expect(nace.search("agriculture", { language: "fr" })).toEqual([]);
+		});
+
+		it("should respect language option once the pack is loaded", () => {
+			const translated = new NACE({ languages: [fr] });
+			const results = translated.search("agriculture", { language: "fr" });
 			expect(results.length).toBeGreaterThan(0);
 		});
 
@@ -247,6 +256,53 @@ describe("NACE", () => {
 			expect(code?.includes).toContain("cereals");
 			expect(code?.excludes).toBeDefined();
 			expect(code?.excludes).toContain("rice");
+		});
+	});
+
+	describe("language packs", () => {
+		it("should expose only English by default", () => {
+			expect(Object.keys(nace.getCode("A")?.description ?? {})).toEqual(["en"]);
+		});
+
+		it("should expose a language once its pack is passed", () => {
+			const code = new NACE({ languages: [fr] }).getCode("A");
+			expect(code?.description.fr).toBeTruthy();
+			expect(code?.description.fr).not.toBe(code?.description.en);
+		});
+
+		it("should expose several packs at once and no others", () => {
+			const code = new NACE({ languages: [fr, da] }).getCode("01.11");
+			expect(Object.keys(code?.description ?? {}).sort()).toEqual([
+				"da",
+				"en",
+				"fr",
+			]);
+		});
+
+		it("should keep English intact when a pack is applied", () => {
+			const base = nace.getCode("01.11");
+			const translated = new NACE({ languages: [fr] }).getCode("01.11");
+			expect(translated?.description.en).toBe(base?.description.en);
+		});
+
+		it("should not leak a pack into instances that did not ask for it", () => {
+			const translated = new NACE({ languages: [fr] });
+			expect(translated.getCode("A")?.description.fr).toBeTruthy();
+			// Shares the cached base map, so the overlay must not have mutated it.
+			expect(new NACE().getCode("A")?.description.fr).toBeUndefined();
+		});
+
+		it("should apply packs under preload too", () => {
+			const code = new NACE({ preload: true, languages: [fr] }).getCode("A");
+			expect(code?.description.fr).toBeTruthy();
+		});
+
+		it("should cover every code the English data covers", () => {
+			const translated = new NACE({ languages: [fr] });
+			const missing = translated
+				.getAllCodes()
+				.filter((code) => code.description.fr === undefined);
+			expect(missing).toEqual([]);
 		});
 	});
 });

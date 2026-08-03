@@ -22,32 +22,9 @@ export function processNACEData(
 		const normalizedCode = normalizeCode(heading.NACE_CODE);
 		const level = determineLevel(normalizedCode);
 
-		const descriptions: LanguageDescriptions = {
-			en: heading.EN_DESC || "",
-			fr: heading.FR_DESC,
-			de: heading.DE_DESC,
-			nl: heading.NL_DESC,
-			es: heading.ES_DESC,
-			it: heading.IT_DESC,
-			pt: heading.PT_DESC,
-			bg: heading.BG_DESC,
-			cs: heading.CS_DESC,
-			da: heading.DA_DESC,
-			el: heading.EL_DESC,
-			et: heading.ET_DESC,
-			fi: heading.FI_DESC,
-			ga: heading.GA_DESC,
-			hr: heading.HR_DESC,
-			hu: heading.HU_DESC,
-			lt: heading.LT_DESC,
-			lv: heading.LV_DESC,
-			mt: heading.MT_DESC,
-			pl: heading.PL_DESC,
-			ro: heading.RO_DESC,
-			sk: heading.SK_DESC,
-			sl: heading.SL_DESC,
-			sv: heading.SV_DESC,
-		};
+		// English only. Translations arrive later as opt-in language packs, so they
+		// never enter the default bundle's module graph.
+		const descriptions: LanguageDescriptions = { en: heading.EN_DESC || "" };
 
 		const structureEntry = structure.find(
 			(s) => normalizeCode(s.CODE) === normalizedCode,

@@ -6,12 +6,15 @@ A TypeScript library for working with NACE and NACEBEL economic activity classif
 
 - **Full NACE Rev. 2.1 Support**: Complete hierarchy of European economic activity classifications
 - **NACEBEL Extension**: Support for Belgian-specific 6-digit extensions
-- **Multi-language**: Access descriptions in 24+ languages (NACE) and 4 languages (NACEBEL)
+- **Multi-language**: Descriptions in 24 languages (NACE) and 4 languages
+  (NACEBEL), each loadable on its own
 - **Flexible Code Lookup**: Search by various formats (e.g., "70.20", "7020", "702", "A")
 - **Hierarchical Navigation**: Traverse parent-child relationships in the classification tree
 - **Rich Metadata**: Access includes/excludes rules and explanatory notes
 - **Type-Safe**: Full TypeScript support with strict typing
-- **Lightweight**: Efficient data loading with lazy initialization
+- **Pay For What You Load**: English ships in the default bundle; each other
+  language is a separate module you opt into. Translations are the bulk of this
+  dataset, so one locale costs roughly one locale.
 - **Tree-Shakeable**: Core NACE and the Belgian NACEBEL extension are separate
   entry points with disjoint data. Importing NACE never pulls Belgian data into
   your bundle.
@@ -20,18 +23,29 @@ A TypeScript library for working with NACE and NACEBEL economic activity classif
 ## Installation
 
 ```bash
-npm install nace-codes
+npm install @financica/nace-codes
 ```
 
 ## Entry Points
 
-| Import               | Contents                                        |
-| -------------------- | ----------------------------------------------- |
-| `nace-codes`         | Core NACE Rev. 2.1 (EU) — the `NACE` class      |
-| `nace-codes/nacebel` | Belgian NACEBEL extension — the `NACEBEL` class |
+| Import                                      | Contents                                              |
+| ------------------------------------------- | ----------------------------------------------------- |
+| `@financica/nace-codes`                     | Core NACE Rev. 2.1 (EU) — the `NACE` class, English   |
+| `@financica/nace-codes/nacebel`             | Belgian NACEBEL extension — the `NACEBEL` class       |
+| `@financica/nace-codes/lang/<code>`         | NACE heading translations for one language            |
+| `@financica/nace-codes/nacebel/lang/<code>` | NACEBEL explanatory notes for one language (fr/nl/de) |
 
 Only reach for `nace-codes/nacebel` when you need the Belgian national codes; it
 bundles the NACE core data plus the Belgian delta.
+
+Approximate gzipped cost, so you can see where the weight is:
+
+| Module                | gzipped |
+| --------------------- | ------- |
+| core NACE (English)   | ~194 KB |
+| `lang/<code>`         | ~15 KB  |
+| NACEBEL (English)     | ~470 KB |
+| `nacebel/lang/<code>` | ~275 KB |
 
 ## Quick Start
 
@@ -46,9 +60,8 @@ const nace = new NACE();
 const code = nace.getCode("70.20");
 console.log(code.description.en); // "Management consultancy activities"
 
-// Get code in different languages
-console.log(code.description.fr); // "Conseil pour les affaires et autres conseils de gestion"
-console.log(code.description.nl); // "Advisering op het gebied van management"
+// Other languages are opt-in — see "Languages" below
+console.log(code.description.fr); // undefined
 
 // Navigate hierarchy
 const parent = nace.getParent("70.20");
@@ -63,6 +76,57 @@ console.log(details.includes); // Description of what this code includes
 console.log(details.excludes); // Description of what this code excludes
 ```
 
+## Languages
+
+The 24 EU translations are ~95% of this dataset, so only English ships in the
+default bundle. Every other language is a module you import explicitly and hand
+to the constructor:
+
+```typescript
+import { NACE } from "@financica/nace-codes";
+import da from "@financica/nace-codes/lang/da";
+
+const nace = new NACE({ languages: [da] });
+
+nace.getCode("01.11").description.da; // "Dyrkning af korn ..."
+nace.search("dyrkning", { language: "da" }); // matches Danish text
+```
+
+Only the languages you pass are populated. `description.fr` is `undefined`
+without the `fr` pack, and `search({ language: "fr" })` returns no results —
+there is nothing to match against.
+
+Load a locale on demand with a dynamic import:
+
+```typescript
+const pack = await import(`@financica/nace-codes/lang/${locale}`);
+const nace = new NACE({ languages: [pack.default] });
+```
+
+Language packs are resolved when the code map is built, so pass them at
+construction. To switch locale at runtime, construct a new instance.
+
+### Languages with NACEBEL
+
+NACEBEL has two independent translated fields:
+
+- `nationalTitles` (nl/fr/de/en) — the official Belgian titles. These ship
+  eagerly in `nace-codes/nacebel`, need no pack, and are what NACEBEL `search()`
+  matches for nl/fr/de.
+- `explanatoryNote` — the long Markdown notes, by far the largest field. English
+  ships in the bundle; fr/nl/de come from `nacebel/lang/<code>`.
+
+`description` (the inherited EU heading) still comes from `lang/<code>`, so a
+French consumer who wants both fields passes both packs:
+
+```typescript
+import { NACEBEL } from "@financica/nace-codes/nacebel";
+import fr from "@financica/nace-codes/lang/fr";
+import frNotes from "@financica/nace-codes/nacebel/lang/fr";
+
+const nacebel = new NACEBEL({ languages: [fr, frNotes] });
+```
+
 ## API Reference
 
 ### NACE Class
@@ -74,8 +138,12 @@ Initialize a new NACE classifier instance.
 ```typescript
 interface NACEOptions {
 	preload?: boolean; // Load all data on initialization (default: false)
+	languages?: readonly LanguagePack[]; // Translations to layer on (default: none)
 }
 ```
+
+Note that `preload` only controls _when_ the bundled data is parsed and indexed.
+It has no effect on bundle size; that is what the language modules are for.
 
 #### `getCode(code: string): NACECode | null`
 
@@ -204,12 +272,14 @@ interface NACEBELCode extends NACECode {
 	};
 }
 
-interface LanguageDescriptions {
-	en: string;
-	fr?: string;
-	de?: string;
-	nl?: string;
-	// ... other language codes
+// `en` is always present; every other language appears only when its pack is loaded
+type LanguageDescriptions = { en: string } & Partial<Record<OptionalLanguage, string>>;
+
+// What `lang/<code>` and `nacebel/lang/<code>` default-export
+interface LanguagePack {
+	language: OptionalLanguage;
+	descriptions?: Record<string, string>;
+	explanatoryNotes?: Record<string, string>;
 }
 
 type Language =
@@ -237,7 +307,12 @@ type Language =
 	| "sk"
 	| "sl"
 	| "sv";
+
+type OptionalLanguage = Exclude<Language, "en">;
 ```
+
+The `LANGUAGES`, `OPTIONAL_LANGUAGES`, and `BUNDLED_LANGUAGE` constants are
+exported too, if you need to enumerate what exists at runtime.
 
 ## Code Format Normalization
 
@@ -293,15 +368,16 @@ function isValidNACEBEL(code: string): boolean {
 ### Multi-language Support
 
 ```typescript
-// Get descriptions in all available languages
-const code = nace.getCode("70.20");
-const languages: Language[] = ["en", "fr", "de", "nl", "es", "it"];
+import de from "@financica/nace-codes/lang/de";
+import fr from "@financica/nace-codes/lang/fr";
+import nl from "@financica/nace-codes/lang/nl";
 
-languages.forEach((lang) => {
-	if (code.description[lang]) {
-		console.log(`${lang}: ${code.description[lang]}`);
-	}
-});
+const nace = new NACE({ languages: [fr, de, nl] });
+
+const code = nace.getCode("70.20");
+for (const lang of ["en", "fr", "de", "nl"] as const) {
+	console.log(`${lang}: ${code.description[lang]}`);
+}
 ```
 
 ### Working with Inclusions and Exclusions
@@ -316,6 +392,28 @@ console.log(code.includesAlso);
 
 console.log("\nThis class excludes:");
 console.log(code.excludes);
+```
+
+## Migrating from 2.x
+
+Translations no longer ship in the default bundle. If you only read
+`description.en`, or you only use NACEBEL's `nationalTitles`, nothing changes.
+
+Otherwise, note that TypeScript will _not_ flag this for you: the non-English
+fields were already optional, so the break shows up at runtime as `undefined`
+descriptions and empty `search()` results. Audit for:
+
+- `description.<lang>` for any language other than `en`
+- `search(query, { language })` with a non-`en` language — except NACEBEL nl/fr/de,
+  which match `nationalTitles` and keep working
+- `explanatoryNote.<lang>` for fr/nl/de on NACEBEL codes
+
+Each is fixed by importing the matching pack and passing it to the constructor:
+
+```diff
+- const nace = new NACE();
++ import fr from "@financica/nace-codes/lang/fr";
++ const nace = new NACE({ languages: [fr] });
 ```
 
 ## Data Sources
@@ -342,9 +440,15 @@ bun run ci              # typecheck + lint + test + build
 ```
 
 The classification data lives in `data/` as TSV. `generate:data` compiles it
-into `src/generated/*.ts` (git-ignored). Core NACE data is emitted to
+into `src/generated/*.ts`, which is committed. Core NACE data is emitted to
 `naceData.ts`; each national extension (e.g. NACEBEL) is emitted as a separate
-delta module so the entry points stay tree-shakeable.
+delta module so the entry points stay tree-shakeable. Translations are split out
+per language into `generated/lang/*.ts` and `generated/nacebel/lang/*.ts`, one
+build entry each.
+
+`src/languageList.ts` is the single source of truth for the language axis: the
+generator, the `tsdown` entry map, and the `Language` type all derive from it, so
+adding a language means editing one list.
 
 ## License
 
@@ -356,4 +460,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Support
 
-For issues and questions, please use the [GitHub issue tracker](https://github.com/ingram-technologies/nace-codes/issues).
+For issues and questions, please use the [GitHub issue tracker](https://github.com/financica/ts-libs/issues).

@@ -1,4 +1,7 @@
 import { NACE } from "@financica/nace-codes";
+import de from "@financica/nace-codes/lang/de";
+import fr from "@financica/nace-codes/lang/fr";
+import nl from "@financica/nace-codes/lang/nl";
 
 // Initialize NACE classifier
 const nace = new NACE();
@@ -39,9 +42,11 @@ searchResults.forEach((result) => {
 	console.log(`  ${result.code}: ${result.description.en}`);
 });
 
-// Multi-language support
+// Multi-language support. Only English is bundled by default, so each extra
+// language is imported as its own module and passed to the constructor.
 console.log("\n=== Multi-language Support ===\n");
-const transport = nace.getCode("H");
+const multilingual = new NACE({ languages: [fr, de, nl] });
+const transport = multilingual.getCode("H");
 if (transport) {
 	console.log("Transport and storage in different languages:");
 	console.log(`  EN: ${transport.description.en}`);

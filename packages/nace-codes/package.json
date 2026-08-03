@@ -1,6 +1,6 @@
 {
 	"name": "@financica/nace-codes",
-	"version": "2.0.0",
+	"version": "3.0.0",
 	"description": "TypeScript library for NACE and NACEBEL economic activity classification codes",
 	"keywords": [
 		"belgium",
@@ -34,6 +34,14 @@
 		"./nacebel": {
 			"types": "./dist/nacebel.d.ts",
 			"import": "./dist/nacebel.js"
+		},
+		"./nacebel/lang/*": {
+			"types": "./dist/nacebel/lang/*.d.ts",
+			"import": "./dist/nacebel/lang/*.js"
+		},
+		"./lang/*": {
+			"types": "./dist/lang/*.d.ts",
+			"import": "./dist/lang/*.js"
 		},
 		"./package.json": "./package.json"
 	},

@@ -1,7 +1,9 @@
+import fr from "@financica/nace-codes/lang/fr";
 import { NACEBEL } from "@financica/nace-codes/nacebel";
 
-// Initialize NACEBEL classifier
-const nacebel = new NACEBEL();
+// Initialize NACEBEL classifier. `nationalTitles` (nl/fr/de) is always bundled;
+// the inherited EU `description` needs the matching language pack.
+const nacebel = new NACEBEL({ languages: [fr] });
 
 console.log("=== NACEBEL Belgian Extensions ===\n");
 
