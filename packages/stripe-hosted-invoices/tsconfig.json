@@ -1,0 +1,20 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"verbatimModuleSyntax": true,
+		// `noPropertyAccessFromIndexSignature` is deliberately off: the payload
+		// types are "known fields + passthrough" by design, so the rule fires on
+		// every intended read. Same reason facturx/ubl/camt053 leave it off.
+		//
+		// DOM is added for the `fetch`/`Response` types. The package ships no
+		// DOM code — it is runtime-agnostic and Node ≥18 provides these globally.
+		"lib": ["ESNext", "DOM"]
+	},
+	"include": ["src/**/*.ts", "test/**/*.ts"],
+	"exclude": ["node_modules", "dist"]
+}

@@ -22,6 +22,7 @@ still published to npm independently.
 | [`@financica/peppol`](packages/peppol)                         | 0.6.0   | Peppol network: SML/SMP participant discovery, Directory lookups, EAS schemes                         |
 | [`@financica/react-ubl-renderer`](packages/react-ubl-renderer) | 0.2.0   | Render parsed UBL / Peppol BIS Billing 3.0 invoices as React or standalone HTML                       |
 | [`@financica/scrada-client`](packages/scrada-client)           | 0.5.0   | HTTP client for the Scrada Peppol API                                                                 |
+| [`@financica/stripe-hosted-invoices`](packages/stripe-hosted-invoices) | 0.1.0 | Read a Stripe invoice, credit note or receipt from its public hosted URL — no API key             |
 | [`@financica/stripe-ubl`](packages/stripe-ubl)                 | 1.0.1   | Convert Stripe invoices and credit notes into Peppol BIS Billing 3.0 UBL                              |
 | [`@financica/ubl`](packages/ubl)                               | 0.12.0  | UBL invoice toolkit — parse, build and serialize Peppol BIS Billing 3.0                               |
 | [`@financica/xbrl`](packages/xbrl)                             | 0.2.0   | XBRL 2.1 instance document parser                                                                     |
