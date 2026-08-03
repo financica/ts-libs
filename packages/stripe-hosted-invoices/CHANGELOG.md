@@ -15,6 +15,10 @@ uses to render itself.
   `fetchStripeCreditNotes` / `fetchStripePdf` — the individual steps.
 - `parseStripeInvoiceUrl` / `parseStripeReceiptUrl` / `isStripeInvoiceUrl` —
   dependency-free URL matchers, safe in a client bundle.
+- `unwrapTrackedStripeUrl` — recovers the real URL from the SendGrid
+  click-tracking wrapper Stripe's billing emails use, which is what a user
+  actually pastes. Applied automatically by both parsers. Decoding is local:
+  the wrapper host is never requested.
 - `parseStripeReceiptPage` — reads the refunded amount, date and credited lines
   off a receipt, which after a post-payment refund is the only place they exist.
 - `fromStripeMinorUnits` / `toStripeMinorUnits` — Stripe's decimal

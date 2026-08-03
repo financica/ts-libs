@@ -3,6 +3,7 @@ import {
 	isStripeInvoiceUrl,
 	parseStripeInvoiceUrl,
 	parseStripeReceiptUrl,
+	unwrapTrackedStripeUrl,
 } from "../src/urls.js";
 
 describe("parseStripeInvoiceUrl", () => {
@@ -131,5 +132,152 @@ describe("isStripeInvoiceUrl", () => {
 	it("rejects unrelated URLs", () => {
 		expect(isStripeInvoiceUrl("https://example.com/invoice/123")).toBe(false);
 		expect(isStripeInvoiceUrl("")).toBe(false);
+	});
+});
+
+/**
+ * base64url of a blob containing `acct_1TEST00000000000`, so it satisfies
+ * `parseStripeReceiptUrl`'s embedded-account extraction. Synthetic on purpose:
+ * a real receipt token grants read access to a real customer's receipt, and
+ * expires, which makes it a bad fixture twice over.
+ */
+const DEMO_RECEIPT_TOKEN = "CgphY2N0XzFURVNUMDAwMDAwMDAwMDAoZGVtby1yZWNlaXB0LXRva2Vu";
+
+/**
+ * Wrap a target URL the way SendGrid wraps Stripe's billing emails.
+ *
+ * The `58` subdomain and the `CL0` marker are both per-sender and not a
+ * contract, so `host` is a parameter and nothing here is matched on — see the
+ * host-independence test below.
+ */
+const wrap = (encodedTarget: string, host = "58.email.stripe.com"): string =>
+	`https://${host}/CL0/${encodedTarget}/1/0100000000-aaaa/ZZZZ=452`;
+
+describe("unwrapTrackedStripeUrl", () => {
+	it("recovers the target from a SendGrid click-tracking wrapper", () => {
+		// Stripe's own billing emails go out click-tracked, so this is the
+		// shape users actually paste out of "Download invoice".
+		expect(
+			unwrapTrackedStripeUrl(
+				wrap("https%3A%2F%2Finvoice.stripe.com%2Fi%2Facct_1ABC%2Flive_XYZ"),
+			),
+		).toBe("https://invoice.stripe.com/i/acct_1ABC/live_XYZ");
+	});
+
+	it("handles a half-encoded scheme separator", () => {
+		// Observed in the wild alongside the fully-encoded form.
+		expect(
+			unwrapTrackedStripeUrl(
+				wrap(
+					"https:%2F%2Fdashboard.stripe.com%2Freceipts%2Finvoices%2Fabc%3Fs=em",
+				),
+			),
+		).toBe("https://dashboard.stripe.com/receipts/invoices/abc?s=em");
+	});
+
+	it("decodes a bare percent-encoded URL with no wrapper", () => {
+		expect(
+			unwrapTrackedStripeUrl(
+				"https%3A%2F%2Finvoice.stripe.com%2Fi%2Facct_1ABC%2Flive_XYZ",
+			),
+		).toBe("https://invoice.stripe.com/i/acct_1ABC/live_XYZ");
+	});
+
+	it("returns a clean URL byte-identical", () => {
+		// Not every Stripe sender wraps; unwrapping must be a no-op passthrough.
+		for (const url of [
+			"https://invoice.stripe.com/i/acct_1ABC/live_XYZ",
+			"https://pay.stripe.com/receipts/invoices/abc/pdf",
+			"https://example.com/a/b?c=d#e",
+		]) {
+			expect(unwrapTrackedStripeUrl(url)).toBe(url);
+		}
+	});
+
+	it("is idempotent", () => {
+		const wrapped = wrap(
+			"https%3A%2F%2Finvoice.stripe.com%2Fi%2Facct_1ABC%2Flive_XYZ",
+		);
+		const once = unwrapTrackedStripeUrl(wrapped);
+		expect(unwrapTrackedStripeUrl(once)).toBe(once);
+	});
+
+	it("does not depend on the wrapper host or the marker segment", () => {
+		// The numeric subdomain varies per sender, and `CL0` is a SendGrid
+		// marker rather than a contract. Neither is matched on: any URL whose
+		// path carries an encoded target unwraps the same way.
+		const encoded = "https%3A%2F%2Finvoice.stripe.com%2Fi%2Facct_1ABC%2Flive_XYZ";
+		for (const host of [
+			"58.email.stripe.com",
+			"12.email.stripe.com",
+			"u1234567.ct.sendgrid.net",
+			"links.example-esp.io",
+		]) {
+			expect(unwrapTrackedStripeUrl(wrap(encoded, host))).toBe(
+				"https://invoice.stripe.com/i/acct_1ABC/live_XYZ",
+			);
+		}
+
+		// Nor on the marker segment, nor on the tracking tail being present.
+		expect(unwrapTrackedStripeUrl(`https://x.example/ZZ9/${encoded}`)).toBe(
+			"https://invoice.stripe.com/i/acct_1ABC/live_XYZ",
+		);
+		expect(unwrapTrackedStripeUrl(`https://x.example/${encoded}`)).toBe(
+			"https://invoice.stripe.com/i/acct_1ABC/live_XYZ",
+		);
+	});
+
+	it("returns malformed input unchanged rather than throwing", () => {
+		for (const value of ["", "not a url", "https://%E0%A4%A", "%%%", "/CL0/%2F"]) {
+			expect(() => unwrapTrackedStripeUrl(value)).not.toThrow();
+			expect(typeof unwrapTrackedStripeUrl(value)).toBe("string");
+		}
+	});
+});
+
+describe("click-tracked URLs reach the parsers", () => {
+	it("parses a wrapped hosted-invoice URL", () => {
+		expect(
+			parseStripeInvoiceUrl(
+				wrap("https%3A%2F%2Finvoice.stripe.com%2Fi%2Facct_1ABC%2Flive_XYZ"),
+			),
+		).toEqual({ accountId: "acct_1ABC", liveToken: "live_XYZ" });
+	});
+
+	it("parses a wrapped receipt URL and drops the tracking residue", () => {
+		const result = parseStripeReceiptUrl(
+			wrap(
+				`https%3A%2F%2Fdashboard.stripe.com%2Freceipts%2Finvoices%2F${DEMO_RECEIPT_TOKEN}%2Fpdf%3Fs%3Dem`,
+			),
+		);
+
+		expect(result).toEqual({
+			accountId: "acct_1TEST00000000000",
+			receiptToken: DEMO_RECEIPT_TOKEN,
+			// Canonical, with no `/pdf` suffix and no `?s=em`.
+			pageUrl: `https://pay.stripe.com/receipts/invoices/${DEMO_RECEIPT_TOKEN}`,
+			pdfUrl: `https://pay.stripe.com/receipts/invoices/${DEMO_RECEIPT_TOKEN}/pdf`,
+		});
+	});
+
+	it("detects a wrapped URL as importable", () => {
+		expect(
+			isStripeInvoiceUrl(
+				wrap(
+					"https%3A%2F%2Fpay.stripe.com%2Finvoice%2Facct_1ABC%2Flive_XYZ%2Fpdf",
+				),
+			),
+		).toBe(true);
+	});
+
+	it("still rejects a wrapper pointing at a non-Stripe host", () => {
+		// Unwrapping is not trusting: the wrapper is attacker-controllable, and
+		// the anchored stripe.com matchers are what stop anything being fetched.
+		const hostile = wrap("https%3A%2F%2Fevil.example.com%2Fx");
+
+		expect(unwrapTrackedStripeUrl(hostile)).toBe("https://evil.example.com/x");
+		expect(parseStripeInvoiceUrl(hostile)).toBeNull();
+		expect(parseStripeReceiptUrl(hostile)).toBeNull();
+		expect(isStripeInvoiceUrl(hostile)).toBe(false);
 	});
 });

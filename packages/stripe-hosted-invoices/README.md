@@ -11,7 +11,7 @@ https://invoice.stripe.com/i/acct_…/live_…
    @financica/stripe-hosted-invoices ──▶ invoice + lines + credit notes + receipt
 ```
 
-For the opposite direction — turning a `Stripe.Invoice` you *do* own into Peppol UBL — see [`@financica/stripe-ubl`](../stripe-ubl).
+For the opposite direction — turning a `Stripe.Invoice` you _do_ own into Peppol UBL — see [`@financica/stripe-ubl`](../stripe-ubl).
 
 ## ⚠️ This uses undocumented Stripe endpoints
 
@@ -57,21 +57,44 @@ result.hostedData; // raw hosted-page payload: supplier country, support email
 
 Accepted URL forms:
 
-| Form | Example |
-| --- | --- |
-| Hosted invoice page | `https://invoice.stripe.com/i/acct_…/live_…` |
-| Pay / PDF link | `https://pay.stripe.com/invoice/acct_…/live_…` |
-| Payment or refund receipt | `https://pay.stripe.com/receipts/invoices/<token>` |
-| Dashboard receipt | `https://dashboard.stripe.com/receipts/invoices/<token>` |
+| Form                            | Example                                                         |
+| ------------------------------- | --------------------------------------------------------------- |
+| Hosted invoice page             | `https://invoice.stripe.com/i/acct_…/live_…`                    |
+| Pay / PDF link                  | `https://pay.stripe.com/invoice/acct_…/live_…`                  |
+| Payment or refund receipt       | `https://pay.stripe.com/receipts/invoices/<token>`              |
+| Dashboard receipt               | `https://dashboard.stripe.com/receipts/invoices/<token>`        |
+| Any of the above, click-tracked | `https://58.email.stripe.com/CL0/https%3A%2F%2F…/1/<id>/<hmac>` |
 
 A receipt URL is resolved by fetching the receipt page and following the hosted invoice link embedded in it, so the result always centres on the invoice, with the parsed receipt attached.
+
+### Emailed links
+
+Stripe's own billing emails are sent through SendGrid click tracking, so the link a user copies out of "Download invoice" is not a `stripe.com` URL at all — it is a tracking wrapper (`58.email.stripe.com/CL0/…`, though the subdomain and marker segment vary per sender) with the real URL percent-encoded inside one path segment. Users paste exactly that.
+
+Nothing is matched on the wrapper's host or marker: any URL with an encoded target in its path unwraps, so other senders and ESPs work too.
+
+Every parser unwraps these first, so it just works. `unwrapTrackedStripeUrl` is exported if you need it directly:
+
+```ts
+import { unwrapTrackedStripeUrl } from "@financica/stripe-hosted-invoices";
+
+unwrapTrackedStripeUrl(pastedFromEmail); // → the canonical stripe.com URL
+unwrapTrackedStripeUrl(alreadyClean); // → returned unchanged
+```
+
+It is total and idempotent: never throws, and malformed input comes back untouched.
+
+**Unwrapping is not trusting.** The wrapper is attacker-controllable — a link whose encoded segment points at `evil.example.com` unwraps to exactly that. That is safe here only because the result feeds straight into the anchored `stripe.com` matchers, which reject it and fetch nothing. Decoding is done **locally and never by requesting the wrapper host**: an importer that followed redirects from a user-supplied host would be an SSRF vector, and fetching a tracking link marks the recipient's email as read. If you store the pasted URL, store the unwrapped one — a tracking wrapper is single-use noise.
 
 ### Detect a pasted link, in the browser
 
 The URL matchers are pure and pull in no dependencies, so they are safe in a client bundle:
 
 ```ts
-import { isStripeInvoiceUrl, parseStripeInvoiceUrl } from "@financica/stripe-hosted-invoices";
+import {
+	isStripeInvoiceUrl,
+	parseStripeInvoiceUrl,
+} from "@financica/stripe-hosted-invoices";
 
 isStripeInvoiceUrl(text); // → boolean
 parseStripeInvoiceUrl(url); // → { accountId, liveToken } | null
@@ -82,7 +105,10 @@ parseStripeInvoiceUrl(url); // → { accountId, liveToken } | null
 Stripe amounts are in minor units, and **Stripe's decimal classification is not ISO 4217**. Use these rather than an ISO table or `Intl`:
 
 ```ts
-import { fromStripeMinorUnits, toStripeMinorUnits } from "@financica/stripe-hosted-invoices";
+import {
+	fromStripeMinorUnits,
+	toStripeMinorUnits,
+} from "@financica/stripe-hosted-invoices";
 
 fromStripeMinorUnits(1234, "EUR"); // 12.34
 fromStripeMinorUnits(500, "JPY"); // 500  — zero-decimal
@@ -157,12 +183,12 @@ await resolveStripeInvoiceUrl(url, {
 
 Nothing throws. Failing calls return `{ ok: false, error }`:
 
-| `kind` | Meaning |
-| --- | --- |
-| `invalid_url` | Not a Stripe hosted invoice or receipt URL |
-| `network_error` | `fetch` threw — DNS, TLS, timeout, offline (`cause` carries the original) |
-| `http_error` | Stripe answered with a non-OK status (`status`, `url`) |
-| `invalid_response` | Stripe answered, but not in a shape this protocol can use (`detail`) |
+| `kind`             | Meaning                                                                   |
+| ------------------ | ------------------------------------------------------------------------- |
+| `invalid_url`      | Not a Stripe hosted invoice or receipt URL                                |
+| `network_error`    | `fetch` threw — DNS, TLS, timeout, offline (`cause` carries the original) |
+| `http_error`       | Stripe answered with a non-OK status (`status`, `url`)                    |
+| `invalid_response` | Stripe answered, but not in a shape this protocol can use (`detail`)      |
 
 `fetchStripeCreditNotes` is the exception by design: it returns `[]` and warns rather than failing, because an invoice read that could not reach the credit-note endpoint is still a correct invoice read.
 

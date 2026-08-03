@@ -42,19 +42,89 @@ export type StripeReceiptUrlParts = {
 };
 
 /**
+ * Recover the real Stripe URL from an emailed click-tracking wrapper.
+ *
+ * Stripe's own billing emails go out through SendGrid click tracking, so the
+ * link a user copies out of "Download invoice" is not a `stripe.com` URL at
+ * all — it is an `*.email.stripe.com` wrapper with the real URL percent-encoded
+ * inside a single path segment:
+ *
+ * ```
+ * https://58.email.stripe.com/CL0/https:%2F%2Fdashboard.stripe.com%2F…%3Fs=em/1/<id>/<hmac>=452
+ *                             │   └ the whole real URL, one segment  └ ESP tracking, dropped
+ *                             └ a SendGrid marker, not a contract — never matched on
+ * ```
+ *
+ * Also handles a bare percent-encoded URL with no wrapper, which turns up when
+ * a link is copied out of a query string or a JSON blob.
+ *
+ * Returns the input unchanged when there is nothing to unwrap, so it is safe to
+ * call on every URL and safe to call twice. Never throws.
+ *
+ * **Unwrapping is not trusting.** The wrapper is attacker-controllable text: a
+ * link whose encoded segment points at `evil.example.com` unwraps to exactly
+ * that. This is safe only because the result is fed straight into the anchored
+ * `stripe.com` matchers below, which reject it and fetch nothing. Two rules
+ * follow, and both matter:
+ *
+ * - Decoding happens **locally**. Never resolve a wrapper by requesting
+ *   `*.email.stripe.com` — a server-side importer that follows redirects from a
+ *   user-supplied host is a straight SSRF vector. Local decoding is also better
+ *   behaved: tracking links can be single-use, and fetching one marks the
+ *   recipient's email as read.
+ * - The `^https:\/\/…stripe\.com` anchors are the defence. Do not relax them to
+ *   accommodate a wrapper, and do not add the wrapper host to any allowlist of
+ *   fetchable hosts.
+ */
+export const unwrapTrackedStripeUrl = (raw: string): string => {
+	let parsed: URL;
+	try {
+		parsed = new URL(raw);
+	} catch {
+		// Not a URL at all — it may be a wholly-encoded one.
+		const decoded = decodeSegment(raw);
+		return decoded !== null && isHttpUrl(decoded) ? decoded : raw;
+	}
+
+	for (const segment of parsed.pathname.split("/")) {
+		// Cheap reject: a wrapped target always carries an encoded `/` or `:`.
+		if (!segment.includes("%2F") && !segment.includes("%3A")) continue;
+		const decoded = decodeSegment(segment);
+		if (decoded !== null && isHttpUrl(decoded)) return decoded;
+	}
+	return raw;
+};
+
+/** `decodeURIComponent` that answers null instead of throwing on bad escapes. */
+const decodeSegment = (value: string): string | null => {
+	try {
+		return decodeURIComponent(value);
+	} catch {
+		return null;
+	}
+};
+
+const isHttpUrl = (value: string): boolean =>
+	value.startsWith("https://") || value.startsWith("http://");
+
+/**
  * Parse a Stripe hosted invoice URL into its components. Also accepts
- * `pay.stripe.com` PDF URLs, which share the same token.
+ * `pay.stripe.com` PDF URLs, which share the same token, and emailed
+ * click-tracking wrappers (see {@link unwrapTrackedStripeUrl}).
  *
  * Returns `null` when the URL is not a Stripe hosted invoice URL.
  */
 export const parseStripeInvoiceUrl = (url: string): StripeInvoiceUrlParts | null => {
-	const match = STRIPE_HOSTED_INVOICE_URL_RE.exec(url) ?? STRIPE_PAY_URL_RE.exec(url);
+	const target = unwrapTrackedStripeUrl(url);
+	const match =
+		STRIPE_HOSTED_INVOICE_URL_RE.exec(target) ?? STRIPE_PAY_URL_RE.exec(target);
 	if (!match?.[1] || !match[2]) return null;
 	return { accountId: match[1], liveToken: match[2] };
 };
 
 /**
- * Parse a Stripe receipt URL for an invoice payment or refund.
+ * Parse a Stripe receipt URL for an invoice payment or refund. Accepts emailed
+ * click-tracking wrappers (see {@link unwrapTrackedStripeUrl}).
  *
  * The token is a base64url-encoded protobuf that embeds the Stripe account id,
  * which is dug out rather than requested: nothing else in the URL identifies
@@ -62,7 +132,7 @@ export const parseStripeInvoiceUrl = (url: string): StripeInvoiceUrlParts | null
  * cannot be extracted.
  */
 export const parseStripeReceiptUrl = (url: string): StripeReceiptUrlParts | null => {
-	const match = STRIPE_RECEIPT_URL_RE.exec(url);
+	const match = STRIPE_RECEIPT_URL_RE.exec(unwrapTrackedStripeUrl(url));
 	if (!match?.[1]) return null;
 
 	const receiptToken = match[1];

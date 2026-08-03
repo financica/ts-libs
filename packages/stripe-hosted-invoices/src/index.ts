@@ -64,6 +64,7 @@ export {
 	STRIPE_RECEIPT_URL_RE,
 	type StripeInvoiceUrlParts,
 	type StripeReceiptUrlParts,
+	unwrapTrackedStripeUrl,
 } from "./urls.js";
 
 /**
