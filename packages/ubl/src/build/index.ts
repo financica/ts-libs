@@ -16,6 +16,7 @@ export type {
 	UblLine,
 	UblMonetaryTotal,
 	UblParty,
+	UblPeriod,
 	UblTaxCategory,
 	UblTaxSubtotal,
 	UblTaxTotal,

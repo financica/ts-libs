@@ -17,6 +17,7 @@ import type {
 	UblDocument,
 	UblLine,
 	UblParty,
+	UblPeriod,
 	UblTaxCategory,
 	UblTaxSubtotal,
 } from "./types";
@@ -133,6 +134,22 @@ const legalMonetaryTotalChildren = (doc: UblDocument): XmlElement[] => {
 	return children.filter((child): child is XmlElement => Boolean(child));
 };
 
+/**
+ * `cac:InvoicePeriod`. Null when neither bound is set — an empty period element
+ * fails BR-CO-19, which requires at least one of the two dates.
+ */
+const invoicePeriod = (period: UblPeriod | null | undefined): XmlElement | null => {
+	if (!period || (!period.startDate && !period.endDate)) return null;
+	return el(
+		"cac:InvoicePeriod",
+		null,
+		[
+			period.startDate ? el("cbc:StartDate", null, period.startDate) : null,
+			period.endDate ? el("cbc:EndDate", null, period.endDate) : null,
+		].filter((child): child is XmlElement => Boolean(child)),
+	);
+};
+
 const line = (
 	source: UblLine,
 	currency: string,
@@ -147,6 +164,7 @@ const line = (
 		el("cbc:ID", null, source.id),
 		el(quantityElementName, { unitCode: source.unitCode }, String(source.quantity)),
 		money("cbc:LineExtensionAmount", source.lineExtensionAmount, currency),
+		invoicePeriod(source.invoicePeriod),
 		el("cac:Item", null, [
 			el("cbc:Name", null, source.name),
 			taxCategory("cac:ClassifiedTaxCategory", source.taxCategory),
@@ -205,6 +223,7 @@ export const serializeUblDocument = (doc: UblDocument): string => {
 		doc.note ? el("cbc:Note", null, doc.note) : null,
 		el("cbc:DocumentCurrencyCode", null, doc.currency),
 		doc.buyerReference ? el("cbc:BuyerReference", null, doc.buyerReference) : null,
+		invoicePeriod(doc.invoicePeriod),
 		doc.precedingInvoiceId ? billingReference(doc.precedingInvoiceId) : null,
 		...doc.attachments.map(attachmentReference),
 		el("cac:AccountingSupplierParty", null, [party(doc.supplier)]),

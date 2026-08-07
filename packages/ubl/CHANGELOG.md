@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.13.0
+
+### Added
+
+- **Service periods, end to end.** `UblLine.invoicePeriod` carries a line's own `cac:InvoicePeriod` (BT-134/BT-135), which the parser previously discarded; `normalizeUblResponse` promotes both the document period (BT-73/BT-74) and each line's to first-class `period_start` / `period_end` DTO fields, so consumers no longer have to dig the document one out of `extra.invoice_period` and had no way at all to reach the line ones. The serializer emits `cac:InvoicePeriod` from `UblDocument.invoicePeriod` and `UblLine.invoicePeriod`, at the positions UBL's element sequence requires (after `cbc:BuyerReference` on the document, after `cbc:LineExtensionAmount` on a line). A period with neither bound set is omitted rather than emitted empty, which would fail BR-CO-19.
+
+### Fixed
+
+- **A line's period is no longer reported as the document's.** The document-level lookup was a descendant search, so on an invoice that states a period only per line — the normal shape for a subscription bill with prorations — the first line's period surfaced as the whole document's. Both lookups now read direct children only.
+
 ## 0.12.0
 
 ### Added

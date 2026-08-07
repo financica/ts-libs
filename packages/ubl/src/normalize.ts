@@ -213,6 +213,8 @@ export const normalizeUblResponse = (
 		product_code:
 			normalizeText(line.sellersItemId) ?? normalizeText(line.buyersItemId),
 		discount_amount: toNumberOrNull(line.discountAmount),
+		period_start: parseDate(line.invoicePeriod?.startDate),
+		period_end: parseDate(line.invoicePeriod?.endDate),
 		extra: {
 			ubl_line_id: normalizeText(line.id),
 			item_name: normalizeText(line.itemName),
@@ -250,6 +252,8 @@ export const normalizeUblResponse = (
 			invoice_number: normalizeText(ubl.id),
 			invoice_date: parseDate(ubl.issueDate),
 			due_date: parseDate(ubl.dueDate),
+			period_start: parseDate(ubl.invoicePeriod?.startDate),
+			period_end: parseDate(ubl.invoicePeriod?.endDate),
 			currency,
 			subtotal,
 			tax_total: taxTotal,

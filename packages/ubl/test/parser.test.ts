@@ -577,3 +577,41 @@ describe("parseUblInvoice", () => {
 		});
 	});
 });
+
+describe("invoice periods", () => {
+	// A line-level period must not be reported as the document's: the lookup is
+	// a direct-child one, not a descendant search over the whole document.
+	const withLinePeriodOnly = `<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+  <cbc:ID>INV-1</cbc:ID>
+  <cbc:IssueDate>2026-02-01</cbc:IssueDate>
+  <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+  <cac:InvoiceLine>
+    <cbc:ID>1</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="C62">1</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="EUR">100.00</cbc:LineExtensionAmount>
+    <cac:InvoicePeriod>
+      <cbc:StartDate>2026-01-15</cbc:StartDate>
+      <cbc:EndDate>2026-01-31</cbc:EndDate>
+    </cac:InvoicePeriod>
+    <cac:Item><cbc:Name>Proration</cbc:Name></cac:Item>
+  </cac:InvoiceLine>
+</Invoice>`;
+
+	it("keeps a line period on its line and off the document", () => {
+		const invoice = parseUblInvoice(withLinePeriodOnly)!;
+		expect(invoice.invoicePeriod).toBeUndefined();
+		expect(invoice.lines[0]?.invoicePeriod).toEqual({
+			startDate: "2026-01-15",
+			endDate: "2026-01-31",
+			descriptionCode: undefined,
+		});
+	});
+
+	it("reports no line period when the line states none", () => {
+		const xml = readFixture("ubl-invoice-extended.xml");
+		const invoice = parseUblInvoice(xml)!;
+		expect(invoice.invoicePeriod).toBeDefined();
+		expect(invoice.lines[0]?.invoicePeriod).toBeUndefined();
+	});
+});

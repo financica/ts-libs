@@ -324,6 +324,7 @@ function parseLines(root: Element, isCreditNote: boolean): UblLine[] {
 				additionalItemProperties.length > 0
 					? additionalItemProperties
 					: undefined,
+			invoicePeriod: parseInvoicePeriod(line),
 		};
 	});
 }
@@ -372,8 +373,13 @@ function parsePaymentMeansList(root: Element): UblPaymentMeans[] | undefined {
 	return list.length > 0 ? list : undefined;
 }
 
-function parseInvoicePeriod(root: Element): UblInvoicePeriod | undefined {
-	const period = cacElement(root, "InvoicePeriod");
+/**
+ * BT-73/BT-74 on a document, BT-134/BT-135 on a line. Direct children only:
+ * a descendant search on the document root would report the first line's
+ * period as the document's whenever the document states none of its own.
+ */
+function parseInvoicePeriod(parent: Element): UblInvoicePeriod | undefined {
+	const period = cacDirectElement(parent, "InvoicePeriod");
 	if (!period) return undefined;
 
 	const start = cbcText(period, "StartDate");

@@ -86,6 +86,8 @@ export interface UblLine {
 	 * net exactly (PEPPOL-EN16931-R120); see `deriveUnitPrice`.
 	 */
 	baseQuantity?: number;
+	/** `cac:InvoicePeriod` (BT-134/BT-135) — the line's own service period. */
+	invoicePeriod?: UblPeriod | null;
 	taxCategory: UblTaxCategory;
 }
 
@@ -136,6 +138,18 @@ export interface UblAttachment {
 	base64: string;
 }
 
+/**
+ * A service period: BT-73/BT-74 on the document, BT-134/BT-135 on a line.
+ * Either bound may stand alone — UBL allows a half-open period — but a period
+ * with neither is omitted entirely.
+ */
+export interface UblPeriod {
+	/** `YYYY-MM-DD`. */
+	startDate: string | null;
+	/** `YYYY-MM-DD`, inclusive. */
+	endDate: string | null;
+}
+
 export interface UblDocument {
 	documentType: "invoice" | "creditNote";
 	/** Invoice / credit note number (BT-1). */
@@ -150,6 +164,8 @@ export interface UblDocument {
 	currency: string;
 	/** Buyer reference (BT-10). */
 	buyerReference: string | null;
+	/** Invoicing period (BT-73/BT-74). */
+	invoicePeriod?: UblPeriod | null;
 	/** For credit notes: the referenced original invoice number (BT-25). */
 	precedingInvoiceId: string | null;
 	supplier: UblParty;

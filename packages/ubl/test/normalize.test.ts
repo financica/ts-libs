@@ -351,3 +351,27 @@ describe("normalizeUblResponse", () => {
 		});
 	});
 });
+
+describe("service period in the DTO", () => {
+	it("promotes the document period to first-class fields", () => {
+		const xml = readFixture("ubl-invoice-extended.xml");
+		const { extracted } = normalizeUblResponse(xml, "doc-extended");
+		expect(extracted.invoice).toMatchObject({
+			period_start: "2026-02-01",
+			period_end: "2026-02-28",
+		});
+	});
+
+	it("reports null on a document and lines that state no period", () => {
+		const xml = readFixture("ubl-invoice.xml");
+		const { extracted } = normalizeUblResponse(xml, "doc-ubl");
+		expect(extracted.invoice).toMatchObject({
+			period_start: null,
+			period_end: null,
+		});
+		expect(extracted.line_items[0]).toMatchObject({
+			period_start: null,
+			period_end: null,
+		});
+	});
+});

@@ -59,6 +59,8 @@ export interface UblLine {
 	sellersItemId?: string;
 	buyersItemId?: string;
 	additionalItemProperties?: UblItemProperty[];
+	/** EN 16931 BT-134/BT-135: the line's own service period. */
+	invoicePeriod?: UblInvoicePeriod;
 }
 
 export interface UblAllowanceCharge {
@@ -174,6 +176,9 @@ export interface InvoiceExtractionDTO {
 		invoice_number: string | null;
 		invoice_date: string | null;
 		due_date: string | null;
+		/** EN 16931 BT-73/BT-74: the period the document bills for. */
+		period_start: string | null;
+		period_end: string | null;
 		currency: string | null;
 		subtotal: number | null;
 		tax_total: number | null;
@@ -210,6 +215,9 @@ export interface InvoiceExtractionDTO {
 		tax_rate: number | null;
 		product_code: string | null;
 		discount_amount: number | null;
+		/** EN 16931 BT-134/BT-135: the line's own service period. */
+		period_start: string | null;
+		period_end: string | null;
 		extra: Record<string, unknown>;
 	}>;
 	confidence: {

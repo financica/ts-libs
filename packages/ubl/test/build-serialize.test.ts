@@ -228,3 +228,59 @@ describe("serializeUblDocument", () => {
 		);
 	});
 });
+
+describe("invoice period", () => {
+	it("emits the document period between BuyerReference and BillingReference", () => {
+		const xml = serializeUblDocument(
+			doc({
+				buyerReference: "PO-9",
+				precedingInvoiceId: "INV-000",
+				invoicePeriod: { startDate: "2026-01-01", endDate: "2026-01-31" },
+			}),
+		);
+
+		expect(xml).toContain("<cbc:StartDate>2026-01-01</cbc:StartDate>");
+		expect(xml).toContain("<cbc:EndDate>2026-01-31</cbc:EndDate>");
+		// UBL's element sequence is fixed; a period out of order fails the schema.
+		expect(xml.indexOf("cbc:BuyerReference")).toBeLessThan(
+			xml.indexOf("cac:InvoicePeriod"),
+		);
+		expect(xml.indexOf("cac:InvoicePeriod")).toBeLessThan(
+			xml.indexOf("cac:BillingReference"),
+		);
+	});
+
+	it("emits a line period after LineExtensionAmount and before the Item", () => {
+		const xml = serializeUblDocument(
+			doc({
+				lines: [
+					{
+						id: "1",
+						name: "Widget",
+						quantity: 2,
+						unitCode: "C62",
+						lineExtensionAmount: 100,
+						priceAmount: 50,
+						invoicePeriod: { startDate: "2026-01-15", endDate: null },
+						taxCategory: { id: "S", percent: 21 },
+					},
+				],
+			}),
+		);
+
+		expect(xml.indexOf("cbc:LineExtensionAmount")).toBeLessThan(
+			xml.indexOf("cac:InvoicePeriod"),
+		);
+		expect(xml.indexOf("cac:InvoicePeriod")).toBeLessThan(xml.indexOf("cac:Item"));
+		// A half-open period is legal; the absent bound is simply not emitted.
+		expect(xml).toContain("<cbc:StartDate>2026-01-15</cbc:StartDate>");
+		expect(xml).not.toContain("cbc:EndDate");
+	});
+
+	it("omits the element entirely when neither bound is set", () => {
+		const xml = serializeUblDocument(
+			doc({ invoicePeriod: { startDate: null, endDate: null } }),
+		);
+		expect(xml).not.toContain("cac:InvoicePeriod");
+	});
+});
