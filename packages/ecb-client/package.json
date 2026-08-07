@@ -1,6 +1,6 @@
 {
 	"name": "@financica/ecb-client",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "Tiny, zero-dependency client for the European Central Bank euro foreign-exchange reference rates, with historical single-day lookups and last-business-day fallback.",
 	"keywords": [
 		"accounting",

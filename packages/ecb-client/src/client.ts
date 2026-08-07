@@ -5,6 +5,7 @@ import type {
 	ConvertResult,
 	CurrencyCode,
 	IsoDate,
+	RateSeries,
 	RateSnapshot,
 	ReferenceRate,
 } from "./types.js";
@@ -53,6 +54,10 @@ const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
  * Requests for a date that is not a TARGET business day resolve to the most
  * recent prior business day, via the data API's `lastNObservations` parameter,
  * and the resolved date is reported on each {@link ReferenceRate}.
+ *
+ * {@link getSeries} is the exception: it returns a whole date range in one
+ * request, with no business-day substitution, which is what you want when
+ * populating a local rate table rather than pricing a single transaction.
  */
 export class EcbClient {
 	private readonly baseUrl: string;
@@ -120,6 +125,47 @@ export class EcbClient {
 	}
 
 	/**
+	 * Every observation published between `from` and `to` inclusive, oldest
+	 * first. One request covers the whole window, so callers building a local
+	 * rate table should prefer this over looping {@link getRates} per date.
+	 *
+	 * Unlike {@link getRates}, this does not fall back to the last business day:
+	 * weekends and holidays are simply absent from the result. That is
+	 * deliberate — it reports the ECB's real publication calendar so callers can
+	 * decide how to fill the gaps.
+	 *
+	 * `EUR` is omitted; it is the implicit unit of every quote.
+	 */
+	async getSeries(
+		from: Date | IsoDate,
+		to: Date | IsoDate,
+		currencies?: readonly CurrencyCode[],
+	): Promise<RateSeries> {
+		const startPeriod = normalizeDate(from);
+		const endPeriod = normalizeDate(to);
+		if (startPeriod > endPeriod) {
+			throw new EcbError(
+				`Invalid range: "${startPeriod}" is after "${endPeriod}"`,
+			);
+		}
+		const wanted = currencies?.filter((c) => c !== BASE_CURRENCY);
+		if (wanted && wanted.length === 0) {
+			return { from: startPeriod, to: endPeriod, rates: [] };
+		}
+		const url = `${this.seriesUrl(wanted ?? null)}?startPeriod=${startPeriod}&endPeriod=${endPeriod}`;
+		const rates = await this.fetchObservations(url, endPeriod);
+		return {
+			from: startPeriod,
+			to: endPeriod,
+			rates: [...rates].sort(
+				(left, right) =>
+					left.date.localeCompare(right.date) ||
+					left.currency.localeCompare(right.currency),
+			),
+		};
+	}
+
+	/**
 	 * Convert `amount` from one currency to another using the reference rates on
 	 * (or before) `date`. Non-euro pairs are crossed through the euro.
 	 */
@@ -173,11 +219,30 @@ export class EcbClient {
 		currencies: readonly CurrencyCode[] | null,
 		requestedDate: IsoDate,
 	): Promise<RateSnapshot> {
-		const key = currencies && currencies.length ? currencies.join("+") : "";
-		const url = `${this.baseUrl}/data/EXR/D.${key}.EUR.SP00.A?endPeriod=${requestedDate}&lastNObservations=1`;
+		const url = `${this.seriesUrl(currencies)}?endPeriod=${requestedDate}&lastNObservations=1`;
+		return {
+			requestedDate,
+			rates: await this.fetchObservations(url, requestedDate),
+		};
+	}
 
+	/** The `EXR` series key for a currency selection; empty selects every series. */
+	private seriesUrl(currencies: readonly CurrencyCode[] | null): string {
+		const key = currencies && currencies.length ? currencies.join("+") : "";
+		return `${this.baseUrl}/data/EXR/D.${key}.EUR.SP00.A`;
+	}
+
+	/**
+	 * Fetch and parse one data-API request, memoized on the URL. `cacheDate` is
+	 * only the `requestedDate` stamped on the cached snapshot; the observations
+	 * themselves carry their own effective dates.
+	 */
+	private async fetchObservations(
+		url: string,
+		cacheDate: IsoDate,
+	): Promise<ReferenceRate[]> {
 		const cached = this.cache?.get(url);
-		if (cached) return cached;
+		if (cached) return cached.rates;
 
 		const text = await this.get(url);
 		const rates: ReferenceRate[] = [];
@@ -189,9 +254,8 @@ export class EcbClient {
 			rates.push({ currency, rate: value, date: observedAt });
 		}
 
-		const snapshot: RateSnapshot = { requestedDate, rates };
-		this.cache?.set(url, snapshot);
-		return snapshot;
+		this.cache?.set(url, { requestedDate: cacheDate, rates });
+		return rates;
 	}
 
 	private async get(url: string): Promise<string> {

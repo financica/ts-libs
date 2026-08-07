@@ -18,12 +18,24 @@ const FIXTURES: Record<string, string> = {
 	"D.USD+GBP.EUR.SP00.A|2024-01-15": "usd-gbp-2024-01-15.csv",
 	"D.USD+GBP+CHF.EUR.SP00.A|2024-01-15": "subset-2024-01-15.csv",
 	"D..EUR.SP00.A|2024-01-15": "all-2024-01-15.csv",
+	"D.USD+GBP.EUR.SP00.A|2024-01-11|2024-01-15":
+		"usd-gbp-series-2024-01-11-2024-01-15.csv",
 };
 
 const buildFetch = (): { fetch: FetchLike; calls: string[] } => {
 	const calls: string[] = [];
 	const fetch: FetchLike = async (url) => {
 		calls.push(url);
+		const series = url.match(
+			/\/data\/EXR\/([^?]+)\?startPeriod=(\d{4}-\d{2}-\d{2})&endPeriod=(\d{4}-\d{2}-\d{2})/,
+		);
+		if (series) {
+			const file = FIXTURES[`${series[1]}|${series[2]}|${series[3]}`];
+			if (file === undefined) {
+				return { ok: false, status: 404, text: async () => `no fixture` };
+			}
+			return { ok: true, status: 200, text: async () => fixture(file) };
+		}
 		const match = url.match(
 			/\/data\/EXR\/([^?]+)\?.*endPeriod=(\d{4}-\d{2}-\d{2})/,
 		);
@@ -127,6 +139,61 @@ describe("EcbClient.getRates", () => {
 		const ars = snapshot.rates.find((r) => r.currency === "ARS");
 		// ECB stopped publishing ARS daily; its last observation predates 2024.
 		expect(ars?.date).toBe("2020-10-30");
+	});
+});
+
+describe("EcbClient.getSeries", () => {
+	let calls: string[];
+	let client: EcbClient;
+	beforeEach(() => {
+		const f = buildFetch();
+		calls = f.calls;
+		client = new EcbClient({ fetch: f.fetch });
+	});
+
+	it("returns the whole window in one request, oldest first", async () => {
+		const series = await client.getSeries("2024-01-11", "2024-01-15", [
+			"USD",
+			"GBP",
+		]);
+		expect(calls).toHaveLength(1);
+		expect(series).toMatchObject({ from: "2024-01-11", to: "2024-01-15" });
+		expect(series.rates.map((r) => [r.date, r.currency, r.rate])).toEqual([
+			["2024-01-11", "GBP", 0.86123],
+			["2024-01-11", "USD", 1.0968],
+			["2024-01-12", "GBP", 0.8604],
+			["2024-01-12", "USD", 1.0953],
+			["2024-01-15", "GBP", 0.86075],
+			["2024-01-15", "USD", 1.0945],
+		]);
+	});
+
+	it("omits non-business days rather than carrying the prior rate forward", async () => {
+		const series = await client.getSeries("2024-01-11", "2024-01-15", [
+			"USD",
+			"GBP",
+		]);
+		// 13 and 14 January 2024 are a weekend: absent, not back-filled.
+		expect(series.rates.some((r) => r.date === "2024-01-13")).toBe(false);
+		expect(series.rates.some((r) => r.date === "2024-01-14")).toBe(false);
+	});
+
+	it("drops EUR from the request and makes no call for EUR alone", async () => {
+		const series = await client.getSeries("2024-01-11", "2024-01-15", ["EUR"]);
+		expect(series.rates).toEqual([]);
+		expect(calls).toHaveLength(0);
+	});
+
+	it("caches the window by request", async () => {
+		await client.getSeries("2024-01-11", "2024-01-15", ["USD", "GBP"]);
+		await client.getSeries("2024-01-11", "2024-01-15", ["USD", "GBP"]);
+		expect(calls).toHaveLength(1);
+	});
+
+	it("rejects an inverted range", async () => {
+		await expect(
+			client.getSeries("2024-01-15", "2024-01-11", ["USD"]),
+		).rejects.toBeInstanceOf(EcbError);
 	});
 });
 

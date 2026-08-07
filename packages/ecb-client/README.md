@@ -49,6 +49,11 @@ await ecb.convert({ amount: 100, from: "USD", to: "EUR", date: "2024-01-15" });
 // Several currencies for one date, in a single request.
 const snapshot = await ecb.getRates("2024-01-15", ["USD", "GBP", "CHF"]);
 // → { requestedDate: "2024-01-15", rates: [ { currency, rate, date }, … ] }
+
+// A whole date range in one request, for populating a local rate table.
+const series = await ecb.getSeries("2024-01-11", "2024-01-15", ["USD", "GBP"]);
+// → { from: "2024-01-11", to: "2024-01-15", rates: [ … ] }  (oldest first;
+//    the 13th and 14th are a weekend and are simply absent)
 ```
 
 ## API
@@ -74,6 +79,18 @@ Rates for several currencies on (or before) `date`. Omit `currencies` to fetch
 every series the ECB publishes — note that **discontinued series resolve to
 their own last-published date**, so check each rate's `date` rather than
 assuming the requested one.
+
+### `getSeries(from, to, currencies?) → Promise<RateSeries>`
+
+Every observation published between `from` and `to` inclusive, in **one**
+request, sorted oldest first and then by currency. Prefer this over looping
+`getRates()` per date when building a local rate table.
+
+Unlike `getRate`/`getRates`, this performs **no last-business-day
+substitution**: weekends and holidays are absent from the result rather than
+carrying the previous rate forward. That reports the ECB's real publication
+calendar, leaving the gap-filling policy to the caller. `EUR` is omitted, since
+it is the implicit unit of every quote.
 
 ### `convert({ amount, from, to, date }) → Promise<ConvertResult>`
 

@@ -16,6 +16,7 @@ export type {
 	ConvertResult,
 	CurrencyCode,
 	IsoDate,
+	RateSeries,
 	RateSnapshot,
 	ReferenceRate,
 } from "./types.js";

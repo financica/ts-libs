@@ -35,6 +35,21 @@ export interface RateSnapshot {
 	rates: ReferenceRate[];
 }
 
+/** Every published observation over a date range. */
+export interface RateSeries {
+	/** Start of the requested window, inclusive, normalized to `YYYY-MM-DD`. */
+	from: IsoDate;
+	/** End of the requested window, inclusive, normalized to `YYYY-MM-DD`. */
+	to: IsoDate;
+	/**
+	 * Every observation the ECB published inside the window, oldest first and
+	 * then by currency. Non-business days are simply absent — unlike
+	 * {@link RateSnapshot}, a series never substitutes a prior day's rate, so
+	 * callers can see the real publication calendar and fill gaps themselves.
+	 */
+	rates: ReferenceRate[];
+}
+
 /** The outcome of converting an amount between two currencies. */
 export interface ConvertResult {
 	/** The converted amount, expressed in {@link to}. Not rounded. */
