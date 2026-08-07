@@ -12,6 +12,7 @@ import {
 	getInvoiceLineDiscountAmountCents,
 	getInvoiceLineTaxAmounts,
 } from "./tax-amounts";
+import { toUblPeriod } from "./period";
 import { normalizeString, toNumber } from "./utils";
 
 // Stripe gives a line *total*, not a unit price, so every line's `cac:Price` is
@@ -101,6 +102,10 @@ export const buildInvoiceLines = (invoice: Stripe.Invoice): UblLine[] => {
 			lineExtensionAmount: netTotal,
 			priceAmount: price.priceAmount,
 			baseQuantity: price.baseQuantity,
+			// BT-134/BT-135. Kept per line, not folded into the document period:
+			// a proration covers a different window than the rest of the invoice,
+			// and that difference is the whole reason the line exists.
+			invoicePeriod: toUblPeriod(line.period?.start, line.period?.end),
 			taxCategory: resolveTaxCategoryFromTaxAmounts(taxAmounts, vatPercentage),
 		};
 	});

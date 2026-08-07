@@ -19,6 +19,7 @@ import {
 	resolveInvoiceSettledCents,
 	resolvePrepaidAmount,
 } from "./settlement";
+import { resolveInvoicePeriod } from "./period";
 import { normalizeString, toNumber } from "./utils";
 
 const validateCurrency = (currency: string): string => {
@@ -151,6 +152,10 @@ export const buildUblInvoiceDocument = (params: BuildUblInvoiceParams): UblDocum
 		note: normalizeString(invoice.description),
 		currency: validateCurrency(invoice.currency),
 		buyerReference: normalizeString(params.buyerReference),
+		// BT-73/BT-74. A subscription invoice that does not say what it bills
+		// for forces the receiver to infer it from the issue date, which is
+		// exactly what goes wrong across a year end.
+		invoicePeriod: resolveInvoicePeriod(invoice),
 		precedingInvoiceId: null,
 		supplier: buildSupplierParty(supplier),
 		customer,

@@ -16,6 +16,7 @@ export {
 } from "./build";
 export { buildCreditNoteLines, buildInvoiceLines } from "./lines";
 export { buildCustomerPartyFromStripeInvoice } from "./party";
+export { resolveInvoicePeriod, toUblPeriod } from "./period";
 export { retrieveStripeInvoiceForUbl, STRIPE_INVOICE_UBL_EXPAND } from "./retrieve";
 export {
 	type ResolvePrepaidAmountParams,

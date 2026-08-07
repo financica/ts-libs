@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.1.0
+
+### Added
+
+- **The billing period now reaches the wire.** Stripe states a service period per line and per invoice, and every one of them was being dropped: a subscription invoice went out saying only when it was issued, leaving the receiver to infer what it paid for from the issue date — which is exactly the inference that goes wrong across a year end. `cac:InvoicePeriod` is now emitted at document level (BT-73/BT-74) and per line (BT-134/BT-135), via the exported `resolveInvoicePeriod` / `toUblPeriod`.
+
+    Two conversions are applied, both silently wrong if skipped. **Stripe's period end is exclusive** — a January month bills `01-01 → 02-01`, while BT-74 is the inclusive last day of service, so the end moves back a day; passing it through unchanged puts every monthly invoice one day into the following period. And **a degenerate period is not a period**: Stripe stamps `start === end` on one-off invoice items, which is reported as absent rather than as a zero-length range.
+
+    The document period is the span of the line periods, falling back to `invoice.period_start/end` only when no line states one — the invoice-level pair is the billing window, which a proration or mid-cycle add-on legitimately falls outside of.
+
+### Changed
+
+- Requires `@financica/ubl` >= 0.13.0, which is what can emit `cac:InvoicePeriod`.
+
 ## 1.0.3
 
 ### Changed
