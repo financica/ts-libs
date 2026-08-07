@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.3
+
+### Changed
+
+- **`@financica/ubl` requirement moved to `^0.13.0`.** A caret range on a 0.x line excludes the next minor, so `^0.12.0` did not admit 0.13.0 — inside this monorepo it resolved to the published 0.12.0 instead of the workspace sibling, and consumers could not pick up first-class invoice service periods (BT-73/BT-74, BT-134/BT-135). Nothing in this package's own behaviour changes.
+
 ## 1.0.2
 
 ### Changed
