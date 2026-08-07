@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0
+
+### Added
+
+- **`EcbClient.getSeries(from, to, currencies?)`** — every observation the ECB published inside a date range, in one request, oldest first. Unlike `getRate` / `getRates` it does **not** substitute the last business day: non-business days are simply absent, so the caller sees the real publication calendar and decides how to fill the gaps. That is what you want when populating a local rate table; per-transaction pricing still wants the substituting single-day lookups. Returns a `RateSeries` (`from`, `to`, `rates`), and rejects an inverted range.
+
+_Released from the standalone `financica/ecb-client` repository, which shipped without a changelog entry; written up retroactively when the package moved into this monorepo._
+
 ## 0.1.0
 
 Initial release.
