@@ -126,6 +126,13 @@
         "node-html-parser": "^7.0.1",
       },
     },
+    "packages/stripe-tax-invoices": {
+      "name": "@financica/stripe-tax-invoices",
+      "version": "0.1.0",
+      "dependencies": {
+        "unpdf": "^1.8.0",
+      },
+    },
     "packages/stripe-ubl": {
       "name": "@financica/stripe-ubl",
       "version": "1.1.0",
@@ -256,6 +263,8 @@
     "@financica/scrada-client": ["@financica/scrada-client@workspace:packages/scrada-client"],
 
     "@financica/stripe-hosted-invoices": ["@financica/stripe-hosted-invoices@workspace:packages/stripe-hosted-invoices"],
+
+    "@financica/stripe-tax-invoices": ["@financica/stripe-tax-invoices@workspace:packages/stripe-tax-invoices"],
 
     "@financica/stripe-ubl": ["@financica/stripe-ubl@workspace:packages/stripe-ubl"],
 

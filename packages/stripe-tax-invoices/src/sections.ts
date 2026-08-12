@@ -1,0 +1,158 @@
+/**
+ * The fee tables. One per transfer currency, each a list of fee lines followed
+ * by its own totals block.
+ *
+ * The table has no rules or borders to key off, so its extent is inferred:
+ * a `Transfer Currency:` heading opens it, the first indented totals row ends
+ * the lines, and the first left-margin row after that (the balance note, the
+ * legal paragraph) ends the section.
+ */
+import { parseAmount } from "./amount.js";
+import { indentedText, LABEL_COLUMN_SPLIT_X, leftText } from "./layout.js";
+import { CURRENCY_HEADING_RE, TOTAL_LABELS, VOLUME_RE } from "./patterns.js";
+import type { FeeSection, FeeVolume, TextItem, TextRow } from "./types.js";
+
+/**
+ * Right edges of the two amount columns when the headings cannot be measured,
+ * from real invoices. Both columns are right-aligned, so these are the only
+ * coordinates that stay put as the numbers change width.
+ */
+const FALLBACK_FEE_COLUMN_RIGHT = 471;
+const FALLBACK_VAT_COLUMN_RIGHT = 557;
+
+/**
+ * How far below its fee line a description line may sit, in points. Printed
+ * gaps are ~15; the limit exists so that page furniture below a table that
+ * breaks across pages is not read as a description.
+ */
+const DETAIL_MAX_GAP = 25;
+
+/** `1 other payment totaling €1,242.00` read as a count and a volume. */
+export const parseVolume = (detail: string): FeeVolume | null => {
+	const match = detail.trim().match(VOLUME_RE);
+	if (!match) return null;
+	const count = Number.parseInt((match[1] ?? "").replace(/,/g, ""), 10);
+	const amount = parseAmount(match[3]);
+	if (!Number.isFinite(count) || amount === null) return null;
+	return { count, kind: (match[2] ?? "").trim(), amount };
+};
+
+/** Which total a row states, if any. `Total VAT` is tested before `Total`. */
+const totalKey = (label: string) =>
+	TOTAL_LABELS.find((total) => label.startsWith(total.label))?.key ?? null;
+
+const emptySection = (currency: string): FeeSection => ({
+	currency,
+	lines: [],
+	stripeFees: null,
+	totalVat: null,
+	total: null,
+	debitedFromBalance: null,
+	amountDue: null,
+});
+
+/** The column headings, when the currency heading row prints them. */
+const columnEdges = (row: TextRow) => {
+	const heading = (text: string) =>
+		row.items.find((item) => item.str === text)?.right ?? null;
+	return {
+		fee: heading("Fee Amount") ?? FALLBACK_FEE_COLUMN_RIGHT,
+		vat: heading("VAT") ?? FALLBACK_VAT_COLUMN_RIGHT,
+	};
+};
+
+/**
+ * Split a fee row's amounts across the two columns. Order settles a row that
+ * prints both; a row that prints only one is placed by which heading it ends
+ * closest to.
+ */
+const splitAmounts = (
+	amounts: readonly { item: TextItem; value: number }[],
+	edges: { fee: number; vat: number },
+): { feeAmount: number; vatAmount: number | null } | null => {
+	const [first, second] = amounts;
+	if (!first) return null;
+	if (second) return { feeAmount: first.value, vatAmount: second.value };
+
+	const toFee = Math.abs(first.item.right - edges.fee);
+	const toVat = Math.abs(first.item.right - edges.vat);
+	return toVat < toFee
+		? { feeAmount: 0, vatAmount: first.value }
+		: { feeAmount: first.value, vatAmount: null };
+};
+
+/** Every fee table in the document, in printed order. */
+export const parseSections = (rows: readonly TextRow[]): FeeSection[] => {
+	const sections: FeeSection[] = [];
+	let section: FeeSection | null = null;
+	let edges = { fee: FALLBACK_FEE_COLUMN_RIGHT, vat: FALLBACK_VAT_COLUMN_RIGHT };
+	let inTotals = false;
+	/** The row the last fee line was read from, for the description-line test. */
+	let lineRow: TextRow | null = null;
+
+	for (const row of rows) {
+		const left = leftText(row);
+
+		const currency = left.match(CURRENCY_HEADING_RE)?.[1];
+		if (currency) {
+			section = emptySection(currency);
+			sections.push(section);
+			edges = columnEdges(row);
+			inTotals = false;
+			lineRow = null;
+			continue;
+		}
+
+		if (!section) continue;
+
+		if (left) {
+			// A left-margin row once the totals have started is the prose under the
+			// table, not part of it.
+			if (inTotals) {
+				section = null;
+				continue;
+			}
+
+			const amounts = row.items
+				.filter((item) => item.x >= LABEL_COLUMN_SPLIT_X)
+				.map((item) => ({ item, value: parseAmount(item.str) }))
+				.filter(
+					(entry): entry is { item: TextItem; value: number } =>
+						entry.value !== null,
+				);
+
+			const split = splitAmounts(amounts, edges);
+			if (split) {
+				section.lines.push({
+					description: left,
+					detail: null,
+					volume: null,
+					lineOrder: section.lines.length,
+					...split,
+				});
+				lineRow = row;
+				continue;
+			}
+
+			// No amounts: the description line printed under the fee above.
+			const previous = section.lines.at(-1);
+			const gap = lineRow ? lineRow.y - row.y : Number.POSITIVE_INFINITY;
+			if (previous && gap > 0 && gap <= DETAIL_MAX_GAP) {
+				previous.detail = previous.detail ? `${previous.detail} ${left}` : left;
+				previous.volume = parseVolume(previous.detail);
+				// Chain, so a description that wraps onto a third row still attaches.
+				lineRow = row;
+			}
+			continue;
+		}
+
+		const key = totalKey(indentedText(row));
+		if (!key) continue;
+		const amount = parseAmount(row.items.at(-1)?.str);
+		if (amount === null) continue;
+		inTotals = true;
+		section[key] = amount;
+	}
+
+	return sections;
+};
