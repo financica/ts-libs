@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.4.0
+
+- Adds `@financica/pcmn/charts`: the statutory charts themselves, for
+  enterprises (478 accounts) and for associations and foundations (449), in
+  French, Dutch, German and English — every language the CNC publishes the
+  annexe in. Behind its own entry point, so the class taxonomy stays as small
+  as it was.
+- The charts are the annexe verbatim. Ranges stay ranges, accounts the law
+  prints unnamed keep an empty wording, and the two places where the CNC's own
+  text has a gap (no French number for the 550-559 range; 6702 misnumbered as a
+  second 6701 in Dutch) are left as gaps rather than filled in from another
+  language. `labelFor` falls back across languages for callers that just want a
+  name.
+- `resolveCode` answers which entry of a chart governs an arbitrary account
+  number, following ranges and falling back to the nearest ancestor.
+
 ## 0.3.1
 
 - Reverts the `110901` / `111901` entries added in 0.3.0. They are the CNC's own
