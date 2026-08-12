@@ -1,9 +1,15 @@
 import { StripeTaxInvoiceParseError } from "./errors.js";
-import { parseHeaderFields, parseIdentity, parseParties } from "./header.js";
-import { rowText } from "./layout.js";
-import { ACCOUNT_ID_RE, REVERSE_CHARGE_NOTE, TITLE } from "./patterns.js";
+import {
+	parseHeaderFields,
+	parseIdentity,
+	parseParties,
+	parseReverseChargeNote,
+} from "./header.js";
+import { leftText, rowText } from "./layout.js";
+import { ACCOUNT_ID_RE, CURRENCY_HEADING_RE, TITLE } from "./patterns.js";
 import { readPdf } from "./pdf.js";
 import { parseSections } from "./sections.js";
+import { parseExchangeRates, parseInvoiceTotals, parseNotes } from "./summary.js";
 import type { StripeTaxInvoice, TextItem, TextRow } from "./types.js";
 
 const looksLikeTaxInvoice = (fullText: string): boolean =>
@@ -31,7 +37,11 @@ export const parseStripeTaxInvoiceRows = (
 		);
 	}
 
-	const fields = parseHeaderFields(rows);
+	// Everything above the first fee table is the identity block. Cutting there
+	// keeps the totals — which share the label column — out of the header.
+	const tableStart = rows.findIndex((row) => CURRENCY_HEADING_RE.test(leftText(row)));
+	const headerRows = tableStart === -1 ? rows : rows.slice(0, tableStart);
+
 	const sections = parseSections(rows);
 	if (sections.length === 0) {
 		throw new StripeTaxInvoiceParseError(
@@ -40,11 +50,20 @@ export const parseStripeTaxInvoiceRows = (
 		);
 	}
 
+	const fields = parseHeaderFields(headerRows);
+	const reverseChargeNote = parseReverseChargeNote(headerRows);
+	const { rates, basis } = parseExchangeRates(rows);
+
 	return {
 		...parseIdentity(fields),
-		...parseParties(rows, fields),
-		reverseCharge: fullText.includes(REVERSE_CHARGE_NOTE),
+		...parseParties(headerRows, fields),
+		reverseCharge: reverseChargeNote !== null,
+		reverseChargeNote,
 		sections,
+		totals: parseInvoiceTotals(rows, sections),
+		exchangeRates: rates,
+		exchangeRateBasis: basis,
+		...parseNotes(rows),
 	};
 };
 

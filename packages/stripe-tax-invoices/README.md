@@ -35,10 +35,11 @@ invoice.accountId; // "acct_1RayACDEBQCMEBs7"
 invoice.serviceMonth; // "2025-08"
 invoice.supplier.taxNumber; // "IE 3206488LH"
 invoice.reverseCharge; // true
+invoice.totals; // { currency: "EUR", fees: 45.59, vat: 0 }
 
 for (const section of invoice.sections) {
 	section.currency; // "EUR"
-	section.total; // 45.59
+	section.totals.total; // 45.59
 
 	for (const line of section.lines) {
 		line.description; // "Stripe Processing Fees"
@@ -81,29 +82,47 @@ const invoice = parseStripeTaxInvoiceRows(items, pages.flatMap(groupIntoRows));
 
 **Parties** — the issuing Stripe entity and the billed business, each with its name, address lines, and the tax registration printed for it. Which registration appears depends on the entity and on where you are registered (`Stripe VAT Number` in the EU, `Stripe GST Number` elsewhere), so `taxNumberLabel` reports the label the invoice used rather than assuming one.
 
-**Fee sections** — one per transfer currency. An account settling in several currencies is billed per currency, and each currency gets its own table _and its own totals_. Nothing is summed across sections, because those amounts are not comparable.
+**Fee sections** — one per transfer currency, normally one per page. An account settling in several currencies is billed per currency, and each currency gets its own table _and its own totals_. Nothing is summed across sections, because those amounts are not comparable; `invoice.totals` is the figure that spans them.
 
-**Fee lines** — the description, the fee, and the tax on it. Where the invoice prints a description line, `volume` reads the payment count and gross volume out of it (`17 card payments totaling €1,882.76` → `{ count: 17, kind: "card payments", amount: 1882.76 }`). That is the only place the document states what was actually processed, and it is what lets a month's fees be tied back to the payments that produced them.
+**Fee lines** — the description, the fee, and the tax on it. Descriptions are kept verbatim and do not identify a line: the same name can appear several times in one section, each covering a different group of payments. A fee can be negative (`Fee Adjustment`), and a footnote marker is part of the name as printed (`Refunded Fees †`), with the note itself in `invoice.footnotes`.
+
+Where the invoice prints a description line, `volume` reads the count and gross volume out of it (`17 card payments totaling €1,882.76` → `{ count: 17, kind: "card payments", amount: 1882.76 }`). That is the only place the document states what was actually processed, and it is what lets a month's fees be tied back to the payments that produced them.
 
 **Totals** — `Stripe Fees`, `Total VAT`, `Total`, `Debited from your Balance` and `Amount Due`. The balance row is kept with the sign it is printed with (negative), so `total + debitedFromBalance === amountDue` holds as arithmetic you can check against the paper.
 
-## The two layouts
+## Invoices that span currencies
 
-Stripe changed the fee table in mid-2026, and both forms are still in circulation:
+A section billed in a currency other than the one Stripe reports the invoice in restates its totals in a second column, under `in USD` / `in EUR` headings. Only the totals are restated; the fee lines stay in the section's own currency.
 
-|                  | until mid-2026                                         | from mid-2026                              |
-| ---------------- | ------------------------------------------------------ | ------------------------------------------ |
-| Line description | a fee category — `Stripe Processing Fees`, `Invoicing` | the product — `Card payments - Stripe fee` |
-| Description line | yes, with the payment count and volume                 | none                                       |
-| Balance rows     | `Debited from your Balance` and `Amount Due`           | prose instead; both `null`                 |
+```ts
+const [usd] = invoice.sections;
 
-Nothing needs to be told which one it is reading. The difference shows up in the parsed invoice as `volume` and the balance fields being present or `null`.
+usd.currency; // "USD"
+usd.totals.total; // 1.64
+usd.convertedCurrency; // "EUR"
+usd.convertedTotals.total; // 1.40
+
+invoice.totals; // { currency: "EUR", fees: 10.75, vat: 0 }
+invoice.exchangeRates; // [{ from: "USD", to: "EUR", rate: 0.8555883449056172 }]
+invoice.exchangeRateBasis; // "derived from average rate for period"
+```
+
+`invoice.totals` comes from the `Total fees in EUR` rows the invoice prints under its last section. Those rows appear whenever anything had to be converted — including on a single-section invoice, when that one section is not in the reporting currency. Only an invoice with nothing to convert prints neither, and there the sole section's own totals are the invoice's.
+
+## What varies between invoices
+
+These invoices are consistent in structure and inconsistent in wording, so anything whose wording carries meaning is kept verbatim rather than reduced to a flag:
+
+- **`settlementNote`** — what happened to the money. At least six wordings are in circulation, differing on singular/plural and on tense. When the total has not been debited yet the note says so in the future tense, and the `Debited from your Balance` and `Amount Due` rows are omitted entirely, leaving both `null`.
+- **`reverseChargeNote`** — `Reverse Charge VAT may be applicable.` and `VAT reverse charge applies.` are both in use. Note that the legal paragraph at the foot of _every_ invoice mentions reverse charge whether or not the note applies, so a text search is not a test of it; this reads the note's own position beside the customer block.
+- **Fee descriptions** — mostly fee categories (`Stripe Processing Fees`, `Tax Product Fees`, `Billing - Usage Fee`, `Transfer Fees`, `Payout Fees`), but a product name is also possible (`Card payments - Stripe fee`).
+- **Column labels** — a narrow converted column wraps `Debited from your Balance` onto two rows, with the amount on the first.
 
 ## Limits
 
 - **English only.** Stripe issues these in English whatever the customer's country, and the amounts are formatted US-style (`€1,242.00`). A European-formatted amount is rejected rather than guessed at, because reading `1.242,00` as `1.242` would be a hundred-fold error.
 - **Amounts are numbers, not minor units.** Convert before you do money arithmetic on them.
-- **Verified against EU invoices** from Stripe Payments Europe, Limited. The parser keys off the document's structure rather than the entity, so invoices from Stripe's other entities should read the same way, but that is untested.
+- **Verified against 78 real invoices** from four Stripe accounts, spanning Aug 2021 to Jul 2026, single- and multi-page, EUR and USD — all issued by Stripe Payments Europe, Limited. On every one, the fee lines sum to `Stripe Fees`, `Total` equals fees plus VAT, `Amount Due` equals `Total` plus the debited amount, each converted total matches the printed exchange rate, and the invoice total matches the sum of its sections. The parser keys off the document's structure rather than the entity, so invoices from Stripe's other entities should read the same way, but that is untested.
 
 ## License
 

@@ -4,13 +4,29 @@
  *
  * The table has no rules or borders to key off, so its extent is inferred:
  * a `Transfer Currency:` heading opens it, the first indented totals row ends
- * the lines, and the first left-margin row after that (the balance note, the
+ * the lines, and the first left-margin row after that (the settlement note, the
  * legal paragraph) ends the section.
+ *
+ * A section billed in a currency other than the one Stripe reports the invoice
+ * in restates its totals in a second column, under `in USD` / `in EUR`
+ * headings. Only the totals are restated; the fee lines stay in the section's
+ * own currency.
  */
 import { parseAmount } from "./amount.js";
-import { indentedText, LABEL_COLUMN_SPLIT_X, leftText } from "./layout.js";
-import { CURRENCY_HEADING_RE, TOTAL_LABELS, VOLUME_RE } from "./patterns.js";
-import type { FeeSection, FeeVolume, TextItem, TextRow } from "./types.js";
+import { indentedItems, leftText } from "./layout.js";
+import {
+	CONVERSION_HEADING_RE,
+	CURRENCY_HEADING_RE,
+	resolveTotalKey,
+	VOLUME_RE,
+} from "./patterns.js";
+import type {
+	FeeSection,
+	FeeVolume,
+	SectionTotals,
+	TextItem,
+	TextRow,
+} from "./types.js";
 
 /**
  * Right edges of the two amount columns when the headings cannot be measured,
@@ -27,7 +43,7 @@ const FALLBACK_VAT_COLUMN_RIGHT = 557;
  */
 const DETAIL_MAX_GAP = 25;
 
-/** `1 other payment totaling €1,242.00` read as a count and a volume. */
+/** `1 other refund totaling –€29.75` read as a count and a volume. */
 export const parseVolume = (detail: string): FeeVolume | null => {
 	const match = detail.trim().match(VOLUME_RE);
 	if (!match) return null;
@@ -37,18 +53,20 @@ export const parseVolume = (detail: string): FeeVolume | null => {
 	return { count, kind: (match[2] ?? "").trim(), amount };
 };
 
-/** Which total a row states, if any. `Total VAT` is tested before `Total`. */
-const totalKey = (label: string) =>
-	TOTAL_LABELS.find((total) => label.startsWith(total.label))?.key ?? null;
-
-const emptySection = (currency: string): FeeSection => ({
-	currency,
-	lines: [],
+const emptyTotals = (): SectionTotals => ({
 	stripeFees: null,
 	totalVat: null,
 	total: null,
 	debitedFromBalance: null,
 	amountDue: null,
+});
+
+const emptySection = (currency: string): FeeSection => ({
+	currency,
+	lines: [],
+	totals: emptyTotals(),
+	convertedCurrency: null,
+	convertedTotals: null,
 });
 
 /** The column headings, when the currency heading row prints them. */
@@ -61,10 +79,26 @@ const columnEdges = (row: TextRow) => {
 	};
 };
 
+/** Every amount printed in the indented columns, left to right. */
+const amountsOf = (row: TextRow): { item: TextItem; value: number }[] =>
+	indentedItems(row)
+		.map((item) => ({ item, value: parseAmount(item.str) }))
+		.filter(
+			(entry): entry is { item: TextItem; value: number } => entry.value !== null,
+		);
+
+/** Everything on a row that is not an amount, which is its label. */
+const labelOf = (row: TextRow): string =>
+	indentedItems(row)
+		.filter((item) => parseAmount(item.str) === null)
+		.map((item) => item.str)
+		.join(" ")
+		.trim();
+
 /**
- * Split a fee row's amounts across the two columns. Order settles a row that
- * prints both; a row that prints only one is placed by which heading it ends
- * closest to.
+ * Split a fee row's amounts across the fee and VAT columns. Order settles a row
+ * that prints both; a row that prints only one is placed by which heading it
+ * ends closest to.
  */
 const splitAmounts = (
 	amounts: readonly { item: TextItem; value: number }[],
@@ -81,13 +115,21 @@ const splitAmounts = (
 		: { feeAmount: first.value, vatAmount: null };
 };
 
+/** `in USD` / `in EUR`, the headings over a restated totals block. */
+const conversionHeadings = (row: TextRow): string[] | null => {
+	const items = indentedItems(row);
+	if (items.length !== 2) return null;
+	const codes = items.map((item) => item.str.match(CONVERSION_HEADING_RE)?.[1]);
+	return codes.every((code): code is string => Boolean(code)) ? codes : null;
+};
+
 /** Every fee table in the document, in printed order. */
 export const parseSections = (rows: readonly TextRow[]): FeeSection[] => {
 	const sections: FeeSection[] = [];
 	let section: FeeSection | null = null;
 	let edges = { fee: FALLBACK_FEE_COLUMN_RIGHT, vat: FALLBACK_VAT_COLUMN_RIGHT };
 	let inTotals = false;
-	/** The row the last fee line was read from, for the description-line test. */
+	/** The row the last description was read from, for the wrap test. */
 	let lineRow: TextRow | null = null;
 
 	for (const row of rows) {
@@ -113,15 +155,7 @@ export const parseSections = (rows: readonly TextRow[]): FeeSection[] => {
 				continue;
 			}
 
-			const amounts = row.items
-				.filter((item) => item.x >= LABEL_COLUMN_SPLIT_X)
-				.map((item) => ({ item, value: parseAmount(item.str) }))
-				.filter(
-					(entry): entry is { item: TextItem; value: number } =>
-						entry.value !== null,
-				);
-
-			const split = splitAmounts(amounts, edges);
+			const split = splitAmounts(amountsOf(row), edges);
 			if (split) {
 				section.lines.push({
 					description: left,
@@ -146,12 +180,24 @@ export const parseSections = (rows: readonly TextRow[]): FeeSection[] => {
 			continue;
 		}
 
-		const key = totalKey(indentedText(row));
+		const conversion = conversionHeadings(row);
+		if (conversion) {
+			// The first heading restates the section's own currency; the second is
+			// what it is being converted to.
+			section.convertedCurrency = conversion[1] ?? null;
+			section.convertedTotals = emptyTotals();
+			continue;
+		}
+
+		const key = resolveTotalKey(labelOf(row));
 		if (!key) continue;
-		const amount = parseAmount(row.items.at(-1)?.str);
-		if (amount === null) continue;
+		const [own, converted] = amountsOf(row);
+		if (!own) continue;
 		inTotals = true;
-		section[key] = amount;
+		section.totals[key] = own.value;
+		if (converted && section.convertedTotals) {
+			section.convertedTotals[key] = converted.value;
+		}
 	}
 
 	return sections;

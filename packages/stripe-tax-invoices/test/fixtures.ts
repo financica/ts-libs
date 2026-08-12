@@ -150,11 +150,59 @@ export const feeLine = (
 	],
 ];
 
-/** A totals row: label in the indented column, amount right-aligned. */
-export const totalLine = (y: number, label: string, amount: string): Line => [
+/**
+ * A totals row: label in the indented column, amount right-aligned. A section
+ * being converted restates the amount in a second column, so the section's own
+ * amount moves left into the fee column.
+ */
+export const totalLine = (
+	y: number,
+	label: string,
+	amount: string,
+	converted?: string,
+): Line => [
+	y,
+	converted
+		? [
+				[316, label],
+				[471 - amount.length * 4.6, amount, 471],
+				[557 - converted.length * 4.6, converted, 557],
+			]
+		: [
+				[316, label],
+				[557 - amount.length * 4.6, amount, 557],
+			],
+];
+
+/**
+ * `Debited from your Balance` as the narrow converted layout prints it: the
+ * label wrapped onto two rows, with the amount on the first.
+ */
+export const wrappedDebitedLines = (y: number, amount: string): Line[] => [
+	[
+		y,
+		[
+			[316, "Debited from"],
+			[471 - amount.length * 4.6, amount, 471],
+		],
+	],
+	[y - 15, [[316, "your Balance"]]],
+];
+
+/** The `in USD` / `in EUR` headings over a restated totals block. */
+export const conversionHeading = (y: number, from: string, to: string): Line => [
 	y,
 	[
-		[316, label],
-		[557 - amount.length * 4.6, amount, 557],
+		[446, `in ${from}`, 471],
+		[533, `in ${to}`, 557],
+	],
+];
+
+/** One row of the `Exchange Rates` table. */
+export const exchangeRateLine = (y: number, pair: string, rate: string): Line => [
+	y,
+	[
+		[228, pair],
+		[295, rate],
 	],
 ];

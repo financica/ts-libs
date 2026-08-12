@@ -4,8 +4,8 @@
  */
 import { longDateToIso, monthYearToIso } from "./dates.js";
 import { StripeTaxInvoiceParseError } from "./errors.js";
-import { LABEL_COLUMN_SPLIT_X, leftText } from "./layout.js";
-import { CURRENCY_HEADING_RE } from "./patterns.js";
+import { indentedText, LABEL_COLUMN_SPLIT_X, leftText } from "./layout.js";
+import { CURRENCY_HEADING_RE, REVERSE_CHARGE_RE } from "./patterns.js";
 import type { InvoiceParty, TextRow } from "./types.js";
 
 /** The right-hand label/value pairs, keyed by label as printed. */
@@ -51,6 +51,21 @@ const findTaxNumber = (
 		}
 	}
 	return { taxNumber: null, taxNumberLabel: null };
+};
+
+/**
+ * The reverse-charge note, printed beside the customer block.
+ *
+ * Two wordings are in circulation, and the legal paragraph at the foot of every
+ * invoice mentions reverse charge whether or not the note applies — so this
+ * looks only at the indented column above the fee table, where the note is.
+ */
+export const parseReverseChargeNote = (rows: readonly TextRow[]): string | null => {
+	for (const row of rows) {
+		const text = indentedText(row);
+		if (REVERSE_CHARGE_RE.test(text)) return text;
+	}
+	return null;
 };
 
 /**

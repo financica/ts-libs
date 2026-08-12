@@ -63,13 +63,13 @@ export const leftText = (row: TextRow): string =>
 		.join(" ")
 		.trim();
 
+/** The runs of a row printed in the indented column and beyond. */
+export const indentedItems = (row: TextRow): TextItem[] =>
+	row.items.filter((item) => item.x >= LABEL_COLUMN_SPLIT_X);
+
 /** The part of a row printed in the indented column and beyond. */
 export const indentedText = (row: TextRow): string =>
-	row.items
-		.filter((item) => item.x >= LABEL_COLUMN_SPLIT_X)
+	indentedItems(row)
 		.map((item) => item.str)
 		.join(" ")
 		.trim();
-
-/** Whether a row prints anything against the left margin. */
-export const hasLeftText = (row: TextRow): boolean => leftText(row) !== "";
