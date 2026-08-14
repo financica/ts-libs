@@ -122,7 +122,7 @@ These invoices are consistent in structure and inconsistent in wording, so anyth
 
 - **English only.** Stripe issues these in English whatever the customer's country, and the amounts are formatted US-style (`€1,242.00`). A European-formatted amount is rejected rather than guessed at, because reading `1.242,00` as `1.242` would be a hundred-fold error.
 - **Amounts are numbers, not minor units.** Convert before you do money arithmetic on them.
-- **Verified against 78 real invoices** from four Stripe accounts, spanning Aug 2021 to Jul 2026, single- and multi-page, EUR and USD — all issued by Stripe Payments Europe, Limited. On every one, the fee lines sum to `Stripe Fees`, `Total` equals fees plus VAT, `Amount Due` equals `Total` plus the debited amount, each converted total matches the printed exchange rate, and the invoice total matches the sum of its sections. The parser keys off the document's structure rather than the entity, so invoices from Stripe's other entities should read the same way, but that is untested.
+- **Verified against 78 real invoices** from five Stripe accounts, spanning Aug 2021 to Jul 2026, single- and multi-page, EUR and USD — all issued by Stripe Payments Europe, Limited. On every one, the fee lines sum to `Stripe Fees`, `Total` equals fees plus VAT, `Amount Due` equals `Total` plus the debited amount, each converted total matches the printed exchange rate, and the invoice total matches the sum of its sections. The parser keys off the document's structure rather than the entity, so invoices from Stripe's other entities should read the same way, but that is untested.
 
 ## License
 

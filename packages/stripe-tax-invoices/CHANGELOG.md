@@ -22,5 +22,5 @@ Initial release.
 - Failures are a `StripeTaxInvoiceParseError` carrying a `code`
   (`not_a_stripe_tax_invoice` or `missing_field`).
 
-Verified against 78 real invoices from four Stripe accounts, Aug 2021 to
+Verified against 78 real invoices from five Stripe accounts, Aug 2021 to
 Jul 2026, EUR and USD.
