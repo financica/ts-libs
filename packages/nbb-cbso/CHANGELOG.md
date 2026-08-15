@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.6.0
+
+Breaking: `NbbFilingInput.taxonomy` is the taxonomy module itself, imported
+from `@financica/nbb-cbso/taxonomies/<model>-<part>`, and replaces the
+`model`, `part` and `taxonomy` (version) strings. `TAXONOMY_MODULES` and
+`DEFAULT_TAXONOMY` are gone with the registry they served. A registry that is
+looked up by string at runtime cannot be tree-shaken — a bundler has to keep
+every model behind it — and at 3 MB for the full association model alone that
+was going to be the whole package. With the module passed in, the main entry
+carries no taxonomy data at all and a caller ships the models it imports.
+`NbbFilingPart` is now the entry-point suffix, `"f"` / `"a"` / `"o"`.
+
+- The association and foundation models are generated: `m04-f` (abbreviated),
+  `m05-f` (full) and `m08-f` (micro), alongside `m87-f`. They carry the
+  association's own passif spine — `10` is the association's funds, `13` the
+  allocated funds — the class-73 income rubric for contributions, gifts,
+  legacies and grants, and their own check lists (179, 415 and 160), which
+  do not share the company appropriation identity. An association files only
+  the `-f` part, and there is no other module to import.
+- The generator emits each model to `src/taxonomies/` and formats its output,
+  and no longer writes an index that a partial run could leave short.
+
 ## 0.5.0
 
 Breaking: a filing with no `entity.businessCourt` is now an error. The business

@@ -1,9 +1,5 @@
 import type { Datapoint, TaxonomyModule } from "./taxonomy.js";
 import type { NbbFilingInput, RubricAmounts } from "./types.js";
-import { TAXONOMY_MODULES } from "./generated/index.js";
-
-/** The taxonomy release used when a filing does not name one. */
-export const DEFAULT_TAXONOMY = "26.0.15";
 
 /** A single value to report, bound to the datapoint that carries it. */
 export interface NbbFact {
@@ -138,21 +134,10 @@ function columnOf(
  * Rubric codes are resolved against the generated datapoint table, so an
  * unknown code is an error rather than a silently dropped figure.
  *
- * @throws {Error} if the taxonomy release or model is not available, or a
- * rubric code does not exist in the chosen model.
+ * @throws {Error} if a rubric code does not exist in the chosen model.
  */
 export function buildNbbFiling(input: NbbFilingInput): NbbFiling {
-	const version = input.taxonomy ?? DEFAULT_TAXONOMY;
-	const part = { full: "f", "annual-accounts": "a", "other-documents": "o" }[
-		input.part ?? "full"
-	];
-	const key = `${version}/${input.model}-${part}`;
-	const taxonomyModule = TAXONOMY_MODULES[key];
-	if (!taxonomyModule) {
-		throw new Error(
-			`no generated taxonomy for "${key}"; available: ${Object.keys(TAXONOMY_MODULES).join(", ")}`,
-		);
-	}
+	const taxonomyModule = input.taxonomy;
 
 	const byCode = new Map<string, Datapoint[]>();
 	for (const datapoint of taxonomyModule.datapoints) {

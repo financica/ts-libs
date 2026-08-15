@@ -2,10 +2,12 @@
  * Shapes of the data generated from an NBB/CBSO taxonomy package.
  *
  * Nothing in here is hand-maintained. `scripts/generate-taxonomy.ts` reads a
- * taxonomy release and emits modules under `src/generated/` that conform to
- * these types, which is what keeps a new January release a data change rather
- * than a code change.
+ * taxonomy release and emits one module per model under `src/taxonomies/`,
+ * conforming to these types, which is what keeps a new January release a data
+ * change rather than a code change.
  */
+
+import type { NbbFilingPart, NbbModel } from "./types.js";
 
 /**
  * A reportable figure, identified the way the taxonomy identifies it: a metric
@@ -163,9 +165,9 @@ export interface TaxonomyModule {
 	/** Taxonomy version, e.g. `"26.0.15"`. */
 	version: string;
 	/** Model identifier, e.g. `"m87"`. */
-	model: string;
+	model: NbbModel;
 	/** Filing part: `"f"`, `"a"` or `"o"`. */
-	part: string;
+	part: NbbFilingPart;
 	/** Entry-point schema URI to write as the instance's `schemaRef`. */
 	schemaRef: string;
 	/** Namespace URI for the metric dictionary. */

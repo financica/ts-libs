@@ -6,12 +6,12 @@ This package builds, validates and renders the `.xbrl` instance document a filer
 
 Belgian knowledge lives here. The generic XBRL 2.1 reading and writing lives in [`@financica/xbrl`](https://github.com/financica/xbrl), which this package builds on.
 
-> **Status: early but working end to end.** A micro filing builds, validates and renders to a `.xbrl` that round-trips through a parser. Read [Check coverage](#check-coverage) before relying on validation: the validator is sound but not yet complete.
+> **Status: early but working end to end.** A micro company filing and an abbreviated association filing build, validate and render to a `.xbrl` that round-trips through a parser. Read [Check coverage](#check-coverage) before relying on validation: the validator is sound but not yet complete.
 
 ## Scope
 
-- Taxonomy **NBB-CBSO-26.0.15**, in use since 2 January 2026, with older and future versions selectable.
-- All nine annual-accounts models: full, abbreviated and micro, for companies with capital, companies without capital, and associations and foundations. Since the CSA abolished company capital, a Belgian SRL/BV files a _without capital_ model — `m87` for a micro SRL.
+- Taxonomy **NBB-CBSO-26.0.15**, in use since 2 January 2026. Each release and model is its own module, so older and future releases sit alongside rather than replace.
+- The nine annual-accounts models are full, abbreviated and micro, for companies with capital (`m02`, `m01`, `m07`), companies without capital (`m82`, `m81`, `m87`) and associations and foundations (`m05`, `m04`, `m08`). Since the CSA abolished company capital, a Belgian SRL/BV files a _without capital_ model — `m87` for a micro SRL. Generated so far: **`m87-f`, `m04-f`, `m05-f` and `m08-f`**; the other five are a generator run away (see [Taxonomy modules](#taxonomy-modules)).
 - The statutory arithmetic and logical checks published in the Moniteur belge, which are disqualifying; the complementary checks from Annex 1.2 of the filing protocol, which are not; and the social balance sheet checks from Annex 1.3.
 
 ## The input contract
@@ -20,9 +20,10 @@ The full contract is in [`src/types.ts`](src/types.ts) and is the authority; thi
 
 ```typescript
 import type { NbbFilingInput } from "@financica/nbb-cbso";
+import m87f from "@financica/nbb-cbso/taxonomies/m87-f";
 
 const filing: NbbFilingInput = {
-	model: "m87",
+	taxonomy: m87f,
 	language: "fr",
 	entity: {
 		enterpriseNumber: "0766280697",
@@ -45,9 +46,15 @@ const filing: NbbFilingInput = {
 };
 ```
 
+### The taxonomy is a module you import
+
+The model, filing part and release are not named by string: `taxonomy` takes the module for the entry point you file against, `@financica/nbb-cbso/taxonomies/<model>-<part>`. The module carries `model`, `part` and `version` itself. Each is a separate file — `m05-f` alone is close to 3 MB of datapoints and checks — and the main entry imports none of them, so a bundler ships only the models a caller imports and a caller that files for one kind of entity pays for one.
+
+An association or foundation (`m04`, `m05`, `m08`) files only the `-f` part; the NBB publishes no `-a` or `-o` entry point for those models, so there is no module to import.
+
 ### Figures are keyed by statutory rubric code
 
-You pass `"20/58"`, not a taxonomy element name. This is not sugar. The NBB taxonomy is dimensional: there are only fifteen metric elements in the whole dictionary, and a figure is a metric such as `met:am1` combined with a set of explicit dimension members that identify the rubric. Resolving a rubric code to that combination is this package's job. Element names never appear in the contract.
+You pass `"20/58"`, not a taxonomy element name. The NBB taxonomy is dimensional: there are only fifteen metric elements in the whole dictionary, and a figure is a metric such as `met:am1` combined with a set of explicit dimension members that identify the rubric. Resolving a rubric code to that combination is this package's job. Element names never appear in the contract.
 
 ### The balance sheet is after appropriation
 
@@ -73,15 +80,16 @@ import {
 	validateNbbFiling,
 	renderNbbFiling,
 } from "@financica/nbb-cbso";
+import m04f from "@financica/nbb-cbso/taxonomies/m04-f";
 
-const filing = buildNbbFiling(input);
+const filing = buildNbbFiling({ ...input, taxonomy: m04f });
 const { errors, warnings, skipped } = validateNbbFiling(filing);
 if (errors.length === 0) {
 	const xbrl = renderNbbFiling(filing); // write this to <name>.xbrl
 }
 ```
 
-`buildNbbFiling` resolves each rubric code against the taxonomy, so an unknown code throws rather than silently dropping a figure.
+`buildNbbFiling` resolves each rubric code against the taxonomy, so an unknown code throws rather than silently dropping a figure. That is also what keeps a company figure out of an association filing: `RubricCode` is a plain string, and `10/11` or `19` fed to `m04-f` fails at build time because the association model has no such rubric.
 
 `validateNbbFiling` separates `errors` from `warnings` along the NBB's own line: statutory checks are disqualifying and land in `errors`, Annex 1.2 and social balance sheet checks are not and land in `warnings`. Each `Finding` carries the NBB's own check identifier, the rubric codes involved, and a message naming the figures that broke the rule. `skipped` lists checks that were not evaluated, which is deliberate — see below.
 
@@ -89,26 +97,31 @@ if (errors.length === 0) {
 
 ## Check coverage
 
-The datapoint table and the check list are both generated from the taxonomy by `scripts/generate-taxonomy.ts`, which reads the table linkbases for rubric codes and the formula linkbases for the published assertions. For `m87-f` that yields **936 datapoints, 523 of them carrying a statutory rubric code, and 171 checks**.
+The datapoint table and the check list are both generated from the taxonomy by `scripts/generate-taxonomy.ts`, which reads the table linkbases for rubric codes and the formula linkbases for the published assertions. The association models do not share the company checks — their equity identity has no capital in it and their appropriation account no dividends — so each model carries its own list:
 
-Of those 171, **51 resolve unambiguously** to one rubric per variable and are evaluated. The rest are skipped and reported in `skipped`:
+| Module  | Datapoints | With a rubric code | Checks | Not applicable | Evaluated on the test fixture |
+| ------- | ---------- | ------------------ | ------ | -------------- | ----------------------------- |
+| `m87-f` | 1027       | 586                | 171    | 54             | 69                            |
+| `m04-f` | 894        | 595                | 179    | 54             | 73                            |
+| `m05-f` | 2139       | 1741               | 415    | 88             | —                             |
+| `m08-f` | 819        | 540                | 160    | 54             | —                             |
 
-- **40 are ambiguous.** The taxonomy filters some variables loosely enough to match several rubrics, and disambiguates through `implicitFiltering`. The generator applies implicit filtering and an exact-match preference, which resolves many but not all.
-- **80 have a variable that reaches no coded rubric** in this model.
+_Not applicable_ are checks about a section the model does not have — the social balance sheet, for a micro or abbreviated filing. Of the rest, a check is evaluated when it resolves unambiguously to one rubric per variable and the filing reports something for it; `validateNbbFiling` reports the others as `skipped` (nothing reported to check), `unresolved` (could not be pinned to its rubrics) or `notApplicable`. Where a variable is ambiguous, the taxonomy filters it loosely enough to match several rubrics and disambiguates through `implicitFiltering`; the generator applies implicit filtering and an exact-match preference, which resolves most but not all.
 
-Skipping is the deliberate choice. Guessing which rubric an ambiguous variable meant would invent failures on filings that are in fact correct, and the whole point of this package is to stop a filing being rejected — a validator that cries wolf is worse than one that says what it did not check.
+Skipping is deliberate. Guessing which rubric an ambiguous variable meant would invent failures on filings that are in fact correct, and a rejected filing is what this package exists to prevent.
 
-Every statutory check that _is_ evaluated has been verified against the equations published in Appendix 2.1 of the technical guide. All six reproduce the published form exactly, for example `va_03.01.0_0014` → `20/58 = 20 + 21/28 + 29/58`.
+Six of the `m87-f` checks and three of the `m04-f` ones are pinned in tests to the equations published in Appendix 2.1 of the technical guide and reproduce the published form exactly, for example `va_03.01.0_0014` → `20/58 = 20 + 21/28 + 29/58` and, for the association, `va_03.02.0_0012` → `14 = 9906 + 791 - 691`. The rest come from the same generated code path but have not been transcribed against the guide individually.
 
 Alongside the generated checks, these are asserted directly: the balance sheet balancing (`20/58 = 10/49`, stated too loosely in the taxonomy to resolve), DAT 26 date consistency, DAT 31 decimal places, the enterprise number's modulo-97 check digits, non-empty valuation rules, and the requirement that at least one balance sheet figure be reported for the exercise.
 
 ## Known gaps
 
-- The software producer is **not** written into the annual accounts instance. Its section belongs to the `m101-r` module, which is a separate filing and is not published; only `m87-f` is generated so far.
+- The software producer is **not** written into the annual accounts instance. Its section belongs to the `m101-r` module, which is a separate filing and is not generated.
+- The company models with capital (`m01`, `m02`, `m07`), the full and abbreviated models without capital (`m81`, `m82`) and the split `-a` / `-o` parts are not generated yet. Nothing in the code is specific to the four that are; see [Taxonomy modules](#taxonomy-modules).
 - Directors (section 2.1) and the accountant declaration (section 2.2) are accepted by the contract but not yet rendered — they sit in open tables addressed by typed dimensions.
 - DAT 39, duplicate filing, cannot be checked locally: it depends on what the NBB already holds.
 
-## Filing facts worth knowing
+## Filing constraints
 
 - One annual account per file, `.xbrl` extension, 50 MB maximum.
 - The entity identifier is the KBO/BCE enterprise number as ten digits, no `BE` prefix, under the scheme `http://www.fgov.be`.
@@ -124,6 +137,18 @@ bun run typecheck  # tsc --noEmit
 bun run build      # tsdown
 bun run ci         # all of the above
 ```
+
+### Taxonomy modules
+
+`src/taxonomies/*.ts` and `src/generated/enumerations.ts` are generated, never edited. To add a model or take a new January release:
+
+```bash
+curl -O https://www.nbb.be/doc/ba/xbrl/taxo2026/nbb-cbso-26.0.15.zip
+unzip -q nbb-cbso-26.0.15.zip -d taxo
+bun run generate taxo/nbb-cbso-26.0.15 26.0.15 m87-f m04-f m05-f m08-f
+```
+
+Each `<model>-<part>` becomes `src/taxonomies/<model>-<part>.ts`, which tsdown builds to its own entry under `dist/taxonomies/`, published through the `./taxonomies/*` export pattern — no `package.json` change per model. The generator formats what it writes, so a re-run against the same release is a no-op in git. Pass every model you want in one run or in several; each file stands alone and there is no index to keep in step.
 
 ### Test fixture
 

@@ -1,3 +1,5 @@
+import type { TaxonomyModule } from "./taxonomy.js";
+
 /**
  * Input contract for an NBB/CBSO annual-accounts filing.
  *
@@ -41,19 +43,20 @@ export type NbbModel =
 	| "m08";
 
 /**
- * Which part of the filing this document carries. The NBB allows a filing to
- * be split into two deposits; `"full"` is the single-file, unsplit form.
+ * Which part of the filing a taxonomy module carries. The NBB allows a filing
+ * to be split into two deposits; `"f"` is the single-file, unsplit form.
  *
- * Maps to the `-f` / `-a` / `-o` entry-point suffixes. Associations
- * (`m04`, `m05`, `m08`) only support `"full"`.
+ * These are the entry-point suffixes: `m87-f`, `m87-a`, `m87-o`. Associations
+ * and foundations (`m04`, `m05`, `m08`) publish only `-f`, so there is no
+ * module to import for anything else.
  */
 export type NbbFilingPart =
-	/** Annual accounts and other documents in one file (`-f`). */
-	| "full"
-	/** Annual accounts only (`-a`). */
-	| "annual-accounts"
-	/** Other documents only (`-o`). */
-	| "other-documents";
+	/** Annual accounts and other documents in one file. */
+	| "f"
+	/** Annual accounts only. */
+	| "a"
+	/** Other documents only. */
+	| "o";
 
 /** Language the filing is drawn up in. Written as `xml:lang` on the root. */
 export type FilingLanguage = "fr" | "nl" | "de" | "en";
@@ -204,11 +207,21 @@ export interface ApplicationProducer {
  * and pass the result here alongside {@link NbbFilingInput.appropriation}.
  */
 export interface NbbFilingInput {
-	/** Taxonomy version to file against. Defaults to the current one. */
-	taxonomy?: string;
-	model: NbbModel;
-	/** Defaults to `"full"`. */
-	part?: NbbFilingPart;
+	/**
+	 * The model and taxonomy release to file against, imported from
+	 * `@financica/nbb-cbso/taxonomies/<model>-<part>`:
+	 *
+	 * ```typescript
+	 * import m04f from "@financica/nbb-cbso/taxonomies/m04-f";
+	 * ```
+	 *
+	 * The module carries its own {@link TaxonomyModule.model | model},
+	 * {@link TaxonomyModule.part | part} and
+	 * {@link TaxonomyModule.version | version}, so those are not repeated here.
+	 * Passing the module rather than naming it is what lets a bundler leave
+	 * every other model out.
+	 */
+	taxonomy: TaxonomyModule;
 	language: FilingLanguage;
 	entity: Entity;
 	identification: Identification;

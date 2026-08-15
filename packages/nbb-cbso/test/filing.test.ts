@@ -8,8 +8,8 @@ import {
 	ENTERPRISE_NUMBER_SCHEME,
 	ENUMERATIONS,
 } from "../src/index.js";
-import type { NbbFilingInput } from "../src/index.js";
-import { MICRO_FILING, withBalanceSheet } from "./filing.js";
+import type { NbbFilingInput, RubricAmounts } from "../src/index.js";
+import { ASSOCIATION_FILING, MICRO_FILING, withBalanceSheet } from "./filing.js";
 
 const built = () => buildNbbFiling(MICRO_FILING);
 
@@ -58,10 +58,11 @@ describe("buildNbbFiling", () => {
 		).toThrow(/unknown rubric code "99\/99"/);
 	});
 
-	it("rejects a taxonomy release that is not generated", () => {
-		expect(() => buildNbbFiling({ ...MICRO_FILING, taxonomy: "1.0.0" })).toThrow(
-			/no generated taxonomy/,
-		);
+	it("takes the model, part and release from the taxonomy module", () => {
+		const filing = built();
+		expect(filing.module.model).toBe("m87");
+		expect(filing.module.part).toBe("f");
+		expect(filing.module.version).toBe("26.0.15");
 	});
 
 	it("writes amounts to two decimal places", () => {
@@ -166,6 +167,86 @@ describe("statutory checks", () => {
 		expect(result.warnings.some((finding) => finding.check.startsWith("va_"))).toBe(
 			false,
 		);
+	});
+});
+
+/**
+ * The association models are not a subset of the company ones: the passif
+ * spine and the appropriation account differ, and so do the checks. What the
+ * fixture proves is that the association's own rubrics resolve, that a
+ * company rubric fed into the association model is refused, and that the
+ * association's own statutory identities are evaluated.
+ */
+describe("association filing (m04)", () => {
+	const association = () => buildNbbFiling(ASSOCIATION_FILING);
+	const withAssociationBalanceSheet = (overrides: RubricAmounts) =>
+		buildNbbFiling({
+			...ASSOCIATION_FILING,
+			balanceSheet: { ...ASSOCIATION_FILING.balanceSheet, ...overrides },
+		});
+
+	it("resolves the association passif spine and class 73 income", () => {
+		const filing = association();
+		expect(filingValue(filing, "10", "current")).toBe(20000);
+		expect(filingValue(filing, "13", "current")).toBe(5000);
+		expect(filingValue(filing, "73", "current")).toBe(40000);
+		const funds = filing.facts.find((fact) => fact.code === "10");
+		expect(funds?.datapoint.label).toMatch(/association/i);
+	});
+
+	it("refuses a company rubric the association model does not have", () => {
+		for (const code of ["10/11", "110", "19", "9902"]) {
+			expect(
+				() => withAssociationBalanceSheet({ [code]: { current: 1 } }),
+				code,
+			).toThrow(new RegExp(`unknown rubric code "${code}"`));
+		}
+	});
+
+	it("passes when the association's own arithmetic holds", () => {
+		const result = validateNbbFiling(association());
+		expect(result.errors).toEqual([]);
+		expect(result.warnings).toEqual([]);
+		expect(result.evaluated.length).toBeGreaterThan(0);
+	});
+
+	// The association's own checks: an equity identity with no capital in
+	// it, and the appropriation identity, which has no company counterpart.
+	const cases: { check: string; rule: string; break: RubricAmounts }[] = [
+		{
+			check: "va_03.02.0_0001",
+			rule: "10/15 = 10 + 12 + 13 + 14 + 15",
+			break: { "10": { current: 21000, previous: 20000 } },
+		},
+		{
+			check: "va_03.02.0_0012",
+			rule: "14 = 9906 + 791 - 691",
+			break: { "14": { current: 33000, previous: 20000 } },
+		},
+		{
+			check: "va_03.02.0_0011",
+			rule: "10/49 = 10/15 + 16 + 17/49",
+			break: { "16": { current: 1000, previous: 0 } },
+		},
+	];
+
+	for (const testCase of cases) {
+		it(`${testCase.check} fails when ${testCase.rule} does not hold`, () => {
+			const result = validateNbbFiling(
+				withAssociationBalanceSheet(testCase.break),
+			);
+			const finding = result.errors.find(
+				(candidate) => candidate.check === testCase.check,
+			);
+			expect(finding, `expected ${testCase.check} to fail`).toBeDefined();
+			expect(finding?.rule).toBe(testCase.rule);
+		});
+	}
+
+	it("renders against the m04-f entry point", () => {
+		const xml = renderNbbFiling(association());
+		expect(xml).toContain("m04-f");
+		expect(parseXbrl(xml)?.facts.length).toBeGreaterThan(0);
 	});
 });
 

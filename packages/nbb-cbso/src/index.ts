@@ -1,4 +1,4 @@
-export { buildNbbFiling, filingValue, DEFAULT_TAXONOMY } from "./build.js";
+export { buildNbbFiling, filingValue } from "./build.js";
 export { validateNbbFiling } from "./validate.js";
 export { renderNbbFiling, ENTERPRISE_NUMBER_SCHEME } from "./render.js";
 export {
@@ -6,7 +6,6 @@ export {
 	describeExpression,
 	ExpressionError,
 } from "./expression.js";
-export { TAXONOMY_MODULES } from "./generated/index.js";
 export { ENUMERATIONS } from "./generated/enumerations.js";
 
 export type { NbbFact, NbbFiling } from "./build.js";

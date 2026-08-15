@@ -1,4 +1,6 @@
 import type { NbbFilingInput, RubricAmounts } from "../src/index.js";
+import m04f from "../src/taxonomies/m04-f.js";
+import m87f from "../src/taxonomies/m87-f.js";
 
 /**
  * A complete micro filing for a company without capital, used as the starting
@@ -10,7 +12,7 @@ import type { NbbFilingInput, RubricAmounts } from "../src/index.js";
  * validator's own bugs pass unnoticed.
  */
 export const MICRO_FILING: NbbFilingInput = {
-	model: "m87",
+	taxonomy: m87f,
 	language: "fr",
 	entity: {
 		enterpriseNumber: "0925590628",
@@ -163,3 +165,161 @@ export function withBalanceSheet(overrides: RubricAmounts): NbbFilingInput {
 		balanceSheet: { ...MICRO_FILING.balanceSheet, ...overrides },
 	};
 }
+
+/**
+ * A complete abbreviated filing for an association, `m04`. The passif spine
+ * is the association's own: `10` is the association's funds rather than a
+ * capital subtotal, `13` the allocated funds, and the income statement has
+ * `73` — contributions, gifts, legacies and grants — which no company model
+ * carries. Like {@link MICRO_FILING}, every subtotal foots.
+ */
+export const ASSOCIATION_FILING: NbbFilingInput = {
+	taxonomy: m04f,
+	language: "fr",
+	entity: {
+		enterpriseNumber: "0925590628",
+		name: "LES AMIS DU CANAL",
+		// ASBL.
+		legalForm: "m017",
+		address: {
+			street: "QUAI DES PENICHES",
+			houseNumber: "3",
+			postalCode: "1000",
+		},
+		// Brussels, French-speaking.
+		businessCourt: "m31",
+	},
+	identification: {
+		exercise: { startDate: "2025-01-01", endDate: "2025-12-31" },
+		previousExercise: { startDate: "2024-01-01", endDate: "2024-12-31" },
+		generalMeetingDate: "2026-06-15",
+		previousPeriodDataUnchanged: true,
+		pageCount: 14,
+	},
+	producer: { name: "Financica" },
+	balanceSheet: {
+		// 21/28 = 21 + 22/27 + 28, and 22/27 = 22 + … + 27, all furniture.
+		"20": { current: 0, previous: 0 },
+		"21/28": { current: 40000, previous: 30000 },
+		"21": { current: 0, previous: 0 },
+		"22/27": { current: 40000, previous: 30000 },
+		"22": { current: 0, previous: 0 },
+		"23": { current: 0, previous: 0 },
+		"24": { current: 40000, previous: 30000 },
+		"25": { current: 0, previous: 0 },
+		"26": { current: 0, previous: 0 },
+		"27": { current: 0, previous: 0 },
+		"28": { current: 0, previous: 0 },
+
+		// 29/58 = 29 + 3 + 40/41 + 50/53 + 54/58 + 490/1
+		"29": { current: 0, previous: 0 },
+		"290": { current: 0, previous: 0 },
+		"291": { current: 0, previous: 0 },
+		"3": { current: 0, previous: 0 },
+		"30/36": { current: 0, previous: 0 },
+		"37": { current: 0, previous: 0 },
+		"40/41": { current: 15000, previous: 12000 },
+		"40": { current: 15000, previous: 12000 },
+		"41": { current: 0, previous: 0 },
+		"50/53": { current: 0, previous: 0 },
+		"54/58": { current: 45000, previous: 38000 },
+		"490/1": { current: 0, previous: 0 },
+		"29/58": { current: 60000, previous: 50000 },
+		"20/58": { current: 100000, previous: 80000 },
+
+		// Equity: 10/15 = 10 + 12 + 13 + 14 + 15. No `10/11`, `110`, `111`
+		// or `19` here: an association has funds, not capital.
+		"10": { current: 20000, previous: 20000 },
+		"12": { current: 0, previous: 0 },
+		"13": { current: 5000, previous: 5000 },
+		// Last year's 20000 carried forward plus this year's 12000 result.
+		"14": { current: 32000, previous: 20000 },
+		"15": { current: 0, previous: 0 },
+		"10/15": { current: 57000, previous: 45000 },
+
+		// 16 = 160/5 + 167 + 168, with 160/5 broken down to its five lines.
+		"16": { current: 0, previous: 0 },
+		"160/5": { current: 0, previous: 0 },
+		"160": { current: 0, previous: 0 },
+		"161": { current: 0, previous: 0 },
+		"162": { current: 0, previous: 0 },
+		"163": { current: 0, previous: 0 },
+		"164/5": { current: 0, previous: 0 },
+		"167": { current: 0, previous: 0 },
+		"168": { current: 0, previous: 0 },
+
+		// 17/49 = 17 + 42/48 + 492/3, and each of those to its own lines.
+		"17/49": { current: 43000, previous: 35000 },
+		"17": { current: 0, previous: 0 },
+		"170/4": { current: 0, previous: 0 },
+		"172/3": { current: 0, previous: 0 },
+		"174/0": { current: 0, previous: 0 },
+		"175": { current: 0, previous: 0 },
+		"176": { current: 0, previous: 0 },
+		"178/9": { current: 0, previous: 0 },
+		"42/48": { current: 43000, previous: 35000 },
+		"42": { current: 0, previous: 0 },
+		"43": { current: 0, previous: 0 },
+		"430/8": { current: 0, previous: 0 },
+		"439": { current: 0, previous: 0 },
+		"44": { current: 43000, previous: 35000 },
+		"440/4": { current: 43000, previous: 35000 },
+		"441": { current: 0, previous: 0 },
+		"46": { current: 0, previous: 0 },
+		"45": { current: 0, previous: 0 },
+		"450/3": { current: 0, previous: 0 },
+		"454/9": { current: 0, previous: 0 },
+		"48": { current: 0, previous: 0 },
+		"492/3": { current: 0, previous: 0 },
+		"10/49": { current: 100000, previous: 80000 },
+	},
+	incomeStatement: {
+		// Gross margin from turnover plus the class-73 income: 9900 = 70 + 73
+		// - 60/61. Then nothing financial or exceptional, so the result falls
+		// straight through to 9905.
+		"70": { current: 60000, previous: 50000 },
+		"73": { current: 40000, previous: 34000 },
+		"60/61": { current: 80000, previous: 67000 },
+		"9900": { current: 20000, previous: 17000 },
+		"62": { current: 8000, previous: 8000 },
+		"630": { current: 0, previous: 0 },
+		"631/4": { current: 0, previous: 0 },
+		"635/9": { current: 0, previous: 0 },
+		"640/8": { current: 0, previous: 0 },
+		"649": { current: 0, previous: 0 },
+		"66A": { current: 0, previous: 0 },
+		"9901": { current: 12000, previous: 9000 },
+		"75/76B": { current: 0, previous: 0 },
+		"75": { current: 0, previous: 0 },
+		"76B": { current: 0, previous: 0 },
+		"65/66B": { current: 0, previous: 0 },
+		"65": { current: 0, previous: 0 },
+		"66B": { current: 0, previous: 0 },
+		"9903": { current: 12000, previous: 9000 },
+		"780": { current: 0, previous: 0 },
+		"680": { current: 0, previous: 0 },
+		"67/77": { current: 0, previous: 0 },
+		"9904": { current: 12000, previous: 9000 },
+		"789": { current: 0, previous: 0 },
+		"689": { current: 0, previous: 0 },
+		"9905": { current: 12000, previous: 9000 },
+	},
+	appropriation: {
+		// The association's section 5 has no dividends, no directors' fees and
+		// no legal reserve: 9906 = 9905 + 14P, and 14 = 9906 + 791 - 691.
+		"9906": { current: 32000, previous: 29000 },
+		"14P": { current: 20000, previous: 20000 },
+		"791": { current: 0, previous: 0 },
+		"691": { current: 0, previous: 0 },
+	},
+	notes: {
+		"8199P": { current: 30000 },
+		"8169": { current: 10000 },
+		"8179": { current: 0 },
+		"8199": { current: 40000 },
+		"8259": { current: 0 },
+		"8329": { current: 0 },
+	},
+	valuationRules:
+		"Les immobilisations sont amorties linéairement sur leur durée d'utilité estimée.",
+};
