@@ -23,7 +23,7 @@ last-business-day fallback.
 npm install @financica/ecb-client
 ```
 
-Requires Node 18+ (uses the global `fetch`).
+Requires Node ≥ 24 (uses the global `fetch`).
 
 ## Usage
 

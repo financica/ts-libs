@@ -104,10 +104,10 @@ const xml = serializeXbrl(doc);
 ```
 
 `buildXbrlInstance` normalises the document and rejects one that could not be
-serialised: duplicate context or unit IDs, facts pointing at a context or unit
-that is not there, items carrying both `decimals` and `precision`. Namespace
-declarations are worked out from the QNames actually used, so you only declare
-a prefix when you care which one it is.
+serialised as a well-formed instance (duplicate IDs, dangling references,
+conflicting precision — see the [API reference](docs/api_reference.md#buildxbrlinstanceinput-xbrlinstanceinput-xbrlinstance)).
+Namespace declarations are worked out from the QNames actually used, so you
+only declare a prefix when you care which one it is.
 
 Output is deterministic. The same document always produces the same bytes, and
 contexts, units and facts are written in document order — filers regenerate and
@@ -128,18 +128,7 @@ Detailed API documentation lives in [`docs/api_reference.md`](docs/api_reference
 
 ## Development
 
-This repo uses [Bun](https://bun.sh) and the [oxc](https://oxc.rs) toolchain:
-oxlint, oxfmt, and [tsdown](https://tsdown.dev) (rolldown-powered bundler).
-
-```bash
-bun run test        # run tests once (vitest)
-bun run test:watch  # run tests in watch mode
-bun run lint        # oxlint
-bun run format      # oxfmt
-bun run typecheck   # tsc --noEmit
-bun run build       # bundle to dist/ with tsdown
-bun run ci          # typecheck + lint + test + build
-```
+Standard scripts — see the [repository README](../../README.md#getting-started).
 
 ## License
 

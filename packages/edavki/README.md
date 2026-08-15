@@ -2,11 +2,11 @@
 
 TypeScript toolkit for Slovenian **eDavki** (FURS) tax documents.
 
-`v0` covers the **DDV-O VAT return**: build a return from plain numbers and
+Covers the **DDV-O VAT return**: build a return from plain numbers and
 serialize it as [EDP](https://edavki.durs.si/) XML against the vendored
 `DDV_O_11.xsd`, either standalone or wrapped in a full submission envelope, for
 **manual import** into the eDavki portal. There is no runtime XSD validation;
-see [Scope & non-goals](#scope--non-goals-v0).
+see [Scope](#scope).
 
 It is the Slovenian counterpart to `@financica/myminfin` (Belgian SPF Finances
 / Intervat).
@@ -14,7 +14,7 @@ It is the Slovenian counterpart to `@financica/myminfin` (Belgian SPF Finances
 ## Install
 
 ```bash
-bun add @financica/edavki
+npm install @financica/edavki
 ```
 
 ## Usage
@@ -47,6 +47,9 @@ const xml = buildDdvOEnvelope({
 });
 ```
 
+The DDV-O builders, field registry and types are also exported on their own
+from the `@financica/edavki/ddv-o` subpath.
+
 ## The field registry
 
 `DDV_O_FIELDS` is the ordered list of every monetary box on the return, with its
@@ -63,21 +66,20 @@ DDV_O_FIELD_BY_ID.f21; // { id: "f21", section: "vatCharged", kind: "vat", rate:
 Sections mirror the form: `supplies` (I), `vatCharged` (II), `purchases` (III),
 `vatDeducted` (IV), `settlement` (V).
 
-## Scope & non-goals (v0)
+## Scope
 
 - **In scope:** building / serializing DDV-O (`DDV_O_11`) as standalone or
   enveloped XML; the field registry; the EDP taxpayer header.
-- **Out of scope (for now):** authenticated submission transport (the eDavki
-  web service needs a qualified digital certificate and XML-DSig signatures —
-  the envelope emits an empty `<edp:Signatures/>` placeholder); the July-2025 VAT
+- **Out of scope:** authenticated submission transport (the eDavki web service
+  needs a qualified digital certificate and XML-DSig signatures — the envelope
+  emits an empty `<edp:Signatures/>` placeholder); the July-2025 VAT
   **ledgers** (KIR/KPR, `DDV_KIR_KPR_1.xsd`); and XSD-level runtime validation.
-  These are tracked for later versions.
 
 ## Schemas
 
 Vendored under [`schemas/`](./schemas) for reference and deterministic builds:
 
-- `DDV_O_11.xsd` — the VAT return (current version; v12 not yet published)
+- `DDV_O_11.xsd` — the VAT return (current published version)
 - `EDP-Common-1.xsd` — the shared envelope/header/signatures
 
 Source of truth: <https://edavki.durs.si/Documents/Schemas/>. FURS bumps the
@@ -86,7 +88,4 @@ new version ships, vendor the new XSD, add the new fields, and bump `NS_DDV_O`.
 
 ## Development
 
-```bash
-bun install
-bun run ci   # type-check + lint + test + build
-```
+Standard scripts — see the [repository README](../../README.md#getting-started).

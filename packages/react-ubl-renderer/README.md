@@ -4,7 +4,7 @@ Render a parsed UBL / Peppol BIS Billing 3.0 invoice as a React component or a
 standalone HTML document.
 
 Give it raw UBL XML, or a `UblInvoiceData` object already parsed by
-[`@financica/ubl`](https://www.npmjs.com/package/@financica/ubl), and it renders
+[`@financica/ubl`](../ubl), and it renders
 a human-readable invoice: header, supplier/receiver details, line items, VAT
 breakdown, totals, and payment information. All text is escaped, and every
 selector is scoped under a single `.ubl-invoice` class, so the stylesheet cannot

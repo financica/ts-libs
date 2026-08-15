@@ -144,7 +144,10 @@ For a document that is already paid, pass the settled gross amount as
 outstanding rather than the full gross total:
 
 ```ts
-const { taxTotal, monetaryTotal } = buildTaxTotals(lines, { prepaidAmount: 121 });
+import { buildTaxTotals } from "@financica/ubl/build";
+
+// `lines` is the same `UblLine[]` as `doc.lines` above (net 100, 21% VAT).
+const { taxTotal, monetaryTotal } = buildTaxTotals(doc.lines, { prepaidAmount: 121 });
 // monetaryTotal.payableAmount => 0
 ```
 
@@ -168,12 +171,4 @@ Parties (seller/buyer), addresses, contacts, endpoint IDs, line items with quant
 
 ## Development
 
-```bash
-bun run test        # run tests once (vitest)
-bun run test:watch  # run tests in watch mode
-bun run lint        # oxlint
-bun run format      # oxfmt
-bun run typecheck   # tsc --noEmit
-bun run build       # bundle to dist/ with tsdown
-bun run ci          # lint + format:check + build + typecheck + test
-```
+Standard scripts — see the [repository README](../../README.md#getting-started).

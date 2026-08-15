@@ -178,15 +178,7 @@ Parse a CODA file. Returns `null` if the input is empty, doesn't start with a re
 
 ## Development
 
-```bash
-bun run test        # run tests once (vitest)
-bun run test:watch  # run tests in watch mode
-bun run lint        # oxlint
-bun run format      # oxfmt
-bun run typecheck   # tsc --noEmit
-bun run build       # bundle to dist/ with tsdown
-bun run ci          # lint + format:check + build + typecheck + test
-```
+Standard scripts — see the [repository README](../../README.md#getting-started).
 
 ## License
 

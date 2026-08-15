@@ -4,14 +4,14 @@ Belgian annual-accounts filing for the National Bank of Belgium's Central Balanc
 
 This package builds, validates and renders the `.xbrl` instance document a filer uploads to the NBB Filing application. There is no submission API on the NBB side: the deliverable is a file.
 
-Belgian knowledge lives here. The generic XBRL 2.1 reading and writing lives in [`@financica/xbrl`](https://github.com/financica/xbrl), which this package builds on.
+Belgian knowledge lives here. The generic XBRL 2.1 reading and writing lives in [`@financica/xbrl`](../xbrl), which this package builds on.
 
-> **Status: early but working end to end.** A micro company filing and an abbreviated association filing build, validate and render to a `.xbrl` that round-trips through a parser. Read [Check coverage](#check-coverage) before relying on validation: the validator is sound but not yet complete.
+> **Status: working end to end.** A micro company filing and an abbreviated association filing build, validate and render to a `.xbrl` that round-trips through a parser. Read [Check coverage](#check-coverage) before relying on validation: the validator is sound but incomplete.
 
 ## Scope
 
 - Taxonomy **NBB-CBSO-26.0.15**, in use since 2 January 2026. Each release and model is its own module, so older and future releases sit alongside rather than replace.
-- The nine annual-accounts models are full, abbreviated and micro, for companies with capital (`m02`, `m01`, `m07`), companies without capital (`m82`, `m81`, `m87`) and associations and foundations (`m05`, `m04`, `m08`). Since the CSA abolished company capital, a Belgian SRL/BV files a _without capital_ model — `m87` for a micro SRL. Generated so far: **`m87-f`, `m04-f`, `m05-f` and `m08-f`**; the other five are a generator run away (see [Taxonomy modules](#taxonomy-modules)).
+- The nine annual-accounts models are full, abbreviated and micro, for companies with capital (`m02`, `m01`, `m07`), companies without capital (`m82`, `m81`, `m87`) and associations and foundations (`m05`, `m04`, `m08`). Since the CSA abolished company capital, a Belgian SRL/BV files a _without capital_ model — `m87` for a micro SRL. Generated: **`m87-f`, `m04-f`, `m05-f` and `m08-f`**; the other five are a generator run away (see [Taxonomy modules](#taxonomy-modules)).
 - The statutory arithmetic and logical checks published in the Moniteur belge, which are disqualifying; the complementary checks from Annex 1.2 of the filing protocol, which are not; and the social balance sheet checks from Annex 1.3.
 
 ## The input contract
@@ -117,8 +117,8 @@ Alongside the generated checks, these are asserted directly: the balance sheet b
 ## Known gaps
 
 - The software producer is **not** written into the annual accounts instance. Its section belongs to the `m101-r` module, which is a separate filing and is not generated.
-- The company models with capital (`m01`, `m02`, `m07`), the full and abbreviated models without capital (`m81`, `m82`) and the split `-a` / `-o` parts are not generated yet. Nothing in the code is specific to the four that are; see [Taxonomy modules](#taxonomy-modules).
-- Directors (section 2.1) and the accountant declaration (section 2.2) are accepted by the contract but not yet rendered — they sit in open tables addressed by typed dimensions.
+- The company models with capital (`m01`, `m02`, `m07`), the full and abbreviated models without capital (`m81`, `m82`) and the split `-a` / `-o` parts are not generated. Nothing in the code is specific to the four that are; see [Taxonomy modules](#taxonomy-modules).
+- Directors (section 2.1) and the accountant declaration (section 2.2) are accepted by the contract but not rendered — they sit in open tables addressed by typed dimensions.
 - DAT 39, duplicate filing, cannot be checked locally: it depends on what the NBB already holds.
 
 ## Filing constraints
@@ -130,13 +130,8 @@ Alongside the generated checks, these are asserted directly: the balance sheet b
 
 ## Development
 
-```bash
-bun run test       # vitest
-bun run lint       # oxlint
-bun run typecheck  # tsc --noEmit
-bun run build      # tsdown
-bun run ci         # all of the above
-```
+Standard scripts — see the [repository README](../../README.md#getting-started).
+Package-specific: `bun run generate <taxonomy-dir> <version> <model-part>...` regenerates the taxonomy modules (see below).
 
 ### Taxonomy modules
 

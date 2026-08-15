@@ -17,7 +17,7 @@ Withdrawn currencies back to the 1970s ship in an opt-in `/historic` subpath.
 npm install @financica/iso4217
 ```
 
-Requires Node 18+.
+Requires Node ≥ 24.
 
 ## Usage
 
@@ -108,6 +108,8 @@ getHistoricByCode("ANG").map((c) => c.withdrawalDate);
 | -------------------------------------- | ------------------------------------ |
 | `formatAmount(amount, code, options?)` | `string` (wraps `Intl.NumberFormat`) |
 
+Stripe's minor-unit classification is not ISO 4217 (e.g. `UGX`, `ISK`, `HUF`); for amounts crossing the Stripe boundary use the helpers in [`@financica/stripe-hosted-invoices`](../stripe-hosted-invoices/README.md#money).
+
 ### Data
 
 | Export             | Shape                                                  |
@@ -152,7 +154,7 @@ Data is generated from the two official SIX Group XML lists:
 - `list-one.xml` — active currencies
 - `list-three.xml` — historic / withdrawn currencies
 
-Both are downloaded into `data/` by `npm run fetch-data`. `npm run generate`
+Both are downloaded into `data/` by `bun run fetch-data`. `bun run generate`
 then re-parses the XML, normalises entity rows to ISO 3166-1 alpha-2 country
 codes (via the mapping in `scripts/iso-3166.ts`), and emits the three
 generated source files in `src/`:
@@ -167,11 +169,11 @@ dropping an association.
 
 ## Releasing a new revision
 
-1. `npm run fetch-data`
-2. `npm run generate`
+1. `bun run fetch-data`
+2. `bun run generate`
 3. Review `git diff src/`
-4. `npm test`
-5. Bump the `version` in `package.json`, commit, tag, `npm publish`.
+4. `bun run test`
+5. Publish per the [repository README](../../README.md#releasing).
 
 ## License
 

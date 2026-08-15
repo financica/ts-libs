@@ -14,7 +14,7 @@ Provides typed access to:
 npm install @financica/myminfin
 ```
 
-Requires Node.js 20+ (uses native `fetch` and `crypto`).
+Requires Node.js 24+ (uses native `fetch` and `crypto`).
 
 ## Authentication
 
@@ -309,13 +309,13 @@ const { xml, grid, warnings } = buildBelgianVatReturn({
 });
 ```
 
-Today's mapping covers domestic standard-rated sales (boxes 00/01/02/03 + 54),
+The mapping covers domestic standard-rated sales (boxes 00/01/02/03 + 54),
 deductible domestic purchases (boxes 82 + 59), intra-community supplies and
 acquisitions, exports, domestic reverse charge and imports with postponed
 accounting (44/45/46/47, 86/87/88 + 55/56/57), credit-note corrections
 (48/49/84/85 with the VAT in 63/64) and miscellaneous regularisations (61/62).
 The goods/investment purchase split (81/83) and prepayments (91) are not
-modelled yet; `warnings` flags anything that could not be mapped. Use `serializeVatReturn` if
+modelled; `warnings` flags anything that could not be mapped. Use `serializeVatReturn` if
 you already have explicit grid box amounts, or `computeBelgianVatGrid` for just
 the grid.
 
@@ -338,15 +338,14 @@ const xml = generateClientListingXml({
 });
 ```
 
+## Reference material
+
+- [`convention.md`](./convention.md) — SPF Finances API usage convention (French, third-party text).
+- [`intervat-api.md`](./intervat-api.md) — vendored Intervat API guide, version 09/07/2025.
+
 ## Development
 
-```sh
-npm run type-check   # Type-check
-npm run lint         # Lint
-npm run test:run     # Run tests
-npm run build        # Build
-npm run ci           # All of the above
-```
+Standard scripts — see the [repository README](../../README.md#getting-started).
 
 ## License
 

@@ -393,28 +393,6 @@ console.log("\nThis class excludes:");
 console.log(code.excludes);
 ```
 
-## Migrating from 2.x
-
-Translations no longer ship in the default bundle. If you only read
-`description.en`, or you only use NACEBEL's `nationalTitles`, nothing changes.
-
-Otherwise, note that TypeScript will _not_ flag this for you: the non-English
-fields were already optional, so the break shows up at runtime as `undefined`
-descriptions and empty `search()` results. Audit for:
-
-- `description.<lang>` for any language other than `en`
-- `search(query, { language })` with a non-`en` language — except NACEBEL nl/fr/de,
-  which match `nationalTitles` and keep working
-- `explanatoryNote.<lang>` for fr/nl/de on NACEBEL codes
-
-Each is fixed by importing the matching pack and passing it to the constructor:
-
-```diff
-- const nace = new NACE();
-+ import fr from "@financica/nace-codes/lang/fr";
-+ const nace = new NACE({ languages: [fr] });
-```
-
 ## Data Sources
 
 This library uses official classification data from:
@@ -424,18 +402,11 @@ This library uses official classification data from:
 
 ## Development
 
-This repo uses [Bun](https://bun.sh) and the [oxc](https://oxc.rs) toolchain:
-oxlint, oxfmt, and [tsdown](https://tsdown.dev) (rolldown-powered bundler).
+Standard scripts — see the [repository README](../../README.md#getting-started).
+Package-specific:
 
 ```bash
-bun install
-bun run generate:data   # regenerate src/generated/* from data/
-bun run build           # generate data + bundle with tsdown
-bun run test            # vitest
-bun run typecheck       # tsc --noEmit
-bun run lint            # oxlint
-bun run format          # oxfmt --write
-bun run ci              # typecheck + lint + test + build
+bun run generate:data   # regenerate src/generated/* from data/ (also runs as part of build)
 ```
 
 The classification data lives in `data/` as TSV. `generate:data` compiles it

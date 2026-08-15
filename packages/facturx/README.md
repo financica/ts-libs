@@ -3,7 +3,7 @@
 Factur-X / ZUGFeRD (EN 16931 CII) hybrid e-invoice toolkit for TypeScript:
 parse, generate, and embed structured invoices in PDF/A-3.
 
-- No native bindings; runs on Node ≥ 18.
+- No native bindings; runs on Node ≥ 24.
 - Parsing and generation share one `FacturXInvoice` data model with EN 16931
   business-term naming.
 - Any CII document parses: every Factur-X / ZUGFeRD 2.x profile (MINIMUM

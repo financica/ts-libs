@@ -30,9 +30,8 @@ const result = await lookupPeppolParticipant({ scheme: "9925", value: "BE0123456
 // Pass `environment: "test"` to query the test SMK instead of production.
 ```
 
-This targets the OpenPeppol-operated SML (`…sml.prod.tech.peppol.org`), which
-replaced the retired EC `edelivery.tech.ec.europa.eu` zone, and uses NAPTR
-discovery, which superseded the old CNAME scheme. A DNS name that
+This targets the OpenPeppol-operated SML (`…sml.prod.tech.peppol.org`) via
+NAPTR discovery. A DNS name that
 doesn't exist (or carries no NAPTR) means the participant is not registered;
 any other DNS/transport failure returns `status: "error"` so callers can
 distinguish "absent" from "couldn't check".

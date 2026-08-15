@@ -8,7 +8,7 @@ This is the vendor-neutral glue between Stripe's data model and the Peppol stand
 Stripe.Invoice ──@financica/stripe-ubl──▶ UBL (BIS3 XML) ──any access point──▶ Peppol
 ```
 
-For the reverse direction (parsing inbound UBL), see [`@financica/ubl`](https://www.npmjs.com/package/@financica/ubl).
+For the reverse direction (parsing inbound UBL), see [`@financica/ubl`](../ubl).
 
 ## Installation
 
@@ -34,7 +34,7 @@ import { ScradaApiClient } from "@financica/scrada-client";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 // 1. Retrieve the invoice with the right `expand` so per-line VAT info is
-//    available under either the legacy `tax_amounts` or the newer `taxes` shape.
+//    available under `tax_amounts` or `taxes` (Stripe exposes either; both are read).
 const invoice = await stripe.invoices.retrieve(invoiceId, {
 	expand: [
 		"lines.data.tax_amounts.tax_rate",
@@ -117,7 +117,7 @@ Stripe sometimes reports per-line tax differently from the document header (roun
 
 - **Line nets** are reconciled against Stripe's authoritative `total_excluding_tax`; any sub-cent difference is pushed into the largest line (BR-CO-13 / BR-S-08 stay consistent bottom-up).
 - **The VAT breakdown** is grouped by `(category, rate)`, and each category's tax amount is **derived** as `taxable × rate / 100` rounded to two decimals (BR-CO-17), not summed from upstream tax cents. This can differ by a cent from the figure Stripe reported: a cents-rounded system cannot always be re-expressed as a rate-based VAT breakdown without drift.
-- **Per-line VAT** falls back from `tax_amounts` to `taxes` when only the newer shape is populated, so the rate isn't silently lost on accounts mid-migration.
+- **Per-line VAT**: Stripe exposes per-line VAT under `tax_amounts` or `taxes`; both are read, falling back from `tax_amounts` to `taxes` when only the latter is populated, so the rate is not silently lost.
 - **Discounted lines** use the post-discount net as both the VAT base and the line net, so a discounted standard-rated line keeps its true rate (e.g. 21%, not 14.70%). Line discounts are folded into the net rather than emitted as a `cac:AllowanceCharge`.
 - **Fully-discounted lines** read the rate from the expanded `tax_rate.percentage` so a 100%-discounted standard-rated line stays category `S` instead of collapsing to zero-rated.
 
@@ -132,7 +132,7 @@ Stripe sometimes reports per-line tax differently from the document header (roun
 
 Because a settled invoice reports a payable amount of 0, **BR-CO-25 no longer applies to it** and no due date is invented. `charge_automatically` invoices that are still open keep the issue-date fallback, since they do have a positive payable to cover.
 
-The coarse `credit_note.type` is deliberately **not** used as a fallback for the amount split. Both the split and `type`'s `mixed` value arrived in the same Stripe API version (`2025-05-28.basil`, stripe-node 18.2.0), so on any version old enough to lack the amounts a genuinely mixed credit note reports as plain `pre_payment` / `post_payment`. Reading that as fully settled would emit BT-113 for the whole total and understate what is still outstanding, leaving the buyer to overpay the open invoice. The peer range requires `stripe >=22`, so the split is always present.
+The coarse `credit_note.type` is deliberately **not** used as a fallback for the amount split: on any Stripe version old enough to lack the amount split, a mixed credit note reports as plain `pre_payment` / `post_payment`, so reading it as fully settled would emit BT-113 for the whole total and understate the outstanding amount, leaving the buyer to overpay the open invoice. The peer range on `stripe` (`>=22.0.0`) guarantees the split is present.
 
 ## VAT categories & `vatStatus`
 
@@ -202,7 +202,7 @@ UBL_CUSTOMIZATION_ID, UBL_PROFILE_ID, INVOICE_TYPE_CODE, …
 
 ## Conformance
 
-The output targets EN 16931 + Peppol BIS Billing 3.0 and is built to satisfy the calculation rules (BR-CO-10/13/15/17, BR-S-08, …). It is **not yet wired to the official EN 16931 / Peppol schematron**, so conformance is not verified here: if you depend on it, validate the emitted XML against the published schematron in CI (and your access point will validate on ingest). Line-level `AllowanceCharge` and `PaymentMeans` are intentionally not emitted yet.
+The output targets EN 16931 + Peppol BIS Billing 3.0 and is built to satisfy the calculation rules (BR-CO-10/13/15/17, BR-S-08, …). It is **not wired to the official EN 16931 / Peppol schematron**, so conformance is not verified here: if you depend on it, validate the emitted XML against the published schematron in CI (and your access point will validate on ingest). Line-level `AllowanceCharge` and `PaymentMeans` are intentionally not emitted.
 
 ## License
 

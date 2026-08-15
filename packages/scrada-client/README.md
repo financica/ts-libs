@@ -10,7 +10,7 @@ This package is the thin transport layer: it wraps `https://api.scrada.be/v1` an
 npm install @financica/scrada-client
 ```
 
-Requires Node 18+ for the global `fetch`.
+Requires Node 24+ for the global `fetch`.
 
 ## Usage
 
@@ -46,9 +46,14 @@ const scrada = createScradaApiClientFromEnv();
 | `getInboundDocumentPdf`          | GET    | `/company/{id}/peppol/inbound/document/{docId}/pdf`     |
 | `confirmInboundDocument`         | PUT    | `/company/{id}/peppol/inbound/document/{docId}/confirm` |
 | `sendOutboundSalesInvoice`       | POST   | `/company/{id}/peppol/outbound/salesInvoice`            |
+| `sendOutboundSelfBillingInvoice` | POST   | `/company/{id}/peppol/outbound/selfBillingInvoice`      |
+| `sendOutboundDocument`           | POST   | `/company/{id}/peppol/outbound/document`                |
 | `getOutboundDocumentInfo`        | GET    | `/company/{id}/peppol/outbound/document/{docId}/info`   |
+| `getOutboundDocumentUbl`         | GET    | `/company/{id}/peppol/outbound/document/{docId}/ubl`    |
 | `lookupPeppolParticipant`        | GET    | `/company/{id}/peppol/lookup/{scheme}/{id}`             |
 | `lookupPeppolParty`              | POST   | `/company/{id}/peppol/lookup`                           |
+
+`sendOutboundDocument` posts a pre-built UBL XML string as-is (`application/xml`); the endpoint does not parse the UBL for routing, so `options.routing` (sender, receiver, document type and process) is required and is sent as `x-scrada-peppol-*` headers. The outbound send methods accept an optional `idempotencyKey`.
 
 ## Errors
 

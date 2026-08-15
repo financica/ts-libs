@@ -30,7 +30,7 @@ What that means in practice:
 npm install @financica/stripe-hosted-invoices
 ```
 
-One runtime dependency (`node-html-parser`, for the receipt page). Requires a global `fetch` — Node ≥18, Bun, Deno or a browser. Node ≥24 is what CI covers.
+One runtime dependency (`node-html-parser`, for the receipt page). Requires a global `fetch`. Node ≥ 24 (the declared engine); Bun, Deno and browsers also work.
 
 ## Usage
 
