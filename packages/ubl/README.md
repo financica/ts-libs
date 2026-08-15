@@ -62,10 +62,8 @@ Handles UTF-8 BOM stripping automatically.
 
 ### Build UBL XML
 
-Construct a `UblDocument` — a thin, vendor-neutral mirror of the Peppol BIS
-Billing 3.0 fields — and serialize it with `serializeUblDocument`. Builders and
-helpers for parties, tax totals, identifiers, and attachments are exported from
-the same subpath.
+Construct a `UblDocument`, a vendor-neutral mirror of the Peppol BIS Billing 3.0
+fields, and serialize it with `serializeUblDocument`.
 
 ```typescript
 import { serializeUblDocument, type UblDocument } from "@financica/ubl/build";
@@ -152,8 +150,7 @@ const { taxTotal, monetaryTotal } = buildTaxTotals(lines, { prepaidAmount: 121 }
 
 `buildTaxTotals` derives `payableAmount` as
 `taxInclusiveAmount - prepaidAmount + payableRoundingAmount` (BR-CO-16) and does
-not clamp it, so an overpayment shows up as a negative figure instead of being
-silently hidden.
+not clamp it: an overpayment yields a negative `payableAmount`.
 
 The build subpath also exports
 helpers such as `buildSupplierParty`, `buildTaxTotals`, `buildCompanyId`,
@@ -172,10 +169,11 @@ Parties (seller/buyer), addresses, contacts, endpoint IDs, line items with quant
 ## Development
 
 ```bash
-npm test          # run tests in watch mode
-npm run test:run  # run tests once
-npm run lint      # eslint
-npm run format    # prettier
-npm run build     # build to dist/
-npm run ci        # type-check + lint + test + build
+bun run test        # run tests once (vitest)
+bun run test:watch  # run tests in watch mode
+bun run lint        # oxlint
+bun run format      # oxfmt
+bun run typecheck   # tsc --noEmit
+bun run build       # bundle to dist/ with tsdown
+bun run ci          # lint + format:check + build + typecheck + test
 ```

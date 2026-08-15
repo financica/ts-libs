@@ -1,8 +1,8 @@
-# xbrl
+# @financica/xbrl
 
-`xbrl` is a TypeScript library for reading and writing [XBRL 2.1](https://www.xbrl.org/Specification/XBRL-2.1/REC-2003-12-31/XBRL-2.1-REC-2003-12-31+corrected-errata-2013-02-20.html) instance documents as typed JavaScript objects. It focuses on practical reporting data: contexts, units, facts, schema references, and footnotes.
+A TypeScript library for reading and writing [XBRL 2.1](https://www.xbrl.org/Specification/XBRL-2.1/REC-2003-12-31/XBRL-2.1-REC-2003-12-31+corrected-errata-2013-02-20.html) instance documents as typed JavaScript objects. It focuses on practical reporting data: contexts, units, facts, schema references, and footnotes.
 
-The library is designed for application code that needs a dependable parser and serialiser rather than a full validation pipeline. It resolves QNames, preserves reported values as strings, represents tuples recursively, and returns `null` instead of throwing when the input is empty, malformed, or not an XBRL instance document.
+The library is for application code that needs a parser and serialiser rather than a full validation pipeline. It resolves QNames into `{ namespace, localName, prefix }`, preserves reported values as strings so callers can apply their own numeric and precision rules, represents tuples recursively, indexes contexts and units by ID for direct lookup from fact references, parses segment and scenario dimensions into structured members where it can, and returns `null` instead of throwing when the input is empty, malformed, or not an XBRL instance document.
 
 Parsing and writing are symmetric: `parseXbrl(serializeXbrl(doc))` gives back `doc`.
 
@@ -113,7 +113,7 @@ Output is deterministic. The same document always produces the same bytes, and
 contexts, units and facts are written in document order — filers regenerate and
 diff their filings, so stable output matters.
 
-## What The Library Parses
+## What it parses
 
 - Contexts, including entity identifiers, periods, segments, and scenarios
 - Units, including simple and divide units with resolved measure QNames
@@ -121,14 +121,6 @@ diff their filings, so stable output matters.
 - Schema, linkbase, role, and arcrole references
 - Footnote links, locators, resources, and arcs
 - Namespace declarations from the root instance element
-
-## Design Notes
-
-- `parseXbrl(xml)` returns an `XbrlInstance` or `null`
-- Element and measure names are resolved into `{ namespace, localName, prefix }`
-- Fact values stay as strings so callers can apply their own numeric and precision rules
-- Contexts and units are indexed by ID for direct lookup from fact references
-- Segment and scenario dimensions are parsed into structured members when possible
 
 ## API Reference
 

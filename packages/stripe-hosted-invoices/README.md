@@ -1,8 +1,8 @@
 # @financica/stripe-hosted-invoices
 
-Read a Stripe invoice, credit note or receipt **from its public hosted URL** — no API key, no OAuth, no connected account.
+Read a Stripe invoice, credit note or receipt **from its public hosted URL**, with no API key.
 
-When a customer forwards you a Stripe invoice link, you have a URL and nothing else. The Stripe API needs a secret key you will never have for someone else's account. This package closes that gap by speaking the same protocol the hosted invoice page speaks to render itself: the page is handed a short-lived **ephemeral key** that authorises read-only access to that one invoice, and that key is enough to pull the invoice, its full line items, its credit notes and its PDFs.
+When a customer forwards you a Stripe invoice link, you have a URL and nothing else, and the Stripe API needs a secret key you will never have for someone else's account. This package speaks the protocol the hosted invoice page speaks to render itself: the page is handed a short-lived **ephemeral key** that authorises read-only access to that one invoice, and that key is enough to pull the invoice, its full line items, its credit notes and its PDFs.
 
 ```
 https://invoice.stripe.com/i/acct_…/live_…
@@ -13,13 +13,13 @@ https://invoice.stripe.com/i/acct_…/live_…
 
 For the opposite direction — turning a `Stripe.Invoice` you _do_ own into Peppol UBL — see [`@financica/stripe-ubl`](../stripe-ubl).
 
-## ⚠️ This uses undocumented Stripe endpoints
+## This uses undocumented Stripe endpoints
 
-`invoicedata.stripe.com`, `/v1/invoices/{id}/hosted` and the ephemeral-key auth flow are **not public API**. They are not in Stripe's docs, not covered by its API-versioning promise, and can change or disappear without notice.
+`invoicedata.stripe.com`, `/v1/invoices/{id}/hosted` and the ephemeral-key auth flow are **not public API**. They are not covered by Stripe's API-versioning promise and can change or disappear without notice.
 
 What that means in practice:
 
-- Every function fails soft and returns a typed error instead of throwing. Build your flow so a failure degrades rather than breaks.
+- Every function fails soft and returns a typed error instead of throwing.
 - Requests are pinned to Stripe API version `2020-03-02`, because that is what the hosted endpoints speak. Do not change it to match your own API version.
 - If you have an API key for the account, **use the official `stripe` SDK instead**. This package is for the case where you do not.
 - Read only. Nothing here creates, modifies or pays anything.
@@ -69,11 +69,11 @@ A receipt URL is resolved by fetching the receipt page and following the hosted 
 
 ### Emailed links
 
-Stripe's own billing emails are sent through SendGrid click tracking, so the link a user copies out of "Download invoice" is not a `stripe.com` URL at all — it is a tracking wrapper (`58.email.stripe.com/CL0/…`, though the subdomain and marker segment vary per sender) with the real URL percent-encoded inside one path segment. Users paste exactly that.
+Stripe's own billing emails are sent through SendGrid click tracking, so the link a user copies out of "Download invoice" is not a `stripe.com` URL at all: it is a tracking wrapper (`58.email.stripe.com/CL0/…`, though the subdomain and marker segment vary per sender) with the real URL percent-encoded inside one path segment.
 
 Nothing is matched on the wrapper's host or marker: any URL with an encoded target in its path unwraps, so other senders and ESPs work too.
 
-Every parser unwraps these first, so it just works. `unwrapTrackedStripeUrl` is exported if you need it directly:
+Every parser unwraps these first. `unwrapTrackedStripeUrl` is exported if you need it directly:
 
 ```ts
 import { unwrapTrackedStripeUrl } from "@financica/stripe-hosted-invoices";
@@ -84,7 +84,7 @@ unwrapTrackedStripeUrl(alreadyClean); // → returned unchanged
 
 It is total and idempotent: never throws, and malformed input comes back untouched.
 
-**Unwrapping is not trusting.** The wrapper is attacker-controllable — a link whose encoded segment points at `evil.example.com` unwraps to exactly that. That is safe here only because the result feeds straight into the anchored `stripe.com` matchers, which reject it and fetch nothing. Decoding is done **locally and never by requesting the wrapper host**: an importer that followed redirects from a user-supplied host would be an SSRF vector, and fetching a tracking link marks the recipient's email as read. If you store the pasted URL, store the unwrapped one — a tracking wrapper is single-use noise.
+The wrapper is attacker-controllable: a link whose encoded segment points at `evil.example.com` unwraps to exactly that. That is safe here only because the result feeds straight into the anchored `stripe.com` matchers, which reject it and fetch nothing. Decoding is local and never requests the wrapper host. An importer that followed redirects from a user-supplied host would be an SSRF vector, and fetching a tracking link marks the recipient's email as read. If you store the pasted URL, store the unwrapped one.
 
 ### Detect a pasted link, in the browser
 
@@ -115,7 +115,7 @@ fromStripeMinorUnits(500, "JPY"); // 500  — zero-decimal
 fromStripeMinorUnits(500, "UGX"); // 5    — ISO says zero-decimal; Stripe does not
 ```
 
-`UGX`, `ISK` and `HUF` all read as zero-decimal in ISO 4217 and `Intl`, but Stripe requires the two-decimal form. Following ISO on these is a factor-of-100 error on real money. Use [`@financica/iso4217`](../iso4217) for ledger rounding and this for anything crossing the Stripe boundary; they are not interchangeable.
+`UGX`, `ISK` and `HUF` all read as zero-decimal in ISO 4217 and `Intl`, but Stripe requires the two-decimal form. Following ISO on these is a factor-of-100 error on real money. Use [`@financica/iso4217`](../iso4217) for ledger rounding and this for anything crossing the Stripe boundary.
 
 ### Refunds
 
@@ -207,6 +207,6 @@ The one normalisation applied is money. Stripe sends documented-integer fields a
 - **Voided credit notes are excluded** (`status=issued`) — they were retracted and credited nothing.
 - **The receipt parser is layout-dependent.** It reads Stripe's email-layout markup positionally, which is stable across the receipts Stripe renders today but is not a contract.
 
-## Licence
+## License
 
 MIT

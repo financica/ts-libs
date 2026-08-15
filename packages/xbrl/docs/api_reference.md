@@ -37,7 +37,7 @@ Serialises an instance document to XBRL 2.1 XML.
 
 Output is deterministic: the same document always produces the same bytes, and
 contexts, units and facts are written in document order. Filers regenerate and
-diff their filings, so stability matters more than any particular ordering.
+diff their filings.
 
 Handles instant, duration and forever periods; entity segments and scenarios;
 explicit and typed dimensions; simple, multi-measure and divide units;

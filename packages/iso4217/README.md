@@ -1,20 +1,15 @@
 # @financica/iso4217
 
-Strictly typed, zero-dependency ISO 4217 currency dataset with O(1) lookups
-and a small, spec-aligned API surface.
+Strictly typed, zero-dependency ISO 4217 currency dataset with O(1) lookups.
 
-- **Fresh**: built from SIX Group's official `list-one.xml` (currently
-  published `2026-01-01`).
-- **Spec-aligned**: alphabetic code, numeric code, minor units, name,
-  fund-flag, kind. Country associations are ISO 3166-1 alpha-2 codes, never
-  opaque name strings.
-- **Strictly typed**: every code is a literal union, so the compiler can
-  tell `"USD"` from `"usd"` and `"US"` from `"USA"`.
-- **Tiny**: zero runtime dependencies, tree-shakeable, ships ESM + CJS.
-- **Immutable**: all exported data is `Object.freeze`d; all arrays are
-  `readonly`.
-- **Complete**: ships an opt-in `/historic` subpath for every withdrawn
-  currency back to the 1970s.
+Built from SIX Group's official `list-one.xml`, revision `2026-01-01`:
+alphabetic code, numeric code, minor units, name, fund flag and kind. Country
+associations are ISO 3166-1 alpha-2 codes, never opaque name strings. Every
+code is a literal union, so the compiler tells `"USD"` from `"usd"` and `"US"`
+from `"USA"`. All exported data is `Object.freeze`d and every array is
+`readonly`. Ships ESM + CJS and tree-shakes.
+
+Withdrawn currencies back to the 1970s ship in an opt-in `/historic` subpath.
 
 ## Install
 
@@ -139,7 +134,7 @@ interface Currency {
 type CurrencyKind = "fiat" | "fund" | "metal" | "special";
 ```
 
-`kind` classifies each entry for easy filtering:
+`kind` classifies each entry:
 
 - **`fiat`** — sovereign or supranational general-tender currency
   (USD, EUR, GBP, XAF, XOF, XCD, XCG, XPF, …).
@@ -166,8 +161,9 @@ generated source files in `src/`:
 - `src/data.ts`
 - `src/historic-data.ts`
 
-The generator throws if it encounters an entity name it does not know how to
-map, so a change in the upstream spec can never silently corrupt the data.
+The generator throws on any entity name it does not know how to map, so a new
+or renamed country in the upstream list fails the build rather than silently
+dropping an association.
 
 ## Releasing a new revision
 

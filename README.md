@@ -1,8 +1,8 @@
 # @financica/ts-libs
 
 Financica's TypeScript libraries for European e-invoicing, accounting and financial
-data standards. One repository, one toolchain, one release process — each package is
-still published to npm independently.
+data standards. Shared toolchain and release process; each package is still
+published to npm independently.
 
 ## Packages
 
@@ -59,7 +59,7 @@ workspace.
 
 ## Layout
 
-Shared configuration lives at the root and is the single source of truth:
+Shared configuration lives at the root:
 
 - `tsconfig.base.json` — every package extends it and overrides only what it must
   (`jsx`, DOM libs, extra strictness).
@@ -79,9 +79,9 @@ history was rewritten into `packages/<name>/` before being merged, so
 `git log packages/ubl` and `git log --follow packages/ubl/src/index.ts` reach back to
 the original commits. Commit hashes changed; authors, dates and messages did not.
 
-Three packages were renamed on the way in — `@ingram-tech/camt053`,
-`@ingram-tech/coda` and `@ingram-tech/myminfin` became `@financica/*` — as did
-`nace-codes`, now `@financica/nace-codes`.
+Four packages were renamed on the way in: `@ingram-tech/camt053`,
+`@ingram-tech/coda` and `@ingram-tech/myminfin` became `@financica/*`, and
+`nace-codes` became `@financica/nace-codes`.
 
 ## License
 

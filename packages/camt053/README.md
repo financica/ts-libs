@@ -1,6 +1,6 @@
 # @financica/camt053
 
-TypeScript parser for [ISO 20022](https://www.iso20022.org/) CAMT.053 (Bank-to-Customer Statement) XML documents. Parses CAMT.053.001.x (any version) into fully typed objects, extracting every data element from the standard.
+TypeScript parser for [ISO 20022](https://www.iso20022.org/) CAMT.053 (Bank-to-Customer Statement) XML. Handles namespace versions 001 through 010, including the `Cdtr > Pty > Nm` nesting introduced in v10, and returns typed objects.
 
 ## Installation
 
@@ -47,7 +47,7 @@ if (report) {
 
 ## Parsed fields
 
-The parser extracts all CAMT.053 data elements:
+Extracted:
 
 - **Group header**: message ID, creation date, recipient
 - **Statement**: ID, sequence numbers, date range, account, balances, entries
@@ -59,19 +59,16 @@ The parser extracts all CAMT.053 data elements:
 - **Entry details**: batch info, transaction details
 - **Transaction details**: references (message/payment/instruction/end-to-end/transaction/mandate IDs), amount details, bank transaction code, related parties (debtor/creditor/ultimate), related agents, purpose, remittance info (unstructured and structured), charges, return info, additional info
 
-## Supported versions
-
-Supports all CAMT.053.001.x namespace versions (001 through 010+), including the v10 `Cdtr > Pty > Nm` nesting used by modern banks.
-
 ## Development
 
 ```bash
-npm test          # run tests in watch mode
-npm run test:run  # run tests once
-npm run lint      # eslint
-npm run format    # prettier
-npm run build     # build to dist/
-npm run ci        # type-check + lint + test + build
+bun run test        # run tests once (vitest)
+bun run test:watch  # run tests in watch mode
+bun run lint        # oxlint
+bun run format      # oxfmt
+bun run typecheck   # tsc --noEmit
+bun run build       # bundle to dist/ with tsdown
+bun run ci          # lint + format:check + build + typecheck + test
 ```
 
 ## License

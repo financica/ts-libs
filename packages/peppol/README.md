@@ -1,6 +1,6 @@
 # @financica/peppol
 
-Peppol network toolkit for TypeScript. Provider-free participant **discovery**
+Peppol network toolkit for TypeScript. Provider-free participant discovery
 and reference data: check whether a company is reachable on the Peppol network,
 read the document types it accepts, enrich it from the public Peppol Directory,
 and resolve the right electronic address scheme (EAS) per country.
@@ -30,9 +30,9 @@ const result = await lookupPeppolParticipant({ scheme: "9925", value: "BE0123456
 // Pass `environment: "test"` to query the test SMK instead of production.
 ```
 
-This targets the **OpenPeppol-operated SML** (`…sml.prod.tech.peppol.org`),
-which replaced the retired EC `edelivery.tech.ec.europa.eu` zone — and the
-modern **NAPTR** discovery that superseded the old CNAME scheme. A DNS name that
+This targets the OpenPeppol-operated SML (`…sml.prod.tech.peppol.org`), which
+replaced the retired EC `edelivery.tech.ec.europa.eu` zone, and uses NAPTR
+discovery, which superseded the old CNAME scheme. A DNS name that
 doesn't exist (or carries no NAPTR) means the participant is not registered;
 any other DNS/transport failure returns `status: "error"` so callers can
 distinguish "absent" from "couldn't check".
@@ -69,7 +69,7 @@ types). The main entry pulls in the Node-only lookups.
 
 ## Country e-invoicing profiles
 
-Provider-neutral, hand-verified per-country facts for building an e-invoicing
+Provider-neutral per-country facts for building an e-invoicing
 integration: the legal delivery network, the company and (separate, when one
 exists) VAT participant EAS schemes, where the VAT/registration number is
 validated (VIES vs BRREG), statutory archival years, and the org-number length
@@ -85,9 +85,9 @@ getCountryEInvoicingProfile("NO");
 A test pins these profiles to the addressing table in `./schemes` so the two
 views cannot drift.
 
-To resolve the participant identifier schemes for **any** Peppol country —
-using the verified profile when there is one and falling back to the
-VAT-based addressing scheme otherwise — use `getPeppolIdentifierSchemes`:
+To resolve the participant identifier schemes for any Peppol country, using the
+profile when there is one and falling back to the VAT-based addressing scheme
+otherwise, use `getPeppolIdentifierSchemes`:
 
 ```ts
 import { getPeppolIdentifierSchemes } from "@financica/peppol/countries";
@@ -100,9 +100,9 @@ getPeppolIdentifierSchemes("CA"); // outside Peppol → null
 This is what keeps an unprofiled sender's VAT id addressed under its own
 country scheme instead of a provider's Belgian default.
 
-Either scheme can be null, and null means **register nothing under it** — not
-"substitute a default", which would publish an identifier under another
-country's scheme. Norway and Denmark have no separate VAT scheme; an unprofiled
+Either scheme can be null. Null means register nothing under that scheme;
+substituting a default would publish an identifier under another country's
+scheme. Norway and Denmark have no separate VAT scheme, and an unprofiled
 country has no known company scheme.
 
 ## Document type classification

@@ -1,6 +1,6 @@
 # @financica/coda
 
-TypeScript parser for [CODA](https://www.febelfin.be/en/expertise/electronic-banking/standards) (Coded statement of account) bank files. CODA is the Belgian standard (maintained by Febelfin) for electronic bank-to-customer account statements, used by all Belgian banks and widely supported across Europe.
+TypeScript parser for [CODA](https://www.febelfin.be/en/expertise/electronic-banking/standards) (Coded statement of account) bank files. CODA is the Belgian standard, maintained by Febelfin, for electronic bank-to-customer account statements.
 
 Parses CODA v2.x files into fully typed objects. Returns `null` on invalid input instead of throwing.
 
@@ -50,11 +50,11 @@ if (file) {
 
 ## Design
 
-- **Single function, null return** -- `parseCoda(content)` returns a `CodaFile` or `null`. No exceptions for malformed input.
-- **Signed amounts** -- Balances and movements are signed numbers: positive for credit, negative for debit. No separate sign field to check.
-- **Faithful extraction** -- Fields are extracted at their standard-defined positions. Communications are concatenated across record parts (2.1 + 2.2 + 2.3 for movements, 3.1 + 3.2 + 3.3 for information records) and right-trimmed.
-- **No deep structured communication parsing** -- The `communicationType` and `structuredCommunicationType` fields tell you the format; the `communication` field gives you the raw content. Type 101/102 Belgian structured references come through as 12-digit strings ready for mod-97 validation. More exotic types (127 SEPA direct debit, 105 FX details, etc.) are left as raw strings for the caller to parse.
-- **Flat movement model** -- Each record 2.1 becomes a `CodaMovement`, with fields from 2.2 and 2.3 merged in. Information records (3.x) are attached as an `information[]` array on the preceding movement.
+- `parseCoda(content)` returns a `CodaFile` or `null`. No exceptions for malformed input.
+- Balances and movements are signed numbers: positive for credit, negative for debit. There is no separate sign field to check.
+- Fields are extracted at their standard-defined positions. Communications are concatenated across record parts (2.1 + 2.2 + 2.3 for movements, 3.1 + 3.2 + 3.3 for information records) and right-trimmed.
+- Structured communications are not parsed further. The `communicationType` and `structuredCommunicationType` fields tell you the format; the `communication` field gives you the raw content. Type 101/102 Belgian structured references come through as 12-digit strings ready for mod-97 validation. Types such as 127 (SEPA direct debit) and 105 (FX details) are left as raw strings for the caller to parse.
+- Each record 2.1 becomes a `CodaMovement`, with fields from 2.2 and 2.3 merged in. Information records (3.x) are attached as an `information[]` array on the preceding movement.
 
 ## Parsed fields
 
@@ -179,12 +179,13 @@ Parse a CODA file. Returns `null` if the input is empty, doesn't start with a re
 ## Development
 
 ```bash
-npm test          # run tests in watch mode
-npm run test:run  # run tests once
-npm run lint      # eslint
-npm run format    # prettier
-npm run build     # build to dist/
-npm run ci        # type-check + lint + test + build
+bun run test        # run tests once (vitest)
+bun run test:watch  # run tests in watch mode
+bun run lint        # oxlint
+bun run format      # oxfmt
+bun run typecheck   # tsc --noEmit
+bun run build       # bundle to dist/ with tsdown
+bun run ci          # lint + format:check + build + typecheck + test
 ```
 
 ## License

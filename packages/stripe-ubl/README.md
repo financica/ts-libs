@@ -2,13 +2,13 @@
 
 Convert Stripe invoices and credit notes into [Peppol BIS Billing 3.0](https://docs.peppol.eu/poacc/billing/3.0/) **UBL** documents.
 
-This is the vendor-neutral glue between Stripe's data model and the Peppol standard: it turns a `Stripe.Invoice` or `Stripe.CreditNote` into a conformant UBL XML string. It does **not** talk to any access point — hand the XML to whichever Peppol access point you use (e.g. [`@financica/scrada-client`](../scrada-client)'s `sendOutboundDocument`). Because the output is standard UBL rather than a vendor's proprietary JSON, swapping access points is a transport change, not a rewrite.
+This is the vendor-neutral glue between Stripe's data model and the Peppol standard: it turns a `Stripe.Invoice` or `Stripe.CreditNote` into a conformant UBL XML string. It does **not** talk to any access point. Hand the XML to whichever Peppol access point you use, e.g. [`@financica/scrada-client`](../scrada-client)'s `sendOutboundDocument`. The output is standard UBL, not a vendor's proprietary JSON.
 
 ```
 Stripe.Invoice ──@financica/stripe-ubl──▶ UBL (BIS3 XML) ──any access point──▶ Peppol
 ```
 
-For the reverse direction (parsing inbound UBL), see [`@financica/ubl`](https://www.npmjs.com/package/@financica/ubl). That package is pure UBL; this one is the Stripe-specific glue.
+For the reverse direction (parsing inbound UBL), see [`@financica/ubl`](https://www.npmjs.com/package/@financica/ubl).
 
 ## Installation
 
@@ -116,7 +116,7 @@ const ubl = serializeUblDocument(doc);
 Stripe sometimes reports per-line tax differently from the document header (rounding, distributed coupons, prorations). This library reconciles those into a UBL document that is internally consistent and EN 16931-conformant:
 
 - **Line nets** are reconciled against Stripe's authoritative `total_excluding_tax`; any sub-cent difference is pushed into the largest line (BR-CO-13 / BR-S-08 stay consistent bottom-up).
-- **The VAT breakdown** is grouped by `(category, rate)`, and each category's tax amount is **derived** as `taxable × rate / 100` rounded to two decimals (**BR-CO-17**) — not summed from upstream tax cents. This can differ by a cent from the figure Stripe reported, which is an unavoidable artifact of representing a cents-rounded system as a rate-based VAT breakdown; the resulting document validates.
+- **The VAT breakdown** is grouped by `(category, rate)`, and each category's tax amount is **derived** as `taxable × rate / 100` rounded to two decimals (BR-CO-17), not summed from upstream tax cents. This can differ by a cent from the figure Stripe reported: a cents-rounded system cannot always be re-expressed as a rate-based VAT breakdown without drift.
 - **Per-line VAT** falls back from `tax_amounts` to `taxes` when only the newer shape is populated, so the rate isn't silently lost on accounts mid-migration.
 - **Discounted lines** use the post-discount net as both the VAT base and the line net, so a discounted standard-rated line keeps its true rate (e.g. 21%, not 14.70%). Line discounts are folded into the net rather than emitted as a `cac:AllowanceCharge`.
 - **Fully-discounted lines** read the rate from the expanded `tax_rate.percentage` so a 100%-discounted standard-rated line stays category `S` instead of collapsing to zero-rated.
@@ -126,9 +126,9 @@ Stripe sometimes reports per-line tax differently from the document header (roun
 `cbc:PayableAmount` is the **outstanding** amount per BIS Billing 3.0, so a document for an already-paid invoice must not present its full gross total as still owed — a receiver's AP system has nothing else in the document to go on. What has been settled is emitted as `cbc:PrepaidAmount` (BT-113) and the payable amount derives from it per **BR-CO-16** (`BT-115 = BT-112 − BT-113 + BT-114`).
 
 - **Invoices** take BT-113 from `invoice.amount_paid` — deliberately _not_ `total - amount_due`, because Stripe also reduces `amount_due` by `pre_payment_credit_notes_amount` / `post_payment_credit_notes_amount`, and a credit-note reduction is not a prepayment. The credit note travels as its own Peppol document and the receiver nets the two via BT-25.
-- **Credit notes** take BT-113 from `credit_note.post_payment_amount` — the part refunded to the customer, credited to their balance, or credited outside Stripe. The `pre_payment_amount` portion returned nothing to the buyer (it only reduced an open invoice's balance), so it stays payable. This is the case that mattered most: a refund already settled through Stripe would otherwise go out as a fresh demand for the full amount.
+- **Credit notes** take BT-113 from `credit_note.post_payment_amount` — the part refunded to the customer, credited to their balance, or credited outside Stripe. The `pre_payment_amount` portion returned nothing to the buyer (it only reduced an open invoice's balance), so it stays payable. Without this split, a refund already settled through Stripe goes out as a fresh demand for the full amount.
 - **A fully-settled document snaps to the derived BT-112**, not Stripe's gross total. The two can differ by a cent (see BR-CO-17 above), and passing Stripe's figure would leave a settled document reporting 0.01 payable — enough to re-trigger BR-CO-25.
-- **Nothing settled means nothing emitted.** `cbc:PrepaidAmount` is omitted entirely, so an unpaid invoice serializes exactly as it did before this behaviour existed.
+- **Nothing settled means nothing emitted.** `cbc:PrepaidAmount` is omitted entirely.
 
 Because a settled invoice reports a payable amount of 0, **BR-CO-25 no longer applies to it** and no due date is invented. `charge_automatically` invoices that are still open keep the issue-date fallback, since they do have a positive payable to cover.
 
@@ -202,7 +202,7 @@ UBL_CUSTOMIZATION_ID, UBL_PROFILE_ID, INVOICE_TYPE_CODE, …
 
 ## Conformance
 
-The output targets EN 16931 + Peppol BIS Billing 3.0 and is built to satisfy the calculation rules (BR-CO-10/13/15/17, BR-S-08, …). It is **not yet wired to the official EN 16931 / Peppol schematron** — if you depend on guaranteed conformance, validate the emitted XML against the published schematron in CI (and your access point will validate on ingest). Some optional constructs (line-level `AllowanceCharge`, `PaymentMeans`, prepaid amounts) are intentionally not emitted yet.
+The output targets EN 16931 + Peppol BIS Billing 3.0 and is built to satisfy the calculation rules (BR-CO-10/13/15/17, BR-S-08, …). It is **not yet wired to the official EN 16931 / Peppol schematron**, so conformance is not verified here: if you depend on it, validate the emitted XML against the published schematron in CI (and your access point will validate on ingest). Line-level `AllowanceCharge` and `PaymentMeans` are intentionally not emitted yet.
 
 ## License
 

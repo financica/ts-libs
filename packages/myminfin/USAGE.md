@@ -6,7 +6,7 @@ Provides typed access to:
 
 - **MyMinFin API** — Search and download documents from MyDoc / MyDocPro
 - **Intervat API** — Submit VAT returns via XML
-- **OIDC Authentication** — Full OAuth2 + PKCE flow with JWT client authentication
+- **OIDC Authentication** — OAuth2 + PKCE with JWT client authentication
 
 ## Installation
 
@@ -18,7 +18,7 @@ Requires Node.js 20+ (uses native `fetch` and `crypto`).
 
 ## Authentication
 
-All API calls require an OAuth2 access token obtained through the SPF Finances OIDC flow. The `MyMinFinAuth` class handles the full flow: building authorization URLs, exchanging codes for tokens, and refreshing tokens.
+All API calls require an OAuth2 access token obtained through the SPF Finances OIDC flow, which `MyMinFinAuth` implements.
 
 ### Prerequisites
 
@@ -229,7 +229,7 @@ When rate-limited, the API returns HTTP 429 with a `Retry-After` header.
 
 ## Endpoint helpers
 
-All endpoint URLs are available as functions for advanced use cases:
+All endpoint URLs are also exported as functions:
 
 ```ts
 import {
@@ -287,8 +287,7 @@ console.log(discoveryUrl("test"));
 ## Document generators
 
 Besides the API clients, the package generates the Intervat XML documents you
-submit. These are pure functions — no auth or network — so they are trivially
-testable and can run anywhere.
+submit. These are pure functions: no auth, no network.
 
 ### Periodic VAT return
 

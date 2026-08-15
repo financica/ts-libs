@@ -1,24 +1,23 @@
-# nace-codes
+# @financica/nace-codes
 
 A TypeScript library for working with NACE and NACEBEL economic activity classification codes.
 
-## Features
+## What's in it
 
-- **Full NACE Rev. 2.1 Support**: Complete hierarchy of European economic activity classifications
-- **NACEBEL Extension**: Support for Belgian-specific 6-digit extensions
-- **Multi-language**: Descriptions in 24 languages (NACE) and 4 languages
-  (NACEBEL), each loadable on its own
-- **Flexible Code Lookup**: Search by various formats (e.g., "70.20", "7020", "702", "A")
-- **Hierarchical Navigation**: Traverse parent-child relationships in the classification tree
-- **Rich Metadata**: Access includes/excludes rules and explanatory notes
-- **Type-Safe**: Full TypeScript support with strict typing
-- **Pay For What You Load**: English ships in the default bundle; each other
-  language is a separate module you opt into. Translations are the bulk of this
-  dataset, so one locale costs roughly one locale.
-- **Tree-Shakeable**: Core NACE and the Belgian NACEBEL extension are separate
-  entry points with disjoint data. Importing NACE never pulls Belgian data into
-  your bundle.
-- **Zero Dependencies**: No external runtime dependencies
+NACE Rev. 2.1 in full: sections (A–U) down to classes, with includes/excludes
+rules and explanatory notes. Codes resolve from any common format ("70.20",
+"7020", "702", "A"), and parent, child, ancestor, descendant and sibling
+relations are queryable.
+
+NACEBEL 2025 adds the Belgian 6-digit extensions from a separate entry point
+with disjoint data, so importing NACE never pulls Belgian data into your bundle.
+
+Descriptions come in 24 languages for NACE and 4 for NACEBEL. Translations are
+~95% of the dataset, so only English ships in the default bundle; every other
+language is a module you import and pass to the constructor. See
+[Languages](#languages).
+
+No runtime dependencies.
 
 ## Installation
 
@@ -316,7 +315,7 @@ exported too, if you need to enumerate what exists at runtime.
 
 ## Code Format Normalization
 
-The library automatically normalizes various input formats:
+Input formats are normalized:
 
 - `"70.20"` → `"7020"` (internal format)
 - `"7020"` → `"7020"` (already normalized)
@@ -452,12 +451,4 @@ adding a language means editing one list.
 
 ## License
 
-MIT
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## Support
-
-For issues and questions, please use the [GitHub issue tracker](https://github.com/financica/ts-libs/issues).
+MIT. Issues and pull requests: <https://github.com/financica/ts-libs/issues>.

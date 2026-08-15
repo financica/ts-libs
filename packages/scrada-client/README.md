@@ -2,7 +2,7 @@
 
 TypeScript HTTP client for the [Scrada](https://www.scrada.be/) Peppol API. Scrada is a Belgian Peppol access point that exposes a JSON API for sending and receiving Peppol BIS Billing 3.0 documents (invoices, credit notes) plus participant registration and lookup.
 
-This package is the thin transport layer — it wraps `https://api.scrada.be/v1` and exposes typed request/response shapes. It does not build payloads from upstream sources like Stripe; for that, see [`@financica/scrada-stripe`](../scrada-stripe).
+This package is the thin transport layer: it wraps `https://api.scrada.be/v1` and exposes typed request/response shapes. It does not build payloads from upstream sources like Stripe; for that, see [`@financica/stripe-ubl`](../stripe-ubl).
 
 ## Installation
 

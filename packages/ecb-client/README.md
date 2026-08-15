@@ -1,21 +1,21 @@
 # @financica/ecb-client
 
 Tiny, zero-dependency TypeScript client for the **European Central Bank's euro
-foreign-exchange reference rates**, with first-class support for **historical
-single-day lookups** and **last-business-day fallback**.
+foreign-exchange reference rates**, with historical single-day lookups and
+last-business-day fallback.
 
-- **Authoritative source.** Reads the ECB data API directly (dataflow `EXR`).
-  No third-party middleman, no API key, no SLA in front of your numbers. ECB
-  reference rates are the rates EU tax authorities accept for currency
-  conversion (VAT Directive art. 91).
-- **Point-in-time.** Ask for a rate "on or before" any date; the ECB only
-  publishes on TARGET business days, so weekends and holidays transparently
-  resolve to the most recent prior business day. The effective date is reported
-  back on every rate.
+- **Authoritative source.** Reads the ECB data API directly (dataflow `EXR`),
+  with no third-party middleman and no API key. ECB reference rates are the
+  rates EU tax authorities accept for currency conversion (VAT Directive
+  art. 91).
+- **Point-in-time.** Ask for a rate "on or before" any date. The ECB publishes
+  only on TARGET business days, so weekends and holidays resolve to the most
+  recent prior business day, and the effective date is reported back on every
+  rate.
 - **Cross rates.** Every ECB rate is quoted against the euro; the client crosses
   two foreign currencies through EUR for you.
-- **Tiny & typed.** Zero runtime dependencies, ESM + CJS, strict types, an
-  injectable `fetch`, and an in-process snapshot cache.
+- **Interface.** ESM + CJS, strict types, an injectable `fetch`, and an
+  in-process snapshot cache.
 
 ## Install
 
@@ -107,12 +107,11 @@ cross-currency case.
 
 ## Caveats
 
-- **Business days only.** No observation on weekends or TARGET holidays; the
-  client resolves to the last prior business day for you.
 - **~30 active currencies, all against EUR.** Cross rates are computed through
   EUR. Discontinued series (e.g. `ARS`) still return, at a stale date.
-- **Be a good citizen.** The ECB data API is a public good with no SLA. The
-  built-in cache deduplicates repeated lookups; cache aggressively in your app.
+- **No SLA.** The ECB data API is public and unmetered, with nothing guaranteed
+  behind it. The built-in cache deduplicates repeated lookups; cache
+  aggressively in your app.
 
 ## License
 

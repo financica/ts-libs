@@ -3,13 +3,13 @@
 TypeScript toolkit for Slovenian **eDavki** (FURS) tax documents.
 
 `v0` covers the **DDV-O VAT return**: build a return from plain numbers and
-serialize it as schema-faithful [EDP](https://edavki.durs.si/) XML, either
-standalone or wrapped in a full submission envelope, for **manual import** into
-the eDavki portal.
+serialize it as [EDP](https://edavki.durs.si/) XML against the vendored
+`DDV_O_11.xsd`, either standalone or wrapped in a full submission envelope, for
+**manual import** into the eDavki portal. There is no runtime XSD validation;
+see [Scope & non-goals](#scope--non-goals-v0).
 
 It is the Slovenian counterpart to `@financica/myminfin` (Belgian SPF Finances
-/ Intervat) and follows the same shape as the other `@financica/*` format
-libraries (`ubl`, `coda`, `camt053`).
+/ Intervat).
 
 ## Install
 
@@ -52,7 +52,7 @@ const xml = buildDdvOEnvelope({
 `DDV_O_FIELDS` is the ordered list of every monetary box on the return, with its
 section, whether it is a tax **base** or a **VAT amount**, and its rate. It is
 exported so a consuming app (e.g. Financica's statutory VAT-return engine) can
-drive box mapping, labels, and UI from one source of truth.
+drive box mapping, labels and UI from it.
 
 ```ts
 import { DDV_O_FIELDS, DDV_O_FIELD_BY_ID } from "@financica/edavki";

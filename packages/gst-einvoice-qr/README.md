@@ -1,6 +1,6 @@
 # @financica/gst-einvoice-qr
 
-Decode, cryptographically verify and reconcile the **signed QR code** printed on
+Decode, cryptographically verify and reconcile the signed QR code printed on
 Indian GST e-invoices. Zero dependencies; signature checking uses `node:crypto`.
 
 ```bash
@@ -31,8 +31,7 @@ without trusting the sender:
 
 **It is not an embedded document.** Unlike Factur-X or ZUGFeRD you cannot
 reconstruct the invoice from it, only confirm that the IRP saw those ten values.
-That distinction drives this library's API: it gives you an attestation to
-compare against, not a parsed invoice.
+So the API returns an attestation to compare against, not a parsed invoice.
 
 ## Quick start
 
@@ -73,7 +72,7 @@ bytes, so re-encoding it breaks verification.
 | `unsupported_algorithm` | The header asked for something other than RS256.                                                         |
 | `certificate_expired`   | The matched certificate was outside its validity window at `at`.                                         |
 
-`verified` is true only after a real cryptographic check passed, so gating on it
+`verified` is true only after a cryptographic check passed, so gating on it
 directly is safe.
 
 ## Certificates
@@ -90,8 +89,8 @@ hex) and `x5t` (base64url of the same 20 bytes). If the header names neither and
 you supplied exactly one certificate, that one is used; with several, the
 library refuses to guess rather than trying each key in turn.
 
-For an old invoice, pass `at` to check the certificate was valid **when the
-invoice was cleared** rather than today:
+For an old invoice, pass `at` to check the certificate was valid when the
+invoice was cleared rather than today:
 
 ```ts
 verifySignedQr(text, { certificates, at: new Date(invoice.documentDate) });
@@ -152,7 +151,7 @@ isSameLegalEntity("27AAPFU0939F1ZV", "29AAPFU0939F1ZR"); // true — same PAN
 Validation is structural. Whether a registration exists or is active can only be
 answered by the GST portal.
 
-## Behaviour worth knowing
+## Behaviour
 
 - **`DocDt` is `DD/MM/YYYY`** and is normalised to `YYYY-MM-DD`. `05/08/2020` is
   5 August, not 8 May. Impossible dates like `31/02` are rejected rather than
@@ -184,8 +183,8 @@ credentials and either an Indian IP whitelist or a GSP/ASP relationship.
 [`gstin-validator`](https://www.npmjs.com/package/gstin-validator) covers
 GSTIN checksums and signed-QR verification and was the starting point for this
 research. It is unmaintained since 2022, ships no types, depends on
-`jsonwebtoken@8`, and bundles a fixed certificate list keyed to NIC — which is
-the design decision this package deliberately inverts.
+`jsonwebtoken@8`, and bundles a fixed certificate list keyed to NIC, which is
+the design decision this package inverts.
 
 ## License
 

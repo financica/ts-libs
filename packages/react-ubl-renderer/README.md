@@ -3,12 +3,12 @@
 Render a parsed UBL / Peppol BIS Billing 3.0 invoice as a React component or a
 standalone HTML document.
 
-Give it raw UBL XML (or a `UblInvoice` object already parsed by
-[`@financica/ubl`](https://www.npmjs.com/package/@financica/ubl)) and it renders
-a polished, human-readable invoice: header,
-supplier/receiver details, line items, VAT breakdown, totals, and payment
-information. All text is escaped; the markup is scoped under a single
-`.ubl-invoice` class so it never collides with your app's CSS.
+Give it raw UBL XML, or a `UblInvoiceData` object already parsed by
+[`@financica/ubl`](https://www.npmjs.com/package/@financica/ubl), and it renders
+a human-readable invoice: header, supplier/receiver details, line items, VAT
+breakdown, totals, and payment information. All text is escaped, and every
+selector is scoped under a single `.ubl-invoice` class, so the stylesheet cannot
+affect the rest of your app.
 
 ## Install
 
@@ -17,9 +17,8 @@ npm install @financica/react-ubl-renderer @financica/ubl react react-dom
 ```
 
 `@financica/ubl` (the parser), `react`, and `react-dom` (>=18) are peer
-dependencies — the renderer binds to the single copy your app installs, so the
-parsed `UblInvoice` type can never go out of sync. Modern package managers
-install peers automatically; the line above is explicit for clarity.
+dependencies, so the renderer uses the copy your app installs rather than
+bundling its own.
 
 ## Usage
 
@@ -56,11 +55,11 @@ const html = renderUblInvoiceHtml(xml);
 The raw stylesheet is also exported as `ublInvoiceCss` if you need to inline it
 yourself.
 
-### Advanced: render a pre-parsed invoice
+### Rendering a pre-parsed invoice
 
-If you already have a parsed invoice — or want to inspect, transform, or
-validate it before rendering — pass `invoice` instead of `xml`. The parser and
-its type are re-exported, so you never need a separate import:
+If you already have a parsed invoice, or want to inspect or transform it before
+rendering, pass `invoice` instead of `xml`. The parser and its type are
+re-exported:
 
 ```tsx
 import { parseUblInvoice, UblInvoice } from "@financica/react-ubl-renderer";

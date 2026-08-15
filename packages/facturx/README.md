@@ -3,17 +3,15 @@
 Factur-X / ZUGFeRD (EN 16931 CII) hybrid e-invoice toolkit for TypeScript:
 parse, generate, and embed structured invoices in PDF/A-3.
 
-- **Pure TypeScript.** No native bindings; runs in Node ≥ 18 and modern
-  serverless runtimes.
-- **Parsing and generation both**, sharing one `FacturXInvoice` data model
-  with EN 16931 business-term naming.
-- **Tolerant reader.** Any CII document parses — every Factur-X / ZUGFeRD 2.x
-  profile (MINIMUM through EXTENDED) _and_ XRechnung CIUS documents, which
-  schema-locked libraries reject. Numeric character references (`&#233;`)
-  are decoded per XML 1.0, and elements match by local name so unusual
-  namespace prefixes don't matter.
-- **Cleanly split entry points** so bundlers tree-shake what you don't use:
-  parsing an XML string never pulls in the PDF machinery or the bundled fonts.
+- No native bindings; runs on Node ≥ 18.
+- Parsing and generation share one `FacturXInvoice` data model with EN 16931
+  business-term naming.
+- Any CII document parses: every Factur-X / ZUGFeRD 2.x profile (MINIMUM
+  through EXTENDED) and XRechnung CIUS documents. Numeric character references
+  (`&#233;`) are decoded per XML 1.0, and elements match by local name, so
+  unusual namespace prefixes don't matter.
+- Entry points are split so bundlers tree-shake what you don't use: parsing an
+  XML string never pulls in the PDF machinery or the bundled fonts.
 
 | Entry point                   | What it exports                                               | Dependencies pulled in                  |
 | ----------------------------- | ------------------------------------------------------------- | --------------------------------------- |
@@ -90,10 +88,10 @@ and the document totals (BG-22) per the EN 16931 calculation rules
 (BR-CO-10..17), including `roundingAmount` / `prepaidAmount` handling and
 VATEX exemption-reason defaults for AE/K/G/O categories.
 
-`generateFacturXPdf` renders a clean A4 template (locales `en`, `fr`, `de`,
-`nl`; fonts fully embedded, PDF/A-3B output intent and XMP metadata) — or
-embeds into your own PDF via `existingPdf`. To keep full control, compose the
-pieces yourself:
+`generateFacturXPdf` renders an A4 template (locales `en`, `fr`, `de`, `nl`;
+fonts fully embedded, PDF/A-3B output intent and XMP metadata), or embeds into
+your own PDF via `existingPdf`. To keep full control, compose the pieces
+yourself:
 
 ```ts
 import { buildFacturXXml } from "@financica/facturx/generate";
@@ -105,8 +103,7 @@ const pdfBytes = await attachFacturXXml({ pdf: myPdfBytes, xml });
 
 Note: embedding into an arbitrary existing PDF applies the PDF/A-3 furniture
 (attachment relationship, output intent, metadata) but cannot retrofit fonts
-the source PDF didn't embed; the built-in template always yields conformant
-output.
+the source PDF didn't embed. The built-in template embeds its own.
 
 ## Profiles
 
@@ -117,7 +114,7 @@ the EN 16931 (COMFORT) profile.
 
 ## Code lists
 
-Practical subsets of the relevant code lists ship as constants:
+Subsets of the code lists ship as constants:
 `DOCUMENT_TYPE_CODES` (UNTDID 1001), `TAX_CATEGORY_CODES` (UNTDID 5305),
 `PAYMENT_MEANS_CODES` (UNTDID 4461), `UNIT_CODES` (UN/ECE Rec 20/21),
 `IDENTIFIER_SCHEMES` (ISO 6523), plus full `COUNTRY_CODES` (ISO 3166-1) and
