@@ -44,6 +44,10 @@
 		"./countries": {
 			"import": "./dist/countries.js",
 			"types": "./dist/countries.d.ts"
+		},
+		"./identifiers": {
+			"import": "./dist/identifiers.js",
+			"types": "./dist/identifiers.d.ts"
 		}
 	},
 	"publishConfig": {

@@ -50,6 +50,26 @@ const entry = await lookupPeppolDirectory(
 // → { name: "ACME NV", countryCode: "BE" } | null
 ```
 
+## Participant identifier normalization
+
+Users type identifiers the way they are printed. Normalization has to be
+scheme-aware, because the SML name is `base32(sha256(lowercase(id)))` — every
+character added or removed addresses a *different* participant:
+
+```ts
+import { normalizeParticipantValue } from "@financica/peppol/identifiers";
+
+normalizeParticipantValue("0208", "0762.747.721"); // → "0762747721"
+normalizeParticipantValue("0204", "991-07335-68"); // → "991-07335-68"
+```
+
+Whitespace and characters outside the policy repertoire (`A-Za-z0-9.-_~`) always
+go. The separators `-` `.` `_` `~` are dropped only for schemes whose registered
+structure has none — the Belgian enterprise number, GLN, the VAT schemes and
+friends. A German Leitweg-ID (`0204`), a GEBA (`0246`), and any scheme not in
+`PEPPOL_PARTICIPANT_SCHEMES` keep their value verbatim, so a scheme added to the
+code list next year fails safe.
+
 ## EAS schemes by country
 
 ```ts
@@ -61,8 +81,9 @@ import {
 getPeppolCountryScheme("DE"); // → { country: "DE", scheme: "9930", example: "DE123456789" }
 ```
 
-`@financica/peppol/schemes`, `@financica/peppol/document-types`, and
-`@financica/peppol/countries` are free of Node built-ins, so they are safe to
+`@financica/peppol/schemes`, `@financica/peppol/document-types`,
+`@financica/peppol/countries` and `@financica/peppol/identifiers` are free of
+Node built-ins, so they are safe to
 import in a browser bundle (e.g. to build a country dropdown or label document
 types). The main entry pulls in the Node-only lookups.
 

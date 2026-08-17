@@ -5,7 +5,10 @@ import {
 	classifyPeppolDocumentType,
 	type PeppolDocumentTypeKind,
 } from "./document-types";
+import { buildParticipantId } from "./identifiers";
 import { isRecord, toErrorMessage } from "./internal";
+
+export { buildParticipantId };
 
 /** The only participant identifier scheme in Peppol production use. */
 const PARTICIPANT_ID_SCHEME = "iso6523-actorid-upis";
@@ -37,16 +40,6 @@ export type PeppolLookupResult =
 	  }
 	| { status: "not_registered"; participantId: string }
 	| { status: "error"; participantId: string; message: string };
-
-const cleanIdentifierValue = (value: string) =>
-	value
-		.trim()
-		.replace(/\s+/g, "")
-		.replace(/[^A-Za-z0-9]/g, "");
-
-/** Human participant id, e.g. `9925:BE0123456789`. */
-export const buildParticipantId = (scheme: string, value: string) =>
-	`${scheme.trim()}:${cleanIdentifierValue(value)}`;
 
 /** Canonical participant id used for hashing and the SMP query path. */
 export const buildCanonicalParticipantId = (scheme: string, value: string) =>
