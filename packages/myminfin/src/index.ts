@@ -6,6 +6,7 @@ export {
 	computeBelgianVatGrid,
 	buildBelgianVatReturn,
 	normalizeBelgianVatNumber,
+	isDecemberAdvancePeriod,
 	VAT_GRID_NUMBERS,
 } from "./vat-return";
 export type {

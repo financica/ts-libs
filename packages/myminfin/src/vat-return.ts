@@ -54,6 +54,18 @@ export type VatReturnPeriod =
 	| { year: number; month: number }
 	| { year: number; quarter: number };
 
+/**
+ * Whether a period may carry the December advance (grid 91) at all.
+ *
+ * The advance settles the year, so only the last period of it declares one: the
+ * December return for a monthly filer, the Q4 return for a quarterly one. This
+ * is eligibility, not emission — whether grid 91 is actually filled depends on
+ * `prepayment` being set, which is the filer's election of the actual-figures
+ * method.
+ */
+export const isDecemberAdvancePeriod = (period: VatReturnPeriod): boolean =>
+	"month" in period ? period.month === 12 : period.quarter === 4;
+
 export interface SerializeVatReturnOptions {
 	declarant: VatReturnDeclarant;
 	period: VatReturnPeriod;

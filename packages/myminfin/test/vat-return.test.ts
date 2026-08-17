@@ -3,6 +3,7 @@ import { XMLParser } from "fast-xml-parser";
 import {
 	buildBelgianVatReturn,
 	computeBelgianVatGrid,
+	isDecemberAdvancePeriod,
 	normalizeBelgianVatNumber,
 	serializeVatReturn,
 	type VatReturnDeclarant,
@@ -385,6 +386,20 @@ describe("computeBelgianVatGrid", () => {
 		});
 		expect(grid[46]).toBeUndefined();
 		expect(warnings.some((w) => w.includes("grid 46"))).toBe(true);
+	});
+});
+
+// Eligibility, not emission: the grid-91 cases above assert whether the box is
+// EMITTED for a given prepayment; these assert which periods may carry it at all.
+describe("isDecemberAdvancePeriod", () => {
+	it("makes the year's last period eligible for grid 91", () => {
+		expect(isDecemberAdvancePeriod({ year: 2025, month: 12 })).toBe(true);
+		expect(isDecemberAdvancePeriod({ year: 2025, quarter: 4 })).toBe(true);
+	});
+
+	it("leaves every other period ineligible for grid 91", () => {
+		expect(isDecemberAdvancePeriod({ year: 2025, month: 11 })).toBe(false);
+		expect(isDecemberAdvancePeriod({ year: 2025, quarter: 3 })).toBe(false);
 	});
 });
 
