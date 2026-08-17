@@ -37,7 +37,11 @@ export {
 	type ResolvedStripeInvoice,
 	type ResolvedStripeReceipt,
 } from "./resolve.js";
-export { detectStripeTaxInclusive } from "./tax.js";
+export {
+	adjustForInclusiveTax,
+	detectStripeTaxInclusive,
+	type StripeTaxAdjustableLine,
+} from "./tax.js";
 export type {
 	StripeAddress,
 	StripeCreditNote,
