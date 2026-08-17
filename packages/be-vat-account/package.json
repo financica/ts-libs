@@ -1,6 +1,6 @@
 {
 	"name": "@financica/be-vat-account",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "Parser for the Belgian VAT current-account statement (Extrait de compte TVA / Uittreksel btw-rekening) issued by the FPS Finance — PFORM671 and legacy layouts, French and Dutch.",
 	"keywords": [
 		"accounting",

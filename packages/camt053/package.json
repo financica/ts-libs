@@ -1,6 +1,6 @@
 {
 	"name": "@financica/camt053",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "TypeScript parser for ISO 20022 CAMT.053 (Bank-to-Customer Statement) XML",
 	"homepage": "https://github.com/financica/ts-libs/tree/main/packages/camt053#readme",
 	"bugs": "https://github.com/financica/ts-libs/issues",

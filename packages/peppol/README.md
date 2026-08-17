@@ -54,7 +54,7 @@ const entry = await lookupPeppolDirectory(
 
 Users type identifiers the way they are printed. Normalization has to be
 scheme-aware, because the SML name is `base32(sha256(lowercase(id)))` — every
-character added or removed addresses a *different* participant:
+character added or removed addresses a _different_ participant:
 
 ```ts
 import { normalizeParticipantValue } from "@financica/peppol/identifiers";

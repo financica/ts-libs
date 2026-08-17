@@ -368,7 +368,7 @@ function serializeCurrency(c: Currency): string {
     countryCodes: ${countries},
     isFund: ${c.isFund},
     kind: ${JSON.stringify(c.kind)},
-  })`;
+  } satisfies Currency)`;
 }
 
 function emitData(currencies: Currency[], publishedAt: string): string {
@@ -396,7 +396,7 @@ function serializeHistoric(h: HistoricCurrency): string {
     numericCode: ${numeric},
     name: ${JSON.stringify(h.name)},
     withdrawalDate: ${JSON.stringify(h.withdrawalDate)},
-  })`;
+  } satisfies HistoricCurrency)`;
 }
 
 function emitHistoricData(historic: HistoricCurrency[], publishedAt: string): string {

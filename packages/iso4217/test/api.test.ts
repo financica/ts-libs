@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import type { AlphabeticCode } from "../src/types.js";
 import {
 	CURRENCIES,
 	formatAmount,
@@ -134,7 +135,9 @@ const fractionDigitsOf = (formatted: string, locale: string, currency: string) =
 };
 
 describe("formatAmount", () => {
-	it.each([
+	// Typed as tuples: a bare array widens `code` to `string | number`, which
+	// formatAmount's AlphabeticCode parameter rejects.
+	it.each<[AlphabeticCode, number]>([
 		["USD", 2], // ISO 4217: cent
 		["JPY", 0], // ISO 4217: no minor unit
 		["BHD", 3], // ISO 4217: fils, thousandths

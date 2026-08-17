@@ -1,6 +1,6 @@
 {
 	"name": "@financica/iso4217",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "ISO 4217 currency codes, numeric codes, minor units, and entities — fully typed, zero dependencies, O(1) lookups.",
 	"keywords": [
 		"currencies",

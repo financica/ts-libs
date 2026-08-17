@@ -1,6 +1,6 @@
 {
 	"name": "@financica/ubl",
-	"version": "0.13.0",
+	"version": "0.14.0",
 	"description": "UBL (Universal Business Language) invoice toolkit for TypeScript: parse, build, and serialize Peppol BIS Billing 3.0 documents.",
 	"homepage": "https://github.com/financica/ts-libs/tree/main/packages/ubl#readme",
 	"bugs": "https://github.com/financica/ts-libs/issues",
@@ -44,7 +44,7 @@
 		"prepack": "bun run build"
 	},
 	"dependencies": {
-		"@financica/peppol": ">=0.6.0 <1.0.0",
+		"@financica/peppol": ">=0.7.0 <1.0.0",
 		"@xmldom/xmldom": "^0.9.10"
 	},
 	"engines": {
