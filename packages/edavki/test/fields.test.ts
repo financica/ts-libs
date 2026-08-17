@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { DDV_O_FIELD_BY_ID, DDV_O_FIELDS } from "../src/index.js";
 
@@ -34,5 +36,19 @@ describe("DDV_O_FIELDS registry", () => {
 		expect(bySection("purchases").every((f) => f.kind === "base")).toBe(true);
 		expect(bySection("vatCharged").every((f) => f.kind === "vat")).toBe(true);
 		expect(bySection("vatDeducted").every((f) => f.kind === "vat")).toBe(true);
+	});
+
+	it("matches the monetary f* boxes of DDV_O_11.xsd, in schema order", () => {
+		const xsd = readFileSync(
+			fileURLToPath(new URL("../schemas/DDV_O_11.xsd", import.meta.url)),
+			"utf8",
+		);
+		// The 32 xs:decimal boxes f11..f52; f02/f03/f04 are the integer/boolean
+		// header flags, not registry fields.
+		const decimalBoxes = [
+			...xsd.matchAll(/<xs:element name="(f\d+[a-z]?)" type="xs:decimal"/g),
+		].map((m) => m[1]);
+		expect(decimalBoxes).toHaveLength(32);
+		expect(DDV_O_FIELDS.map((f) => f.id)).toEqual(decimalBoxes);
 	});
 });
