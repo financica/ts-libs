@@ -11,8 +11,9 @@ describe("parseLocalizedAmount", () => {
 		expect(parseLocalizedAmount(input)).toBe(expected);
 	});
 
-	it("reads the Anglo form, so a mixed-source caller needs no branch", () => {
+	it("reads the Anglo form and a dotted-thousands integer, so a mixed-source caller needs no branch", () => {
 		expect(parseLocalizedAmount("1,234.56")).toBe(1234.56);
+		expect(parseLocalizedAmount("1.234.567")).toBe(1234567);
 	});
 
 	it("reads repeated Anglo thousands groups", () => {

@@ -21,29 +21,40 @@ describe("groupIntoRows", () => {
 		expect(rows.map(rowText)).toEqual(["above", "first second"]);
 	});
 
-	it("joins baselines that differ by less than the tolerance", () => {
-		const rows = groupIntoRows([
-			item(50, 700, "a"),
-			item(200, 700 + Y_TOLERANCE - 1, "b"),
-		]);
+	it.each([
+		[Y_TOLERANCE - 1, 1],
+		[Y_TOLERANCE, 1],
+		[Y_TOLERANCE + 1, 2],
+	])(
+		"baselines %i apart form %i row(s): the tolerance is inclusive",
+		(gap, rowCount) => {
+			const rows = groupIntoRows([item(50, 700, "a"), item(200, 700 + gap, "b")]);
 
-		expect(rows).toHaveLength(1);
-		expect(rowText(rows[0]!)).toBe("a b");
-	});
-
-	it("keeps baselines further apart than the tolerance separate", () => {
-		const rows = groupIntoRows([
-			item(50, 700, "a"),
-			item(200, 700 + Y_TOLERANCE + 1, "b"),
-		]);
-
-		expect(rows).toHaveLength(2);
-	});
+			expect(rows).toHaveLength(rowCount);
+		},
+	);
 
 	it("does not mutate the input", () => {
 		const items = [item(200, 700, "b"), item(50, 800, "a")];
 		groupIntoRows(items);
 		expect(items.map((entry) => entry.str)).toEqual(["b", "a"]);
+	});
+});
+
+describe("COLUMNS", () => {
+	it("tile the row without gaps or overlap, each half-open on the right", () => {
+		const ordered = Object.values(COLUMNS);
+		for (let index = 1; index < ordered.length; index++) {
+			expect(ordered[index]!.min).toBe(ordered[index - 1]!.max);
+		}
+	});
+
+	it("assigns an item on a boundary to exactly one column", () => {
+		const boundary = COLUMNS.operationCode.min;
+		const row = groupIntoRows([item(boundary, 700, "A-01.2025")])[0]!;
+
+		expect(columnText(row, COLUMNS.registrationDate)).toBe("");
+		expect(columnText(row, COLUMNS.operationCode)).toBe("A-01.2025");
 	});
 });
 
