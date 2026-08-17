@@ -164,6 +164,7 @@ export class MyMinFinAuth {
 			.setIssuer(this.config.clientId)
 			.setSubject(this.config.clientId)
 			.setAudience(audience)
+			.setIssuedAt()
 			.setExpirationTime("5m")
 			.setJti(generateRandom())
 			.sign(key);

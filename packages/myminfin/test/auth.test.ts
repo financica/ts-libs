@@ -1,129 +1,274 @@
-import { describe, expect, it } from "vitest";
+import {
+	base64url,
+	decodeJwt,
+	decodeProtectedHeader,
+	exportPKCS8,
+	generateKeyPair,
+	jwtVerify,
+} from "jose";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { MyMinFinAuth } from "../src/auth";
+import { authorizeUrl, tokenUrl } from "../src/endpoints";
+import { MyMinFinApiError } from "../src/types";
 
-const FAKE_PRIVATE_KEY = `-----BEGIN PRIVATE KEY-----
-MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC7o4qne60TB3pq
-6JSqRfQ4gZzNpDMiSCtHxozmJZ0vmhVjJMJTFBBOFAjdRMiff2MMXiCOkdl7Kdq6
-RKOzVqK5vwn5GjNJfW2A9YXGmGzazNwtZHSWJlOlMSQwmeOMb2lAVIHYDHjJur4e
-8DN1LHzmNJh0lggSSYfbUb/KLkg3jDSEoGiEmrBOaToZ3r14VxaFkJqNKCb6LhfA
-OdMGF7IiU3L3+UmC3KnR1tLinFnfMKqjBfR5qFRo0pYWMOwIzz2cFqm/pSELj8Jb
-VBd3tqGcWJ0gWlSSiURvAYK0J8NykIK6FMflIwJHpHbRIqvkdmMbpjw4olfWGuBB
-GaOyhXAjAgMBAAECggEAFuq6Lgc2EJRQoC5VEux0QEGCM39p9v2bJL9FKx1KN+pJ
-IJJUbkBkqNHDJFMbdFYEB8MsWHjJDwxj25TCYqgTqFQHmOBKxXdfmFIBoI8OQnKP
-B0AWMZYfkVHo1FU3FMMf+6S5GWBP0gQT+MHtaGCWWPfFuv1LBUxZ0K5K2G3R3F9m
-+hCPa4x6JVDtZEkPvLbLCgR1JOazxqjKq2FjdPKYuNh/M9WW4Udc8q56G6X2anz
-C6p/MFUH8mYTx/wBqdqfbKf7sJ80AFb+4jGZdajcLCI1cXgIzwc9NjKR/tEwxBbe
-BNWiQJGTdcr8VjqPwyFo1IuYinoRKKzHQepNL/FE4QKBgQDwJIkU92+tFpqbwkdq
-hBvCvfGr/tiOBit5kKOT7HTeqY3yOPcBr0JUfp0l7paBFpiNp1pk0+4+Gw0Hd8NG
-3QjNOA8ZnhAzNUb/FiHbhN4skqkJxr1WHNBxlG5K76OVK4v/csBfMM/c5/zLIufb
-MjOJLUPLjmDMchgmXq4UrAD01QKBgQDnMnU8JBsgMXxYcb0/Kgj6ln/y0LuG0z6f
-gPCDKKJjlpEbM+4rLkfMOyyrt+EcATuRAEhm6v0Si6WyMkwk50gD+B4y0Ws5a8Jj
-CVpSMLN1JFGhPB4VJRFC/pVf/B7RFHZ1amYXF/0+qZRYKPOFRwVFYD3YPDAya2mD
-U6kCxFBnJwKBgB0HqOhNZNqCc5KPdu3zuI5JJ5OqAo9JpS2gXjjQIBgBBmnPC8RC
-v2ow5ij8K+FrYEN3fz/SBx2f5vWN1SQQF2fEL8mNBFKsBqzNf/wBa0V0daRbHDlT
-x5B+PgjCd8LcY8Shf0Gnl0Hkp1py1CKn9LNXpnvBLCRd7hnXJDHlI/hAoGBAJlA
-ooekyxva2Q25p07YHmnJtfQ3EDP5+S/kSB1zy1aCn+ATCshdDhvtmfFUCqE4NDB7Y
-UTqbK/EquaHcLnPp6IzXOjYaogs4fVxcULhH73s0hNjIE+e0Hbc9eTZ7BOHy3PJ8
-QF3+mCz/B+IjiSC7Aj7Lv0LPNWKa0eX0z35t/0HPAoGBAM7lfMYYb0rN/sNdGSWX
-aJKf5q0u3ip1QSYCVpILBmBQ0MU0yLYAxXq54FRWg0QhzCRjJbH7Av/SYBlJGmsA
-e5W3DjMqFt/Ib9MTLRkQ4VMoSjJEJtRe1c7IGbpzJ6K0eBg8sYjXdDJHR/j9Z5Ig
-+kZp+eFKjzblK5e3ON9/Sjhl
------END PRIVATE KEY-----`;
+let privateKeyPem: string;
+let publicKey: CryptoKey;
+let auth: MyMinFinAuth;
 
-describe("MyMinFinAuth", () => {
-	const auth = new MyMinFinAuth({
+beforeAll(async () => {
+	const pair = await generateKeyPair("RS256", { extractable: true });
+	privateKeyPem = await exportPKCS8(pair.privateKey);
+	publicKey = pair.publicKey;
+	auth = new MyMinFinAuth({
 		clientId: "TestClient",
-		privateKey: FAKE_PRIVATE_KEY,
+		privateKey: privateKeyPem,
 		keyId: "test-key-1",
 		redirectUri: "https://example.com/callback",
 		environment: "test",
 	});
+});
 
-	describe("getAuthorizationUrl", () => {
-		it("returns a valid authorization URL", async () => {
-			const result = await auth.getAuthorizationUrl({
-				ecb: "0123456789",
-				scopes: ["myminfin_docs_read"],
-			});
+const sha256base64url = async (input: string): Promise<string> =>
+	base64url.encode(
+		new Uint8Array(
+			await crypto.subtle.digest("SHA-256", new TextEncoder().encode(input)),
+		),
+	);
 
-			expect(result.url).toContain(
-				"https://fediamapi-a.minfin.be/sso/oauth2/authorize",
-			);
-			expect(result.url).toContain("response_type=code");
-			expect(result.url).toContain("client_id=TestClient");
-			expect(result.url).toContain("code_challenge_method=S256");
-			expect(result.state).toBeTruthy();
-			expect(result.nonce).toBeTruthy();
-			expect(result.codeVerifier).toBeTruthy();
+describe("MyMinFinAuth.getAuthorizationUrl", () => {
+	it("builds an authorization request bound to the returned state, nonce and PKCE verifier", async () => {
+		const result = await auth.getAuthorizationUrl({
+			ecb: "0123456789",
+			scopes: ["myminfin_docs_read"],
+		});
+		const url = new URL(result.url);
+		const p = url.searchParams;
+
+		expect(url.origin + url.pathname).toBe(authorizeUrl("test"));
+		expect(p.get("response_type")).toBe("code");
+		expect(p.get("client_id")).toBe("TestClient");
+		expect(p.get("redirect_uri")).toBe("https://example.com/callback");
+		expect(p.get("state")).toBe(result.state);
+		expect(p.get("nonce")).toBe(result.nonce);
+		// RFC 7636 §4.2: code_challenge = BASE64URL(SHA256(code_verifier)), no padding.
+		expect(p.get("code_challenge_method")).toBe("S256");
+		expect(p.get("code_challenge")).toBe(
+			await sha256base64url(result.codeVerifier),
+		);
+		expect(p.get("code_challenge")).toHaveLength(43);
+		// RFC 7636 §4.1: verifier is 43-128 unreserved characters.
+		expect(result.codeVerifier).toMatch(/^[A-Za-z0-9\-._~]{43,128}$/);
+	});
+
+	it("carries the enterprise number as the ecb claim (FediamAPI convention)", async () => {
+		const result = await auth.getAuthorizationUrl({ ecb: "0662348959" });
+		const claims = new URL(result.url).searchParams.get("claims")!;
+		expect(JSON.parse(claims)).toEqual({ ecb: "0662348959" });
+	});
+
+	it("always requests openid and profile, adds custom scopes once each", async () => {
+		const result = await auth.getAuthorizationUrl({
+			ecb: "0123456789",
+			scopes: [
+				"openid",
+				"myminfin_docs_read",
+				"intervat_write",
+				"intervat_write",
+			],
+		});
+		const scopes = new URL(result.url).searchParams.get("scope")!.split(" ");
+		expect(scopes).toEqual(
+			expect.arrayContaining([
+				"openid",
+				"profile",
+				"myminfin_docs_read",
+				"intervat_write",
+			]),
+		);
+		expect(new Set(scopes).size).toBe(scopes.length);
+	});
+
+	it("generates unique state, nonce and verifier per call", async () => {
+		const r1 = await auth.getAuthorizationUrl({ ecb: "0123456789" });
+		const r2 = await auth.getAuthorizationUrl({ ecb: "0123456789" });
+		expect(r1.state).not.toBe(r2.state);
+		expect(r1.nonce).not.toBe(r2.nonce);
+		expect(r1.codeVerifier).not.toBe(r2.codeVerifier);
+	});
+
+	it("targets the production authorization server when configured", async () => {
+		const prodAuth = new MyMinFinAuth({
+			clientId: "ProdClient",
+			privateKey: privateKeyPem,
+			keyId: "prod-key",
+			redirectUri: "https://example.com/callback",
+			environment: "production",
+		});
+		const url = new URL(
+			(await prodAuth.getAuthorizationUrl({ ecb: "0123456789" })).url,
+		);
+		expect(url.origin + url.pathname).toBe(authorizeUrl("production"));
+	});
+});
+
+describe("MyMinFinAuth token requests", () => {
+	const fetchMock = vi.fn<typeof fetch>();
+	const tokenJson = {
+		access_token: "at-1",
+		refresh_token: "rt-1",
+		id_token: "idt-1",
+		scope: "openid profile",
+		token_type: "Bearer",
+		expires_in: 3600,
+	};
+
+	afterEach(() => {
+		vi.unstubAllGlobals();
+		fetchMock.mockReset();
+	});
+
+	const stubToken = (init?: ResponseInit, body: unknown = tokenJson) => {
+		fetchMock.mockResolvedValueOnce(
+			new Response(JSON.stringify(body), {
+				status: 200,
+				headers: { "content-type": "application/json" },
+				...init,
+			}),
+		);
+		vi.stubGlobal("fetch", fetchMock);
+	};
+
+	const sentBody = (call = 0): URLSearchParams => {
+		const init = fetchMock.mock.calls[call]![1]!;
+		return new URLSearchParams(init.body as string);
+	};
+
+	it("exchangeCode posts an RFC 7523 client assertion and PKCE verifier to the token endpoint", async () => {
+		stubToken();
+		const tokens = await auth.exchangeCode({
+			code: "auth-code",
+			redirectUri: "https://example.com/callback",
+			codeVerifier: "verifier-xyz",
 		});
 
-		it("includes ECB claim in URL", async () => {
-			const result = await auth.getAuthorizationUrl({ ecb: "0662348959" });
-			const url = new URL(result.url);
-			const claims = url.searchParams.get("claims");
-			expect(claims).toBe('{"ecb":"0662348959"}');
-		});
+		const [url, init] = fetchMock.mock.calls[0]!;
+		expect(url).toBe(tokenUrl("test"));
+		expect(init?.method).toBe("POST");
+		expect(new Headers(init?.headers).get("content-type")).toMatch(
+			/^application\/x-www-form-urlencoded/,
+		);
 
-		it("always includes openid and profile scopes", async () => {
-			const result = await auth.getAuthorizationUrl({ ecb: "0123456789" });
-			const url = new URL(result.url);
-			const scope = url.searchParams.get("scope")!;
-			expect(scope).toContain("openid");
-			expect(scope).toContain("profile");
-		});
+		const body = sentBody();
+		expect(body.get("grant_type")).toBe("authorization_code");
+		expect(body.get("code")).toBe("auth-code");
+		expect(body.get("redirect_uri")).toBe("https://example.com/callback");
+		expect(body.get("code_verifier")).toBe("verifier-xyz");
+		expect(body.get("client_id")).toBe("TestClient");
+		// RFC 7523 §2.2 client authentication assertion type.
+		expect(body.get("client_assertion_type")).toBe(
+			"urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+		);
 
-		it("includes custom scopes", async () => {
-			const result = await auth.getAuthorizationUrl({
-				ecb: "0123456789",
-				scopes: ["myminfin_docs_read", "intervat_write"],
-			});
-			const url = new URL(result.url);
-			const scope = url.searchParams.get("scope")!;
-			expect(scope).toContain("myminfin_docs_read");
-			expect(scope).toContain("intervat_write");
+		const assertion = body.get("client_assertion")!;
+		// Signed with the configured key: verifiable with its public half.
+		const { payload, protectedHeader } = await jwtVerify(assertion, publicKey, {
+			issuer: "TestClient",
+			subject: "TestClient",
+			audience: tokenUrl("test"),
 		});
-
-		it("deduplicates scopes", async () => {
-			const result = await auth.getAuthorizationUrl({
-				ecb: "0123456789",
-				scopes: ["openid", "profile", "custom"],
-			});
-			const url = new URL(result.url);
-			const scope = url.searchParams.get("scope")!;
-			const parts = scope.split(" ");
-			const unique = new Set(parts);
-			expect(parts.length).toBe(unique.size);
+		expect(protectedHeader).toMatchObject({
+			alg: "RS256",
+			typ: "JWT",
+			kid: "test-key-1",
 		});
+		// RFC 7523 §3: iss = sub = client_id, aud = token endpoint, exp present, jti unique.
+		expect(payload.iss).toBe("TestClient");
+		expect(payload.sub).toBe("TestClient");
+		expect(payload.aud).toBe(tokenUrl("test"));
+		// "5m" lifetime; iat and exp are read from two clock samples, so a
+		// second boundary between them may shave one second off the delta.
+		expect(payload.exp! - payload.iat!).toBeGreaterThanOrEqual(299);
+		expect(payload.exp! - payload.iat!).toBeLessThanOrEqual(300);
+		expect(payload.jti).toBeTruthy();
 
-		it("generates unique state and nonce per call", async () => {
-			const r1 = await auth.getAuthorizationUrl({ ecb: "0123456789" });
-			const r2 = await auth.getAuthorizationUrl({ ecb: "0123456789" });
-			expect(r1.state).not.toBe(r2.state);
-			expect(r1.nonce).not.toBe(r2.nonce);
-			expect(r1.codeVerifier).not.toBe(r2.codeVerifier);
+		// TokenSet mapping snake_case -> camelCase.
+		expect(tokens).toEqual({
+			accessToken: "at-1",
+			refreshToken: "rt-1",
+			idToken: "idt-1",
+			scope: "openid profile",
+			tokenType: "Bearer",
+			expiresIn: 3600,
 		});
+	});
 
-		it("uses production URLs when configured", async () => {
-			const prodAuth = new MyMinFinAuth({
-				clientId: "ProdClient",
-				privateKey: FAKE_PRIVATE_KEY,
-				keyId: "prod-key",
+	it("refreshToken posts grant_type=refresh_token with a fresh assertion (unique jti)", async () => {
+		stubToken();
+		stubToken();
+		await auth.refreshToken({ refreshToken: "rt-old" });
+		await auth.refreshToken({ refreshToken: "rt-old" });
+
+		const body = sentBody(0);
+		expect(body.get("grant_type")).toBe("refresh_token");
+		expect(body.get("refresh_token")).toBe("rt-old");
+		expect(body.get("client_assertion_type")).toBe(
+			"urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+		);
+		expect(body.has("code_verifier")).toBe(false);
+
+		const jti0 = decodeJwt(sentBody(0).get("client_assertion")!).jti;
+		const jti1 = decodeJwt(sentBody(1).get("client_assertion")!).jti;
+		expect(jti0).toBeTruthy();
+		expect(jti0).not.toBe(jti1);
+		expect(decodeProtectedHeader(sentBody(1).get("client_assertion")!).kid).toBe(
+			"test-key-1",
+		);
+	});
+
+	it("accepts a CryptoKey directly and audiences the production token endpoint", async () => {
+		const pair = await generateKeyPair("RS256");
+		const prodAuth = new MyMinFinAuth({
+			clientId: "ProdClient",
+			privateKey: pair.privateKey,
+			keyId: "prod-key",
+			redirectUri: "https://example.com/callback",
+			environment: "production",
+		});
+		stubToken();
+		await prodAuth.refreshToken({ refreshToken: "rt" });
+		expect(fetchMock.mock.calls[0]![0]).toBe(tokenUrl("production"));
+		const { payload } = await jwtVerify(
+			sentBody().get("client_assertion")!,
+			pair.publicKey,
+			{ audience: tokenUrl("production") },
+		);
+		expect(payload.iss).toBe("ProdClient");
+	});
+
+	it("surfaces the OAuth error_description on a non-OK token response", async () => {
+		stubToken(
+			{ status: 400 },
+			{ error: "invalid_grant", error_description: "Authorization code expired" },
+		);
+		const err = await auth
+			.exchangeCode({
+				code: "x",
 				redirectUri: "https://example.com/callback",
-				environment: "production",
-			});
+				codeVerifier: "v",
+			})
+			.catch((e: unknown) => e);
+		expect(err).toBeInstanceOf(MyMinFinApiError);
+		expect((err as MyMinFinApiError).status).toBe(400);
+		expect((err as MyMinFinApiError).message).toBe("Authorization code expired");
+	});
 
-			const result = await prodAuth.getAuthorizationUrl({ ecb: "0123456789" });
-			expect(result.url).toContain(
-				"https://fediamapi.minfin.fgov.be/sso/oauth2/authorize",
-			);
-		});
-
-		it("code_challenge is 43 characters (no padding)", async () => {
-			const result = await auth.getAuthorizationUrl({ ecb: "0123456789" });
-			const url = new URL(result.url);
-			const challenge = url.searchParams.get("code_challenge")!;
-			expect(challenge.length).toBe(43);
-			expect(challenge).not.toContain("=");
-		});
+	it("falls back to a generic message when the error body has no error_description", async () => {
+		stubToken({ status: 401 }, { error: "invalid_client" });
+		const err = await auth
+			.refreshToken({ refreshToken: "rt" })
+			.catch((e: unknown) => e);
+		expect(err).toBeInstanceOf(MyMinFinApiError);
+		expect((err as MyMinFinApiError).status).toBe(401);
+		expect((err as MyMinFinApiError).message).toBeTruthy();
 	});
 });
