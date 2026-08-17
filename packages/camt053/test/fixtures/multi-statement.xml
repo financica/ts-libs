@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Two statements in one message, each with its own account, currency,
+	balances and entries. Banks emit this shape when a customer holds several
+	accounts with the same institution; a consumer that reads only
+	`statements[0]` silently loses everything below.
+-->
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.02">
+	<BkToCstmrStmt>
+		<GrpHdr>
+			<MsgId>MULTI-MSG-001</MsgId>
+			<CreDtTm>2025-07-01T06:00:00Z</CreDtTm>
+		</GrpHdr>
+		<Stmt>
+			<Id>STMT-EUR</Id>
+			<ElctrncSeqNb>1</ElctrncSeqNb>
+			<CreDtTm>2025-07-01T06:00:00Z</CreDtTm>
+			<Acct>
+				<Id>
+					<IBAN>BE68539007547034</IBAN>
+				</Id>
+				<Ccy>EUR</Ccy>
+				<Ownr>
+					<Nm>Acme BV</Nm>
+				</Ownr>
+			</Acct>
+			<Bal>
+				<Tp>
+					<CdOrPrtry>
+						<Cd>OPBD</Cd>
+					</CdOrPrtry>
+				</Tp>
+				<Amt Ccy="EUR">1000.00</Amt>
+				<CdtDbtInd>CRDT</CdtDbtInd>
+				<Dt>
+					<Dt>2025-06-01</Dt>
+				</Dt>
+			</Bal>
+			<Bal>
+				<Tp>
+					<CdOrPrtry>
+						<Cd>CLBD</Cd>
+					</CdOrPrtry>
+				</Tp>
+				<Amt Ccy="EUR">1150.00</Amt>
+				<CdtDbtInd>CRDT</CdtDbtInd>
+				<Dt>
+					<Dt>2025-06-30</Dt>
+				</Dt>
+			</Bal>
+			<Ntry>
+				<NtryRef>EUR-NTRY-1</NtryRef>
+				<Amt Ccy="EUR">200.00</Amt>
+				<CdtDbtInd>CRDT</CdtDbtInd>
+				<Sts>
+					<Cd>BOOK</Cd>
+				</Sts>
+				<BookgDt>
+					<Dt>2025-06-10</Dt>
+				</BookgDt>
+				<AddtlNtryInf>EUR statement first entry</AddtlNtryInf>
+			</Ntry>
+			<Ntry>
+				<NtryRef>EUR-NTRY-2</NtryRef>
+				<Amt Ccy="EUR">50.00</Amt>
+				<CdtDbtInd>DBIT</CdtDbtInd>
+				<Sts>
+					<Cd>BOOK</Cd>
+				</Sts>
+				<BookgDt>
+					<Dt>2025-06-20</Dt>
+				</BookgDt>
+				<AddtlNtryInf>EUR statement second entry</AddtlNtryInf>
+			</Ntry>
+		</Stmt>
+		<Stmt>
+			<Id>STMT-USD</Id>
+			<ElctrncSeqNb>2</ElctrncSeqNb>
+			<CreDtTm>2025-07-01T06:00:00Z</CreDtTm>
+			<Acct>
+				<Id>
+					<IBAN>DE89370400440532013000</IBAN>
+				</Id>
+				<Ccy>USD</Ccy>
+				<Ownr>
+					<Nm>Acme Inc</Nm>
+				</Ownr>
+			</Acct>
+			<Bal>
+				<Tp>
+					<CdOrPrtry>
+						<Cd>OPBD</Cd>
+					</CdOrPrtry>
+				</Tp>
+				<Amt Ccy="USD">5000.00</Amt>
+				<CdtDbtInd>CRDT</CdtDbtInd>
+				<Dt>
+					<Dt>2025-06-01</Dt>
+				</Dt>
+			</Bal>
+			<Bal>
+				<Tp>
+					<CdOrPrtry>
+						<Cd>CLBD</Cd>
+					</CdOrPrtry>
+				</Tp>
+				<Amt Ccy="USD">4250.00</Amt>
+				<CdtDbtInd>CRDT</CdtDbtInd>
+				<Dt>
+					<Dt>2025-06-30</Dt>
+				</Dt>
+			</Bal>
+			<Ntry>
+				<NtryRef>USD-NTRY-1</NtryRef>
+				<Amt Ccy="USD">750.00</Amt>
+				<CdtDbtInd>DBIT</CdtDbtInd>
+				<Sts>
+					<Cd>BOOK</Cd>
+				</Sts>
+				<BookgDt>
+					<Dt>2025-06-15</Dt>
+				</BookgDt>
+				<AddtlNtryInf>USD statement only entry</AddtlNtryInf>
+			</Ntry>
+		</Stmt>
+	</BkToCstmrStmt>
+</Document>
