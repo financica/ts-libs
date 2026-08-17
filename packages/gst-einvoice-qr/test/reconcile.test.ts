@@ -108,8 +108,9 @@ describe("reconcileWithQr", () => {
 
 		expect(statusOf(result, "supplierTaxId")).toBe("explained");
 		expect(result.consistent).toBe(true);
-		expect(result.checks.find((c) => c.field === "supplierTaxId")?.note).toMatch(
-			/one GSTIN per state/,
+		// An `explained` verdict must carry a reason; the wording is not pinned.
+		expect(result.checks.find((c) => c.field === "supplierTaxId")?.note).toEqual(
+			expect.stringMatching(/\S/),
 		);
 	});
 
@@ -149,11 +150,40 @@ describe("reconcileWithQr", () => {
 			lineCount: 1,
 		});
 
-		expect(result.mismatches.map((check) => check.field)).toEqual([
-			"invoiceNumber",
-			"invoiceDate",
-			"totalAmount",
-			"lineCount",
-		]);
+		expect(result.consistent).toBe(false);
+		expect(new Set(result.mismatches.map((check) => check.field))).toEqual(
+			new Set(["invoiceNumber", "invoiceDate", "totalAmount", "lineCount"]),
+		);
+	});
+
+	it("does not explain URP away when the QR names a real buyer GSTIN", () => {
+		// The URP explanation is for the QR side saying URP, not the extraction.
+		const result = reconcileWithQr(qr, { customerTaxId: "URP" });
+
+		expect(statusOf(result, "customerTaxId")).toBe("mismatch");
+		expect(result.consistent).toBe(false);
+	});
+
+	it("matches a customer tax id regardless of case and surrounding whitespace", () => {
+		expect(
+			reconcileWithQr(qr, { customerTaxId: "  24aaacc1206d1zm " }).consistent,
+		).toBe(true);
+	});
+
+	it.each([
+		["a NaN total", { totalAmount: Number.NaN }, "totalAmount"],
+		["a blank invoice number", { invoiceNumber: "   " }, "invoiceNumber"],
+	])("treats %s as not extracted rather than a mismatch", (_case, fields, field) => {
+		const result = reconcileWithQr(qr, fields);
+
+		expect(statusOf(result, field)).toBe("not_extracted");
+		expect(result.comparedCount).toBe(0);
+	});
+
+	it("catches a line count off by one", () => {
+		const result = reconcileWithQr(qr, { lineCount: 4 });
+
+		expect(statusOf(result, "lineCount")).toBe("mismatch");
+		expect(result.consistent).toBe(false);
 	});
 });

@@ -28,13 +28,10 @@ describe("isValidGstin", () => {
 		["letters where digits belong", "AAAAPFU0939F1ZV"],
 		["empty", ""],
 		["the URP placeholder", "URP"],
+		// Same characters, two of them swapped: format still passes, checksum must not.
+		["a transposition that keeps the format", "27AAPFU9039F1ZV"],
 	])("rejects %s", (_case, gstin) => {
 		expect(isValidGstin(gstin)).toBe(false);
-	});
-
-	it("rejects a single-character transposition that keeps the format", () => {
-		// Same characters, two of them swapped: format still passes, checksum must not.
-		expect(isValidGstin("27AAPFU9039F1ZV")).toBe(false);
 	});
 });
 
