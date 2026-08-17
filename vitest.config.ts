@@ -5,7 +5,7 @@ export default defineConfig({
 		// Each package keeps its own vitest.config.ts where it needs one
 		// (different test locations, jsdom, coverage tweaks); packages without
 		// one run on vitest defaults.
-		projects: ["packages/*"],
+		projects: ["packages/*/vitest.config.ts"],
 		coverage: {
 			provider: "v8",
 			reporter: ["text", "html"],
