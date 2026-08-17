@@ -4,6 +4,7 @@ import {
 	buildCanonicalParticipantId,
 	buildParticipantId,
 	buildSmlHostname,
+	isDnsNotFound,
 	parseServiceGroupDocumentTypes,
 	parseSmpUrlFromNaptrRegexp,
 } from "../src/smp-lookup";
@@ -101,6 +102,68 @@ describe("parseServiceGroupDocumentTypes", () => {
 	it("returns nothing for a participant with no service references", () => {
 		expect(parseServiceGroupDocumentTypes(serviceGroup([]))).toEqual([]);
 	});
+
+	it("dedupes references that point at the same document type", () => {
+		expect(
+			parseServiceGroupDocumentTypes(
+				serviceGroup([
+					reference(INVOICE_DOC_TYPE),
+					reference(INVOICE_DOC_TYPE),
+				]),
+			),
+		).toEqual([INVOICE_DOC_TYPE]);
+	});
+
+	it("keeps the raw path segment when it is not valid percent-encoding", () => {
+		// `%E0%A4%A` is a truncated UTF-8 sequence: decodeURIComponent throws.
+		const raw = "bad%E0%A4%A";
+		const xml = serviceGroup([
+			`<smp:ServiceMetadataReference href="http://smp.example.eu/x/services/${raw}"/>`,
+		]);
+		expect(parseServiceGroupDocumentTypes(xml)).toEqual([raw]);
+	});
+
+	it.each([
+		[
+			"a ServiceGroup without a reference collection",
+			`<?xml version="1.0"?><ServiceGroup xmlns="http://busdox.org/serviceMetadata/publishing/1.0/"><ParticipantIdentifier scheme="iso6523-actorid-upis">9925:BE0123456789</ParticipantIdentifier></ServiceGroup>`,
+		],
+		["non-XML garbage", "<html><body>502 Bad Gateway</body></html> not xml at all"],
+		["an empty body", ""],
+	])("returns [] for %s", (_label, xml) => {
+		expect(parseServiceGroupDocumentTypes(xml)).toEqual([]);
+	});
+});
+
+describe("isDnsNotFound", () => {
+	// Node's dns error codes: ENOTFOUND (NXDOMAIN) and ENODATA (name exists,
+	// no NAPTR) mean "not registered"; everything else means "couldn't check".
+	const dnsError = (code: string) => Object.assign(new Error(code), { code });
+
+	it.each(["ENOTFOUND", "ENODATA"])("treats %s as not registered", (code) => {
+		expect(isDnsNotFound(dnsError(code))).toBe(true);
+	});
+
+	it.each(["ENOTFOUND", "ENODATA"])(
+		"treats a wrapped %s (via .cause) as not registered",
+		(code) => {
+			expect(
+				isDnsNotFound(new Error("lookup failed", { cause: dnsError(code) })),
+			).toBe(true);
+		},
+	);
+
+	it.each(["ETIMEOUT", "EAI_AGAIN", "ESERVFAIL", "ECONNREFUSED"])(
+		"treats %s as a transient error, not absence",
+		(code) => {
+			expect(isDnsNotFound(dnsError(code))).toBe(false);
+		},
+	);
+
+	it("is false for non-error values", () => {
+		expect(isDnsNotFound(null)).toBe(false);
+		expect(isDnsNotFound("ENOTFOUND")).toBe(false);
+	});
 });
 
 describe("classifyPeppolDocumentType", () => {
@@ -120,9 +183,33 @@ describe("classifyPeppolDocumentType", () => {
 			"message-level-response",
 		],
 		[
+			// Peppol BIS Self-Billing 3.0 credit note (spec customization id).
+			"busdox-docid-qns::urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2::CreditNote##urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:selfbilling:3.0::2.1",
+			"self-billing-credit-note",
+		],
+		[
 			"busdox-docid-qns::urn:oasis:names:specification:ubl:schema:xsd:Order-2::Order##urn:fdc:peppol.eu:poacc:trns:order:3::2.1",
 			"order",
 		],
+		[
+			// Peppol BIS Order Response (T76): must not be swallowed by "order".
+			"busdox-docid-qns::urn:oasis:names:specification:ubl:schema:xsd:OrderResponse-2::OrderResponse##urn:fdc:peppol.eu:poacc:trns:order_response:3::2.1",
+			"order-response",
+		],
+		[
+			"busdox-docid-qns::urn:oasis:names:specification:ubl:schema:xsd:DespatchAdvice-2::DespatchAdvice##urn:fdc:peppol.eu:poacc:trns:despatch_advice:3::2.1",
+			"despatch-advice",
+		],
+		[
+			"busdox-docid-qns::urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2::Catalogue##urn:fdc:peppol.eu:poacc:trns:catalogue:3::2.1",
+			"catalogue",
+		],
+		[
+			"busdox-docid-qns::urn:oasis:names:specification:ubl:schema:xsd:Reminder-2::Reminder##urn:www.cenbii.eu:transaction:biitrns019:ver2.0::2.1",
+			"reminder",
+		],
+		// SMPs differ in casing of the busdox id; classification is case-insensitive.
+		[INVOICE_DOC_TYPE.toUpperCase(), "invoice"],
 		["something-we-do-not-recognise", "other"],
 	])("classifies %s", (docTypeId, expected) => {
 		expect(classifyPeppolDocumentType(docTypeId)).toBe(expected);

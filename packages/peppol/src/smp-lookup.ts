@@ -192,7 +192,7 @@ const resolveSmpBaseUrl = async (
  * `EAI_AGAIN`) is reported as an error — we genuinely couldn't check, and must
  * not be mistaken for "absent".
  */
-const isDnsNotFound = (error: unknown): boolean => {
+export const isDnsNotFound = (error: unknown): boolean => {
 	const direct =
 		isRecord(error) && typeof error.code === "string" ? error.code : null;
 	const cause =
