@@ -131,7 +131,10 @@ describe("buildNbbFiling", () => {
 		const facts = filing.facts.filter(
 			(fact) => fact.code === "14" || fact.code === "(14)",
 		);
-		expect(facts.map((fact) => fact.period).sort()).toEqual(["current", "previous"]);
+		expect(facts.map((fact) => fact.period).sort()).toEqual([
+			"current",
+			"previous",
+		]);
 		expect(filingValue(filing, "14", "current")).toBe(32000);
 		expect(filingValue(filing, "(14)", "current")).toBe(32000);
 	});
@@ -377,7 +380,10 @@ describe("structural checks", () => {
 		const result = validateNbbFiling(
 			buildNbbFiling(
 				withIdentification({
-					previousExercise: { startDate: "2024-12-31", endDate: "2024-01-01" },
+					previousExercise: {
+						startDate: "2024-12-31",
+						endDate: "2024-01-01",
+					},
 				}),
 			),
 		);
@@ -468,7 +474,10 @@ describe("structural checks", () => {
 		const result = validateNbbFiling(
 			buildNbbFiling({
 				...MICRO_FILING,
-				balanceSheet: { "20/58": { previous: 80000 }, "10/49": { previous: 80000 } },
+				balanceSheet: {
+					"20/58": { previous: 80000 },
+					"10/49": { previous: 80000 },
+				},
 			}),
 		);
 		expect(
@@ -612,7 +621,10 @@ describe("renderNbbFiling", () => {
  */
 describe("conformance with an accepted filing", () => {
 	const example = parseXbrl(
-		readFileSync(new URL("./fixtures/m87-micro-example.xbrl", import.meta.url), "utf8"),
+		readFileSync(
+			new URL("./fixtures/m87-micro-example.xbrl", import.meta.url),
+			"utf8",
+		),
 	)!;
 	const ours = parseXbrl(renderNbbFiling(built()))!;
 
