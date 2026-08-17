@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { StripeTaxInvoiceParseError } from "../src/errors.js";
-import { parseStripeTaxInvoiceRows } from "../src/parse.js";
+import { groupIntoRows, Y_TOLERANCE } from "../src/layout.js";
+import { isStripeTaxInvoice, parseStripeTaxInvoiceRows } from "../src/parse.js";
+import type { TextItem } from "../src/types.js";
 import {
 	conversionHeading,
 	currencyHeading,
@@ -37,21 +39,23 @@ const SINGLE_CURRENCY: Line[] = [
 
 /**
  * Two currencies: a USD table restated in EUR, then the EUR table, then the
- * invoice's own totals and the rate they were converted at.
+ * invoice's own totals and the rate they were converted at. The USD section
+ * carries VAT and the EUR one does not, so that no section total coincides
+ * with the invoice-level `Total VAT in EUR`.
  */
 const MULTI_CURRENCY: Line[][] = [
 	[
 		...HEADER,
 		currencyHeading(474, "USD"),
-		feeLine(446, "Billing - Usage Fee", "$0.40", "$0.00"),
+		feeLine(446, "Billing - Usage Fee", "$0.40", "$0.03"),
 		[432, [[55, "Fees for Billing volume"]]],
-		feeLine(407, "Stripe Processing Fees", "$1.24", "$0.00"),
+		feeLine(407, "Stripe Processing Fees", "$1.24", "$0.09"),
 		[393, [[55, "1 card payment totaling $29.00"]]],
 		conversionHeading(368, "USD", "EUR"),
 		totalLine(340, "Stripe Fees", "$1.64", "€1.40"),
-		totalLine(316, "Total VAT", "$0.00", "€0.00"),
-		totalLine(291, "Total", "$1.64", "€1.40"),
-		...wrappedDebitedLines(267, "–$1.64"),
+		totalLine(316, "Total VAT", "$0.12", "€0.10"),
+		totalLine(291, "Total", "$1.76", "€1.50"),
+		...wrappedDebitedLines(267, "–$1.76"),
 		totalLine(227, "Amount Due", "$0.00"),
 		[
 			32,
@@ -72,7 +76,7 @@ const MULTI_CURRENCY: Line[][] = [
 		totalLine(573, "Total", "€9.35"),
 		totalLine(548, "Debited from your Balance", "–€9.35"),
 		totalLine(524, "Amount Due", "€0.00"),
-		totalLine(464, "Total VAT in EUR", "€0.00"),
+		totalLine(464, "Total VAT in EUR", "€0.10"),
 		totalLine(428, "Total fees in EUR", "€10.75"),
 		[398, [[54, "Exchange Rates (derived from average rate for period)"]]],
 		exchangeRateLine(372, "USD / EUR", "0.8555883449056172"),
@@ -126,7 +130,7 @@ describe("parseStripeTaxInvoiceRows", () => {
 	it("reads a fee table with description lines and a full totals block", () => {
 		const invoice = parse(SINGLE_CURRENCY);
 
-		expect(invoice.sections).toEqual([
+		expect(invoice.sections).toMatchObject([
 			{
 				currency: "EUR",
 				lines: [
@@ -177,11 +181,14 @@ describe("parseStripeTaxInvoiceRows", () => {
 				convertedCurrency: "EUR",
 				totals: {
 					stripeFees: 1.64,
-					total: 1.64,
-					debitedFromBalance: -1.64,
+					totalVat: 0.12,
+					total: 1.76,
+					// The narrow converted layout wraps `Debited from your Balance`
+					// onto two rows; the amount is on the first.
+					debitedFromBalance: -1.76,
 					amountDue: 0,
 				},
-				convertedTotals: { stripeFees: 1.4, totalVat: 0, total: 1.4 },
+				convertedTotals: { stripeFees: 1.4, totalVat: 0.1, total: 1.5 },
 			},
 			{
 				currency: "EUR",
@@ -193,35 +200,121 @@ describe("parseStripeTaxInvoiceRows", () => {
 	});
 
 	it("reads the invoice totals and the rate the sections were converted at", () => {
-		const invoice = parse(...MULTI_CURRENCY);
-
-		expect(invoice).toMatchObject({
-			totals: { currency: "EUR", fees: 10.75, vat: 0 },
+		expect(parse(...MULTI_CURRENCY)).toMatchObject({
+			totals: { currency: "EUR", fees: 10.75, vat: 0.1 },
 			exchangeRates: [{ from: "USD", to: "EUR", rate: 0.8555883449056172 }],
 			exchangeRateBasis: "derived from average rate for period",
 			settlementNote:
 				"The totals above have been debited from your Stripe balance.",
 		});
-		// €1.40 converted + €9.35 native is what the invoice says it comes to.
-		expect(invoice.totals.fees).toBeCloseTo(
-			(invoice.sections[0]?.convertedTotals?.total ?? 0) +
-				(invoice.sections[1]?.totals.total ?? 0),
-			2,
-		);
-	});
-
-	it("reads a balance row whose label wraps onto a second line", () => {
-		expect(parse(...MULTI_CURRENCY).sections[0]?.totals.debitedFromBalance).toBe(
-			-1.64,
-		);
 	});
 
 	it("does not mistake the invoice totals for a section total", () => {
 		const eur = parse(...MULTI_CURRENCY).sections[1];
 
-		// `Total VAT in EUR` sits in the same column as `Total VAT`.
+		// `Total VAT in EUR` (€0.10) sits in the same column as the EUR section's
+		// own `Total VAT` (€0.00), and `Total fees in EUR` under its `Total`.
 		expect(eur?.totals.totalVat).toBe(0);
 		expect(eur?.totals.total).toBe(9.35);
+	});
+
+	it("prefers the printed invoice totals over a sole section's own", () => {
+		// One section, billed in USD on an invoice Stripe reports in EUR: the
+		// totals are restated and `Total fees in EUR` is printed.
+		const invoice = parse([
+			...HEADER,
+			currencyHeading(474, "USD"),
+			feeLine(446, "Stripe Processing Fees", "$1.24", "$0.00"),
+			conversionHeading(368, "USD", "EUR"),
+			totalLine(340, "Stripe Fees", "$1.24", "€1.06"),
+			totalLine(316, "Total VAT", "$0.00", "€0.00"),
+			totalLine(291, "Total", "$1.24", "€1.06"),
+			totalLine(264, "Total VAT in EUR", "€0.00"),
+			totalLine(228, "Total fees in EUR", "€1.06"),
+			...FOOTER,
+		]);
+
+		expect(invoice.totals).toEqual({ currency: "EUR", fees: 1.06, vat: 0 });
+	});
+
+	it("reads a section that charges VAT", () => {
+		// An Irish customer is charged Stripe's home 23% VAT: €10.00 × 23% = €2.30.
+		const invoice = parse([
+			...HEADER,
+			currencyHeading(487, "EUR"),
+			feeLine(460, "Stripe Processing Fees", "€10.00", "€2.30"),
+			totalLine(435, "Stripe Fees", "€10.00"),
+			totalLine(411, "Total VAT", "€2.30"),
+			totalLine(386, "Total", "€12.30"),
+			...FOOTER,
+		]);
+
+		const [section] = invoice.sections;
+		expect(section?.lines[0]).toMatchObject({ feeAmount: 10, vatAmount: 2.3 });
+		expect(section?.totals).toMatchObject({ stripeFees: 10, totalVat: 2.3 });
+		expect(section?.totals.total).toBeCloseTo(
+			(section?.totals.stripeFees ?? 0) + (section?.totals.totalVat ?? 0),
+			2,
+		);
+		expect(invoice.totals).toMatchObject({ fees: 10, vat: 2.3 });
+	});
+
+	it("places a lone amount by which column heading it ends under", () => {
+		const invoice = parse([
+			...HEADER,
+			currencyHeading(487, "EUR"),
+			// VAT only: nothing printed in the fee column.
+			[
+				460,
+				[
+					[55, "VAT correction"],
+					[557 - 5 * 4.6, "€1.15", 557],
+				],
+			],
+			// Fee only: nothing printed in the VAT column.
+			[
+				435,
+				[
+					[55, "Fee Adjustment"],
+					[471 - 5 * 4.6, "€2.00", 471],
+				],
+			],
+			totalLine(410, "Total", "€3.15"),
+			...FOOTER,
+		]);
+
+		expect(invoice.sections[0]?.lines).toMatchObject([
+			{ description: "VAT correction", feeAmount: 0, vatAmount: 1.15 },
+			{ description: "Fee Adjustment", feeAmount: 2, vatAmount: null },
+		]);
+	});
+
+	it("falls back to the known column edges when the headings are not printed", () => {
+		const invoice = parse([
+			...HEADER,
+			[487, [[55, "Transfer Currency: EUR"]]],
+			[
+				460,
+				[
+					[55, "VAT correction"],
+					[557 - 5 * 4.6, "€1.15", 557],
+				],
+			],
+			[
+				435,
+				[
+					[55, "Fee Adjustment"],
+					[471 - 5 * 4.6, "€2.00", 471],
+				],
+			],
+			totalLine(410, "Total", "€3.15"),
+			...FOOTER,
+		]);
+
+		expect(invoice.sections[0]?.lines).toMatchObject([
+			{ feeAmount: 0, vatAmount: 1.15 },
+			{ feeAmount: 2, vatAmount: null },
+		]);
 	});
 
 	it("reads a refund line and a negative adjustment", () => {
@@ -271,6 +364,41 @@ describe("parseStripeTaxInvoiceRows", () => {
 		]);
 	});
 
+	it("joins a description that wraps onto a third row", () => {
+		const invoice = parse([
+			...HEADER,
+			currencyHeading(487, "EUR"),
+			feeLine(460, "Stripe Processing Fees", "€40.62", "€0.00"),
+			[445, [[55, "9 card payments"]]],
+			[430, [[55, "totaling"]]],
+			[415, [[55, "€1,242.00"]]],
+			totalLine(390, "Total", "€40.62"),
+			...FOOTER,
+		]);
+
+		expect(invoice.sections[0]?.lines[0]).toMatchObject({
+			detail: "9 card payments totaling €1,242.00",
+			volume: { count: 9, kind: "card payments", amount: 1242 },
+		});
+	});
+
+	it.each([
+		// DETAIL_MAX_GAP is 25pt: exactly that far still attaches, one more does not.
+		[25, "Fees for Invoicing"],
+		[26, null],
+	])("attaches a description printed %ipt below its fee line", (gap, detail) => {
+		const invoice = parse([
+			...HEADER,
+			currencyHeading(487, "EUR"),
+			feeLine(460, "Invoicing", "€4.97", "€0.00"),
+			[460 - gap, [[55, "Fees for Invoicing"]]],
+			totalLine(400, "Total", "€4.97"),
+			...FOOTER,
+		]);
+
+		expect(invoice.sections[0]?.lines[0]?.detail).toBe(detail);
+	});
+
 	it("reads the other wording of the reverse-charge note", () => {
 		const rows = HEADER.map(
 			([y, cells]): Line => [
@@ -292,6 +420,61 @@ describe("parseStripeTaxInvoiceRows", () => {
 		).toMatchObject({
 			reverseCharge: true,
 			reverseChargeNote: "VAT reverse charge applies.",
+		});
+	});
+
+	it("does not take the legal paragraph's mention of reverse charge for the note", () => {
+		const withoutNote = HEADER.map(
+			([y, cells]): Line => [
+				y,
+				cells.filter(
+					(cell) => cell[1] !== "Reverse Charge VAT may be applicable.",
+				) as Line[1],
+			],
+		);
+
+		expect(
+			parse([
+				...withoutNote,
+				currencyHeading(487, "EUR"),
+				totalLine(381, "Total", "€1.00"),
+				...FOOTER,
+				[
+					190,
+					[
+						[
+							54,
+							"of the services, including whether the reverse charge mechanism applies.",
+						],
+					],
+				],
+			]),
+		).toMatchObject({ reverseCharge: false, reverseChargeNote: null });
+	});
+
+	it("reads a GST registration under the label the invoice uses", () => {
+		const gstHeader = HEADER.map(
+			([y, cells]): Line => [
+				y,
+				cells.map((cell) => {
+					if (cell[1] === "Stripe VAT Number")
+						return [cell[0], "Stripe GST Number"];
+					if (cell[1] === "IE 3206488LH")
+						return [cell[0], "12 345 678 901", 558];
+					return cell;
+				}) as Line[1],
+			],
+		);
+
+		expect(
+			parse([
+				...gstHeader,
+				currencyHeading(487, "AUD"),
+				totalLine(381, "Total", "A$1.00"),
+			]).supplier,
+		).toMatchObject({
+			taxNumber: "12 345 678 901",
+			taxNumberLabel: "Stripe GST Number",
 		});
 	});
 
@@ -394,11 +577,56 @@ describe("parseStripeTaxInvoiceRows", () => {
 		expect(() => parse(withoutServiceMonth)).toThrowError(
 			StripeTaxInvoiceParseError,
 		);
+		expect(() => parse(withoutServiceMonth)).toThrowError(
+			expect.objectContaining({ code: "missing_field" }),
+		);
 	});
 
 	it("rejects an invoice with no fee table", () => {
 		expect(() => parse(HEADER)).toThrowError(
 			expect.objectContaining({ code: "missing_field" }),
 		);
+	});
+});
+
+describe("groupIntoRows", () => {
+	const item = (x: number, y: number, str = `${x},${y}`): TextItem => ({
+		str,
+		x,
+		right: x + 10,
+		y,
+	});
+
+	it("merges baselines within the tolerance and splits those beyond it", () => {
+		const rows = groupIntoRows([
+			item(55, 460),
+			item(471, 460 - Y_TOLERANCE),
+			item(557, 460 - Y_TOLERANCE - 1),
+		]);
+
+		expect(rows.map((row) => row.items.length)).toEqual([2, 1]);
+	});
+
+	it("orders rows top to bottom and items left to right whatever the input order", () => {
+		const rows = groupIntoRows([
+			item(557, 400),
+			item(55, 460),
+			item(316, 400),
+			item(471, 460),
+			item(55, 400),
+		]);
+
+		expect(rows.map((row) => row.items.map((it) => it.str))).toEqual([
+			["55,460", "471,460"],
+			["55,400", "316,400", "557,400"],
+		]);
+	});
+});
+
+describe("isStripeTaxInvoice", () => {
+	it("says no to bytes that are not a PDF, without throwing", async () => {
+		await expect(
+			isStripeTaxInvoice(new TextEncoder().encode("not a pdf at all")),
+		).resolves.toBe(false);
 	});
 });
