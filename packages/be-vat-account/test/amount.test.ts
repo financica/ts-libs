@@ -13,24 +13,45 @@ describe("parseLocalizedAmount", () => {
 
 	it("reads the Anglo form, so a mixed-source caller needs no branch", () => {
 		expect(parseLocalizedAmount("1,234.56")).toBe(1234.56);
-		expect(parseLocalizedAmount("1.234.567")).toBe(1234567);
 	});
 
-	it("treats a lone comma before three digits as a thousands group", () => {
+	it("reads repeated Anglo thousands groups", () => {
+		expect(parseLocalizedAmount("1,234,567.89")).toBe(1234567.89);
+	});
+
+	it("reads a lone separator with any tail length", () => {
+		expect(parseLocalizedAmount("0,5")).toBe(0.5);
+		expect(parseLocalizedAmount("1234,56")).toBe(1234.56);
+		expect(parseLocalizedAmount("1234.56")).toBe(1234.56);
+		expect(parseLocalizedAmount("1234")).toBe(1234);
+	});
+
+	it("treats a lone comma before three digits as a thousands group, a lone dot as a decimal", () => {
 		expect(parseLocalizedAmount("1,234")).toBe(1234);
 		expect(parseLocalizedAmount("1,23")).toBe(1.23);
+		expect(parseLocalizedAmount("1.234")).toBe(1.234);
 	});
 
 	it("strips decoration extraction leaves attached", () => {
+		expect(parseLocalizedAmount("$1,234.56")).toBe(1234.56);
+		expect(parseLocalizedAmount("EUR 12,50")).toBe(12.5);
 		expect(parseLocalizedAmount("€ 2.561,66")).toBe(2561.66);
 		expect(parseLocalizedAmount("2 561,66")).toBe(2561.66);
 	});
 
-	it("moves a trailing minus to the front", () => {
-		expect(parseLocalizedAmount("927,41-")).toBe(-927.41);
+	it("reads every space a thousands separator is printed with", () => {
+		// Plain space and narrow no-break space, beside the no-break space above.
+		expect(parseLocalizedAmount("1 234,56")).toBe(1234.56);
+		expect(parseLocalizedAmount("1\u202f234,56")).toBe(1234.56);
 	});
 
-	it.each(["", "   ", "n/a", "1-2-3"])("returns null for %o", (input) => {
+	it("moves a trailing minus to the front, and keeps a leading one", () => {
+		expect(parseLocalizedAmount("927,41-")).toBe(-927.41);
+		expect(parseLocalizedAmount("-1.234,56")).toBe(-1234.56);
+		expect(parseLocalizedAmount("-1,234.56")).toBe(-1234.56);
+	});
+
+	it.each(["", "   ", "n/a", "1-2-3", "--", "."])("returns null for %o", (input) => {
 		expect(parseLocalizedAmount(input)).toBeNull();
 	});
 
