@@ -27,6 +27,28 @@ describe("getCountryEInvoicingProfile", () => {
 		expect(getCountryEInvoicingProfile("DK")?.vatIdentifierScheme).toBeNull();
 	});
 
+	it("marks Denmark and Finland as not fully Peppol-reachable", () => {
+		// DK routes domestically over NemHandel and FI over the operator/bank
+		// networks, so Peppol alone does not address the whole market there.
+		expect(getCountryEInvoicingProfile("DK")?.peppolReachesFullMarket).toBe(false);
+		expect(getCountryEInvoicingProfile("FI")?.peppolReachesFullMarket).toBe(false);
+		expect(getCountryEInvoicingProfile("NO")?.peppolReachesFullMarket).toBe(true);
+		expect(getCountryEInvoicingProfile("SE")?.peppolReachesFullMarket).toBe(true);
+	});
+
+	it("carries a company-number length distinct from the VAT length", () => {
+		// Norwegian org.nr is 9 digits; its VAT number is the same 9 plus MVA.
+		expect(getCountryEInvoicingProfile("NO")?.companyNumberLength).toBe(9);
+		expect(getCountryEInvoicingProfile("SE")?.companyNumberLength).toBe(10);
+		expect(getCountryEInvoicingProfile("NL")?.companyNumberLength).toBe(8);
+	});
+
+	it("validates Norwegian numbers against BRREG, not VIES", () => {
+		// Norway is outside the EU, so VIES holds nothing for it.
+		expect(getCountryEInvoicingProfile("NO")?.vatRegistrySource).toBe("brreg");
+		expect(getCountryEInvoicingProfile("SE")?.vatRegistrySource).toBe("vies");
+	});
+
 	it("profiles Luxembourg with the CTIE matricule 0240 / VAT 9938", () => {
 		const lu = getCountryEInvoicingProfile("LU");
 		expect(lu?.companyIdentifierScheme).toBe("0240");
@@ -40,17 +62,11 @@ describe("getCountryEInvoicingProfile", () => {
 
 describe("getPeppolIdentifierSchemes", () => {
 	it("uses the verified profile for profiled countries", () => {
+		// One representative; every profiled country's scheme pair is checked
+		// against PEPPOL_COUNTRY_SCHEMES by the it.each below.
 		expect(getPeppolIdentifierSchemes("BE")).toEqual({
 			companyIdentifierScheme: "0208",
 			vatIdentifierScheme: "9925",
-		});
-		expect(getPeppolIdentifierSchemes("nl")).toEqual({
-			companyIdentifierScheme: "0106",
-			vatIdentifierScheme: "9944",
-		});
-		expect(getPeppolIdentifierSchemes("LU")).toEqual({
-			companyIdentifierScheme: "0240",
-			vatIdentifierScheme: "9938",
 		});
 	});
 
