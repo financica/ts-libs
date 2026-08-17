@@ -2,6 +2,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import da from "./generated/lang/da";
 import fr from "./generated/lang/fr";
 import { NACE } from "./nace";
+import { getParentCode } from "./utils";
 
 describe("NACE", () => {
 	let nace: NACE;
@@ -11,42 +12,24 @@ describe("NACE", () => {
 	});
 
 	describe("getCode", () => {
-		it("should retrieve a section code", () => {
-			const code = nace.getCode("A");
-			expect(code).toBeDefined();
-			expect(code?.code).toBe("A");
-			expect(code?.level).toBe(1);
-			expect(code?.description.en).toContain("AGRICULTURE");
+		// Codes and headings from NACE Rev. 2.1 (Regulation (EU) 2023/137, Annex).
+		it.each([
+			["A", "A", 1, "AGRICULTURE"],
+			["01", "01", 2, "Crop and animal production"],
+			["01.1", "011", 3, "non-perennial crops"],
+			["01.11", "0111", 4, "cereals"],
+		])("should retrieve %s as level %i", (input, code, level, fragment) => {
+			const result = nace.getCode(input);
+			expect(result).toMatchObject({ code, level });
+			expect(result?.description.en).toContain(fragment);
 		});
 
-		it("should retrieve a division code", () => {
-			const code = nace.getCode("01");
-			expect(code).toBeDefined();
-			expect(code?.code).toBe("01");
-			expect(code?.level).toBe(2);
-			expect(code?.description.en).toContain("Crop and animal production");
-		});
-
-		it("should retrieve a group code", () => {
-			const code = nace.getCode("01.1");
-			expect(code).toBeDefined();
-			expect(code?.code).toBe("011");
-			expect(code?.level).toBe(3);
-			expect(code?.description.en).toContain("non-perennial crops");
-		});
-
-		it("should retrieve a class code", () => {
-			const code = nace.getCode("01.11");
-			expect(code).toBeDefined();
-			expect(code?.code).toBe("0111");
-			expect(code?.level).toBe(4);
-			expect(code?.description.en).toContain("cereals");
-		});
-
-		it("should handle normalized codes", () => {
-			const code1 = nace.getCode("70.20");
-			const code2 = nace.getCode("7020");
-			expect(code1).toEqual(code2);
+		it.each([
+			["70.20", "7020"],
+			["a", "A"],
+		])("should treat %s and %s as the same code", (raw, normalized) => {
+			expect(nace.getCode(raw)).not.toBeNull();
+			expect(nace.getCode(raw)).toEqual(nace.getCode(normalized));
 		});
 
 		it("should return null for invalid codes", () => {
@@ -54,102 +37,63 @@ describe("NACE", () => {
 			expect(nace.getCode("99.99")).toBeNull();
 			expect(nace.getCode("invalid")).toBeNull();
 		});
-
-		it("should be case-insensitive for section codes", () => {
-			const code1 = nace.getCode("a");
-			const code2 = nace.getCode("A");
-			expect(code1).toEqual(code2);
-		});
 	});
 
 	describe("getParent", () => {
-		it("should get parent of a class", () => {
-			const parent = nace.getParent("01.11");
-			expect(parent).toBeDefined();
-			expect(parent?.code).toBe("011");
-		});
-
-		it("should get parent of a group", () => {
-			const parent = nace.getParent("01.1");
-			expect(parent).toBeDefined();
-			expect(parent?.code).toBe("01");
-		});
-
-		it("should get parent of a division", () => {
-			const parent = nace.getParent("01");
-			expect(parent).toBeDefined();
-			expect(parent?.code).toBe("A");
+		it.each([
+			["01.11", "011"],
+			["01.1", "01"],
+			["01", "A"],
+		])("should get parent of %s", (code, parent) => {
+			expect(nace.getParent(code)?.code).toBe(parent);
 		});
 
 		it("should return null for section codes", () => {
-			const parent = nace.getParent("A");
-			expect(parent).toBeNull();
+			expect(nace.getParent("A")).toBeNull();
 		});
 
 		it("should return null for invalid codes", () => {
-			const parent = nace.getParent("invalid");
-			expect(parent).toBeNull();
+			expect(nace.getParent("invalid")).toBeNull();
 		});
 	});
 
 	describe("getChildren", () => {
-		it("should get children of a section", () => {
-			const children = nace.getChildren("A");
+		it.each([
+			["A", 2, "01"],
+			["01", 3, "011"],
+			["01.1", 4, "0111"],
+		])("should get children of %s", (code, level, child) => {
+			const children = nace.getChildren(code);
 			expect(children.length).toBeGreaterThan(0);
-			expect(children.every((c) => c.level === 2)).toBe(true);
-			expect(children.some((c) => c.code === "01")).toBe(true);
-		});
-
-		it("should get children of a division", () => {
-			const children = nace.getChildren("01");
-			expect(children.length).toBeGreaterThan(0);
-			expect(children.every((c) => c.level === 3)).toBe(true);
-			expect(children.some((c) => c.code === "011")).toBe(true);
-		});
-
-		it("should get children of a group", () => {
-			const children = nace.getChildren("01.1");
-			expect(children.length).toBeGreaterThan(0);
-			expect(children.every((c) => c.level === 4)).toBe(true);
-			expect(children.some((c) => c.code === "0111")).toBe(true);
+			expect(children.every((c) => c.level === level)).toBe(true);
+			expect(children.some((c) => c.code === child)).toBe(true);
 		});
 
 		it("should return empty array for class codes", () => {
-			const children = nace.getChildren("01.11");
-			expect(children).toEqual([]);
+			expect(nace.getChildren("01.11")).toEqual([]);
 		});
 
 		it("should return empty array for invalid codes", () => {
-			const children = nace.getChildren("invalid");
-			expect(children).toEqual([]);
+			expect(nace.getChildren("invalid")).toEqual([]);
 		});
 	});
 
 	describe("getAncestors", () => {
-		it("should get all ancestors of a class", () => {
-			const ancestors = nace.getAncestors("01.11");
-			expect(ancestors).toHaveLength(3);
-			expect(ancestors.map((a) => a.code)).toEqual(["011", "01", "A"]);
-		});
-
-		it("should get all ancestors of a group", () => {
-			const ancestors = nace.getAncestors("01.1");
-			expect(ancestors).toHaveLength(2);
-			expect(ancestors.map((a) => a.code)).toEqual(["01", "A"]);
-		});
-
-		it("should return empty array for section codes", () => {
-			const ancestors = nace.getAncestors("A");
-			expect(ancestors).toEqual([]);
+		it.each([
+			["01.11", ["011", "01", "A"]],
+			["01.1", ["01", "A"]],
+			["A", []],
+		])("should get ancestors of %s", (code, ancestors) => {
+			expect(nace.getAncestors(code).map((a) => a.code)).toEqual(ancestors);
 		});
 	});
 
 	describe("getDescendants", () => {
 		it("should get all descendants of a division", () => {
 			const descendants = nace.getDescendants("01");
-			expect(descendants.length).toBeGreaterThan(5);
 			expect(descendants.some((d) => d.level === 3)).toBe(true);
 			expect(descendants.some((d) => d.level === 4)).toBe(true);
+			expect(descendants.every((d) => d.code.startsWith("01"))).toBe(true);
 		});
 
 		it("should get all descendants of a group", () => {
@@ -159,17 +103,15 @@ describe("NACE", () => {
 		});
 
 		it("should return empty array for class codes", () => {
-			const descendants = nace.getDescendants("01.11");
-			expect(descendants).toEqual([]);
+			expect(nace.getDescendants("01.11")).toEqual([]);
 		});
 	});
 
 	describe("getSiblings", () => {
 		it("should get siblings of a division", () => {
 			const siblings = nace.getSiblings("01");
-			expect(siblings.length).toBeGreaterThan(0);
-			expect(siblings.every((s) => s.level === 2)).toBe(true);
-			expect(siblings.every((s) => s.code !== "01")).toBe(true);
+			// Section A = divisions 01, 02, 03 (NACE Rev. 2.1).
+			expect(siblings.map((s) => s.code)).toEqual(["02", "03"]);
 		});
 
 		it("should get siblings of a class", () => {
@@ -181,8 +123,7 @@ describe("NACE", () => {
 		});
 
 		it("should return empty array for invalid codes", () => {
-			const siblings = nace.getSiblings("invalid");
-			expect(siblings).toEqual([]);
+			expect(nace.getSiblings("invalid")).toEqual([]);
 		});
 	});
 
@@ -200,22 +141,91 @@ describe("NACE", () => {
 	});
 
 	describe("getAllCodes", () => {
-		it("should get all codes", () => {
-			const allCodes = nace.getAllCodes();
-			expect(allCodes.length).toBeGreaterThan(100);
+		// Statutory structure of NACE Rev. 2.1 (Regulation (EU) 2023/137;
+		// Eurostat "NACE Rev. 2.1 – Statistical classification of economic
+		// activities", 2023): 22 sections, 87 divisions, 287 groups, 651 classes.
+		it.each([
+			[1, 22],
+			[2, 87],
+			[3, 287],
+			[4, 651],
+		])("should hold the statutory number of level-%i codes", (level, count) => {
+			const codes = nace.getAllCodes(level);
+			expect(codes).toHaveLength(count);
+			expect(codes.every((c) => c.level === level)).toBe(true);
 		});
 
-		it("should get all section codes", () => {
-			const sections = nace.getAllCodes(1);
-			expect(sections.length).toBeGreaterThan(10);
-			expect(sections.length).toBeLessThan(30);
-			expect(sections.every((s) => s.level === 1)).toBe(true);
+		it("should return every level when unfiltered", () => {
+			expect(nace.getAllCodes()).toHaveLength(22 + 87 + 287 + 651);
+		});
+	});
+
+	describe("hierarchy invariants", () => {
+		it("should derive the same parent from the code as the data declares", () => {
+			// Guards the hand-typed division-to-section map in utils.ts against the
+			// PARENT_CODE column of the Eurostat structure file.
+			const mismatches = nace
+				.getAllCodes()
+				.filter((c) => (getParentCode(c.code) ?? undefined) !== c.parent)
+				.map((c) => [c.code, c.parent, getParentCode(c.code)]);
+			expect(mismatches).toEqual([]);
 		});
 
-		it("should get all division codes", () => {
-			const divisions = nace.getAllCodes(2);
-			expect(divisions.length).toBeGreaterThan(50);
-			expect(divisions.every((d) => d.level === 2)).toBe(true);
+		it("should have every non-section code point at an existing parent", () => {
+			for (const code of nace.getAllCodes()) {
+				if (code.level === 1) {
+					expect(code.parent).toBeUndefined();
+				} else {
+					expect(nace.getCode(code.parent!)).not.toBeNull();
+				}
+			}
+		});
+
+		it("should round-trip getChildren and getParent", () => {
+			// One pass to invert getParent, then compare against getChildren:
+			// the pairwise form is quadratic over the ~1000-code dataset.
+			const all = nace.getAllCodes();
+			const byParent = new Map<string, string[]>();
+			for (const code of all) {
+				const parent = nace.getParent(code.code);
+				if (!parent) continue;
+				byParent.set(parent.code, [
+					...(byParent.get(parent.code) ?? []),
+					code.code,
+				]);
+			}
+			const sorted = (codes: string[]) =>
+				[...codes].sort((a, b) => a.localeCompare(b));
+
+			for (const parent of all) {
+				const codes = nace.getChildren(parent.code).map((c) => c.code);
+				expect(codes, `${parent.code} children are sorted`).toEqual(
+					sorted(codes),
+				);
+				expect(codes, `${parent.code} children invert getParent`).toEqual(
+					sorted(byParent.get(parent.code) ?? []),
+				);
+			}
+		});
+
+		it("should make getDescendants the transitive closure of getChildren", () => {
+			for (const section of nace.getAllCodes(1)) {
+				const descendants = nace.getDescendants(section.code);
+				const closure = new Set<string>();
+				const stack = [section.code];
+				while (stack.length > 0) {
+					for (const child of nace.getChildren(stack.pop()!)) {
+						closure.add(child.code);
+						stack.push(child.code);
+					}
+				}
+				expect(new Set(descendants.map((d) => d.code))).toEqual(closure);
+				for (const d of descendants) {
+					expect(nace.getAncestors(d.code).map((a) => a.code)).toContain(
+						section.code,
+					);
+				}
+			}
 		});
 	});
 
@@ -224,6 +234,33 @@ describe("NACE", () => {
 			const results = nace.search("agriculture");
 			expect(results.length).toBeGreaterThan(0);
 			expect(results.some((r) => r.code === "A")).toBe(true);
+		});
+
+		it("should only return codes whose description contains the query", () => {
+			const results = nace.search("cereals", { limit: 1000 });
+			expect(results.length).toBeGreaterThan(0);
+			for (const r of results) {
+				expect(r.description.en.toLowerCase()).toContain("cereals");
+			}
+		});
+
+		it("should make fuzzy results a superset of exact results", () => {
+			const exact = new Set(
+				nace.search("growing of cereals", { limit: 1000 }).map((r) => r.code),
+			);
+			const fuzzy = nace.search("growing cereals", {
+				fuzzy: true,
+				limit: 1000,
+			});
+			expect(exact.size).toBeGreaterThan(0);
+			for (const code of exact) {
+				expect(fuzzy.map((r) => r.code)).toContain(code);
+			}
+			for (const r of fuzzy) {
+				const text = r.description.en.toLowerCase();
+				expect(text).toContain("growing");
+				expect(text).toContain("cereals");
+			}
 		});
 
 		it("should find nothing in a language whose pack was not loaded", () => {
@@ -239,31 +276,43 @@ describe("NACE", () => {
 		});
 
 		it("should respect limit option", () => {
-			const results = nace.search("a", { limit: 5 });
-			expect(results.length).toBeLessThanOrEqual(5);
+			const unlimited = nace.search("a", { limit: Number.MAX_SAFE_INTEGER });
+			expect(unlimited.length).toBeGreaterThan(5);
+			expect(nace.search("a", { limit: 5 })).toHaveLength(5);
+			expect(nace.search("a")).toHaveLength(10); // default limit
 		});
 
 		it("should return empty array for no matches", () => {
-			const results = nace.search("xyzabc123");
-			expect(results).toEqual([]);
+			expect(nace.search("xyzabc123")).toEqual([]);
 		});
 	});
 
 	describe("includes/excludes metadata", () => {
 		it("should have includes/excludes for relevant codes", () => {
+			// Explanatory notes for 01.11 (NACE Rev. 2.1): includes cereals,
+			// excludes growing of rice (01.12).
 			const code = nace.getCode("01.11");
-			expect(code?.includes).toBeDefined();
 			expect(code?.includes).toContain("cereals");
-			expect(code?.excludes).toBeDefined();
 			expect(code?.excludes).toContain("rice");
+		});
+
+		it("should only reference existing codes from includes/excludes", () => {
+			// Cross-references such as "see 01.12" / "see division 56" must resolve.
+			const pattern = /(?:see |class |group |division )(\d\d(?:\.\d\d?)?)/g;
+			for (const code of nace.getAllCodes()) {
+				for (const text of [code.includes, code.includesAlso, code.excludes]) {
+					for (const [, ref] of text?.matchAll(pattern) ?? []) {
+						expect(
+							nace.getCode(ref!),
+							`${code.code} -> ${ref}`,
+						).not.toBeNull();
+					}
+				}
+			}
 		});
 	});
 
 	describe("language packs", () => {
-		it("should expose only English by default", () => {
-			expect(Object.keys(nace.getCode("A")?.description ?? {})).toEqual(["en"]);
-		});
-
 		it("should expose a language once its pack is passed", () => {
 			const code = new NACE({ languages: [fr] }).getCode("A");
 			expect(code?.description.fr).toBeTruthy();
@@ -288,8 +337,11 @@ describe("NACE", () => {
 		it("should not leak a pack into instances that did not ask for it", () => {
 			const translated = new NACE({ languages: [fr] });
 			expect(translated.getCode("A")?.description.fr).toBeTruthy();
-			// Shares the cached base map, so the overlay must not have mutated it.
-			expect(new NACE().getCode("A")?.description.fr).toBeUndefined();
+			// Shares the cached base map, so the overlay must not have mutated it;
+			// this also pins that only English ships by default.
+			expect(Object.keys(new NACE().getCode("A")?.description ?? {})).toEqual([
+				"en",
+			]);
 		});
 
 		it("should apply packs under preload too", () => {

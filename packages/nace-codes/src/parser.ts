@@ -3,7 +3,7 @@ export function parseTSV<T = Record<string, string>>(content: string): T[] {
 		return [];
 	}
 
-	const lines = content.split("\n");
+	const lines = content.split(/\r?\n/);
 	if (lines.length < 2) {
 		return [];
 	}
