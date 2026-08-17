@@ -1,15 +1,11 @@
+import { normalizeParticipantValue } from "@financica/peppol/identifiers";
 import type { UblCompanyId, UblEndpoint } from "./ubl/types";
 import { isRecord, normalizeString } from "./utils";
 
-const cleanIdentifierValue = (value: string) =>
-	value
-		.trim()
-		.replace(/\s+/g, "")
-		.replace(/[^A-Za-z0-9]/g, "");
-
 const normalizeBelgianCompanyNumber = (value: string | null | undefined) => {
 	if (!value) return "";
-	return cleanIdentifierValue(value).toUpperCase().replace(/^BE/, "");
+	// EAS 0208 (BE:EN) is 10 bare digits, so the printed dots are decoration.
+	return normalizeParticipantValue("0208", value).toUpperCase().replace(/^BE/, "");
 };
 
 /**
@@ -57,7 +53,11 @@ export const resolveCompanyIdScheme = (params: {
 		return TABLE[normalizedCountry] ?? null;
 	}
 
-	const countryPrefix = cleanIdentifierValue(companyNumber).toUpperCase().slice(0, 2);
+	// Only sniffing the country prefix, e.g. `BE0793904121` → `BE`.
+	const countryPrefix = companyNumber
+		.replace(/[^A-Za-z]/g, "")
+		.toUpperCase()
+		.slice(0, 2);
 	return countryPrefix in TABLE ? (TABLE[countryPrefix] ?? null) : null;
 };
 
@@ -157,10 +157,11 @@ export const resolveVatEndpoint = (params: {
 }): UblEndpoint | null => {
 	const value = normalizeString(params.vatNumber);
 	if (!value) return null;
-	const cleaned = cleanIdentifierValue(value).toUpperCase();
-	if (!cleaned) return null;
 
-	const prefix = cleaned.slice(0, 2);
+	const prefix = value
+		.replace(/[^A-Za-z0-9]/g, "")
+		.toUpperCase()
+		.slice(0, 2);
 	const fromPrefix = /^[A-Z]{2}$/.test(prefix)
 		? (VAT_PREFIX_TO_COUNTRY[prefix] ?? prefix)
 		: null;
@@ -170,6 +171,11 @@ export const resolveVatEndpoint = (params: {
 		fromPrefix && fromPrefix in VAT_SCHEME_BY_COUNTRY ? fromPrefix : fromCountry;
 	const scheme = country ? VAT_SCHEME_BY_COUNTRY[country] : undefined;
 	if (!scheme) return null;
+
+	// Every scheme in the table is a VAT scheme, whose value carries no
+	// separator, so the printed dots/spaces are dropped.
+	const cleaned = normalizeParticipantValue(scheme, value).toUpperCase();
+	if (!cleaned) return null;
 
 	return { scheme, value: cleaned };
 };
@@ -289,7 +295,7 @@ export const listPeppolReceiverIdentifierCandidates = (
 
 	// 2. GLN → EAS 0088 (Global Location Number).
 	const gln = normalizeString(customer.glnNumber);
-	if (gln) add({ scheme: "0088", value: cleanIdentifierValue(gln) });
+	if (gln) add({ scheme: "0088", value: normalizeParticipantValue("0088", gln) });
 
 	// 3. VAT number → the country's VAT EAS scheme (e.g. BE → 9925).
 	const vat = resolveVatEndpoint({ vatNumber: customer.vatNumber, countryCode });

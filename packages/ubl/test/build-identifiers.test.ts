@@ -136,6 +136,15 @@ describe("resolveVatEndpoint", () => {
 	it("returns null for empty input", () => {
 		expect(resolveVatEndpoint({ vatNumber: null })).toBeNull();
 	});
+
+	it("drops the printed punctuation a VAT scheme's value never carries", () => {
+		// 9925 (BE:VAT) is `BE` + 10 digits; the dots are how the number is
+		// printed, and a participant lookup hashes the value exactly.
+		expect(resolveVatEndpoint({ vatNumber: " BE 0762.747.721 " })).toEqual({
+			scheme: "9925",
+			value: "BE0762747721",
+		});
+	});
 });
 
 describe("listPeppolReceiverIdentifierCandidates", () => {
