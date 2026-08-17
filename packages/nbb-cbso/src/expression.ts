@@ -180,9 +180,18 @@ export function evaluateExpression(
 	const logical = (): ExpressionValue => {
 		let left = comparison();
 		for (;;) {
-			if (eat("and")) left = asBoolean(left) && asBoolean(comparison());
-			else if (eat("or")) left = asBoolean(left) || asBoolean(comparison());
-			else return left;
+			// Both sides are parsed before they are combined. Short-circuiting
+			// the right-hand side would leave its tokens unconsumed, and the
+			// expression would then be rejected for trailing input — which is
+			// what `$a eq 1 or $b eq 3` did whenever the left side was true.
+			// Nothing here has side effects, so evaluating both is free.
+			if (eat("and")) {
+				const right = comparison();
+				left = asBoolean(left) && asBoolean(right);
+			} else if (eat("or")) {
+				const right = comparison();
+				left = asBoolean(left) || asBoolean(right);
+			} else return left;
 		}
 	};
 
