@@ -26,8 +26,13 @@ import type {
 	Camt053TransactionSummary,
 } from "./types.js";
 
-// Supported CAMT.053 namespace prefixes for version detection
-const CAMT053_NS_PREFIX = "urn:iso:std:iso:20022:tech:xsd:camt.053.001.";
+/**
+ * Common prefix of every CAMT.053 namespace URI, shared by all versions
+ * (`camt.053.001.02` … `camt.053.001.10` and later). The parser uses it to
+ * decide whether a document is a CAMT.053 at all; it is exported so callers can
+ * sniff a file for the format before handing it over.
+ */
+export const CAMT053_NS_PREFIX = "urn:iso:std:iso:20022:tech:xsd:camt.053.001.";
 
 const xmlParser = new XMLParser({
 	ignoreAttributes: false,

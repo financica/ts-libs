@@ -1,4 +1,4 @@
-export { parseCamt053 } from "./parser.js";
+export { CAMT053_NS_PREFIX, parseCamt053 } from "./parser.js";
 export type {
 	Camt053Account,
 	Camt053AmountDetails,

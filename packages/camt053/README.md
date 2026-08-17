@@ -45,6 +45,17 @@ if (report) {
 }
 ```
 
+## Detecting the format
+
+`CAMT053_NS_PREFIX` is the namespace prefix every CAMT.053 version shares, so a
+caller can sniff a file before parsing it:
+
+```ts
+import { CAMT053_NS_PREFIX } from "@financica/camt053";
+
+const looksLikeCamt053 = (content: string) => content.includes(CAMT053_NS_PREFIX);
+```
+
 ## Parsed fields
 
 Extracted:
