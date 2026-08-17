@@ -15,916 +15,916 @@ export const HISTORIC_PUBLISHED_AT = "2026-01-01" as const;
  * so callers should treat this list as informational only.
  */
 export const HISTORIC_CURRENCIES: readonly HistoricCurrency[] = Object.freeze([
-	{
+	Object.freeze({
 		alphabeticCode: "ADP",
 		numericCode: "020",
 		name: "Andorran Peseta",
 		withdrawalDate: "2003-07",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "AFA",
 		numericCode: "004",
 		name: "Afghani",
 		withdrawalDate: "2003-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ALK",
 		numericCode: "008",
 		name: "Old Lek",
 		withdrawalDate: "1989-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ANG",
 		numericCode: "532",
 		name: "Netherlands Antillean Guilder",
 		withdrawalDate: "2010-10",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ANG",
 		numericCode: "532",
 		name: "Netherlands Antillean Guilder",
 		withdrawalDate: "2025-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "AOK",
 		numericCode: "024",
 		name: "Kwanza",
 		withdrawalDate: "1991-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "AON",
 		numericCode: "024",
 		name: "New Kwanza",
 		withdrawalDate: "2000-02",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "AOR",
 		numericCode: "982",
 		name: "Kwanza Reajustado",
 		withdrawalDate: "2000-02",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ARA",
 		numericCode: "032",
 		name: "Austral",
 		withdrawalDate: "1992-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ARP",
 		numericCode: "032",
 		name: "Peso Argentino",
 		withdrawalDate: "1985-07",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ARY",
 		numericCode: "032",
 		name: "Peso",
 		withdrawalDate: "1989 to 1990",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ATS",
 		numericCode: "040",
 		name: "Schilling",
 		withdrawalDate: "2002-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "AYM",
 		numericCode: "945",
 		name: "Azerbaijan Manat",
 		withdrawalDate: "2005-10",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "AZM",
 		numericCode: "031",
 		name: "Azerbaijanian Manat",
 		withdrawalDate: "2005-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BAD",
 		numericCode: "070",
 		name: "Dinar",
 		withdrawalDate: "1998-07",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BEC",
 		numericCode: "993",
 		name: "Convertible Franc",
 		withdrawalDate: "1990-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BEF",
 		numericCode: "056",
 		name: "Belgian Franc",
 		withdrawalDate: "2002-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BEL",
 		numericCode: "992",
 		name: "Financial Franc",
 		withdrawalDate: "1990-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BGJ",
 		numericCode: "100",
 		name: "Lev A/52",
 		withdrawalDate: "1989 to 1990",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BGK",
 		numericCode: "100",
 		name: "Lev A/62",
 		withdrawalDate: "1989 to 1990",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BGL",
 		numericCode: "100",
 		name: "Lev",
 		withdrawalDate: "2003-11",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BGN",
 		numericCode: "975",
 		name: "Bulgarian Lev",
 		withdrawalDate: "2026-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BOP",
 		numericCode: "068",
 		name: "Peso boliviano",
 		withdrawalDate: "1987-02",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BRB",
 		numericCode: "076",
 		name: "Cruzeiro",
 		withdrawalDate: "1986-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BRC",
 		numericCode: "076",
 		name: "Cruzado",
 		withdrawalDate: "1989-02",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BRE",
 		numericCode: "076",
 		name: "Cruzeiro",
 		withdrawalDate: "1993-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BRN",
 		numericCode: "076",
 		name: "New Cruzado",
 		withdrawalDate: "1990-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BRR",
 		numericCode: "987",
 		name: "Cruzeiro Real",
 		withdrawalDate: "1994-07",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BUK",
 		numericCode: "104",
 		name: "Kyat",
 		withdrawalDate: "1990-02",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BYB",
 		numericCode: "112",
 		name: "Belarusian Ruble",
 		withdrawalDate: "2001-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BYR",
 		numericCode: "974",
 		name: "Belarusian Ruble",
 		withdrawalDate: "2017-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CHC",
 		numericCode: "948",
 		name: "WIR Franc (for electronic)",
 		withdrawalDate: "2004-11",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CSD",
 		numericCode: "891",
 		name: "Serbian Dinar",
 		withdrawalDate: "2006-10",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CSJ",
 		numericCode: "203",
 		name: "Krona A/53",
 		withdrawalDate: "1989 to 1990",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CSK",
 		numericCode: "200",
 		name: "Koruna",
 		withdrawalDate: "1993-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CUC",
 		numericCode: "931",
 		name: "Peso Convertible",
 		withdrawalDate: "2021-06",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CYP",
 		numericCode: "196",
 		name: "Cyprus Pound",
 		withdrawalDate: "2008-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "DDM",
 		numericCode: "278",
 		name: "Mark der DDR",
 		withdrawalDate: "1990-07 to 1990-09",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "DEM",
 		numericCode: "276",
 		name: "Deutsche Mark",
 		withdrawalDate: "2002-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ECS",
 		numericCode: "218",
 		name: "Sucre",
 		withdrawalDate: "2000-09",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ECV",
 		numericCode: "983",
 		name: "Unidad de Valor Constante (UVC)",
 		withdrawalDate: "2000-09",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "EEK",
 		numericCode: "233",
 		name: "Kroon",
 		withdrawalDate: "2011-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ESA",
 		numericCode: "996",
 		name: "Spanish Peseta",
 		withdrawalDate: "1978 to 1981",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ESB",
 		numericCode: "995",
 		name: '"A" Account (convertible Peseta Account)',
 		withdrawalDate: "1994-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ESP",
 		numericCode: "724",
 		name: "Spanish Peseta",
 		withdrawalDate: "2002-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "EUR",
 		numericCode: "978",
 		name: "Euro",
 		withdrawalDate: "2006-10",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "FIM",
 		numericCode: "246",
 		name: "Markka",
 		withdrawalDate: "2002-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "FRF",
 		numericCode: "250",
 		name: "French Franc",
 		withdrawalDate: "1999-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "FRF",
 		numericCode: "250",
 		name: "French Franc",
 		withdrawalDate: "2002-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GEK",
 		numericCode: "268",
 		name: "Georgian Coupon",
 		withdrawalDate: "1995-10",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GHC",
 		numericCode: "288",
 		name: "Cedi",
 		withdrawalDate: "2008-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GHP",
 		numericCode: "939",
 		name: "Ghana Cedi",
 		withdrawalDate: "2007-06",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GNE",
 		numericCode: "324",
 		name: "Syli",
 		withdrawalDate: "1989-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GNS",
 		numericCode: "324",
 		name: "Syli",
 		withdrawalDate: "1986-02",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GQE",
 		numericCode: "226",
 		name: "Ekwele",
 		withdrawalDate: "1986-06",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GRD",
 		numericCode: "300",
 		name: "Drachma",
 		withdrawalDate: "2002-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GWE",
 		numericCode: "624",
 		name: "Guinea Escudo",
 		withdrawalDate: "1978 to 1981",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GWP",
 		numericCode: "624",
 		name: "Guinea-Bissau Peso",
 		withdrawalDate: "1997-05",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "HRD",
 		numericCode: "191",
 		name: "Croatian Dinar",
 		withdrawalDate: "1995-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "HRK",
 		numericCode: "191",
 		name: "Croatian Kuna",
 		withdrawalDate: "2015-06",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "HRK",
 		numericCode: "191",
 		name: "Kuna",
 		withdrawalDate: "2023-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "IDR",
 		numericCode: "360",
 		name: "Rupiah",
 		withdrawalDate: "2002-07",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "IEP",
 		numericCode: "372",
 		name: "Irish Pound",
 		withdrawalDate: "2002-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ILP",
 		numericCode: "376",
 		name: "Pound",
 		withdrawalDate: "1978 to 1981",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ILR",
 		numericCode: "376",
 		name: "Old Shekel",
 		withdrawalDate: "1989 to 1990",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ISJ",
 		numericCode: "352",
 		name: "Old Krona",
 		withdrawalDate: "1989 to 1990",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ITL",
 		numericCode: "380",
 		name: "Italian Lira",
 		withdrawalDate: "2002-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "LAJ",
 		numericCode: "418",
 		name: "Pathet Lao Kip",
 		withdrawalDate: "1979-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "LSM",
 		numericCode: "426",
 		name: "Loti",
 		withdrawalDate: "1985-05",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "LTL",
 		numericCode: "440",
 		name: "Lithuanian Litas",
 		withdrawalDate: "2014-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "LTT",
 		numericCode: "440",
 		name: "Talonas",
 		withdrawalDate: "1993-07",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "LUC",
 		numericCode: "989",
 		name: "Luxembourg Convertible Franc",
 		withdrawalDate: "1990-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "LUF",
 		numericCode: "442",
 		name: "Luxembourg Franc",
 		withdrawalDate: "2002-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "LUL",
 		numericCode: "988",
 		name: "Luxembourg Financial Franc",
 		withdrawalDate: "1990-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "LVL",
 		numericCode: "428",
 		name: "Latvian Lats",
 		withdrawalDate: "2014-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "LVR",
 		numericCode: "428",
 		name: "Latvian Ruble",
 		withdrawalDate: "1994-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MGF",
 		numericCode: "450",
 		name: "Malagasy Franc",
 		withdrawalDate: "2004-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MLF",
 		numericCode: "466",
 		name: "Mali Franc",
 		withdrawalDate: "1984-11",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MRO",
 		numericCode: "478",
 		name: "Ouguiya",
 		withdrawalDate: "2017-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MTL",
 		numericCode: "470",
 		name: "Maltese Lira",
 		withdrawalDate: "2008-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MTP",
 		numericCode: "470",
 		name: "Maltese Pound",
 		withdrawalDate: "1983-06",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MVQ",
 		numericCode: "462",
 		name: "Maldive Rupee",
 		withdrawalDate: "1989-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MWK",
 		numericCode: "454",
 		name: "Kwacha",
 		withdrawalDate: "2016-02",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MXP",
 		numericCode: "484",
 		name: "Mexican Peso",
 		withdrawalDate: "1993-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MZE",
 		numericCode: "508",
 		name: "Mozambique Escudo",
 		withdrawalDate: "1978 to 1981",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MZM",
 		numericCode: "508",
 		name: "Mozambique Metical",
 		withdrawalDate: "2006-06",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "NIC",
 		numericCode: "558",
 		name: "Cordoba",
 		withdrawalDate: "1990-10",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "NLG",
 		numericCode: "528",
 		name: "Netherlands Guilder",
 		withdrawalDate: "2002-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "PEH",
 		numericCode: "604",
 		name: "Sol",
 		withdrawalDate: "1989 to 1990",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "PEI",
 		numericCode: "604",
 		name: "Inti",
 		withdrawalDate: "1991-07",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "PEN",
 		numericCode: "604",
 		name: "Nuevo Sol",
 		withdrawalDate: "2015-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "PES",
 		numericCode: "604",
 		name: "Sol",
 		withdrawalDate: "1986-02",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "PLZ",
 		numericCode: "616",
 		name: "Zloty",
 		withdrawalDate: "1997-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "PTE",
 		numericCode: "620",
 		name: "Portuguese Escudo",
 		withdrawalDate: "2002-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "RHD",
 		numericCode: "716",
 		name: "Rhodesian Dollar",
 		withdrawalDate: "1978 to 1981",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ROK",
 		numericCode: "642",
 		name: "Leu A/52",
 		withdrawalDate: "1989 to 1990",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ROL",
 		numericCode: "642",
 		name: "Old Leu",
 		withdrawalDate: "2005-06",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "RON",
 		numericCode: "946",
 		name: "New Romanian Leu",
 		withdrawalDate: "2015-06",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "RUR",
 		numericCode: "810",
 		name: "Russian Ruble",
 		withdrawalDate: "1993-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "RUR",
 		numericCode: "810",
 		name: "Russian Ruble",
 		withdrawalDate: "1993-10",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "RUR",
 		numericCode: "810",
 		name: "Russian Ruble",
 		withdrawalDate: "1993-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "RUR",
 		numericCode: "810",
 		name: "Russian Ruble",
 		withdrawalDate: "1994-04",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "RUR",
 		numericCode: "810",
 		name: "Russian Ruble",
 		withdrawalDate: "1994-05",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "RUR",
 		numericCode: "810",
 		name: "Russian Ruble",
 		withdrawalDate: "1994-06",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "RUR",
 		numericCode: "810",
 		name: "Russian Ruble",
 		withdrawalDate: "1994-07",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "RUR",
 		numericCode: "810",
 		name: "Russian Ruble",
 		withdrawalDate: "1994-08",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "RUR",
 		numericCode: "810",
 		name: "Russian Ruble",
 		withdrawalDate: "1995-05",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "RUR",
 		numericCode: "810",
 		name: "Russian Ruble",
 		withdrawalDate: "2004-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SDD",
 		numericCode: "736",
 		name: "Sudanese Dinar",
 		withdrawalDate: "2007-07",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SDG",
 		numericCode: "938",
 		name: "Sudanese Pound",
 		withdrawalDate: "2012-09",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SDP",
 		numericCode: "736",
 		name: "Sudanese Pound",
 		withdrawalDate: "1998-06",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SIT",
 		numericCode: "705",
 		name: "Tolar",
 		withdrawalDate: "2007-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SKK",
 		numericCode: "703",
 		name: "Slovak Koruna",
 		withdrawalDate: "2009-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SLL",
 		numericCode: "694",
 		name: "Leone",
 		withdrawalDate: "2023-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SRG",
 		numericCode: "740",
 		name: "Surinam Guilder",
 		withdrawalDate: "2003-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "STD",
 		numericCode: "678",
 		name: "Dobra",
 		withdrawalDate: "2017-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SUR",
 		numericCode: "810",
 		name: "Rouble",
 		withdrawalDate: "1990-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SZL",
 		numericCode: "748",
 		name: "Lilangeni",
 		withdrawalDate: "2018-08",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "TJR",
 		numericCode: "762",
 		name: "Tajik Ruble",
 		withdrawalDate: "2001-04",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "TMM",
 		numericCode: "795",
 		name: "Turkmenistan Manat",
 		withdrawalDate: "2009-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "TPE",
 		numericCode: "626",
 		name: "Timor Escudo",
 		withdrawalDate: "2002-11",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "TRL",
 		numericCode: "792",
 		name: "Old Turkish Lira",
 		withdrawalDate: "2005-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "TRY",
 		numericCode: "949",
 		name: "New Turkish Lira",
 		withdrawalDate: "2009-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "UAK",
 		numericCode: "804",
 		name: "Karbovanet",
 		withdrawalDate: "1996-09",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "UGS",
 		numericCode: "800",
 		name: "Uganda Shilling",
 		withdrawalDate: "1987-05",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "UGW",
 		numericCode: "800",
 		name: "Old Shilling",
 		withdrawalDate: "1989 to 1990",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "USS",
 		numericCode: "998",
 		name: "US Dollar (Same day)",
 		withdrawalDate: "2014-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "UYN",
 		numericCode: "858",
 		name: "Old Uruguay Peso",
 		withdrawalDate: "1989-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "UYP",
 		numericCode: "858",
 		name: "Uruguayan Peso",
 		withdrawalDate: "1993-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "VEB",
 		numericCode: "862",
 		name: "Bolivar",
 		withdrawalDate: "2008-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "VEF",
 		numericCode: "937",
 		name: "Bolivar Fuerte",
 		withdrawalDate: "2011-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "VEF",
 		numericCode: "937",
 		name: "Bolivar",
 		withdrawalDate: "2016-02",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "VEF",
 		numericCode: "937",
 		name: "Bolívar",
 		withdrawalDate: "2018-08",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "VNC",
 		numericCode: "704",
 		name: "Old Dong",
 		withdrawalDate: "1989-1990",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XEU",
 		numericCode: "954",
 		name: "European Currency Unit (E.C.U)",
 		withdrawalDate: "1999-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XFO",
 		numericCode: null,
 		name: "Gold-Franc",
 		withdrawalDate: "2006-10",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XFU",
 		numericCode: null,
 		name: "UIC-Franc",
 		withdrawalDate: "2013-11",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XRE",
 		numericCode: null,
 		name: "RINET Funds Code",
 		withdrawalDate: "1999-11",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "YDD",
 		numericCode: "720",
 		name: "Yemeni Dinar",
 		withdrawalDate: "1991-09",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "YUD",
 		numericCode: "890",
 		name: "New Yugoslavian Dinar",
 		withdrawalDate: "1990-01",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "YUM",
 		numericCode: "891",
 		name: "New Dinar",
 		withdrawalDate: "2003-07",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "YUN",
 		numericCode: "890",
 		name: "Yugoslavian Dinar",
 		withdrawalDate: "1995-11",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ZAL",
 		numericCode: "991",
 		name: "Financial Rand",
 		withdrawalDate: "1995-03",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ZMK",
 		numericCode: "894",
 		name: "Zambian Kwacha",
 		withdrawalDate: "2012-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ZRN",
 		numericCode: "180",
 		name: "New Zaire",
 		withdrawalDate: "1999-06",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ZRZ",
 		numericCode: "180",
 		name: "Zaire",
 		withdrawalDate: "1994-02",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ZWC",
 		numericCode: "716",
 		name: "Rhodesian Dollar",
 		withdrawalDate: "1989-12",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ZWD",
 		numericCode: "716",
 		name: "Zimbabwe Dollar (old)",
 		withdrawalDate: "2006-08",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ZWD",
 		numericCode: "716",
 		name: "Zimbabwe Dollar",
 		withdrawalDate: "2008-08",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ZWL",
 		numericCode: "932",
 		name: "Zimbabwe Dollar",
 		withdrawalDate: "2024-09",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ZWN",
 		numericCode: "942",
 		name: "Zimbabwe Dollar (new)",
 		withdrawalDate: "2006-09",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ZWR",
 		numericCode: "935",
 		name: "Zimbabwe Dollar",
 		withdrawalDate: "2009-06",
-	},
+	}),
 ]);

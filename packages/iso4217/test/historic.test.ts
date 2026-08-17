@@ -8,9 +8,27 @@ import {
 } from "../src/historic.js";
 
 describe("historic dataset", () => {
-	it("is non-empty and Object.freeze'd", () => {
+	it("is non-empty and Object.freeze'd, elements included", () => {
 		expect(HISTORIC_CURRENCIES.length).toBeGreaterThan(0);
 		expect(Object.isFrozen(HISTORIC_CURRENCIES)).toBe(true);
+		for (const h of HISTORIC_CURRENCIES) expect(Object.isFrozen(h)).toBe(true);
+	});
+
+	it("is sorted by alphabetic code, then withdrawal date", () => {
+		// generate.ts sorts with localeCompare("en") on both keys.
+		for (let i = 1; i < HISTORIC_CURRENCIES.length; i++) {
+			const prev = HISTORIC_CURRENCIES[i - 1]!;
+			const curr = HISTORIC_CURRENCIES[i]!;
+			const byAlpha = prev.alphabeticCode.localeCompare(
+				curr.alphabeticCode,
+				"en",
+			);
+			const byDate = prev.withdrawalDate.localeCompare(curr.withdrawalDate, "en");
+			expect(
+				byAlpha < 0 || (byAlpha === 0 && byDate <= 0),
+				curr.alphabeticCode,
+			).toBe(true);
+		}
 	});
 
 	it("has a valid publication date", () => {
@@ -33,17 +51,13 @@ describe("historic dataset", () => {
 });
 
 describe("getHistoricByCode", () => {
-	it("returns historic records for a withdrawn code", () => {
-		const ang = getHistoricByCode("ANG");
-		expect(ang.length).toBeGreaterThan(0);
-		expect(ang.every((c) => c.alphabeticCode === "ANG")).toBe(true);
-	});
-
-	it("returns multiple records when a code was withdrawn more than once", () => {
+	it("returns every record for a code withdrawn more than once", () => {
 		// ANG was withdrawn once with Netherlands Antilles, again with Curaçao/
 		// Sint Maarten when XCG took over in 2025.
 		const ang = getHistoricByCode("ANG");
 		expect(ang.length).toBeGreaterThanOrEqual(2);
+		expect(ang.every((c) => c.alphabeticCode === "ANG")).toBe(true);
+		expect(Object.isFrozen(ang)).toBe(true);
 	});
 
 	it("is case-insensitive and trims whitespace", () => {

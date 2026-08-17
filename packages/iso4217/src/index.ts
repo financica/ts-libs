@@ -184,11 +184,18 @@ export function formatAmount(
 		currency: code,
 		...rest,
 	};
-	if (currency.minorUnits !== null && rest.minimumFractionDigits === undefined) {
-		format.minimumFractionDigits = currency.minorUnits;
-	}
-	if (currency.minorUnits !== null && rest.maximumFractionDigits === undefined) {
-		format.maximumFractionDigits = currency.minorUnits;
+	if (currency.minorUnits !== null) {
+		const { minimumFractionDigits: min, maximumFractionDigits: max } = rest;
+		// Intl throws RangeError when min > max, so a caller-supplied bound on
+		// one side must widen the default on the other side rather than clash.
+		if (min === undefined && max === undefined) {
+			format.minimumFractionDigits = currency.minorUnits;
+			format.maximumFractionDigits = currency.minorUnits;
+		} else if (min === undefined) {
+			format.minimumFractionDigits = Math.min(currency.minorUnits, max as number);
+		} else if (max === undefined) {
+			format.maximumFractionDigits = Math.max(currency.minorUnits, min);
+		}
 	}
 	return new Intl.NumberFormat(locale, format).format(amount);
 }

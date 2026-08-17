@@ -13,7 +13,7 @@ export const PUBLISHED_AT = "2026-01-01" as const;
  * Frozen array of every active ISO 4217 currency, sorted by alphabetic code.
  */
 export const CURRENCIES: readonly Currency[] = Object.freeze([
-	{
+	Object.freeze({
 		alphabeticCode: "AED",
 		numericCode: "784",
 		minorUnits: 2,
@@ -21,8 +21,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["AE"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "AFN",
 		numericCode: "971",
 		minorUnits: 2,
@@ -30,8 +30,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["AF"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ALL",
 		numericCode: "008",
 		minorUnits: 2,
@@ -39,8 +39,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["AL"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "AMD",
 		numericCode: "051",
 		minorUnits: 2,
@@ -48,8 +48,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["AM"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "AOA",
 		numericCode: "973",
 		minorUnits: 2,
@@ -57,8 +57,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["AO"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ARS",
 		numericCode: "032",
 		minorUnits: 2,
@@ -66,8 +66,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["AR"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "AUD",
 		numericCode: "036",
 		minorUnits: 2,
@@ -75,8 +75,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["AU", "CC", "CX", "HM", "KI", "NF", "NR", "TV"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "AWG",
 		numericCode: "533",
 		minorUnits: 2,
@@ -84,8 +84,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["AW"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "AZN",
 		numericCode: "944",
 		minorUnits: 2,
@@ -93,8 +93,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["AZ"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BAM",
 		numericCode: "977",
 		minorUnits: 2,
@@ -102,8 +102,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BA"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BBD",
 		numericCode: "052",
 		minorUnits: 2,
@@ -111,8 +111,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BB"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BDT",
 		numericCode: "050",
 		minorUnits: 2,
@@ -120,8 +120,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BD"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BHD",
 		numericCode: "048",
 		minorUnits: 3,
@@ -129,8 +129,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BH"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BIF",
 		numericCode: "108",
 		minorUnits: 0,
@@ -138,8 +138,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BI"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BMD",
 		numericCode: "060",
 		minorUnits: 2,
@@ -147,8 +147,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BM"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BND",
 		numericCode: "096",
 		minorUnits: 2,
@@ -156,8 +156,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BN"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BOB",
 		numericCode: "068",
 		minorUnits: 2,
@@ -165,8 +165,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BO"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BOV",
 		numericCode: "984",
 		minorUnits: 2,
@@ -174,8 +174,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BO"],
 		isFund: true,
 		kind: "fund",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BRL",
 		numericCode: "986",
 		minorUnits: 2,
@@ -183,8 +183,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BR"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BSD",
 		numericCode: "044",
 		minorUnits: 2,
@@ -192,8 +192,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BS"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BTN",
 		numericCode: "064",
 		minorUnits: 2,
@@ -201,8 +201,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BT"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BWP",
 		numericCode: "072",
 		minorUnits: 2,
@@ -210,8 +210,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BW"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BYN",
 		numericCode: "933",
 		minorUnits: 2,
@@ -219,8 +219,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BY"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "BZD",
 		numericCode: "084",
 		minorUnits: 2,
@@ -228,8 +228,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BZ"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CAD",
 		numericCode: "124",
 		minorUnits: 2,
@@ -237,8 +237,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CA"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CDF",
 		numericCode: "976",
 		minorUnits: 2,
@@ -246,8 +246,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CD"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CHE",
 		numericCode: "947",
 		minorUnits: 2,
@@ -255,8 +255,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CH"],
 		isFund: true,
 		kind: "fund",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CHF",
 		numericCode: "756",
 		minorUnits: 2,
@@ -264,8 +264,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CH", "LI"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CHW",
 		numericCode: "948",
 		minorUnits: 2,
@@ -273,8 +273,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CH"],
 		isFund: true,
 		kind: "fund",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CLF",
 		numericCode: "990",
 		minorUnits: 4,
@@ -282,8 +282,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CL"],
 		isFund: true,
 		kind: "fund",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CLP",
 		numericCode: "152",
 		minorUnits: 0,
@@ -291,8 +291,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CL"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CNY",
 		numericCode: "156",
 		minorUnits: 2,
@@ -300,8 +300,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CN"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "COP",
 		numericCode: "170",
 		minorUnits: 2,
@@ -309,8 +309,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CO"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "COU",
 		numericCode: "970",
 		minorUnits: 2,
@@ -318,8 +318,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CO"],
 		isFund: true,
 		kind: "fund",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CRC",
 		numericCode: "188",
 		minorUnits: 2,
@@ -327,8 +327,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CR"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CUP",
 		numericCode: "192",
 		minorUnits: 2,
@@ -336,8 +336,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CU"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CVE",
 		numericCode: "132",
 		minorUnits: 2,
@@ -345,8 +345,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CV"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "CZK",
 		numericCode: "203",
 		minorUnits: 2,
@@ -354,8 +354,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CZ"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "DJF",
 		numericCode: "262",
 		minorUnits: 0,
@@ -363,8 +363,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["DJ"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "DKK",
 		numericCode: "208",
 		minorUnits: 2,
@@ -372,8 +372,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["DK", "FO", "GL"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "DOP",
 		numericCode: "214",
 		minorUnits: 2,
@@ -381,8 +381,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["DO"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "DZD",
 		numericCode: "012",
 		minorUnits: 2,
@@ -390,8 +390,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["DZ"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "EGP",
 		numericCode: "818",
 		minorUnits: 2,
@@ -399,8 +399,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["EG"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ERN",
 		numericCode: "232",
 		minorUnits: 2,
@@ -408,8 +408,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["ER"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ETB",
 		numericCode: "230",
 		minorUnits: 2,
@@ -417,8 +417,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["ET"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "EUR",
 		numericCode: "978",
 		minorUnits: 2,
@@ -464,8 +464,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "FJD",
 		numericCode: "242",
 		minorUnits: 2,
@@ -473,8 +473,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["FJ"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "FKP",
 		numericCode: "238",
 		minorUnits: 2,
@@ -482,8 +482,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["FK"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GBP",
 		numericCode: "826",
 		minorUnits: 2,
@@ -491,8 +491,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["GB", "GG", "IM", "JE"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GEL",
 		numericCode: "981",
 		minorUnits: 2,
@@ -500,8 +500,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["GE"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GHS",
 		numericCode: "936",
 		minorUnits: 2,
@@ -509,8 +509,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["GH"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GIP",
 		numericCode: "292",
 		minorUnits: 2,
@@ -518,8 +518,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["GI"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GMD",
 		numericCode: "270",
 		minorUnits: 2,
@@ -527,8 +527,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["GM"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GNF",
 		numericCode: "324",
 		minorUnits: 0,
@@ -536,8 +536,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["GN"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GTQ",
 		numericCode: "320",
 		minorUnits: 2,
@@ -545,8 +545,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["GT"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "GYD",
 		numericCode: "328",
 		minorUnits: 2,
@@ -554,8 +554,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["GY"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "HKD",
 		numericCode: "344",
 		minorUnits: 2,
@@ -563,8 +563,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["HK"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "HNL",
 		numericCode: "340",
 		minorUnits: 2,
@@ -572,8 +572,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["HN"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "HTG",
 		numericCode: "332",
 		minorUnits: 2,
@@ -581,8 +581,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["HT"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "HUF",
 		numericCode: "348",
 		minorUnits: 2,
@@ -590,8 +590,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["HU"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "IDR",
 		numericCode: "360",
 		minorUnits: 2,
@@ -599,8 +599,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["ID"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ILS",
 		numericCode: "376",
 		minorUnits: 2,
@@ -608,8 +608,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["IL"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "INR",
 		numericCode: "356",
 		minorUnits: 2,
@@ -617,8 +617,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BT", "IN"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "IQD",
 		numericCode: "368",
 		minorUnits: 3,
@@ -626,8 +626,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["IQ"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "IRR",
 		numericCode: "364",
 		minorUnits: 2,
@@ -635,8 +635,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["IR"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ISK",
 		numericCode: "352",
 		minorUnits: 0,
@@ -644,8 +644,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["IS"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "JMD",
 		numericCode: "388",
 		minorUnits: 2,
@@ -653,8 +653,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["JM"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "JOD",
 		numericCode: "400",
 		minorUnits: 3,
@@ -662,8 +662,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["JO"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "JPY",
 		numericCode: "392",
 		minorUnits: 0,
@@ -671,8 +671,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["JP"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "KES",
 		numericCode: "404",
 		minorUnits: 2,
@@ -680,8 +680,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["KE"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "KGS",
 		numericCode: "417",
 		minorUnits: 2,
@@ -689,8 +689,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["KG"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "KHR",
 		numericCode: "116",
 		minorUnits: 2,
@@ -698,8 +698,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["KH"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "KMF",
 		numericCode: "174",
 		minorUnits: 0,
@@ -707,8 +707,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["KM"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "KPW",
 		numericCode: "408",
 		minorUnits: 2,
@@ -716,8 +716,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["KP"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "KRW",
 		numericCode: "410",
 		minorUnits: 0,
@@ -725,8 +725,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["KR"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "KWD",
 		numericCode: "414",
 		minorUnits: 3,
@@ -734,8 +734,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["KW"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "KYD",
 		numericCode: "136",
 		minorUnits: 2,
@@ -743,8 +743,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["KY"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "KZT",
 		numericCode: "398",
 		minorUnits: 2,
@@ -752,8 +752,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["KZ"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "LAK",
 		numericCode: "418",
 		minorUnits: 2,
@@ -761,8 +761,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["LA"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "LBP",
 		numericCode: "422",
 		minorUnits: 2,
@@ -770,8 +770,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["LB"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "LKR",
 		numericCode: "144",
 		minorUnits: 2,
@@ -779,8 +779,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["LK"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "LRD",
 		numericCode: "430",
 		minorUnits: 2,
@@ -788,8 +788,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["LR"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "LSL",
 		numericCode: "426",
 		minorUnits: 2,
@@ -797,8 +797,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["LS"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "LYD",
 		numericCode: "434",
 		minorUnits: 3,
@@ -806,8 +806,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["LY"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MAD",
 		numericCode: "504",
 		minorUnits: 2,
@@ -815,8 +815,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["EH", "MA"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MDL",
 		numericCode: "498",
 		minorUnits: 2,
@@ -824,8 +824,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["MD"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MGA",
 		numericCode: "969",
 		minorUnits: 2,
@@ -833,8 +833,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["MG"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MKD",
 		numericCode: "807",
 		minorUnits: 2,
@@ -842,8 +842,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["MK"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MMK",
 		numericCode: "104",
 		minorUnits: 2,
@@ -851,8 +851,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["MM"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MNT",
 		numericCode: "496",
 		minorUnits: 2,
@@ -860,8 +860,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["MN"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MOP",
 		numericCode: "446",
 		minorUnits: 2,
@@ -869,8 +869,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["MO"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MRU",
 		numericCode: "929",
 		minorUnits: 2,
@@ -878,8 +878,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["MR"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MUR",
 		numericCode: "480",
 		minorUnits: 2,
@@ -887,8 +887,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["MU"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MVR",
 		numericCode: "462",
 		minorUnits: 2,
@@ -896,8 +896,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["MV"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MWK",
 		numericCode: "454",
 		minorUnits: 2,
@@ -905,8 +905,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["MW"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MXN",
 		numericCode: "484",
 		minorUnits: 2,
@@ -914,8 +914,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["MX"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MXV",
 		numericCode: "979",
 		minorUnits: 2,
@@ -923,8 +923,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["MX"],
 		isFund: true,
 		kind: "fund",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MYR",
 		numericCode: "458",
 		minorUnits: 2,
@@ -932,8 +932,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["MY"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "MZN",
 		numericCode: "943",
 		minorUnits: 2,
@@ -941,8 +941,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["MZ"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "NAD",
 		numericCode: "516",
 		minorUnits: 2,
@@ -950,8 +950,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["NA"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "NGN",
 		numericCode: "566",
 		minorUnits: 2,
@@ -959,8 +959,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["NG"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "NIO",
 		numericCode: "558",
 		minorUnits: 2,
@@ -968,8 +968,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["NI"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "NOK",
 		numericCode: "578",
 		minorUnits: 2,
@@ -977,8 +977,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BV", "NO", "SJ"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "NPR",
 		numericCode: "524",
 		minorUnits: 2,
@@ -986,8 +986,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["NP"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "NZD",
 		numericCode: "554",
 		minorUnits: 2,
@@ -995,8 +995,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CK", "NU", "NZ", "PN", "TK"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "OMR",
 		numericCode: "512",
 		minorUnits: 3,
@@ -1004,8 +1004,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["OM"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "PAB",
 		numericCode: "590",
 		minorUnits: 2,
@@ -1013,8 +1013,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["PA"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "PEN",
 		numericCode: "604",
 		minorUnits: 2,
@@ -1022,8 +1022,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["PE"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "PGK",
 		numericCode: "598",
 		minorUnits: 2,
@@ -1031,8 +1031,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["PG"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "PHP",
 		numericCode: "608",
 		minorUnits: 2,
@@ -1040,8 +1040,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["PH"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "PKR",
 		numericCode: "586",
 		minorUnits: 2,
@@ -1049,8 +1049,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["PK"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "PLN",
 		numericCode: "985",
 		minorUnits: 2,
@@ -1058,8 +1058,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["PL"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "PYG",
 		numericCode: "600",
 		minorUnits: 0,
@@ -1067,8 +1067,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["PY"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "QAR",
 		numericCode: "634",
 		minorUnits: 2,
@@ -1076,8 +1076,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["QA"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "RON",
 		numericCode: "946",
 		minorUnits: 2,
@@ -1085,8 +1085,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["RO"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "RSD",
 		numericCode: "941",
 		minorUnits: 2,
@@ -1094,8 +1094,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["RS"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "RUB",
 		numericCode: "643",
 		minorUnits: 2,
@@ -1103,8 +1103,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["RU"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "RWF",
 		numericCode: "646",
 		minorUnits: 0,
@@ -1112,8 +1112,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["RW"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SAR",
 		numericCode: "682",
 		minorUnits: 2,
@@ -1121,8 +1121,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["SA"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SBD",
 		numericCode: "090",
 		minorUnits: 2,
@@ -1130,8 +1130,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["SB"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SCR",
 		numericCode: "690",
 		minorUnits: 2,
@@ -1139,8 +1139,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["SC"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SDG",
 		numericCode: "938",
 		minorUnits: 2,
@@ -1148,8 +1148,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["SD"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SEK",
 		numericCode: "752",
 		minorUnits: 2,
@@ -1157,8 +1157,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["SE"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SGD",
 		numericCode: "702",
 		minorUnits: 2,
@@ -1166,8 +1166,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["SG"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SHP",
 		numericCode: "654",
 		minorUnits: 2,
@@ -1175,8 +1175,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["SH"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SLE",
 		numericCode: "925",
 		minorUnits: 2,
@@ -1184,8 +1184,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["SL"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SOS",
 		numericCode: "706",
 		minorUnits: 2,
@@ -1193,8 +1193,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["SO"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SRD",
 		numericCode: "968",
 		minorUnits: 2,
@@ -1202,8 +1202,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["SR"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SSP",
 		numericCode: "728",
 		minorUnits: 2,
@@ -1211,8 +1211,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["SS"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "STN",
 		numericCode: "930",
 		minorUnits: 2,
@@ -1220,8 +1220,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["ST"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SVC",
 		numericCode: "222",
 		minorUnits: 2,
@@ -1229,8 +1229,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["SV"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SYP",
 		numericCode: "760",
 		minorUnits: 2,
@@ -1238,8 +1238,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["SY"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "SZL",
 		numericCode: "748",
 		minorUnits: 2,
@@ -1247,8 +1247,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["SZ"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "THB",
 		numericCode: "764",
 		minorUnits: 2,
@@ -1256,8 +1256,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["TH"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "TJS",
 		numericCode: "972",
 		minorUnits: 2,
@@ -1265,8 +1265,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["TJ"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "TMT",
 		numericCode: "934",
 		minorUnits: 2,
@@ -1274,8 +1274,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["TM"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "TND",
 		numericCode: "788",
 		minorUnits: 3,
@@ -1283,8 +1283,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["TN"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "TOP",
 		numericCode: "776",
 		minorUnits: 2,
@@ -1292,8 +1292,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["TO"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "TRY",
 		numericCode: "949",
 		minorUnits: 2,
@@ -1301,8 +1301,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["TR"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "TTD",
 		numericCode: "780",
 		minorUnits: 2,
@@ -1310,8 +1310,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["TT"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "TWD",
 		numericCode: "901",
 		minorUnits: 2,
@@ -1319,8 +1319,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["TW"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "TZS",
 		numericCode: "834",
 		minorUnits: 2,
@@ -1328,8 +1328,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["TZ"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "UAH",
 		numericCode: "980",
 		minorUnits: 2,
@@ -1337,8 +1337,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["UA"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "UGX",
 		numericCode: "800",
 		minorUnits: 0,
@@ -1346,8 +1346,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["UG"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "USD",
 		numericCode: "840",
 		minorUnits: 2,
@@ -1375,8 +1375,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "USN",
 		numericCode: "997",
 		minorUnits: 2,
@@ -1384,8 +1384,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["US"],
 		isFund: true,
 		kind: "fund",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "UYI",
 		numericCode: "940",
 		minorUnits: 0,
@@ -1393,8 +1393,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["UY"],
 		isFund: true,
 		kind: "fund",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "UYU",
 		numericCode: "858",
 		minorUnits: 2,
@@ -1402,8 +1402,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["UY"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "UYW",
 		numericCode: "927",
 		minorUnits: 4,
@@ -1411,8 +1411,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["UY"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "UZS",
 		numericCode: "860",
 		minorUnits: 2,
@@ -1420,8 +1420,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["UZ"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "VED",
 		numericCode: "926",
 		minorUnits: 2,
@@ -1429,8 +1429,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["VE"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "VES",
 		numericCode: "928",
 		minorUnits: 2,
@@ -1438,8 +1438,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["VE"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "VND",
 		numericCode: "704",
 		minorUnits: 0,
@@ -1447,8 +1447,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["VN"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "VUV",
 		numericCode: "548",
 		minorUnits: 0,
@@ -1456,8 +1456,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["VU"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "WST",
 		numericCode: "882",
 		minorUnits: 2,
@@ -1465,8 +1465,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["WS"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XAD",
 		numericCode: "396",
 		minorUnits: 2,
@@ -1474,8 +1474,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: [],
 		isFund: false,
 		kind: "special",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XAF",
 		numericCode: "950",
 		minorUnits: 0,
@@ -1483,8 +1483,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CF", "CG", "CM", "GA", "GQ", "TD"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XAG",
 		numericCode: "961",
 		minorUnits: null,
@@ -1492,8 +1492,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: [],
 		isFund: false,
 		kind: "metal",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XAU",
 		numericCode: "959",
 		minorUnits: null,
@@ -1501,8 +1501,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: [],
 		isFund: false,
 		kind: "metal",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XBA",
 		numericCode: "955",
 		minorUnits: null,
@@ -1510,8 +1510,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: [],
 		isFund: false,
 		kind: "special",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XBB",
 		numericCode: "956",
 		minorUnits: null,
@@ -1519,8 +1519,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: [],
 		isFund: false,
 		kind: "special",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XBC",
 		numericCode: "957",
 		minorUnits: null,
@@ -1528,8 +1528,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: [],
 		isFund: false,
 		kind: "special",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XBD",
 		numericCode: "958",
 		minorUnits: null,
@@ -1537,8 +1537,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: [],
 		isFund: false,
 		kind: "special",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XCD",
 		numericCode: "951",
 		minorUnits: 2,
@@ -1546,8 +1546,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["AG", "AI", "DM", "GD", "KN", "LC", "MS", "VC"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XCG",
 		numericCode: "532",
 		minorUnits: 2,
@@ -1555,8 +1555,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["CW", "SX"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XDR",
 		numericCode: "960",
 		minorUnits: null,
@@ -1564,8 +1564,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: [],
 		isFund: false,
 		kind: "special",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XOF",
 		numericCode: "952",
 		minorUnits: 0,
@@ -1573,8 +1573,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["BF", "BJ", "CI", "GW", "ML", "NE", "SN", "TG"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XPD",
 		numericCode: "964",
 		minorUnits: null,
@@ -1582,8 +1582,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: [],
 		isFund: false,
 		kind: "metal",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XPF",
 		numericCode: "953",
 		minorUnits: 0,
@@ -1591,8 +1591,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["NC", "PF", "WF"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XPT",
 		numericCode: "962",
 		minorUnits: null,
@@ -1600,8 +1600,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: [],
 		isFund: false,
 		kind: "metal",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XSU",
 		numericCode: "994",
 		minorUnits: null,
@@ -1609,8 +1609,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: [],
 		isFund: false,
 		kind: "special",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XTS",
 		numericCode: "963",
 		minorUnits: null,
@@ -1618,8 +1618,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: [],
 		isFund: false,
 		kind: "special",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XUA",
 		numericCode: "965",
 		minorUnits: null,
@@ -1627,8 +1627,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: [],
 		isFund: false,
 		kind: "special",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "XXX",
 		numericCode: "999",
 		minorUnits: null,
@@ -1636,8 +1636,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: [],
 		isFund: false,
 		kind: "special",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "YER",
 		numericCode: "886",
 		minorUnits: 2,
@@ -1645,8 +1645,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["YE"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ZAR",
 		numericCode: "710",
 		minorUnits: 2,
@@ -1654,8 +1654,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["LS", "NA", "ZA"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ZMW",
 		numericCode: "967",
 		minorUnits: 2,
@@ -1663,8 +1663,8 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["ZM"],
 		isFund: false,
 		kind: "fiat",
-	},
-	{
+	}),
+	Object.freeze({
 		alphabeticCode: "ZWG",
 		numericCode: "924",
 		minorUnits: 2,
@@ -1672,5 +1672,5 @@ export const CURRENCIES: readonly Currency[] = Object.freeze([
 		countryCodes: ["ZW"],
 		isFund: false,
 		kind: "fiat",
-	},
+	}),
 ]);

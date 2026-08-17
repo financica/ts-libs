@@ -358,7 +358,9 @@ function serializeCurrency(c: Currency): string {
 		c.countryCodes.length === 0
 			? "[]"
 			: `[${c.countryCodes.map((x) => JSON.stringify(x)).join(", ")}]`;
-	return `  {
+	// Each element is frozen too: the README promises immutable currencies,
+	// and freezing only the array would leave the objects writable.
+	return `  Object.freeze({
     alphabeticCode: ${JSON.stringify(c.alphabeticCode)},
     numericCode: ${JSON.stringify(c.numericCode)},
     minorUnits: ${minor},
@@ -366,7 +368,7 @@ function serializeCurrency(c: Currency): string {
     countryCodes: ${countries},
     isFund: ${c.isFund},
     kind: ${JSON.stringify(c.kind)},
-  }`;
+  })`;
 }
 
 function emitData(currencies: Currency[], publishedAt: string): string {
@@ -389,12 +391,12 @@ ${currencies.map(serializeCurrency).join(",\n")},
 
 function serializeHistoric(h: HistoricCurrency): string {
 	const numeric = h.numericCode === null ? "null" : JSON.stringify(h.numericCode);
-	return `  {
+	return `  Object.freeze({
     alphabeticCode: ${JSON.stringify(h.alphabeticCode)},
     numericCode: ${numeric},
     name: ${JSON.stringify(h.name)},
     withdrawalDate: ${JSON.stringify(h.withdrawalDate)},
-  }`;
+  })`;
 }
 
 function emitHistoricData(historic: HistoricCurrency[], publishedAt: string): string {

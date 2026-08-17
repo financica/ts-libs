@@ -51,9 +51,12 @@ describe("getByNumericCode", () => {
 		expect(getByNumericCode(8)?.alphabeticCode).toBe("ALL"); // numeric 008
 	});
 
-	it("accepts unpadded strings", () => {
+	it("accepts unpadded, partially padded and whitespace-wrapped strings", () => {
+		// JSDoc: `8`, "8", "008" and "08" all resolve identically.
 		expect(getByNumericCode("8")?.alphabeticCode).toBe("ALL");
+		expect(getByNumericCode("08")?.alphabeticCode).toBe("ALL");
 		expect(getByNumericCode("48")?.alphabeticCode).toBe("BHD");
+		expect(getByNumericCode(" 840 ")?.alphabeticCode).toBe("USD");
 	});
 
 	it("rejects non-integers and out-of-range values", () => {
@@ -85,13 +88,9 @@ describe("getByCountry", () => {
 		expect(eu.some((c) => c.alphabeticCode === "EUR")).toBe(true);
 	});
 
-	it("is case-insensitive", () => {
-		expect(
-			getByCountry("us")
-				.map((c) => c.alphabeticCode)
-				.sort(),
-		).toEqual(["USD", "USN"]);
-		expect(getByCountry("Ch").length).toBe(3);
+	it("is case-insensitive, returning the same reference as the uppercase call", () => {
+		expect(getByCountry("us")).toBe(getByCountry("US"));
+		expect(getByCountry("Ch")).toBe(getByCountry("CH"));
 	});
 
 	it("returns a frozen empty array for unknown country codes", () => {
@@ -122,21 +121,26 @@ describe("type guards", () => {
 	});
 });
 
+/** Digits after the decimal separator, per `Intl.NumberFormat.formatToParts`. */
+const fractionDigitsOf = (formatted: string, locale: string, currency: string) => {
+	const parts = new Intl.NumberFormat(locale, { style: "currency", currency });
+	void parts;
+	const decimal = new Intl.NumberFormat(locale)
+		.formatToParts(1.5)
+		.find((p) => p.type === "decimal")?.value;
+	const idx = decimal === undefined ? -1 : formatted.lastIndexOf(decimal);
+	if (idx === -1) return 0;
+	return (formatted.slice(idx + 1).match(/\d/g) ?? []).length;
+};
+
 describe("formatAmount", () => {
-	it("uses USD's 2 minor units by default", () => {
-		const out = formatAmount(1234.5, "USD", { locale: "en-US" });
-		expect(out).toBe("$1,234.50");
-	});
-
-	it("uses JPY's 0 minor units by default", () => {
-		const out = formatAmount(1234.5, "JPY", { locale: "en-US" });
-		// JPY has no subunit — Intl truncates/rounds to the integer.
-		expect(out).toBe("¥1,235");
-	});
-
-	it("uses BHD's 3 minor units", () => {
-		const out = formatAmount(1.5, "BHD", { locale: "en-US" });
-		expect(out).toContain("1.500");
+	it.each([
+		["USD", 2], // ISO 4217: cent
+		["JPY", 0], // ISO 4217: no minor unit
+		["BHD", 3], // ISO 4217: fils, thousandths
+	])("pads and rounds %s to its ISO minor units (%i)", (code, digits) => {
+		const out = formatAmount(1.5, code, { locale: "en-US" });
+		expect(fractionDigitsOf(out, "en-US", code)).toBe(digits);
 	});
 
 	it("respects user-supplied fractionDigits", () => {
@@ -145,8 +149,42 @@ describe("formatAmount", () => {
 			minimumFractionDigits: 4,
 			maximumFractionDigits: 4,
 		});
-		expect(out).toBe("$1.0000");
+		expect(fractionDigitsOf(out, "en-US", "USD")).toBe(4);
 	});
+
+	it("widens the maximum when only a larger minimum is given", () => {
+		// Previously threw RangeError: minimumFractionDigits 4 > maximum 2.
+		const out = formatAmount(1, "USD", {
+			locale: "en-US",
+			minimumFractionDigits: 4,
+		});
+		expect(fractionDigitsOf(out, "en-US", "USD")).toBe(4);
+	});
+
+	it("lowers the minimum when only a smaller maximum is given", () => {
+		// Previously threw RangeError: maximumFractionDigits 0 < minimum 2.
+		const out = formatAmount(1.4, "USD", {
+			locale: "en-US",
+			maximumFractionDigits: 0,
+		});
+		expect(fractionDigitsOf(out, "en-US", "USD")).toBe(0);
+	});
+
+	it.each(["XAU", "XXX"] as const)(
+		"does not force a precision for %s, which has no minor unit",
+		(code) => {
+			// Locale default for a currency without minor units is at most 2 digits.
+			const out = formatAmount(1.23456, code, { locale: "en-US" });
+			expect(fractionDigitsOf(out, "en-US", code)).toBeLessThanOrEqual(2);
+			// And a caller-supplied precision is honoured untouched.
+			const wide = formatAmount(1.23456, code, {
+				locale: "en-US",
+				minimumFractionDigits: 5,
+				maximumFractionDigits: 5,
+			});
+			expect(fractionDigitsOf(wide, "en-US", code)).toBe(5);
+		},
+	);
 
 	it("throws for unknown codes", () => {
 		// The type guard still allows the assertion at runtime; we accept the

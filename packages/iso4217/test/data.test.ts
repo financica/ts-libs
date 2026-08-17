@@ -20,9 +20,11 @@ describe("dataset integrity", () => {
 		expect(PUBLISHED_AT).toMatch(/^\d{4}-\d{2}-\d{2}$/);
 	});
 
-	it("code tuples match CURRENCIES length", () => {
-		expect(ALPHABETIC_CODES.length).toBe(CURRENCIES.length);
-		expect(NUMERIC_CODES.length).toBe(CURRENCIES.length);
+	it("code tuples mirror CURRENCIES exactly, in the same order", () => {
+		// generate.ts emits both tuples from the same sorted list; NUMERIC_CODES
+		// is documented as "sorted to match ALPHABETIC_CODES".
+		expect([...ALPHABETIC_CODES]).toEqual(CURRENCIES.map((c) => c.alphabeticCode));
+		expect([...NUMERIC_CODES]).toEqual(CURRENCIES.map((c) => c.numericCode));
 	});
 
 	it("is sorted ascending by alphabetic code", () => {
@@ -70,10 +72,20 @@ describe("dataset integrity", () => {
 		}
 	});
 
-	it("fund currencies are flagged isFund=true and kind='fund'", () => {
+	it("isFund and kind='fund' agree both ways", () => {
 		const funds = CURRENCIES.filter((c) => c.isFund);
 		expect(funds.length).toBeGreaterThan(0);
-		for (const c of funds) expect(c.kind).toBe("fund");
+		for (const c of CURRENCIES)
+			expect(c.isFund, c.alphabeticCode).toBe(c.kind === "fund");
+	});
+
+	it("metals and special codes carry no country codes", () => {
+		// Funds (BOV, CHE, USN...) do belong to a country; metals and X-codes do not.
+		for (const c of CURRENCIES) {
+			if (c.kind === "metal" || c.kind === "special") {
+				expect(c.countryCodes, c.alphabeticCode).toEqual([]);
+			}
+		}
 	});
 
 	it("XXX is the no-currency sentinel", () => {
@@ -89,14 +101,14 @@ describe("dataset integrity", () => {
 		}
 	});
 
-	it("every currency's countryCodes are known and sorted", () => {
-		const known = new Set(COUNTRY_CODES);
-		for (const { alphabeticCode, countryCodes } of CURRENCIES) {
-			for (const code of countryCodes) {
-				expect(known.has(code), `${alphabeticCode} → ${code}`).toBe(true);
-			}
-			const sorted = [...countryCodes].sort();
-			expect(countryCodes).toEqual(sorted);
+	it("COUNTRY_CODES is exactly the sorted set of every currency's countries", () => {
+		const union = [...new Set(CURRENCIES.flatMap((c) => c.countryCodes))].sort();
+		expect([...COUNTRY_CODES]).toEqual(union);
+	});
+
+	it("every currency's countryCodes are sorted", () => {
+		for (const { countryCodes } of CURRENCIES) {
+			expect(countryCodes).toEqual([...countryCodes].sort());
 		}
 	});
 
@@ -125,7 +137,9 @@ describe("dataset integrity", () => {
 		}
 	});
 
-	it("every currency is Object.freeze'd (immutable)", () => {
+	it("the array and every currency in it are Object.freeze'd (immutable)", () => {
 		expect(Object.isFrozen(CURRENCIES)).toBe(true);
+		for (const c of CURRENCIES)
+			expect(Object.isFrozen(c), c.alphabeticCode).toBe(true);
 	});
 });
