@@ -117,18 +117,10 @@ const removeEmbeddedFile = (pdfDoc: PDFDocument, filename: string): void => {
 			decodePdfText(dict.lookup(PDFName.of("F")));
 		return name?.trim().toLowerCase() === target;
 	};
-	// Fully delete a replaced filespec (and its embedded stream) so stale
-	// copies can't be found by attachment scans later.
-	const deleteFileSpec = (ref: unknown) => {
-		if (!(ref instanceof PDFRef)) return;
-		const dict = pdfDoc.context.lookupMaybe(ref, PDFDict);
-		const embedded = dict?.lookupMaybe(PDFName.of("EF"), PDFDict);
-		for (const key of ["F", "UF"]) {
-			const streamRef = embedded?.get(PDFName.of(key));
-			if (streamRef instanceof PDFRef) pdfDoc.context.delete(streamRef);
-		}
-		pdfDoc.context.delete(ref);
-	};
+	// Filespecs to drop. Collected first and deleted last: deleting one before
+	// the /AF array is filtered would make its entry unresolvable, so it would
+	// survive as a dangling reference to a removed object.
+	const doomed: PDFRef[] = [];
 	if (pairs) {
 		const kept: Parameters<PDFArray["push"]>[0][] = [];
 		for (let index = 0; index + 1 < pairs.size(); index += 2) {
@@ -138,7 +130,7 @@ const removeEmbeddedFile = (pdfDoc: PDFDocument, filename: string): void => {
 				key instanceof PDFRef ? pdfDoc.context.lookup(key) : key,
 			);
 			if (keyName?.trim().toLowerCase() === target || matchesTarget(value)) {
-				deleteFileSpec(value);
+				if (value instanceof PDFRef) doomed.push(value);
 				continue;
 			}
 			kept.push(key, value);
@@ -155,11 +147,28 @@ const removeEmbeddedFile = (pdfDoc: PDFDocument, filename: string): void => {
 		for (let index = 0; index < afArray.size(); index += 1) {
 			const entry = afArray.get(index);
 			if (matchesTarget(entry)) continue;
+			if (
+				entry instanceof PDFRef &&
+				doomed.some((ref) => ref.tag === entry.tag)
+			) {
+				continue;
+			}
 			replacement.push(entry);
 		}
 		if (replacement.size() !== afArray.size()) {
 			catalog.set(PDFName.of("AF"), replacement);
 		}
+	}
+	// Fully delete the replaced filespecs (and their embedded streams) so stale
+	// copies can't be found by attachment scans later.
+	for (const ref of doomed) {
+		const dict = pdfDoc.context.lookupMaybe(ref, PDFDict);
+		const embedded = dict?.lookupMaybe(PDFName.of("EF"), PDFDict);
+		for (const key of ["F", "UF"]) {
+			const streamRef = embedded?.get(PDFName.of(key));
+			if (streamRef instanceof PDFRef) pdfDoc.context.delete(streamRef);
+		}
+		pdfDoc.context.delete(ref);
 	}
 };
 
