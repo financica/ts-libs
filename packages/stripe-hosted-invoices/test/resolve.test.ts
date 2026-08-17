@@ -19,7 +19,7 @@ const protocolRoutes = (): Array<[string, () => Response]> => [
 		() => json({ ephemeral_key: "ek_live_abc", invoice_id: "in_1234567890abc" }),
 	],
 	[
-		"/hosted",
+		"/v1/invoices/in_1234567890abc/hosted",
 		() =>
 			json({
 				id: "in_1234567890abc",
@@ -29,7 +29,10 @@ const protocolRoutes = (): Array<[string, () => Response]> => [
 				lines: { data: [{ id: "il_1", amount: 10000 }], has_more: false },
 			}),
 	],
-	["/credit_notes", () => json({ data: [{ id: "cn_1", total: 2500 }] })],
+	[
+		"/v1/invoices/in_1234567890abc/credit_notes",
+		() => json({ data: [{ id: "cn_1", total: 2500 }] }),
+	],
 ];
 
 const stubFetch = (
@@ -107,8 +110,80 @@ describe("resolveStripeInvoiceUrl", () => {
 			date: "2025-01-08",
 			receiptToken,
 		});
-		// It still centres on the invoice the receipt points at.
+		// It still centres on the invoice the receipt points at, and the account
+		// comes from the hosted link embedded in the page (acct_TESTACCOUNT in
+		// the fixture), not from the receipt token.
 		expect(result.invoiceId).toBe("in_1234567890abc");
+		expect(result.accountId).toBe("acct_TESTACCOUNT");
+	});
+
+	it("reads a payment receipt as a payment, not a refund", async () => {
+		// Payment receipts lead with "Receipt from <merchant>" and a "Paid <date>"
+		// row; the fixtures on disk are both refunds, so this one is synthetic.
+		const receiptToken = Buffer.from("acct_1ABCdef").toString("base64url");
+		const paymentReceipt = `<html><body><table>
+			<tr><td>Receipt from Example Studio</td></tr>
+			<tr><td>$120.00</td></tr>
+			<tr><td>Paid March 3, 2025</td></tr>
+			<tr><td>Receipt number</td></tr><tr><td>1111-2222</td></tr>
+			<tr><td>Invoice number</td></tr><tr><td>ABCD1234-0001</td></tr>
+			<tr><td><a href="https://invoice.stripe.com/i/acct_1ABC/live_XYZ">View invoice</a></td></tr>
+		</table></body></html>`;
+		const fetch = stubFetch([
+			["/receipts/invoices/", () => new Response(paymentReceipt)],
+			...protocolRoutes(),
+		]);
+
+		const result = await resolveStripeInvoiceUrl(
+			`https://pay.stripe.com/receipts/invoices/${receiptToken}`,
+			{ fetch },
+		);
+
+		expect(result.ok).toBe(true);
+		if (!result.ok) return;
+		expect(result.receipt).toMatchObject({
+			kind: "payment",
+			merchantName: "Example Studio",
+			amount: 120,
+			date: "2025-03-03",
+			receiptNumber: "1111-2222",
+			invoiceNumber: "ABCD1234-0001",
+			creditNote: null,
+		});
+	});
+
+	it("surfaces the status and URL when the receipt page cannot be fetched", async () => {
+		const receiptToken = Buffer.from("acct_1ABCdef").toString("base64url");
+		const fetch = stubFetch([
+			["/receipts/invoices/", () => new Response("gone", { status: 410 })],
+		]);
+
+		const result = await resolveStripeInvoiceUrl(
+			`https://pay.stripe.com/receipts/invoices/${receiptToken}`,
+			{ fetch },
+		);
+
+		expect(result).toMatchObject({
+			ok: false,
+			error: {
+				kind: "http_error",
+				status: 410,
+				url: `https://pay.stripe.com/receipts/invoices/${receiptToken}`,
+			},
+		});
+	});
+
+	it("returns a network error rather than throwing when the receipt fetch fails", async () => {
+		const receiptToken = Buffer.from("acct_1ABCdef").toString("base64url");
+		const fetch = (() =>
+			Promise.reject(new Error("ECONNRESET"))) as typeof globalThis.fetch;
+
+		const result = await resolveStripeInvoiceUrl(
+			`https://pay.stripe.com/receipts/invoices/${receiptToken}`,
+			{ fetch },
+		);
+
+		expect(result).toMatchObject({ ok: false, error: { kind: "network_error" } });
 	});
 
 	it("explains a receipt that is not linked to an invoice", async () => {
@@ -150,7 +225,7 @@ describe("resolveStripeInvoiceUrl", () => {
 
 	it("still returns the invoice when the credit-note endpoint fails", async () => {
 		const fetch = stubFetch([
-			...protocolRoutes().filter(([match]) => match !== "/credit_notes"),
+			...protocolRoutes().filter(([match]) => !match.endsWith("/credit_notes")),
 			["/credit_notes", () => json({}, 500)],
 		]);
 

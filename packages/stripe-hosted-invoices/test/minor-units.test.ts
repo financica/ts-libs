@@ -6,11 +6,6 @@ import {
 	toStripeMinorUnits,
 } from "../src/minor-units.js";
 
-/** What `Intl` (and therefore ISO 4217) reports, for the divergence tests. */
-const isoDigits = (currency: string): number =>
-	new Intl.NumberFormat("en", { style: "currency", currency }).resolvedOptions()
-		.maximumFractionDigits ?? 2;
-
 describe("stripeMinorUnitDivisor", () => {
 	it.each([
 		["JPY", 1],
@@ -29,12 +24,12 @@ describe("stripeMinorUnitDivisor", () => {
 	});
 
 	// The whole reason this table is hand-maintained instead of read from
-	// ISO 4217. Each of these reads as zero-decimal via Intl, and following
-	// Intl here is a 100x error on real money.
+	// ISO 4217: ISO 4217 lists UGX, ISK and HUF with 0 minor units, but
+	// Stripe's currency reference bills them in two-decimal minor units.
+	// Following ISO here is a 100x error on real money.
 	it.each(["UGX", "ISK", "HUF"])(
-		"treats %s as two-decimal even though ISO/Intl calls it zero-decimal",
+		"treats %s as two-decimal even though ISO 4217 calls it zero-decimal",
 		(currency) => {
-			expect(isoDigits(currency)).toBe(0);
 			expect(stripeMinorUnitDivisor(currency)).toBe(100);
 			expect(isStripeZeroDecimalCurrency(currency)).toBe(false);
 		},

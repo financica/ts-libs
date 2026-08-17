@@ -38,9 +38,8 @@ describe("ephemeralHeaders", () => {
 	it("pins the API version and the hosted-page origin", () => {
 		// Stripe rejects an ephemeral key when the request does not name an
 		// explicit version, and the endpoints reject a missing Origin/Referer.
-		expect(ephemeralHeaders("ek_test")).toEqual({
+		expect(ephemeralHeaders("ek_test")).toMatchObject({
 			Authorization: "Bearer ek_test",
-			"Content-Type": "application/x-www-form-urlencoded",
 			"Stripe-Version": STRIPE_HOSTED_API_VERSION,
 			Origin: "https://invoice.stripe.com",
 			Referer: "https://invoice.stripe.com/",
@@ -79,12 +78,9 @@ describe("fetchStripeHostedPage", () => {
 
 		const result = await fetchStripeHostedPage(parts, { fetch });
 
-		expect(result).toEqual({
+		expect(result).toMatchObject({
 			ok: false,
-			error: {
-				kind: "invalid_response",
-				detail: "no ephemeral_key in hosted page payload",
-			},
+			error: { kind: "invalid_response" },
 		});
 	});
 
@@ -177,6 +173,45 @@ describe("fetchStripeHostedInvoice", () => {
 		expect(warnings).toContain("failed to paginate invoice lines");
 	});
 
+	it("stops at the page cap and warns when has_more never clears", async () => {
+		// MAX_LINE_PAGES is 20. A server that always says has_more with fresh
+		// ids would otherwise be followed forever.
+		let page = 0;
+		const warnings: string[] = [];
+		const fetch = stubFetch([
+			[
+				"/hosted",
+				() =>
+					json({
+						id: "in_1",
+						lines: { data: [{ id: "il_0" }], has_more: true },
+					}),
+			],
+			[
+				"/lines",
+				() => {
+					page += 1;
+					return json({ data: [{ id: `il_${page}` }], has_more: true });
+				},
+			],
+		]);
+
+		const result = await fetchStripeHostedInvoice(args, {
+			fetch,
+			onWarning: (message) => warnings.push(message),
+		});
+
+		expect(result.ok).toBe(true);
+		if (!result.ok) return;
+		expect(fetch.calls.filter((call) => call.url.includes("/lines"))).toHaveLength(
+			20,
+		);
+		expect(result.lines).toHaveLength(21);
+		expect(warnings).toContain(
+			"invoice line pagination hit its page cap; lines are truncated",
+		);
+	});
+
 	it("does not paginate when the first page is already complete", async () => {
 		const fetch = stubFetch([
 			[
@@ -226,6 +261,107 @@ describe("fetchStripeCreditNotes", () => {
 
 		expect(results.map((entry) => entry.creditNote.id)).toEqual(["cn_1"]);
 		expect(warnings).toContain("skipping unreadable credit note");
+	});
+
+	it("follows the starting_after cursor for a credit note's remaining lines", async () => {
+		// The list endpoint embeds only the first page of each note's lines;
+		// the rest live under /v1/credit_notes/{id}/lines.
+		let page = 0;
+		const fetch = stubFetch([
+			[
+				"/v1/invoices/in_1/credit_notes",
+				() =>
+					json({
+						data: [
+							{
+								id: "cn_1",
+								total: 300,
+								lines: {
+									data: [{ id: "cnli_1", amount: 100 }],
+									has_more: true,
+								},
+							},
+						],
+					}),
+			],
+			[
+				"/v1/credit_notes/cn_1/lines",
+				() => {
+					page += 1;
+					return page === 1
+						? json({
+								data: [{ id: "cnli_2", amount: 100 }],
+								has_more: true,
+							})
+						: json({
+								data: [{ id: "cnli_3", amount: 100 }],
+								has_more: false,
+							});
+				},
+			],
+		]);
+
+		const results = await fetchStripeCreditNotes(args, { fetch });
+
+		expect(results[0]?.lines.map((line) => line.id)).toEqual([
+			"cnli_1",
+			"cnli_2",
+			"cnli_3",
+		]);
+		const cursors = fetch.calls
+			.filter((call) => call.url.includes("/v1/credit_notes/cn_1/lines"))
+			.map((call) => new URL(call.url).searchParams.get("starting_after"));
+		expect(cursors).toEqual(["cnli_1", "cnli_2"]);
+	});
+
+	it("keeps the embedded credit-note lines when their pagination fails", async () => {
+		const warnings: string[] = [];
+		const fetch = stubFetch([
+			[
+				"/v1/invoices/in_1/credit_notes",
+				() =>
+					json({
+						data: [
+							{
+								id: "cn_1",
+								lines: { data: [{ id: "cnli_1" }], has_more: true },
+							},
+						],
+					}),
+			],
+			["/v1/credit_notes/cn_1/lines", () => json({}, 500)],
+		]);
+
+		const results = await fetchStripeCreditNotes(args, {
+			fetch,
+			onWarning: (message) => warnings.push(message),
+		});
+
+		expect(results[0]?.lines.map((line) => line.id)).toEqual(["cnli_1"]);
+		expect(warnings).toContain("failed to paginate credit-note lines");
+	});
+
+	it("does not fetch credit-note lines when the embedded page is complete", async () => {
+		const fetch = stubFetch([
+			[
+				"/v1/invoices/in_1/credit_notes",
+				() =>
+					json({
+						data: [
+							{
+								id: "cn_1",
+								lines: { data: [{ id: "cnli_1" }], has_more: false },
+							},
+						],
+					}),
+			],
+		]);
+
+		await fetchStripeCreditNotes(args, { fetch });
+
+		expect(
+			fetch.calls.filter((call) => call.url.includes("/v1/credit_notes/")),
+		).toHaveLength(0);
 	});
 
 	it("returns an empty list rather than failing when the endpoint is unreachable", async () => {

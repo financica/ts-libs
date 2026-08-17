@@ -64,9 +64,10 @@ describe("findDeep", () => {
 			for (let i = 0; i < levels; i += 1) node = { level: node };
 			return node;
 		};
-		// FIND_DEEP_MAX_DEPTH is 16: inside the cap the key is still found.
-		expect(findDeep(nest(15), "target")).toBe("found");
-		expect(findDeep(nest(20), "target")).toBeUndefined();
+		// FIND_DEEP_MAX_DEPTH is 16: `nest(n)` puts the target object at depth
+		// n, so depth 16 is the last level searched and depth 17 the first cut.
+		expect(findDeep(nest(16), "target")).toBe("found");
+		expect(findDeep(nest(17), "target")).toBeUndefined();
 	});
 });
 
@@ -115,6 +116,17 @@ describe("findStripeInvoiceId", () => {
 	it("returns null for empty objects", () => {
 		expect(findStripeInvoiceId({})).toBeNull();
 	});
+
+	it("prefers a known key over a stray in_ string that serializes earlier", () => {
+		// The text fallback is a last resort: a payload can carry other
+		// invoice-looking ids (a related invoice, a previous one) that must
+		// not shadow the one under the documented key.
+		const data = {
+			related: "in_OTHER0000000000",
+			deep: { invoice_id: "in_1234567890abc" },
+		};
+		expect(findStripeInvoiceId(data)).toBe("in_1234567890abc");
+	});
 });
 
 describe("optionalAmount", () => {
@@ -130,6 +142,7 @@ describe("optionalAmount", () => {
 			null,
 			undefined,
 			"",
+			"  ",
 			"abc",
 			{},
 			[],

@@ -228,9 +228,10 @@ describe("unwrapTrackedStripeUrl", () => {
 	});
 
 	it("returns malformed input unchanged rather than throwing", () => {
+		// Nothing here decodes cleanly, so nothing here may change: the caller
+		// gets back exactly what it passed in, and the anchored parsers reject it.
 		for (const value of ["", "not a url", "https://%E0%A4%A", "%%%", "/CL0/%2F"]) {
-			expect(() => unwrapTrackedStripeUrl(value)).not.toThrow();
-			expect(typeof unwrapTrackedStripeUrl(value)).toBe("string");
+			expect(unwrapTrackedStripeUrl(value)).toBe(value);
 		}
 	});
 });
