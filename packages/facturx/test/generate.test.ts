@@ -1,3 +1,4 @@
+import { XMLParser } from "fast-xml-parser";
 import { describe, expect, it } from "vitest";
 import {
 	DOCUMENT_TYPE_CODES,
@@ -7,8 +8,14 @@ import {
 	computeTotals,
 	type FacturXInvoiceInput,
 } from "../src/index.js";
-import { FacturXBuildError, buildFacturXXml } from "../src/generate/index.js";
+import {
+	FacturXBuildError,
+	buildFacturXXml,
+	validateForBuild,
+} from "../src/generate/index.js";
 import { parseFacturXXml } from "../src/parse/index.js";
+
+type OrderedNode = Record<string, OrderedNode[]> & { ":@"?: unknown };
 
 const input = (): FacturXInvoiceInput => ({
 	id: "INV-2026-042",
@@ -19,6 +26,9 @@ const input = (): FacturXInvoiceInput => ({
 	seller: {
 		name: "Financica Test SARL",
 		legalOrganization: { id: { id: "552100554", schemeId: "0002" } },
+		// The schemeID attribute carries a double quote (escapeAttribute) and
+		// the id carries text specials; "Heures prestées & suivi" covers text.
+		globalIds: [{ id: "<G&1>", schemeId: 'x"y' }],
 		address: {
 			line1: "1 Rue de la Paix",
 			postcode: "75002",
@@ -79,8 +89,6 @@ describe("buildFacturXXml", () => {
 	it("produces well-formed XML that round-trips through the parser", () => {
 		const invoice = computeTotals(input());
 		const xml = buildFacturXXml(invoice);
-		expect(xml).toContain("rsm:CrossIndustryInvoice");
-		expect(xml).toContain("urn:cen.eu:en16931:2017");
 
 		const { invoice: parsed, profile, warnings } = parseFacturXXml(xml);
 		expect(profile).toBe("en16931");
@@ -96,6 +104,7 @@ describe("buildFacturXXml", () => {
 			name: "Financica Test SARL",
 			vatId: "FR11999999998",
 			legalOrganization: { id: { id: "552100554", schemeId: "0002" } },
+			globalIds: [{ id: "<G&1>", schemeId: 'x"y' }],
 			address: { city: "Paris", country: "FR" },
 		});
 		expect(parsed.lines?.[1]).toMatchObject({
@@ -136,64 +145,64 @@ describe("buildFacturXXml", () => {
 
 	it("emits CII elements in schema order", () => {
 		const xml = buildFacturXXml(computeTotals(input()));
-		const order = [
-			"rsm:ExchangedDocumentContext",
-			"rsm:ExchangedDocument",
-			"rsm:SupplyChainTradeTransaction",
-			"ram:IncludedSupplyChainTradeLineItem",
-			"ram:ApplicableHeaderTradeAgreement",
-			"ram:SellerTradeParty",
-			"ram:BuyerTradeParty",
-			"ram:ApplicableHeaderTradeDelivery",
-			"ram:ApplicableHeaderTradeSettlement",
-		];
-		// Match the opening tag whether it has children, attributes, or is
-		// self-closing (the mandatory empty delivery element renders as />).
-		const tagIndex = (tag: string, from = 0) => {
-			const match = new RegExp(`<${tag}[\\s/>]`).exec(xml.slice(from));
-			return match ? from + match.index : -1;
+		const tree = new XMLParser({
+			preserveOrder: true,
+			ignoreAttributes: false,
+			removeNSPrefix: true,
+		}).parse(xml) as OrderedNode[];
+		// Child element names of the first element called `name` under `nodes`.
+		const childrenOf = (nodes: OrderedNode[], name: string): OrderedNode[] =>
+			nodes.find((node) => name in node)?.[name] ?? [];
+		const names = (nodes: OrderedNode[]): string[] =>
+			nodes.map((node) => Object.keys(node).find((key) => key !== ":@") ?? "");
+		// Assert `expected` appear in this relative order among `actual`
+		// (deduplicated), ignoring elements not listed.
+		const expectOrdered = (actual: string[], expected: string[]) => {
+			const seen = actual.filter((name, i) => actual.indexOf(name) === i);
+			expect(seen.filter((name) => expected.includes(name))).toEqual(expected);
 		};
-		let previous = -1;
-		for (const tag of order) {
-			const index = tagIndex(tag);
-			expect(index, tag).toBeGreaterThan(previous);
-			previous = index;
-		}
-		// Header settlement members in schema order (searched after the
-		// settlement opens, so line-level twins don't match first).
-		const settlementStart = xml.indexOf("<ram:ApplicableHeaderTradeSettlement");
-		const settlementOrder = [
-			"ram:InvoiceCurrencyCode",
-			"ram:SpecifiedTradeSettlementPaymentMeans",
-			"ram:ApplicableTradeTax",
-			"ram:SpecifiedTradePaymentTerms",
-			"ram:SpecifiedTradeSettlementHeaderMonetarySummation",
-		];
-		previous = settlementStart;
-		for (const tag of settlementOrder) {
-			const index = tagIndex(tag, settlementStart);
-			expect(index, tag).toBeGreaterThan(previous);
-			previous = index;
-		}
-		// Monetary summation members in schema order.
-		const summation = [
-			"ram:LineTotalAmount",
-			"ram:TaxBasisTotalAmount",
-			"ram:TaxTotalAmount",
-			"ram:GrandTotalAmount",
-			"ram:DuePayableAmount",
-		];
-		previous = -1;
-		for (const tag of summation) {
-			const index = tagIndex(tag);
-			expect(index, tag).toBeGreaterThan(previous);
-			previous = index;
-		}
-	});
 
-	it("escapes XML special characters", () => {
-		const xml = buildFacturXXml(computeTotals(input()));
-		expect(xml).toContain("Heures prestées &amp; suivi");
+		const cii = childrenOf(tree, "CrossIndustryInvoice");
+		// CII D16B rsm:CrossIndustryInvoice sequence.
+		expectOrdered(names(cii), [
+			"ExchangedDocumentContext",
+			"ExchangedDocument",
+			"SupplyChainTradeTransaction",
+		]);
+		const transaction = childrenOf(cii, "SupplyChainTradeTransaction");
+		expectOrdered(names(transaction), [
+			"IncludedSupplyChainTradeLineItem",
+			"ApplicableHeaderTradeAgreement",
+			"ApplicableHeaderTradeDelivery",
+			"ApplicableHeaderTradeSettlement",
+		]);
+		expectOrdered(
+			names(childrenOf(transaction, "ApplicableHeaderTradeAgreement")),
+			["SellerTradeParty", "BuyerTradeParty", "BuyerOrderReferencedDocument"],
+		);
+		const settlement = childrenOf(transaction, "ApplicableHeaderTradeSettlement");
+		expectOrdered(names(settlement), [
+			"InvoiceCurrencyCode",
+			"SpecifiedTradeSettlementPaymentMeans",
+			"ApplicableTradeTax",
+			"SpecifiedTradePaymentTerms",
+			"SpecifiedTradeSettlementHeaderMonetarySummation",
+		]);
+		expectOrdered(
+			names(
+				childrenOf(
+					settlement,
+					"SpecifiedTradeSettlementHeaderMonetarySummation",
+				),
+			),
+			[
+				"LineTotalAmount",
+				"TaxBasisTotalAmount",
+				"TaxTotalAmount",
+				"GrandTotalAmount",
+				"DuePayableAmount",
+			],
+		);
 	});
 
 	it("supports credit notes with preceding invoice references", () => {
@@ -202,11 +211,9 @@ describe("buildFacturXXml", () => {
 			typeCode: DOCUMENT_TYPE_CODES.CREDIT_NOTE,
 			precedingInvoices: [{ id: "INV-2026-001", issueDate: "2026-01-15" }],
 		});
-		const xml = buildFacturXXml(invoice);
-		expect(xml).toContain("<ram:TypeCode>381</ram:TypeCode>");
-		expect(xml).toContain("<ram:InvoiceReferencedDocument>");
-		expect(xml).toContain("INV-2026-001");
-		const { invoice: parsed } = parseFacturXXml(xml);
+		const { invoice: parsed } = parseFacturXXml(buildFacturXXml(invoice));
+		// UNTDID 1001 code 381 = credit note.
+		expect(parsed.typeCode).toBe("381");
 		expect(parsed.precedingInvoices).toEqual([
 			{ id: "INV-2026-001", issueDate: "2026-01-15" },
 		]);
@@ -233,17 +240,22 @@ describe("buildFacturXXml", () => {
 				exemptionReasons: [{ categoryCode: "AE", reason: "Reverse charge" }],
 			},
 		);
-		const xml = buildFacturXXml(invoice);
-		expect(xml).toContain("<ram:RoundingAmount>0.01</ram:RoundingAmount>");
-		expect(xml).toContain("<ram:TotalPrepaidAmount>20.00</ram:TotalPrepaidAmount>");
-		expect(xml).toContain(
-			"<ram:ExemptionReason>Reverse charge</ram:ExemptionReason>",
-		);
-		expect(xml).toContain(
-			"<ram:ExemptionReasonCode>VATEX-EU-AE</ram:ExemptionReasonCode>",
-		);
-		const { invoice: parsed } = parseFacturXXml(xml);
-		expect(parsed.totals?.duePayable).toBe(80.01);
+		const { invoice: parsed } = parseFacturXXml(buildFacturXXml(invoice));
+		// BR-CO-16: 100 − 20 prepaid + 0.01 rounding.
+		expect(parsed.totals).toMatchObject({
+			roundingAmount: 0.01,
+			prepaidAmount: 20,
+			grandTotal: 100,
+			duePayable: 80.01,
+		});
+		// VATEX-EU-AE is the CEF VATEX code for reverse charge (BT-121).
+		expect(parsed.taxBreakdown).toEqual([
+			expect.objectContaining({
+				categoryCode: "AE",
+				exemptionReasonCode: "VATEX-EU-AE",
+				exemptionReason: "Reverse charge",
+			}),
+		]);
 	});
 
 	it("throws FacturXBuildError listing the problems", () => {
@@ -271,5 +283,29 @@ describe("buildFacturXXml", () => {
 			expect(build.errors.length).toBeGreaterThanOrEqual(4);
 			expect(build.errors.join(" ")).toContain("BT-1");
 		}
+	});
+
+	it("throws FacturXBuildError naming an invalid nested date", () => {
+		const invoice = computeTotals({
+			...input(),
+			paymentTerms: { dueDate: "01/07/2026" },
+		});
+		expect(() => buildFacturXXml(invoice)).toThrow(FacturXBuildError);
+		expect(() => buildFacturXXml(invoice)).toThrow("01/07/2026");
+	});
+
+	it("validateForBuild returns problems without throwing", () => {
+		const errors = validateForBuild({
+			id: "X",
+			typeCode: "380",
+			issueDate: "2026-06-01",
+			currency: "EUR",
+			seller: { name: "S", address: { country: "FR" } },
+			buyer: { name: "B" },
+			// No totals, no lines.
+		});
+		expect(errors.join(" ")).toContain("BG-22");
+		expect(errors.join(" ")).toContain("BG-25");
+		expect(validateForBuild(computeTotals(input()))).toEqual([]);
 	});
 });
