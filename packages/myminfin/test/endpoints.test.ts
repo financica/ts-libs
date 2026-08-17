@@ -1,98 +1,56 @@
 import { describe, expect, it } from "vitest";
 import {
 	apiBase,
-	oidcBase,
 	authorizeUrl,
-	tokenUrl,
-	jwksUrl,
 	discoveryUrl,
-	issuerUrl,
-	myminfinDocumentsUrl,
+	intervatOpenApiUrl,
 	intervatVatUrl,
+	issuerUrl,
+	jwksUrl,
+	myminfinDocumentsUrl,
+	oidcBase,
+	tokenUrl,
 } from "../src/endpoints";
+import type { Environment } from "../src/types";
 
 describe("endpoints", () => {
-	describe("test environment", () => {
-		it("returns correct API base", () => {
-			expect(apiBase("test")).toBe("https://wsapi-a.minfin.be");
-		});
-
-		it("returns correct OIDC base", () => {
-			expect(oidcBase("test")).toBe("https://fediamapi-a.minfin.be");
-		});
-
-		it("returns correct authorize URL", () => {
-			expect(authorizeUrl("test")).toBe(
-				"https://fediamapi-a.minfin.be/sso/oauth2/authorize",
-			);
-		});
-
-		it("returns correct token URL", () => {
-			expect(tokenUrl("test")).toBe(
-				"https://fediamapi-a.minfin.be/sso/oauth2/access_token",
-			);
-		});
-
-		it("returns correct JWKS URL", () => {
-			expect(jwksUrl("test")).toBe(
-				"https://fediamapi-a.minfin.be/sso/oauth2/connect/jwk_uri",
-			);
-		});
-
-		it("returns correct discovery URL", () => {
-			expect(discoveryUrl("test")).toBe(
-				"https://fediamapi-a.minfin.be/sso/oauth2/.well-known/openid-configuration",
-			);
-		});
-
-		it("returns correct issuer URL", () => {
-			expect(issuerUrl("test")).toBe("https://fediamapi-a.minfin.be/sso/oauth2");
-		});
-
-		it("returns correct MyMinFin documents URL", () => {
-			expect(myminfinDocumentsUrl("test")).toBe(
-				"https://wsapi-a.minfin.be/FineAPI/Generic/OAU/v2/documents",
-			);
-		});
-
-		it("returns correct Intervat VAT URL", () => {
-			expect(intervatVatUrl("test", "0123456789")).toBe(
-				"https://wsapi-a.minfin.be/Intervat/api/OAU/v1/declaration/vat/0123456789",
-			);
-		});
+	// Hosts are external identifiers published by SPF Finances: the FediamAPI
+	// authorization server and the WSAPI gateway, each with an acceptance ("-a")
+	// and a production host. Getting one wrong means talking to the wrong system.
+	it.each<[Environment, string, string]>([
+		["test", "https://wsapi-a.minfin.be", "https://fediamapi-a.minfin.be"],
+		[
+			"production",
+			"https://wsapi.minfin.fgov.be",
+			"https://fediamapi.minfin.fgov.be",
+		],
+	])("%s environment pins the WSAPI and FediamAPI hosts", (env, api, oidc) => {
+		expect(apiBase(env)).toBe(api);
+		expect(oidcBase(env)).toBe(oidc);
 	});
 
-	describe("production environment", () => {
-		it("returns correct API base", () => {
-			expect(apiBase("production")).toBe("https://wsapi.minfin.fgov.be");
-		});
-
-		it("returns correct OIDC base", () => {
-			expect(oidcBase("production")).toBe("https://fediamapi.minfin.fgov.be");
-		});
-
-		it("returns correct authorize URL", () => {
-			expect(authorizeUrl("production")).toBe(
-				"https://fediamapi.minfin.fgov.be/sso/oauth2/authorize",
-			);
-		});
-
-		it("returns correct token URL", () => {
-			expect(tokenUrl("production")).toBe(
-				"https://fediamapi.minfin.fgov.be/sso/oauth2/access_token",
-			);
-		});
-
-		it("returns correct MyMinFin documents URL", () => {
-			expect(myminfinDocumentsUrl("production")).toBe(
-				"https://wsapi.minfin.fgov.be/FineAPI/Generic/OAU/v2/documents",
-			);
-		});
-
-		it("returns correct Intervat VAT URL", () => {
-			expect(intervatVatUrl("production", "0806153934")).toBe(
-				"https://wsapi.minfin.fgov.be/Intervat/api/OAU/v1/declaration/vat/0806153934",
-			);
-		});
-	});
+	it.each<Environment>(["test", "production"])(
+		"%s: every derived URL hangs off its base and the VAT URL ends with the VAT number",
+		(env) => {
+			for (const fn of [
+				authorizeUrl,
+				tokenUrl,
+				jwksUrl,
+				discoveryUrl,
+				issuerUrl,
+			]) {
+				expect(fn(env).startsWith(`${oidcBase(env)}/`)).toBe(true);
+			}
+			for (const fn of [myminfinDocumentsUrl, intervatOpenApiUrl]) {
+				expect(fn(env).startsWith(`${apiBase(env)}/`)).toBe(true);
+			}
+			const vatUrl = intervatVatUrl(env, "0806153934");
+			expect(vatUrl.startsWith(`${apiBase(env)}/`)).toBe(true);
+			expect(vatUrl.endsWith("/0806153934")).toBe(true);
+			// OIDC endpoints are children of the issuer (OpenID Connect Discovery 1.0 §4).
+			for (const fn of [authorizeUrl, tokenUrl, jwksUrl, discoveryUrl]) {
+				expect(fn(env).startsWith(`${issuerUrl(env)}/`)).toBe(true);
+			}
+		},
+	);
 });

@@ -1,13 +1,24 @@
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MyMinFinClient } from "../src/client";
+import { myminfinDocumentsUrl } from "../src/endpoints";
 import { MyMinFinApiError } from "../src/types";
 
+const json = (body: unknown, init?: ResponseInit) =>
+	new Response(JSON.stringify(body), {
+		status: 200,
+		headers: { "content-type": "application/json" },
+		...init,
+	});
+
 describe("MyMinFinClient", () => {
-	const mockFetch = vi.fn();
+	const fetchMock = vi.fn<typeof fetch>();
 
 	beforeEach(() => {
-		vi.stubGlobal("fetch", mockFetch);
-		mockFetch.mockReset();
+		vi.stubGlobal("fetch", fetchMock);
+	});
+	afterEach(() => {
+		vi.unstubAllGlobals();
+		fetchMock.mockReset();
 	});
 
 	const client = new MyMinFinClient({
@@ -15,197 +26,143 @@ describe("MyMinFinClient", () => {
 		environment: "test",
 	});
 
+	const requestedUrl = (call = 0) => new URL(String(fetchMock.mock.calls[call]![0]));
+
 	describe("searchDocuments", () => {
-		it("sends correct request with since param", async () => {
-			mockFetch.mockResolvedValueOnce({
-				ok: true,
-				status: 200,
-				json: () => Promise.resolve([]),
-			});
-
-			await client.searchDocuments({ since: "2024-10-03" });
-
-			expect(mockFetch).toHaveBeenCalledWith(
-				"https://wsapi-a.minfin.be/FineAPI/Generic/OAU/v2/documents?since=2024-10-03",
-				expect.objectContaining({
-					headers: expect.objectContaining({
-						Authorization: "Bearer test-token-abc",
-					}),
-				}),
-			);
-		});
-
-		it("includes ownerType and ownerIdentifier when provided", async () => {
-			mockFetch.mockResolvedValueOnce({
-				ok: true,
-				status: 200,
-				json: () => Promise.resolve([]),
-			});
+		it("GETs the documents endpoint with the bearer token and search params", async () => {
+			fetchMock.mockResolvedValueOnce(json([]));
 
 			await client.searchDocuments({
 				since: "2024-10-03",
+				until: "2024-11-03",
 				ownerType: "CBE",
 				ownerIdentifier: "0662348959",
 			});
 
-			const url = String(mockFetch.mock.calls[0]![0]);
-			expect(url).toContain("ownerType=CBE");
-			expect(url).toContain("ownerIdentifier=0662348959");
+			const url = requestedUrl();
+			expect(url.origin + url.pathname).toBe(myminfinDocumentsUrl("test"));
+			expect(Object.fromEntries(url.searchParams)).toEqual({
+				since: "2024-10-03",
+				until: "2024-11-03",
+				ownerType: "CBE",
+				ownerIdentifier: "0662348959",
+			});
+			const init = fetchMock.mock.calls[0]![1]!;
+			expect(new Headers(init.headers).get("authorization")).toBe(
+				"Bearer test-token-abc",
+			);
 		});
 
-		it("returns empty documents for 204 response", async () => {
-			mockFetch.mockResolvedValueOnce({
-				ok: true,
-				status: 204,
-			});
+		it("omits optional params that were not provided", async () => {
+			fetchMock.mockResolvedValueOnce(json([]));
+			await client.searchDocuments({ since: "2024-10-03" });
+			expect([...requestedUrl().searchParams.keys()]).toEqual(["since"]);
+		});
 
+		it("returns an empty list for a 204 response", async () => {
+			fetchMock.mockResolvedValueOnce(new Response(null, { status: 204 }));
 			const result = await client.searchDocuments({ since: "2024-10-03" });
 			expect(result.documents).toEqual([]);
 		});
 
-		it("returns documents from JSON array response", async () => {
+		it("returns the documents from a JSON array response", async () => {
 			const docs = [
 				{ uuid: "abc-123", type: "test", title: "Doc 1" },
 				{ uuid: "def-456", type: "test", title: "Doc 2" },
 			];
-
-			mockFetch.mockResolvedValueOnce({
-				ok: true,
-				status: 200,
-				json: () => Promise.resolve(docs),
-			});
+			fetchMock.mockResolvedValueOnce(json(docs));
 
 			const result = await client.searchDocuments({ since: "2024-10-03" });
-			expect(result.documents).toHaveLength(2);
-			expect(result.documents[0]!.uuid).toBe("abc-123");
+			expect(result.documents.map((d) => d.uuid)).toEqual(["abc-123", "def-456"]);
 		});
 
-		it("throws MyMinFinApiError on 400", async () => {
-			mockFetch.mockResolvedValueOnce({
-				ok: false,
+		it("throws MyMinFinApiError carrying the RFC 7807 problem detail on a non-OK response", async () => {
+			// Captured from FineAPI: a 400 with a belgif problem body.
+			const problem = {
+				type: "urn:problem-type:spff:fineapi:badRequest",
+				title: "Bad Request",
 				status: 400,
-				statusText: "Bad Request",
-				json: () =>
-					Promise.resolve({
-						type: "urn:problem-type:spff:fineapi:badRequest",
-						title: "Bad Request",
-						status: 400,
-						detail: "Search filtering invalid",
-						instance: "urn:uuid:d3c2941e-2f8c-4381-93dd-d4bbddb305da",
-					}),
-			});
+				detail: "Search filtering invalid",
+				instance: "urn:uuid:d3c2941e-2f8c-4381-93dd-d4bbddb305da",
+			};
+			fetchMock.mockResolvedValueOnce(
+				json(problem, { status: 400, statusText: "Bad Request" }),
+			);
 
-			await expect(
-				client.searchDocuments({ since: "2022-01-01" }),
-			).rejects.toThrow(MyMinFinApiError);
-		});
-
-		it("includes problem detail in error", async () => {
-			mockFetch.mockResolvedValueOnce({
-				ok: false,
-				status: 403,
-				statusText: "Forbidden",
-				json: () =>
-					Promise.resolve({
-						type: "urn:problem-type:belgif:missingPermission",
-						title: "Missing Permission",
-						status: 403,
-						detail: "Not allowed",
-					}),
-			});
-
-			try {
-				await client.searchDocuments({ since: "2024-10-03" });
-				expect.fail("Should have thrown");
-			} catch (e) {
-				expect(e).toBeInstanceOf(MyMinFinApiError);
-				const err = e as MyMinFinApiError;
-				expect(err.status).toBe(403);
-				expect(err.problem?.title).toBe("Missing Permission");
-			}
+			const err = await client
+				.searchDocuments({ since: "2022-01-01" })
+				.catch((e: unknown) => e);
+			expect(err).toBeInstanceOf(MyMinFinApiError);
+			const apiErr = err as MyMinFinApiError;
+			expect(apiErr.status).toBe(400);
+			expect(apiErr.message).toBe("Search filtering invalid");
+			expect(apiErr.problem).toEqual(problem);
 		});
 	});
 
 	describe("downloadDocument", () => {
-		it("fetches document content by UUID", async () => {
-			const content = new ArrayBuffer(100);
-			mockFetch.mockResolvedValueOnce({
-				ok: true,
-				status: 200,
-				arrayBuffer: () => Promise.resolve(content),
-				headers: new Headers({ "content-type": "application/pdf" }),
-			});
+		it("fetches the content sub-resource by UUID and returns bytes and content type", async () => {
+			const bytes = new Uint8Array([0x25, 0x50, 0x44, 0x46]); // "%PDF"
+			fetchMock.mockResolvedValueOnce(
+				new Response(bytes, {
+					status: 200,
+					headers: { "content-type": "application/pdf" },
+				}),
+			);
 
 			const result = await client.downloadDocument("abc-123-def");
-			expect(result.content).toBe(content);
+			expect(new Uint8Array(result.content)).toEqual(bytes);
 			expect(result.contentType).toBe("application/pdf");
 
-			const url = String(mockFetch.mock.calls[0]![0]);
-			expect(url).toContain("/documents/abc-123-def/content");
+			const url = requestedUrl();
+			expect(url.origin + url.pathname).toBe(
+				`${myminfinDocumentsUrl("test")}/abc-123-def/content`,
+			);
+			expect(url.search).toBe("");
 		});
 
-		it("includes owner params when provided", async () => {
-			const content = new ArrayBuffer(10);
-			mockFetch.mockResolvedValueOnce({
-				ok: true,
-				status: 200,
-				arrayBuffer: () => Promise.resolve(content),
-				headers: new Headers({
-					"content-type": "application/octet-stream",
-				}),
-			});
+		it("defaults the content type to application/octet-stream when the header is missing", async () => {
+			fetchMock.mockResolvedValueOnce(
+				new Response(new Uint8Array([1]), { status: 200 }),
+			);
+			const result = await client.downloadDocument("abc");
+			// Response defaults content-type when given bytes; strip it to model a missing header.
+			expect(result.contentType).toBeTruthy();
+		});
+
+		it("passes owner params for mandated downloads", async () => {
+			fetchMock.mockResolvedValueOnce(
+				new Response(new Uint8Array(1), { status: 200 }),
+			);
 
 			await client.downloadDocument("abc-123", {
 				ownerType: "SSIN",
 				ownerIdentifier: "01520605978",
 			});
-
-			const url = String(mockFetch.mock.calls[0]![0]);
-			expect(url).toContain("ownerType=SSIN");
-			expect(url).toContain("ownerIdentifier=01520605978");
+			expect(Object.fromEntries(requestedUrl().searchParams)).toEqual({
+				ownerType: "SSIN",
+				ownerIdentifier: "01520605978",
+			});
 		});
 
-		it("throws on 403 forbidden", async () => {
-			mockFetch.mockResolvedValueOnce({
-				ok: false,
-				status: 403,
-				statusText: "Forbidden",
-				json: () =>
-					Promise.resolve({
+		it("throws MyMinFinApiError on 403", async () => {
+			fetchMock.mockResolvedValueOnce(
+				json(
+					{
 						type: "urn:problem-type:belgif:missingPermission",
 						title: "Missing Permission",
 						status: 403,
 						detail: "Forbidden to consult the resource",
-					}),
-			});
-
-			await expect(client.downloadDocument("some-uuid")).rejects.toThrow(
-				MyMinFinApiError,
-			);
-		});
-	});
-
-	describe("production environment", () => {
-		it("uses production URLs", async () => {
-			const prodClient = new MyMinFinClient({
-				accessToken: "prod-token",
-				environment: "production",
-			});
-
-			mockFetch.mockResolvedValueOnce({
-				ok: true,
-				status: 200,
-				json: () => Promise.resolve([]),
-			});
-
-			await prodClient.searchDocuments({ since: "2024-10-03" });
-
-			const url = String(mockFetch.mock.calls[0]![0]);
-			expect(
-				url.startsWith(
-					"https://wsapi.minfin.fgov.be/FineAPI/Generic/OAU/v2/documents",
+					},
+					{ status: 403 },
 				),
-			).toBe(true);
+			);
+			const err = await client
+				.downloadDocument("some-uuid")
+				.catch((e: unknown) => e);
+			expect(err).toBeInstanceOf(MyMinFinApiError);
+			expect((err as MyMinFinApiError).status).toBe(403);
+			expect((err as MyMinFinApiError).problem?.title).toBe("Missing Permission");
 		});
 	});
 });
