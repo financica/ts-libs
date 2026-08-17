@@ -156,6 +156,14 @@ function fallbackOf(fallback: string | undefined): number {
 	return Number.isFinite(value) ? value : Number.NaN;
 }
 
+/** `rule` mirrors `check`: the NBB names each of these by its check id. */
+const finding = (
+	severity: "error" | "warning",
+	check: string,
+	message: string,
+	codes: string[] = [],
+): Finding => ({ severity, check, rule: check, codes, message });
+
 /**
  * Checks the NBB applies to the filing as a whole rather than to its
  * arithmetic, each mapped to the rejection code it would produce.
@@ -163,13 +171,6 @@ function fallbackOf(fallback: string | undefined): number {
 function structuralFindings(filing: NbbFiling): Finding[] {
 	const findings: Finding[] = [];
 	const { identification, entity } = filing.input;
-
-	const finding = (
-		severity: "error" | "warning",
-		check: string,
-		message: string,
-		codes: string[] = [],
-	): Finding => ({ severity, check, rule: check, codes, message });
 
 	// The business court is a mandatory mention. The taxonomy has no formula for
 	// it — it is a rule of the filing application, which refuses the deposit with

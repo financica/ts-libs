@@ -61,20 +61,21 @@ function formatAmount(value: number): string {
 	return value.toFixed(2);
 }
 
+/** Declarant children live in the InputCommon namespace (common: prefix). */
+const commonEl = (name: string, text: string) =>
+	`<common:${name}>${escapeXmlText(text)}</common:${name}>`;
+
 function declarantChildren(declarant: ClientListingDeclarant): string[] {
-	// Declarant children live in the InputCommon namespace (common: prefix).
-	const el = (name: string, text: string) =>
-		`<common:${name}>${escapeXmlText(text)}</common:${name}>`;
 	const children = [
-		el("VATNumber", declarant.vatNumber),
-		el("Name", declarant.name ?? ""),
-		el("Street", declarant.street ?? ""),
-		el("PostCode", declarant.postCode ?? ""),
-		el("City", declarant.city ?? ""),
-		el("CountryCode", declarant.countryCode ?? ""),
+		commonEl("VATNumber", declarant.vatNumber),
+		commonEl("Name", declarant.name ?? ""),
+		commonEl("Street", declarant.street ?? ""),
+		commonEl("PostCode", declarant.postCode ?? ""),
+		commonEl("City", declarant.city ?? ""),
+		commonEl("CountryCode", declarant.countryCode ?? ""),
 	];
-	if (declarant.email) children.push(el("EmailAddress", declarant.email));
-	if (declarant.phone) children.push(el("Phone", declarant.phone));
+	if (declarant.email) children.push(commonEl("EmailAddress", declarant.email));
+	if (declarant.phone) children.push(commonEl("Phone", declarant.phone));
 	return children;
 }
 

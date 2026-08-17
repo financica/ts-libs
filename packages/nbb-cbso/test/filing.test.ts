@@ -671,7 +671,7 @@ describe("conformance with an accepted filing", () => {
 			new Set(
 				Object.values(doc.contexts).flatMap((c) =>
 					(c.scenario ?? [])
-						.filter((m) => m.dimension.localName === "prd")
+						.filter((m) => m.dimension?.localName === "prd")
 						.map((m) => m.member?.localName),
 				),
 			);
@@ -682,7 +682,9 @@ describe("conformance with an accepted filing", () => {
 	it("reports money as the accepted filing does: one EUR unit, decimals INF", () => {
 		for (const doc of [example, ours]) {
 			expect(Object.keys(doc.units)).toEqual(["EUR"]);
-			expect(doc.units["EUR"]?.measures.map((m) => m.localName)).toEqual(["EUR"]);
+			expect(doc.units["EUR"]?.measures?.map((m) => m.localName)).toEqual([
+				"EUR",
+			]);
 			const monetary = doc.facts.filter(
 				(fact) => fact.type === "item" && fact.unitRef !== undefined,
 			);

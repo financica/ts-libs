@@ -109,9 +109,13 @@ function formatAmount(value: number): string {
 	return value.toFixed(2);
 }
 
+/** An unprefixed element, i.e. one in the InputCommon default namespace. */
+const el = (name: string, text: string) => `<${name}>${escapeXmlText(text)}</${name}>`;
+
+/** Intervat spells its booleans out. */
+const yesNo = (value: boolean) => (value ? "YES" : "NO");
+
 function declarantChildren(declarant: VatReturnDeclarant): string[] {
-	const el = (name: string, text: string) =>
-		`<${name}>${escapeXmlText(text)}</${name}>`;
 	// Order and namespace (unprefixed = InputCommon) follow Declarant_Type.
 	const children: string[] = [
 		el("VATNumber", normalizeBelgianVatNumber(declarant.vatNumber)),
@@ -189,7 +193,6 @@ export function serializeVatReturn(options: SerializeVatReturnOptions): string {
 		);
 	}
 
-	const yesNo = (value: boolean) => (value ? "YES" : "NO");
 	const declarationAttrs =
 		declarantReference !== undefined
 			? `SequenceNumber="${sequenceNumber}" DeclarantReference="${escapeXmlAttr(declarantReference)}"`
