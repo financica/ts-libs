@@ -249,7 +249,9 @@ export class EcbClient {
 		for (const record of parseCsv(text)) {
 			const currency = record["CURRENCY"];
 			const observedAt = record["TIME_PERIOD"];
-			const value = Number(record["OBS_VALUE"]);
+			// `Number("")` is 0, so an empty observation must be rejected explicitly.
+			const raw = record["OBS_VALUE"]?.trim();
+			const value = raw ? Number(raw) : Number.NaN;
 			if (!currency || !observedAt || !Number.isFinite(value)) continue;
 			rates.push({ currency, rate: value, date: observedAt });
 		}

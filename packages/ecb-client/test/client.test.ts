@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import { beforeEach, describe, expect, it } from "vitest";
 import { EcbClient } from "../src/client.js";
 import type { FetchLike } from "../src/client.js";
+import type { RateSnapshot } from "../src/types.js";
 import { EcbError, EcbHttpError, NoRateError } from "../src/errors.js";
 
 const fixture = (name: string): string =>
@@ -16,6 +17,7 @@ const FIXTURES: Record<string, string> = {
 	"D.USD.EUR.SP00.A|1998-01-02": "empty.csv",
 	"D.GBP.EUR.SP00.A|2024-01-15": "gbp-2024-01-15.csv",
 	"D.USD+GBP.EUR.SP00.A|2024-01-15": "usd-gbp-2024-01-15.csv",
+	"D.GBP+USD.EUR.SP00.A|2024-01-15": "usd-gbp-2024-01-15.csv",
 	"D.USD+GBP+CHF.EUR.SP00.A|2024-01-15": "subset-2024-01-15.csv",
 	"D..EUR.SP00.A|2024-01-15": "all-2024-01-15.csv",
 	"D.USD+GBP.EUR.SP00.A|2024-01-11|2024-01-15":
@@ -108,6 +110,70 @@ describe("EcbClient.getRate", () => {
 			EcbError,
 		);
 	});
+
+	it("rejects an invalid Date object before building a URL", async () => {
+		const f = buildFetch();
+		const local = new EcbClient({ fetch: f.fetch });
+		await expect(
+			local.getRate("USD", new Date("not a date")),
+		).rejects.toBeInstanceOf(EcbError);
+		expect(f.calls).toHaveLength(0);
+	});
+
+	it("normalizes a Date in UTC, not local time", async () => {
+		// 23:30 UTC on the 15th is already the 16th in any zone east of UTC+0:30.
+		await client.getRate("USD", new Date("2024-01-15T23:30:00Z"));
+		expect(calls[0]).toContain("endPeriod=2024-01-15");
+	});
+
+	it("wraps a rejected fetch in EcbError and keeps the cause", async () => {
+		const failure = new TypeError("fetch failed");
+		const local = new EcbClient({
+			fetch: async () => {
+				throw failure;
+			},
+		});
+		const error = await local.getRate("USD", "2024-01-15").catch((e) => e);
+		expect(error).toBeInstanceOf(EcbError);
+		expect(error).not.toBeInstanceOf(EcbHttpError);
+		expect((error as EcbError).cause).toBe(failure);
+	});
+
+	it("passes an abort signal by default and none when timeoutMs is 0", async () => {
+		const seen: (AbortSignal | undefined)[] = [];
+		const spy: FetchLike = async (url, init) => {
+			seen.push(init?.signal);
+			return buildFetch().fetch(url, init);
+		};
+		await new EcbClient({ fetch: spy }).getRate("USD", "2024-01-15");
+		await new EcbClient({ fetch: spy, timeoutMs: 0 }).getRate("USD", "2024-01-15");
+		expect(seen[0]).toBeInstanceOf(AbortSignal);
+		expect(seen[1]).toBeUndefined();
+	});
+
+	it("refetches every time when cache is null", async () => {
+		const f = buildFetch();
+		const local = new EcbClient({ fetch: f.fetch, cache: null });
+		await local.getRate("USD", "2024-01-15");
+		await local.getRate("USD", "2024-01-15");
+		expect(f.calls).toHaveLength(2);
+	});
+
+	it("uses a custom RateCache keyed by request URL", async () => {
+		const store = new Map<string, RateSnapshot>();
+		const f = buildFetch();
+		const local = new EcbClient({
+			fetch: f.fetch,
+			cache: { get: (k) => store.get(k), set: (k, v) => store.set(k, v) },
+		});
+		await local.getRate("USD", "2024-01-15");
+		expect([...store.keys()]).toEqual([f.calls[0]]);
+		await local.getRate("USD", "2024-01-15");
+		expect(f.calls).toHaveLength(1);
+		// A different date is a different URL, so a different cache entry.
+		await local.getRate("USD", "2024-01-13");
+		expect(store.size).toBe(2);
+	});
 });
 
 describe("EcbClient.getRates", () => {
@@ -133,6 +199,52 @@ describe("EcbClient.getRates", () => {
 		expect(snapshot.rates.find((r) => r.currency === "USD")?.rate).toBe(1.0945);
 	});
 
+	it("returns an empty snapshot for [] and for EUR alone without a call", async () => {
+		const f = buildFetch();
+		const local = new EcbClient({ fetch: f.fetch });
+		expect(await local.getRates("2024-01-15", [])).toEqual({
+			requestedDate: "2024-01-15",
+			rates: [],
+		});
+		expect(await local.getRates("2024-01-15", ["EUR"])).toEqual({
+			requestedDate: "2024-01-15",
+			rates: [{ currency: "EUR", rate: 1, date: "2024-01-15" }],
+		});
+		expect(f.calls).toHaveLength(0);
+	});
+
+	it("returns only the currencies that have an observation (partial data)", async () => {
+		// The USD+GBP fixture stands in for a response where one requested series
+		// (CHF) yields no observation. Pinned: getRates reports what the ECB
+		// returned rather than throwing — callers that need every currency use
+		// getRate/convert, which raise NoRateError for the missing leg.
+		const local = new EcbClient({
+			fetch: async () => ({
+				ok: true,
+				status: 200,
+				text: async () => fixture("usd-gbp-2024-01-15.csv"),
+			}),
+		});
+		const snapshot = await local.getRates("2024-01-15", ["USD", "GBP", "CHF"]);
+		expect(snapshot.rates.map((r) => r.currency).sort()).toEqual(["GBP", "USD"]);
+	});
+
+	it("skips rows whose OBS_VALUE is blank or not a finite number, never yielding a 0 or NaN rate", async () => {
+		const header = "KEY,CURRENCY,TIME_PERIOD,OBS_VALUE";
+		const local = new EcbClient({
+			fetch: async () => ({
+				ok: true,
+				status: 200,
+				text: async () =>
+					`${header}\nEXR.D.USD.EUR.SP00.A,USD,2024-01-15,1.0945\nEXR.D.GBP.EUR.SP00.A,GBP,2024-01-15,\nEXR.D.CHF.EUR.SP00.A,CHF,2024-01-15,NaN\n`,
+			}),
+		});
+		const snapshot = await local.getRates("2024-01-15", ["USD", "GBP", "CHF"]);
+		expect(snapshot.rates).toEqual([
+			{ currency: "USD", rate: 1.0945, date: "2024-01-15" },
+		]);
+	});
+
 	it("returns discontinued series at their own last-published date", async () => {
 		const snapshot = await client.getRates("2024-01-15");
 		expect(snapshot.rates.length).toBeGreaterThan(30);
@@ -151,31 +263,27 @@ describe("EcbClient.getSeries", () => {
 		client = new EcbClient({ fetch: f.fetch });
 	});
 
-	it("returns the whole window in one request, oldest first", async () => {
+	it("returns the whole window in one request, sorted by [date, currency], with weekends absent", async () => {
 		const series = await client.getSeries("2024-01-11", "2024-01-15", [
 			"USD",
 			"GBP",
 		]);
 		expect(calls).toHaveLength(1);
 		expect(series).toMatchObject({ from: "2024-01-11", to: "2024-01-15" });
-		expect(series.rates.map((r) => [r.date, r.currency, r.rate])).toEqual([
-			["2024-01-11", "GBP", 0.86123],
-			["2024-01-11", "USD", 1.0968],
-			["2024-01-12", "GBP", 0.8604],
-			["2024-01-12", "USD", 1.0953],
-			["2024-01-15", "GBP", 0.86075],
-			["2024-01-15", "USD", 1.0945],
-		]);
-	});
-
-	it("omits non-business days rather than carrying the prior rate forward", async () => {
-		const series = await client.getSeries("2024-01-11", "2024-01-15", [
-			"USD",
-			"GBP",
-		]);
-		// 13 and 14 January 2024 are a weekend: absent, not back-filled.
-		expect(series.rates.some((r) => r.date === "2024-01-13")).toBe(false);
-		expect(series.rates.some((r) => r.date === "2024-01-14")).toBe(false);
+		// 11, 12 and 15 January 2024 are TARGET business days; the 13th/14th are a
+		// weekend and must be absent, not back-filled. Two currencies × three days.
+		expect(series.rates).toHaveLength(6);
+		expect(new Set(series.rates.map((r) => r.date))).toEqual(
+			new Set(["2024-01-11", "2024-01-12", "2024-01-15"]),
+		);
+		const sorted = [...series.rates].sort(
+			(a, b) =>
+				a.date.localeCompare(b.date) || a.currency.localeCompare(b.currency),
+		);
+		expect(series.rates).toEqual(sorted);
+		for (const rate of series.rates) {
+			expect(rate.date >= series.from && rate.date <= series.to).toBe(true);
+		}
 	});
 
 	it("drops EUR from the request and makes no call for EUR alone", async () => {
@@ -235,6 +343,41 @@ describe("EcbClient.convert", () => {
 		});
 		expect(result.rate).toBeCloseTo(0.86075 / 1.0945, 12);
 		expect(result.amount).toBeCloseTo((100 * 0.86075) / 1.0945, 10);
+	});
+
+	it("reports the later of the two legs' dates as rateDate", async () => {
+		// USD last observed on the 15th, ARS discontinued on 2020-10-30 (see the
+		// all-currencies fixture): the cross rate is only as fresh as its newest leg.
+		const local = new EcbClient({
+			fetch: async () => ({
+				ok: true,
+				status: 200,
+				text: async () => fixture("all-2024-01-15.csv"),
+			}),
+		});
+		const result = await local.convert({
+			amount: 1,
+			from: "ARS",
+			to: "USD",
+			date: "2024-01-15",
+		});
+		expect(result.rateDate).toBe("2024-01-15");
+	});
+
+	it("round-trips: rate(A→B) × rate(B→A) ≈ 1", async () => {
+		const there = await client.convert({
+			amount: 1,
+			from: "USD",
+			to: "GBP",
+			date: "2024-01-15",
+		});
+		const back = await client.convert({
+			amount: 1,
+			from: "GBP",
+			to: "USD",
+			date: "2024-01-15",
+		});
+		expect(there.rate * back.rate).toBeCloseTo(1, 12);
 	});
 
 	it("is a no-op for identical currencies and makes no request", async () => {

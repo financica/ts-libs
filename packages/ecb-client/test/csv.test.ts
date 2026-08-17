@@ -33,4 +33,25 @@ describe("parseCsv", () => {
 	it("tolerates a missing trailing newline", () => {
 		expect(parseCsv("a,b\n1,2")).toEqual([{ a: "1", b: "2" }]);
 	});
+
+	it("accepts CRLF line endings without leaking \\r into fields", () => {
+		expect(parseCsv("a,b\r\n1,2\r\n3,4\r\n")).toEqual([
+			{ a: "1", b: "2" },
+			{ a: "3", b: "4" },
+		]);
+	});
+
+	it("keeps a line break inside a quoted field", () => {
+		expect(parseCsv('x,y\n"line one\nline two",z\n')).toEqual([
+			{ x: "line one\nline two", y: "z" },
+		]);
+	});
+
+	it("pads short rows with empty strings and drops fields beyond the header", () => {
+		// Chosen rule: the header is the schema; rows never widen or narrow it.
+		expect(parseCsv("a,b,c\n1\n1,2,3,4\n")).toEqual([
+			{ a: "1", b: "", c: "" },
+			{ a: "1", b: "2", c: "3" },
+		]);
+	});
 });
