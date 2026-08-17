@@ -116,18 +116,43 @@ describe("normalizeUblResponse", () => {
 				endpoint_scheme_id: "0208",
 				company_legal_form: "SA/NV",
 				tax_scheme_id: "VAT",
+				contact_name: "Supplier Contact",
+				contact_email: "supplier@example.com",
 			},
 			receiver: {
 				endpoint_id: "1006119434",
 				endpoint_scheme_id: "0208",
 				company_legal_form: "BV",
 				tax_scheme_id: "VAT",
+				contact_name: "Buyer Contact",
+				contact_email: "buyer@example.com",
 			},
 			payment_means: {
 				code: "30",
 				code_name: "VIREMENT",
 			},
 		});
+	});
+
+	it("maps a CreditNote document into the DTO with its billing reference", () => {
+		const xml = readFixture("ubl-credit-note.xml");
+		const { extracted } = normalizeUblResponse(xml, "doc-ubl-credit");
+		expect(extracted.provider).toBe("ubl_xml");
+		expect(extracted.invoice.invoice_number).toBe("CN-UBL-9001");
+		expect(extracted.invoice.invoice_date).toBe("2026-02-26");
+		expect(extracted.invoice.total).toBe(121);
+		expect(extracted.invoice.extra).toMatchObject({
+			document_type: "CreditNote",
+			invoice_type_code: "381",
+			billing_reference: {
+				invoice_id: "INV-ORIG-9001",
+				invoice_issue_date: "2026-01-26",
+			},
+		});
+		expect(extracted.line_items).toHaveLength(1);
+		expect(extracted.line_items[0]?.description).toBe(
+			"Refunded consulting services",
+		);
 	});
 
 	it("maps UBL attachments without persisting raw base64 in metadata", () => {
@@ -149,8 +174,13 @@ describe("normalizeUblResponse", () => {
 		expect(raw.invoice?.attachments?.[0]?.base64Content).toBeUndefined();
 	});
 
-	it("throws on invalid XML", () => {
-		expect(() => normalizeUblResponse("<bad", "doc")).toThrow(
+	it.each([
+		{ name: "unclosed tag", xml: "<bad" },
+		{ name: "empty input", xml: "" },
+		{ name: "truncated XML", xml: "<Invoice><cbc:ID>IN" },
+		{ name: "non-XML text", xml: "not xml at all" },
+	])("throws on unparseable input ($name)", ({ xml }) => {
+		expect(() => normalizeUblResponse(xml, "doc")).toThrow(
 			"Failed to parse UBL invoice XML",
 		);
 	});
