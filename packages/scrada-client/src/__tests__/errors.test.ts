@@ -54,6 +54,26 @@ describe("summarizeScradaErrorDetails", () => {
 	it("walks string arrays", () => {
 		expect(summarizeScradaErrorDetails(["one", "two"])).toBe("one | two");
 	});
+
+	it("dedupes identical messages", () => {
+		expect(summarizeScradaErrorDetails(["a", "a"])).toBe("a");
+		expect(
+			summarizeScradaErrorDetails({ message: "a", errors: [{ detail: "a" }] }),
+		).toBe("a");
+	});
+
+	it("walks nested modelState fields and picks error-ish keys only", () => {
+		// ASP.NET-style modelState: field name → array of messages.
+		expect(
+			summarizeScradaErrorDetails({
+				modelState: { "invoice.lines[0].vatType": ["vatType is required"] },
+			}),
+		).toBe("vatType is required");
+		// Unknown string keys are only surfaced when the key looks like an error.
+		expect(
+			summarizeScradaErrorDetails({ vatError: "bad VAT", note: "ignored" }),
+		).toBe("bad VAT");
+	});
 });
 
 describe("scradaApiErrorFromResponse", () => {

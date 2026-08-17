@@ -33,6 +33,19 @@ describe("advertisesPeppolInvoice / advertisesPeppolCreditNote", () => {
 	});
 });
 
+describe("advertisesPeppolInvoice on self-billing ids", () => {
+	// DECISION PIN: the BIS Billing 3.0 self-billing invoice id
+	// (…billing:3.0 with the selfbilling customization) contains both
+	// substrings the predicate looks for, so it currently returns true.
+	// Whether self-billing should count as "advertises invoice" is an open
+	// decision; this pins today's behaviour so a change is deliberate.
+	it("currently treats the selfbilling:3.0 invoice id as an invoice", () => {
+		const selfBilling =
+			"urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:selfbilling:3.0::2.1";
+		expect(advertisesPeppolInvoice(selfBilling)).toBe(true);
+	});
+});
+
 describe("isPeppolParticipantRegistered", () => {
 	it("treats a resolved SMP record as registered even without the legacy flag", () => {
 		expect(isPeppolParticipantRegistered(smpLookup("9925:be0206582284", []))).toBe(
@@ -125,6 +138,41 @@ describe("probePeppolParticipant", () => {
 		expect(match?.identifier).toBe("9925:BE0206582284");
 		expect(match?.networkRegistered).toBe(true);
 		expect(match?.supportCreditInvoice).toBe(false);
+	});
+
+	it("falls back to a resolved-but-unregistered match when nothing better exists", async () => {
+		// Legacy party-lookup shape: resolves, but registered=false.
+		const lookupPeppolParticipant = vi
+			.fn()
+			.mockResolvedValueOnce({ registered: false })
+			.mockRejectedValueOnce(new ScradaApiError("not found", 404, null));
+
+		const match = await probePeppolParticipant(
+			{ lookupPeppolParticipant },
+			"co_123",
+			["9925:BE0206582284", "0208:0206582284"],
+		);
+
+		expect(match).toMatchObject({
+			identifier: "9925:BE0206582284",
+			networkRegistered: false,
+			supportInvoice: false,
+		});
+	});
+
+	it("trims whitespace around the endpoint split and skips ':abc' / 'abc:'", async () => {
+		const lookupPeppolParticipant = vi
+			.fn()
+			.mockResolvedValue(smpLookup("9925:be0206582284", ["Invoice"]));
+
+		const match = await probePeppolParticipant(
+			{ lookupPeppolParticipant },
+			"co_123",
+			[":abc", "abc:", " 9925 : BE0206582284 "],
+		);
+
+		expect(lookupPeppolParticipant).toHaveBeenCalledTimes(1);
+		expect(match?.endpoint).toEqual({ scheme: "9925", value: "BE0206582284" });
 	});
 
 	it("returns null when every candidate 404s or is unparseable", async () => {
