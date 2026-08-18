@@ -400,16 +400,14 @@ describe("parseStripeTaxInvoiceRows", () => {
 	});
 
 	it("reads the other wording of the reverse-charge note", () => {
-		const rows = HEADER.map(
-			([y, cells]): Line => [
-				y,
-				cells.map((cell) =>
-					cell[1] === "Reverse Charge VAT may be applicable."
-						? ([316, "VAT reverse charge applies.", 472] as const)
-						: cell,
-				) as Line[1],
-			],
-		);
+		const rows = HEADER.map(([y, cells]): Line => [
+			y,
+			cells.map((cell) =>
+				cell[1] === "Reverse Charge VAT may be applicable."
+					? ([316, "VAT reverse charge applies.", 472] as const)
+					: cell,
+			) as Line[1],
+		]);
 
 		expect(
 			parse([
@@ -424,14 +422,12 @@ describe("parseStripeTaxInvoiceRows", () => {
 	});
 
 	it("does not take the legal paragraph's mention of reverse charge for the note", () => {
-		const withoutNote = HEADER.map(
-			([y, cells]): Line => [
-				y,
-				cells.filter(
-					(cell) => cell[1] !== "Reverse Charge VAT may be applicable.",
-				) as Line[1],
-			],
-		);
+		const withoutNote = HEADER.map(([y, cells]): Line => [
+			y,
+			cells.filter(
+				(cell) => cell[1] !== "Reverse Charge VAT may be applicable.",
+			) as Line[1],
+		]);
 
 		expect(
 			parse([
@@ -453,18 +449,15 @@ describe("parseStripeTaxInvoiceRows", () => {
 	});
 
 	it("reads a GST registration under the label the invoice uses", () => {
-		const gstHeader = HEADER.map(
-			([y, cells]): Line => [
-				y,
-				cells.map((cell) => {
-					if (cell[1] === "Stripe VAT Number")
-						return [cell[0], "Stripe GST Number"];
-					if (cell[1] === "IE 3206488LH")
-						return [cell[0], "12 345 678 901", 558];
-					return cell;
-				}) as Line[1],
-			],
-		);
+		const gstHeader = HEADER.map(([y, cells]): Line => [
+			y,
+			cells.map((cell) => {
+				if (cell[1] === "Stripe VAT Number")
+					return [cell[0], "Stripe GST Number"];
+				if (cell[1] === "IE 3206488LH") return [cell[0], "12 345 678 901", 558];
+				return cell;
+			}) as Line[1],
+		]);
 
 		expect(
 			parse([
