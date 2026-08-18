@@ -67,7 +67,7 @@
 		"@financica/xbrl": "^0.2.0"
 	},
 	"devDependencies": {
-		"fast-xml-parser": "^5.10.1"
+		"fast-xml-parser": "^5.11.0"
 	},
 	"engines": {
 		"node": ">=24"

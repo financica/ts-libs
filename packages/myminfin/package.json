@@ -40,10 +40,10 @@
 		"prepack": "bun run build"
 	},
 	"dependencies": {
-		"jose": "^6.2.3"
+		"jose": "^6.2.9"
 	},
 	"devDependencies": {
-		"fast-xml-parser": "^5.10.1"
+		"fast-xml-parser": "^5.11.0"
 	},
 	"engines": {
 		"node": ">=24"

@@ -45,7 +45,7 @@
 	},
 	"dependencies": {
 		"@financica/peppol": ">=0.7.0 <1.0.0",
-		"@xmldom/xmldom": "^0.9.10"
+		"@xmldom/xmldom": "^0.9.11"
 	},
 	"engines": {
 		"node": ">=24"

@@ -64,7 +64,7 @@
 		"prepack": "bun run build"
 	},
 	"dependencies": {
-		"unpdf": "^1.8.0"
+		"unpdf": "^1.8.1"
 	},
 	"engines": {
 		"node": ">=24"
