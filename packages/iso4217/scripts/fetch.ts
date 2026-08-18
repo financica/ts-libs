@@ -27,18 +27,19 @@ async function main(): Promise<void> {
 	const dataDir = resolve(here, "..", "data");
 	await mkdir(dataDir, { recursive: true });
 
-	for (const { url, file } of SOURCES) {
-		const response = await fetch(url);
-		if (!response.ok) {
-			throw new Error(
-				`Failed to fetch ${url}: ${response.status} ${response.statusText}`,
-			);
-		}
-		const xml = await response.text();
-		const target = resolve(dataDir, file);
-		await writeFile(target, xml, "utf8");
-		console.log(`  ✓ ${file} (${xml.length} bytes)`);
-	}
+	await Promise.all(
+		SOURCES.map(async ({ url, file }) => {
+			const response = await fetch(url);
+			if (!response.ok) {
+				throw new Error(
+					`Failed to fetch ${url}: ${response.status} ${response.statusText}`,
+				);
+			}
+			const xml = await response.text();
+			await writeFile(resolve(dataDir, file), xml, "utf8");
+			console.log(`  ✓ ${file} (${xml.length} bytes)`);
+		}),
+	);
 }
 
 main().catch((error: unknown) => {

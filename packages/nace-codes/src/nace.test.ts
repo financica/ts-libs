@@ -4,6 +4,8 @@ import fr from "./generated/lang/fr";
 import { NACE } from "./nace";
 import { getParentCode } from "./utils";
 
+const sorted = (codes: string[]) => [...codes].sort((a, b) => a.localeCompare(b));
+
 describe("NACE", () => {
 	let nace: NACE;
 
@@ -194,9 +196,6 @@ describe("NACE", () => {
 					code.code,
 				]);
 			}
-			const sorted = (codes: string[]) =>
-				[...codes].sort((a, b) => a.localeCompare(b));
-
 			for (const parent of all) {
 				const codes = nace.getChildren(parent.code).map((c) => c.code);
 				expect(codes, `${parent.code} children are sorted`).toEqual(

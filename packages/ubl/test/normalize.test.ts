@@ -6,6 +6,21 @@ import { normalizeUblResponse } from "../src/normalize.js";
 const readFixture = (name: string) =>
 	readFileSync(join(import.meta.dirname, "fixtures", name), "utf8");
 
+// Belgian cash rounding to the nearest 0.05. BR-CO-16:
+// PayableAmount = TaxInclusiveAmount - PrepaidAmount + PayableRoundingAmount.
+const invoiceXml = (monetaryTotal: string) => `<?xml version="1.0"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+	xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+	xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+	<cbc:ID>TICKET-1</cbc:ID>
+	<cbc:IssueDate>2026-08-02</cbc:IssueDate>
+	<cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+	<cac:AccountingSupplierParty><cac:Party><cac:PartyName><cbc:Name>Winkel</cbc:Name></cac:PartyName></cac:Party></cac:AccountingSupplierParty>
+	<cac:AccountingCustomerParty><cac:Party><cac:PartyName><cbc:Name>Klant</cbc:Name></cac:PartyName></cac:Party></cac:AccountingCustomerParty>
+	<cac:TaxTotal><cbc:TaxAmount currencyID="EUR">4.71</cbc:TaxAmount></cac:TaxTotal>
+	<cac:LegalMonetaryTotal>${monetaryTotal}</cac:LegalMonetaryTotal>
+</Invoice>`;
+
 describe("normalizeUblResponse", () => {
 	it("maps UBL XML fields into DTO", () => {
 		const xml = readFixture("ubl-invoice.xml");
@@ -306,21 +321,6 @@ describe("normalizeUblResponse", () => {
 	});
 
 	describe("payable rounding (BT-114)", () => {
-		// Belgian cash rounding to the nearest 0.05. BR-CO-16:
-		// PayableAmount = TaxInclusiveAmount - PrepaidAmount + PayableRoundingAmount.
-		const invoiceXml = (monetaryTotal: string) => `<?xml version="1.0"?>
-<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
-	xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
-	xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
-	<cbc:ID>TICKET-1</cbc:ID>
-	<cbc:IssueDate>2026-08-02</cbc:IssueDate>
-	<cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
-	<cac:AccountingSupplierParty><cac:Party><cac:PartyName><cbc:Name>Winkel</cbc:Name></cac:PartyName></cac:Party></cac:AccountingSupplierParty>
-	<cac:AccountingCustomerParty><cac:Party><cac:PartyName><cbc:Name>Klant</cbc:Name></cac:PartyName></cac:Party></cac:AccountingCustomerParty>
-	<cac:TaxTotal><cbc:TaxAmount currencyID="EUR">4.71</cbc:TaxAmount></cac:TaxTotal>
-	<cac:LegalMonetaryTotal>${monetaryTotal}</cac:LegalMonetaryTotal>
-</Invoice>`;
-
 		it("carries a rounded-up payable without inventing a prepayment", () => {
 			const { extracted } = normalizeUblResponse(
 				invoiceXml(`

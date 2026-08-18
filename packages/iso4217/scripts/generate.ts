@@ -48,6 +48,9 @@ async function loadFormatConfig(): Promise<FormatConfig> {
 	for (;;) {
 		const candidate = resolve(directory, ".oxfmtrc.json");
 		if (existsSync(candidate)) {
+			// The loop walks one directory up per round and returns on the first
+			// hit, so there is nothing to run in parallel.
+			// oxlint-disable-next-line no-await-in-loop
 			return JSON.parse(await readFile(candidate, "utf8")) as FormatConfig;
 		}
 

@@ -373,12 +373,13 @@ describe("fetchStripeCreditNotes", () => {
 	});
 });
 
-describe("fetchStripePdf", () => {
-	const pdf = (): Response =>
-		new Response(new Uint8Array([0x25, 0x50, 0x44, 0x46]), {
-			headers: { "content-type": "application/pdf" },
-		});
+/** A response whose body is the %PDF magic and whose type says so. */
+const pdf = (): Response =>
+	new Response(new Uint8Array([0x25, 0x50, 0x44, 0x46]), {
+		headers: { "content-type": "application/pdf" },
+	});
 
+describe("fetchStripePdf", () => {
 	it("returns the bytes when the URL serves a PDF directly", async () => {
 		const fetch = stubFetch([["files.stripe.com", pdf]]);
 

@@ -624,19 +624,21 @@ function statedBinding(
  * of rubrics. An assignment that instead reshuffles the rubrics of the stated
  * one is a permutation, and is dropped.
  */
+/** A binding's rubric assignment, order-independent, for comparing two. */
+const bindingKey = (binding: CheckBinding) =>
+	Object.entries(binding)
+		.sort(([a], [b]) => a.localeCompare(b))
+		.map(([name, code]) => `${name}=${code}`)
+		.join(",");
+
 function mergeBindings(
 	stated: CheckBinding | undefined,
 	inferred: CheckBinding[] | undefined,
 ): CheckBinding[] | undefined {
 	if (!stated) return inferred;
 	if (!inferred) return [stated];
-	const key = (binding: CheckBinding) =>
-		Object.entries(binding)
-			.sort(([a], [b]) => a.localeCompare(b))
-			.map(([name, code]) => `${name}=${code}`)
-			.join(",");
-	const wanted = key(stated);
-	if (!inferred.some((binding) => key(binding) === wanted)) return [stated];
+	const wanted = bindingKey(stated);
+	if (!inferred.some((binding) => bindingKey(binding) === wanted)) return [stated];
 	// A one-variable check states which rubric it is about and there is no
 	// shape left to repeat, so nothing joins it.
 	if (Object.keys(stated).length < 2) return [stated];
@@ -892,6 +894,10 @@ function generateModule(options: Options, model: string, part: string) {
  * assignment could have used it. Where the fixpoint leaves several, the
  * taxonomy genuinely does not decide between them and the variable stays open.
  */
+/** A datapoint's member on one dimension; absent means the default member. */
+const memberOf = (datapoint: Datapoint, dimension: string) =>
+	datapoint.dimensions[dimension] ?? "";
+
 function applyImplicitFiltering(
 	variables: CheckVariable[],
 	candidates: Map<string, Datapoint[]>,
@@ -910,9 +916,6 @@ function applyImplicitFiltering(
 	);
 	// A datapoint that does not carry a dimension reports it at its default,
 	// which is the same thing as another datapoint that also omits it.
-	const memberOf = (datapoint: Datapoint, dimension: string) =>
-		datapoint.dimensions[dimension] ?? "";
-
 	for (let pass = 0; pass < dimensions.size + 1; pass++) {
 		let narrowed = false;
 		for (const dimension of dimensions) {
@@ -973,9 +976,6 @@ function consistentBindings(
 			sets.flatMap((set) => set.flatMap((d) => Object.keys(d.dimensions))),
 		),
 	];
-	const memberOf = (datapoint: Datapoint, dimension: string) =>
-		datapoint.dimensions[dimension] ?? "";
-
 	// Cheapest variables first, so a contradiction surfaces before the wide
 	// sets are ever walked.
 	const order = sets
@@ -997,7 +997,7 @@ function consistentBindings(
 		});
 
 	let overflowed = false;
-	const walk = (position: number): void => {
+	const choose = (position: number): void => {
 		if (overflowed) return;
 		if (position === order.length) {
 			if (bindings.length >= MAX_CHECK_BINDINGS) {
@@ -1018,12 +1018,12 @@ function consistentBindings(
 		for (const candidate of sets[index]!) {
 			if (!agrees(index, candidate)) continue;
 			chosen[index] = candidate;
-			walk(position + 1);
+			choose(position + 1);
 			chosen[index] = undefined;
 			if (overflowed) return;
 		}
 	};
-	walk(0);
+	choose(0);
 	if (overflowed || bindings.length === 0) return undefined;
 
 	// Assignments differing only in which alias of one rubric they name are the

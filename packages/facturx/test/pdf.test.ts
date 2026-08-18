@@ -30,7 +30,8 @@ const embeddedFileNames = (doc: PDFDocument): string[] => {
 	const embedded = names?.lookupMaybe(PDFName.of("EmbeddedFiles"), PDFDict);
 	const pairs = embedded?.lookupMaybe(PDFName.of("Names"), PDFArray);
 	const result: string[] = [];
-	for (let index = 0; pairs && index + 1 < pairs.size(); index += 2) {
+	if (!pairs) return result;
+	for (let index = 0; index + 1 < pairs.size(); index += 2) {
 		const key = pairs.lookup(index);
 		if (key instanceof PDFString || key instanceof PDFHexString) {
 			result.push(key.decodeText());

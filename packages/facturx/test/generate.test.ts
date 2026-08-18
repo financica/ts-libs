@@ -17,6 +17,22 @@ import { parseFacturXXml } from "../src/parse/index.js";
 
 type OrderedNode = Record<string, OrderedNode[]> & { ":@"?: unknown };
 
+/** Child element names of the first element called `name` under `nodes`. */
+const childrenOf = (nodes: OrderedNode[], name: string): OrderedNode[] =>
+	nodes.find((node) => name in node)?.[name] ?? [];
+
+const names = (nodes: OrderedNode[]): string[] =>
+	nodes.map((node) => Object.keys(node).find((key) => key !== ":@") ?? "");
+
+/**
+ * Assert `expected` appear in this relative order among `actual`
+ * (deduplicated), ignoring elements not listed.
+ */
+const expectOrdered = (actual: string[], expected: string[]) => {
+	const seen = actual.filter((name, i) => actual.indexOf(name) === i);
+	expect(seen.filter((name) => expected.includes(name))).toEqual(expected);
+};
+
 const input = (): FacturXInvoiceInput => ({
 	id: "INV-2026-042",
 	typeCode: DOCUMENT_TYPE_CODES.COMMERCIAL_INVOICE,
@@ -150,18 +166,6 @@ describe("buildFacturXXml", () => {
 			ignoreAttributes: false,
 			removeNSPrefix: true,
 		}).parse(xml) as OrderedNode[];
-		// Child element names of the first element called `name` under `nodes`.
-		const childrenOf = (nodes: OrderedNode[], name: string): OrderedNode[] =>
-			nodes.find((node) => name in node)?.[name] ?? [];
-		const names = (nodes: OrderedNode[]): string[] =>
-			nodes.map((node) => Object.keys(node).find((key) => key !== ":@") ?? "");
-		// Assert `expected` appear in this relative order among `actual`
-		// (deduplicated), ignoring elements not listed.
-		const expectOrdered = (actual: string[], expected: string[]) => {
-			const seen = actual.filter((name, i) => actual.indexOf(name) === i);
-			expect(seen.filter((name) => expected.includes(name))).toEqual(expected);
-		};
-
 		const cii = childrenOf(tree, "CrossIndustryInvoice");
 		// CII D16B rsm:CrossIndustryInvoice sequence.
 		expectOrdered(names(cii), [

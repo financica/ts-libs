@@ -582,14 +582,14 @@ describe("parseStripeTaxInvoiceRows", () => {
 	});
 });
 
-describe("groupIntoRows", () => {
-	const item = (x: number, y: number, str = `${x},${y}`): TextItem => ({
-		str,
-		x,
-		right: x + 10,
-		y,
-	});
+const item = (x: number, y: number, str = `${x},${y}`): TextItem => ({
+	str,
+	x,
+	right: x + 10,
+	y,
+});
 
+describe("groupIntoRows", () => {
 	it("merges baselines within the tolerance and splits those beyond it", () => {
 		const rows = groupIntoRows([
 			item(55, 460),
@@ -609,7 +609,7 @@ describe("groupIntoRows", () => {
 			item(55, 400),
 		]);
 
-		expect(rows.map((row) => row.items.map((it) => it.str))).toEqual([
+		expect(rows.map((row) => row.items.map((cell) => cell.str))).toEqual([
 			["55,460", "471,460"],
 			["55,400", "316,400", "557,400"],
 		]);

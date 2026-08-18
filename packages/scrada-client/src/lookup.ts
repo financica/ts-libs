@@ -142,6 +142,11 @@ export const probePeppolParticipant = async (
 
 		let lookup: ScradaPeppolLookupResponse;
 		try {
+			// Sequential on purpose: the candidates are in priority order and the
+			// loop returns on the first that supports the document type, so probing
+			// them all in parallel would spend Scrada calls on candidates that a
+			// higher-priority hit makes moot.
+			// oxlint-disable-next-line no-await-in-loop
 			lookup = await client.lookupPeppolParticipant(
 				companyId,
 				DEFAULT_PEPPOL_SENDER_IDENTIFIER_SCHEME,

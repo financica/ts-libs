@@ -24,6 +24,13 @@ describe("unixToIsoDate", () => {
 	});
 });
 
+/** An object with `{ target: "found" }` buried `levels` deep. */
+const nest = (levels: number): unknown => {
+	let node: unknown = { target: "found" };
+	for (let i = 0; i < levels; i += 1) node = { level: node };
+	return node;
+};
+
 describe("findDeep", () => {
 	it("finds a top-level key", () => {
 		expect(findDeep({ ephemeral_key: "ek_123" }, "ephemeral_key")).toBe("ek_123");
@@ -59,11 +66,6 @@ describe("findDeep", () => {
 	});
 
 	it("stops descending past the depth cap", () => {
-		const nest = (levels: number): unknown => {
-			let node: unknown = { target: "found" };
-			for (let i = 0; i < levels; i += 1) node = { level: node };
-			return node;
-		};
 		// FIND_DEEP_MAX_DEPTH is 16: `nest(n)` puts the target object at depth
 		// n, so depth 16 is the last level searched and depth 17 the first cut.
 		expect(findDeep(nest(16), "target")).toBe("found");

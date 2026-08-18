@@ -135,11 +135,11 @@ describe("parseServiceGroupDocumentTypes", () => {
 	});
 });
 
-describe("isDnsNotFound", () => {
-	// Node's dns error codes: ENOTFOUND (NXDOMAIN) and ENODATA (name exists,
-	// no NAPTR) mean "not registered"; everything else means "couldn't check".
-	const dnsError = (code: string) => Object.assign(new Error(code), { code });
+// Node's dns error codes: ENOTFOUND (NXDOMAIN) and ENODATA (name exists, no
+// NAPTR) mean "not registered"; everything else means "couldn't check".
+const dnsError = (code: string) => Object.assign(new Error(code), { code });
 
+describe("isDnsNotFound", () => {
 	it.each(["ENOTFOUND", "ENODATA"])("treats %s as not registered", (code) => {
 		expect(isDnsNotFound(dnsError(code))).toBe(true);
 	});

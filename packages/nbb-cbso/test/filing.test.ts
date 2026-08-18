@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { XMLParser } from "fast-xml-parser";
 import { parseXbrl } from "@financica/xbrl";
+import type { XbrlInstance } from "@financica/xbrl";
 import {
 	buildNbbFiling,
 	describeExpression,
@@ -17,6 +18,47 @@ import type { NbbFiling, NbbFilingInput, RubricAmounts } from "../src/index.js";
 import { ASSOCIATION_FILING, MICRO_FILING, withBalanceSheet } from "./filing.js";
 
 const built = () => buildNbbFiling(MICRO_FILING);
+const association = () => buildNbbFiling(ASSOCIATION_FILING);
+
+const withAssociationBalanceSheet = (overrides: RubricAmounts) =>
+	buildNbbFiling({
+		...ASSOCIATION_FILING,
+		balanceSheet: { ...ASSOCIATION_FILING.balanceSheet, ...overrides },
+	});
+
+const withIdentification = (
+	overrides: Partial<NbbFilingInput["identification"]>,
+): NbbFilingInput => ({
+	...MICRO_FILING,
+	identification: { ...MICRO_FILING.identification, ...overrides },
+});
+
+/** Entity identifier schemes an instance uses, deduplicated. */
+const schemes = (doc: XbrlInstance) =>
+	new Set(Object.values(doc.contexts).map((c) => c.entity.scheme));
+
+/** A framework href with its release version blanked, so releases compare. */
+const frameworkPath = (href: string) => href.replace(/\/fws\/[\d.]+\//, "/fws/<v>/");
+
+/** Namespace URIs an instance binds, with release-versioned ones normalised. */
+const uris = (doc: XbrlInstance) =>
+	new Set(
+		Object.values(doc.namespaces).map((uri) =>
+			uri.replace(/\/cbso\/[\d.]+\//, "/cbso/<v>/"),
+		),
+	);
+
+/** The prd: dimension members an instance's contexts carry. */
+const prdMembers = (doc: XbrlInstance) =>
+	new Set(
+		Object.values(doc.contexts).flatMap((c) =>
+			(c.scenario ?? [])
+				.filter((m) => m.dimension?.localName === "prd")
+				.map((m) => m.member?.localName),
+		),
+	);
+
+const collapse = (value: string) => value.replace(/\s+/g, " ").trim();
 /** Attributes of the root `xbrl` element, which the XBRL parser does not keep. */
 function rootAttributes(xml: string): Record<string, string> {
 	const parsed = new XMLParser({
@@ -264,13 +306,6 @@ describe("statutory checks", () => {
  * association's own statutory identities are evaluated.
  */
 describe("association filing (m04)", () => {
-	const association = () => buildNbbFiling(ASSOCIATION_FILING);
-	const withAssociationBalanceSheet = (overrides: RubricAmounts) =>
-		buildNbbFiling({
-			...ASSOCIATION_FILING,
-			balanceSheet: { ...ASSOCIATION_FILING.balanceSheet, ...overrides },
-		});
-
 	it("resolves the association passif spine and class 73 income", () => {
 		const filing = association();
 		expect(filingValue(filing, "10", "current")).toBe(20000);
@@ -344,13 +379,6 @@ describe("association filing (m04)", () => {
 });
 
 describe("structural checks", () => {
-	const withIdentification = (
-		overrides: Partial<NbbFilingInput["identification"]>,
-	): NbbFilingInput => ({
-		...MICRO_FILING,
-		identification: { ...MICRO_FILING.identification, ...overrides },
-	});
-
 	it("DAT 26 rejects an exercise that ends before it starts", () => {
 		const result = validateNbbFiling(
 			buildNbbFiling(
@@ -629,15 +657,14 @@ describe("conformance with an accepted filing", () => {
 	const ours = parseXbrl(renderNbbFiling(built()))!;
 
 	it("uses the same entity identifier scheme", () => {
-		const schemes = (doc: typeof ours) =>
-			new Set(Object.values(doc.contexts).map((c) => c.entity.scheme));
 		expect(schemes(example)).toEqual(new Set([ENTERPRISE_NUMBER_SCHEME]));
 		expect(schemes(ours)).toEqual(schemes(example));
 	});
 
 	it("points at the same entry point of the framework, this release's", () => {
-		const path = (href: string) => href.replace(/\/fws\/[\d.]+\//, "/fws/<v>/");
-		expect(path(ours.schemaRefs[0]!.href)).toBe(path(example.schemaRefs[0]!.href));
+		expect(frameworkPath(ours.schemaRefs[0]!.href)).toBe(
+			frameworkPath(example.schemaRefs[0]!.href),
+		);
 	});
 
 	it("declares every namespace the accepted filing does", () => {
@@ -645,12 +672,6 @@ describe("conformance with an accepted filing", () => {
 		// as the default namespace where we bind it to `xbrli:`, and either is
 		// valid. Release-versioned enum namespaces are normalised, the fixture
 		// being 23.0 against this release's 26.0.
-		const uris = (doc: typeof ours) =>
-			new Set(
-				Object.values(doc.namespaces).map((uri) =>
-					uri.replace(/\/cbso\/[\d.]+\//, "/cbso/<v>/"),
-				),
-			);
 		expect(uris(ours)).toEqual(new Set([...uris(ours), ...uris(example)]));
 	});
 
@@ -667,14 +688,6 @@ describe("conformance with an accepted filing", () => {
 	});
 
 	it("carries both columns as prd:m1 and prd:m2 members", () => {
-		const prdMembers = (doc: typeof ours) =>
-			new Set(
-				Object.values(doc.contexts).flatMap((c) =>
-					(c.scenario ?? [])
-						.filter((m) => m.dimension?.localName === "prd")
-						.map((m) => m.member?.localName),
-				),
-			);
 		expect(prdMembers(example)).toEqual(new Set(["m1", "m2"]));
 		expect(prdMembers(ours)).toEqual(prdMembers(example));
 	});
@@ -931,7 +944,6 @@ describe("ENUMERATIONS", () => {
 		// the economic interest grouping — the three the fixtures file under.
 		const lgf = ENUMERATIONS["lgf"] ?? [];
 		const byCode = new Map(lgf.map((member) => [member.code, member]));
-		const collapse = (value: string) => value.replace(/\s+/g, " ").trim();
 		for (const [code, label] of [
 			["m610", "Private limited company"],
 			["m017", "Non-profit organization"],

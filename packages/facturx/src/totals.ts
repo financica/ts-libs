@@ -91,6 +91,9 @@ export const computeTotals = (
 	input: FacturXInvoiceInput,
 	options: ComputeTotalsOptions = {},
 ): FacturXInvoice => {
+	// computeTotals documents that it does not mutate its input, so copying each
+	// line is the contract here, not an oversight.
+	// oxlint-disable-next-line no-map-spread
 	const lines = (input.lines ?? []).map((line): InvoiceLine => {
 		const netPrice = netPriceOf(line);
 		const categoryCode = line.tax.categoryCode;

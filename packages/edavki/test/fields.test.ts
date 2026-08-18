@@ -3,6 +3,9 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { DDV_O_FIELD_BY_ID, DDV_O_FIELDS } from "../src/index.js";
 
+const bySection = (section: string) =>
+	DDV_O_FIELDS.filter((f) => f.section === section);
+
 describe("DDV_O_FIELDS registry", () => {
 	it("has unique ids and a matching lookup map", () => {
 		const ids = DDV_O_FIELDS.map((f) => f.id);
@@ -30,8 +33,6 @@ describe("DDV_O_FIELDS registry", () => {
 	});
 
 	it("classifies tax-base vs VAT-amount sections correctly", () => {
-		const bySection = (section: string) =>
-			DDV_O_FIELDS.filter((f) => f.section === section);
 		expect(bySection("supplies").every((f) => f.kind === "base")).toBe(true);
 		expect(bySection("purchases").every((f) => f.kind === "base")).toBe(true);
 		expect(bySection("vatCharged").every((f) => f.kind === "vat")).toBe(true);

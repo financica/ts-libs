@@ -137,30 +137,34 @@ export const naceStructure: ParsedNACEStructure[] = ${serialize(structure)};
 	await writeModule(join(generatedDir, "naceData.ts"), module);
 	console.log("✓ Generated naceData.ts (en only)");
 
-	for (const language of OPTIONAL_LANGUAGES) {
-		const column = languageColumn(language);
-		const descriptions: Record<string, string> = {};
+	// One module per language, each to its own file, so they can all be written
+	// at once.
+	await Promise.all(
+		OPTIONAL_LANGUAGES.map(async (language) => {
+			const column = languageColumn(language);
+			const descriptions: Record<string, string> = {};
 
-		for (const heading of headings) {
-			const value = (heading as unknown as Record<string, string | undefined>)[
-				column
-			];
-			if (value !== undefined && value !== "") {
-				descriptions[normalizeCode(heading.NACE_CODE)] = value;
+			for (const heading of headings) {
+				const value = (
+					heading as unknown as Record<string, string | undefined>
+				)[column];
+				if (value !== undefined && value !== "") {
+					descriptions[normalizeCode(heading.NACE_CODE)] = value;
+				}
 			}
-		}
 
-		await generateLanguageModule(
-			langDir,
-			language,
-			"descriptions",
-			descriptions,
-			2,
-		);
-		console.log(
-			`✓ Generated lang/${language}.ts (${Object.keys(descriptions).length})`,
-		);
-	}
+			await generateLanguageModule(
+				langDir,
+				language,
+				"descriptions",
+				descriptions,
+				2,
+			);
+			console.log(
+				`✓ Generated lang/${language}.ts (${Object.keys(descriptions).length})`,
+			);
+		}),
+	);
 }
 
 /** Belgian NACEBEL delta only — the shared NACE core lives in naceData.ts. */
@@ -210,27 +214,30 @@ export const nacebelDescriptions: Record<string, LanguageDescriptions> = ${seria
 		`✓ Generated nacebelDescriptions.ts (${Object.keys(english).length} notes, en only)`,
 	);
 
-	for (const language of NACEBEL_NOTE_LANGUAGES) {
-		const notes: Record<string, string> = {};
+	// Same here: one file per language, so write them concurrently.
+	await Promise.all(
+		NACEBEL_NOTE_LANGUAGES.map(async (language) => {
+			const notes: Record<string, string> = {};
 
-		for (const [code, note] of Object.entries(descriptions)) {
-			const translated = note[language];
-			if (translated !== undefined && translated !== "") {
-				notes[code] = translated;
+			for (const [code, note] of Object.entries(descriptions)) {
+				const translated = note[language];
+				if (translated !== undefined && translated !== "") {
+					notes[code] = translated;
+				}
 			}
-		}
 
-		await generateLanguageModule(
-			nacebelLangDir,
-			language,
-			"explanatoryNotes",
-			notes,
-			3,
-		);
-		console.log(
-			`✓ Generated nacebel/lang/${language}.ts (${Object.keys(notes).length} notes)`,
-		);
-	}
+			await generateLanguageModule(
+				nacebelLangDir,
+				language,
+				"explanatoryNotes",
+				notes,
+				3,
+			);
+			console.log(
+				`✓ Generated nacebel/lang/${language}.ts (${Object.keys(notes).length} notes)`,
+			);
+		}),
+	);
 }
 
 console.log("Starting data module generation...\n");

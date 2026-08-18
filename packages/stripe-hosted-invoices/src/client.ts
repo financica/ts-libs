@@ -188,6 +188,9 @@ export const fetchStripeHostedInvoice = async (
 	if (invoice.lines?.has_more && lines.length > 0) {
 		let hasMore = true;
 		let page = 0;
+		// Each page asks for what follows the last id of the page before it, so
+		// the walk is sequential by construction.
+		/* oxlint-disable no-await-in-loop */
 		while (hasMore && page < MAX_LINE_PAGES) {
 			const lastId = lines[lines.length - 1]?.id;
 			if (typeof lastId !== "string") break;
@@ -219,6 +222,7 @@ export const fetchStripeHostedInvoice = async (
 			}
 			page += 1;
 		}
+		/* oxlint-enable no-await-in-loop */
 		if (hasMore && page >= MAX_LINE_PAGES) {
 			onWarning("invoice line pagination hit its page cap; lines are truncated", {
 				invoiceId,
@@ -282,24 +286,24 @@ export const fetchStripeCreditNotes = async (
 			? ((raw as { data: unknown[] }).data ?? [])
 			: [];
 
-	const results: StripeCreditNoteWithLines[] = [];
-	for (const entry of entries) {
-		const creditNote = coerceCreditNote(entry);
-		if (!creditNote) {
-			// A dropped credit note is a missing accounting document, not a
-			// cosmetic gap, so it is reported rather than silently skipped.
-			onWarning("skipping unreadable credit note", { invoiceId });
-			continue;
-		}
-		results.push({
-			creditNote,
-			lines: await fetchCreditNoteLines(creditNote, headers, {
-				fetch,
-				onWarning,
-			}),
-		});
+	const creditNotes = entries.map((entry) => coerceCreditNote(entry));
+	for (const creditNote of creditNotes) {
+		// A dropped credit note is a missing accounting document, not a cosmetic
+		// gap, so it is reported rather than silently skipped.
+		if (!creditNote) onWarning("skipping unreadable credit note", { invoiceId });
 	}
-	return results;
+	// One line fetch per credit note, and they do not depend on each other.
+	return Promise.all(
+		creditNotes
+			.filter((note) => note !== null)
+			.map(async (creditNote) => ({
+				creditNote,
+				lines: await fetchCreditNoteLines(creditNote, headers, {
+					fetch,
+					onWarning,
+				}),
+			})),
+	);
 };
 
 /** Follow `starting_after` when a credit note has more lines than the list embeds. */
@@ -312,6 +316,8 @@ const fetchCreditNoteLines = async (
 	let hasMore = creditNote.lines?.has_more === true && lines.length > 0;
 	let page = 0;
 
+	// Cursor pagination again: page N + 1 is defined by page N's last id.
+	/* oxlint-disable no-await-in-loop */
 	while (hasMore && page < MAX_LINE_PAGES) {
 		const lastId = lines[lines.length - 1]?.id;
 		if (typeof lastId !== "string") break;
@@ -343,6 +349,7 @@ const fetchCreditNoteLines = async (
 		}
 		page += 1;
 	}
+	/* oxlint-enable no-await-in-loop */
 
 	return lines;
 };
@@ -365,6 +372,10 @@ export const fetchStripePdf = async (
 	const queue: string[] = [startUrl];
 	const seen = new Set<string>();
 
+	// The queue is drained and grown at the same time — a response can name the
+	// URL the PDF actually lives at — and the walk stops at the first PDF, so
+	// the rounds cannot be issued up front.
+	/* oxlint-disable no-await-in-loop */
 	while (queue.length > 0) {
 		const url = queue.shift();
 		if (!url || seen.has(url)) continue;
@@ -388,6 +399,7 @@ export const fetchStripePdf = async (
 			onWarning("failed to download PDF", { cause, url });
 		}
 	}
+	/* oxlint-enable no-await-in-loop */
 	return null;
 };
 

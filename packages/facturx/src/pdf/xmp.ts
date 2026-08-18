@@ -27,16 +27,18 @@ export interface XmpMetadataInput {
 	conformanceLevel: string;
 }
 
-export const buildXmpMetadata = (input: XmpMetadataInput): string => {
-	const createDate = formatXmpDate(input.createDate);
-	const modifyDate = formatXmpDate(input.modifyDate);
-	const property = (name: string, description: string) =>
-		`<rdf:li rdf:parseType="Resource">
+/** One pdfaSchema:property entry of the Factur-X extension schema. */
+const property = (name: string, description: string) =>
+	`<rdf:li rdf:parseType="Resource">
 							<pdfaProperty:name>${name}</pdfaProperty:name>
 							<pdfaProperty:valueType>Text</pdfaProperty:valueType>
 							<pdfaProperty:category>external</pdfaProperty:category>
 							<pdfaProperty:description>${description}</pdfaProperty:description>
 						</rdf:li>`;
+
+export const buildXmpMetadata = (input: XmpMetadataInput): string => {
+	const createDate = formatXmpDate(input.createDate);
+	const modifyDate = formatXmpDate(input.modifyDate);
 	return `<?xpacket begin="\u{FEFF}" id="${escapeXml(input.documentId)}"?>
 <x:xmpmeta xmlns:x="adobe:ns:meta/">
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
