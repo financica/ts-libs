@@ -75,9 +75,12 @@
 		"prepack": "bun run build"
 	},
 	"dependencies": {
-		"@cantoo/pdf-lib": "~2.7.2",
-		"@pdf-lib/fontkit": "^1.1.1",
-		"fast-xml-parser": "^5.11.0"
+		"@cantoo/pdf-lib": "^2.8.4",
+		"fast-xml-parser": "^5.11.0",
+		"fontkit": "^2.0.4"
+	},
+	"devDependencies": {
+		"@types/fontkit": "^2.0.9"
 	},
 	"engines": {
 		"node": ">=24"

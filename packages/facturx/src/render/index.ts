@@ -1,5 +1,7 @@
 import { PDFDocument, type PDFFont, type PDFPage, rgb } from "@cantoo/pdf-lib";
-import fontkit from "@pdf-lib/fontkit";
+// fontkit's ESM build has no default export, only named ones; the namespace is
+// what `registerFontkit` wants (it calls `.create`).
+import * as fontkit from "fontkit";
 import { buildFacturXXml } from "../generate/index.js";
 import type { FacturXInvoice, TradeParty } from "../model.js";
 import { type FacturXProfile, detectProfile } from "../profiles.js";
