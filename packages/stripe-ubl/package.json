@@ -40,7 +40,7 @@
 		"prepack": "bun run build"
 	},
 	"dependencies": {
-		"@financica/ubl": "^0.13.0"
+		"@financica/ubl": "^0.14.0"
 	},
 	"devDependencies": {
 		"stripe": "^22.5.0"

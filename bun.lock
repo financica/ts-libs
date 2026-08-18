@@ -103,7 +103,7 @@
       "name": "@financica/react-ubl-renderer",
       "version": "0.2.0",
       "devDependencies": {
-        "@financica/ubl": "^0.13.0",
+        "@financica/ubl": "^0.14.0",
         "@types/react": "^19.2.17",
         "@types/react-dom": "^19.2.3",
         "@xmldom/xmldom": "^0.9.11",
@@ -138,7 +138,7 @@
       "name": "@financica/stripe-ubl",
       "version": "1.1.0",
       "dependencies": {
-        "@financica/ubl": "^0.13.0",
+        "@financica/ubl": "^0.14.0",
       },
       "devDependencies": {
         "stripe": "^22.5.0",
@@ -748,14 +748,6 @@
 
     "yuku-parser": ["yuku-parser@0.8.3", "", { "dependencies": { "@yuku-toolchain/types": "^0.8.3", "yuku-ast": "^0.8.3" }, "optionalDependencies": { "@yuku-parser/binding-android-arm64": "0.8.3", "@yuku-parser/binding-darwin-arm64": "0.8.3", "@yuku-parser/binding-darwin-x64": "0.8.3", "@yuku-parser/binding-freebsd-x64": "0.8.3", "@yuku-parser/binding-linux-arm-gnu": "0.8.3", "@yuku-parser/binding-linux-arm-musl": "0.8.3", "@yuku-parser/binding-linux-arm64-gnu": "0.8.3", "@yuku-parser/binding-linux-arm64-musl": "0.8.3", "@yuku-parser/binding-linux-x64-gnu": "0.8.3", "@yuku-parser/binding-linux-x64-musl": "0.8.3", "@yuku-parser/binding-win32-arm64": "0.8.3", "@yuku-parser/binding-win32-x64": "0.8.3" } }, "sha512-KPQcpF9aj77ywlJBIkQWCQ9DObdxnCA8AJdUOmA5CZZx042Xt4+dvbQmPJfWxF3E+KG5dVAZ2fBKuDJ8VsKWgA=="],
 
-    "@financica/react-ubl-renderer/@financica/ubl": ["@financica/ubl@0.13.0", "", { "dependencies": { "@xmldom/xmldom": "^0.9.10" } }, "sha512-o8jxRlJI8QC5iLFYs8aDZpDlnHg6ZgyV5EbIoQnRTZp8c+3NGTR/pnQCruCJP7fhRCB/g1OY3FeuO47gtPTEnQ=="],
-
-    "@financica/stripe-ubl/@financica/ubl": ["@financica/ubl@0.13.0", "", { "dependencies": { "@xmldom/xmldom": "^0.9.10" } }, "sha512-o8jxRlJI8QC5iLFYs8aDZpDlnHg6ZgyV5EbIoQnRTZp8c+3NGTR/pnQCruCJP7fhRCB/g1OY3FeuO47gtPTEnQ=="],
-
     "dom-serializer/entities": ["entities@4.5.0", "", {}, "sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw=="],
-
-    "@financica/react-ubl-renderer/@financica/ubl/@xmldom/xmldom": ["@xmldom/xmldom@0.9.10", "", {}, "sha512-A9gOqLdi6cV4ibazAjcQufGj0B1y/vDqYrcuP6d/6x8P27gRS8643Dj9o1dEKtB6O7fwxb2FgBmJS2mX7gpvdw=="],
-
-    "@financica/stripe-ubl/@financica/ubl/@xmldom/xmldom": ["@xmldom/xmldom@0.9.10", "", {}, "sha512-A9gOqLdi6cV4ibazAjcQufGj0B1y/vDqYrcuP6d/6x8P27gRS8643Dj9o1dEKtB6O7fwxb2FgBmJS2mX7gpvdw=="],
   }
 }
