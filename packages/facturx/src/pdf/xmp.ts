@@ -10,6 +10,13 @@ const escapeXml = (value: string): string =>
 		.replace(/>/g, "&gt;")
 		.replace(/"/g, "&quot;");
 
+/**
+ * The XMP packet header id is a fixed marker defined by the spec (ISO 16684-1
+ * §7.3.2) so that scanners can find the packet in arbitrary bytes. It is not a
+ * per-document identifier — that is `xmpMM:DocumentID`.
+ */
+const XPACKET_ID = "W5M0MpCehiHzreSzNTczkc9d";
+
 /** ISO timestamp without milliseconds, as XMP expects. */
 const formatXmpDate = (date: Date): string => `${date.toISOString().split(".")[0]}Z`;
 
@@ -39,7 +46,7 @@ const property = (name: string, description: string) =>
 export const buildXmpMetadata = (input: XmpMetadataInput): string => {
 	const createDate = formatXmpDate(input.createDate);
 	const modifyDate = formatXmpDate(input.modifyDate);
-	return `<?xpacket begin="\u{FEFF}" id="${escapeXml(input.documentId)}"?>
+	return `<?xpacket begin="\u{FEFF}" id="${XPACKET_ID}"?>
 <x:xmpmeta xmlns:x="adobe:ns:meta/">
 	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
 		<rdf:Description rdf:about="" xmlns:dc="http://purl.org/dc/elements/1.1/">
@@ -54,6 +61,9 @@ export const buildXmpMetadata = (input: XmpMetadataInput): string => {
 					<rdf:li xml:lang="x-default">${escapeXml(input.title)}</rdf:li>
 				</rdf:Alt>
 			</dc:title>
+		</rdf:Description>
+		<rdf:Description rdf:about="" xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/">
+			<xmpMM:DocumentID>${escapeXml(input.documentId)}</xmpMM:DocumentID>
 		</rdf:Description>
 		<rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/">
 			<xmp:CreatorTool>${escapeXml(input.creatorTool)}</xmp:CreatorTool>

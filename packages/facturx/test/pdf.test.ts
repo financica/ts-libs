@@ -208,7 +208,18 @@ describe("attachFacturXXml", () => {
 				decodePDFRawStream(metadata as PDFRawStream).decode(),
 			),
 		) as Record<string, unknown>;
+		// The packet header id is the fixed marker from the XMP spec, not the
+		// document's own identity — that goes in xmpMM:DocumentID. Both reference
+		// filings in test/fixtures carry this same constant.
+		const packet = new TextDecoder().decode(
+			decodePDFRawStream(metadata as PDFRawStream).decode(),
+		);
+		expect(packet).toContain(
+			'<?xpacket begin="\u{FEFF}" id="W5M0MpCehiHzreSzNTczkc9d"?>',
+		);
+
 		const descriptions = flattenDescriptions(xmp);
+		expect(descriptions.DocumentID).toBe("TEST-1");
 		expect(descriptions.ConformanceLevel).toBe(PROFILE_CONFORMANCE_LEVELS.en16931);
 		expect(descriptions.DocumentFileName).toBe(FACTUR_X_FILENAME);
 		expect(descriptions.DocumentType).toBe("INVOICE");
