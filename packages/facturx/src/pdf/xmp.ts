@@ -1,6 +1,8 @@
 /**
- * XMP metadata packet for PDF/A-3B with the Factur-X PDF/A extension schema,
- * as required by the Factur-X / ZUGFeRD specification (§6.2).
+ * The Factur-X slice of the XMP packet. pdf-lib's `convertToPDFA` owns the
+ * dc / xmp / pdf / pdfaid descriptions and rebuilds them from the Info
+ * dictionary; these fragments are handed to it as `extensions` and appended
+ * verbatim, so only what the Factur-X specification adds lives here.
  */
 
 const escapeXml = (value: string): string =>
@@ -9,30 +11,6 @@ const escapeXml = (value: string): string =>
 		.replace(/</g, "&lt;")
 		.replace(/>/g, "&gt;")
 		.replace(/"/g, "&quot;");
-
-/**
- * The XMP packet header id is a fixed marker defined by the spec (ISO 16684-1
- * §7.3.2) so that scanners can find the packet in arbitrary bytes. It is not a
- * per-document identifier — that is `xmpMM:DocumentID`.
- */
-const XPACKET_ID = "W5M0MpCehiHzreSzNTczkc9d";
-
-/** ISO timestamp without milliseconds, as XMP expects. */
-const formatXmpDate = (date: Date): string => `${date.toISOString().split(".")[0]}Z`;
-
-export interface XmpMetadataInput {
-	documentId: string;
-	title: string;
-	author: string;
-	creatorTool: string;
-	producer: string;
-	createDate: Date;
-	modifyDate: Date;
-	/** fx:DocumentFileName — factur-x.xml or xrechnung.xml. */
-	documentFileName: string;
-	/** fx:ConformanceLevel — MINIMUM, BASIC WL, BASIC, EN 16931, EXTENDED, XRECHNUNG. */
-	conformanceLevel: string;
-}
 
 /** One pdfaSchema:property entry of the Factur-X extension schema. */
 const property = (name: string, description: string) =>
@@ -43,72 +21,58 @@ const property = (name: string, description: string) =>
 							<pdfaProperty:description>${description}</pdfaProperty:description>
 						</rdf:li>`;
 
-export const buildXmpMetadata = (input: XmpMetadataInput): string => {
-	const createDate = formatXmpDate(input.createDate);
-	const modifyDate = formatXmpDate(input.modifyDate);
-	return `<?xpacket begin="\u{FEFF}" id="${XPACKET_ID}"?>
-<x:xmpmeta xmlns:x="adobe:ns:meta/">
-	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-		<rdf:Description rdf:about="" xmlns:dc="http://purl.org/dc/elements/1.1/">
-			<dc:format>application/pdf</dc:format>
-			<dc:creator>
-				<rdf:Seq>
-					<rdf:li>${escapeXml(input.author)}</rdf:li>
-				</rdf:Seq>
-			</dc:creator>
-			<dc:title>
-				<rdf:Alt>
-					<rdf:li xml:lang="x-default">${escapeXml(input.title)}</rdf:li>
-				</rdf:Alt>
-			</dc:title>
-		</rdf:Description>
-		<rdf:Description rdf:about="" xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/">
-			<xmpMM:DocumentID>${escapeXml(input.documentId)}</xmpMM:DocumentID>
-		</rdf:Description>
-		<rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/">
-			<xmp:CreatorTool>${escapeXml(input.creatorTool)}</xmp:CreatorTool>
-			<xmp:CreateDate>${createDate}</xmp:CreateDate>
-			<xmp:ModifyDate>${modifyDate}</xmp:ModifyDate>
-			<xmp:MetadataDate>${modifyDate}</xmp:MetadataDate>
-		</rdf:Description>
-		<rdf:Description rdf:about="" xmlns:pdf="http://ns.adobe.com/pdf/1.3/">
-			<pdf:Producer>${escapeXml(input.producer)}</pdf:Producer>
-		</rdf:Description>
-		<rdf:Description rdf:about="" xmlns:pdfaid="http://www.aiim.org/pdfa/ns/id/">
-			<pdfaid:part>3</pdfaid:part>
-			<pdfaid:conformance>B</pdfaid:conformance>
-		</rdf:Description>
-		<rdf:Description rdf:about="" xmlns:fx="urn:factur-x:pdfa:CrossIndustryDocument:invoice:1p0#">
-			<fx:DocumentType>INVOICE</fx:DocumentType>
-			<fx:DocumentFileName>${escapeXml(input.documentFileName)}</fx:DocumentFileName>
-			<fx:Version>1.0</fx:Version>
-			<fx:ConformanceLevel>${escapeXml(input.conformanceLevel)}</fx:ConformanceLevel>
-		</rdf:Description>
-		<rdf:Description rdf:about=""
-				xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/"
-				xmlns:pdfaField="http://www.aiim.org/pdfa/ns/field#"
-				xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
-				xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#"
-				xmlns:pdfaType="http://www.aiim.org/pdfa/ns/type#">
-			<pdfaExtension:schemas>
-				<rdf:Bag>
-					<rdf:li rdf:parseType="Resource">
-						<pdfaSchema:schema>Factur-X PDFA Extension Schema</pdfaSchema:schema>
-						<pdfaSchema:namespaceURI>urn:factur-x:pdfa:CrossIndustryDocument:invoice:1p0#</pdfaSchema:namespaceURI>
-						<pdfaSchema:prefix>fx</pdfaSchema:prefix>
-						<pdfaSchema:property>
-							<rdf:Seq>
-								${property("DocumentFileName", "The name of the embedded XML invoice file")}
-								${property("DocumentType", "The type of the hybrid document, INVOICE or ORDER")}
-								${property("Version", "The actual version of the standard applying to the embedded XML document")}
-								${property("ConformanceLevel", "The conformance level of the embedded XML document")}
-							</rdf:Seq>
-						</pdfaSchema:property>
-					</rdf:li>
-				</rdf:Bag>
-			</pdfaExtension:schemas>
-		</rdf:Description>
-	</rdf:RDF>
-</x:xmpmeta>
-<?xpacket end="w"?>`;
-};
+/**
+ * The PDF/A extension schema declaring the `fx:` properties. PDF/A validators
+ * reject metadata in a namespace the document does not describe, so this
+ * travels with every Factur-X document and never varies.
+ */
+const FACTUR_X_EXTENSION_SCHEMA = `<rdf:Description rdf:about=""
+		xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/"
+		xmlns:pdfaField="http://www.aiim.org/pdfa/ns/field#"
+		xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+		xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#"
+		xmlns:pdfaType="http://www.aiim.org/pdfa/ns/type#">
+	<pdfaExtension:schemas>
+		<rdf:Bag>
+			<rdf:li rdf:parseType="Resource">
+				<pdfaSchema:schema>Factur-X PDFA Extension Schema</pdfaSchema:schema>
+				<pdfaSchema:namespaceURI>urn:factur-x:pdfa:CrossIndustryDocument:invoice:1p0#</pdfaSchema:namespaceURI>
+				<pdfaSchema:prefix>fx</pdfaSchema:prefix>
+				<pdfaSchema:property>
+					<rdf:Seq>
+						${property("DocumentFileName", "The name of the embedded XML invoice file")}
+						${property("DocumentType", "The type of the hybrid document, INVOICE or ORDER")}
+						${property("Version", "The actual version of the standard applying to the embedded XML document")}
+						${property("ConformanceLevel", "The conformance level of the embedded XML document")}
+					</rdf:Seq>
+				</pdfaSchema:property>
+			</rdf:li>
+		</rdf:Bag>
+	</pdfaExtension:schemas>
+</rdf:Description>`;
+
+export interface FacturXXmpInput {
+	/** Identity of this document, for xmpMM:DocumentID. */
+	documentId: string;
+	/** fx:DocumentFileName — factur-x.xml or xrechnung.xml. */
+	documentFileName: string;
+	/** fx:ConformanceLevel — MINIMUM, BASIC WL, BASIC, EN 16931, EXTENDED, XRECHNUNG. */
+	conformanceLevel: string;
+}
+
+/**
+ * The `rdf:Description` fragments Factur-X adds on top of a plain PDF/A
+ * document, in the order they should appear.
+ */
+export const buildFacturXXmpExtensions = (input: FacturXXmpInput): string[] => [
+	`<rdf:Description rdf:about="" xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/">
+	<xmpMM:DocumentID>${escapeXml(input.documentId)}</xmpMM:DocumentID>
+</rdf:Description>`,
+	`<rdf:Description rdf:about="" xmlns:fx="urn:factur-x:pdfa:CrossIndustryDocument:invoice:1p0#">
+	<fx:DocumentType>INVOICE</fx:DocumentType>
+	<fx:DocumentFileName>${escapeXml(input.documentFileName)}</fx:DocumentFileName>
+	<fx:Version>1.0</fx:Version>
+	<fx:ConformanceLevel>${escapeXml(input.conformanceLevel)}</fx:ConformanceLevel>
+</rdf:Description>`,
+	FACTUR_X_EXTENSION_SCHEMA,
+];
