@@ -61,7 +61,7 @@
 		"prepack": "bun run build"
 	},
 	"dependencies": {
-		"node-html-parser": "^7.0.1"
+		"node-html-parser": "^9.0.1"
 	},
 	"engines": {
 		"node": ">=24"
