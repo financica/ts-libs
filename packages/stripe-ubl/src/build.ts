@@ -20,7 +20,7 @@ import {
 	resolvePrepaidAmount,
 } from "./settlement";
 import { resolveInvoicePeriod } from "./period";
-import { normalizeString, toNumber } from "./utils";
+import { normalizeString, stripeInvoiceNote, toNumber } from "./utils";
 
 const validateCurrency = (currency: string): string => {
 	const upper = currency?.toUpperCase();
@@ -149,7 +149,7 @@ export const buildUblInvoiceDocument = (params: BuildUblInvoiceParams): UblDocum
 		dueDate:
 			isoDateFromUnixSeconds(invoice.due_date) ??
 			(monetaryTotal.payableAmount > 0 ? issueDate : null),
-		note: normalizeString(invoice.description),
+		note: stripeInvoiceNote(invoice),
 		currency: validateCurrency(invoice.currency),
 		buyerReference: normalizeString(params.buyerReference),
 		// BT-73/BT-74. A subscription invoice that does not say what it bills

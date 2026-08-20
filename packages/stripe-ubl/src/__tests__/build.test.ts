@@ -136,6 +136,21 @@ describe("buildUblInvoiceDocument", () => {
 		});
 	});
 
+	it("joins the memo and footer into the BT-22 note", () => {
+		expect(
+			buildUblInvoiceDocument({
+				invoice: buildStripeInvoice({ footer: "Legal mentions" }),
+				supplier: buildSupplier(),
+			}).note,
+		).toBe("Test invoice\n\nLegal mentions");
+		expect(
+			buildUblInvoiceDocument({
+				invoice: buildStripeInvoice({ description: null, footer: null }),
+				supplier: buildSupplier(),
+			}).note,
+		).toBeNull();
+	});
+
 	it("converts amounts to a rate-derived VAT breakdown (BR-CO-17)", () => {
 		const doc = buildUblInvoiceDocument({
 			invoice: buildStripeInvoice({
