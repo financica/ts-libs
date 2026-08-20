@@ -160,6 +160,8 @@ export interface UblDocument {
 	dueDate: string | null;
 	/** Free-text note (BT-22). */
 	note: string | null;
+	/** Payment terms note (BT-20, `cac:PaymentTerms/cbc:Note`). */
+	paymentTermsNote?: string | null;
 	/** Document currency (BT-5). */
 	currency: string;
 	/** Buyer reference (BT-10). */

@@ -250,6 +250,27 @@ describe("invoice period", () => {
 		);
 	});
 
+	it("emits BT-20 payment terms between the customer party and TaxTotal", () => {
+		const xml = serializeUblDocument(
+			doc({ paymentTermsNote: "Payable within 30 days" }),
+		);
+
+		expect(xml).toMatch(
+			/<cac:PaymentTerms>\s*<cbc:Note>Payable within 30 days<\/cbc:Note>\s*<\/cac:PaymentTerms>/,
+		);
+		// UBL's element sequence is fixed; PaymentTerms out of order fails the schema.
+		expect(xml.indexOf("cac:AccountingCustomerParty")).toBeLessThan(
+			xml.indexOf("cac:PaymentTerms"),
+		);
+		expect(xml.indexOf("cac:PaymentTerms")).toBeLessThan(
+			xml.indexOf("cac:TaxTotal"),
+		);
+	});
+
+	it("omits PaymentTerms when there is no note", () => {
+		expect(serializeUblDocument(doc())).not.toContain("cac:PaymentTerms");
+	});
+
 	it("emits a line period after LineExtensionAmount and before the Item", () => {
 		const xml = serializeUblDocument(
 			doc({

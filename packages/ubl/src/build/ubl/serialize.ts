@@ -228,6 +228,12 @@ export const serializeUblDocument = (doc: UblDocument): string => {
 		...doc.attachments.map(attachmentReference),
 		el("cac:AccountingSupplierParty", null, [party(doc.supplier)]),
 		el("cac:AccountingCustomerParty", null, [party(doc.customer)]),
+		// BT-20. In both the Invoice and CreditNote sequences PaymentTerms sits
+		// after the parties (and PaymentMeans, which we do not emit) and before
+		// TaxTotal.
+		doc.paymentTermsNote
+			? el("cac:PaymentTerms", null, [el("cbc:Note", null, doc.paymentTermsNote)])
+			: null,
 		el("cac:TaxTotal", null, [
 			money("cbc:TaxAmount", doc.taxTotal.taxAmount, doc.currency),
 			...doc.taxTotal.subtotals.map((subtotal) =>
