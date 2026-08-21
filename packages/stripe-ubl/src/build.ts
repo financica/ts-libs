@@ -191,6 +191,14 @@ export interface BuildUblCreditNoteParams {
  * carry an independent customer address), and the original invoice number is
  * referenced via `cac:BillingReference` (BT-25).
  */
+// BT-21+BT-22 in one cbc:Note: `#ACD#<text>` per the EN 16931 UBL binding.
+const creditNoteReasonNote = (
+	creditNote: Pick<Stripe.CreditNote, "reason">,
+): string | null => {
+	const reason = normalizeString(creditNote.reason);
+	return reason ? `#ACD#${reason.replace(/_/g, " ")}` : null;
+};
+
 export const buildUblCreditNoteDocument = (
 	params: BuildUblCreditNoteParams,
 ): UblDocument => {
@@ -225,8 +233,12 @@ export const buildUblCreditNoteDocument = (
 		id: creditNote.number ?? creditNote.id,
 		issueDate,
 		dueDate: null,
+		// The memo is the sender's own words. Without one, a Stripe credit
+		// reason travels as a BT-21 coded note (UNTDID 4451 `ACD` = Reason),
+		// the EN 16931 way of marking a note as the credit's reason.
 		note:
 			normalizeString(creditNote.memo) ??
+			creditNoteReasonNote(creditNote) ??
 			normalizeString(invoice.description) ??
 			"Credit note",
 		currency: validateCurrency(creditNote.currency),

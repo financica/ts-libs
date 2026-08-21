@@ -437,6 +437,29 @@ describe("buildUblInvoiceDocument", () => {
 });
 
 describe("buildUblCreditNoteDocument", () => {
+	it("notes the credit reason as #ACD# when there is no memo", () => {
+		const base = {
+			invoice: buildStripeInvoice(),
+			supplier: buildSupplier(),
+		};
+		expect(
+			buildUblCreditNoteDocument({
+				...base,
+				creditNote: buildStripeCreditNote({
+					memo: null,
+					reason: "order_change",
+				}),
+			}).note,
+		).toBe("#ACD#order change");
+		// The memo wins over the coded reason.
+		expect(
+			buildUblCreditNoteDocument({
+				...base,
+				creditNote: buildStripeCreditNote({ reason: "order_change" }),
+			}).note,
+		).toBe("Partial refund");
+	});
+
 	it("marks the document as a credit note referencing the original invoice", () => {
 		const doc = buildUblCreditNoteDocument({
 			creditNote: buildStripeCreditNote(),
