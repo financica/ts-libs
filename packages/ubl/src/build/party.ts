@@ -1,4 +1,4 @@
-import { normalizeAddress } from "./address";
+import { type AddressInput, normalizeAddress } from "./address";
 import { buildCompanyId, parsePeppolEndpoint, resolveVatEndpoint } from "./identifiers";
 import type { UblAddress, UblEndpoint, UblParty } from "./ubl/types";
 import { normalizeString } from "./utils";
@@ -31,7 +31,7 @@ export interface UblSupplier {
 	 * Free-form address. Stripe-style fields (`line1`, `postal_code`, `country`)
 	 * and legacy/internal fields (`street`, `zip_code`) are both accepted.
 	 */
-	address: unknown;
+	address: AddressInput | null;
 	/** Country-specific company/registration number (e.g. BE enterprise number). */
 	companyNumber?: string | null;
 	/** VAT number with country prefix (e.g. `"BE0793904121"`). */

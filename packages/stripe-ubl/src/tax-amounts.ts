@@ -3,28 +3,60 @@ import type Stripe from "stripe";
 import { toNumber } from "./utils";
 
 /**
+ * A tax rate reference as Stripe serialises it: the rate's id when not
+ * expanded, or the full object when expanded.
+ */
+type StripeTaxRateRef = string | Pick<Stripe.TaxRate, "percentage"> | null | undefined;
+
+/**
+ * Legacy `tax_amounts[]` entry on an invoice line. The Stripe SDK no longer
+ * declares this field on `InvoiceLineItem`, but the API still returns it on
+ * older API versions, so its shape is pinned here.
+ */
+interface StripeLegacyTaxAmount {
+	amount: number | string;
+	taxability_reason?: string | null;
+	tax_rate?: StripeTaxRateRef;
+}
+
+/**
+ * Legacy `discount_amounts[]` entry on an invoice line, likewise absent from
+ * the SDK types.
+ */
+interface StripeLegacyDiscountAmount {
+	amount: number | string;
+}
+
+/**
+ * Fields the runtime API returns on an invoice line that the SDK's
+ * `InvoiceLineItem` type omits.
+ */
+type InvoiceLineItemWithLegacyFields = Stripe.InvoiceLineItem & {
+	tax_amounts?: StripeLegacyTaxAmount[] | null;
+	discount_amounts?: StripeLegacyDiscountAmount[] | null;
+};
+
+/** The two shapes that can carry an (expanded) tax rate. */
+type TaxWithRate =
+	| StripeLegacyTaxAmount
+	| Pick<Stripe.InvoiceLineItem.Tax, "tax_rate_details">
+	| Pick<Stripe.CreditNoteLineItem.Tax, "tax_rate_details">;
+
+const percentageOf = (rate: StripeTaxRateRef): number | null =>
+	rate && typeof rate === "object" && typeof rate.percentage === "number"
+		? rate.percentage
+		: null;
+
+/**
  * Reads the rate percentage from either Stripe shape:
  *   - `tax_amounts[].tax_rate.percentage`             (legacy invoice field, when expanded)
  *   - `taxes[].tax_rate_details.tax_rate.percentage`  (newer field, when expanded)
  */
-// `any`: runtime shape varies across Stripe API versions.
-const readExpandedTaxRatePercentage = (tax: any): number | null => {
-	const detailRate = tax?.tax_rate_details?.tax_rate;
-	if (
-		detailRate &&
-		typeof detailRate === "object" &&
-		typeof detailRate.percentage === "number"
-	) {
-		return detailRate.percentage;
+const readExpandedTaxRatePercentage = (tax: TaxWithRate): number | null => {
+	if ("tax_rate_details" in tax) {
+		return percentageOf(tax.tax_rate_details?.tax_rate);
 	}
-	if (
-		tax?.tax_rate &&
-		typeof tax.tax_rate === "object" &&
-		typeof tax.tax_rate.percentage === "number"
-	) {
-		return tax.tax_rate.percentage;
-	}
-	return null;
+	return percentageOf(tax.tax_rate);
 };
 
 /**
@@ -50,11 +82,9 @@ const readExpandedTaxRatePercentage = (tax: any): number | null => {
 export const getInvoiceLineTaxAmounts = (
 	line: Stripe.InvoiceLineItem,
 ): TaxAmountInfo[] => {
-	// `any`: Stripe SDK types don't expose tax_amounts on InvoiceLineItem (legacy field).
-	const rawTaxAmounts = (line as any).tax_amounts;
+	const rawTaxAmounts = (line as InvoiceLineItemWithLegacyFields).tax_amounts;
 	if (Array.isArray(rawTaxAmounts) && rawTaxAmounts.length > 0) {
-		// `any`: runtime shape from Stripe API.
-		return rawTaxAmounts.map((ta: any) => ({
+		return rawTaxAmounts.map((ta) => ({
 			amount: toNumber(ta.amount),
 			taxability_reason: ta.taxability_reason ?? null,
 			tax_rate_percentage: readExpandedTaxRatePercentage(ta),
@@ -92,11 +122,7 @@ export const getCreditNoteLineTaxAmounts = (
 export const getInvoiceLineDiscountAmountCents = (
 	line: Stripe.InvoiceLineItem,
 ): number => {
-	// `any`: Stripe SDK types don't expose discount_amounts on InvoiceLineItem.
-	const raw = (line as any).discount_amounts;
+	const raw = (line as InvoiceLineItemWithLegacyFields).discount_amounts;
 	if (!Array.isArray(raw)) return 0;
-	return raw.reduce(
-		(sum: number, discount: { amount: unknown }) => sum + toNumber(discount.amount),
-		0,
-	);
+	return raw.reduce((sum, discount) => sum + toNumber(discount.amount), 0);
 };

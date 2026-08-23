@@ -1,11 +1,32 @@
 import type { UblAddress } from "./ubl/types";
-import { isRecord, normalizeString } from "./utils";
+import { normalizeString } from "./utils";
 
 const normalizeCountryCode = (value: string | null | undefined): string | null => {
 	const trimmed = normalizeString(value);
 	if (!trimmed) return null;
 	return trimmed.length >= 2 ? trimmed.toUpperCase().slice(0, 2) : null;
 };
+
+/**
+ * A free-form postal address as accepted by {@link normalizeAddress}.
+ *
+ * Both the Stripe shape (`line1`, `postal_code`, `country`, `state`) and the
+ * legacy/internal shape (`street`, `zip_code`, `country_code`,
+ * `country_subentity`) are accepted; when both keys are present the Stripe
+ * one wins.
+ */
+export interface AddressInput {
+	line1?: string | null;
+	line2?: string | null;
+	street?: string | null;
+	city?: string | null;
+	postal_code?: string | null;
+	zip_code?: string | null;
+	state?: string | null;
+	country_subentity?: string | null;
+	country?: string | null;
+	country_code?: string | null;
+}
 
 /**
  * Normalize a free-form address (Stripe shape, custom shape, or an internal
@@ -17,11 +38,11 @@ const normalizeCountryCode = (value: string | null | undefined): string | null =
  * `null` when "no country" is the right answer.
  */
 export const normalizeAddress = (
-	address: unknown,
+	address: AddressInput | null | undefined,
 	fallbackCountryCode: string | null,
 	fallbackLine?: string | null,
 ): UblAddress => {
-	const record = isRecord(address) ? address : {};
+	const record: AddressInput = address ?? {};
 	const countryCode =
 		normalizeCountryCode(normalizeString(record.country)) ??
 		normalizeCountryCode(normalizeString(record.country_code)) ??

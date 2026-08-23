@@ -1,6 +1,6 @@
 import { normalizeParticipantValue } from "@financica/peppol/identifiers";
 import type { UblCompanyId, UblEndpoint } from "./ubl/types";
-import { isRecord, normalizeString } from "./utils";
+import { normalizeString } from "./utils";
 
 const normalizeBelgianCompanyNumber = (value: string | null | undefined) => {
 	if (!value) return "";
@@ -207,6 +207,16 @@ export interface CustomerTaxIdentifiers {
 	vatNumber: string | null;
 }
 
+/**
+ * One customer tax identifier as stored by Stripe (`customer_tax_ids[]`) or an
+ * equivalent `{type, value}` pair. `type` is a Stripe tax-ID type such as
+ * `eu_vat`, or a custom type such as `peppol_id`; blank entries are skipped.
+ */
+export interface CustomerTaxIdInput {
+	type: string | null | undefined;
+	value: string | null | undefined;
+}
+
 const normalizeIdentifierType = (value: string | null) =>
 	value?.toLowerCase().replace(/[^a-z0-9]+/g, "_") ?? null;
 
@@ -218,20 +228,14 @@ const normalizeIdentifierType = (value: string | null) =>
  * Peppol IDs are typically stored as a custom `peppol_id` type.
  */
 export const extractCustomerTaxIdentifiers = (
-	taxIds: unknown,
+	taxIds: readonly CustomerTaxIdInput[] | null | undefined,
 ): CustomerTaxIdentifiers => {
 	let peppolID: string | null = null;
 	let glnNumber: string | null = null;
 	let taxNumber: string | null = null;
 	let vatNumber: string | null = null;
 
-	if (!Array.isArray(taxIds)) {
-		return { peppolID, glnNumber, taxNumber, vatNumber };
-	}
-
-	for (const entry of taxIds) {
-		if (!isRecord(entry)) continue;
-
+	for (const entry of taxIds ?? []) {
 		const type = normalizeIdentifierType(normalizeString(entry.type));
 		const value = normalizeString(entry.value);
 		if (!type || !value) continue;
@@ -276,12 +280,7 @@ export const extractCustomerTaxIdentifiers = (
  * identifiers that don't carry a country prefix (GLN, plain tax numbers).
  */
 export const listPeppolReceiverIdentifierCandidates = (
-	customer: {
-		peppolID?: string | null;
-		glnNumber?: string | null;
-		taxNumber?: string | null;
-		vatNumber?: string | null;
-	},
+	customer: Partial<CustomerTaxIdentifiers>,
 	countryCode?: string | null,
 ): string[] => {
 	const candidates: string[] = [];

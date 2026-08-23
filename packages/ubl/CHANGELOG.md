@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **Build-side inputs are typed instead of `unknown`.** `extractCustomerTaxIdentifiers` takes `readonly CustomerTaxIdInput[] | null | undefined` (`{type, value}` pairs, the shape of Stripe's `customer_tax_ids`), and `normalizeAddress` / `UblSupplier.address` take the new `AddressInput` (Stripe `line1`/`postal_code`/`country` and legacy `street`/`zip_code`/`country_code` keys). Both new types are exported from `@financica/ubl/build`. Runtime behaviour is unchanged; callers that passed arbitrary values must now pass the documented shape (or `null`). `listPeppolReceiverIdentifierCandidates` accepts `Partial<CustomerTaxIdentifiers>`, which is the same shape it took before.
+
 ## 0.15.1
 
 ### Fixed

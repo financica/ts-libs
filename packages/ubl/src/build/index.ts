@@ -32,11 +32,12 @@ export {
 } from "./party";
 
 // ── Re-usable helpers ──────────────────────────────────────────────────
-export { normalizeAddress } from "./address";
+export { type AddressInput, normalizeAddress } from "./address";
 export { buildPdfAttachment, sanitizeUblDocumentForAudit } from "./attachment";
 export {
 	buildCompanyId,
 	type CustomerTaxIdentifiers,
+	type CustomerTaxIdInput,
 	extractCustomerTaxIdentifiers,
 	listPeppolReceiverIdentifierCandidates,
 	normalizeCompanyNumberForCountry,

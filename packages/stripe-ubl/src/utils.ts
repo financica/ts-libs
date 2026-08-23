@@ -1,4 +1,4 @@
-export const normalizeString = (value: unknown): string | null => {
+export const normalizeString = (value: string | null | undefined): string | null => {
 	if (typeof value !== "string") return null;
 	const normalized = value.trim();
 	return normalized.length > 0 ? normalized : null;
@@ -33,7 +33,7 @@ export const stripeInvoiceNote = (invoice: {
  * means a UBL document that understates the VAT due, which is worse than
  * failing outright. Anything unparseable still falls back to 0.
  */
-export const toNumber = (value: unknown): number => {
+export const toNumber = (value: number | string | null | undefined): number => {
 	if (typeof value === "number" && Number.isFinite(value)) return value;
 	if (typeof value === "string") {
 		const parsed = Number(value);
