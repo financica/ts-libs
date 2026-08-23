@@ -9,7 +9,7 @@ import {
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { MyMinFinAuth } from "../src/auth";
 import { authorizeUrl, tokenUrl } from "../src/endpoints";
-import { MyMinFinApiError } from "../src/types";
+import { MyMinFinApiError, MyMinFinError } from "../src/types";
 
 let privateKeyPem: string;
 let publicKey: CryptoKey;
@@ -25,8 +25,12 @@ beforeAll(async () => {
 		keyId: "test-key-1",
 		redirectUri: "https://example.com/callback",
 		environment: "test",
+		fetch: (...args) => fetchMock(...args),
 	});
 });
+
+/** Shared fetch mock; the top-level `auth` routes through it. */
+const fetchMock = vi.fn<typeof fetch>();
 
 const sha256base64url = async (input: string): Promise<string> =>
 	base64url.encode(
@@ -112,7 +116,6 @@ describe("MyMinFinAuth.getAuthorizationUrl", () => {
 });
 
 describe("MyMinFinAuth token requests", () => {
-	const fetchMock = vi.fn<typeof fetch>();
 	const tokenJson = {
 		access_token: "at-1",
 		refresh_token: "rt-1",
@@ -123,19 +126,17 @@ describe("MyMinFinAuth token requests", () => {
 	};
 
 	afterEach(() => {
-		vi.unstubAllGlobals();
 		fetchMock.mockReset();
 	});
 
 	const stubToken = (init?: ResponseInit, body: unknown = tokenJson) => {
 		fetchMock.mockResolvedValueOnce(
-			new Response(JSON.stringify(body), {
+			new Response(typeof body === "string" ? body : JSON.stringify(body), {
 				status: 200,
 				headers: { "content-type": "application/json" },
 				...init,
 			}),
 		);
-		vi.stubGlobal("fetch", fetchMock);
 	};
 
 	const sentBody = (call = 0): URLSearchParams => {
@@ -233,6 +234,7 @@ describe("MyMinFinAuth token requests", () => {
 			keyId: "prod-key",
 			redirectUri: "https://example.com/callback",
 			environment: "production",
+			fetch: fetchMock,
 		});
 		stubToken();
 		await prodAuth.refreshToken({ refreshToken: "rt" });
@@ -260,6 +262,30 @@ describe("MyMinFinAuth token requests", () => {
 		expect(err).toBeInstanceOf(MyMinFinApiError);
 		expect((err as MyMinFinApiError).status).toBe(400);
 		expect((err as MyMinFinApiError).message).toBe("Authorization code expired");
+	});
+
+	it("turns a non-JSON 5xx token response into MyMinFinApiError, not SyntaxError", async () => {
+		stubToken(
+			{ status: 502, headers: { "content-type": "text/html" } },
+			"<html>Bad Gateway</html>",
+		);
+		const err = await auth
+			.refreshToken({ refreshToken: "rt" })
+			.catch((e: unknown) => e);
+		expect(err).toBeInstanceOf(MyMinFinApiError);
+		expect((err as MyMinFinApiError).status).toBe(502);
+		expect((err as MyMinFinApiError).message).toBe("Token request failed");
+	});
+
+	it("wraps a fetch rejection in MyMinFinError with the cause attached", async () => {
+		const failure = new TypeError("fetch failed");
+		fetchMock.mockRejectedValueOnce(failure);
+		const err = await auth
+			.refreshToken({ refreshToken: "rt" })
+			.catch((e: unknown) => e);
+		expect(err).toBeInstanceOf(MyMinFinError);
+		expect(err).not.toBeInstanceOf(MyMinFinApiError);
+		expect((err as MyMinFinError).cause).toBe(failure);
 	});
 
 	it("falls back to a generic message when the error body has no error_description", async () => {

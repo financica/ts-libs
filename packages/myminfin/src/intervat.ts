@@ -1,5 +1,5 @@
 import { intervatOpenApiUrl, intervatVatUrl } from "./endpoints";
-import { assertOk, authorizedFetch } from "./http";
+import { assertOk, authorizedFetch, resolveFetch } from "./http";
 import type { ClientConfig, Environment, VatSubmissionResult } from "./types";
 
 /** MIME types Intervat accepts for an uploaded declaration. */
@@ -14,10 +14,12 @@ type IntervatContentType = "application/xml" | "application/zip";
 export class IntervatClient {
 	private readonly accessToken: string;
 	private readonly environment: Environment;
+	private readonly fetchImpl: typeof fetch;
 
 	constructor(config: ClientConfig) {
 		this.accessToken = config.accessToken;
 		this.environment = config.environment;
+		this.fetchImpl = resolveFetch(config.fetch);
 	}
 
 	/**
@@ -27,8 +29,12 @@ export class IntervatClient {
 	 * @param xml - The VAT return XML content (conforming to the Intervat XSD)
 	 * @returns Submission result including the proof UUID
 	 */
-	submitVatReturn(vatNumber: string, xml: string): Promise<VatSubmissionResult> {
-		return this.submit(vatNumber, xml, "application/xml");
+	submitVatReturn(
+		vatNumber: string,
+		xml: string,
+		options?: { signal?: AbortSignal },
+	): Promise<VatSubmissionResult> {
+		return this.submit(vatNumber, xml, "application/xml", options?.signal);
 	}
 
 	/**
@@ -42,18 +48,23 @@ export class IntervatClient {
 		vatNumber: string,
 		file: Buffer | Uint8Array,
 		contentType: IntervatContentType = "application/xml",
+		options?: { signal?: AbortSignal },
 	): Promise<VatSubmissionResult> {
-		return this.submit(vatNumber, Buffer.from(file), contentType);
+		return this.submit(vatNumber, Buffer.from(file), contentType, options?.signal);
 	}
 
 	/**
 	 * Download the OpenAPI specification YAML for the Intervat API.
 	 */
-	async getOpenApiSpec(): Promise<string> {
+	async getOpenApiSpec(options?: { signal?: AbortSignal }): Promise<string> {
 		const res = await authorizedFetch(
+			this.fetchImpl,
 			intervatOpenApiUrl(this.environment),
 			this.accessToken,
-			{ headers: { Accept: "application/octet-stream" } },
+			{
+				headers: { Accept: "application/octet-stream" },
+				signal: options?.signal,
+			},
 		);
 		await assertOk(res);
 		return res.text();
@@ -63,8 +74,10 @@ export class IntervatClient {
 		vatNumber: string,
 		body: BodyInit,
 		contentType: IntervatContentType,
+		signal?: AbortSignal,
 	): Promise<VatSubmissionResult> {
 		const res = await authorizedFetch(
+			this.fetchImpl,
 			intervatVatUrl(this.environment, vatNumber),
 			this.accessToken,
 			{
@@ -74,6 +87,7 @@ export class IntervatClient {
 					Accept: "application/json",
 				},
 				body,
+				signal,
 			},
 		);
 

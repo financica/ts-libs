@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, it, expect } from "vitest";
-import { parseCoda } from "../src/parser.js";
+import { CodaParseError, parseCoda } from "../src/parser.js";
 import type { CodaMovement, CodaStatement } from "../src/types.js";
 
 function fixture(name: string): string {
@@ -19,8 +19,8 @@ const sumDebits = (movements: CodaMovement[]) =>
 
 /** Sum of top-level movements must equal the record-9 trailer totals. */
 function expectMovementsReconcileWithTrailer(stmt: CodaStatement) {
-	expect(sumCredits(stmt.movements)).toBeCloseTo(stmt.totalCredit, 2);
-	expect(sumDebits(stmt.movements)).toBeCloseTo(stmt.totalDebit, 2);
+	expect(sumCredits(stmt.movements)).toBeCloseTo(stmt.totalCredit!, 2);
+	expect(sumDebits(stmt.movements)).toBeCloseTo(stmt.totalDebit!, 2);
 }
 
 /**
@@ -98,9 +98,49 @@ describe("validation", () => {
 		expect(parseCoda(input)).toBeNull();
 	});
 
-	it("returns null for a statement group with a header but no old-balance record", () => {
-		expect(parseCoda(header())).toBeNull();
-		expect(parseCoda([header(), movement21("011017")].join("\n"))).toBeNull();
+	it("throws CodaParseError for a statement group with a header but no old-balance record", () => {
+		expect(() => parseCoda(header())).toThrow(CodaParseError);
+		expect(() => parseCoda([header(), movement21("011017")].join("\n"))).toThrow(
+			CodaParseError,
+		);
+	});
+
+	it("throws CodaParseError for a header whose creation date is not a date", () => {
+		expect(() =>
+			parseCoda([header("320199"), oldBalance("0", "")].join("\n")),
+		).toThrow(CodaParseError);
+	});
+
+	it("throws CodaParseError for a movement without an amount", () => {
+		const broken = record([
+			[1, "21"],
+			[3, "0001"],
+			[7, "0000"],
+			[32, "0"],
+			[54, "00150000"],
+			[62, "0"],
+			[116, "011017"],
+		]);
+		let error: unknown;
+		try {
+			parseCoda([header(), oldBalance("0", ""), broken].join("\n"));
+		} catch (e) {
+			error = e;
+		}
+		expect(error).toBeInstanceOf(CodaParseError);
+		expect((error as CodaParseError).name).toBe("CodaParseError");
+	});
+
+	it("leaves blank header fields and a missing trailer absent rather than filled", () => {
+		const stmt = parseCoda([header(), oldBalance("0", "")].join("\n"))!
+			.statements[0]!;
+		expect(stmt).not.toHaveProperty("separateApplication");
+		expect(stmt).not.toHaveProperty("fileReference");
+		expect(stmt).not.toHaveProperty("totalDebit");
+		expect(stmt).not.toHaveProperty("totalCredit");
+		expect(stmt).not.toHaveProperty("newBalance");
+		expect(stmt.movements).toEqual([]);
+		expect(stmt.freeCommunications).toEqual([]);
 	});
 
 	it("parses CRLF line endings identically to LF", () => {
@@ -211,10 +251,9 @@ describe("sample1 - structured communications", () => {
 
 	it("movements reconcile with trailer totals and the balance change", () => {
 		expectMovementsReconcileWithTrailer(stmt);
-		expect(stmt.oldBalance.amount + stmt.totalCredit - stmt.totalDebit).toBeCloseTo(
-			stmt.newBalance!.amount,
-			2,
-		);
+		expect(
+			stmt.oldBalance.amount + stmt.totalCredit! - stmt.totalDebit!,
+		).toBeCloseTo(stmt.newBalance!.amount, 2);
 	});
 
 	it("parses 4 movements", () => {
@@ -375,7 +414,6 @@ describe("sample4 - SEPA transfer (misaligned fixture)", () => {
 			valueDate: new Date(2017, 4, 31),
 			communicationType: "unstructured",
 			// Globalisation code 0 → undefined
-			globalisationCode: undefined,
 		});
 		expect(m.communication).toContain("Europese overschrijving");
 	});
@@ -491,10 +529,9 @@ describe("12298862.BC2 - real-world statement", () => {
 
 	it("movements reconcile with trailer totals and the balance change", () => {
 		expectMovementsReconcileWithTrailer(stmt);
-		expect(stmt.oldBalance.amount + stmt.totalCredit - stmt.totalDebit).toBeCloseTo(
-			stmt.newBalance!.amount,
-			2,
-		);
+		expect(
+			stmt.oldBalance.amount + stmt.totalCredit! - stmt.totalDebit!,
+		).toBeCloseTo(stmt.newBalance!.amount, 2);
 	});
 
 	it("parses first movement (debit transfer 0/01/01 - PROXIMUS)", () => {

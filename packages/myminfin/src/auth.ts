@@ -1,5 +1,6 @@
 import { base64url, importPKCS8, SignJWT } from "jose";
 import { authorizeUrl, tokenUrl } from "./endpoints";
+import { assertOk, resolveFetch, wrapFetchError } from "./http";
 import type {
 	AuthConfig,
 	AuthorizationUrlParams,
@@ -8,7 +9,6 @@ import type {
 	TokenExchangeParams,
 	TokenSet,
 } from "./types";
-import { MyMinFinApiError } from "./types";
 
 /** Raw body of the OAuth token endpoint, as returned by MyMinFin. */
 interface TokenResponse {
@@ -29,10 +29,12 @@ interface TokenResponse {
  */
 export class MyMinFinAuth {
 	private readonly config: AuthConfig;
+	private readonly fetchImpl: typeof fetch;
 	private resolvedKey: CryptoKey | null = null;
 
 	constructor(config: AuthConfig) {
 		this.config = config;
+		this.fetchImpl = resolveFetch(config.fetch);
 	}
 
 	/**
@@ -79,7 +81,10 @@ export class MyMinFinAuth {
 	 * Exchange an authorization code for a token set.
 	 * Call this after the user has been redirected back to your redirect URI.
 	 */
-	async exchangeCode(params: TokenExchangeParams): Promise<TokenSet> {
+	async exchangeCode(
+		params: TokenExchangeParams,
+		options?: { signal?: AbortSignal },
+	): Promise<TokenSet> {
 		const clientAssertion = await this.buildClientAssertionJwt();
 
 		const body = new URLSearchParams({
@@ -93,14 +98,17 @@ export class MyMinFinAuth {
 			client_assertion: clientAssertion,
 		});
 
-		return this.postToken(body);
+		return this.postToken(body, options?.signal);
 	}
 
 	/**
 	 * Use a refresh token to obtain a new access token.
 	 * Each refresh token can only be used once; the response includes a new one.
 	 */
-	async refreshToken(params: RefreshParams): Promise<TokenSet> {
+	async refreshToken(
+		params: RefreshParams,
+		options?: { signal?: AbortSignal },
+	): Promise<TokenSet> {
 		const clientAssertion = await this.buildClientAssertionJwt();
 
 		const body = new URLSearchParams({
@@ -111,34 +119,45 @@ export class MyMinFinAuth {
 			client_assertion: clientAssertion,
 		});
 
-		return this.postToken(body);
+		return this.postToken(body, options?.signal);
 	}
 
 	// -----------------------------------------------------------------------
 	// Internal helpers
 	// -----------------------------------------------------------------------
 
-	private async postToken(body: URLSearchParams): Promise<TokenSet> {
+	private async postToken(
+		body: URLSearchParams,
+		signal?: AbortSignal,
+	): Promise<TokenSet> {
 		const url = tokenUrl(this.config.environment);
 
-		const res = await fetch(url, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-				Accept: "application/json",
-			},
-			body: body.toString(),
+		let res: Response;
+		try {
+			res = await this.fetchImpl(url, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+					Accept: "application/json",
+				},
+				body: body.toString(),
+				...(signal ? { signal } : {}),
+			});
+		} catch (error) {
+			throw wrapFetchError(error, url);
+		}
+
+		// Check the status before touching the body: a non-JSON 5xx must be a
+		// MyMinFinApiError, not a SyntaxError from `res.json()`. Token errors
+		// are OAuth `{error, error_description}` bodies, not RFC 7807.
+		await assertOk(res, {
+			message: (errorBody) =>
+				typeof errorBody?.["error_description"] === "string"
+					? errorBody["error_description"]
+					: "Token request failed",
 		});
 
 		const json = (await res.json()) as TokenResponse;
-
-		if (!res.ok) {
-			const errorDesc =
-				typeof json.error_description === "string"
-					? json.error_description
-					: "Token request failed";
-			throw new MyMinFinApiError(errorDesc, res.status);
-		}
 
 		return {
 			accessToken: json.access_token,

@@ -126,8 +126,8 @@ export interface Camt053TransactionSummary {
 
 /** Balance information (Bal). */
 export interface Camt053Balance {
-	/** Balance type code (Bal/Tp/CdOrPrtry/Cd), e.g. OPBD, CLBD, CLAV. */
-	type: string;
+	/** Balance type code (Bal/Tp/CdOrPrtry/Cd), e.g. OPBD, CLBD, CLAV. Absent when the balance uses a proprietary type. */
+	type?: string | undefined;
 	/** Balance type proprietary code (Bal/Tp/CdOrPrtry/Prtry). */
 	proprietaryType?: string | undefined;
 	/** Balance amount (Bal/Amt). */

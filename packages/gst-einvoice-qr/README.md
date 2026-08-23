@@ -172,6 +172,10 @@ answered by the GST portal.
   one is the likeliest way to end up here, so it gets its own error rather than
   a confusing "not a JWS".
 
+## Errors
+
+Everything this package throws is a `GstQrError`: `GstQrParseError` (not a compact JWS, or its parts do not decode), `GstQrPayloadError` (a JWS whose payload is not an e-invoice QR; `field` names the culprit when one can be singled out), `DynamicB2cQrError` (the B2C UPI QR, see above) and `CertificateError` (an unusable PEM). Every class sets `name` to its class name, and `cause` carries the underlying decoding or WebCrypto error when one was wrapped.
+
 ## Scope
 
 This library reads and checks what an IRP already issued. It does **not**

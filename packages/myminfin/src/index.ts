@@ -60,4 +60,4 @@ export type {
 	BusinessRuleError,
 	BusinessValidationError,
 } from "./types";
-export { MyMinFinApiError } from "./types";
+export { MyMinFinApiError, MyMinFinError } from "./types";

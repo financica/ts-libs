@@ -1,4 +1,8 @@
-import { parseUblInvoice, type UblInvoice as UblInvoiceData } from "@financica/ubl";
+import {
+	parseUblInvoice,
+	type UblInvoice as UblInvoiceData,
+	UblParseError,
+} from "@financica/ubl";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { ublInvoiceCss } from "./styles";
@@ -28,7 +32,8 @@ body {
  * invoice object. Useful for emails, PDF generation, or serving the preview
  * outside React. For in-app React rendering, use {@link UblInvoice}.
  *
- * @throws if `input` is XML that cannot be parsed.
+ * @throws {UblParseError} when `input` is XML that is malformed, not a UBL
+ * invoice, or lacks a mandatory element.
  */
 export const renderUblInvoiceHtml = (
 	input: string | UblInvoiceData,
@@ -36,7 +41,7 @@ export const renderUblInvoiceHtml = (
 ): string => {
 	const invoice = typeof input === "string" ? parseUblInvoice(input) : input;
 	if (!invoice) {
-		throw new Error("renderUblInvoiceHtml: could not parse the provided UBL XML.");
+		throw new UblParseError("Document is not a UBL Invoice or CreditNote");
 	}
 	const body = renderToStaticMarkup(
 		createElement(UblInvoice, {

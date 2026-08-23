@@ -1,4 +1,5 @@
 export { buildNbbFiling, filingValue } from "./build.js";
+export { NbbBuildError, NbbCbsoError } from "./errors.js";
 export { validateNbbFiling } from "./validate.js";
 export { renderNbbFiling, ENTERPRISE_NUMBER_SCHEME } from "./render.js";
 export {

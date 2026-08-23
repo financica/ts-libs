@@ -1,4 +1,4 @@
-import { XMLParser } from "fast-xml-parser";
+import { XMLParser, XMLValidator } from "fast-xml-parser";
 import type {
 	AdditionalReference,
 	AllowanceCharge,
@@ -33,11 +33,20 @@ import { parseDecimal } from "../numeric.js";
  */
 
 export class FacturXParseError extends Error {
-	constructor(message: string) {
+	override readonly cause?: unknown;
+
+	constructor(message: string, options?: { cause?: unknown }) {
 		super(message);
 		this.name = "FacturXParseError";
+		if (options && "cause" in options) this.cause = options.cause;
 	}
 }
+
+/** A mandatory value: throws `FacturXParseError` naming the business term when absent. */
+const required = <T>(value: T | undefined, what: string): T => {
+	if (value === undefined) throw new FacturXParseError(`Missing ${what}.`);
+	return value;
+};
 
 export interface FacturXParseResult {
 	invoice: FacturXInvoice;
@@ -255,7 +264,10 @@ const readBillingPeriod = (node: Node | undefined): BillingPeriod | undefined =>
 
 const readLine = (node: Node, index: number, warnings: string[]): InvoiceLine => {
 	const lineDocument = child(node, "AssociatedDocumentLineDocument");
-	const id = text(lineDocument, "LineID") ?? String(index + 1);
+	const id = required(
+		text(lineDocument, "LineID"),
+		`line identifier (BT-126) on line ${index + 1}`,
+	);
 	const note = text(child(lineDocument ?? {}, "IncludedNote"), "Content");
 
 	const product = child(node, "SpecifiedTradeProduct");
@@ -324,7 +336,7 @@ const readLine = (node: Node, index: number, warnings: string[]): InvoiceLine =>
 		id,
 		...(note !== undefined ? { note } : {}),
 		product: {
-			name: productName ?? "",
+			name: required(productName, `item name (BT-153) on line ${id}`),
 			...(productDescription !== undefined
 				? { description: productDescription }
 				: {}),
@@ -345,10 +357,10 @@ const readLine = (node: Node, index: number, warnings: string[]): InvoiceLine =>
 				}
 			: {}),
 		...(netPrice ? { netPrice } : {}),
-		quantity: quantity ?? 0,
-		unitCode: unitCode ?? "C62",
+		quantity: required(quantity, `invoiced quantity (BT-129) on line ${id}`),
+		unitCode: required(unitCode, `invoiced quantity unit (BT-130) on line ${id}`),
 		...(buyerOrderLineReference !== undefined ? { buyerOrderLineReference } : {}),
-		tax: tax ?? { categoryCode: "S" },
+		tax: required(tax, `line VAT category (BT-151) on line ${id}`),
 		...(billingPeriod ? { billingPeriod } : {}),
 		...(allowances.length > 0 ? { allowances } : {}),
 		...(charges.length > 0 ? { charges } : {}),
@@ -406,11 +418,17 @@ const readTaxBreakdown = (node: Node): TaxBreakdownEntry | undefined => {
 	const taxPointDate = isoDate(child(node, "TaxPointDate"));
 	const dueDateTypeCode = text(node, "DueDateTypeCode");
 	return {
-		calculatedAmount: calculatedAmount ?? 0,
+		calculatedAmount: required(
+			calculatedAmount,
+			`VAT category tax amount (BT-117) for category ${categoryCode}`,
+		),
 		...(typeCode !== undefined ? { typeCode } : {}),
 		...(exemptionReason !== undefined ? { exemptionReason } : {}),
 		...(exemptionReasonCode !== undefined ? { exemptionReasonCode } : {}),
-		basisAmount: basisAmount ?? 0,
+		basisAmount: required(
+			basisAmount,
+			`VAT category taxable amount (BT-116) for category ${categoryCode}`,
+		),
 		categoryCode,
 		...(rate !== undefined ? { rateApplicablePercent: rate } : {}),
 		...(taxPointDate !== undefined ? { taxPointDate } : {}),
@@ -447,10 +465,21 @@ const readAdditionalReference = (node: Node): AdditionalReference | undefined =>
 
 /**
  * Parse Factur-X / ZUGFeRD / XRechnung CII XML into a `FacturXInvoice`.
- * Throws `FacturXParseError` when the document is not a CII invoice at all;
- * anything else is read leniently, with oddities reported as `warnings`.
+ *
+ * Returns `null` when the document is not a CII invoice (no
+ * `CrossIndustryInvoice` root). Throws `FacturXParseError` when it is one but
+ * the XML is malformed or a mandatory business term (BT-1 invoice number,
+ * BT-2 issue date, BT-3 type code, BT-5 currency, seller, buyer, line and
+ * VAT-breakdown essentials) is missing. Non-fatal oddities are reported in
+ * `warnings`.
  */
-export const parseFacturXXml = (xml: string): FacturXParseResult => {
+export const parseFacturXXml = (xml: string): FacturXParseResult | null => {
+	const validation = XMLValidator.validate(xml);
+	if (validation !== true) {
+		throw new FacturXParseError(`Invalid XML: ${validation.err.msg}`, {
+			cause: validation.err,
+		});
+	}
 	let root: unknown;
 	try {
 		const parser = new XMLParser({
@@ -465,18 +494,15 @@ export const parseFacturXXml = (xml: string): FacturXParseResult => {
 			processEntities: true,
 		});
 		root = parser.parse(xml) as unknown;
-	} catch (error) {
+	} catch (cause) {
 		throw new FacturXParseError(
-			`Invalid XML: ${error instanceof Error ? error.message : String(error)}`,
+			`Invalid XML: ${cause instanceof Error ? cause.message : String(cause)}`,
+			{ cause },
 		);
 	}
-	if (!isNode(root)) throw new FacturXParseError("Empty XML document.");
+	if (!isNode(root)) return null;
 	const cii = child(root, "CrossIndustryInvoice");
-	if (!cii) {
-		throw new FacturXParseError(
-			"Not a CII invoice: missing CrossIndustryInvoice root element.",
-		);
-	}
+	if (!cii) return null;
 
 	const warnings: string[] = [];
 	const context = child(cii, "ExchangedDocumentContext");
@@ -490,24 +516,33 @@ export const parseFacturXXml = (xml: string): FacturXParseResult => {
 	);
 
 	const document = child(cii, "ExchangedDocument");
-	const id = text(document, "ID");
-	const typeCode = text(document, "TypeCode");
-	const issueDate = isoDate(child(document, "IssueDateTime"));
+	const id = required(text(document, "ID"), "invoice number (BT-1)");
+	const typeCode = required(text(document, "TypeCode"), "invoice type code (BT-3)");
+	const issueDate = required(
+		isoDate(child(document, "IssueDateTime")),
+		"or invalid issue date (BT-2)",
+	);
 	const notes = readNotes(document ?? {}, "IncludedNote");
-	if (id === undefined) warnings.push("Missing invoice number (BT-1).");
-	if (issueDate === undefined) warnings.push("Missing or invalid issue date (BT-2).");
 
 	const transaction = child(cii, "SupplyChainTradeTransaction");
 	const agreement = child(transaction, "ApplicableHeaderTradeAgreement");
 	const delivery = child(transaction, "ApplicableHeaderTradeDelivery");
 	const settlement = child(transaction, "ApplicableHeaderTradeSettlement");
 
-	const currency = text(settlement, "InvoiceCurrencyCode");
-	if (currency === undefined) warnings.push("Missing invoice currency (BT-5).");
+	const currency = required(
+		text(settlement, "InvoiceCurrencyCode"),
+		"invoice currency (BT-5)",
+	);
 	const taxCurrency = text(settlement, "TaxCurrencyCode");
 
-	const seller = readParty(child(agreement, "SellerTradeParty")) ?? {};
-	const buyer = readParty(child(agreement, "BuyerTradeParty")) ?? {};
+	const seller = required(
+		readParty(child(agreement, "SellerTradeParty")),
+		"seller (BG-4)",
+	);
+	const buyer = required(
+		readParty(child(agreement, "BuyerTradeParty")),
+		"buyer (BG-7)",
+	);
 	const payee = readParty(child(settlement, "PayeeTradeParty"));
 	const sellerTaxRepresentative = readParty(
 		child(agreement, "SellerTaxRepresentativeTradeParty"),
@@ -566,7 +601,13 @@ export const parseFacturXXml = (xml: string): FacturXParseResult => {
 		const entry = readAllowanceCharge(node);
 		if (!entry) return undefined;
 		const tax = readTax(child(node, "CategoryTradeTax"));
-		return { ...entry, tax: tax ?? { categoryCode: "S" } };
+		return {
+			...entry,
+			tax: required(
+				tax,
+				"document level allowance/charge VAT category (BT-95/BT-102)",
+			),
+		};
 	};
 	const allowances = headerAllowanceCharges
 		.filter((node) => !isChargeIndicator(node))
@@ -638,10 +679,10 @@ export const parseFacturXXml = (xml: string): FacturXParseResult => {
 	const invoice: FacturXInvoice = {
 		...(profileUrn !== undefined ? { profile: profileUrn } : {}),
 		...(businessProcessType !== undefined ? { businessProcessType } : {}),
-		id: id ?? "",
-		typeCode: typeCode ?? "",
-		issueDate: issueDate ?? "",
-		currency: currency ?? "",
+		id,
+		typeCode,
+		issueDate,
+		currency,
 		...(taxCurrency !== undefined ? { taxCurrency } : {}),
 		...(notes.length > 0 ? { notes } : {}),
 		seller,

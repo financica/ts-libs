@@ -8,10 +8,12 @@ export type ParseErrorCode =
 /** Every error this package throws. */
 export class VatAccountParseError extends Error {
 	readonly code: ParseErrorCode;
+	override readonly cause?: unknown;
 
 	constructor(code: ParseErrorCode, message: string, options?: { cause?: unknown }) {
 		super(message, options);
 		this.name = "VatAccountParseError";
 		this.code = code;
+		this.cause = options?.cause;
 	}
 }

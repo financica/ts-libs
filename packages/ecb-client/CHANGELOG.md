@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- `EcbHttpError.details` carries the response body (same value as `body`), and `EcbError.cause` is declared `readonly`, matching the error contract shared by the HTTP clients in this repository.
+
 ## 0.2.1
 
 ### Fixed

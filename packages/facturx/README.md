@@ -41,9 +41,12 @@ if (embedded) {
 }
 ```
 
-`parseFacturXXml` throws `FacturXParseError` only when the input is not a CII
-invoice at all. Everything else parses leniently; non-fatal oddities are
-reported in `warnings`.
+`parseFacturXXml` returns `null` when the input is well-formed XML but not a
+CII invoice (no `CrossIndustryInvoice` root). It throws `FacturXParseError`
+when the XML is malformed or a mandatory business term is missing (BT-1, BT-2,
+BT-3, BT-5, seller, buyer, line id/name/quantity/unit/VAT category, VAT
+breakdown amounts). Non-fatal oddities — an unrecognised guideline, a profile
+mismatch — are reported in `warnings`.
 
 ## Generating a Factur-X invoice
 

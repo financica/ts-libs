@@ -12,10 +12,12 @@ export type ParseErrorCode =
  */
 export class StripeTaxInvoiceParseError extends Error {
 	readonly code: ParseErrorCode;
+	override readonly cause?: unknown;
 
 	constructor(code: ParseErrorCode, message: string, options?: { cause?: unknown }) {
 		super(message, options);
 		this.name = "StripeTaxInvoiceParseError";
 		this.code = code;
+		this.cause = options?.cause;
 	}
 }

@@ -1,4 +1,4 @@
-import { XMLParser } from "fast-xml-parser";
+import { XMLParser, XMLValidator } from "fast-xml-parser";
 import type {
 	XbrlInstance,
 	XbrlSchemaRef,
@@ -21,6 +21,9 @@ import type {
 } from "./types.js";
 import { NS_LINK, NS_XBRLI } from "./namespaces.js";
 
+/** Namespace bound to the reserved `xml` prefix. */
+const XML_NS = "http://www.w3.org/XML/1998/namespace";
+
 // Prefixes used by fast-xml-parser
 const ATTR = "@_";
 const TEXT = "#text";
@@ -41,23 +44,46 @@ const xmlParser = new XMLParser({
 // ── Public API ────────────────────────────────────────────────────────
 
 /**
+ * Thrown when the input is an XBRL instance but cannot be read: malformed
+ * XML, an undeclared namespace prefix, or a mandatory element or attribute
+ * (context `id`, `entity`, `period`, `link:schemaRef`, …) missing.
+ */
+export class XbrlParseError extends Error {
+	override readonly cause?: unknown;
+
+	constructor(message: string, options?: { cause?: unknown }) {
+		super(message);
+		this.name = "XbrlParseError";
+		if (options && "cause" in options) this.cause = options.cause;
+	}
+}
+
+/**
  * Parse an XBRL 2.1 instance document.
- * Returns `null` if the input cannot be parsed or is not a valid XBRL instance.
+ *
+ * Returns `null` when the input is not an XBRL instance (no `xbrli:xbrl` root
+ * element); throws {@link XbrlParseError} when it is one but is malformed or
+ * lacks a mandatory element.
  */
 export function parseXbrl(xml: string): XbrlInstance | null {
-	try {
-		const parsed = xmlParser.parse(xml) as unknown[];
-		if (!Array.isArray(parsed) || parsed.length === 0) return null;
+	const validation = XMLValidator.validate(xml);
+	if (validation !== true)
+		throw new XbrlParseError(`Malformed XML: ${validation.err.msg}`, {
+			cause: validation.err,
+		});
+	const parsed: unknown = xmlParser.parse(xml);
+	if (!Array.isArray(parsed) || parsed.length === 0) return null;
 
-		// Find the xbrl root element (may be prefixed)
-		const root = findXbrlRoot(parsed);
-		if (!root) return null;
+	// Find the xbrl root element (may be prefixed)
+	const root = findXbrlRoot(parsed);
+	if (!root) return null;
 
-		const { element: rootEl, attrs: rootAttrs } = root;
+	const { element: rootEl, attrs: rootAttrs } = root;
 
-		// Build namespace map from root attributes
-		const namespaces = buildNamespaceMap(rootAttrs);
-
+	// Build namespace map from root attributes
+	const namespaces = buildNamespaceMap(rootAttrs);
+	if (resolveQName(root.tag, namespaces).namespace !== NS_XBRLI) return null;
+	{
 		// Parse all children
 		const schemaRefs: XbrlSchemaRef[] = [];
 		const linkbaseRefs: XbrlLinkbaseRef[] = [];
@@ -96,12 +122,12 @@ export function parseXbrl(xml: string): XbrlInstance | null {
 				switch (resolved.localName) {
 					case "context": {
 						const ctx = parseContext(child, tag, namespaces);
-						if (ctx) contexts[ctx.id] = ctx;
+						contexts[ctx.id] = ctx;
 						break;
 					}
 					case "unit": {
 						const unit = parseUnit(child, tag, namespaces);
-						if (unit) units[unit.id] = unit;
+						units[unit.id] = unit;
 						break;
 					}
 				}
@@ -112,7 +138,8 @@ export function parseXbrl(xml: string): XbrlInstance | null {
 			}
 		}
 
-		if (schemaRefs.length === 0 && facts.length === 0) return null;
+		if (schemaRefs.length === 0)
+			throw new XbrlParseError("Missing mandatory element link:schemaRef");
 
 		return {
 			namespaces,
@@ -125,14 +152,29 @@ export function parseXbrl(xml: string): XbrlInstance | null {
 			facts,
 			footnoteLinks,
 		};
-	} catch {
-		return null;
 	}
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────
 
 type ParsedNode = Record<string, unknown>;
+
+/** Drop `undefined`-valued keys so an absent field is an absent key. */
+function compact<T extends object>(obj: T): T {
+	for (const key of Object.keys(obj)) {
+		if ((obj as Record<string, unknown>)[key] === undefined)
+			delete (obj as Record<string, unknown>)[key];
+	}
+	return obj;
+}
+
+/** A mandatory attribute: throws when absent. */
+function requireAttr(attrs: Record<string, string>, name: string, on: string): string {
+	const v = attrs[name];
+	if (v === undefined)
+		throw new XbrlParseError(`Missing mandatory attribute ${name} on ${on}`);
+	return v;
+}
 
 function asArray<T>(val: T | T[] | undefined | null): T[] {
 	if (val === undefined || val === null) return [];
@@ -209,6 +251,7 @@ function buildNamespaceMap(attrs: Record<string, string>): Record<string, string
 function resolveQName(prefixed: string, namespaces: Record<string, string>): XbrlQName {
 	const colon = prefixed.indexOf(":");
 	if (colon === -1) {
+		// No default namespace declared means the null namespace.
 		return {
 			namespace: namespaces[""] ?? "",
 			localName: prefixed,
@@ -216,18 +259,19 @@ function resolveQName(prefixed: string, namespaces: Record<string, string>): Xbr
 	}
 	const prefix = prefixed.substring(0, colon);
 	const localName = prefixed.substring(colon + 1);
-	return {
-		namespace: namespaces[prefix] ?? "",
-		localName,
-		prefix,
-	};
+	const namespace = prefix === "xml" ? XML_NS : namespaces[prefix];
+	if (namespace === undefined)
+		throw new XbrlParseError(
+			`Undeclared namespace prefix "${prefix}" in ${prefixed}`,
+		);
+	return { namespace, localName, prefix };
 }
 
 // ── Root finding ──────────────────────────────────────────────────────
 
 function findXbrlRoot(
 	parsed: unknown[],
-): { element: unknown[]; attrs: Record<string, string> } | null {
+): { tag: string; element: unknown[]; attrs: Record<string, string> } | null {
 	for (const node of parsed) {
 		if (typeof node !== "object" || node === null) continue;
 		const n = node as ParsedNode;
@@ -238,7 +282,7 @@ function findXbrlRoot(
 			if (localName === "xbrl") {
 				const children = Array.isArray(n[key]) ? (n[key] as unknown[]) : [];
 				const attrs = getAttrs(node, key);
-				return { element: children, attrs };
+				return { tag: key, element: children, attrs };
 			}
 		}
 	}
@@ -253,11 +297,11 @@ function parseSimpleLinkRef(
 	tag: string,
 ): XbrlSchemaRef | XbrlLinkbaseRef {
 	const attrs = getAttrs(node, tag);
-	return {
-		href: attrs["xlink:href"] ?? "",
+	return compact({
+		href: requireAttr(attrs, "xlink:href", tag),
 		role: attrs["xlink:role"] || undefined,
 		arcrole: attrs["xlink:arcrole"] || undefined,
-	};
+	});
 }
 
 function parseUriRef<K extends "roleURI" | "arcroleURI">(
@@ -267,8 +311,8 @@ function parseUriRef<K extends "roleURI" | "arcroleURI">(
 ): Record<K, string> & { href: string } {
 	const attrs = getAttrs(node, tag);
 	return {
-		[uriAttr]: attrs[uriAttr] ?? "",
-		href: attrs["xlink:href"] ?? "",
+		[uriAttr]: requireAttr(attrs, uriAttr, tag),
+		href: requireAttr(attrs, "xlink:href", tag),
 	} as Record<K, string> & { href: string };
 }
 
@@ -278,10 +322,9 @@ function parseContext(
 	node: unknown,
 	tag: string,
 	namespaces: Record<string, string>,
-): XbrlContext | null {
+): XbrlContext {
 	const attrs = getAttrs(node, tag);
-	const id = attrs["id"];
-	if (!id) return null;
+	const id = requireAttr(attrs, "id", tag);
 
 	const children = getChildren(node, tag);
 	let entity: XbrlEntity | undefined;
@@ -308,8 +351,9 @@ function parseContext(
 		}
 	}
 
-	if (!entity || !period) return null;
-	return { id, entity, period, scenario };
+	if (!entity) throw new XbrlParseError(`Context "${id}" has no entity`);
+	if (!period) throw new XbrlParseError(`Context "${id}" has no valid period`);
+	return compact({ id, entity, period, scenario });
 }
 
 function parseEntity(
@@ -318,8 +362,8 @@ function parseEntity(
 	namespaces: Record<string, string>,
 ): XbrlEntity | undefined {
 	const children = getChildren(node, tag);
-	let scheme = "";
-	let value = "";
+	let scheme: string | undefined;
+	let value: string | undefined;
 	let segment: XbrlDimensionMember[] | undefined;
 
 	for (const child of children) {
@@ -330,7 +374,7 @@ function parseEntity(
 		if (resolved.namespace === NS_XBRLI) {
 			if (resolved.localName === "identifier") {
 				const idAttrs = getAttrs(child, childTag);
-				scheme = idAttrs["scheme"] ?? "";
+				scheme = requireAttr(idAttrs, "scheme", childTag);
 				value = getTextContent(child, childTag);
 			} else if (resolved.localName === "segment") {
 				segment = parseDimensionMembers(child, childTag, namespaces);
@@ -338,8 +382,9 @@ function parseEntity(
 		}
 	}
 
-	if (!scheme && !value) return undefined;
-	return { scheme, value, segment };
+	if (scheme === undefined || value === undefined)
+		throw new XbrlParseError(`${tag} has no identifier`);
+	return compact({ scheme, value, segment });
 }
 
 function parsePeriod(
@@ -400,11 +445,15 @@ function parseDimensionMembers(
 			const dimAttrs = getAttrs(child, childTag);
 			const dimName = dimAttrs["dimension"];
 			const memberText = getTextContent(child, childTag);
-			members.push({
-				dimension: dimName ? resolveQName(dimName, namespaces) : undefined,
-				member: memberText ? resolveQName(memberText, namespaces) : undefined,
-				elementName: childTag,
-			});
+			members.push(
+				compact({
+					dimension: dimName ? resolveQName(dimName, namespaces) : undefined,
+					member: memberText
+						? resolveQName(memberText, namespaces)
+						: undefined,
+					elementName: childTag,
+				}),
+			);
 		} else if (resolved.localName === "typedMember") {
 			const dimAttrs = getAttrs(child, childTag);
 			const dimName = dimAttrs["dimension"];
@@ -415,18 +464,24 @@ function parseDimensionMembers(
 			const text = valueTag
 				? getTextContent(valueEl, valueTag)
 				: getTextContent(child, childTag);
-			members.push({
-				dimension: dimName ? resolveQName(dimName, namespaces) : undefined,
-				typedValue: text || undefined,
-				typedElement: valueTag ? resolveQName(valueTag, namespaces) : undefined,
-				elementName: childTag,
-			});
+			members.push(
+				compact({
+					dimension: dimName ? resolveQName(dimName, namespaces) : undefined,
+					typedValue: text || undefined,
+					typedElement: valueTag
+						? resolveQName(valueTag, namespaces)
+						: undefined,
+					elementName: childTag,
+				}),
+			);
 		} else {
 			// Unknown extension element -- preserve as-is
-			members.push({
-				elementName: childTag,
-				textContent: getTextContent(child, childTag) || undefined,
-			});
+			members.push(
+				compact({
+					elementName: childTag,
+					textContent: getTextContent(child, childTag) || undefined,
+				}),
+			);
 		}
 	}
 
@@ -439,10 +494,9 @@ function parseUnit(
 	node: unknown,
 	tag: string,
 	namespaces: Record<string, string>,
-): XbrlUnit | null {
+): XbrlUnit {
 	const attrs = getAttrs(node, tag);
-	const id = attrs["id"];
-	if (!id) return null;
+	const id = requireAttr(attrs, "id", tag);
 
 	const children = getChildren(node, tag);
 	const measures: XbrlQName[] = [];
@@ -526,8 +580,9 @@ function parseFact(
 	const attrs = getAttrs(node, tag);
 
 	// Items have contextRef, tuples do not
-	if (attrs["contextRef"]) {
-		return parseItem(node, tag, attrs, namespaces);
+	const contextRef = attrs["contextRef"];
+	if (contextRef) {
+		return parseItem(node, tag, attrs, contextRef, namespaces);
 	}
 
 	// Check if this looks like a tuple (has children with contextRef)
@@ -549,6 +604,7 @@ function parseItem(
 	node: unknown,
 	tag: string,
 	attrs: Record<string, string>,
+	contextRef: string,
 	namespaces: Record<string, string>,
 ): XbrlItem {
 	const name = resolveQName(tag, namespaces);
@@ -572,17 +628,17 @@ function parseItem(
 		}
 	}
 
-	return {
+	return compact({
 		type: "item",
 		name,
 		id: attrs["id"] || undefined,
-		contextRef: attrs["contextRef"] ?? "",
+		contextRef,
 		unitRef: attrs["unitRef"] || undefined,
 		precision,
 		decimals,
 		value,
 		isNil,
-	};
+	});
 }
 
 function parseTuple(
@@ -594,12 +650,12 @@ function parseTuple(
 	const name = resolveQName(tag, namespaces);
 	const childFacts = extractFacts(children, namespaces);
 
-	return {
+	return compact({
 		type: "tuple",
 		name,
 		id: attrs["id"] || undefined,
 		children: childFacts,
-	};
+	});
 }
 
 function hasFacts(children: unknown[]): boolean {
@@ -648,7 +704,7 @@ function parseFootnoteLink(
 	namespaces: Record<string, string>,
 ): XbrlFootnoteLink {
 	const attrs = getAttrs(node, tag);
-	const role = attrs["xlink:role"] ?? "";
+	const role = requireAttr(attrs, "xlink:role", tag);
 	const children = getChildren(node, tag);
 
 	const locators: XbrlFootnoteLocator[] = [];
@@ -665,19 +721,21 @@ function parseFootnoteLink(
 				case "loc": {
 					const locAttrs = getAttrs(child, childTag);
 					locators.push({
-						label: locAttrs["xlink:label"] ?? "",
-						href: locAttrs["xlink:href"] ?? "",
+						label: requireAttr(locAttrs, "xlink:label", childTag),
+						href: requireAttr(locAttrs, "xlink:href", childTag),
 					});
 					break;
 				}
 				case "footnote": {
 					const fnAttrs = getAttrs(child, childTag);
-					footnotes.push({
-						label: fnAttrs["xlink:label"] ?? "",
-						role: fnAttrs["xlink:role"] ?? "",
-						lang: fnAttrs["xml:lang"] || undefined,
-						content: getTextContent(child, childTag),
-					});
+					footnotes.push(
+						compact({
+							label: requireAttr(fnAttrs, "xlink:label", childTag),
+							role: requireAttr(fnAttrs, "xlink:role", childTag),
+							lang: fnAttrs["xml:lang"] || undefined,
+							content: getTextContent(child, childTag),
+						}),
+					);
 					break;
 				}
 				case "footnoteArc": {
@@ -685,15 +743,17 @@ function parseFootnoteLink(
 					const order = arcAttrs["order"]
 						? Number(arcAttrs["order"])
 						: undefined;
-					arcs.push({
-						from: arcAttrs["xlink:from"] ?? "",
-						to: arcAttrs["xlink:to"] ?? "",
-						arcrole: arcAttrs["xlink:arcrole"] ?? "",
-						order:
-							order !== undefined && Number.isFinite(order)
-								? order
-								: undefined,
-					});
+					arcs.push(
+						compact({
+							from: requireAttr(arcAttrs, "xlink:from", childTag),
+							to: requireAttr(arcAttrs, "xlink:to", childTag),
+							arcrole: requireAttr(arcAttrs, "xlink:arcrole", childTag),
+							order:
+								order !== undefined && Number.isFinite(order)
+									? order
+									: undefined,
+						}),
+					);
 					break;
 				}
 			}

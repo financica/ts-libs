@@ -1,5 +1,5 @@
 import { myminfinDocumentsUrl } from "./endpoints";
-import { assertOk, authorizedFetch } from "./http";
+import { assertOk, authorizedFetch, resolveFetch } from "./http";
 import type {
 	ClientConfig,
 	DocumentDownloadParams,
@@ -18,10 +18,12 @@ import type {
 export class MyMinFinClient {
 	private readonly accessToken: string;
 	private readonly baseUrl: string;
+	private readonly fetchImpl: typeof fetch;
 
 	constructor(config: ClientConfig) {
 		this.accessToken = config.accessToken;
 		this.baseUrl = myminfinDocumentsUrl(config.environment);
+		this.fetchImpl = resolveFetch(config.fetch);
 	}
 
 	/**
@@ -31,14 +33,17 @@ export class MyMinFinClient {
 	 * If ownerType/ownerIdentifier are omitted, returns documents for the
 	 * connected entity plus any mandated entities.
 	 */
-	async searchDocuments(params: DocumentSearchParams): Promise<DocumentSearchResult> {
+	async searchDocuments(
+		params: DocumentSearchParams,
+		options?: { signal?: AbortSignal },
+	): Promise<DocumentSearchResult> {
 		const qs = new URLSearchParams({ since: params.since });
 		if (params.until) qs.set("until", params.until);
 		if (params.ownerType) qs.set("ownerType", params.ownerType);
 		if (params.ownerIdentifier) qs.set("ownerIdentifier", params.ownerIdentifier);
 
 		const url = `${this.baseUrl}?${qs.toString()}`;
-		const res = await this.request(url);
+		const res = await this.request(url, options?.signal);
 
 		if (res.status === 204) {
 			return { documents: [] };
@@ -64,6 +69,7 @@ export class MyMinFinClient {
 	async downloadDocument(
 		uuid: string,
 		params?: DocumentDownloadParams,
+		options?: { signal?: AbortSignal },
 	): Promise<{ content: ArrayBuffer; contentType: string }> {
 		const qs = new URLSearchParams();
 		if (params?.ownerType) qs.set("ownerType", params.ownerType);
@@ -74,7 +80,7 @@ export class MyMinFinClient {
 			? `${this.baseUrl}/${uuid}/content?${query}`
 			: `${this.baseUrl}/${uuid}/content`;
 
-		const res = await this.request(url);
+		const res = await this.request(url, options?.signal);
 		await assertOk(res);
 
 		const content = await res.arrayBuffer();
@@ -84,7 +90,7 @@ export class MyMinFinClient {
 		return { content, contentType };
 	}
 
-	private request(url: string): Promise<Response> {
-		return authorizedFetch(url, this.accessToken);
+	private request(url: string, signal?: AbortSignal): Promise<Response> {
+		return authorizedFetch(this.fetchImpl, url, this.accessToken, { signal });
 	}
 }

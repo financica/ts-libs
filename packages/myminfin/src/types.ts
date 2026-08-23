@@ -5,6 +5,8 @@
 export type Environment = "test" | "production";
 
 export interface AuthConfig {
+	/** Override the global `fetch` (e.g. for testing). Defaults to `globalThis.fetch`. */
+	fetch?: typeof fetch;
 	/** OIDC client ID provided during registration */
 	clientId: string;
 	/** RS256 private key (PEM string or CryptoKey) for signing client assertion JWTs */
@@ -18,6 +20,8 @@ export interface AuthConfig {
 }
 
 export interface ClientConfig {
+	/** Override the global `fetch` (e.g. for testing). Defaults to `globalThis.fetch`. */
+	fetch?: typeof fetch;
 	/** OAuth2 Bearer access token */
 	accessToken: string;
 	/** Target environment */
@@ -188,7 +192,29 @@ export interface BusinessValidationError extends ProblemDetail {
 	businessrules: BusinessRuleError[];
 }
 
-export class MyMinFinApiError extends Error {
+/**
+ * Base class for every error thrown by this package. Network failures and
+ * aborted requests are wrapped in a `MyMinFinError` with `cause` set to the
+ * original rejection; HTTP-level failures are the {@link MyMinFinApiError}
+ * subclass.
+ */
+export class MyMinFinError extends Error {
+	override readonly cause?: unknown;
+
+	constructor(message: string, options?: { cause?: unknown }) {
+		super(message, options);
+		this.name = "MyMinFinError";
+		this.cause = options?.cause;
+	}
+}
+
+/**
+ * Thrown for every non-OK HTTP response. `status` is the HTTP status code;
+ * `problem` is the RFC 7807 body when the server sent one (Intervat business
+ * validation errors extend it with `businessrules`). `details` aliases
+ * `problem` for parity with the other HTTP clients in this repository.
+ */
+export class MyMinFinApiError extends MyMinFinError {
 	readonly status: number;
 	readonly problem: ProblemDetail | BusinessValidationError | undefined;
 
@@ -196,10 +222,16 @@ export class MyMinFinApiError extends Error {
 		message: string,
 		status: number,
 		problem?: ProblemDetail | BusinessValidationError,
+		options?: { cause?: unknown },
 	) {
-		super(message);
+		super(message, options);
 		this.name = "MyMinFinApiError";
 		this.status = status;
 		this.problem = problem;
+	}
+
+	/** The response body, when it was a problem detail. Same value as `problem`. */
+	get details(): ProblemDetail | BusinessValidationError | undefined {
+		return this.problem;
 	}
 }

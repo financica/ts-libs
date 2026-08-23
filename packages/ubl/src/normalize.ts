@@ -1,3 +1,5 @@
+import { base64DecodedSize } from "./attachments.js";
+import { UblParseError } from "./errors.js";
 import { parseUblInvoice } from "./parser.js";
 import type {
 	InvoiceExtractionDTO,
@@ -12,17 +14,16 @@ import type {
 
 const UTF8_BOM = 0xfeff;
 
-const normalizeText = (value?: string | null): string | null => {
-	if (!value) return null;
-	const trimmed = value.trim();
-	if (!trimmed) return null;
-	const upper = trimmed.toUpperCase();
+/** `null` for an absent value or an "N/A" placeholder written by the sender. */
+const normalizeText = (value: string | undefined): string | null => {
+	if (value === undefined) return null;
+	const upper = value.toUpperCase();
 	if (upper === "NA" || upper === "N/A") return null;
-	return trimmed;
+	return value;
 };
 
-const toNumberOrNull = (value: number | null | undefined): number | null =>
-	Number.isFinite(value ?? Number.NaN) ? (value as number) : null;
+const toNumberOrNull = (value: number | undefined): number | null =>
+	value !== undefined && Number.isFinite(value) ? value : null;
 
 const roundToCents = (value: number): number => Math.round(value * 100) / 100;
 
@@ -55,19 +56,17 @@ const sanitizePaymentMeans = (pm: UblPaymentMeans) => ({
 
 // --- Address helpers ---
 
+const present = (part: string | undefined): part is string => part !== undefined;
+
 const joinStreet = (address: UblAddress): string =>
-	[address.street, address.additionalStreet]
-		.filter((part) => part && part.trim().length > 0)
-		.join(" ");
+	[address.street, address.additionalStreet].filter(present).join(" ");
 
 const addressToString = (address?: UblAddress): string | null => {
 	if (!address) return null;
 	const street = joinStreet(address);
-	const cityLine = [address.postalZone, address.city]
-		.filter((part) => part && part.trim().length > 0)
-		.join(" ");
+	const cityLine = [address.postalZone, address.city].filter(present).join(" ");
 	const countryLine = [address.countrySubentity, address.countryCode]
-		.filter((part) => part && part.trim().length > 0)
+		.filter(present)
 		.join(" ");
 	const lines = [street, cityLine, countryLine].filter((line) => line.length > 0);
 	return lines.length > 0 ? lines.join("\n") : null;
@@ -77,7 +76,7 @@ const addressToStructured = (address?: UblAddress) => {
 	if (!address) return null;
 	const line1 = joinStreet(address);
 	const result = {
-		line1: normalizeText(line1),
+		line1: line1 ? normalizeText(line1) : null,
 		line2: null as string | null,
 		city: normalizeText(address.city),
 		state: normalizeText(address.countrySubentity),
@@ -90,26 +89,16 @@ const addressToStructured = (address?: UblAddress) => {
 
 // --- Attachment & charge sanitizers ---
 
-const base64ByteLength = (content: string) => {
-	const sanitized = content.replace(/\s+/g, "");
-	if (!sanitized) return 0;
-	const paddingLength = sanitized.endsWith("==")
-		? 2
-		: sanitized.endsWith("=")
-			? 1
-			: 0;
-	return Math.floor((sanitized.length * 3) / 4) - paddingLength;
-};
-
 const sanitizeAttachments = (attachments?: UblAttachment[]) =>
 	(attachments ?? []).map((attachment) => ({
 		id: normalizeText(attachment.id),
 		filename: normalizeText(attachment.filename),
 		mime_code: normalizeText(attachment.mimeCode),
 		description: normalizeText(attachment.description),
-		size_bytes: attachment.base64Content
-			? base64ByteLength(attachment.base64Content)
-			: null,
+		size_bytes:
+			attachment.base64Content !== undefined
+				? base64DecodedSize(attachment.base64Content)
+				: null,
 		external_uri: normalizeText(attachment.externalUri),
 	}));
 
@@ -134,15 +123,19 @@ const sanitizeRawUbl = (ubl: UblInvoice) => ({
 
 // --- Summation helpers ---
 
-const sumTaxTotal = (ubl: UblInvoice) => {
+const sumTaxTotal = (ubl: UblInvoice): number | null => {
 	const subtotalSum = ubl.taxSubtotals.reduce(
-		(sum, subtotal) => sum + subtotal.taxAmount,
+		(sum, subtotal) => sum + (subtotal.taxAmount ?? 0),
 		0,
 	);
 	if (ubl.taxSubtotals.length > 0 && Number.isFinite(subtotalSum)) {
 		return subtotalSum;
 	}
-	return ubl.monetaryTotal.taxInclusiveAmount - ubl.monetaryTotal.taxExclusiveAmount;
+	const { taxInclusiveAmount, taxExclusiveAmount } = ubl.monetaryTotal;
+	if (taxInclusiveAmount === undefined || taxExclusiveAmount === undefined) {
+		return null;
+	}
+	return taxInclusiveAmount - taxExclusiveAmount;
 };
 
 const sumAllowanceChargesByType = (
@@ -151,7 +144,7 @@ const sumAllowanceChargesByType = (
 ) =>
 	(charges ?? []).reduce((sum, charge) => {
 		if (charge.chargeIndicator !== chargeIndicator) return sum;
-		return sum + Math.abs(charge.amount);
+		return sum + Math.abs(charge.amount ?? 0);
 	}, 0);
 
 // --- Public API ---
@@ -167,6 +160,9 @@ export const decodeXmlBytes = (bytes: Uint8Array): string => {
 /**
  * Parse a UBL XML string and normalize it into a flat DTO suitable for
  * database storage or API responses.
+ *
+ * @throws {UblParseError} when the XML is malformed, not a UBL invoice, or
+ * lacks a mandatory element.
  */
 export const normalizeUblResponse = (
 	xml: string,
@@ -177,7 +173,7 @@ export const normalizeUblResponse = (
 } => {
 	const ubl = parseUblInvoice(xml);
 	if (!ubl) {
-		throw new Error("Failed to parse UBL invoice XML");
+		throw new UblParseError("Document is not a UBL Invoice or CreditNote");
 	}
 
 	const subtotal =
@@ -202,7 +198,7 @@ export const normalizeUblResponse = (
 	const amountPaid =
 		prepaidAmount ??
 		(inferredPaid !== null && inferredPaid > 0 ? inferredPaid : null);
-	const taxTotal = toNumberOrNull(sumTaxTotal(ubl));
+	const taxTotal = toNumberOrNull(sumTaxTotal(ubl) ?? undefined);
 	const hasHeaderAllowanceCharges = (ubl.allowanceCharges?.length ?? 0) > 0;
 	const headerDiscountTotal = sumAllowanceChargesByType(ubl.allowanceCharges, false);
 	const headerChargeTotal = sumAllowanceChargesByType(ubl.allowanceCharges, true);

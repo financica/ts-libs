@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **`ScradaError` is the base class of every error the client throws.** `ScradaApiError` now extends it; `instanceof ScradaApiError` checks keep working. Raw `fetch` rejections (network failures, aborts) no longer escape: they are wrapped in `ScradaError` with `cause` set.
+- **A 2xx response with a non-JSON body now throws `ScradaApiError`** (status 200, body on `details`) instead of being returned as if it were the typed result. The document-id-returning calls (`registerCompany`, `sendOutbound*`) keep accepting a bare text id.
+- `normalizeDocumentId` failures throw `ScradaError` instead of a plain `Error`.
+
+### Added
+
+- Optional `{ signal?: AbortSignal }` on every request method.
+- `ScradaError` is exported.
+
 ## 0.5.0
 
 ### Added

@@ -1,14 +1,36 @@
 /**
- * Error thrown for every non-2xx response from the Scrada API. `status` is
- * the HTTP status code; `details` is the parsed response body (JSON when
+ * Base class for every error thrown by this package. Network failures and
+ * aborted requests are wrapped in a `ScradaError` with `cause` set to the
+ * original rejection; HTTP-level failures are the {@link ScradaApiError}
+ * subclass.
+ */
+export class ScradaError extends Error {
+	override readonly cause?: unknown;
+
+	constructor(message: string, options?: { cause?: unknown }) {
+		super(message, options);
+		this.name = "ScradaError";
+		this.cause = options?.cause;
+	}
+}
+
+/**
+ * Error thrown for every non-2xx response from the Scrada API, and for a 2xx
+ * response whose body is not the JSON the caller asked for. `status` is the
+ * HTTP status code; `details` is the parsed response body (JSON when
  * parseable, otherwise the raw text).
  */
-export class ScradaApiError extends Error {
+export class ScradaApiError extends ScradaError {
 	readonly status: number;
 	readonly details: unknown;
 
-	constructor(message: string, status: number, details: unknown) {
-		super(message);
+	constructor(
+		message: string,
+		status: number,
+		details: unknown,
+		options?: { cause?: unknown },
+	) {
+		super(message, options);
 		this.name = "ScradaApiError";
 		this.status = status;
 		this.details = details;

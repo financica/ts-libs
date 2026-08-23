@@ -9,29 +9,39 @@ import type {
 } from "./types.js";
 
 /**
+ * Thrown when the input is a CODA file but cannot be read: a statement without
+ * its old-balance record, an unparseable mandatory date or amount, …
+ */
+export class CodaParseError extends Error {
+	override readonly cause?: unknown;
+
+	constructor(message: string, options?: { cause?: unknown }) {
+		super(message);
+		this.name = "CodaParseError";
+		if (options && "cause" in options) this.cause = options.cause;
+	}
+}
+
+/**
+ * A CODA header record: record code `0` followed by a six-digit creation date
+ * (DDMMYY) at positions 6-11.
+ */
+const HEADER_SIGNATURE = /^0.{4}\d{6}/;
+
+/**
  * Parse a CODA file content string into a structured {@link CodaFile}.
- * Returns `null` if the input cannot be parsed.
+ *
+ * Returns `null` when the content does not start with a CODA header record
+ * (it is not a CODA file); throws {@link CodaParseError} when it is one but a
+ * mandatory record or field is missing or invalid.
  */
 export function parseCoda(content: string): CodaFile | null {
-	try {
-		const lines = content.split(/\r?\n/).filter((l) => l.length > 0);
-		if (lines.length === 0) return null;
-		if (lines[0]?.[0] !== "0") return null;
+	const lines = content.split(/\r?\n/).filter((l) => l.length > 0);
+	const first = lines[0];
+	if (first === undefined || !HEADER_SIGNATURE.test(first)) return null;
 
-		const groups = groupIntoStatements(lines);
-		if (groups.length === 0) return null;
-
-		const statements: CodaStatement[] = [];
-		for (const group of groups) {
-			const stmt = parseStatementGroup(group);
-			if (stmt) statements.push(stmt);
-		}
-
-		if (statements.length === 0) return null;
-		return { statements };
-	} catch {
-		return null;
-	}
+	const statements = groupIntoStatements(lines).map(parseStatementGroup);
+	return { statements };
 }
 
 // ── Line grouping ─────────────────────────────────────────────────────
@@ -74,11 +84,29 @@ function numSub(line: string, start: number, end: number): number {
 	return Number.isFinite(n) ? n : 0;
 }
 
+/** Drop `undefined`-valued keys so an absent field is an absent key. */
+function compact<T extends object>(obj: T): T {
+	for (const key of Object.keys(obj)) {
+		if ((obj as Record<string, unknown>)[key] === undefined)
+			delete (obj as Record<string, unknown>)[key];
+	}
+	return obj;
+}
+
+/** A mandatory DDMMYY date: throws when blank or unparseable. */
+function requireDate(s: string, what: string): Date {
+	const d = parseCodaDate(s);
+	if (!d) throw new CodaParseError(`Missing or invalid ${what}: "${s}"`);
+	return d;
+}
+
 // ── Value parsers ─────────────────────────────────────────────────────
 
-function parseAmount(signChar: string, amountStr: string): number {
-	const raw = Number(amountStr.trim());
-	if (!Number.isFinite(raw)) return 0;
+function parseAmount(signChar: string, amountStr: string, what: string): number {
+	const trimmed = amountStr.trim();
+	const raw = trimmed === "" ? Number.NaN : Number(trimmed);
+	if (!Number.isFinite(raw))
+		throw new CodaParseError(`Missing or invalid ${what}: "${amountStr}"`);
 	const amount = raw / 1000;
 	return signChar === "1" ? -amount : amount;
 }
@@ -89,18 +117,22 @@ function parseCodaDate(s: string): Date | undefined {
 	const day = Number(t.substring(0, 2));
 	const month = Number(t.substring(2, 4));
 	const year = Number(t.substring(4, 6));
-	if (!Number.isFinite(day) || !Number.isFinite(month) || !Number.isFinite(year))
-		return undefined;
+	if (!/^\d{6}$/.test(t)) return undefined;
 	const fullYear = year >= 80 ? 1900 + year : 2000 + year;
-	return new Date(fullYear, month - 1, day);
+	const d = new Date(fullYear, month - 1, day);
+	// Reject rolled-over dates such as 32/01 or month 00
+	if (d.getDate() !== day || d.getMonth() !== month - 1) return undefined;
+	return d;
 }
 
 function parseTransactionCode(raw: string): CodaTransactionCode {
+	if (!/^\d{8}$/.test(raw))
+		throw new CodaParseError(`Invalid transaction code: "${raw}"`);
 	return {
-		type: Number(raw.substring(0, 1)) || 0,
-		family: Number(raw.substring(1, 3)) || 0,
-		transaction: Number(raw.substring(3, 5)) || 0,
-		category: Number(raw.substring(5, 8)) || 0,
+		type: Number(raw.substring(0, 1)),
+		family: Number(raw.substring(1, 3)),
+		transaction: Number(raw.substring(3, 5)),
+		category: Number(raw.substring(5, 8)),
 	};
 }
 
@@ -184,30 +216,29 @@ interface HeaderResult {
 	bankId: number;
 	isDuplicate: boolean;
 	fileReference?: string | undefined;
-	addressee: string;
+	addressee?: string | undefined;
 	bic?: string | undefined;
 	companyId?: string | undefined;
-	separateApplication: string;
+	separateApplication?: string | undefined;
 	transactionReference?: string | undefined;
 	relatedReference?: string | undefined;
 	version: number;
 }
 
-function parseHeader(line: string): HeaderResult | null {
-	if (line[0] !== "0") return null;
-	return {
-		creationDate: parseCodaDate(sub(line, 6, 11)) ?? new Date(0),
+function parseHeader(line: string): HeaderResult {
+	return compact({
+		creationDate: requireDate(sub(line, 6, 11), "header creation date"),
 		bankId: numSub(line, 12, 14),
 		isDuplicate: sub(line, 17, 17) === "D",
 		fileReference: trimSub(line, 25, 34) || undefined,
-		addressee: trimSub(line, 35, 60),
+		addressee: trimSub(line, 35, 60) || undefined,
 		bic: trimSub(line, 61, 71) || undefined,
 		companyId: trimSub(line, 72, 82) || undefined,
-		separateApplication: trimSub(line, 84, 88),
+		separateApplication: trimSub(line, 84, 88) || undefined,
 		transactionReference: trimSub(line, 89, 104) || undefined,
 		relatedReference: trimSub(line, 105, 120) || undefined,
 		version: numSub(line, 128, 128),
-	};
+	});
 }
 
 interface OldBalanceResult {
@@ -219,19 +250,22 @@ interface OldBalanceResult {
 	oldBalance: CodaBalance;
 }
 
-function parseOldBalance(line: string): OldBalanceResult | null {
-	if (line[0] !== "1") return null;
-	return {
+function parseOldBalance(line: string): OldBalanceResult {
+	return compact({
 		account: parseAccountField(sub(line, 2, 2), sub(line, 6, 42)),
 		paperStatementSequence: numSub(line, 3, 5),
 		codaStatementSequence: numSub(line, 126, 128),
 		accountHolderName: trimSub(line, 65, 90) || undefined,
 		accountDescription: trimSub(line, 91, 125) || undefined,
 		oldBalance: {
-			amount: parseAmount(sub(line, 43, 43), sub(line, 44, 58)),
-			date: parseCodaDate(sub(line, 59, 64)) ?? new Date(0),
+			amount: parseAmount(
+				sub(line, 43, 43),
+				sub(line, 44, 58),
+				"old balance amount",
+			),
+			date: requireDate(sub(line, 59, 64), "old balance date"),
 		},
-	};
+	});
 }
 
 interface Raw21 {
@@ -254,9 +288,9 @@ function parseRecord21(line: string): Raw21 | null {
 		sequenceNumber: numSub(line, 3, 6),
 		detailNumber: numSub(line, 7, 10),
 		bankReference: trimSub(line, 11, 31),
-		amount: parseAmount(sub(line, 32, 32), sub(line, 33, 47)),
+		amount: parseAmount(sub(line, 32, 32), sub(line, 33, 47), "movement amount"),
 		valueDate: parseCodaDate(sub(line, 48, 53)),
-		entryDate: parseCodaDate(sub(line, 116, 121)) ?? new Date(0),
+		entryDate: requireDate(sub(line, 116, 121), "movement entry date"),
 		transactionCode: parseTransactionCode(sub(line, 54, 61)),
 		comm: parseCommunicationField(sub(line, 62, 62), sub(line, 63, 115)),
 		paperStatementSequence: numSub(line, 122, 124),
@@ -342,11 +376,10 @@ function parseRecord33Comm(line: string): string | null {
 	return sub(line, 11, 100);
 }
 
-function parseNewBalance(line: string): CodaBalance | null {
-	if (line[0] !== "8") return null;
+function parseNewBalance(line: string): CodaBalance {
 	return {
-		amount: parseAmount(sub(line, 42, 42), sub(line, 43, 57)),
-		date: parseCodaDate(sub(line, 58, 63)) ?? new Date(0),
+		amount: parseAmount(sub(line, 42, 42), sub(line, 43, 57), "new balance amount"),
+		date: requireDate(sub(line, 58, 63), "new balance date"),
 	};
 }
 
@@ -355,12 +388,12 @@ interface TrailerResult {
 	totalCredit: number;
 }
 
-function parseTrailer(line: string): TrailerResult | null {
-	if (line[0] !== "9") return null;
-	return {
-		totalDebit: Number(sub(line, 23, 37).trim()) / 1000 || 0,
-		totalCredit: Number(sub(line, 38, 52).trim()) / 1000 || 0,
-	};
+function parseTrailer(line: string): TrailerResult {
+	const totalDebit = Number(sub(line, 23, 37).trim());
+	const totalCredit = Number(sub(line, 38, 52).trim());
+	if (!Number.isFinite(totalDebit) || !Number.isFinite(totalCredit))
+		throw new CodaParseError("Invalid trailer totals");
+	return { totalDebit: totalDebit / 1000, totalCredit: totalCredit / 1000 };
 }
 
 // ── Movement assembly ─────────────────────────────────────────────────
@@ -390,7 +423,7 @@ function assembleMovement(
 	const information: CodaInformation[] = infoGroups.map((ig) => {
 		const parts = [ig.r31.comm.rawContent, ...ig.continuations];
 		const comm = parts.join("").trimEnd();
-		return {
+		return compact({
 			sequenceNumber: ig.r31.sequenceNumber,
 			detailNumber: ig.r31.detailNumber,
 			bankReference: ig.r31.bankReference,
@@ -398,10 +431,10 @@ function assembleMovement(
 			communication: comm,
 			communicationType: ig.r31.comm.communicationType,
 			structuredCommunicationType: ig.r31.comm.structuredCommunicationType,
-		};
+		});
 	});
 
-	return {
+	return compact({
 		sequenceNumber: r21.sequenceNumber,
 		detailNumber: r21.detailNumber,
 		bankReference: r21.bankReference,
@@ -422,27 +455,26 @@ function assembleMovement(
 		purpose: r22?.purpose,
 		counterpartyAccountNumber,
 		counterpartyAccountCurrency,
-		counterpartyName: r23?.counterpartyName,
+		counterpartyName: r23?.counterpartyName || undefined,
 		information,
-	};
+	});
 }
 
 // ── Statement assembly ────────────────────────────────────────────────
 
-function parseStatementGroup(lines: string[]): CodaStatement | null {
-	if (lines.length === 0) return null;
-
-	// Header (record 0)
-	const headerLine = lines.find((l) => l[0] === "0");
-	if (!headerLine) return null;
+function parseStatementGroup(lines: string[]): CodaStatement {
+	// Header (record 0) — groups always start with one
+	const headerLine = lines[0];
+	if (headerLine === undefined || !HEADER_SIGNATURE.test(headerLine))
+		throw new CodaParseError(
+			"Statement does not start with a valid header record (0)",
+		);
 	const header = parseHeader(headerLine);
-	if (!header) return null;
 
 	// Old balance (record 1)
 	const balLine = lines.find((l) => l[0] === "1");
-	if (!balLine) return null;
+	if (!balLine) throw new CodaParseError("Statement has no old-balance record (1)");
 	const oldBal = parseOldBalance(balLine);
-	if (!oldBal) return null;
 
 	// Movements: iterate through records 2.x and 3.x in order
 	const movements: CodaMovement[] = [];
@@ -510,7 +542,8 @@ function parseStatementGroup(lines: string[]): CodaStatement | null {
 
 	// New balance (record 8)
 	const newBalLine = lines.find((l) => l[0] === "8");
-	const newBalance = newBalLine ? parseNewBalance(newBalLine) : undefined;
+	const newBalance =
+		newBalLine === undefined ? undefined : parseNewBalance(newBalLine);
 
 	// Free communications (record 4)
 	const freeCommMap = new Map<number, string[]>();
@@ -527,15 +560,15 @@ function parseStatementGroup(lines: string[]): CodaStatement | null {
 
 	// Trailer (record 9)
 	const trailerLine = lines.find((l) => l[0] === "9");
-	const trailer = trailerLine ? parseTrailer(trailerLine) : null;
+	const trailer = trailerLine === undefined ? undefined : parseTrailer(trailerLine);
 
-	return {
+	return compact({
 		...header,
 		...oldBal,
 		movements,
-		newBalance: newBalance ?? undefined,
+		newBalance,
 		freeCommunications,
-		totalDebit: trailer?.totalDebit ?? 0,
-		totalCredit: trailer?.totalCredit ?? 0,
-	};
+		totalDebit: trailer?.totalDebit,
+		totalCredit: trailer?.totalCredit,
+	});
 }

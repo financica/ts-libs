@@ -2,7 +2,7 @@
 
 TypeScript parser for [CODA](https://www.febelfin.be/en/expertise/electronic-banking/standards) (Coded statement of account) bank files. CODA is the Belgian standard, maintained by Febelfin, for electronic bank-to-customer account statements.
 
-Parses CODA v2.x files into fully typed objects. Returns `null` on invalid input instead of throwing.
+Parses CODA v2.x files into fully typed objects. Returns `null` when the content is not a CODA file; throws `CodaParseError` when it is one but is broken.
 
 ## Installation
 
@@ -50,7 +50,7 @@ if (file) {
 
 ## Design
 
-- `parseCoda(content)` returns a `CodaFile` or `null`. No exceptions for malformed input.
+- `parseCoda(content)` returns a `CodaFile`, or `null` when the content has no CODA header record. A CODA file with a missing old-balance record or an invalid mandatory date, amount or transaction code throws `CodaParseError`.
 - Balances and movements are signed numbers: positive for credit, negative for debit. There is no separate sign field to check.
 - Fields are extracted at their standard-defined positions. Communications are concatenated across record parts (2.1 + 2.2 + 2.3 for movements, 3.1 + 3.2 + 3.3 for information records) and right-trimmed.
 - Structured communications are not parsed further. The `communicationType` and `structuredCommunicationType` fields tell you the format; the `communication` field gives you the raw content. Type 101/102 Belgian structured references come through as 12-digit strings ready for mod-97 validation. Types such as 127 (SEPA direct debit) and 105 (FX details) are left as raw strings for the caller to parse.
@@ -75,7 +75,7 @@ The parser extracts all fields defined in the CODA v2.8 standard:
 
 ### `parseCoda(content: string): CodaFile | null`
 
-Parse a CODA file. Returns `null` if the input is empty, doesn't start with a record 0, or cannot be parsed. Handles both `\n` and `\r\n` line endings. Multiple statements in a single file (delimited by record 0 boundaries) are supported.
+Parse a CODA file. Returns `null` if the input is empty or doesn't start with a CODA header record (record 0 with a DDMMYY creation date); throws `CodaParseError` if it does but a mandatory record or field is missing or invalid. Handles both `\n` and `\r\n` line endings. Multiple statements in a single file (delimited by record 0 boundaries) are supported.
 
 ### Types
 

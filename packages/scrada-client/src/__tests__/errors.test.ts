@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
 	ScradaApiError,
+	ScradaError,
 	scradaApiErrorFromResponse,
 	summarizeScradaErrorDetails,
 } from "../errors";
@@ -104,5 +105,17 @@ describe("scradaApiErrorFromResponse", () => {
 		const error = await scradaApiErrorFromResponse(response);
 		expect(error.details).toBe("upstream timeout");
 		expect(error.message).toBe("upstream timeout");
+	});
+});
+
+describe("error classes", () => {
+	it("ScradaApiError extends ScradaError and sets name/readonly fields", () => {
+		const cause = new Error("root");
+		const error = new ScradaApiError("boom", 503, { message: "x" }, { cause });
+		expect(error).toBeInstanceOf(ScradaError);
+		expect(error.name).toBe("ScradaApiError");
+		expect(error.status).toBe(503);
+		expect(error.cause).toBe(cause);
+		expect(new ScradaError("net", { cause }).name).toBe("ScradaError");
 	});
 });

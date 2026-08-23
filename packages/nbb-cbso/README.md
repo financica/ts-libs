@@ -89,11 +89,15 @@ if (errors.length === 0) {
 }
 ```
 
-`buildNbbFiling` resolves each rubric code against the taxonomy, so an unknown code throws rather than silently dropping a figure. That is also what keeps a company figure out of an association filing: `RubricCode` is a plain string, and `10/11` or `19` fed to `m04-f` fails at build time because the association model has no such rubric.
+`buildNbbFiling` resolves each rubric code against the taxonomy, so an unknown code throws `NbbBuildError` rather than silently dropping a figure. That is also what keeps a company figure out of an association filing: `RubricCode` is a plain string, and `10/11` or `19` fed to `m04-f` fails at build time because the association model has no such rubric.
 
 `validateNbbFiling` separates `errors` from `warnings` along the NBB's own line: statutory checks are disqualifying and land in `errors`, Annex 1.2 and social balance sheet checks are not and land in `warnings`. Each `Finding` carries the NBB's own check identifier, the rubric codes involved, and a message naming the figures that broke the rule. `skipped` lists checks that were not evaluated, which is deliberate — see below.
 
 `renderNbbFiling` produces the instance document, following the conventions of accepted filings: one instant context per fact at the closing date, the preceding exercise as a period dimension, `decimals="INF"`, a single EUR unit, no segments, and none of the prohibited `linkbaseRef` / `roleRef` / `arcroleRef` / `footnoteLink` elements. Output is byte-stable across runs.
+
+### Errors
+
+Everything this package throws is an `NbbCbsoError`: `NbbBuildError` from `buildNbbFiling` (unknown rubric code, or one figure given two different values under two of its names) and `ExpressionError` from `evaluateExpression` (syntax outside the supported subset, or a variable without a value). Every class sets `name` to its class name; `validateNbbFiling` does not throw for a failing check — it reports it.
 
 ## Check coverage
 

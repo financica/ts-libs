@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **BREAKING: follows the `@financica/ubl` parse contract.** `<UblInvoice xml>` renders `fallback` when the XML is malformed, not a UBL invoice, or lacks a mandatory element (`parseUblInvoice` returning `null` or throwing `UblParseError`); `renderUblInvoiceHtml` throws `UblParseError` for the same inputs instead of a generic `Error`. Optional fields of the parsed model (`seller.name`, line `description`/`quantity`/`unitPrice`, monetary-total amounts, …) may now be absent; the renderer treats an absent field exactly as it treated `""`/`0` (both still tolerated, so stored parses from older versions render unchanged), so output is identical for documents that state them. Requires `@financica/ubl` with `UblParseError`.
+
 ## 0.2.0
 
 Breaking: `@financica/ubl` is now a peer dependency, and `invoice` is no

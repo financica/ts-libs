@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { parseCamt053 } from "../src/parser.js";
+import { Camt053ParseError, parseCamt053 } from "../src/parser.js";
 import type { Camt053Entry } from "../src/types.js";
 
 const readFixture = (name: string) =>
@@ -23,6 +23,9 @@ const wrapEntry = (ntry: string) => `<?xml version="1.0"?>
 	</BkToCstmrStmt>
 </Document>`;
 
+const camtDoc = (body: string) => `<?xml version="1.0"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.02">${body}</Document>`;
+
 describe("parseCamt053", () => {
 	// -----------------------------------------------------------------------
 	// Validation & error handling
@@ -31,6 +34,12 @@ describe("parseCamt053", () => {
 	it.each([
 		["non-XML input", "not xml at all"],
 		["empty string", ""],
+		["unbalanced tags", "<Document><BkToCstmrStmt></Document>"],
+	])("throws Camt053ParseError for %s", (_label, xml) => {
+		expect(() => parseCamt053(xml)).toThrow(Camt053ParseError);
+	});
+
+	it.each([
 		[
 			"valid XML that is not a CAMT.053 document",
 			"<root><child>value</child></root>",
@@ -74,8 +83,8 @@ describe("parseCamt053", () => {
 			expect(report).toMatchObject({
 				messageId: "MSG-001",
 				creationDate: new Date("2025-06-15T10:30:00Z"),
-				recipient: undefined,
 			});
+			expect(report).not.toHaveProperty("recipient");
 			expect(report.statements).toHaveLength(1);
 			expect(stmt).toMatchObject({
 				id: "STMT-001",
@@ -140,7 +149,6 @@ describe("parseCamt053", () => {
 
 		it("parses a simple card entry (no NtryRef, no NtryDtls)", () => {
 			expect(stmt.entries[0]).toMatchObject({
-				entryReference: undefined,
 				amount: 42.5,
 				currency: "EUR",
 				creditDebitIndicator: "DBIT",
@@ -312,7 +320,6 @@ describe("parseCamt053", () => {
 				amountDetails: {
 					transactionAmount: 3000.0,
 					transactionCurrency: "EUR",
-					currencyExchange: undefined,
 				},
 				bankTransactionCode: { domainCode: "PMNT" },
 				relatedParties: {
@@ -365,10 +372,9 @@ describe("parseCamt053", () => {
 
 		it("extracts second statement with other-ID account, proprietary balance, no entries", () => {
 			expect(report.statements[1]).toMatchObject({
-				account: { iban: undefined, otherId: "123456789", currency: "USD" },
+				account: { otherId: "123456789", currency: "USD" },
 				balances: [
 					{
-						type: "",
 						proprietaryType: "CUSTOM_BAL",
 						amount: 10000.0,
 						currency: "USD",
@@ -376,6 +382,7 @@ describe("parseCamt053", () => {
 				],
 				entries: [],
 			});
+			expect(report.statements[1]!.balances[0]).not.toHaveProperty("type");
 		});
 	});
 
@@ -473,7 +480,6 @@ describe("parseCamt053", () => {
 
 		it("parses a card entry without NtryRef (entries[0])", () => {
 			expect(entries[0]).toMatchObject({
-				entryReference: undefined,
 				amount: 13.99,
 				currency: "EUR",
 				creditDebitIndicator: "DBIT",
@@ -581,17 +587,87 @@ describe("parseCamt053", () => {
 			expect(entry.charges).toEqual({ totalAmount: 0.15, totalCurrency: "EUR" });
 		});
 
-		// Known bug: an entry with no <Amt> is emitted as amount 0 / currency ""
-		// (parser.ts, parseEntry) instead of being rejected or skipped, so a
-		// truncated statement silently reconciles to the wrong figures.
-		it.fails("does not emit a silent zero for an entry without <Amt>", () => {
+		it("throws Camt053ParseError for an entry without <Amt>", () => {
 			const xml = wrapEntry(`
 				<CdtDbtInd>DBIT</CdtDbtInd>
 				<Sts><Cd>BOOK</Cd></Sts>`);
-			const entries = parseCamt053(xml)?.statements[0]?.entries ?? [];
-			for (const entry of entries) {
-				expect(entry.currency).not.toBe("");
+			expect(() => parseCamt053(xml)).toThrow(Camt053ParseError);
+		});
+
+		it("throws Camt053ParseError for a CdtDbtInd outside the union", () => {
+			const xml = wrapEntry(`
+				<Amt Ccy="EUR">10.00</Amt>
+				<CdtDbtInd>CREDIT</CdtDbtInd>`);
+			expect(() => parseCamt053(xml)).toThrow(Camt053ParseError);
+		});
+
+		it("leaves optional entry fields absent rather than filled", () => {
+			const xml = wrapEntry(`
+				<Amt Ccy="EUR">10.00</Amt>
+				<CdtDbtInd>DBIT</CdtDbtInd>`);
+			const entry = parseCamt053(xml)!.statements[0]!.entries[0]!;
+			expect(entry.bookingDate).toBeUndefined();
+			expect(entry.valueDate).toBeUndefined();
+			expect(entry.status).toBeUndefined();
+			expect(entry.reversalIndicator).toBeUndefined();
+			expect(entry.entryDetails).toEqual([]);
+		});
+
+		it("validates the batch CdtDbtInd instead of casting it", () => {
+			const xml = wrapEntry(`
+				<Amt Ccy="EUR">10.00</Amt>
+				<CdtDbtInd>DBIT</CdtDbtInd>
+				<NtryDtls><Btch><MsgId>B1</MsgId><CdtDbtInd>BOGUS</CdtDbtInd></Btch></NtryDtls>`);
+			const detail =
+				parseCamt053(xml)!.statements[0]!.entries[0]!.entryDetails[0]!;
+			expect(detail.batch?.messageId).toBe("B1");
+			expect(detail.batch?.creditDebitIndicator).toBeUndefined();
+		});
+	});
+
+	describe("broken documents", () => {
+		it("throws Camt053ParseError for malformed XML in the CAMT.053 namespace", () => {
+			const xml = camtDoc(
+				"<BkToCstmrStmt><GrpHdr><MsgId>M</MsgId></BkToCstmrStmt>",
+			);
+			expect(() => parseCamt053(xml)).toThrow(Camt053ParseError);
+		});
+
+		it("sets cause on the wrapped XML error", () => {
+			const xml = camtDoc("<BkToCstmrStmt><GrpHdr></BkToCstmrStmt>");
+			let error: unknown;
+			try {
+				parseCamt053(xml);
+			} catch (e) {
+				error = e;
 			}
+			expect(error).toBeInstanceOf(Camt053ParseError);
+			expect((error as Camt053ParseError).name).toBe("Camt053ParseError");
+			expect((error as Camt053ParseError).cause).toBeDefined();
+		});
+
+		it.each([
+			[
+				"GrpHdr/MsgId",
+				"<BkToCstmrStmt><GrpHdr><CreDtTm>2025-01-01T00:00:00Z</CreDtTm></GrpHdr></BkToCstmrStmt>",
+			],
+			[
+				"GrpHdr/CreDtTm",
+				"<BkToCstmrStmt><GrpHdr><MsgId>M</MsgId></GrpHdr></BkToCstmrStmt>",
+			],
+			[
+				"Stmt/Id",
+				`<BkToCstmrStmt><GrpHdr><MsgId>M</MsgId><CreDtTm>2025-01-01T00:00:00Z</CreDtTm></GrpHdr>
+				<Stmt><CreDtTm>2025-01-01T00:00:00Z</CreDtTm><Acct><Id><IBAN>X</IBAN></Id></Acct></Stmt></BkToCstmrStmt>`,
+			],
+			[
+				"Bal/Dt",
+				`<BkToCstmrStmt><GrpHdr><MsgId>M</MsgId><CreDtTm>2025-01-01T00:00:00Z</CreDtTm></GrpHdr>
+				<Stmt><Id>S</Id><CreDtTm>2025-01-01T00:00:00Z</CreDtTm><Acct><Id><IBAN>X</IBAN></Id></Acct>
+				<Bal><Tp><CdOrPrtry><Cd>OPBD</Cd></CdOrPrtry></Tp><Amt Ccy="EUR">1</Amt><CdtDbtInd>CRDT</CdtDbtInd></Bal></Stmt></BkToCstmrStmt>`,
+			],
+		])("throws Camt053ParseError when %s is missing", (_label, body) => {
+			expect(() => parseCamt053(camtDoc(body))).toThrow(Camt053ParseError);
 		});
 	});
 });

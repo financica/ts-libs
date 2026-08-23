@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, it, expect } from "vitest";
-import { parseXbrl } from "../src/parser.js";
+import { XbrlParseError, parseXbrl } from "../src/parser.js";
 import type { XbrlItem, XbrlTuple } from "../src/types.js";
 
 function fixture(name: string): string {
@@ -32,23 +32,86 @@ function collectTuples(facts: (XbrlItem | XbrlTuple)[]): XbrlTuple[] {
 
 // ── Validation ────────────────────────────────────────────────────────
 
+const wrap = (
+	body: string,
+) => `<xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance"
+		xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xlink="http://www.w3.org/1999/xlink"
+		xmlns:eg="http://example.com/taxonomy">
+		<link:schemaRef xlink:type="simple" xlink:href="schema.xsd"/>${body}</xbrli:xbrl>`;
+
 describe("validation", () => {
-	it("returns null for empty string", () => {
-		expect(parseXbrl("")).toBeNull();
+	it.each([
+		["empty string", ""],
+		["non-XML input", "this is not xml"],
+		[
+			"unbalanced tags",
+			'<xbrl xmlns="http://www.xbrl.org/2003/instance"><a></xbrl>',
+		],
+	])("throws XbrlParseError for %s", (_label, xml) => {
+		expect(() => parseXbrl(xml)).toThrow(XbrlParseError);
 	});
 
-	it("returns null for non-XML input", () => {
-		expect(parseXbrl("this is not xml")).toBeNull();
+	it("sets name and cause on a malformed-XML error", () => {
+		let error: unknown;
+		try {
+			parseXbrl("<root><a></root>");
+		} catch (e) {
+			error = e;
+		}
+		expect(error).toBeInstanceOf(XbrlParseError);
+		expect((error as XbrlParseError).name).toBe("XbrlParseError");
+		expect((error as XbrlParseError).cause).toBeDefined();
 	});
 
 	it("returns null for XML without xbrl root", () => {
 		expect(parseXbrl("<root><child/></root>")).toBeNull();
 	});
 
-	it("returns null for empty xbrl document", () => {
+	it("returns null for an xbrl root outside the xbrli namespace", () => {
 		expect(
-			parseXbrl('<xbrl xmlns="http://www.xbrl.org/2003/instance"></xbrl>'),
+			parseXbrl('<xbrl xmlns="http://example.com/not-xbrl"></xbrl>'),
 		).toBeNull();
+	});
+
+	it("throws XbrlParseError for an xbrl document without schemaRef", () => {
+		expect(() =>
+			parseXbrl('<xbrl xmlns="http://www.xbrl.org/2003/instance"></xbrl>'),
+		).toThrow(XbrlParseError);
+	});
+
+	it.each([
+		["a context without id", "<xbrli:context><xbrli:entity/></xbrli:context>"],
+		[
+			"a context without period",
+			`<xbrli:context id="c1"><xbrli:entity>
+				<xbrli:identifier scheme="http://example.com">E1</xbrli:identifier>
+			</xbrli:entity></xbrli:context>`,
+		],
+		[
+			"a unit without id",
+			"<xbrli:unit><xbrli:measure>xbrli:pure</xbrli:measure></xbrli:unit>",
+		],
+		["an undeclared namespace prefix", '<nope:Fact contextRef="c1">1</nope:Fact>'],
+	])("throws XbrlParseError for %s", (_label, body) => {
+		expect(() => parseXbrl(wrap(body))).toThrow(XbrlParseError);
+	});
+
+	it("leaves optional item attributes absent rather than filled", () => {
+		const result = parseXbrl(
+			wrap(`<xbrli:context id="c1"><xbrli:entity>
+				<xbrli:identifier scheme="http://example.com">E1</xbrli:identifier>
+			</xbrli:entity><xbrli:period><xbrli:instant>2024-12-31</xbrli:instant></xbrli:period></xbrli:context>
+			<eg:Name contextRef="c1">Acme</eg:Name>`),
+		)!;
+		const item = result.facts[0] as XbrlItem;
+		expect(item.contextRef).toBe("c1");
+		expect(item).not.toHaveProperty("id");
+		expect(item).not.toHaveProperty("unitRef");
+		expect(item).not.toHaveProperty("decimals");
+		expect(item).not.toHaveProperty("precision");
+		expect(result.contexts["c1"]).not.toHaveProperty("scenario");
+		expect(result.contexts["c1"]!.entity).not.toHaveProperty("segment");
+		expect(result.schemaRefs[0]).not.toHaveProperty("role");
 	});
 });
 
@@ -317,6 +380,7 @@ describe("synthetic XBRL documents", () => {
 <xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance"
             xmlns:link="http://www.xbrl.org/2003/linkbase"
             xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
             xmlns:eg="http://example.com/taxonomy">
   <link:schemaRef xlink:type="simple" xlink:href="schema.xsd"/>
   <xbrli:context id="c1">
@@ -353,6 +417,7 @@ describe("synthetic XBRL documents", () => {
 <xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance"
             xmlns:link="http://www.xbrl.org/2003/linkbase"
             xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
             xmlns:eg="http://example.com/taxonomy">
   <link:schemaRef xlink:type="simple" xlink:href="schema.xsd"/>
   <xbrli:context id="forever">
@@ -377,6 +442,7 @@ describe("synthetic XBRL documents", () => {
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:link="http://www.xbrl.org/2003/linkbase"
             xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
             xmlns:eg="http://example.com/taxonomy">
   <link:schemaRef xlink:type="simple" xlink:href="schema.xsd"/>
   <xbrli:context id="c1">
@@ -401,6 +467,7 @@ describe("synthetic XBRL documents", () => {
 <xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance"
             xmlns:link="http://www.xbrl.org/2003/linkbase"
             xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
             xmlns:eg="http://example.com/taxonomy">
   <link:schemaRef xlink:type="simple" xlink:href="schema.xsd"/>
   <xbrli:context id="c1">
@@ -459,6 +526,7 @@ describe("synthetic XBRL documents", () => {
 <xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance"
             xmlns:link="http://www.xbrl.org/2003/linkbase"
             xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
             xmlns:eg="http://example.com/taxonomy">
   <link:schemaRef xlink:type="simple" xlink:href="schema.xsd"/>
   <xbrli:context id="c1">
@@ -508,6 +576,7 @@ describe("synthetic XBRL documents", () => {
 <xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance"
             xmlns:link="http://www.xbrl.org/2003/linkbase"
             xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
             xmlns:eg="http://example.com/taxonomy">
   <link:schemaRef xlink:type="simple" xlink:href="schema.xsd"/>
   <xbrli:context id="c1">
@@ -533,6 +602,7 @@ describe("synthetic XBRL documents", () => {
 <xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance"
             xmlns:link="http://www.xbrl.org/2003/linkbase"
             xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
             xmlns:eg="http://example.com/taxonomy">
   <link:schemaRef xlink:type="simple" xlink:href="schema1.xsd"/>
   <link:schemaRef xlink:type="simple" xlink:href="schema2.xsd"/>
@@ -561,6 +631,7 @@ describe("synthetic XBRL documents", () => {
 <xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance"
             xmlns:link="http://www.xbrl.org/2003/linkbase"
             xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
             xmlns:eg="http://example.com/taxonomy">
   <link:schemaRef xlink:type="simple" xlink:href="schema.xsd"/>
   <xbrli:context id="c1">

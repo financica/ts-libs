@@ -1,13 +1,14 @@
+import { UblParseError } from "./errors.js";
 import { parseUblInvoice } from "./parser.js";
 import type { UblAttachment } from "./types.js";
 
 /**
  * An embedded attachment extracted from a UBL document's
  * `AdditionalDocumentReference` entries, with its binary content still
- * base64-encoded. `sizeBytes` is the approximate decoded size.
+ * base64-encoded. `sizeBytes` is the decoded size.
  */
 export interface UblEmbeddedAttachment {
-	id: string | null;
+	id?: string | undefined;
 	filename: string;
 	mimeCode: string;
 	sizeBytes: number;
@@ -16,27 +17,35 @@ export interface UblEmbeddedAttachment {
 	base64Content: string;
 }
 
-/** Approximate decoded byte length of a base64 string. */
-const base64DecodedSize = (base64: string) => Math.round((base64.length * 3) / 4);
+/** Decoded byte length of a base64 string, accounting for `=` padding. */
+export const base64DecodedSize = (base64: string): number => {
+	const sanitized = base64.replace(/\s+/g, "");
+	if (!sanitized) return 0;
+	const padding = sanitized.endsWith("==") ? 2 : sanitized.endsWith("=") ? 1 : 0;
+	return Math.floor((sanitized.length * 3) / 4) - padding;
+};
 
 /**
  * Extract the embedded attachments (typically the human-readable PDF) from a
  * UBL invoice or credit note XML. Attachments referenced only by external URI
  * (no `EmbeddedDocumentBinaryObject`) are skipped; use {@link parseUblInvoice}
  * directly when those matter.
+ *
+ * @throws {UblParseError} when the XML is malformed or not a UBL invoice.
  */
 export const extractUblEmbeddedAttachments = (xml: string): UblEmbeddedAttachment[] => {
 	const parsed = parseUblInvoice(xml);
-	if (!parsed?.attachments || parsed.attachments.length === 0) return [];
+	if (!parsed) throw new UblParseError("Document is not a UBL Invoice or CreditNote");
+	if (!parsed.attachments || parsed.attachments.length === 0) return [];
 
 	return parsed.attachments
 		.map((attachment, index): UblEmbeddedAttachment | null => {
 			const base64Content = attachment.base64Content?.trim();
 			if (!base64Content) return null;
 			return {
-				id: attachment.id || null,
-				filename: attachment.filename || `attachment-${index + 1}`,
-				mimeCode: attachment.mimeCode || "application/octet-stream",
+				id: attachment.id,
+				filename: attachment.filename ?? `attachment-${index + 1}`,
+				mimeCode: attachment.mimeCode ?? "application/octet-stream",
 				sizeBytes: base64DecodedSize(base64Content),
 				lineOrder: index,
 				base64Content,

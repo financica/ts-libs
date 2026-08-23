@@ -139,6 +139,24 @@ describe("EcbClient.getRate", () => {
 		expect((error as EcbError).cause).toBe(failure);
 	});
 
+	it("surfaces a timeout as EcbError with the abort as cause", async () => {
+		const local = new EcbClient({
+			timeoutMs: 5,
+			fetch: (_url, init) =>
+				new Promise((_resolve, reject) => {
+					init?.signal?.addEventListener("abort", () =>
+						reject(init.signal?.reason ?? new Error("aborted")),
+					);
+				}),
+		});
+		const error = await local.getRate("USD", "2024-01-15").catch((e) => e);
+		expect(error).toBeInstanceOf(EcbError);
+		expect(error).not.toBeInstanceOf(EcbHttpError);
+		expect((error as EcbError).name).toBe("EcbError");
+		expect((error as EcbError).cause).toBeInstanceOf(Error);
+		expect(((error as EcbError).cause as Error).name).toBe("AbortError");
+	});
+
 	it("passes an abort signal by default and none when timeoutMs is 0", async () => {
 		const seen: (AbortSignal | undefined)[] = [];
 		const spy: FetchLike = async (url, init) => {

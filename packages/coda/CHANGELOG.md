@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **BREAKING: parse errors throw `CodaParseError`; `null` means "not a CODA file".** `parseCoda` returns `null` only when the content does not start with a CODA header record (record code `0` with a DDMMYY creation date). A statement without its old-balance record, an unparseable mandatory date or amount, or an invalid transaction code now throws instead of returning `null`.
+- **BREAKING: absent fields are absent.** `addressee` and `separateApplication` are optional (were `""` when blank); `totalDebit` / `totalCredit` are optional (were `0` when the trailer record is missing); `counterpartyName` is absent rather than `""`. Dates are no longer filled with `new Date(0)`.
+
 ## 0.1.0
 
 Initial release.

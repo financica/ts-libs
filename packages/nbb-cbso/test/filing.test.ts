@@ -8,6 +8,7 @@ import {
 	describeExpression,
 	evaluateExpression,
 	ExpressionError,
+	NbbBuildError,
 	filingValue,
 	renderNbbFiling,
 	validateNbbFiling,
@@ -116,7 +117,7 @@ describe("buildNbbFiling", () => {
 	it("rejects a rubric code the model does not have", () => {
 		expect(() =>
 			buildNbbFiling(withBalanceSheet({ "99/99": { current: 1 } })),
-		).toThrow(/unknown rubric code "99\/99"/);
+		).toThrow(NbbBuildError);
 	});
 
 	it("takes the taxonomy module from the input, unchanged", () => {

@@ -16,14 +16,14 @@ export interface CodaStatement {
 	isDuplicate: boolean;
 	/** File reference assigned by the bank. */
 	fileReference?: string | undefined;
-	/** Name of the addressee. */
-	addressee: string;
+	/** Name of the addressee. Absent when the bank leaves the field blank. */
+	addressee?: string | undefined;
 	/** BIC of the bank holding the account. */
 	bic?: string | undefined;
 	/** Identification number of the Belgium-based account holder. */
 	companyId?: string | undefined;
-	/** Separate application code (5 positions). */
-	separateApplication: string;
+	/** Separate application code (5 positions). Absent when blank. */
+	separateApplication?: string | undefined;
 	/** Transaction reference (MT940 tag 20). */
 	transactionReference?: string | undefined;
 	/** Related reference (MT940 tag 21). */
@@ -63,10 +63,10 @@ export interface CodaStatement {
 
 	// ── Trailer record (9) ────────────────────────────────────────────
 
-	/** Sum of debit movement amounts. */
-	totalDebit: number;
-	/** Sum of credit movement amounts. */
-	totalCredit: number;
+	/** Sum of debit movement amounts. Absent when the file has no trailer record. */
+	totalDebit?: number | undefined;
+	/** Sum of credit movement amounts. Absent when the file has no trailer record. */
+	totalCredit?: number | undefined;
 }
 
 /** Account number and currency information. */

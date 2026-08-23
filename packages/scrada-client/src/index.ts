@@ -18,6 +18,7 @@ export {
 } from "./constants";
 export {
 	ScradaApiError,
+	ScradaError,
 	scradaApiErrorFromResponse,
 	summarizeScradaErrorDetails,
 } from "./errors";

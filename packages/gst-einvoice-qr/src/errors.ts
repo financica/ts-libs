@@ -1,8 +1,11 @@
 /** Base class for every error thrown by this package. */
 export class GstQrError extends Error {
+	override readonly cause?: unknown;
+
 	constructor(message: string, options?: { cause?: unknown }) {
 		super(message, options);
 		this.name = "GstQrError";
+		this.cause = options?.cause;
 	}
 }
 

@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **`NbbCbsoError` is the base class of every error the package throws.** `ExpressionError` now extends it and sets `name`; `buildNbbFiling` throws `NbbBuildError` (also an `NbbCbsoError`) instead of a plain `Error` for an unknown rubric code or a contradicted figure.
+
+### Added
+
+- `NbbCbsoError` and `NbbBuildError` are exported.
+
 ## 0.6.1
 
 ### Fixed

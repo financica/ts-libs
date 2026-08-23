@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **BREAKING: parse errors throw `XbrlParseError`; `null` means "not an XBRL instance".** `parseXbrl` returns `null` only when there is no `xbrli:xbrl` root element. Malformed XML, an undeclared namespace prefix, a document without `link:schemaRef`, a context without `id`/`entity`/`period`, a unit without `id`, or a footnote/locator/arc missing its XLink attributes now throws instead of returning `null` or a `""`-filled record.
+- **BREAKING: absent fields are absent keys.** Optional attributes (`id`, `unitRef`, `decimals`, `precision`, `role`, `arcrole`, `lang`, `order`, `scenario`, `segment`) are omitted from the output rather than set to `undefined`; no `""` placeholders remain for `href`, `scheme`, `label`, `role`, `from`, `to` or `arcrole`.
+
 ## 0.2.0
 
 ### Added

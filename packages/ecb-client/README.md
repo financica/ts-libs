@@ -67,6 +67,14 @@ const series = await ecb.getSeries("2024-01-11", "2024-01-15", ["USD", "GBP"]);
 | `cache`     | unbounded in-process `Map`               | Snapshot cache keyed by request. Pass `null` to disable. |
 | `timeoutMs` | `15000`                                  | Per-request timeout. `0` disables it.                    |
 
+### Errors
+
+Everything the client throws is an `EcbError`. Network failures, timeouts and
+aborts are wrapped in an `EcbError` with `cause` set to the original rejection;
+a non-2xx response throws `EcbHttpError extends EcbError` carrying `status` and
+the response body on `details` (also `body`); a missing observation throws
+`NoRateError extends EcbError`. Every class sets `name` to its class name.
+
 ### `getRate(currency, date) → Promise<ReferenceRate>`
 
 The rate for one currency on (or before) `date`. `date` is a `YYYY-MM-DD`

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { createScradaApiClientFromEnv, ScradaApiClient } from "../client";
-import { ScradaApiError } from "../errors";
+import { ScradaApiError, ScradaError } from "../errors";
 import type { PeppolOnlyInvoice, PeppolOutboundDocumentRouting } from "../types";
 
 const buildOkResponse = (body: unknown, init: ResponseInit = {}) =>
@@ -50,6 +50,69 @@ const routing: PeppolOutboundDocumentRouting = {
 };
 
 describe("ScradaApiClient", () => {
+	it("wraps a fetch rejection in ScradaError with the cause attached", async () => {
+		const failure = new TypeError("fetch failed");
+		const fetchSpy = vi.fn(async () => {
+			throw failure;
+		}) as FetchSpy;
+		const client = buildClient(fetchSpy);
+
+		const error = await client
+			.getUnconfirmedInboundDocuments("co-1")
+			.catch((e: unknown) => e);
+
+		expect(error).toBeInstanceOf(ScradaError);
+		expect(error).not.toBeInstanceOf(ScradaApiError);
+		expect((error as ScradaError).name).toBe("ScradaError");
+		expect((error as ScradaError).cause).toBe(failure);
+	});
+
+	it("wraps an abort in ScradaError and forwards the signal to fetch", async () => {
+		const controller = new AbortController();
+		const fetchSpy = vi.fn(async (_url: string, init?: RequestInit) => {
+			init?.signal?.throwIfAborted();
+			return buildOkResponse({});
+		}) as unknown as FetchSpy;
+		const client = buildClient(fetchSpy);
+		controller.abort();
+
+		const error = await client
+			.getUnconfirmedInboundDocuments("co-1", { signal: controller.signal })
+			.catch((e: unknown) => e);
+
+		expect(error).toBeInstanceOf(ScradaError);
+		expect((error as ScradaError).message).toContain("aborted");
+		expect(lastCall(fetchSpy).init?.signal).toBe(controller.signal);
+	});
+
+	it("throws ScradaApiError when a JSON endpoint answers with a non-JSON body", async () => {
+		const fetchSpy = fetchReturning(() =>
+			buildOkResponse("<html>maintenance</html>", {
+				headers: { "content-type": "text/html" },
+			}),
+		);
+		const client = buildClient(fetchSpy);
+
+		const error = await client
+			.getUnconfirmedInboundDocuments("co-1")
+			.catch((e: unknown) => e);
+
+		expect(error).toBeInstanceOf(ScradaApiError);
+		expect((error as ScradaApiError).status).toBe(200);
+		expect((error as ScradaApiError).details).toBe("<html>maintenance</html>");
+	});
+
+	it("still accepts a bare text document id from the outbound endpoints", async () => {
+		const fetchSpy = fetchReturning(() =>
+			buildOkResponse("doc-plain", { headers: { "content-type": "text/plain" } }),
+		);
+		const client = buildClient(fetchSpy);
+
+		await expect(
+			client.sendOutboundSalesInvoice("co-1", buildMinimalInvoice()),
+		).resolves.toBe("doc-plain");
+	});
+
 	it("sends X-API-KEY, X-PASSWORD and Language headers on every request", async () => {
 		const fetchSpy = fetchReturning(() => buildOkResponse({ id: "doc-1" }));
 		const client = buildClient(fetchSpy);
@@ -145,15 +208,6 @@ describe("ScradaApiClient", () => {
 		const client = buildClient(fetchSpy);
 
 		await expect(client.getUnconfirmedInboundDocuments("co-1")).resolves.toBeNull();
-	});
-
-	it("returns a non-JSON text body as the raw string on JSON endpoints", async () => {
-		const fetchSpy = fetchReturning(() => buildOkResponse("not json at all"));
-		const client = buildClient(fetchSpy);
-
-		await expect(client.getUnconfirmedInboundDocuments("co-1")).resolves.toBe(
-			"not json at all",
-		);
 	});
 
 	// Message extraction from the body is covered in errors.test.ts; here only

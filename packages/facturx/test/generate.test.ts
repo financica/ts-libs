@@ -106,7 +106,7 @@ describe("buildFacturXXml", () => {
 		const invoice = computeTotals(input());
 		const xml = buildFacturXXml(invoice);
 
-		const { invoice: parsed, profile, warnings } = parseFacturXXml(xml);
+		const { invoice: parsed, profile, warnings } = parseFacturXXml(xml)!;
 		expect(profile).toBe("en16931");
 		expect(warnings).toEqual([]);
 		expect(parsed).toMatchObject({
@@ -215,7 +215,7 @@ describe("buildFacturXXml", () => {
 			typeCode: DOCUMENT_TYPE_CODES.CREDIT_NOTE,
 			precedingInvoices: [{ id: "INV-2026-001", issueDate: "2026-01-15" }],
 		});
-		const { invoice: parsed } = parseFacturXXml(buildFacturXXml(invoice));
+		const { invoice: parsed } = parseFacturXXml(buildFacturXXml(invoice))!;
 		// UNTDID 1001 code 381 = credit note.
 		expect(parsed.typeCode).toBe("381");
 		expect(parsed.precedingInvoices).toEqual([
@@ -244,7 +244,7 @@ describe("buildFacturXXml", () => {
 				exemptionReasons: [{ categoryCode: "AE", reason: "Reverse charge" }],
 			},
 		);
-		const { invoice: parsed } = parseFacturXXml(buildFacturXXml(invoice));
+		const { invoice: parsed } = parseFacturXXml(buildFacturXXml(invoice))!;
 		// BR-CO-16: 100 − 20 prepaid + 0.01 rounding.
 		expect(parsed.totals).toMatchObject({
 			roundingAmount: 0.01,

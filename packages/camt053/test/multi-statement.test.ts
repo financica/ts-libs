@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { parseCamt053 } from "../src/parser.js";
+import { Camt053ParseError, parseCamt053 } from "../src/parser.js";
 
 const readFixture = (name: string) =>
 	readFileSync(join(import.meta.dirname, "fixtures", name), "utf8");
@@ -100,11 +100,11 @@ describe("parseCamt053 — no statements", () => {
 		expect(report?.creationDate).toEqual(new Date("2025-07-01T06:00:00Z"));
 	});
 
-	it("returns null when BkToCstmrStmt itself is absent", () => {
+	it("throws when BkToCstmrStmt itself is absent", () => {
 		// Distinguishing the two matters: an empty statement list is a real
-		// report, a missing BkToCstmrStmt is not a statement message at all.
+		// report, a CAMT.053 document without its mandatory body is broken.
 		const xml = `<?xml version="1.0"?>
 			<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.02"></Document>`;
-		expect(parseCamt053(xml)).toBeNull();
+		expect(() => parseCamt053(xml)).toThrow(Camt053ParseError);
 	});
 });

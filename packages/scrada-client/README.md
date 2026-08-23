@@ -57,7 +57,7 @@ const scrada = createScradaApiClientFromEnv();
 
 ## Errors
 
-All non-2xx responses surface as `ScradaApiError`:
+Everything the client throws is a `ScradaError`. Network failures and aborted requests are wrapped in a `ScradaError` with `cause` set to the original rejection; all non-2xx responses — and 2xx responses whose body is not the JSON the endpoint promises — surface as `ScradaApiError extends ScradaError`, carrying `status` and the response body on `details`:
 
 ```ts
 import { ScradaApiClient, ScradaApiError } from "@financica/scrada-client";
@@ -72,7 +72,7 @@ try {
 }
 ```
 
-The `message` is extracted from the response body using `summarizeScradaErrorDetails`, which walks Scrada's variable error shapes (`{message}`, `{errors: [{detail}]}`, `{modelState}`, `{defaultFormat}`, …) and joins the human-readable strings with `|`. The full original body is preserved on `err.details`.
+The `message` is extracted from the response body using `summarizeScradaErrorDetails`, which walks Scrada's variable error shapes (`{message}`, `{errors: [{detail}]}`, `{modelState}`, `{defaultFormat}`, …) and joins the human-readable strings with `|`. The full original body is preserved on `err.details`. Every request method accepts an optional `{ signal }` to abort it, and the constructor accepts a `fetch` override for testing.
 
 ## Types
 

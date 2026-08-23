@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { UblParseError } from "../src/errors.js";
 import { normalizeUblResponse } from "../src/normalize.js";
 
 const readFixture = (name: string) =>
@@ -194,10 +195,34 @@ describe("normalizeUblResponse", () => {
 		{ name: "empty input", xml: "" },
 		{ name: "truncated XML", xml: "<Invoice><cbc:ID>IN" },
 		{ name: "non-XML text", xml: "not xml at all" },
-	])("throws on unparseable input ($name)", ({ xml }) => {
-		expect(() => normalizeUblResponse(xml, "doc")).toThrow(
-			"Failed to parse UBL invoice XML",
+	])("throws UblParseError on unparseable input ($name)", ({ xml }) => {
+		expect(() => normalizeUblResponse(xml, "doc")).toThrow(UblParseError);
+	});
+
+	it("throws UblParseError on well-formed XML that is not a UBL invoice", () => {
+		expect(() => normalizeUblResponse("<html><body/></html>", "doc")).toThrow(
+			UblParseError,
 		);
+	});
+
+	it("reports null, not 0, for totals the document does not state", () => {
+		const xml = `<?xml version="1.0"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+	xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+	<cbc:ID>BARE-1</cbc:ID>
+	<cbc:IssueDate>2026-08-02</cbc:IssueDate>
+	<cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+</Invoice>`;
+		const { extracted } = normalizeUblResponse(xml, "doc");
+		expect(extracted.invoice).toMatchObject({
+			subtotal: null,
+			tax_total: null,
+			total: null,
+			amount_due: null,
+			amount_paid: null,
+			rounding_total: null,
+			supplier: { name: null, address: null },
+		});
 	});
 
 	it("computes confidence scores", () => {

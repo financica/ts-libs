@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **BREAKING: parse errors throw `Camt053ParseError`; `null` means "not a CAMT.053 document".** `parseCamt053` returns `null` only when the root is not a `Document` in a `camt.053.001.*` namespace. Malformed XML and missing mandatory elements (`GrpHdr/MsgId`, `GrpHdr/CreDtTm`, `Stmt/Id`, `Stmt/CreDtTm`, `Stmt/Acct`, `Ntry/Amt`, `Ntry/CdtDbtInd`, `Bal/Amt`, `Bal/CdtDbtInd`, `Bal/Dt`) now throw instead of returning `null` or a filled-in placeholder.
+- **BREAKING: absent fields are absent.** `Camt053Balance.type` is now optional (was `""` for proprietary balances); `reversalIndicator` is `undefined` rather than `false` when `RvslInd` is absent; `creditDebitIndicator` values are validated against `"CRDT" | "DBIT"` (an unknown value is `undefined` on batches and summaries, and an error on entries and balances). Dates are no longer filled with `new Date(0)`.
+
 ## 0.2.0
 
 ### Added

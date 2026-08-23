@@ -2,7 +2,7 @@
 
 A TypeScript library for reading and writing [XBRL 2.1](https://www.xbrl.org/Specification/XBRL-2.1/REC-2003-12-31/XBRL-2.1-REC-2003-12-31+corrected-errata-2013-02-20.html) instance documents as typed JavaScript objects. It focuses on practical reporting data: contexts, units, facts, schema references, and footnotes.
 
-The library is for application code that needs a parser and serialiser rather than a full validation pipeline. It resolves QNames into `{ namespace, localName, prefix }`, preserves reported values as strings so callers can apply their own numeric and precision rules, represents tuples recursively, indexes contexts and units by ID for direct lookup from fact references, parses segment and scenario dimensions into structured members where it can, and returns `null` instead of throwing when the input is empty, malformed, or not an XBRL instance document.
+The library is for application code that needs a parser and serialiser rather than a full validation pipeline. It resolves QNames into `{ namespace, localName, prefix }`, preserves reported values as strings so callers can apply their own numeric and precision rules, represents tuples recursively, indexes contexts and units by ID for direct lookup from fact references, parses segment and scenario dimensions into structured members where it can, returns `null` when the input is not an XBRL instance document (no `xbrli:xbrl` root), and throws `XbrlParseError` when it is one but is malformed or lacks a mandatory element.
 
 Parsing and writing are symmetric: `parseXbrl(serializeXbrl(doc))` gives back `doc`.
 

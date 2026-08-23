@@ -1,6 +1,7 @@
 import {
 	parseUblInvoice,
 	type UblAddress,
+	UblParseError,
 	type UblInvoice as UblInvoiceData,
 	type UblLine,
 	type UblParty,
@@ -21,7 +22,11 @@ export type UblInvoiceProps = {
 	locale?: string;
 	/** Extra class names appended to the `.ubl-invoice` root. */
 	className?: string;
-	/** Rendered when `xml` is provided but cannot be parsed. Defaults to `null`. */
+	/**
+	 * Rendered when `xml` is provided but is malformed, not a UBL invoice, or
+	 * lacks a mandatory element (`parseUblInvoice` returns `null` or throws
+	 * `UblParseError`). Defaults to `null`.
+	 */
 	fallback?: React.ReactNode;
 } & (
 	| {
@@ -123,6 +128,8 @@ const LineRow: React.FC<{
 	currency: string;
 	locale: string;
 }> = ({ line, index, currency, locale }) => {
+	// Blank strings are tolerated alongside absent keys: a pre-parsed `invoice`
+	// may come from a store written by an older parser.
 	const name = line.itemName?.trim() || line.description?.trim() || "Line item";
 	const secondary =
 		line.description?.trim() && line.description.trim() !== name
@@ -253,10 +260,15 @@ export const UblInvoice: React.FC<UblInvoiceProps> = (props) => {
 	const { locale = "en-US", className } = props;
 	const xml = "xml" in props ? props.xml : undefined;
 	const provided = "invoice" in props ? props.invoice : undefined;
-	const invoice = useMemo(
-		() => (xml !== undefined ? parseUblInvoice(xml) : (provided ?? null)),
-		[xml, provided],
-	);
+	const invoice = useMemo(() => {
+		if (xml === undefined) return provided ?? null;
+		try {
+			return parseUblInvoice(xml);
+		} catch (error) {
+			if (error instanceof UblParseError) return null;
+			throw error;
+		}
+	}, [xml, provided]);
 
 	if (!invoice) return <>{props.fallback ?? null}</>;
 
@@ -272,9 +284,7 @@ export const UblInvoice: React.FC<UblInvoiceProps> = (props) => {
 	const allowanceTotal = invoice.monetaryTotal.allowanceTotalAmount ?? 0;
 	const prepaid = invoice.monetaryTotal.prepaidAmount ?? 0;
 	const rounding = invoice.monetaryTotal.payableRoundingAmount ?? 0;
-	const payable = isFiniteNumber(invoice.monetaryTotal.payableAmount)
-		? invoice.monetaryTotal.payableAmount
-		: total;
+	const payable = invoice.monetaryTotal.payableAmount ?? total;
 	const taxTotal = invoice.taxSubtotals.reduce(
 		(sum, entry) => sum + finite(entry.taxAmount),
 		0,

@@ -1,4 +1,4 @@
-import { XMLParser } from "fast-xml-parser";
+import { XMLParser, XMLValidator } from "fast-xml-parser";
 import type {
 	Camt053Account,
 	Camt053AmountDetails,
@@ -33,6 +33,20 @@ import type {
  * sniff a file for the format before handing it over.
  */
 export const CAMT053_NS_PREFIX = "urn:iso:std:iso:20022:tech:xsd:camt.053.001.";
+
+/**
+ * Thrown when the input is a CAMT.053 document but cannot be read: malformed
+ * XML, or an element the schema makes mandatory is missing or invalid.
+ */
+export class Camt053ParseError extends Error {
+	override readonly cause?: unknown;
+
+	constructor(message: string, options?: { cause?: unknown }) {
+		super(message);
+		this.name = "Camt053ParseError";
+		if (options && "cause" in options) this.cause = options.cause;
+	}
+}
 
 /** Prefix fast-xml-parser puts on attribute keys. */
 const ATTR_PREFIX = "@_";
@@ -114,6 +128,66 @@ function date(node: XmlNode | undefined, key: string): Date | undefined {
 	return Number.isNaN(d.getTime()) ? undefined : d;
 }
 
+/** Mandatory text value: throws when absent. */
+function requireText(node: XmlNode | undefined, key: string, path: string): string {
+	const v = text(node, key);
+	if (v === undefined)
+		throw new Camt053ParseError(`Missing mandatory element ${path}`);
+	return v;
+}
+
+/** Mandatory date value: throws when absent or unparseable. */
+function requireDate(node: XmlNode | undefined, key: string, path: string): Date {
+	const raw = text(node, key);
+	if (raw === undefined)
+		throw new Camt053ParseError(`Missing mandatory element ${path}`);
+	const d = new Date(raw);
+	if (Number.isNaN(d.getTime()))
+		throw new Camt053ParseError(`Invalid date in ${path}: ${raw}`);
+	return d;
+}
+
+/** Credit/debit indicator read off the wire: validated, never cast. */
+function creditDebit(
+	node: XmlNode | undefined,
+	key = "CdtDbtInd",
+): "CRDT" | "DBIT" | undefined {
+	const v = text(node, key);
+	return v === "CRDT" || v === "DBIT" ? v : undefined;
+}
+
+/** Mandatory credit/debit indicator: throws when absent or outside the union. */
+function requireCreditDebit(node: XmlNode | undefined, path: string): "CRDT" | "DBIT" {
+	const v = creditDebit(node);
+	if (v === undefined)
+		throw new Camt053ParseError(
+			`Missing or invalid ${path}/CdtDbtInd: ${text(node, "CdtDbtInd") ?? "(absent)"}`,
+		);
+	return v;
+}
+
+/** Mandatory amount with its currency: throws when absent or non-numeric. */
+function requireAmount(
+	node: XmlNode | undefined,
+	key: string,
+	path: string,
+): { amount: number; currency: string } {
+	const ac = amountAndCurrency(node, key);
+	if (!ac) throw new Camt053ParseError(`Missing or invalid amount ${path}/${key}`);
+	if (ac.currency === undefined)
+		throw new Camt053ParseError(`Missing mandatory attribute ${path}/${key}/@Ccy`);
+	return { amount: ac.amount, currency: ac.currency };
+}
+
+/** Drop `undefined`-valued keys so an absent field is an absent key. */
+function compact<T extends object>(obj: T): T {
+	for (const key of Object.keys(obj)) {
+		if ((obj as Record<string, unknown>)[key] === undefined)
+			delete (obj as Record<string, unknown>)[key];
+	}
+	return obj;
+}
+
 /** Ensure a value is wrapped in an array. */
 function asArray(val: unknown): unknown[] {
 	if (val == null) return [];
@@ -164,7 +238,7 @@ function parsePostalAddress(
 ): Camt053PostalAddress | undefined {
 	if (!node) return undefined;
 	const adrLines = texts(node, "AdrLine");
-	return {
+	return compact({
 		addressType: text(child(node, "AdrTp"), "Cd"),
 		streetName: text(node, "StrtNm"),
 		buildingNumber: text(node, "BldgNb"),
@@ -173,7 +247,7 @@ function parsePostalAddress(
 		country: text(node, "Ctry"),
 		countrySubDivision: text(node, "CtrySubDvsn"),
 		addressLines: adrLines.length > 0 ? adrLines : undefined,
-	};
+	});
 }
 
 function parsePartyIdentification(
@@ -183,23 +257,23 @@ function parsePartyIdentification(
 	const orgId = child(node, "OrgId");
 	const prvtId = child(node, "PrvtId");
 	const orgOthr = child(orgId, "Othr");
-	return {
+	return compact({
 		organisationId: text(orgOthr, "Id"),
 		organisationIdScheme: text(child(orgOthr, "SchmeNm"), "Cd"),
 		bicOrBei: text(orgId, "BICOrBEI"),
 		privateId: text(child(prvtId, "Othr"), "Id"),
-	};
+	});
 }
 
 function parseParty(node: XmlNode | undefined): Camt053Party | undefined {
 	if (!node) return undefined;
 	// CAMT.053.001.10 wraps party in a Pty element; older versions don't
 	const inner = child(node, "Pty") ?? node;
-	return {
+	return compact({
 		name: text(inner, "Nm"),
 		identification: parsePartyIdentification(child(inner, "Id")),
 		postalAddress: parsePostalAddress(child(inner, "PstlAdr")),
-	};
+	});
 }
 
 function parseFinancialInstitution(
@@ -207,25 +281,25 @@ function parseFinancialInstitution(
 ): Camt053FinancialInstitution | undefined {
 	if (!node) return undefined;
 	const fin = child(node, "FinInstnId") ?? node;
-	return {
+	return compact({
 		bic: text(fin, "BIC") ?? text(fin, "BICFI"),
 		name: text(fin, "Nm"),
 		otherId: text(child(fin, "Othr"), "Id"),
 		clearingSystemMemberId: text(child(fin, "ClrSysMmbId"), "MmbId"),
 		postalAddress: parsePostalAddress(child(fin, "PstlAdr")),
-	};
+	});
 }
 
 function parseAccount(node: XmlNode | undefined): Camt053Account | undefined {
 	if (!node) return undefined;
 	const id = child(node, "Id");
-	return {
+	return compact({
 		iban: text(id, "IBAN"),
 		otherId: text(child(id, "Othr"), "Id"),
 		currency: text(node, "Ccy"),
 		owner: parseParty(child(node, "Ownr")),
 		servicer: parseFinancialInstitution(child(node, "Svcr")),
-	};
+	});
 }
 
 function parseBankTransactionCode(
@@ -235,13 +309,13 @@ function parseBankTransactionCode(
 	const domn = child(node, "Domn");
 	const fmly = child(domn, "Fmly");
 	const prtry = child(node, "Prtry");
-	return {
+	return compact({
 		domainCode: text(domn, "Cd"),
 		domainFamilyCode: text(fmly, "Cd"),
 		domainSubFamilyCode: text(fmly, "SubFmlyCd"),
 		proprietaryCode: text(prtry, "Cd"),
 		proprietaryIssuer: text(prtry, "Issr"),
-	};
+	});
 }
 
 function parseCurrencyExchange(
@@ -252,12 +326,12 @@ function parseCurrencyExchange(
 	const trgtCcy = text(node, "TrgtCcy");
 	const xchgRate = num(node, "XchgRate");
 	if (!srcCcy || !trgtCcy || xchgRate == null) return undefined;
-	return {
+	return compact({
 		sourceCurrency: srcCcy,
 		targetCurrency: trgtCcy,
 		unitCurrency: text(node, "UnitCcy"),
 		exchangeRate: xchgRate,
-	};
+	});
 }
 
 function parseAmountDetails(
@@ -266,26 +340,26 @@ function parseAmountDetails(
 	if (!node) return undefined;
 	const txAmt = child(node, "TxAmt");
 	const ac = amountAndCurrency(txAmt, "Amt");
-	return {
+	return compact({
 		transactionAmount: ac?.amount,
 		transactionCurrency: ac?.currency,
 		currencyExchange: parseCurrencyExchange(child(txAmt, "CcyXchg")),
-	};
+	});
 }
 
 function parseCharges(node: XmlNode | undefined): Camt053Charges | undefined {
 	if (!node) return undefined;
 	const ac = amountAndCurrency(node, "TtlChrgsAndTaxAmt");
 	if (!ac) return undefined;
-	return {
+	return compact({
 		totalAmount: ac.amount,
 		totalCurrency: ac.currency,
-	};
+	});
 }
 
 function parseReferences(node: XmlNode | undefined): Camt053References | undefined {
 	if (!node) return undefined;
-	return {
+	return compact({
 		messageId: text(node, "MsgId"),
 		accountServicerReference: text(node, "AcctSvcrRef"),
 		paymentInformationId: text(node, "PmtInfId"),
@@ -293,47 +367,47 @@ function parseReferences(node: XmlNode | undefined): Camt053References | undefin
 		endToEndId: text(node, "EndToEndId"),
 		transactionId: text(node, "TxId"),
 		mandateId: text(node, "MndtId"),
-	};
+	});
 }
 
 function parseRelatedParties(
 	node: XmlNode | undefined,
 ): Camt053RelatedParties | undefined {
 	if (!node) return undefined;
-	return {
+	return compact({
 		debtor: parseParty(child(node, "Dbtr")),
 		debtorAccount: parseAccount(child(node, "DbtrAcct")),
 		creditor: parseParty(child(node, "Cdtr")),
 		creditorAccount: parseAccount(child(node, "CdtrAcct")),
 		ultimateDebtor: parseParty(child(node, "UltmtDbtr")),
 		ultimateCreditor: parseParty(child(node, "UltmtCdtr")),
-	};
+	});
 }
 
 function parseRelatedAgents(
 	node: XmlNode | undefined,
 ): Camt053RelatedAgents | undefined {
 	if (!node) return undefined;
-	return {
+	return compact({
 		debtorAgent: parseFinancialInstitution(child(node, "DbtrAgt")),
 		creditorAgent: parseFinancialInstitution(child(node, "CdtrAgt")),
-	};
+	});
 }
 
 function parsePurpose(node: XmlNode | undefined): Camt053Purpose | undefined {
 	if (!node) return undefined;
-	return {
+	return compact({
 		code: text(node, "Cd"),
 		proprietary: text(node, "Prtry"),
-	};
+	});
 }
 
 function parseStructuredRemittance(node: XmlNode): Camt053StructuredRemittance {
 	const cdtrRefInf = child(node, "CdtrRefInf");
-	return {
+	return compact({
 		creditorReferenceType: text(child(child(cdtrRefInf, "Tp"), "CdOrPrtry"), "Cd"),
 		creditorReference: text(cdtrRefInf, "Ref"),
-	};
+	});
 }
 
 function parseRemittanceInformation(
@@ -342,10 +416,10 @@ function parseRemittanceInformation(
 	if (!node) return undefined;
 	const ustrd = texts(node, "Ustrd");
 	const strd = children(node, "Strd").map(parseStructuredRemittance);
-	return {
+	return compact({
 		unstructured: ustrd.length > 0 ? ustrd : undefined,
 		structured: strd.length > 0 ? strd : undefined,
-	};
+	});
 }
 
 function parseReturnInformation(
@@ -354,15 +428,15 @@ function parseReturnInformation(
 	if (!node) return undefined;
 	const rsn = child(node, "Rsn");
 	const addtlInf = texts(node, "AddtlInf");
-	return {
+	return compact({
 		reasonCode: text(rsn, "Cd"),
 		reasonProprietary: text(rsn, "Prtry"),
 		additionalInformation: addtlInf.length > 0 ? addtlInf : undefined,
-	};
+	});
 }
 
 function parseTransactionDetail(node: XmlNode): Camt053TransactionDetail {
-	return {
+	return compact({
 		references: parseReferences(child(node, "Refs")),
 		amountDetails: parseAmountDetails(child(node, "AmtDtls")),
 		bankTransactionCode: parseBankTransactionCode(child(node, "BkTxCd")),
@@ -373,36 +447,36 @@ function parseTransactionDetail(node: XmlNode): Camt053TransactionDetail {
 		charges: parseCharges(child(node, "Chrgs")),
 		returnInformation: parseReturnInformation(child(node, "RtrInf")),
 		additionalInformation: text(node, "AddtlTxInf"),
-	};
+	});
 }
 
 function parseBatch(node: XmlNode | undefined): Camt053Batch | undefined {
 	if (!node) return undefined;
 	const ac = amountAndCurrency(node, "TtlAmt");
-	return {
+	return compact({
 		messageId: text(node, "MsgId"),
 		paymentInformationId: text(node, "PmtInfId"),
 		numberOfTransactions: num(node, "NbOfTxs"),
 		totalAmount: ac?.amount,
 		totalCurrency: ac?.currency,
-		creditDebitIndicator: text(node, "CdtDbtInd") as "CRDT" | "DBIT" | undefined,
-	};
+		creditDebitIndicator: creditDebit(node),
+	});
 }
 
 function parseEntryDetail(node: XmlNode): Camt053EntryDetail {
-	return {
+	return compact({
 		batch: parseBatch(child(node, "Btch")),
 		transactionDetails: children(node, "TxDtls").map(parseTransactionDetail),
-	};
+	});
 }
 
 function parseEntry(node: XmlNode): Camt053Entry {
-	const ac = amountAndCurrency(node, "Amt");
-	return {
+	const { amount, currency } = requireAmount(node, "Amt", "Ntry");
+	return compact({
 		entryReference: text(node, "NtryRef"),
-		amount: ac?.amount ?? 0,
-		currency: ac?.currency ?? "",
-		creditDebitIndicator: text(node, "CdtDbtInd") as "CRDT" | "DBIT",
+		amount,
+		currency,
+		creditDebitIndicator: requireCreditDebit(node, "Ntry"),
 		status: text(child(node, "Sts"), "Cd"),
 		bookingDate: parseDate(child(node, "BookgDt")),
 		valueDate: parseDate(child(node, "ValDt")),
@@ -410,10 +484,18 @@ function parseEntry(node: XmlNode): Camt053Entry {
 		bankTransactionCode: parseBankTransactionCode(child(node, "BkTxCd")),
 		amountDetails: parseAmountDetails(child(node, "AmtDtls")),
 		charges: parseCharges(children(node, "Chrgs")[0]),
-		reversalIndicator: node["RvslInd"] === "true" || node["RvslInd"] === true,
+		reversalIndicator: parseBoolean(node["RvslInd"]),
 		additionalInformation: text(node, "AddtlNtryInf"),
 		entryDetails: children(node, "NtryDtls").map(parseEntryDetail),
-	};
+	});
+}
+
+/** An xs:boolean read off the wire; `undefined` when absent or not a boolean. */
+function parseBoolean(val: unknown): boolean | undefined {
+	const v = scalar(val);
+	if (v === "true" || v === "1") return true;
+	if (v === "false" || v === "0") return false;
+	return undefined;
 }
 
 function parseDate(node: XmlNode | undefined): Date | undefined {
@@ -424,15 +506,17 @@ function parseDate(node: XmlNode | undefined): Date | undefined {
 function parseBalance(node: XmlNode): Camt053Balance {
 	const tp = child(node, "Tp");
 	const cdOrPrtry = child(tp, "CdOrPrtry");
-	const ac = amountAndCurrency(node, "Amt");
-	return {
-		type: text(cdOrPrtry, "Cd") ?? "",
+	const { amount, currency } = requireAmount(node, "Amt", "Bal");
+	const balanceDate = parseDate(child(node, "Dt"));
+	if (!balanceDate) throw new Camt053ParseError("Missing mandatory element Bal/Dt");
+	return compact({
+		type: text(cdOrPrtry, "Cd"),
 		proprietaryType: text(cdOrPrtry, "Prtry"),
-		amount: ac?.amount ?? 0,
-		currency: ac?.currency ?? "",
-		creditDebitIndicator: text(node, "CdtDbtInd") as "CRDT" | "DBIT",
-		date: parseDate(child(node, "Dt")) ?? new Date(0),
-	};
+		amount,
+		currency,
+		creditDebitIndicator: requireCreditDebit(node, "Bal"),
+		date: balanceDate,
+	});
 }
 
 function parseTransactionSummary(
@@ -443,37 +527,34 @@ function parseTransactionSummary(
 	const ttlNet = child(ttlNtries, "TtlNetNtry");
 	const ttlCdt = child(node, "TtlCdtNtries");
 	const ttlDbt = child(node, "TtlDbtNtries");
-	return {
+	return compact({
 		totalEntries: num(ttlNtries, "NbOfNtries"),
 		totalEntriesSum: num(ttlNtries, "Sum"),
 		netAmount: num(ttlNet, "Amt"),
-		netCreditDebitIndicator: text(ttlNet, "CdtDbtInd") as
-			| "CRDT"
-			| "DBIT"
-			| undefined,
+		netCreditDebitIndicator: creditDebit(ttlNet),
 		totalCreditEntries: num(ttlCdt, "NbOfNtries"),
 		totalCreditEntriesSum: num(ttlCdt, "Sum"),
 		totalDebitEntries: num(ttlDbt, "NbOfNtries"),
 		totalDebitEntriesSum: num(ttlDbt, "Sum"),
-	};
+	});
 }
 
 function parseStatement(node: XmlNode): Camt053Statement {
 	const frToDt = child(node, "FrToDt");
-	return {
-		id: text(node, "Id") ?? "",
+	const account = parseAccount(child(node, "Acct"));
+	if (!account) throw new Camt053ParseError("Missing mandatory element Stmt/Acct");
+	return compact({
+		id: requireText(node, "Id", "Stmt/Id"),
 		electronicSequenceNumber: num(node, "ElctrncSeqNb"),
 		legalSequenceNumber: num(node, "LglSeqNb"),
-		creationDate: date(node, "CreDtTm") ?? new Date(0),
+		creationDate: requireDate(node, "CreDtTm", "Stmt/CreDtTm"),
 		fromDate: date(frToDt, "FrDtTm") ?? date(frToDt, "FrDt"),
 		toDate: date(frToDt, "ToDtTm") ?? date(frToDt, "ToDt"),
-		account: parseAccount(child(node, "Acct")) ?? {
-			iban: undefined,
-		},
+		account,
 		transactionSummary: parseTransactionSummary(child(node, "TxsSummry")),
 		balances: children(node, "Bal").map(parseBalance),
 		entries: children(node, "Ntry").map(parseEntry),
-	};
+	});
 }
 
 // ---------------------------------------------------------------------------
@@ -483,31 +564,37 @@ function parseStatement(node: XmlNode): Camt053Statement {
 /**
  * Parse a CAMT.053 Bank-to-Customer Statement XML string into a typed object.
  *
- * Supports CAMT.053.001.x (any version from 001 to 010+). Returns `null` if
- * the XML cannot be parsed or is not a CAMT.053 document.
+ * Supports CAMT.053.001.x (any version from 001 to 010+). Returns `null` when
+ * the input is not a CAMT.053 document (no `Document` root in a
+ * `camt.053.001.*` namespace); throws {@link Camt053ParseError} when it is one
+ * but is malformed or lacks a mandatory element.
  */
 export function parseCamt053(xml: string): Camt053Report | null {
-	try {
-		const parsed: unknown = xmlParser.parse(xml);
-		const doc = isNode(parsed) ? child(parsed, "Document") : undefined;
-		if (!doc) return null;
+	const validation = XMLValidator.validate(xml);
+	if (validation !== true)
+		throw new Camt053ParseError(`Malformed XML: ${validation.err.msg}`, {
+			cause: validation.err,
+		});
+	const parsed: unknown = xmlParser.parse(xml);
+	const doc = isNode(parsed) ? child(parsed, "Document") : undefined;
+	if (!doc) return null;
 
-		// Validate namespace
-		const ns = text(doc, `${ATTR_PREFIX}xmlns`) ?? "";
-		if (!ns.startsWith(CAMT053_NS_PREFIX)) return null;
+	// Validate namespace
+	const ns = text(doc, `${ATTR_PREFIX}xmlns`) ?? "";
+	if (!ns.startsWith(CAMT053_NS_PREFIX)) return null;
 
-		const bkToCstmrStmt = child(doc, "BkToCstmrStmt");
-		if (!bkToCstmrStmt) return null;
+	const bkToCstmrStmt = child(doc, "BkToCstmrStmt");
+	if (!bkToCstmrStmt)
+		throw new Camt053ParseError("Missing mandatory element Document/BkToCstmrStmt");
 
-		const grpHdr = child(bkToCstmrStmt, "GrpHdr");
+	const grpHdr = child(bkToCstmrStmt, "GrpHdr");
+	if (!grpHdr)
+		throw new Camt053ParseError("Missing mandatory element BkToCstmrStmt/GrpHdr");
 
-		return {
-			messageId: text(grpHdr, "MsgId") ?? "",
-			creationDate: date(grpHdr, "CreDtTm") ?? new Date(0),
-			recipient: parseParty(child(grpHdr, "MsgRcpt")),
-			statements: children(bkToCstmrStmt, "Stmt").map(parseStatement),
-		};
-	} catch {
-		return null;
-	}
+	return compact({
+		messageId: requireText(grpHdr, "MsgId", "GrpHdr/MsgId"),
+		creationDate: requireDate(grpHdr, "CreDtTm", "GrpHdr/CreDtTm"),
+		recipient: parseParty(child(grpHdr, "MsgRcpt")),
+		statements: children(bkToCstmrStmt, "Stmt").map(parseStatement),
+	});
 }

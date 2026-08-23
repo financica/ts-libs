@@ -180,7 +180,7 @@ const receiptDocs = await client.searchDocuments({
 
 ## Error Handling
 
-All API errors throw `MyMinFinApiError` with structured problem details:
+Everything the clients throw is a `MyMinFinError`. Network failures and aborted requests are wrapped in a `MyMinFinError` with `cause` set to the original rejection; every non-OK HTTP response (including a non-JSON 5xx from the token endpoint) throws `MyMinFinApiError extends MyMinFinError` carrying `status` and the RFC 7807 problem detail on `problem` (aliased as `details`):
 
 ```ts
 import { MyMinFinApiError } from "@financica/myminfin";
@@ -196,6 +196,8 @@ try {
 	}
 }
 ```
+
+Each request method accepts an optional `{ signal }` to abort it, and every config accepts a `fetch` override (defaulting to `globalThis.fetch`) for testing.
 
 For Intervat business rule errors, the problem includes `businessrules` with multilingual descriptions:
 

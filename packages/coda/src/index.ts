@@ -1,4 +1,4 @@
-export { parseCoda } from "./parser.js";
+export { CodaParseError, parseCoda } from "./parser.js";
 export type {
 	CodaFile,
 	CodaStatement,

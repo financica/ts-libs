@@ -1,10 +1,17 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { UblParseError } from "../src/errors.js";
 import { parseUblInvoice } from "../src/parser.js";
 
 const readFixture = (name: string) =>
 	readFileSync(join(import.meta.dirname, "fixtures", name), "utf8");
+
+const headerOnly = (body: string) => `<?xml version="1.0"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+         xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+  <cbc:ID>INV-1</cbc:ID>${body}
+</Invoice>`;
 
 describe("parseUblInvoice", () => {
 	it("parses a standard UBL invoice", () => {
@@ -261,8 +268,12 @@ describe("parseUblInvoice", () => {
 		});
 	});
 
-	it("returns null for invalid XML", () => {
-		expect(parseUblInvoice("<not-valid")).toBeNull();
+	it.each([
+		{ name: "unclosed tag", xml: "<not-valid" },
+		{ name: "empty input", xml: "" },
+		{ name: "non-XML text", xml: "not xml at all" },
+	])("throws UblParseError on malformed XML ($name)", ({ xml }) => {
+		expect(() => parseUblInvoice(xml)).toThrow(UblParseError);
 	});
 
 	it("returns null for non-UBL documents", () => {
@@ -270,13 +281,83 @@ describe("parseUblInvoice", () => {
 		expect(parseUblInvoice(xml)).toBeNull();
 	});
 
-	it("returns null for UBL documents without an ID", () => {
+	it("returns null for an Invoice root outside the UBL namespace", () => {
+		const xml =
+			'<?xml version="1.0"?><Invoice xmlns="urn:example:other"><ID>1</ID></Invoice>';
+		expect(parseUblInvoice(xml)).toBeNull();
+	});
+
+	it("throws UblParseError for UBL documents without an ID", () => {
 		const xml = `<?xml version="1.0"?>
 <Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
          xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
   <cbc:IssueDate>2026-01-01</cbc:IssueDate>
+  <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
 </Invoice>`;
-		expect(parseUblInvoice(xml)).toBeNull();
+		expect(() => parseUblInvoice(xml)).toThrow(UblParseError);
+		expect(() => parseUblInvoice(xml)).toThrow(/cbc:ID/);
+	});
+
+	it("throws UblParseError for UBL documents without an issue date or currency", () => {
+		expect(() =>
+			parseUblInvoice(
+				headerOnly("<cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>"),
+			),
+		).toThrow(/cbc:IssueDate/);
+		expect(() =>
+			parseUblInvoice(headerOnly("<cbc:IssueDate>2026-01-01</cbc:IssueDate>")),
+		).toThrow(/cbc:DocumentCurrencyCode/);
+	});
+
+	it("throws UblParseError for a line without an ID", () => {
+		const xml = `<?xml version="1.0"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+         xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+         xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+  <cbc:ID>INV-1</cbc:ID>
+  <cbc:IssueDate>2026-01-01</cbc:IssueDate>
+  <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+  <cac:InvoiceLine><cbc:InvoicedQuantity>1</cbc:InvoicedQuantity></cac:InvoiceLine>
+</Invoice>`;
+		expect(() => parseUblInvoice(xml)).toThrow(UblParseError);
+	});
+
+	it("leaves an absent optional field absent rather than empty", () => {
+		const xml = `<?xml version="1.0"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+         xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+         xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+  <cbc:ID>INV-1</cbc:ID>
+  <cbc:IssueDate>2026-01-01</cbc:IssueDate>
+  <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+  <cbc:BuyerReference>   </cbc:BuyerReference>
+  <cac:OrderReference><cbc:SalesOrderID>SO-1</cbc:SalesOrderID></cac:OrderReference>
+  <cac:AccountingSupplierParty><cac:Party>
+    <cac:PostalAddress><cbc:CityName>Ghent</cbc:CityName></cac:PostalAddress>
+  </cac:Party></cac:AccountingSupplierParty>
+  <cac:InvoiceLine>
+    <cbc:ID>1</cbc:ID>
+    <cbc:InvoicedQuantity>1</cbc:InvoicedQuantity>
+    <cac:Item><cbc:Name>Thing</cbc:Name></cac:Item>
+  </cac:InvoiceLine>
+</Invoice>`;
+		const invoice = parseUblInvoice(xml)!;
+		expect(invoice).not.toHaveProperty("dueDate");
+		expect(invoice).not.toHaveProperty("buyerReference");
+		expect(invoice.orderReference).toBeUndefined();
+		expect(invoice.salesOrderId).toBe("SO-1");
+		expect(invoice.seller.name).toBeUndefined();
+		expect(invoice.seller.address).toEqual({ city: "Ghent" });
+		expect(invoice.buyer).toEqual({});
+		expect(invoice.monetaryTotal).toEqual({});
+		expect(invoice.taxSubtotals).toEqual([]);
+		const line = invoice.lines[0]!;
+		expect(line.description).toBeUndefined();
+		expect(line.unitCode).toBeUndefined();
+		expect(line.unitPrice).toBeUndefined();
+		expect(line.lineExtensionAmount).toBeUndefined();
+		expect(line.quantity).toBe(1);
+		expect(JSON.stringify(invoice)).not.toContain('""');
 	});
 
 	it("parses a CreditNote document", () => {
@@ -572,8 +653,8 @@ describe("parseUblInvoice", () => {
 			const xml = `<?xml version="1.0"?>
 				<!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///etc/shadow">]>
 				<root>&xxe;</root>`;
-			const invoice = parseUblInvoice(xml);
-			expect(invoice).toBeNull();
+			// With the DOCTYPE stripped, what remains is a non-UBL <root>.
+			expect(parseUblInvoice(xml)).toBeNull();
 		});
 	});
 });
@@ -601,10 +682,9 @@ describe("invoice periods", () => {
 	it("keeps a line period on its line and off the document", () => {
 		const invoice = parseUblInvoice(withLinePeriodOnly)!;
 		expect(invoice.invoicePeriod).toBeUndefined();
-		expect(invoice.lines[0]?.invoicePeriod).toEqual({
+		expect(invoice.lines[0]?.invoicePeriod).toStrictEqual({
 			startDate: "2026-01-15",
 			endDate: "2026-01-31",
-			descriptionCode: undefined,
 		});
 	});
 

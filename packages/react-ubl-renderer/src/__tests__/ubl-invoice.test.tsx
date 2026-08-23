@@ -1,7 +1,11 @@
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { parseUblInvoice, type UblInvoice as UblInvoiceData } from "@financica/ubl";
+import {
+	parseUblInvoice,
+	type UblInvoice as UblInvoiceData,
+	UblParseError,
+} from "@financica/ubl";
 import { DOMParser } from "@xmldom/xmldom";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
@@ -271,9 +275,16 @@ describe("UblInvoice xml input", () => {
 		expect(tbody.getElementsByTagName("tr").length).toBe(parsed.lines.length);
 	});
 
-	it("renders the fallback when xml cannot be parsed", () => {
+	it("renders the fallback when xml is malformed", () => {
 		const html = renderToStaticMarkup(
 			<UblInvoice xml="not valid ubl" fallback={<p>broken</p>} />,
+		);
+		expect(html).toBe("<p>broken</p>");
+	});
+
+	it("renders the fallback when xml is not a UBL invoice", () => {
+		const html = renderToStaticMarkup(
+			<UblInvoice xml="<html><body/></html>" fallback={<p>broken</p>} />,
 		);
 		expect(html).toBe("<p>broken</p>");
 	});
@@ -281,6 +292,30 @@ describe("UblInvoice xml input", () => {
 	it("renders nothing when xml is unparseable and no fallback is given", () => {
 		const html = renderToStaticMarkup(<UblInvoice xml="not valid ubl" />);
 		expect(html).toBe("");
+	});
+
+	it("renders a sparse invoice without manufacturing values", () => {
+		const sparse: UblInvoiceData = {
+			documentType: "Invoice",
+			id: "SPARSE-1",
+			issueDate: "2026-01-01",
+			currency: "EUR",
+			seller: {},
+			buyer: { registrationName: "Buyer Ltd" },
+			lines: [{ id: "1" }],
+			taxSubtotals: [],
+			monetaryTotal: {},
+		};
+		const root = parse(renderToStaticMarkup(<UblInvoice invoice={sparse} />));
+		expect(byClass(root, "ubl-party-name").map(text)).toEqual([
+			"Unknown",
+			"Buyer Ltd",
+		]);
+		const row = root
+			.getElementsByTagName("tbody")[0]!
+			.getElementsByTagName("tr")[0]!;
+		expect(text(row.getElementsByTagName("td")[1])).toBe("Line item");
+		expect(text(root)).not.toContain("undefined");
 	});
 });
 
@@ -305,8 +340,14 @@ describe("renderUblInvoiceHtml", () => {
 		expect(byClass(body, "ubl-invoice")).toHaveLength(1);
 	});
 
-	it("throws when given unparseable xml", () => {
-		expect(() => renderUblInvoiceHtml("not valid ubl")).toThrow(/could not parse/i);
+	it("throws UblParseError when given malformed xml", () => {
+		expect(() => renderUblInvoiceHtml("not valid ubl")).toThrow(UblParseError);
+	});
+
+	it("throws UblParseError when given xml that is not a UBL invoice", () => {
+		expect(() => renderUblInvoiceHtml("<html><body/></html>")).toThrow(
+			UblParseError,
+		);
 	});
 });
 

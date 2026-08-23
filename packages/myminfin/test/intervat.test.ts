@@ -6,13 +6,13 @@ describe("IntervatClient", () => {
 	const mockFetch = vi.fn();
 
 	beforeEach(() => {
-		vi.stubGlobal("fetch", mockFetch);
 		mockFetch.mockReset();
 	});
 
 	const client = new IntervatClient({
 		accessToken: "test-token-xyz",
 		environment: "test",
+		fetch: mockFetch,
 	});
 
 	describe("submitVatReturn", () => {
@@ -160,6 +160,7 @@ describe("IntervatClient", () => {
 			const prodClient = new IntervatClient({
 				accessToken: "prod-token",
 				environment: "production",
+				fetch: mockFetch,
 			});
 
 			mockFetch.mockResolvedValueOnce({

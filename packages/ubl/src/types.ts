@@ -1,12 +1,19 @@
 // --- UBL parsed types ---
+//
+// Parse-side model. A field the document may omit is an optional key: the
+// parser never writes `""`/`0` to fill a gap. Fields EN 16931 makes mandatory
+// (document id, issue date, currency, line id) stay required; a document that
+// lacks one is rejected with `UblParseError`. Containers the consumer iterates
+// (`lines`, `taxSubtotals`) and the `seller`/`buyer`/`monetaryTotal` objects
+// are always present.
 
 export interface UblAddress {
-	street: string;
+	street?: string | undefined;
 	additionalStreet?: string | undefined;
-	city: string;
-	postalZone: string;
+	city?: string | undefined;
+	postalZone?: string | undefined;
 	countrySubentity?: string | undefined;
-	countryCode: string;
+	countryCode?: string | undefined;
 }
 
 export interface UblContact {
@@ -21,7 +28,7 @@ export interface UblPartyIdentification {
 }
 
 export interface UblParty {
-	name: string;
+	name?: string | undefined;
 	registrationName?: string | undefined;
 	companyLegalForm?: string | undefined;
 	vatId?: string | undefined;
@@ -37,16 +44,16 @@ export interface UblParty {
 
 export interface UblItemProperty {
 	name: string;
-	value: string;
+	value?: string | undefined;
 }
 
 export interface UblLine {
 	id: string;
-	description: string;
-	quantity: number;
-	unitCode: string;
-	unitPrice: number;
-	lineExtensionAmount: number;
+	description?: string | undefined;
+	quantity?: number | undefined;
+	unitCode?: string | undefined;
+	unitPrice?: number | undefined;
+	lineExtensionAmount?: number | undefined;
 	taxPercent?: number | undefined;
 	taxAmount?: number | undefined;
 	taxCategoryId?: string | undefined;
@@ -65,7 +72,7 @@ export interface UblLine {
 
 export interface UblAllowanceCharge {
 	chargeIndicator: boolean;
-	amount: number;
+	amount?: number | undefined;
 	baseAmount?: number | undefined;
 	multiplierFactorNumeric?: number | undefined;
 	reason?: string | undefined;
@@ -76,27 +83,27 @@ export interface UblAllowanceCharge {
 }
 
 export interface UblTaxSubtotal {
-	taxableAmount: number;
-	taxAmount: number;
-	taxPercent: number;
+	taxableAmount?: number | undefined;
+	taxAmount?: number | undefined;
+	taxPercent?: number | undefined;
 	taxCategoryId?: string | undefined;
 	taxSchemeId?: string | undefined;
 	taxExemptionReason?: string | undefined;
 }
 
 export interface UblMonetaryTotal {
-	lineExtensionAmount: number;
-	taxExclusiveAmount: number;
-	taxInclusiveAmount: number;
+	lineExtensionAmount?: number | undefined;
+	taxExclusiveAmount?: number | undefined;
+	taxInclusiveAmount?: number | undefined;
 	allowanceTotalAmount?: number | undefined;
 	chargeTotalAmount?: number | undefined;
 	prepaidAmount?: number | undefined;
 	payableRoundingAmount?: number | undefined;
-	payableAmount: number;
+	payableAmount?: number | undefined;
 }
 
 export interface UblPaymentMeans {
-	code: string;
+	code?: string | undefined;
 	codeName?: string | undefined;
 	paymentId?: string | undefined;
 	iban?: string | undefined;
@@ -112,16 +119,16 @@ export interface UblInvoicePeriod {
 }
 
 export interface UblAttachment {
-	id: string;
+	id?: string | undefined;
 	filename?: string | undefined;
 	mimeCode?: string | undefined;
 	description?: string | undefined;
-	base64Content?: string;
+	base64Content?: string | undefined;
 	externalUri?: string | undefined;
 }
 
 export interface UblDocumentReference {
-	id: string;
+	id?: string | undefined;
 	description?: string | undefined;
 }
 

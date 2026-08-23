@@ -10,7 +10,7 @@ describe("parseFacturXXml", () => {
 	it("parses EN 16931 CII example 3 (subscription invoice)", () => {
 		const { invoice, profile, warnings } = parseFacturXXml(
 			fixture("CII_example3.xml"),
-		);
+		)!;
 		expect(profile).toBe("en16931");
 		expect(warnings).toEqual([]);
 		expect(invoice).toMatchObject({
@@ -52,7 +52,7 @@ describe("parseFacturXXml", () => {
 	});
 
 	it("parses parties, payment means and references (example 6)", () => {
-		const { invoice } = parseFacturXXml(fixture("CII_example6.xml"));
+		const { invoice } = parseFacturXXml(fixture("CII_example6.xml"))!;
 		expect(invoice.seller.name).toBeTruthy();
 		expect(invoice.buyer.name).toBeTruthy();
 		expect(invoice.seller.vatId).toMatch(/^[A-Z]{2}/);
@@ -69,7 +69,7 @@ describe("parseFacturXXml", () => {
 			"CII_example8.xml",
 			"CII_example9.xml",
 		]) {
-			const { invoice } = parseFacturXXml(fixture(name));
+			const { invoice } = parseFacturXXml(fixture(name))!;
 			expect(invoice.id).toBeTruthy();
 			expect(invoice.currency).toBeTruthy();
 			expect(invoice.issueDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
@@ -110,7 +110,7 @@ describe("parseFacturXXml", () => {
 		</ram:ApplicableHeaderTradeSettlement>
 	</rsm:SupplyChainTradeTransaction>
 </rsm:CrossIndustryInvoice>`;
-		const { invoice } = parseFacturXXml(xml);
+		const { invoice } = parseFacturXXml(xml)!;
 		expect(invoice.lines?.[0]?.product.name).toBe("Heures prestées");
 		expect(invoice.seller.name).toBe("Société Générale & Fils");
 	});
@@ -120,7 +120,7 @@ describe("parseFacturXXml", () => {
 			"urn:cen.eu:en16931:2017",
 			"urn:cen.eu:en16931:2017#compliant#urn:xeinkauf.de:kosit:xrechnung_3.0",
 		);
-		const { invoice, profile } = parseFacturXXml(xml);
+		const { invoice, profile } = parseFacturXXml(xml)!;
 		expect(profile).toBe("xrechnung");
 		expect(invoice.id).toBe("TOSL108");
 	});
@@ -133,19 +133,65 @@ describe("parseFacturXXml", () => {
 			.replace(/xmlns:rsm=/g, "xmlns:a=")
 			.replace(/xmlns:ram=/g, "xmlns:b=")
 			.replace(/xmlns:udt=/g, "xmlns:c=");
-		const { invoice } = parseFacturXXml(xml);
+		const { invoice } = parseFacturXXml(xml)!;
 		expect(invoice.id).toBe("TOSL108");
 		expect(invoice.lines).toHaveLength(1);
 		expect(invoice.totals?.grandTotal).toBe(1125);
 	});
 
-	it("throws FacturXParseError on non-CII XML", () => {
-		expect(() => parseFacturXXml("<Invoice></Invoice>")).toThrow(FacturXParseError);
+	it("returns null on well-formed XML that is not a CII invoice", () => {
+		expect(parseFacturXXml("<Invoice></Invoice>")).toBeNull();
 	});
 
-	it("throws FacturXParseError on garbage input", () => {
-		expect(() => parseFacturXXml("this is not xml at all <<<>")).toThrow(
-			FacturXParseError,
-		);
+	it("throws FacturXParseError on garbage input, with cause set", () => {
+		let error: unknown;
+		try {
+			parseFacturXXml("this is not xml at all <<<>");
+		} catch (e) {
+			error = e;
+		}
+		expect(error).toBeInstanceOf(FacturXParseError);
+		expect((error as FacturXParseError).name).toBe("FacturXParseError");
+		expect((error as FacturXParseError).cause).toBeDefined();
+	});
+
+	it("throws FacturXParseError on unbalanced CII XML", () => {
+		expect(() =>
+			parseFacturXXml(
+				'<rsm:CrossIndustryInvoice xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100"><rsm:ExchangedDocument></rsm:CrossIndustryInvoice>',
+			),
+		).toThrow(FacturXParseError);
+	});
+
+	it.each([
+		["invoice number (BT-1)", "<ram:ID>TOSL108</ram:ID>", ""],
+		["issue date (BT-2)", /<ram:IssueDateTime>[\s\S]*?<\/ram:IssueDateTime>/, ""],
+		[
+			"invoice currency (BT-5)",
+			/<ram:InvoiceCurrencyCode>\w+<\/ram:InvoiceCurrencyCode>/,
+			"",
+		],
+		[
+			"line quantity (BT-129)",
+			/<ram:BilledQuantity[^>]*>[^<]*<\/ram:BilledQuantity>/,
+			"",
+		],
+	])(
+		"throws FacturXParseError when the %s is missing",
+		(_label, pattern, replacement) => {
+			const xml = fixture("CII_example3.xml").replace(pattern, replacement);
+			expect(xml).not.toBe(fixture("CII_example3.xml"));
+			expect(() => parseFacturXXml(xml)).toThrow(FacturXParseError);
+		},
+	);
+
+	it("leaves absent optional fields absent rather than filled", () => {
+		const { invoice } = parseFacturXXml(fixture("CII_example3.xml"))!;
+		for (const line of invoice.lines ?? []) {
+			expect(line.product).not.toHaveProperty("description", "");
+			expect(line).not.toHaveProperty("note", "");
+		}
+		expect(invoice).not.toHaveProperty("buyerReference", "");
+		expect(invoice).not.toHaveProperty("taxCurrency", "");
 	});
 });

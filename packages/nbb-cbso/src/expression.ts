@@ -8,6 +8,8 @@
  * anything else is rejected rather than guessed at.
  */
 
+import { NbbCbsoError } from "./errors.js";
+
 export type ExpressionValue = number | boolean;
 
 /** Amounts are reported to the cent, so equality is to within half a cent. */
@@ -38,7 +40,13 @@ const OPERATORS = new Set([
 	"or",
 ]);
 
-export class ExpressionError extends Error {}
+/** A check expression uses syntax outside the supported subset, or a variable has no value. */
+export class ExpressionError extends NbbCbsoError {
+	constructor(message: string, options?: { cause?: unknown }) {
+		super(message, options);
+		this.name = "ExpressionError";
+	}
+}
 
 function tokenize(source: string): Token[] {
 	const tokens: Token[] = [];

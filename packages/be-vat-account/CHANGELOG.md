@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- `VatAccountParseError.cause` is declared `readonly` on the class, matching the error contract shared across this repository. No behaviour change.
+
 ## 0.3.0
 
 ### Added

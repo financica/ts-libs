@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **`MyMinFinError` is the base class of every error the package throws.** `MyMinFinApiError` now extends it; `instanceof MyMinFinApiError` checks keep working. Raw `fetch` rejections (network failures, aborts) no longer escape: they are wrapped in `MyMinFinError` with `cause` set.
+- **`MyMinFinAuth` checks the token response status before parsing the body.** A non-JSON 5xx from the token endpoint now throws `MyMinFinApiError` (message "Token request failed") instead of a `SyntaxError`.
+- `MyMinFinApiError.details` aliases `problem`, matching the other HTTP clients in this repository.
+
+### Added
+
+- `fetch?:` on `AuthConfig` and `ClientConfig` (used by `MyMinFinAuth`, `MyMinFinClient`, `IntervatClient`), defaulting to `globalThis.fetch`.
+- Optional `{ signal?: AbortSignal }` on every request method.
+- `MyMinFinError` is exported.
+
 ## 0.8.0
 
 ### Added

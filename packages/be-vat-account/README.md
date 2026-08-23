@@ -67,6 +67,10 @@ const rows = pages.flatMap((page) => groupIntoRows(itemsOf(page)));
 const statement = parseVatAccountStatementRows(items, rows);
 ```
 
+### Errors
+
+`parseVatAccountStatement` throws a `VatAccountParseError` (name set, fields `readonly`) carrying a `code` — `not_a_vat_statement` when the document is not one, `missing_field` when it is but a required field could not be read — and `cause` when it wraps an underlying error. It throws rather than returning `null` for "not this document" because `isVatAccountStatement` is the cheap gate for format chaining; the thrown code distinguishes the two cases for callers that skip the gate. Failures inside the PDF reader (unpdf) are not wrapped.
+
 ## The two layouts
 
 The administration changed the statement in Q4 2022. Both are supported, and

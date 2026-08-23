@@ -1,5 +1,10 @@
 import { DEFAULT_SCRADA_API_BASE_URL, SCRADA_LANGUAGE_HEADER } from "./constants";
-import { scradaApiErrorFromResponse, tryParseJson } from "./errors";
+import {
+	ScradaApiError,
+	ScradaError,
+	scradaApiErrorFromResponse,
+	tryParseJson,
+} from "./errors";
 import type {
 	PeppolOnlyInvoice,
 	PeppolOutboundDocumentRouting,
@@ -31,8 +36,18 @@ const routingHeaders = (
 };
 
 type ScradaRequestMethod = "GET" | "POST" | "PUT" | "DELETE";
-/** How the response body of a `request()` call is decoded. */
-type ScradaResponseExpectation = "json" | "text" | "arrayBuffer";
+/**
+ * How the response body of a `request()` call is decoded.
+ *
+ * - `json` — the body must parse as JSON (an empty body yields `null`);
+ *   anything else is a {@link ScradaApiError}.
+ * - `documentId` — lenient: JSON when it parses, otherwise the raw text.
+ *   Reserved for the endpoints that return a freshly created document id,
+ *   which Scrada has sent as `{id}`, `{documentID}`, a JSON string and a bare
+ *   text id; the caller resolves it with `normalizeDocumentId`.
+ * - `text` / `arrayBuffer` — returned as-is.
+ */
+type ScradaResponseExpectation = "json" | "documentId" | "text" | "arrayBuffer";
 /** Outbound endpoint segment under `/company/{id}/peppol/outbound/`. */
 type ScradaOutboundSegment = "salesInvoice" | "selfBillingInvoice" | "document";
 
@@ -78,7 +93,15 @@ const normalizeDocumentId = (value: unknown): string => {
 			return record["documentID"].trim();
 		}
 	}
-	throw new Error("Unable to resolve document ID from Scrada response");
+	throw new ScradaError("Unable to resolve document ID from Scrada response");
+};
+
+/** Wrap a raw `fetch` rejection (network failure, abort) in a {@link ScradaError}. */
+const wrapFetchError = (error: unknown, url: string): ScradaError => {
+	if (error instanceof ScradaError) return error;
+	const reason =
+		error instanceof Error && error.name === "AbortError" ? "aborted" : "failed";
+	return new ScradaError(`Scrada request to ${url} ${reason}`, { cause: error });
 };
 
 /**
@@ -87,7 +110,8 @@ const normalizeDocumentId = (value: unknown): string => {
  * https://api.scrada.be/v1
  *
  * Authenticates with API key + password sent as `X-API-KEY` / `X-PASSWORD`
- * headers. All non-2xx responses surface as `ScradaApiError`.
+ * headers. All non-2xx responses surface as `ScradaApiError`; network
+ * failures and aborts are wrapped in `ScradaError`.
  */
 export class ScradaApiClient {
 	private readonly apiKey: string;
@@ -123,11 +147,13 @@ export class ScradaApiClient {
 		body?: BodyInit;
 		headers?: HeadersInit;
 		expect?: ScradaResponseExpectation;
+		signal?: AbortSignal | undefined;
 	}): Promise<T> {
-		const response = await this.fetchImpl(joinUrl(this.baseUrl, params.path), {
+		const response = await this.send(params.path, {
 			method: params.method ?? "GET",
 			headers: this.buildHeaders(params.headers),
 			...(params.body !== undefined ? { body: params.body } : {}),
+			...(params.signal ? { signal: params.signal } : {}),
 		});
 
 		if (!response.ok) {
@@ -146,7 +172,22 @@ export class ScradaApiClient {
 		if (!textBody) return null as T;
 		const parsed = tryParseJson(textBody);
 		if (parsed !== null) return parsed as T;
-		return textBody as T;
+		if (expect === "documentId") return textBody as T;
+		throw new ScradaApiError(
+			`Scrada returned a non-JSON body with status ${response.status}`,
+			response.status,
+			textBody,
+		);
+	}
+
+	/** Perform the fetch, wrapping raw rejections in {@link ScradaError}. */
+	private async send(path: string, init: RequestInit): Promise<Response> {
+		const url = joinUrl(this.baseUrl, path);
+		try {
+			return await this.fetchImpl(url, init);
+		} catch (error) {
+			throw wrapFetchError(error, url);
+		}
 	}
 
 	// ── Peppol registration ─────────────────────────────────────────────
@@ -161,12 +202,15 @@ export class ScradaApiClient {
 	async registerCompany(
 		companyId: string,
 		payload: Readonly<Record<string, unknown>>,
+		options?: { signal?: AbortSignal },
 	): Promise<string> {
 		const response = await this.request<unknown>({
 			path: `/company/${companyId}/peppol/register`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(payload),
+			expect: "documentId",
+			signal: options?.signal,
 		});
 		return normalizeDocumentId(response);
 	}
@@ -176,12 +220,14 @@ export class ScradaApiClient {
 		companyId: string,
 		participantIdentifierScheme: string,
 		participantIdentifierValue: string,
+		options?: { signal?: AbortSignal },
 	): Promise<void> {
 		await this.request<null>({
 			path: `/company/${companyId}/peppol/deregister/${encodeURIComponent(
 				participantIdentifierScheme,
 			)}/${encodeURIComponent(participantIdentifierValue)}`,
 			method: "DELETE",
+			signal: options?.signal,
 		});
 	}
 
@@ -190,9 +236,11 @@ export class ScradaApiClient {
 	/** List inbound Peppol documents that have not yet been confirmed for the company. */
 	async getUnconfirmedInboundDocuments(
 		companyId: string,
+		options?: { signal?: AbortSignal },
 	): Promise<ScradaInboundUnconfirmedResponse> {
 		return this.request<ScradaInboundUnconfirmedResponse>({
 			path: `/company/${companyId}/peppol/inbound/document/unconfirmed`,
+			signal: options?.signal,
 		});
 	}
 
@@ -203,15 +251,14 @@ export class ScradaApiClient {
 	async getInboundDocument(
 		companyId: string,
 		documentId: string,
+		options?: { signal?: AbortSignal },
 	): Promise<ScradaInboundDocumentResponse> {
-		const response = await this.fetchImpl(
-			joinUrl(
-				this.baseUrl,
-				`/company/${companyId}/peppol/inbound/document/${documentId}`,
-			),
+		const response = await this.send(
+			`/company/${companyId}/peppol/inbound/document/${documentId}`,
 			{
 				method: "GET",
 				headers: this.buildHeaders(),
+				...(options?.signal ? { signal: options.signal } : {}),
 			},
 		);
 
@@ -228,15 +275,14 @@ export class ScradaApiClient {
 	async getInboundDocumentPdf(
 		companyId: string,
 		documentId: string,
+		options?: { signal?: AbortSignal },
 	): Promise<ScradaInboundPdfResponse> {
-		const response = await this.fetchImpl(
-			joinUrl(
-				this.baseUrl,
-				`/company/${companyId}/peppol/inbound/document/${documentId}/pdf`,
-			),
+		const response = await this.send(
+			`/company/${companyId}/peppol/inbound/document/${documentId}/pdf`,
 			{
 				method: "GET",
 				headers: this.buildHeaders(),
+				...(options?.signal ? { signal: options.signal } : {}),
 			},
 		);
 		if (!response.ok) throw await scradaApiErrorFromResponse(response);
@@ -249,10 +295,15 @@ export class ScradaApiClient {
 	}
 
 	/** Mark an inbound document as confirmed (received/processed) so it drops out of the unconfirmed list. */
-	async confirmInboundDocument(companyId: string, documentId: string): Promise<void> {
+	async confirmInboundDocument(
+		companyId: string,
+		documentId: string,
+		options?: { signal?: AbortSignal },
+	): Promise<void> {
 		await this.request<null>({
 			path: `/company/${companyId}/peppol/inbound/document/${documentId}/confirm`,
 			method: "PUT",
+			signal: options?.signal,
 		});
 	}
 
@@ -265,6 +316,7 @@ export class ScradaApiClient {
 		contentType: "application/json" | "application/xml";
 		idempotencyKey?: string | undefined;
 		extraHeaders?: Record<string, string>;
+		signal?: AbortSignal | undefined;
 	}): Promise<string> {
 		const headers: Record<string, string> = {
 			"Content-Type": params.contentType,
@@ -278,6 +330,8 @@ export class ScradaApiClient {
 			method: "POST",
 			headers,
 			body: params.body,
+			expect: "documentId",
+			signal: params.signal,
 		});
 		return normalizeDocumentId(response);
 	}
@@ -291,7 +345,7 @@ export class ScradaApiClient {
 	async sendOutboundSalesInvoice(
 		companyId: string,
 		payload: PeppolOnlyInvoice,
-		options?: { idempotencyKey?: string },
+		options?: { idempotencyKey?: string; signal?: AbortSignal },
 	): Promise<string> {
 		return this.postOutbound({
 			companyId,
@@ -299,6 +353,7 @@ export class ScradaApiClient {
 			body: JSON.stringify(payload),
 			contentType: "application/json",
 			idempotencyKey: options?.idempotencyKey,
+			signal: options?.signal,
 		});
 	}
 
@@ -311,7 +366,7 @@ export class ScradaApiClient {
 	async sendOutboundSelfBillingInvoice(
 		companyId: string,
 		payload: PeppolOnlyInvoice,
-		options?: { idempotencyKey?: string },
+		options?: { idempotencyKey?: string; signal?: AbortSignal },
 	): Promise<string> {
 		return this.postOutbound({
 			companyId,
@@ -319,6 +374,7 @@ export class ScradaApiClient {
 			body: JSON.stringify(payload),
 			contentType: "application/json",
 			idempotencyKey: options?.idempotencyKey,
+			signal: options?.signal,
 		});
 	}
 
@@ -341,6 +397,7 @@ export class ScradaApiClient {
 		options: {
 			routing: PeppolOutboundDocumentRouting;
 			idempotencyKey?: string;
+			signal?: AbortSignal;
 		},
 	): Promise<string> {
 		return this.postOutbound({
@@ -350,6 +407,7 @@ export class ScradaApiClient {
 			contentType: "application/xml",
 			idempotencyKey: options.idempotencyKey,
 			extraHeaders: routingHeaders(options.routing),
+			signal: options.signal,
 		});
 	}
 
@@ -357,9 +415,11 @@ export class ScradaApiClient {
 	async getOutboundDocumentInfo(
 		companyId: string,
 		documentId: string,
+		options?: { signal?: AbortSignal },
 	): Promise<ScradaOutboundDocumentInfo> {
 		return this.request<ScradaOutboundDocumentInfo>({
 			path: `/company/${companyId}/peppol/outbound/document/${documentId}/info`,
+			signal: options?.signal,
 		});
 	}
 
@@ -370,10 +430,12 @@ export class ScradaApiClient {
 	async getOutboundDocumentUbl(
 		companyId: string,
 		documentId: string,
+		options?: { signal?: AbortSignal },
 	): Promise<string> {
 		return this.request<string>({
 			path: `/company/${companyId}/peppol/outbound/document/${documentId}/ubl`,
 			expect: "text",
+			signal: options?.signal,
 		});
 	}
 
@@ -384,11 +446,13 @@ export class ScradaApiClient {
 		companyId: string,
 		scheme: string,
 		id: string,
+		options?: { signal?: AbortSignal },
 	): Promise<ScradaPeppolLookupResponse> {
 		return this.request<ScradaPeppolLookupResponse>({
 			path: `/company/${companyId}/peppol/lookup/${encodeURIComponent(
 				scheme,
 			)}/${encodeURIComponent(id)}`,
+			signal: options?.signal,
 		});
 	}
 
@@ -401,12 +465,14 @@ export class ScradaApiClient {
 	async lookupPeppolParty(
 		companyId: string,
 		payload: Readonly<Record<string, unknown>>,
+		options?: { signal?: AbortSignal },
 	): Promise<ScradaPeppolLookupResponse> {
 		return this.request<ScradaPeppolLookupResponse>({
 			path: `/company/${companyId}/peppol/lookup`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(payload),
+			signal: options?.signal,
 		});
 	}
 }

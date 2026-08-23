@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { UblParseError } from "../src/errors.js";
 import {
 	isPeppolMessageLevelResponse,
 	parsePeppolMessageLevelResponse,
@@ -73,9 +74,20 @@ describe("parsePeppolMessageLevelResponse", () => {
 		);
 	});
 
-	it("throws when the document is not an ApplicationResponse", () => {
+	it("throws UblParseError when the document is not an ApplicationResponse", () => {
+		expect(() => parsePeppolMessageLevelResponse("<Invoice />")).toThrow(
+			UblParseError,
+		);
 		expect(() => parsePeppolMessageLevelResponse("<Invoice />")).toThrow(
 			/not a Peppol Message Level Response/,
 		);
+	});
+
+	it("throws UblParseError on malformed XML", () => {
+		expect(() => parsePeppolMessageLevelResponse("<bad")).toThrow(UblParseError);
+	});
+
+	it("sniffs malformed XML as not an MLR instead of throwing", () => {
+		expect(isPeppolMessageLevelResponse({ xml: "<bad" })).toBe(false);
 	});
 });

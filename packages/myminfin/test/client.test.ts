@@ -1,7 +1,7 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { MyMinFinClient } from "../src/client";
 import { myminfinDocumentsUrl } from "../src/endpoints";
-import { MyMinFinApiError } from "../src/types";
+import { MyMinFinApiError, MyMinFinError } from "../src/types";
 
 const json = (body: unknown, init?: ResponseInit) =>
 	new Response(JSON.stringify(body), {
@@ -14,16 +14,35 @@ describe("MyMinFinClient", () => {
 	const fetchMock = vi.fn<typeof fetch>();
 
 	beforeEach(() => {
-		vi.stubGlobal("fetch", fetchMock);
-	});
-	afterEach(() => {
-		vi.unstubAllGlobals();
 		fetchMock.mockReset();
 	});
 
 	const client = new MyMinFinClient({
 		accessToken: "test-token-abc",
 		environment: "test",
+		fetch: fetchMock,
+	});
+
+	it("wraps a fetch rejection in MyMinFinError with the cause attached", async () => {
+		const failure = new TypeError("fetch failed");
+		fetchMock.mockRejectedValueOnce(failure);
+		const err = await client
+			.searchDocuments({ since: "2024-01-01" })
+			.catch((e: unknown) => e);
+		expect(err).toBeInstanceOf(MyMinFinError);
+		expect(err).not.toBeInstanceOf(MyMinFinApiError);
+		expect((err as MyMinFinError).name).toBe("MyMinFinError");
+		expect((err as MyMinFinError).cause).toBe(failure);
+	});
+
+	it("forwards an abort signal to fetch", async () => {
+		const controller = new AbortController();
+		fetchMock.mockResolvedValueOnce(json([]));
+		await client.searchDocuments(
+			{ since: "2024-01-01" },
+			{ signal: controller.signal },
+		);
+		expect(fetchMock.mock.calls[0]![1]!.signal).toBe(controller.signal);
 	});
 
 	const requestedUrl = (call = 0) => new URL(String(fetchMock.mock.calls[call]![0]));

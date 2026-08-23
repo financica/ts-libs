@@ -109,7 +109,7 @@ describe("extractFacturXXml", () => {
 		expect(result).not.toBeNull();
 		expect(result?.filename.toLowerCase()).toBe("factur-x.xml");
 		expect(result?.xml).toContain("CrossIndustryInvoice");
-		const { invoice, profile } = parseFacturXXml(result?.xml ?? "");
+		const { invoice, profile } = parseFacturXXml(result?.xml ?? "")!;
 		expect(profile).toBe("minimum");
 		expect(invoice.id).toBe("FA-2017-0010");
 		expect(invoice.totals?.grandTotal).toBe(671.15);
@@ -118,7 +118,7 @@ describe("extractFacturXXml", () => {
 	it("extracts and parses the BASIC WL sample (accents intact)", async () => {
 		const result = await extractFacturXXml(fixture("factur-x-basicwl.pdf"));
 		expect(result).not.toBeNull();
-		const { invoice, profile } = parseFacturXXml(result?.xml ?? "");
+		const { invoice, profile } = parseFacturXXml(result?.xml ?? "")!;
 		expect(profile).toBe("basic-wl");
 		expect(invoice.paymentMeans?.[0]?.payeeAccount?.iban).toBe(
 			"FR2012421242124212421242124",
@@ -276,7 +276,7 @@ describe("generateFacturXPdf", () => {
 
 		const extracted = await extractFacturXXml(pdfBytes);
 		expect(extracted?.xml).toBe(xml);
-		const { invoice: parsed } = parseFacturXXml(extracted?.xml ?? "");
+		const { invoice: parsed } = parseFacturXXml(extracted?.xml ?? "")!;
 		expect(parsed.id).toBe("INV-2026-042");
 		expect(parsed.totals?.grandTotal).toBe(960);
 		expect(parsed.lines?.[0]?.product.name).toBe("Heures prestées");

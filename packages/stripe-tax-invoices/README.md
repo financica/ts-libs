@@ -61,7 +61,11 @@ if (await isStripeTaxInvoice(bytes)) {
 }
 ```
 
-It never throws. `parseStripeTaxInvoice` throws a `StripeTaxInvoiceParseError` carrying a `code` — `not_a_stripe_tax_invoice` or `missing_field`.
+It never throws.
+
+### Errors
+
+`parseStripeTaxInvoice` throws a `StripeTaxInvoiceParseError` (name set, fields `readonly`) carrying a `code` — `not_a_stripe_tax_invoice` when the document is not one, `missing_field` when it is but a required field could not be read — and `cause` when it wraps an underlying error. It throws rather than returning `null` for "not this document" because `isStripeTaxInvoice` is the cheap gate for format chaining; the thrown code distinguishes the two cases for callers that skip the gate. Failures inside the PDF reader (unpdf) are not wrapped.
 
 ### Bringing your own text
 

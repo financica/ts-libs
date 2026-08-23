@@ -1,3 +1,4 @@
+import { NbbBuildError } from "./errors.js";
 import type { Datapoint, TaxonomyModule } from "./taxonomy.js";
 import type { NbbFilingInput, RubricAmounts } from "./types.js";
 
@@ -209,7 +210,7 @@ export function buildNbbFiling(input: NbbFilingInput): NbbFiling {
 		for (const [code, amount] of Object.entries(amounts ?? {})) {
 			const variants = byCode.get(code);
 			if (!variants || variants.length === 0) {
-				throw new Error(`unknown rubric code "${code}" in ${section}`);
+				throw new NbbBuildError(`unknown rubric code "${code}" in ${section}`);
 			}
 			const add = (asked: "current" | "previous", value: number): void => {
 				const [datapoint, period] = columnOf(variants, asked);
@@ -230,7 +231,7 @@ export function buildNbbFiling(input: NbbFilingInput): NbbFiling {
 				// and reported once. Two different figures is a contradiction
 				// the filer has to settle, not something to pick between.
 				if (existing.value !== fact.value) {
-					throw new Error(
+					throw new NbbBuildError(
 						`"${code}" and "${existing.code}" are the same figure but were given as ${fact.value} and ${existing.value}`,
 					);
 				}

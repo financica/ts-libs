@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- `StripeTaxInvoiceParseError.cause` is declared `readonly` on the class, matching the error contract shared across this repository. No behaviour change.
+
 ## 0.1.0
 
 Initial release.
