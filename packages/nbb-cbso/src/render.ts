@@ -1,6 +1,7 @@
 import { buildXbrlInstance, serializeXbrl } from "@financica/xbrl";
 import type { XbrlContext, XbrlFact, XbrlQName } from "@financica/xbrl";
 import type { NbbFiling } from "./build.js";
+import { isMonetary } from "./taxonomy.js";
 
 /**
  * Scheme the NBB uses for the entity identifier.
@@ -12,11 +13,6 @@ import type { NbbFiling } from "./build.js";
 export const ENTERPRISE_NUMBER_SCHEME = "http://www.fgov.be";
 
 const NS_ISO4217 = "http://www.xbrl.org/2003/iso4217";
-
-/** Metrics whose values are monetary, and so need a unit and decimals. */
-function isMonetary(metric: string): boolean {
-	return metric.startsWith("am");
-}
 
 /**
  * Render a filing as an NBB/CBSO instance document.

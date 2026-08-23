@@ -23,7 +23,7 @@ const toArray = (value: unknown): unknown[] => (Array.isArray(value) ? value : [
  * Accept both.
  */
 const extractName = (value: unknown): string | null => {
-	if (typeof value === "string") return value.trim() || null;
+	if (typeof value === "string") return toStringOrNull(value);
 	const first = toArray(value).find((entry) => isRecord(entry) && entry.name);
 	return isRecord(first) ? toStringOrNull(first.name) : null;
 };

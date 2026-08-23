@@ -12,13 +12,11 @@ import type {
 	XbrlSerializeOptions,
 	XbrlUnit,
 } from "./types.js";
+import { NS_LINK, NS_XBRLI, NS_XSI } from "./namespaces.js";
 
 // ── Namespaces ────────────────────────────────────────────────────────
 
-const NS_XBRLI = "http://www.xbrl.org/2003/instance";
-const NS_LINK = "http://www.xbrl.org/2003/linkbase";
 const NS_XLINK = "http://www.w3.org/1999/xlink";
-const NS_XSI = "http://www.w3.org/2001/XMLSchema-instance";
 const NS_XBRLDI = "http://xbrl.org/2006/xbrldi";
 
 /** Prefixes we fall back to when a namespace has none. */

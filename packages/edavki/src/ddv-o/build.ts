@@ -13,7 +13,7 @@ import {
 /** Money formatting: euros with exactly 2 decimals (xs:decimal, max 2 frac). */
 const amount = (value: number): string => value.toFixed(2);
 
-/** Rate formatting: trim to the shortest exact decimal (22, "9.5", 5). */
+/** Rate formatting: `String(value)` — the shortest round-trip decimal (22, 9.5, 5). */
 const rate = (value: number): string => String(value);
 
 const bool = (value: boolean): string => (value ? "true" : "false");

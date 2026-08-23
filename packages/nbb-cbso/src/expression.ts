@@ -11,7 +11,7 @@
 export type ExpressionValue = number | boolean;
 
 /** Amounts are reported to the cent, so equality is to within half a cent. */
-const EPSILON = 0.005;
+export const EPSILON = 0.005;
 
 type Token =
 	| { kind: "number"; value: number }

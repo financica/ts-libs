@@ -28,12 +28,14 @@ export class NACE {
 		}
 	}
 
+	/** Retrieve information about a specific code. */
 	getCode(code: string): NACECode | null {
 		this.ensureDataLoaded();
 		const normalized = normalizeCode(code);
 		return this.codes[normalized] ?? null;
 	}
 
+	/** Get the parent code in the hierarchy. */
 	getParent(code: string): NACECode | null {
 		const codeObj = this.getCode(code);
 		if (!codeObj) return null;
@@ -44,6 +46,7 @@ export class NACE {
 		return this.getCode(parentCode);
 	}
 
+	/** Get all direct children of a code. */
 	getChildren(code: string): NACECode[] {
 		this.ensureDataLoaded();
 		const codeObj = this.getCode(code);
@@ -76,6 +79,7 @@ export class NACE {
 		return childCode.startsWith(parentCode);
 	}
 
+	/** Get all ancestors up to the top level. */
 	getAncestors(code: string): NACECode[] {
 		const ancestors: NACECode[] = [];
 		let current = this.getCode(code);
@@ -93,6 +97,7 @@ export class NACE {
 		return ancestors;
 	}
 
+	/** Get all descendants recursively. */
 	getDescendants(code: string): NACECode[] {
 		const descendants: NACECode[] = [];
 		const toProcess: string[] = [normalizeCode(code)];
@@ -110,6 +115,7 @@ export class NACE {
 		return descendants;
 	}
 
+	/** Get all codes at the same level with the same parent. */
 	getSiblings(code: string): NACECode[] {
 		const codeObj = this.getCode(code);
 		if (!codeObj) return [];
@@ -122,11 +128,13 @@ export class NACE {
 		return this.getChildren(parent.code).filter((c) => c.code !== codeObj.code);
 	}
 
+	/** Get the hierarchical level of a code. */
 	getLevel(code: string): number {
 		const codeObj = this.getCode(code);
 		return codeObj ? codeObj.level : 0;
 	}
 
+	/** Get all codes, optionally filtered by level. */
 	getAllCodes(level?: number): NACECode[] {
 		this.ensureDataLoaded();
 		const allCodes = Object.values(this.codes);
@@ -138,6 +146,7 @@ export class NACE {
 		return allCodes.filter((c) => c.level === level);
 	}
 
+	/** Search for codes by description. */
 	search(query: string, options?: SearchOptions): NACECode[] {
 		this.ensureDataLoaded();
 		const language = options?.language ?? "en";

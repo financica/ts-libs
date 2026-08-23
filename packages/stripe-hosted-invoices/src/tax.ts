@@ -1,6 +1,7 @@
 /** Reading Stripe's tax-inclusivity flags off an invoice payload, and backing
  * the tax out of the amounts when they turn out to be inclusive. */
 
+import { roundToFourDecimals as round } from "./internal.js";
 import type { StripeHostedInvoice, StripeLineItem, StripeTaxAmount } from "./types.js";
 
 const nonZero = (entries: StripeTaxAmount[] | null | undefined): StripeTaxAmount[] =>
@@ -37,19 +38,6 @@ export const detectStripeTaxInclusive = (
 	}
 
 	return null;
-};
-
-/**
- * Round to four decimal places, normalising `-0` to `0`.
- *
- * Four rather than two: the division by quantity can leave sub-cent precision
- * a caller still wants, and rounding to cents here would silently drop it.
- * `-0` is normalised because it compares equal to `0` but serialises as `-0`,
- * which then shows up in stored JSON and in test diffs.
- */
-const round = (value: number): number => {
-	const rounded = Math.round(value * 10000) / 10000;
-	return Object.is(rounded, -0) ? 0 : rounded;
 };
 
 /** The line-item shape {@link adjustForInclusiveTax} needs to reprice a line. */

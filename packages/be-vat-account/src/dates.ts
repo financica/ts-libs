@@ -37,19 +37,20 @@ export const MONTH_NAMES: Readonly<Record<string, number>> = {
 const DOT_DATE_RE = /^(\d{2})\.(\d{2})\.(\d{4})$/;
 const SLASH_DATE_RE = /^(\d{2})\/(\d{2})\/(\d{4})$/;
 
-/** `DD.MM.YYYY` to `YYYY-MM-DD`. */
-export const dotDateToIso = (value: string): IsoDate | null => {
-	const match = value.match(DOT_DATE_RE);
+/** `DD?MM?YYYY` (captured by `re` as day, month, year) to `YYYY-MM-DD`. */
+const dmyToIso = (value: string, re: RegExp): IsoDate | null => {
+	const match = value.match(re);
 	if (!match) return null;
 	return `${match[3]}-${match[2]}-${match[1]}`;
 };
 
+/** `DD.MM.YYYY` to `YYYY-MM-DD`. */
+export const dotDateToIso = (value: string): IsoDate | null =>
+	dmyToIso(value, DOT_DATE_RE);
+
 /** `DD/MM/YYYY` to `YYYY-MM-DD`. */
-export const slashDateToIso = (value: string): IsoDate | null => {
-	const match = value.match(SLASH_DATE_RE);
-	if (!match) return null;
-	return `${match[3]}-${match[2]}-${match[1]}`;
-};
+export const slashDateToIso = (value: string): IsoDate | null =>
+	dmyToIso(value, SLASH_DATE_RE);
 
 /**
  * Either separator to `YYYY-MM-DD`. The two layouts differ on which they use,

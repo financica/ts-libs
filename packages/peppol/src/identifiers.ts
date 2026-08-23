@@ -52,11 +52,63 @@ export interface PeppolParticipantScheme {
 }
 
 /**
+ * VAT-based EAS schemes (`<CC>:VAT` in the code list). A VAT registration number
+ * is a country prefix plus alphanumerics with no separator anywhere in the EU —
+ * the code list leaves `structure` empty for most of them, so the rule is stated
+ * here rather than copied. `0213` (FI:VAT) and `9955` (SE:VAT) were removed from
+ * the code list but are still mapped by `PEPPOL_COUNTRY_SCHEMES`.
+ */
+const VAT_SCHEMES: Record<string, string> = {
+	"0213": "FI:VAT",
+	"0248": "OM:VAT",
+	"9906": "IT:VAT",
+	"9909": "NO:VAT",
+	"9910": "HU:VAT",
+	"9912": "EU:VAT",
+	"9914": "AT:VAT",
+	"9920": "ES:VAT",
+	"9922": "AD:VAT",
+	"9923": "AL:VAT",
+	"9924": "BA:VAT",
+	"9925": "BE:VAT",
+	"9926": "BG:VAT",
+	"9927": "CH:VAT",
+	"9928": "CY:VAT",
+	"9929": "CZ:VAT",
+	"9930": "DE:VAT",
+	"9931": "EE:VAT",
+	"9932": "GB:VAT",
+	"9933": "GR:VAT",
+	"9934": "HR:VAT",
+	"9935": "IE:VAT",
+	"9936": "LI:VAT",
+	"9937": "LT:VAT",
+	"9938": "LU:VAT",
+	"9939": "LV:VAT",
+	"9940": "MC:VAT",
+	"9941": "ME:VAT",
+	"9942": "MK:VAT",
+	"9943": "MT:VAT",
+	"9944": "NL:VAT",
+	"9945": "PL:VAT",
+	"9946": "PT:VAT",
+	"9947": "RO:VAT",
+	"9948": "RS:VAT",
+	"9949": "SI:VAT",
+	"9950": "SK:VAT",
+	"9951": "SM:VAT",
+	"9952": "TR:VAT",
+	"9953": "VA:VAT",
+	"9955": "SE:VAT",
+	"9957": "FR:VAT",
+};
+
+/**
  * Value structures for the schemes we make a normalization claim about. Absence
  * from this table is not an error: an uncatalogued scheme is simply preserved
  * verbatim, which is always the safe reading of POLICY 1.
  */
-export const PEPPOL_PARTICIPANT_SCHEMES: PeppolParticipantScheme[] = [
+export const PEPPOL_PARTICIPANT_SCHEMES: readonly PeppolParticipantScheme[] = [
 	// --- Separator-free national registers -------------------------------------
 	{
 		scheme: "0007",
@@ -124,68 +176,13 @@ export const PEPPOL_PARTICIPANT_SCHEMES: PeppolParticipantScheme[] = [
 		structure: "DE[0-9]{9}(-[0-9]{5})?(\\.[0-9A-Z]{1,8})?",
 		separatorFree: false,
 	},
-];
-
-/**
- * VAT-based EAS schemes (`<CC>:VAT` in the code list). A VAT registration number
- * is a country prefix plus alphanumerics with no separator anywhere in the EU —
- * the code list leaves `structure` empty for most of them, so the rule is stated
- * here rather than copied. `0213` (FI:VAT) and `9955` (SE:VAT) were removed from
- * the code list but are still mapped by `PEPPOL_COUNTRY_SCHEMES`.
- */
-const VAT_SCHEMES: Record<string, string> = {
-	"0213": "FI:VAT",
-	"0248": "OM:VAT",
-	"9906": "IT:VAT",
-	"9909": "NO:VAT",
-	"9910": "HU:VAT",
-	"9912": "EU:VAT",
-	"9914": "AT:VAT",
-	"9920": "ES:VAT",
-	"9922": "AD:VAT",
-	"9923": "AL:VAT",
-	"9924": "BA:VAT",
-	"9925": "BE:VAT",
-	"9926": "BG:VAT",
-	"9927": "CH:VAT",
-	"9928": "CY:VAT",
-	"9929": "CZ:VAT",
-	"9930": "DE:VAT",
-	"9931": "EE:VAT",
-	"9932": "GB:VAT",
-	"9933": "GR:VAT",
-	"9934": "HR:VAT",
-	"9935": "IE:VAT",
-	"9936": "LI:VAT",
-	"9937": "LT:VAT",
-	"9938": "LU:VAT",
-	"9939": "LV:VAT",
-	"9940": "MC:VAT",
-	"9941": "ME:VAT",
-	"9942": "MK:VAT",
-	"9943": "MT:VAT",
-	"9944": "NL:VAT",
-	"9945": "PL:VAT",
-	"9946": "PT:VAT",
-	"9947": "RO:VAT",
-	"9948": "RS:VAT",
-	"9949": "SI:VAT",
-	"9950": "SK:VAT",
-	"9951": "SM:VAT",
-	"9952": "TR:VAT",
-	"9953": "VA:VAT",
-	"9955": "SE:VAT",
-	"9957": "FR:VAT",
-};
-
-for (const [scheme, schemeId] of Object.entries(VAT_SCHEMES)) {
-	PEPPOL_PARTICIPANT_SCHEMES.push({
+	...Object.entries(VAT_SCHEMES).map(([scheme, schemeId]) => ({
 		scheme,
 		schemeId,
 		structure: "country prefix (2 letters) + alphanumerics",
 		separatorFree: true,
-	});
-}
+	})),
+];
 
 const BY_SCHEME = new Map(
 	PEPPOL_PARTICIPANT_SCHEMES.map((entry) => [entry.scheme, entry]),

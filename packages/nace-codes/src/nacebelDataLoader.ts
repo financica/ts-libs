@@ -10,6 +10,8 @@ import type {
 	NACEBELCodeMap,
 	ParsedNACEBEL,
 } from "./types";
+
+const NACEBEL_DEFAULT_VERSION = "2025";
 import { normalizeCode } from "./utils";
 
 function processNACEBELData(
@@ -51,7 +53,7 @@ function processNACEBELData(
 	for (const [code, naceCode] of Object.entries(naceCodes)) {
 		codeMap[code] ??= {
 			...naceCode,
-			version: "2025",
+			version: NACEBEL_DEFAULT_VERSION,
 			nationalTitles: {
 				nl: "",
 				fr: "",

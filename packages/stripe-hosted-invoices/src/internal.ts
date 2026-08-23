@@ -101,3 +101,16 @@ export const findStripeInvoiceId = (data: unknown): string | null => {
 	const match = /"(in_[A-Za-z0-9]{10,})"/.exec(JSON.stringify(data) ?? "");
 	return match?.[1] ?? null;
 };
+
+/**
+ * Round to four decimal places, normalising `-0` to `0`.
+ *
+ * Four rather than two: dividing by a quantity or a minor-unit divisor can
+ * leave sub-cent precision a caller still wants, and rounding to cents here
+ * would silently drop it. `-0` is normalised because it compares equal to `0`
+ * but serialises as `-0`, which then shows up in stored JSON and in test diffs.
+ */
+export const roundToFourDecimals = (value: number): number => {
+	const rounded = Math.round(value * 10000) / 10000;
+	return Object.is(rounded, -0) ? 0 : rounded;
+};

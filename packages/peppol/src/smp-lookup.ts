@@ -8,8 +8,6 @@ import {
 import { buildParticipantId } from "./identifiers";
 import { isRecord, toErrorMessage } from "./internal";
 
-export { buildParticipantId };
-
 /** The only participant identifier scheme in Peppol production use. */
 const PARTICIPANT_ID_SCHEME = "iso6523-actorid-upis";
 

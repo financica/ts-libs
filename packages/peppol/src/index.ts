@@ -23,6 +23,7 @@ export { type PeppolDirectoryEntry, lookupPeppolDirectory } from "./directory-lo
 export {
 	getPeppolParticipantScheme,
 	normalizeParticipantValue,
+	buildParticipantId,
 	PEPPOL_PARTICIPANT_SCHEMES,
 	type PeppolParticipantScheme,
 } from "./identifiers";
@@ -33,7 +34,6 @@ export {
 } from "./schemes";
 export {
 	buildCanonicalParticipantId,
-	buildParticipantId,
 	buildSmlHostname,
 	lookupPeppolParticipant,
 	parseServiceGroupDocumentTypes,

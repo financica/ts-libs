@@ -102,21 +102,13 @@ export const resolveTaxCategoryFromTaxAmounts = (
 ): UblTaxCategory => {
 	for (const ta of taxAmounts) {
 		if (!ta.taxability_reason) continue;
-		if (ta.taxability_reason === "reverse_charge") {
-			return taxCategoryFromReasonOrRate({
-				taxabilityReason: "reverse_charge",
-				rate,
-			});
-		}
-		if (EXEMPT_TAXABILITY_REASONS.has(ta.taxability_reason)) {
+		if (
+			ta.taxability_reason === "reverse_charge" ||
+			ta.taxability_reason === "zero_rated" ||
+			EXEMPT_TAXABILITY_REASONS.has(ta.taxability_reason)
+		) {
 			return taxCategoryFromReasonOrRate({
 				taxabilityReason: ta.taxability_reason,
-				rate,
-			});
-		}
-		if (ta.taxability_reason === "zero_rated") {
-			return taxCategoryFromReasonOrRate({
-				taxabilityReason: "zero_rated",
 				rate,
 			});
 		}

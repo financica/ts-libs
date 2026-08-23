@@ -1,5 +1,5 @@
 // AUTO-GENERATED — do not edit by hand.
-// Regenerate with `npm run generate` after refreshing data via `npm run fetch-data`.
+// Regenerate with `bun run generate` after refreshing data via `bun run fetch-data`.
 // Source: list-one.xml (SIX Group)
 
 import type { Currency } from "./types.js";

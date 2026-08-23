@@ -10,6 +10,17 @@ import type {
 } from "./types";
 import { MyMinFinApiError } from "./types";
 
+/** Raw body of the OAuth token endpoint, as returned by MyMinFin. */
+interface TokenResponse {
+	access_token: string;
+	refresh_token: string;
+	id_token: string;
+	scope: string;
+	token_type: string;
+	expires_in: number;
+	error_description?: unknown;
+}
+
 /**
  * Handles OIDC/OAuth2 authentication with the SPF Finances Authorization Server.
  *
@@ -119,23 +130,23 @@ export class MyMinFinAuth {
 			body: body.toString(),
 		});
 
-		const json = (await res.json()) as Record<string, unknown>;
+		const json = (await res.json()) as TokenResponse;
 
 		if (!res.ok) {
 			const errorDesc =
-				typeof json["error_description"] === "string"
-					? json["error_description"]
+				typeof json.error_description === "string"
+					? json.error_description
 					: "Token request failed";
 			throw new MyMinFinApiError(errorDesc, res.status);
 		}
 
 		return {
-			accessToken: json["access_token"] as string,
-			refreshToken: json["refresh_token"] as string,
-			idToken: json["id_token"] as string,
-			scope: json["scope"] as string,
-			tokenType: json["token_type"] as string,
-			expiresIn: json["expires_in"] as number,
+			accessToken: json.access_token,
+			refreshToken: json.refresh_token,
+			idToken: json.id_token,
+			scope: json.scope,
+			tokenType: json.token_type,
+			expiresIn: json.expires_in,
 		};
 	}
 

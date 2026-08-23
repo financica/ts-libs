@@ -7,12 +7,14 @@ export {
 	ExpressionError,
 } from "./expression.js";
 export { ENUMERATIONS } from "./generated/enumerations.js";
+export { MAX_CHECK_BINDINGS } from "./taxonomy.js";
 
 export type { NbbFact, NbbFiling } from "./build.js";
 export type { NbbValidationResult } from "./validate.js";
 export type { ExpressionValue } from "./expression.js";
 export type {
 	Check,
+	CheckBinding,
 	CheckKind,
 	CheckVariable,
 	Datapoint,

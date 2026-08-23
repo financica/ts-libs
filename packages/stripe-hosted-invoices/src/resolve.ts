@@ -12,11 +12,13 @@ import {
 	fetchStripeCreditNotes,
 	fetchStripeHostedInvoice,
 	fetchStripeHostedPage,
+	resolveStripeHostedOptions,
 	type StripeHostedOptions,
 } from "./client.js";
 import { parseStripeReceiptPage, type StripeReceiptPage } from "./receipt-page.js";
 import type {
 	StripeCreditNoteWithLines,
+	StripeHostedError,
 	StripeHostedInvoice,
 	StripeHostedResult,
 	StripeLineItem,
@@ -141,12 +143,12 @@ const resolveFromReceipt = async (
 	options: StripeHostedOptions,
 ): Promise<
 	| { ok: true; parts: StripeInvoiceUrlParts; receipt: ResolvedStripeReceipt }
-	| { ok: false; error: Extract<StripeHostedResult<never>, { ok: false }>["error"] }
+	| { ok: false; error: StripeHostedError }
 > => {
 	const receiptParts = parseStripeReceiptUrl(url);
 	if (!receiptParts) return { ok: false, error: { kind: "invalid_url" } };
 
-	const fetchImpl = options.fetch ?? globalThis.fetch;
+	const { fetch: fetchImpl } = resolveStripeHostedOptions(options);
 	let html: string;
 	try {
 		const res = await fetchImpl(receiptParts.pageUrl, { redirect: "follow" });

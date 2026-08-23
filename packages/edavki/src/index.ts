@@ -7,7 +7,13 @@
  * submission envelope) for manual import into the eDavki portal.
  */
 
-export { el, serializeDocument, type XmlAttrs, type XmlElement } from "./xml.js";
+export {
+	el,
+	serializeDocument,
+	type ChildSpec,
+	type XmlAttrs,
+	type XmlElement,
+} from "./xml.js";
 export { NS_EDP, type EdpTaxpayer, type EdpTaxpayerType } from "./edp/types.js";
 export { buildEdpHeader } from "./edp/header.js";
 export * from "./ddv-o/index.js";

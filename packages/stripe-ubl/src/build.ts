@@ -19,19 +19,16 @@ import {
 	resolveInvoiceSettledCents,
 	resolvePrepaidAmount,
 } from "./settlement";
-import { resolveInvoicePeriod } from "./period";
+import { isoDateFromUnixSeconds, resolveInvoicePeriod } from "./period";
 import { normalizeString, stripeInvoiceNote, toNumber } from "./utils";
 
 const validateCurrency = (currency: string): string => {
-	const upper = currency?.toUpperCase();
+	const upper = currency.toUpperCase();
 	if (!upper || !/^[A-Z]{3}$/.test(upper)) {
 		throw new Error(`Invalid currency code: ${String(currency)}`);
 	}
 	return upper;
 };
-
-const isoDateFromUnixSeconds = (seconds: number | null | undefined): string | null =>
-	seconds ? new Date(seconds * 1000).toISOString().slice(0, 10) : null;
 
 /**
  * When the supplier does not charge VAT (status 2/3), coerce every line to a
@@ -183,14 +180,6 @@ export interface BuildUblCreditNoteParams {
 	customerEndpoint?: UblEndpoint | null;
 }
 
-/**
- * Build a Peppol BIS Billing 3.0 credit note {@link UblDocument} from a
- * `Stripe.CreditNote` and its parent `Stripe.Invoice`.
- *
- * The customer is resolved from the original invoice (Stripe credit notes don't
- * carry an independent customer address), and the original invoice number is
- * referenced via `cac:BillingReference` (BT-25).
- */
 // BT-21+BT-22 in one cbc:Note: `#ACD#<text>` per the EN 16931 UBL binding.
 const creditNoteReasonNote = (
 	creditNote: Pick<Stripe.CreditNote, "reason">,
@@ -199,14 +188,22 @@ const creditNoteReasonNote = (
 	return reason ? `#ACD#${reason.replace(/_/g, " ")}` : null;
 };
 
+/**
+ * Build a Peppol BIS Billing 3.0 credit note {@link UblDocument} from a
+ * `Stripe.CreditNote` and its parent `Stripe.Invoice`.
+ *
+ * The customer is resolved from the original invoice (Stripe credit notes don't
+ * carry an independent customer address), and the original invoice number is
+ * referenced via `cac:BillingReference` (BT-25).
+ */
 export const buildUblCreditNoteDocument = (
 	params: BuildUblCreditNoteParams,
 ): UblDocument => {
 	const { creditNote, invoice, supplier, attachment } = params;
 
-	const issueDate = creditNote.effective_at
-		? new Date(creditNote.effective_at * 1000).toISOString().slice(0, 10)
-		: new Date(creditNote.created * 1000).toISOString().slice(0, 10);
+	const issueDate =
+		isoDateFromUnixSeconds(creditNote.effective_at) ??
+		new Date(creditNote.created * 1000).toISOString().slice(0, 10);
 
 	const { customer } = buildCustomerPartyFromStripeInvoice(
 		invoice,

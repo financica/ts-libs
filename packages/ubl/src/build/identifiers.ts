@@ -22,6 +22,12 @@ export const normalizeCompanyNumberForCountry = (
 	return companyNumber.trim();
 };
 
+const COMPANY_ID_SCHEME_BY_COUNTRY: Record<string, string> = {
+	BE: "0208",
+	NL: "0106",
+	FR: "0002",
+};
+
 /**
  * Country code → Peppol/ISO 6523 ICD scheme for a legal registration number
  * (`cac:PartyLegalEntity/cbc:CompanyID/@schemeID`).
@@ -41,16 +47,10 @@ export const resolveCompanyIdScheme = (params: {
 	const companyNumber = normalizeString(params.companyNumber);
 	if (!companyNumber) return null;
 
-	const TABLE: Record<string, string> = {
-		BE: "0208",
-		NL: "0106",
-		FR: "0002",
-	};
-
 	const normalizedCountry =
 		normalizeString(params.countryCode)?.toUpperCase() ?? null;
-	if (normalizedCountry && normalizedCountry in TABLE) {
-		return TABLE[normalizedCountry] ?? null;
+	if (normalizedCountry && normalizedCountry in COMPANY_ID_SCHEME_BY_COUNTRY) {
+		return COMPANY_ID_SCHEME_BY_COUNTRY[normalizedCountry] ?? null;
 	}
 
 	// Only sniffing the country prefix, e.g. `BE0793904121` → `BE`.
@@ -58,7 +58,9 @@ export const resolveCompanyIdScheme = (params: {
 		.replace(/[^A-Za-z]/g, "")
 		.toUpperCase()
 		.slice(0, 2);
-	return countryPrefix in TABLE ? (TABLE[countryPrefix] ?? null) : null;
+	return countryPrefix in COMPANY_ID_SCHEME_BY_COUNTRY
+		? (COMPANY_ID_SCHEME_BY_COUNTRY[countryPrefix] ?? null)
+		: null;
 };
 
 /**

@@ -1,7 +1,10 @@
 import type { UblPeriod } from "@financica/ubl/build";
 import type Stripe from "stripe";
 
-const isoDateFromUnixSeconds = (seconds: number | null | undefined): string | null =>
+/** A Unix-seconds timestamp as an ISO `YYYY-MM-DD` date; `null` when absent. */
+export const isoDateFromUnixSeconds = (
+	seconds: number | null | undefined,
+): string | null =>
 	seconds ? new Date(seconds * 1000).toISOString().slice(0, 10) : null;
 
 const addDays = (isoDate: string, days: number): string => {

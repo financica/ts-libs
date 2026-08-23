@@ -46,8 +46,8 @@ export class MyMinFinClient {
 
 		await assertOk(res);
 
-		const json = (await res.json()) as DocumentMetadata[] | Record<string, unknown>;
-		const documents = Array.isArray(json) ? json : [];
+		const json = (await res.json()) as unknown;
+		const documents: DocumentMetadata[] = Array.isArray(json) ? json : [];
 
 		return { documents };
 	}

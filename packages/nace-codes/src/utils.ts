@@ -1,3 +1,4 @@
+/** Normalize a code to the internal format ("70.20" -> "7020", "m" -> "M"). */
 export function normalizeCode(code: string): string {
 	const trimmed = code.trim();
 
@@ -8,34 +9,26 @@ export function normalizeCode(code: string): string {
 	return trimmed.replace(/\./g, "");
 }
 
+/** Get the hierarchical level of a code (1 = section ... 4 = class; 5 and 7 are NACEBEL), or 0 if unrecognized. */
 export function determineLevel(code: string): number {
 	const normalized = normalizeCode(code);
 
-	if (normalized.length === 1 && /[A-Z]/.test(normalized)) {
-		return 1;
+	if (normalized.length === 1) {
+		return /[A-Z]/.test(normalized) ? 1 : 0;
 	}
 
-	if (normalized.length === 2) {
-		return 2;
+	// Level 6 is intentionally absent: NACEBEL goes from 5-digit codes
+	// straight to 7-digit ones, so a 6-character code is not a valid level.
+	switch (normalized.length) {
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 7:
+			return normalized.length;
+		default:
+			return 0;
 	}
-
-	if (normalized.length === 3) {
-		return 3;
-	}
-
-	if (normalized.length === 4) {
-		return 4;
-	}
-
-	if (normalized.length === 5) {
-		return 5;
-	}
-
-	if (normalized.length === 7) {
-		return 7;
-	}
-
-	return 0;
 }
 
 // NACE Rev. 2.1 (Regulation (EU) 2023/137): 22 sections A-V, 87 divisions.
@@ -109,6 +102,7 @@ function isDivision(code: string): code is Division {
 	return code in sectionMap;
 }
 
+/** Get the parent code in the hierarchy, or null for sections and unrecognized codes. */
 export function getParentCode(code: string): string | null {
 	const normalized = normalizeCode(code);
 	const level = determineLevel(normalized);

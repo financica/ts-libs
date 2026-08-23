@@ -1,8 +1,8 @@
 /**
  * A vendor-neutral model of a Peppol BIS Billing 3.0 document.
  *
- * This is the intermediate representation `stripe-ubl` produces from a Stripe
- * invoice or credit note; {@link ../ubl/serialize.ts} turns it into UBL XML.
+ * This is the intermediate representation the builders in `../` (and, for
+ * Stripe data, `stripe-ubl`) produce; `./serialize.ts` turns it into UBL XML.
  * It is deliberately a thin, construction-oriented mirror of the UBL fields we
  * populate — not a full UBL object graph.
  */

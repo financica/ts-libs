@@ -16,10 +16,15 @@
 // the shape Intervat's own examples use.
 // ---------------------------------------------------------------------------
 
-import { escapeXmlAttr, escapeXmlText } from "./xml-escape";
+import {
+	assertSequenceNumber,
+	COMMON_NS,
+	escapeXmlAttr,
+	escapeXmlText,
+	formatAmount as formatSharedAmount,
+} from "./xml-escape";
 
 const VAT_NS = "http://www.minfin.fgov.be/VATConsignment";
-const COMMON_NS = "http://www.minfin.fgov.be/InputCommon";
 
 /**
  * Every grid ("case"/"vak") number the Intervat periodic-declaration XSD
@@ -97,17 +102,8 @@ export function normalizeBelgianVatNumber(raw: string): string {
 	return digits;
 }
 
-function formatAmount(value: number): string {
-	if (!Number.isFinite(value)) {
-		throw new Error(`VAT grid amount must be finite, received ${value}`);
-	}
-	if (value < 0) {
-		throw new Error(
-			`VAT grid amounts must be non-negative (PositiveAmount_Type), received ${value}`,
-		);
-	}
-	return value.toFixed(2);
-}
+const formatAmount = (value: number): string =>
+	formatSharedAmount(value, { label: "VAT grid amount", nonNegative: true });
 
 /** An unprefixed element, i.e. one in the InputCommon default namespace. */
 const el = (name: string, text: string) => `<${name}>${escapeXmlText(text)}</${name}>`;
@@ -187,11 +183,7 @@ export function serializeVatReturn(options: SerializeVatReturnOptions): string {
 		replacedDeclaration,
 	} = options;
 
-	if (!Number.isInteger(sequenceNumber) || sequenceNumber < 1) {
-		throw new Error(
-			`sequenceNumber must be a positive integer, received ${sequenceNumber}`,
-		);
-	}
+	assertSequenceNumber(sequenceNumber);
 
 	const declarationAttrs =
 		declarantReference !== undefined

@@ -34,29 +34,34 @@ import type {
  */
 export const CAMT053_NS_PREFIX = "urn:iso:std:iso:20022:tech:xsd:camt.053.001.";
 
+/** Prefix fast-xml-parser puts on attribute keys. */
+const ATTR_PREFIX = "@_";
+/** Key fast-xml-parser uses for an attributed element's text content. */
+const TEXT_KEY = "#text";
+
+/** Tags that must always parse as arrays, even when a single element is present. */
+const ARRAY_TAGS = new Set([
+	"Stmt",
+	"Bal",
+	"Ntry",
+	"NtryDtls",
+	"TxDtls",
+	"Chrgs",
+	"AdrLine",
+	"Ustrd",
+	"Strd",
+	"AddtlInf",
+]);
+
 const xmlParser = new XMLParser({
 	ignoreAttributes: false,
-	attributeNamePrefix: "@_",
+	attributeNamePrefix: ATTR_PREFIX,
 	// Preserve text content alongside attributes
-	textNodeName: "#text",
+	textNodeName: TEXT_KEY,
 	// Parse tag values as strings — we handle number conversion ourselves
 	parseTagValue: false,
 	// Ensure arrays are never collapsed to single values
-	isArray: (name) => {
-		const arrayTags = new Set([
-			"Stmt",
-			"Bal",
-			"Ntry",
-			"NtryDtls",
-			"TxDtls",
-			"Chrgs",
-			"AdrLine",
-			"Ustrd",
-			"Strd",
-			"AddtlInf",
-		]);
-		return arrayTags.has(name);
-	},
+	isArray: (name) => ARRAY_TAGS.has(name),
 });
 
 // ---------------------------------------------------------------------------
@@ -84,7 +89,7 @@ function child(node: XmlNode | undefined, key: string): XmlNode | undefined {
 function scalar(val: unknown): string | undefined {
 	if (val == null) return undefined;
 	// A node with attributes has its text in #text
-	if (isNode(val)) return "#text" in val ? String(val["#text"]) : undefined;
+	if (isNode(val)) return TEXT_KEY in val ? String(val[TEXT_KEY]) : undefined;
 	return String(val);
 }
 
@@ -127,14 +132,24 @@ function texts(node: XmlNode | undefined, key: string): string[] {
 		.filter((v): v is string => v !== undefined);
 }
 
+/** A parsed monetary amount with its optional `Ccy` attribute. */
+interface AmountAndCurrency {
+	amount: number;
+	currency: string | undefined;
+}
+
 /** Get the amount and currency from an Amt node with @_Ccy attribute. */
-function amountAndCurrency(node: XmlNode | undefined, key: string) {
+function amountAndCurrency(
+	node: XmlNode | undefined,
+	key: string,
+): AmountAndCurrency | undefined {
 	if (!node) return undefined;
 	const amt = node[key];
 	if (amt == null) return undefined;
 	const rawAmount = scalar(amt);
 	if (rawAmount === undefined) return undefined;
-	const currency = isNode(amt) && "@_Ccy" in amt ? String(amt["@_Ccy"]) : undefined;
+	const ccyKey = `${ATTR_PREFIX}Ccy`;
+	const currency = isNode(amt) && ccyKey in amt ? String(amt[ccyKey]) : undefined;
 	const n = Number(rawAmount);
 	if (!Number.isFinite(n)) return undefined;
 	return { amount: n, currency };
@@ -478,7 +493,7 @@ export function parseCamt053(xml: string): Camt053Report | null {
 		if (!doc) return null;
 
 		// Validate namespace
-		const ns = text(doc, "@_xmlns") ?? "";
+		const ns = text(doc, `${ATTR_PREFIX}xmlns`) ?? "";
 		if (!ns.startsWith(CAMT053_NS_PREFIX)) return null;
 
 		const bkToCstmrStmt = child(doc, "BkToCstmrStmt");

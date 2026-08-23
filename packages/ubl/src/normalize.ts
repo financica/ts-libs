@@ -5,6 +5,7 @@ import type {
 	UblAllowanceCharge,
 	UblAttachment,
 	UblInvoice,
+	UblPaymentMeans,
 } from "./types.js";
 
 // --- Utility helpers ---
@@ -42,13 +43,26 @@ export const parseDate = (value?: string | null): string | null => {
 	return iso.slice(0, 10);
 };
 
+const sanitizePaymentMeans = (pm: UblPaymentMeans) => ({
+	code: normalizeText(pm.code),
+	code_name: normalizeText(pm.codeName),
+	payment_id: normalizeText(pm.paymentId),
+	iban: normalizeText(pm.iban),
+	bic: normalizeText(pm.bic),
+	account_name: normalizeText(pm.accountName),
+	mandate_id: normalizeText(pm.mandateId),
+});
+
 // --- Address helpers ---
+
+const joinStreet = (address: UblAddress): string =>
+	[address.street, address.additionalStreet]
+		.filter((part) => part && part.trim().length > 0)
+		.join(" ");
 
 const addressToString = (address?: UblAddress): string | null => {
 	if (!address) return null;
-	const street = [address.street, address.additionalStreet]
-		.filter((part) => part && part.trim().length > 0)
-		.join(" ");
+	const street = joinStreet(address);
 	const cityLine = [address.postalZone, address.city]
 		.filter((part) => part && part.trim().length > 0)
 		.join(" ");
@@ -61,9 +75,7 @@ const addressToString = (address?: UblAddress): string | null => {
 
 const addressToStructured = (address?: UblAddress) => {
 	if (!address) return null;
-	const line1 = [address.street, address.additionalStreet]
-		.filter((part) => part && part.trim().length > 0)
-		.join(" ");
+	const line1 = joinStreet(address);
 	const result = {
 		line1: normalizeText(line1),
 		line2: null as string | null,
@@ -313,25 +325,9 @@ export const normalizeUblResponse = (
 				invoice_period: ubl.invoicePeriod ?? null,
 				note: normalizeText(ubl.note),
 				payment_means: ubl.paymentMeans
-					? {
-							code: normalizeText(ubl.paymentMeans.code),
-							code_name: normalizeText(ubl.paymentMeans.codeName),
-							payment_id: normalizeText(ubl.paymentMeans.paymentId),
-							iban: normalizeText(ubl.paymentMeans.iban),
-							bic: normalizeText(ubl.paymentMeans.bic),
-							account_name: normalizeText(ubl.paymentMeans.accountName),
-							mandate_id: normalizeText(ubl.paymentMeans.mandateId),
-						}
+					? sanitizePaymentMeans(ubl.paymentMeans)
 					: null,
-				payment_means_list: paymentMeansList.map((item) => ({
-					code: normalizeText(item.code),
-					code_name: normalizeText(item.codeName),
-					payment_id: normalizeText(item.paymentId),
-					iban: normalizeText(item.iban),
-					bic: normalizeText(item.bic),
-					account_name: normalizeText(item.accountName),
-					mandate_id: normalizeText(item.mandateId),
-				})),
+				payment_means_list: paymentMeansList.map(sanitizePaymentMeans),
 				delivery: ubl.delivery
 					? {
 							actual_delivery_date: parseDate(

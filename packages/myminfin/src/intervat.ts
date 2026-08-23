@@ -2,6 +2,9 @@ import { intervatOpenApiUrl, intervatVatUrl } from "./endpoints";
 import { assertOk, authorizedFetch } from "./http";
 import type { ClientConfig, Environment, VatSubmissionResult } from "./types";
 
+/** MIME types Intervat accepts for an uploaded declaration. */
+type IntervatContentType = "application/xml" | "application/zip";
+
 /**
  * Client for the Intervat VAT return submission API.
  *
@@ -38,7 +41,7 @@ export class IntervatClient {
 	submitVatReturnFile(
 		vatNumber: string,
 		file: Buffer | Uint8Array,
-		contentType: "application/xml" | "application/zip" = "application/xml",
+		contentType: IntervatContentType = "application/xml",
 	): Promise<VatSubmissionResult> {
 		return this.submit(vatNumber, Buffer.from(file), contentType);
 	}
@@ -59,7 +62,7 @@ export class IntervatClient {
 	private async submit(
 		vatNumber: string,
 		body: BodyInit,
-		contentType: string,
+		contentType: IntervatContentType,
 	): Promise<VatSubmissionResult> {
 		const res = await authorizedFetch(
 			intervatVatUrl(this.environment, vatNumber),

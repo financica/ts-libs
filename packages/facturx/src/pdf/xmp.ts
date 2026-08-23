@@ -5,12 +5,7 @@
  * verbatim, so only what the Factur-X specification adds lives here.
  */
 
-const escapeXml = (value: string): string =>
-	value
-		.replace(/&/g, "&amp;")
-		.replace(/</g, "&lt;")
-		.replace(/>/g, "&gt;")
-		.replace(/"/g, "&quot;");
+import { escapeXmlAttribute as escapeXml } from "../xml-escape.js";
 
 /** One pdfaSchema:property entry of the Factur-X extension schema. */
 const property = (name: string, description: string) =>

@@ -1,6 +1,7 @@
 import { createVerify } from "node:crypto";
 import { selectCertificate } from "./certificates.js";
 import { DynamicB2cQrError, GstQrPayloadError, GstQrParseError } from "./errors.js";
+import { parseJsonObject } from "./json.js";
 import { decodeCompactJws } from "./jws.js";
 import type {
 	DecodedSignedQr,
@@ -95,19 +96,11 @@ const parseDataClaim = (payload: Record<string, unknown>): Record<string, unknow
 			"data",
 		);
 	}
-	let parsed: unknown;
-	try {
-		parsed = JSON.parse(data);
-	} catch {
-		throw new GstQrPayloadError('Signed QR "data" claim is not valid JSON', "data");
-	}
-	if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) {
-		throw new GstQrPayloadError(
-			'Signed QR "data" claim is not a JSON object',
-			"data",
-		);
-	}
-	return parsed as Record<string, unknown>;
+	return parseJsonObject(
+		data,
+		'Signed QR "data" claim',
+		(message) => new GstQrPayloadError(message, "data"),
+	);
 };
 
 const parseInvoice = (data: Record<string, unknown>): GstEInvoiceQr => {

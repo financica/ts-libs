@@ -1,4 +1,5 @@
 import { GstQrParseError } from "./errors.js";
+import { parseJsonObject } from "./json.js";
 
 /** Decode a base64url segment to bytes. Throws on anything malformed. */
 export const decodeBase64Url = (segment: string, what: string): Uint8Array => {
@@ -22,16 +23,11 @@ export const encodeBase64Url = (bytes: Uint8Array): string =>
 
 const decodeJsonSegment = (segment: string, what: string): Record<string, unknown> => {
 	const text = Buffer.from(decodeBase64Url(segment, what)).toString("utf8");
-	let parsed: unknown;
-	try {
-		parsed = JSON.parse(text);
-	} catch (cause) {
-		throw new GstQrParseError(`${what} is not valid JSON`, { cause });
-	}
-	if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) {
-		throw new GstQrParseError(`${what} is not a JSON object`);
-	}
-	return parsed as Record<string, unknown>;
+	return parseJsonObject(text, what, (message, cause) =>
+		cause === undefined
+			? new GstQrParseError(message)
+			: new GstQrParseError(message, { cause }),
+	);
 };
 
 export interface CompactJws {

@@ -25,6 +25,7 @@ import { fileURLToPath } from "node:url";
 import { XMLParser } from "fast-xml-parser";
 import { type FormatConfig, format } from "oxfmt";
 
+import type { CurrencyKind } from "../src/types.js";
 import { ENTITY_TO_COUNTRY_CODE } from "./iso-3166.js";
 
 // ── Paths ────────────────────────────────────────────────────────────────────
@@ -93,8 +94,6 @@ const SPECIAL_CODES = new Set([
 	"XXX", // No currency sentinel
 	"XAD", // Arab Accounting Dinar (Arab Monetary Fund)
 ]);
-
-type CurrencyKind = "fiat" | "fund" | "metal" | "special";
 
 function classify(code: string, isFund: boolean): CurrencyKind {
 	if (isFund) return "fund";
@@ -314,7 +313,7 @@ function buildHistoric(entries: RawHistoricEntry[]): HistoricCurrency[] {
 const HEADER = (source: string) =>
 	[
 		"// AUTO-GENERATED — do not edit by hand.",
-		"// Regenerate with `npm run generate` after refreshing data via `npm run fetch-data`.",
+		"// Regenerate with `bun run generate` after refreshing data via `bun run fetch-data`.",
 		`// Source: ${source}`,
 		"",
 	].join("\n");

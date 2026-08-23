@@ -8,10 +8,15 @@
 // child elements carry the `common:` prefix.
 // ---------------------------------------------------------------------------
 
-import { escapeXmlAttr, escapeXmlText } from "./xml-escape";
+import {
+	assertSequenceNumber,
+	COMMON_NS,
+	escapeXmlAttr,
+	escapeXmlText,
+	formatAmount as formatSharedAmount,
+} from "./xml-escape";
 
 const LISTING_NS = "http://www.minfin.fgov.be/ClientListingConsignment";
-const COMMON_NS = "http://www.minfin.fgov.be/InputCommon";
 
 /**
  * Minimum yearly turnover (excl. VAT, in EUR) at which a Belgian VAT-registered
@@ -54,12 +59,8 @@ export interface ClientListingInput {
 	sequenceNumber?: number;
 }
 
-function formatAmount(value: number): string {
-	if (!Number.isFinite(value)) {
-		throw new Error(`Client listing amount must be finite, received ${value}`);
-	}
-	return value.toFixed(2);
-}
+const formatAmount = (value: number): string =>
+	formatSharedAmount(value, { label: "Client listing amount" });
 
 /** Declarant children live in the InputCommon namespace (common: prefix). */
 const commonEl = (name: string, text: string) =>
@@ -92,11 +93,7 @@ export function generateClientListingXml(input: ClientListingInput): string {
 			`Client listing period must be a 4-digit year, received ${period}`,
 		);
 	}
-	if (!Number.isInteger(sequenceNumber) || sequenceNumber < 1) {
-		throw new Error(
-			`sequenceNumber must be a positive integer, received ${sequenceNumber}`,
-		);
-	}
+	assertSequenceNumber(sequenceNumber);
 
 	const turnOverSum = clients.reduce((sum, c) => sum + c.turnover, 0);
 	const vatAmountSum = clients.reduce((sum, c) => sum + c.vatAmount, 0);

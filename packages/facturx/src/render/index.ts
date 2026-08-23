@@ -2,6 +2,7 @@ import { PDFDocument, type PDFFont, type PDFPage, rgb } from "@cantoo/pdf-lib";
 // fontkit's ESM build has no default export, only named ones; the namespace is
 // what `registerFontkit` wants (it calls `.create`).
 import * as fontkit from "fontkit";
+import { isCreditNoteType } from "../codes.js";
 import { buildFacturXXml } from "../generate/index.js";
 import type { FacturXInvoice, TradeParty } from "../model.js";
 import { type FacturXProfile, detectProfile } from "../profiles.js";
@@ -181,7 +182,7 @@ export const renderInvoicePdf = async (
 	};
 
 	// ---- Header: seller identity (left) and document title (right).
-	const isCreditNote = invoice.typeCode === "381" || invoice.typeCode === "261";
+	const isCreditNote = isCreditNoteType(invoice.typeCode);
 	const title = isCreditNote ? labels.creditNote : labels.invoice;
 	draw(invoice.seller.name ?? "", MARGIN, { font: fonts.bold, size: 14 });
 	draw(title, MARGIN, {
@@ -568,7 +569,7 @@ export const generateFacturXPdf = async (
 ): Promise<GenerateFacturXPdfResult> => {
 	const xml = buildFacturXXml(invoice);
 	const labels = labelsForLocale(options.locale);
-	const isCreditNote = invoice.typeCode === "381" || invoice.typeCode === "261";
+	const isCreditNote = isCreditNoteType(invoice.typeCode);
 	const pdf = options.existingPdf ?? (await renderInvoicePdf(invoice, options));
 	const pdfBytes = await attachFacturXXml({
 		pdf,

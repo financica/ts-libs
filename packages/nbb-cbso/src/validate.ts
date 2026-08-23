@@ -1,9 +1,10 @@
-import type { Check, CheckKind } from "./taxonomy.js";
+import { isMonetary, type Check, type CheckKind } from "./taxonomy.js";
 import type { Finding, ValidationResult } from "./types.js";
 import { filingValue, type NbbFiling } from "./build.js";
 import {
 	describeExpression,
 	evaluateExpression,
+	EPSILON,
 	ExpressionError,
 } from "./expression.js";
 
@@ -76,6 +77,14 @@ function severityOf(kind: CheckKind): "error" | "warning" {
 
 type CheckOutcome = "passed" | "skipped" | Finding;
 
+/** Per-variable labels for {@link describeExpression}, keyed by variable name. */
+function labelsOf(
+	check: Check,
+	label: (name: string) => string,
+): Record<string, string[]> {
+	return Object.fromEntries(check.variables.map((v) => [v.name, [label(v.name)]]));
+}
+
 /**
  * Run one check over every assignment of rubrics the taxonomy permits.
  *
@@ -128,9 +137,7 @@ function runCheck(filing: NbbFiling, check: Check): CheckOutcome {
 		ran = true;
 		if (result) continue;
 
-		const named = Object.fromEntries(
-			check.variables.map((v) => [v.name, [binding[v.name] ?? v.name]]),
-		);
+		const named = labelsOf(check, (name) => binding[name] ?? name);
 		return {
 			severity: severityOf(check.kind),
 			check: check.id,
@@ -138,12 +145,7 @@ function runCheck(filing: NbbFiling, check: Check): CheckOutcome {
 			codes: [...new Set(Object.values(binding))],
 			message: `${check.id}: ${describeExpression(
 				check.test,
-				Object.fromEntries(
-					check.variables.map((v) => [
-						v.name,
-						[`${binding[v.name]}=${values[v.name]}`],
-					]),
-				),
+				labelsOf(check, (name) => `${binding[name]}=${values[name]}`),
 			)} does not hold`,
 		};
 	}
@@ -236,7 +238,7 @@ function structuralFindings(filing: NbbFiling): Finding[] {
 		const assets = filingValue(filing, "20/58", period);
 		const liabilities = filingValue(filing, "10/49", period);
 		if (assets === undefined || liabilities === undefined) continue;
-		if (Math.abs(assets - liabilities) > 0.005) {
+		if (Math.abs(assets - liabilities) > EPSILON) {
 			findings.push(
 				finding(
 					"error",
@@ -252,7 +254,7 @@ function structuralFindings(filing: NbbFiling): Finding[] {
 
 	// DAT 31: amounts are accepted to two decimal places, no further.
 	for (const fact of filing.facts) {
-		if (!fact.datapoint.metric.startsWith("am")) continue;
+		if (!isMonetary(fact.datapoint.metric)) continue;
 		const decimals = fact.value.split(".")[1];
 		if (decimals && decimals.length > 2) {
 			findings.push(

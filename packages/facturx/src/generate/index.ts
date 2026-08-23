@@ -16,6 +16,7 @@ import type {
 } from "../model.js";
 import { PROFILE_URNS, detectProfile, profileHasLines } from "../profiles.js";
 import { formatAmount, formatDecimal } from "../numeric.js";
+import { escapeXmlAttribute, escapeXmlText } from "../xml-escape.js";
 
 /**
  * Serialize a `FacturXInvoice` to CII (UN/CEFACT Cross Industry Invoice) XML,
@@ -39,12 +40,6 @@ interface XmlTree {
 	[key: string]: XmlNode | undefined;
 }
 
-const escapeText = (value: string): string =>
-	value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-const escapeAttribute = (value: string): string =>
-	escapeText(value).replace(/"/g, "&quot;");
-
 /**
  * Minimal XML serializer for the ordered trees this module builds. Object
  * key order is emit order; `@name` keys become attributes and `#text` the
@@ -52,7 +47,7 @@ const escapeAttribute = (value: string): string =>
  */
 const serializeElement = (name: string, node: XmlNode, indent: string): string => {
 	if (typeof node === "string") {
-		return `${indent}<${name}>${escapeText(node)}</${name}>\n`;
+		return `${indent}<${name}>${escapeXmlText(node)}</${name}>\n`;
 	}
 	if (Array.isArray(node)) {
 		return node.map((entry) => serializeElement(name, entry, indent)).join("");
@@ -63,7 +58,7 @@ const serializeElement = (name: string, node: XmlNode, indent: string): string =
 	for (const [key, value] of Object.entries(node)) {
 		if (value === undefined) continue;
 		if (key.startsWith("@") && typeof value === "string") {
-			attributes += ` ${key.slice(1)}="${escapeAttribute(value)}"`;
+			attributes += ` ${key.slice(1)}="${escapeXmlAttribute(value)}"`;
 		} else if (key === "#text" && typeof value === "string") {
 			textContent = value;
 		} else {
@@ -71,7 +66,7 @@ const serializeElement = (name: string, node: XmlNode, indent: string): string =
 		}
 	}
 	if (textContent !== undefined) {
-		return `${indent}<${name}${attributes}>${escapeText(textContent)}</${name}>\n`;
+		return `${indent}<${name}${attributes}>${escapeXmlText(textContent)}</${name}>\n`;
 	}
 	if (children.length === 0) {
 		return `${indent}<${name}${attributes}/>\n`;

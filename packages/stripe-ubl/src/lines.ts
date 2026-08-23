@@ -26,6 +26,51 @@ import { normalizeString, toNumber } from "./utils";
 // EN 16931.
 
 /**
+ * The single synthetic line used when a Stripe document has no line items, so
+ * the UBL document still has at least one line that reconciles with the header.
+ */
+const buildFallbackLine = (params: {
+	name: string;
+	taxBaseCents: number;
+	taxCents: number;
+}): UblLine => {
+	const { name, taxBaseCents, taxCents } = params;
+	const vatPercentage =
+		taxBaseCents > 0 && taxCents > 0
+			? roundCurrency((taxCents / taxBaseCents) * 100)
+			: 0;
+	const net = centsToDecimal(taxBaseCents);
+	return {
+		id: "1",
+		name,
+		quantity: 1,
+		unitCode: DEFAULT_UNIT_CODE,
+		lineExtensionAmount: net,
+		priceAmount: net,
+		taxCategory: resolveTaxCategoryFromTaxAmounts([], vatPercentage),
+	};
+};
+
+/**
+ * Effective VAT percentage of a line from its tax amounts and net base. When
+ * the tax or the net rounds to zero (100% discounted, or a heavily discounted
+ * amount), fall back to the expanded tax_rate so the line is classified
+ * correctly rather than silently becoming zero-rated.
+ */
+const deriveVatPercentage = (
+	taxAmounts: { amount: number; tax_rate_percentage?: number | null }[],
+	netCents: number,
+): number => {
+	if (taxAmounts.length === 0) return 0;
+	const totalTaxCents = taxAmounts.reduce((sum, ta) => sum + ta.amount, 0);
+	if (totalTaxCents > 0 && netCents > 0) {
+		return roundCurrency((totalTaxCents / netCents) * 100);
+	}
+	const firstWithRate = taxAmounts.find((ta) => ta.tax_rate_percentage != null);
+	return firstWithRate?.tax_rate_percentage ?? 0;
+};
+
+/**
  * Convert `Stripe.Invoice` line items into {@link UblLine}s.
  *
  * When the invoice has no line items (e.g. an out-of-band invoice), falls back
@@ -43,23 +88,12 @@ export const buildInvoiceLines = (invoice: Stripe.Invoice): UblLine[] => {
 		// Use total_excluding_tax as the tax base — it reflects all discounts
 		// (including any invoice-level coupon), whereas subtotal is only
 		// post-line-discount.
-		const taxBase = invoice.total_excluding_tax ?? invoice.subtotal;
-		const vatPercentage =
-			taxBase > 0 && invoiceTaxCents > 0
-				? roundCurrency((invoiceTaxCents / taxBase) * 100)
-				: 0;
-		const net = centsToDecimal(taxBase);
-
 		return [
-			{
-				id: "1",
+			buildFallbackLine({
 				name: normalizeString(invoice.description) ?? "Invoice",
-				quantity: 1,
-				unitCode: DEFAULT_UNIT_CODE,
-				lineExtensionAmount: net,
-				priceAmount: net,
-				taxCategory: resolveTaxCategoryFromTaxAmounts([], vatPercentage),
-			},
+				taxBaseCents: invoice.total_excluding_tax ?? invoice.subtotal,
+				taxCents: invoiceTaxCents,
+			}),
 		];
 	}
 
@@ -78,21 +112,7 @@ export const buildInvoiceLines = (invoice: Stripe.Invoice): UblLine[] => {
 		const taxAmounts = getInvoiceLineTaxAmounts(line);
 		const price = deriveUnitPrice(netTotal, quantity);
 
-		let vatPercentage = 0;
-		if (taxAmounts.length > 0) {
-			const totalTaxCents = taxAmounts.reduce((sum, ta) => sum + ta.amount, 0);
-			if (totalTaxCents > 0 && netCents > 0) {
-				vatPercentage = roundCurrency((totalTaxCents / netCents) * 100);
-			} else {
-				// Either 100% discounted (net = 0) or the tax rounds to zero on a
-				// heavily discounted amount. Use the expanded tax_rate so the line
-				// is classified correctly rather than silently becoming zero-rated.
-				const firstWithRate = taxAmounts.find(
-					(ta) => ta.tax_rate_percentage != null,
-				);
-				vatPercentage = firstWithRate?.tax_rate_percentage ?? 0;
-			}
-		}
+		const vatPercentage = deriveVatPercentage(taxAmounts, netCents);
 
 		return {
 			id: String(index + 1),
@@ -123,23 +143,12 @@ export const buildCreditNoteLines = (
 	const stripeLines = creditNote.lines?.data ?? [];
 
 	if (stripeLines.length === 0) {
-		const lineAmountCents = creditNote.total_excluding_tax ?? creditNote.subtotal;
-		const vatPercentage =
-			lineAmountCents > 0 && creditNoteTaxCents > 0
-				? roundCurrency((creditNoteTaxCents / lineAmountCents) * 100)
-				: 0;
-		const net = centsToDecimal(lineAmountCents);
-
 		return [
-			{
-				id: "1",
+			buildFallbackLine({
 				name: normalizeString(creditNote.memo) ?? fallbackItemName,
-				quantity: 1,
-				unitCode: DEFAULT_UNIT_CODE,
-				lineExtensionAmount: net,
-				priceAmount: net,
-				taxCategory: resolveTaxCategoryFromTaxAmounts([], vatPercentage),
-			},
+				taxBaseCents: creditNote.total_excluding_tax ?? creditNote.subtotal,
+				taxCents: creditNoteTaxCents,
+			}),
 		];
 	}
 
@@ -151,19 +160,7 @@ export const buildCreditNoteLines = (
 		const netTotal = centsToDecimal(netCents);
 		const taxAmounts = getCreditNoteLineTaxAmounts(line);
 		const price = deriveUnitPrice(netTotal, quantity);
-		const totalTaxCents = taxAmounts.reduce((sum, ta) => sum + ta.amount, 0);
-
-		let vatPercentage = 0;
-		if (taxAmounts.length > 0) {
-			if (totalTaxCents > 0 && netCents > 0) {
-				vatPercentage = roundCurrency((totalTaxCents / netCents) * 100);
-			} else {
-				const firstWithRate = taxAmounts.find(
-					(ta) => ta.tax_rate_percentage != null,
-				);
-				vatPercentage = firstWithRate?.tax_rate_percentage ?? 0;
-			}
-		}
+		const vatPercentage = deriveVatPercentage(taxAmounts, netCents);
 
 		return {
 			id: String(index + 1),

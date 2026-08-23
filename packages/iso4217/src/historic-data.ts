@@ -1,5 +1,5 @@
 // AUTO-GENERATED — do not edit by hand.
-// Regenerate with `npm run generate` after refreshing data via `npm run fetch-data`.
+// Regenerate with `bun run generate` after refreshing data via `bun run fetch-data`.
 // Source: list-three.xml (SIX Group)
 
 import type { HistoricCurrency } from "./types.js";

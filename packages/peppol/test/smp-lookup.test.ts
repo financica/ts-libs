@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { classifyPeppolDocumentType } from "../src/document-types";
+import { buildParticipantId } from "../src/identifiers";
 import {
 	buildCanonicalParticipantId,
-	buildParticipantId,
 	buildSmlHostname,
 	isDnsNotFound,
 	parseServiceGroupDocumentTypes,

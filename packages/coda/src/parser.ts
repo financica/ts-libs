@@ -54,6 +54,11 @@ function groupIntoStatements(lines: string[]): string[][] {
 
 // ── Substring helpers (1-indexed, inclusive) ───────────────────────────
 
+/**
+ * Slice a record by the column positions as printed in the CODA spec:
+ * `start` and `end` are 1-based and both inclusive (`sub(line, 1, 1)` is the
+ * first character).
+ */
 function sub(line: string, start: number, end: number): string {
 	return line.substring(start - 1, end);
 }

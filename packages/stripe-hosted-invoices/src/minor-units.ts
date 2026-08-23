@@ -23,6 +23,8 @@
  * @see https://docs.stripe.com/currencies#special-cases
  */
 
+import { roundToFourDecimals } from "./internal.js";
+
 /**
  * Currencies where Stripe's `amount` is already in major units, so `500` means
  * 500 JPY rather than 5.00. Every other currency is two-decimal.
@@ -61,9 +63,7 @@ export const isStripeZeroDecimalCurrency = (currency: string): boolean =>
  * division without discarding sub-cent precision a caller may still need.
  */
 export const fromStripeMinorUnits = (minorAmount: number, currency: string): number => {
-	const value = minorAmount / stripeMinorUnitDivisor(currency);
-	const rounded = Math.round(value * 10000) / 10000;
-	return Object.is(rounded, -0) ? 0 : rounded;
+	return roundToFourDecimals(minorAmount / stripeMinorUnitDivisor(currency));
 };
 
 /** Convert a major-unit amount to the integer minor-unit value Stripe expects. */

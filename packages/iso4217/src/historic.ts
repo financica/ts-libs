@@ -8,6 +8,7 @@
  */
 
 import { HISTORIC_CURRENCIES, HISTORIC_PUBLISHED_AT } from "./historic-data.js";
+import { normalizeAlphabetic, normalizeNumeric } from "./normalize.js";
 import type { HistoricCurrency } from "./types.js";
 
 const BY_ALPHABETIC = new Map<string, HistoricCurrency[]>();
@@ -42,9 +43,9 @@ const EMPTY: readonly HistoricCurrency[] = Object.freeze([]);
  * Matching is case-insensitive; whitespace is trimmed.
  */
 export function getHistoricByCode(code: string): readonly HistoricCurrency[] {
-	const trimmed = code.trim();
-	if (trimmed.length !== 3) return EMPTY;
-	return BY_ALPHABETIC.get(trimmed.toUpperCase()) ?? EMPTY;
+	const normalized = normalizeAlphabetic(code);
+	if (normalized === undefined) return EMPTY;
+	return BY_ALPHABETIC.get(normalized) ?? EMPTY;
 }
 
 /**
@@ -54,15 +55,8 @@ export function getHistoricByCode(code: string): readonly HistoricCurrency[] {
 export function getHistoricByNumericCode(
 	code: string | number,
 ): readonly HistoricCurrency[] {
-	let normalized: string;
-	if (typeof code === "number") {
-		if (!Number.isInteger(code) || code < 0 || code > 999) return EMPTY;
-		normalized = code.toString().padStart(3, "0");
-	} else {
-		const trimmed = code.trim();
-		if (!/^\d{1,3}$/.test(trimmed)) return EMPTY;
-		normalized = trimmed.padStart(3, "0");
-	}
+	const normalized = normalizeNumeric(code);
+	if (normalized === undefined) return EMPTY;
 	return BY_NUMERIC.get(normalized) ?? EMPTY;
 }
 

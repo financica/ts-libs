@@ -15,7 +15,7 @@ export class NACEBEL {
 	constructor(options?: NACEBELOptions) {
 		this.languages = options?.languages ?? [];
 
-		if (options?.preload === true) {
+		if (options?.preload ?? false) {
 			this.codes = loadNACEBELCodes(this.languages);
 		} else {
 			this.codes = {};
@@ -28,23 +28,25 @@ export class NACEBEL {
 		}
 	}
 
+	/** Retrieve information about a specific code. */
 	getCode(code: string): NACEBELCode | null {
 		this.ensureDataLoaded();
 		const normalized = normalizeCode(code);
 		return this.codes[normalized] ?? null;
 	}
 
+	/** Get the parent code in the hierarchy. */
 	getParent(code: string): NACEBELCode | null {
 		const codeObj = this.getCode(code);
 		if (!codeObj) return null;
 
 		const parentCode = getParentCode(codeObj.code);
-		if (parentCode === null || parentCode === undefined || parentCode === "")
-			return null;
+		if (!parentCode) return null;
 
 		return this.getCode(parentCode);
 	}
 
+	/** Get Belgian-specific extensions for a NACE code. */
 	getBelgianExtensions(naceCode: string): NACEBELCode[] {
 		this.ensureDataLoaded();
 		const normalized = normalizeCode(naceCode);
@@ -63,6 +65,7 @@ export class NACEBEL {
 		return extensions.sort((a, b) => a.code.localeCompare(b.code));
 	}
 
+	/** Get all direct children of a code. */
 	getChildren(code: string): NACEBELCode[] {
 		this.ensureDataLoaded();
 		const codeObj = this.getCode(code);
@@ -93,26 +96,10 @@ export class NACEBEL {
 
 		if (childLevel <= parentLevel) return false;
 
-		if (parentLevel === 1) {
-			const sectionCode = childCode[0];
-			return sectionCode === parentCode;
-		}
-
-		if (parentLevel === 2 && childLevel === 3) {
-			return childCode.startsWith(parentCode);
-		}
-
-		if (parentLevel === 3 && childLevel === 4) {
-			return childCode.startsWith(parentCode);
-		}
-
-		if (parentLevel === 4 && childLevel > 4) {
-			return childCode.startsWith(parentCode);
-		}
-
 		return childCode.startsWith(parentCode);
 	}
 
+	/** Get all ancestors up to the top level. */
 	getAncestors(code: string): NACEBELCode[] {
 		const ancestors: NACEBELCode[] = [];
 		let current = this.getCode(code);
@@ -127,6 +114,7 @@ export class NACEBEL {
 		return ancestors;
 	}
 
+	/** Get all descendants recursively. */
 	getDescendants(code: string): NACEBELCode[] {
 		this.ensureDataLoaded();
 		const normalized = normalizeCode(code);
@@ -142,6 +130,7 @@ export class NACEBEL {
 		return descendants.sort((a, b) => a.code.localeCompare(b.code));
 	}
 
+	/** Get all codes at the same level with the same parent. */
 	getSiblings(code: string): NACEBELCode[] {
 		const codeObj = this.getCode(code);
 		if (!codeObj) return [];
@@ -152,11 +141,13 @@ export class NACEBEL {
 		return this.getChildren(parent.code).filter((c) => c.code !== codeObj.code);
 	}
 
+	/** Get the hierarchical level of a code. */
 	getLevel(code: string): number {
 		const codeObj = this.getCode(code);
 		return codeObj?.level ?? 0;
 	}
 
+	/** Get all codes, optionally filtered by level. */
 	getAllCodes(level?: number): NACEBELCode[] {
 		this.ensureDataLoaded();
 		const allCodes = Object.values(this.codes);
@@ -168,6 +159,7 @@ export class NACEBEL {
 		return allCodes.filter((c) => c.level === level);
 	}
 
+	/** Search for codes by description. */
 	search(query: string, options?: SearchOptions): NACEBELCode[] {
 		this.ensureDataLoaded();
 		const language = options?.language ?? "en";

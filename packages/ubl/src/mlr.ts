@@ -1,8 +1,5 @@
-import { type Document, DOMParser as XmlDomParser, type Element } from "@xmldom/xmldom";
-
-const CBC_NS = "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2";
-const CAC_NS =
-	"urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2";
+import type { Document, Element } from "@xmldom/xmldom";
+import { CAC_NS, CBC_NS, parseXmlDocument } from "./xml-dom";
 
 /**
  * Peppol BIS MLR (Message Level Response) document-type identifier value
@@ -32,24 +29,6 @@ export interface PeppolMessageLevelResponse {
 	/** Receiver participant id as `schemeID:value`. */
 	receiverIdentifier: string | null;
 }
-
-/**
- * Strip DOCTYPE declarations to prevent XXE (XML External Entity) attacks.
- * @xmldom/xmldom resolves external entities by default, so we remove DOCTYPE
- * blocks (including inline DTD subsets) before parsing.
- */
-const stripDoctype = (xml: string): string =>
-	xml.replace(/<!DOCTYPE\s[^>[]*(?:\[[^\]]*\])?>/gi, "");
-
-const parseXmlDocument = (xml: string): Document | null => {
-	const safeXml = stripDoctype(xml);
-	const BrowserDomParser = (globalThis as { DOMParser?: typeof XmlDomParser })
-		.DOMParser;
-	const parser = BrowserDomParser ? new BrowserDomParser() : new XmlDomParser();
-	const doc = parser.parseFromString(safeXml, "text/xml");
-	if (doc.getElementsByTagName("parsererror").length > 0) return null;
-	return doc;
-};
 
 const trimmed = (value: string | null | undefined): string | null => {
 	const text = value?.trim();

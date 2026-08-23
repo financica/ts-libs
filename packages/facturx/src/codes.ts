@@ -19,6 +19,11 @@ export const DOCUMENT_TYPE_CODES = {
 export type DocumentTypeCode =
 	(typeof DOCUMENT_TYPE_CODES)[keyof typeof DOCUMENT_TYPE_CODES];
 
+/** Whether a BT-3 type code denotes a credit note (381 or self-billed 261). */
+export const isCreditNoteType = (typeCode: string): boolean =>
+	typeCode === DOCUMENT_TYPE_CODES.CREDIT_NOTE ||
+	typeCode === DOCUMENT_TYPE_CODES.SELF_BILLED_CREDIT_NOTE;
+
 /** UNTDID 5305 — VAT category (BT-95/BT-102/BT-118/BT-151). */
 export const TAX_CATEGORY_CODES = {
 	STANDARD_RATE: "S",

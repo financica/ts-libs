@@ -97,6 +97,11 @@ export interface CheckVariable {
  */
 export type CheckBinding = Readonly<Record<string, string>>;
 
+/** Whether a datapoint's metric carries a monetary amount (`am…`). */
+export function isMonetary(metric: string): boolean {
+	return metric.startsWith("am");
+}
+
 /** One published check, as a test expression over named fact variables. */
 export interface Check {
 	/** The NBB's own identifier, e.g. `"va_03.01.0_0014"`. */

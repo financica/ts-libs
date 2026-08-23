@@ -1,9 +1,10 @@
-import { DOMParser as XmlDomParser, type Element } from "@xmldom/xmldom";
+import type { Element } from "@xmldom/xmldom";
 import type {
 	UblAddress,
 	UblAllowanceCharge,
 	UblAttachment,
 	UblBillingReference,
+	UblContact,
 	UblDelivery,
 	UblDocumentReference,
 	UblInvoice,
@@ -16,10 +17,7 @@ import type {
 	UblPaymentMeans,
 	UblTaxSubtotal,
 } from "./types.js";
-
-const CBC_NS = "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2";
-const CAC_NS =
-	"urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2";
+import { CAC_NS, CBC_NS, parseXmlDocument } from "./xml-dom.js";
 
 // --- DOM helpers ---
 
@@ -105,7 +103,7 @@ function parseTaxSchemeId(parent: Element | null): string | undefined {
 	return cbcText(taxScheme, "ID") || undefined;
 }
 
-function parseContact(party: Element): import("./types.js").UblContact | undefined {
+function parseContact(party: Element): UblContact | undefined {
 	const contact = cacElement(party, "Contact");
 	if (!contact) return undefined;
 	const name = cbcText(contact, "Name");
@@ -499,22 +497,10 @@ function parseBillingReference(root: Element): UblBillingReference | undefined {
 
 // --- Main parser ---
 
-/**
- * Strip DOCTYPE declarations to prevent XXE (XML External Entity) attacks.
- * @xmldom/xmldom resolves external entities by default, so we remove
- * DOCTYPE blocks (including inline DTD subsets) before parsing.
- */
-const stripDoctype = (xml: string): string =>
-	xml.replace(/<!DOCTYPE\s[^>[]*(?:\[[^\]]*\])?>/gi, "");
-
 export function parseUblInvoice(xml: string): UblInvoice | null {
 	try {
-		const safeXml = stripDoctype(xml);
-		const BrowserDomParser = (globalThis as { DOMParser?: typeof XmlDomParser })
-			.DOMParser;
-		const parser = BrowserDomParser ? new BrowserDomParser() : new XmlDomParser();
-		const doc = parser.parseFromString(safeXml, "text/xml");
-		if (doc.getElementsByTagName("parsererror").length > 0) return null;
+		const doc = parseXmlDocument(xml);
+		if (!doc) return null;
 
 		const root = doc.documentElement;
 		if (!root) return null;

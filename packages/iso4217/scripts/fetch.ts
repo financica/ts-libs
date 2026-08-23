@@ -4,7 +4,7 @@
  * list-one.xml   — active currency codes
  * list-three.xml — historic (withdrawn) currency codes
  *
- * After running this, execute `npm run generate` to re-emit src/data.ts et al.
+ * After running this, execute `bun run generate` to re-emit src/data.ts et al.
  */
 
 import { mkdir, writeFile } from "node:fs/promises";

@@ -1,6 +1,11 @@
+/**
+ * Error thrown for every non-2xx response from the Scrada API. `status` is
+ * the HTTP status code; `details` is the parsed response body (JSON when
+ * parseable, otherwise the raw text).
+ */
 export class ScradaApiError extends Error {
-	status: number;
-	details: unknown;
+	readonly status: number;
+	readonly details: unknown;
 
 	constructor(message: string, status: number, details: unknown) {
 		super(message);
@@ -10,7 +15,8 @@ export class ScradaApiError extends Error {
 	}
 }
 
-const tryParseJson = (value: string): unknown => {
+/** Parse `value` as JSON, returning `null` when it is not valid JSON. */
+export const tryParseJson = (value: string): unknown => {
 	try {
 		return JSON.parse(value) as unknown;
 	} catch {
@@ -18,10 +24,15 @@ const tryParseJson = (value: string): unknown => {
 	}
 };
 
+/** Maximum nesting depth walked when collecting detail messages. */
+const MAX_DETAIL_DEPTH = 4;
+/** Maximum number of messages joined into the error summary. */
+const MAX_DETAIL_MESSAGES = 6;
+
 const normalizeDetailMessage = (value: string) => value.trim().replace(/\s+/g, " ");
 
 const collectDetailMessages = (value: unknown, collector: Set<string>, depth = 0) => {
-	if (depth > 4 || value === null || value === undefined) return;
+	if (depth > MAX_DETAIL_DEPTH || value === null || value === undefined) return;
 
 	if (typeof value === "string") {
 		const normalized = normalizeDetailMessage(value);
@@ -94,7 +105,7 @@ export const summarizeScradaErrorDetails = (details: unknown): string | null => 
 	const collector = new Set<string>();
 	collectDetailMessages(details, collector);
 	if (collector.size === 0) return null;
-	return Array.from(collector).slice(0, 6).join(" | ");
+	return Array.from(collector).slice(0, MAX_DETAIL_MESSAGES).join(" | ");
 };
 
 const coerceErrorMessage = (details: unknown, fallback: string) =>

@@ -144,6 +144,3 @@ export const parseHeader = (
 			fullText.match(PATTERNS.structuredCommunication)?.[0] ?? null,
 	};
 };
-
-/** Exported for tests; the balance rule is the subtlest part of the header. */
-export { parseBalanceSummary };

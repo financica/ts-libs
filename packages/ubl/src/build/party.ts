@@ -11,8 +11,8 @@ import { normalizeString } from "./utils";
  *   2 — Not subject to VAT.
  *   3 — Small business / franchise exemption (e.g. Belgian Article 56bis).
  *
- * For statuses 2 and 3, {@link ../build.ts} coerces all line categories to a
- * non-charging exempt category so no VAT is reported.
+ * For statuses 2 and 3, stripe-ubl's `coerceForVatStatus` coerces all line
+ * categories to a non-charging exempt category so no VAT is reported.
  */
 export type SupplierVatStatus = 1 | 2 | 3;
 

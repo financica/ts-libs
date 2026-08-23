@@ -19,7 +19,7 @@ import {
 	coerceHostedInvoice,
 	coerceLinesPage,
 } from "./coerce.js";
-import { findDeep, findDeepString, findStripeInvoiceId } from "./internal.js";
+import { findDeep, findDeepString, findStripeInvoiceId, isRecord } from "./internal.js";
 import type {
 	StripeCreditNote,
 	StripeCreditNoteLine,
@@ -40,6 +40,12 @@ export const STRIPE_HOSTED_API_VERSION = "2020-03-02";
 /** Hard cap on line-item pages so a runaway `has_more` cannot loop forever. */
 const MAX_LINE_PAGES = 20;
 
+/** Base of the public Stripe API the ephemeral key authorizes reads against. */
+const STRIPE_API_BASE = "https://api.stripe.com";
+
+/** Page size requested from Stripe list endpoints (its maximum). */
+const PAGE_LIMIT = "100";
+
 /** Optional hooks. Everything is best-effort and silent by default. */
 export type StripeHostedOptions = {
 	/**
@@ -53,10 +59,75 @@ export type StripeHostedOptions = {
 
 type Resolved = Required<Pick<StripeHostedOptions, "fetch" | "onWarning">>;
 
-const resolve = (options: StripeHostedOptions = {}): Resolved => ({
+/** Fill in the defaults for {@link StripeHostedOptions}: global `fetch`, no-op warnings. */
+export const resolveStripeHostedOptions = (
+	options: StripeHostedOptions = {},
+): Resolved => ({
 	fetch: options.fetch ?? globalThis.fetch,
 	onWarning: options.onWarning ?? (() => {}),
 });
+
+const resolve = resolveStripeHostedOptions;
+
+/**
+ * Walk a Stripe `starting_after` cursor list, appending to `lines` in place.
+ *
+ * Stops at the first non-OK response, unreadable page, network error or the
+ * {@link MAX_LINE_PAGES} cap. Returns whether more pages remained when it
+ * stopped because of the cap, so the caller can decide whether to warn.
+ */
+const paginateLines = async <T extends { id?: unknown }>(
+	params: {
+		lines: T[];
+		hasMore: boolean;
+		linesUrl: string;
+		coercePage: (raw: unknown) => { data: T[]; has_more: boolean } | null;
+		/** Warning messages; `notObject` is omitted when that case should stay silent. */
+		warnings: { httpFailed: string; notObject?: string; error: string };
+		/** Extra warning context, given the zero-based page index. */
+		context: (page: number) => Record<string, unknown>;
+	},
+	{ fetch, onWarning }: Resolved,
+	headers: Record<string, string>,
+): Promise<{ truncated: boolean; pages: number }> => {
+	const { lines, linesUrl, coercePage, warnings, context } = params;
+	let hasMore = params.hasMore;
+	let page = 0;
+	// Each page asks for what follows the last id of the page before it, so
+	// the walk is sequential by construction.
+	/* oxlint-disable no-await-in-loop */
+	while (hasMore && page < MAX_LINE_PAGES) {
+		const lastId = lines[lines.length - 1]?.id;
+		if (typeof lastId !== "string") break;
+
+		const pageUrl = new URL(linesUrl);
+		pageUrl.searchParams.set("starting_after", lastId);
+		pageUrl.searchParams.set("limit", PAGE_LIMIT);
+		try {
+			const res = await fetch(pageUrl.toString(), { headers });
+			if (!res.ok) {
+				onWarning(warnings.httpFailed, {
+					status: res.status,
+					...context(page),
+				});
+				break;
+			}
+			const parsed = coercePage(await res.json());
+			if (!parsed) {
+				if (warnings.notObject) onWarning(warnings.notObject, context(page));
+				break;
+			}
+			lines.push(...parsed.data);
+			hasMore = parsed.has_more && parsed.data.length > 0;
+		} catch (cause) {
+			onWarning(warnings.error, { cause, ...context(page) });
+			break;
+		}
+		page += 1;
+	}
+	/* oxlint-enable no-await-in-loop */
+	return { truncated: hasMore && page >= MAX_LINE_PAGES, pages: page };
+};
 
 /**
  * Headers that authorize the ephemeral-key read path.
@@ -157,7 +228,7 @@ export const fetchStripeHostedInvoice = async (
 > => {
 	const { fetch, onWarning } = resolve(options);
 	const headers = ephemeralHeaders(ephemeralKey);
-	const url = `https://api.stripe.com/v1/invoices/${invoiceId}/hosted?expand[0]=total_tax_amounts.tax_rate`;
+	const url = `${STRIPE_API_BASE}/v1/invoices/${invoiceId}/hosted?expand[0]=total_tax_amounts.tax_rate`;
 
 	let raw: unknown;
 	try {
@@ -185,50 +256,27 @@ export const fetchStripeHostedInvoice = async (
 	}
 
 	const lines: StripeLineItem[] = [...(invoice.lines?.data ?? [])];
-	if (invoice.lines?.has_more && lines.length > 0) {
-		let hasMore = true;
-		let page = 0;
-		// Each page asks for what follows the last id of the page before it, so
-		// the walk is sequential by construction.
-		/* oxlint-disable no-await-in-loop */
-		while (hasMore && page < MAX_LINE_PAGES) {
-			const lastId = lines[lines.length - 1]?.id;
-			if (typeof lastId !== "string") break;
-
-			const pageUrl = new URL(
-				`https://api.stripe.com/v1/invoices/${invoiceId}/lines`,
-			);
-			pageUrl.searchParams.set("starting_after", lastId);
-			pageUrl.searchParams.set("limit", "100");
-			try {
-				const res = await fetch(pageUrl.toString(), { headers });
-				if (!res.ok) {
-					onWarning("failed to paginate invoice lines", {
-						status: res.status,
-						page,
-					});
-					break;
-				}
-				const parsed = coerceLinesPage(await res.json());
-				if (!parsed) {
-					onWarning("invoice lines page is not an object", { page });
-					break;
-				}
-				lines.push(...parsed.data);
-				hasMore = parsed.has_more && parsed.data.length > 0;
-			} catch (cause) {
-				onWarning("error paginating invoice lines", { cause, page });
-				break;
-			}
-			page += 1;
-		}
-		/* oxlint-enable no-await-in-loop */
-		if (hasMore && page >= MAX_LINE_PAGES) {
-			onWarning("invoice line pagination hit its page cap; lines are truncated", {
-				invoiceId,
-				pages: page,
-			});
-		}
+	const { truncated, pages } = await paginateLines(
+		{
+			lines,
+			hasMore: invoice.lines?.has_more === true && lines.length > 0,
+			linesUrl: `${STRIPE_API_BASE}/v1/invoices/${invoiceId}/lines`,
+			coercePage: coerceLinesPage,
+			warnings: {
+				httpFailed: "failed to paginate invoice lines",
+				notObject: "invoice lines page is not an object",
+				error: "error paginating invoice lines",
+			},
+			context: (page) => ({ page }),
+		},
+		{ fetch, onWarning },
+		headers,
+	);
+	if (truncated) {
+		onWarning("invoice line pagination hit its page cap; lines are truncated", {
+			invoiceId,
+			pages,
+		});
 	}
 
 	return { ok: true, invoice, lines };
@@ -261,8 +309,8 @@ export const fetchStripeCreditNotes = async (
 	const { fetch, onWarning } = resolve(options);
 	const headers = ephemeralHeaders(ephemeralKey);
 
-	const url = new URL(`https://api.stripe.com/v1/invoices/${invoiceId}/credit_notes`);
-	url.searchParams.set("limit", "100");
+	const url = new URL(`${STRIPE_API_BASE}/v1/invoices/${invoiceId}/credit_notes`);
+	url.searchParams.set("limit", PAGE_LIMIT);
 	url.searchParams.set("status", "issued");
 	url.searchParams.set("expand[0]", "data.tax_amounts.tax_rate");
 
@@ -279,12 +327,7 @@ export const fetchStripeCreditNotes = async (
 		return [];
 	}
 
-	const entries =
-		raw &&
-		typeof raw === "object" &&
-		Array.isArray((raw as { data?: unknown }).data)
-			? ((raw as { data: unknown[] }).data ?? [])
-			: [];
+	const entries = isRecord(raw) && Array.isArray(raw.data) ? raw.data : [];
 
 	const creditNotes = entries.map((entry) => coerceCreditNote(entry));
 	for (const creditNote of creditNotes) {
@@ -313,43 +356,22 @@ const fetchCreditNoteLines = async (
 	{ fetch, onWarning }: Resolved,
 ): Promise<StripeCreditNoteLine[]> => {
 	const lines: StripeCreditNoteLine[] = [...(creditNote.lines?.data ?? [])];
-	let hasMore = creditNote.lines?.has_more === true && lines.length > 0;
-	let page = 0;
-
-	// Cursor pagination again: page N + 1 is defined by page N's last id.
-	/* oxlint-disable no-await-in-loop */
-	while (hasMore && page < MAX_LINE_PAGES) {
-		const lastId = lines[lines.length - 1]?.id;
-		if (typeof lastId !== "string") break;
-
-		const url = new URL(
-			`https://api.stripe.com/v1/credit_notes/${creditNote.id}/lines`,
-		);
-		url.searchParams.set("starting_after", lastId);
-		url.searchParams.set("limit", "100");
-		try {
-			const res = await fetch(url.toString(), { headers });
-			if (!res.ok) {
-				onWarning("failed to paginate credit-note lines", {
-					status: res.status,
-					creditNoteId: creditNote.id,
-				});
-				break;
-			}
-			const parsed = coerceCreditNoteLinesPage(await res.json());
-			if (!parsed) break;
-			lines.push(...parsed.data);
-			hasMore = parsed.has_more && parsed.data.length > 0;
-		} catch (cause) {
-			onWarning("error paginating credit-note lines", {
-				cause,
-				creditNoteId: creditNote.id,
-			});
-			break;
-		}
-		page += 1;
-	}
-	/* oxlint-enable no-await-in-loop */
+	// No cap warning here: a truncated credit note is not reported today.
+	await paginateLines(
+		{
+			lines,
+			hasMore: creditNote.lines?.has_more === true && lines.length > 0,
+			linesUrl: `${STRIPE_API_BASE}/v1/credit_notes/${creditNote.id}/lines`,
+			coercePage: coerceCreditNoteLinesPage,
+			warnings: {
+				httpFailed: "failed to paginate credit-note lines",
+				error: "error paginating credit-note lines",
+			},
+			context: () => ({ creditNoteId: creditNote.id }),
+		},
+		{ fetch, onWarning },
+		headers,
+	);
 
 	return lines;
 };

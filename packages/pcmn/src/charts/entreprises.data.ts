@@ -1,5 +1,5 @@
-// Generated from the CNC's own publication of the annexe, in all four
-// languages it is served in. Do not edit by hand: regenerate instead.
+// Transcribed by hand from the CNC's own publication of the annexe, in all four
+// languages it is served in. There is no generator: this file is maintained by hand.
 //
 // AR/KB 21.10.2018, annexe/bijlage 1re (CDE/WER art. III.84, al. 7)
 // Source: https://www.cnc-cbn.be/fr/node/2250/multilingual-comparison/fr-nl (and /de-en)

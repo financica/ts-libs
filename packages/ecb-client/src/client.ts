@@ -228,7 +228,7 @@ export class EcbClient {
 
 	/** The `EXR` series key for a currency selection; empty selects every series. */
 	private seriesUrl(currencies: readonly CurrencyCode[] | null): string {
-		const key = currencies && currencies.length ? currencies.join("+") : "";
+		const key = currencies && currencies.length > 0 ? currencies.join("+") : "";
 		return `${this.baseUrl}/data/EXR/D.${key}.EUR.SP00.A`;
 	}
 

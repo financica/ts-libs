@@ -19,12 +19,7 @@ import type {
 	XbrlFootnoteResource,
 	XbrlFootnoteArc,
 } from "./types.js";
-
-// ── Namespaces ────────────────────────────────────────────────────────
-
-const NS_XBRLI = "http://www.xbrl.org/2003/instance";
-const NS_LINK = "http://www.xbrl.org/2003/linkbase";
-const NS_XSI = "http://www.w3.org/2001/XMLSchema-instance";
+import { NS_LINK, NS_XBRLI } from "./namespaces.js";
 
 // Prefixes used by fast-xml-parser
 const ATTR = "@_";
@@ -77,21 +72,21 @@ export function parseXbrl(xml: string): XbrlInstance | null {
 			const tag = getTagName(child);
 			if (!tag) continue;
 
-			const resolved = resolveTag(tag, namespaces);
+			const resolved = resolveQName(tag, namespaces);
 
 			if (resolved.namespace === NS_LINK) {
 				switch (resolved.localName) {
 					case "schemaRef":
-						schemaRefs.push(parseSchemaRef(child, tag));
+						schemaRefs.push(parseSimpleLinkRef(child, tag));
 						break;
 					case "linkbaseRef":
-						linkbaseRefs.push(parseLinkbaseRef(child, tag));
+						linkbaseRefs.push(parseSimpleLinkRef(child, tag));
 						break;
 					case "roleRef":
-						roleRefs.push(parseRoleRef(child, tag));
+						roleRefs.push(parseUriRef(child, tag, "roleURI"));
 						break;
 					case "arcroleRef":
-						arcroleRefs.push(parseArcroleRef(child, tag));
+						arcroleRefs.push(parseUriRef(child, tag, "arcroleURI"));
 						break;
 					case "footnoteLink":
 						footnoteLinks.push(parseFootnoteLink(child, tag, namespaces));
@@ -163,9 +158,8 @@ function getAttrs(node: unknown, tag: string): Record<string, string> {
 	}
 	// Also check tag-level attrs
 	const tagVal = n[tag];
-	if (Array.isArray(tagVal)) {
-		// preserveOrder mode: children are in the array
-	} else if (typeof tagVal === "object" && tagVal !== null) {
+	// preserveOrder mode: an array holds children, not attrs
+	if (!Array.isArray(tagVal) && typeof tagVal === "object" && tagVal !== null) {
 		for (const [k, v] of Object.entries(tagVal as Record<string, unknown>)) {
 			if (k.startsWith(ATTR)) {
 				result[k.slice(ATTR.length)] = String(v);
@@ -229,10 +223,6 @@ function resolveQName(prefixed: string, namespaces: Record<string, string>): Xbr
 	};
 }
 
-function resolveTag(tag: string, namespaces: Record<string, string>): XbrlQName {
-	return resolveQName(tag, namespaces);
-}
-
 // ── Root finding ──────────────────────────────────────────────────────
 
 function findXbrlRoot(
@@ -257,8 +247,12 @@ function findXbrlRoot(
 
 // ── Schema/Linkbase refs ──────────────────────────────────────────────
 
-function parseSchemaRef(node: unknown, _tag: string): XbrlSchemaRef {
-	const attrs = getAttrs(node, _tag);
+/** schemaRef and linkbaseRef carry the same simple-link attributes. */
+function parseSimpleLinkRef(
+	node: unknown,
+	tag: string,
+): XbrlSchemaRef | XbrlLinkbaseRef {
+	const attrs = getAttrs(node, tag);
 	return {
 		href: attrs["xlink:href"] ?? "",
 		role: attrs["xlink:role"] || undefined,
@@ -266,29 +260,16 @@ function parseSchemaRef(node: unknown, _tag: string): XbrlSchemaRef {
 	};
 }
 
-function parseLinkbaseRef(node: unknown, _tag: string): XbrlLinkbaseRef {
-	const attrs = getAttrs(node, _tag);
+function parseUriRef<K extends "roleURI" | "arcroleURI">(
+	node: unknown,
+	tag: string,
+	uriAttr: K,
+): Record<K, string> & { href: string } {
+	const attrs = getAttrs(node, tag);
 	return {
+		[uriAttr]: attrs[uriAttr] ?? "",
 		href: attrs["xlink:href"] ?? "",
-		role: attrs["xlink:role"] || undefined,
-		arcrole: attrs["xlink:arcrole"] || undefined,
-	};
-}
-
-function parseRoleRef(node: unknown, _tag: string): XbrlRoleRef {
-	const attrs = getAttrs(node, _tag);
-	return {
-		roleURI: attrs["roleURI"] ?? "",
-		href: attrs["xlink:href"] ?? "",
-	};
-}
-
-function parseArcroleRef(node: unknown, _tag: string): XbrlArcroleRef {
-	const attrs = getAttrs(node, _tag);
-	return {
-		arcroleURI: attrs["arcroleURI"] ?? "",
-		href: attrs["xlink:href"] ?? "",
-	};
+	} as Record<K, string> & { href: string };
 }
 
 // ── Context parsing ───────────────────────────────────────────────────
@@ -310,7 +291,7 @@ function parseContext(
 	for (const child of children) {
 		const childTag = getTagName(child);
 		if (!childTag) continue;
-		const resolved = resolveTag(childTag, namespaces);
+		const resolved = resolveQName(childTag, namespaces);
 
 		if (resolved.namespace === NS_XBRLI) {
 			switch (resolved.localName) {
@@ -344,7 +325,7 @@ function parseEntity(
 	for (const child of children) {
 		const childTag = getTagName(child);
 		if (!childTag) continue;
-		const resolved = resolveTag(childTag, namespaces);
+		const resolved = resolveQName(childTag, namespaces);
 
 		if (resolved.namespace === NS_XBRLI) {
 			if (resolved.localName === "identifier") {
@@ -375,7 +356,7 @@ function parsePeriod(
 	for (const child of children) {
 		const childTag = getTagName(child);
 		if (!childTag) continue;
-		const resolved = resolveTag(childTag, namespaces);
+		const resolved = resolveQName(childTag, namespaces);
 
 		if (resolved.namespace === NS_XBRLI) {
 			switch (resolved.localName) {
@@ -412,7 +393,7 @@ function parseDimensionMembers(
 	for (const child of children) {
 		const childTag = getTagName(child);
 		if (!childTag) continue;
-		const resolved = resolveTag(childTag, namespaces);
+		const resolved = resolveQName(childTag, namespaces);
 
 		// XBRL Dimensions: xbrldi:explicitMember and xbrldi:typedMember
 		if (resolved.localName === "explicitMember") {
@@ -470,7 +451,7 @@ function parseUnit(
 	for (const child of children) {
 		const childTag = getTagName(child);
 		if (!childTag) continue;
-		const resolved = resolveTag(childTag, namespaces);
+		const resolved = resolveQName(childTag, namespaces);
 
 		if (resolved.namespace === NS_XBRLI) {
 			if (resolved.localName === "measure") {
@@ -499,7 +480,7 @@ function parseDivide(
 	for (const child of children) {
 		const childTag = getTagName(child);
 		if (!childTag) continue;
-		const resolved = resolveTag(childTag, namespaces);
+		const resolved = resolveQName(childTag, namespaces);
 
 		if (resolved.namespace === NS_XBRLI) {
 			if (resolved.localName === "unitNumerator") {
@@ -524,7 +505,7 @@ function parseMeasures(
 	for (const child of children) {
 		const childTag = getTagName(child);
 		if (!childTag) continue;
-		const resolved = resolveTag(childTag, namespaces);
+		const resolved = resolveQName(childTag, namespaces);
 
 		if (resolved.namespace === NS_XBRLI && resolved.localName === "measure") {
 			const text = getTextContent(child, childTag);
@@ -552,21 +533,13 @@ function parseFact(
 	// Check if this looks like a tuple (has children with contextRef)
 	const children = getChildren(node, tag);
 	if (children.length > 0 && hasFacts(children)) {
-		return parseTuple(node, tag, attrs, children, namespaces);
+		return parseTuple(tag, attrs, children, namespaces);
 	}
 
 	// If it has child elements, it might still be a tuple with nested tuples
 	if (children.length > 0) {
-		const childFacts = extractFacts(children, namespaces);
-		if (childFacts.length > 0) {
-			const name = resolveTag(tag, namespaces);
-			return {
-				type: "tuple",
-				name,
-				id: attrs["id"] || undefined,
-				children: childFacts,
-			};
-		}
+		const tuple = parseTuple(tag, attrs, children, namespaces);
+		if (tuple.children.length > 0) return tuple;
 	}
 
 	return null;
@@ -578,8 +551,8 @@ function parseItem(
 	attrs: Record<string, string>,
 	namespaces: Record<string, string>,
 ): XbrlItem {
-	const name = resolveTag(tag, namespaces);
-	const isNil = attrs[`xsi:nil`] === "true" || attrs[`${NS_XSI}:nil`] === "true";
+	const name = resolveQName(tag, namespaces);
+	const isNil = attrs["xsi:nil"] === "true";
 	const value = isNil ? null : getTextContent(node, tag) || "";
 
 	let precision: number | "INF" | undefined;
@@ -613,13 +586,12 @@ function parseItem(
 }
 
 function parseTuple(
-	_node: unknown,
 	tag: string,
 	attrs: Record<string, string>,
 	children: unknown[],
 	namespaces: Record<string, string>,
 ): XbrlTuple {
-	const name = resolveTag(tag, namespaces);
+	const name = resolveQName(tag, namespaces);
 	const childFacts = extractFacts(children, namespaces);
 
 	return {
@@ -656,7 +628,7 @@ function extractFacts(
 		const childTag = getTagName(child);
 		if (!childTag) continue;
 
-		const resolved = resolveTag(childTag, namespaces);
+		const resolved = resolveQName(childTag, namespaces);
 		// Skip XBRL structural elements
 		if (resolved.namespace === NS_XBRLI || resolved.namespace === NS_LINK) {
 			continue;
@@ -686,7 +658,7 @@ function parseFootnoteLink(
 	for (const child of children) {
 		const childTag = getTagName(child);
 		if (!childTag) continue;
-		const resolved = resolveTag(childTag, namespaces);
+		const resolved = resolveQName(childTag, namespaces);
 
 		if (resolved.namespace === NS_LINK) {
 			switch (resolved.localName) {

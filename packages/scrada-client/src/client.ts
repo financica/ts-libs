@@ -1,5 +1,5 @@
 import { DEFAULT_SCRADA_API_BASE_URL, SCRADA_LANGUAGE_HEADER } from "./constants";
-import { scradaApiErrorFromResponse } from "./errors";
+import { scradaApiErrorFromResponse, tryParseJson } from "./errors";
 import type {
 	PeppolOnlyInvoice,
 	PeppolOutboundDocumentRouting,
@@ -31,6 +31,10 @@ const routingHeaders = (
 };
 
 type ScradaRequestMethod = "GET" | "POST" | "PUT" | "DELETE";
+/** How the response body of a `request()` call is decoded. */
+type ScradaResponseExpectation = "json" | "text" | "arrayBuffer";
+/** Outbound endpoint segment under `/company/{id}/peppol/outbound/`. */
+type ScradaOutboundSegment = "salesInvoice" | "selfBillingInvoice" | "document";
 
 export interface ScradaApiClientOptions {
 	apiKey: string;
@@ -77,14 +81,6 @@ const normalizeDocumentId = (value: unknown): string => {
 	throw new Error("Unable to resolve document ID from Scrada response");
 };
 
-const tryParseJson = (value: string): unknown => {
-	try {
-		return JSON.parse(value) as unknown;
-	} catch {
-		return null;
-	}
-};
-
 /**
  * HTTP client for the Scrada Peppol API.
  *
@@ -126,7 +122,7 @@ export class ScradaApiClient {
 		method?: ScradaRequestMethod;
 		body?: BodyInit;
 		headers?: HeadersInit;
-		expect?: "json" | "text" | "arrayBuffer";
+		expect?: ScradaResponseExpectation;
 	}): Promise<T> {
 		const response = await this.fetchImpl(joinUrl(this.baseUrl, params.path), {
 			method: params.method ?? "GET",
@@ -155,9 +151,16 @@ export class ScradaApiClient {
 
 	// ── Peppol registration ─────────────────────────────────────────────
 
+	/**
+	 * Register a company as a Peppol participant via Scrada. Returns the
+	 * registration/document ID resolved from the response.
+	 *
+	 * @param payload  Registration body as defined by the Scrada API schema
+	 *   (`POST /company/{companyId}/peppol/register`), see https://api.scrada.be/v1.
+	 */
 	async registerCompany(
 		companyId: string,
-		payload: Record<string, unknown>,
+		payload: Readonly<Record<string, unknown>>,
 	): Promise<string> {
 		const response = await this.request<unknown>({
 			path: `/company/${companyId}/peppol/register`,
@@ -168,6 +171,7 @@ export class ScradaApiClient {
 		return normalizeDocumentId(response);
 	}
 
+	/** Remove a company's Peppol participant registration for the given identifier. */
 	async deregisterCompany(
 		companyId: string,
 		participantIdentifierScheme: string,
@@ -183,6 +187,7 @@ export class ScradaApiClient {
 
 	// ── Inbound documents ───────────────────────────────────────────────
 
+	/** List inbound Peppol documents that have not yet been confirmed for the company. */
 	async getUnconfirmedInboundDocuments(
 		companyId: string,
 	): Promise<ScradaInboundUnconfirmedResponse> {
@@ -191,6 +196,10 @@ export class ScradaApiClient {
 		});
 	}
 
+	/**
+	 * Fetch the raw body of an inbound document (typically UBL XML), along
+	 * with its content type and response headers.
+	 */
 	async getInboundDocument(
 		companyId: string,
 		documentId: string,
@@ -215,6 +224,7 @@ export class ScradaApiClient {
 		};
 	}
 
+	/** Fetch the PDF rendering of an inbound document as an ArrayBuffer. */
 	async getInboundDocumentPdf(
 		companyId: string,
 		documentId: string,
@@ -238,6 +248,7 @@ export class ScradaApiClient {
 		};
 	}
 
+	/** Mark an inbound document as confirmed (received/processed) so it drops out of the unconfirmed list. */
 	async confirmInboundDocument(companyId: string, documentId: string): Promise<void> {
 		await this.request<null>({
 			path: `/company/${companyId}/peppol/inbound/document/${documentId}/confirm`,
@@ -249,7 +260,7 @@ export class ScradaApiClient {
 
 	private async postOutbound(params: {
 		companyId: string;
-		segment: "salesInvoice" | "selfBillingInvoice" | "document";
+		segment: ScradaOutboundSegment;
 		body: BodyInit;
 		contentType: "application/json" | "application/xml";
 		idempotencyKey?: string;
@@ -342,6 +353,7 @@ export class ScradaApiClient {
 		});
 	}
 
+	/** Fetch delivery status and metadata for an outbound document. */
 	async getOutboundDocumentInfo(
 		companyId: string,
 		documentId: string,
@@ -367,6 +379,7 @@ export class ScradaApiClient {
 
 	// ── Peppol participant lookup ───────────────────────────────────────
 
+	/** Look up a Peppol participant by identifier scheme and value. */
 	async lookupPeppolParticipant(
 		companyId: string,
 		scheme: string,
@@ -379,9 +392,15 @@ export class ScradaApiClient {
 		});
 	}
 
+	/**
+	 * Look up a Peppol participant from party details (name, address, VAT number…).
+	 *
+	 * @param payload  Lookup body as defined by the Scrada API schema
+	 *   (`POST /company/{companyId}/peppol/lookup`), see https://api.scrada.be/v1.
+	 */
 	async lookupPeppolParty(
 		companyId: string,
-		payload: Record<string, unknown>,
+		payload: Readonly<Record<string, unknown>>,
 	): Promise<ScradaPeppolLookupResponse> {
 		return this.request<ScradaPeppolLookupResponse>({
 			path: `/company/${companyId}/peppol/lookup`,
