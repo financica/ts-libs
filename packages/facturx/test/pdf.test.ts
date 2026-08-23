@@ -42,8 +42,11 @@ const embeddedFileNames = (doc: PDFDocument): string[] => {
 
 /** Merge every rdf:Description of a parsed XMP packet into one map. */
 const flattenDescriptions = (xmp: Record<string, unknown>): Record<string, unknown> => {
-	const rdf = (xmp.xmpmeta as Record<string, unknown>).RDF as Record<string, unknown>;
-	const descriptions = rdf.Description as Record<string, unknown>[];
+	const rdf = (xmp["xmpmeta"] as Record<string, unknown>)["RDF"] as Record<
+		string,
+		unknown
+	>;
+	const descriptions = rdf["Description"] as Record<string, unknown>[];
 	return Object.assign({}, ...descriptions) as Record<string, unknown>;
 };
 
@@ -219,12 +222,14 @@ describe("attachFacturXXml", () => {
 		);
 
 		const descriptions = flattenDescriptions(xmp);
-		expect(descriptions.DocumentID).toBe("TEST-1");
-		expect(descriptions.ConformanceLevel).toBe(PROFILE_CONFORMANCE_LEVELS.en16931);
-		expect(descriptions.DocumentFileName).toBe(FACTUR_X_FILENAME);
-		expect(descriptions.DocumentType).toBe("INVOICE");
-		expect(String(descriptions.part)).toBe("3");
-		expect(descriptions.conformance).toBe("B");
+		expect(descriptions["DocumentID"]).toBe("TEST-1");
+		expect(descriptions["ConformanceLevel"]).toBe(
+			PROFILE_CONFORMANCE_LEVELS.en16931,
+		);
+		expect(descriptions["DocumentFileName"]).toBe(FACTUR_X_FILENAME);
+		expect(descriptions["DocumentType"]).toBe("INVOICE");
+		expect(String(descriptions["part"])).toBe("3");
+		expect(descriptions["conformance"]).toBe("B");
 
 		// /AF → filespec with a Factur-X AF relationship (spec §6.2.2 allows
 		// Data / Alternative / Source depending on the profile).

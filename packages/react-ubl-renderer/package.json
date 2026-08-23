@@ -20,9 +20,19 @@
 		"directory": "packages/react-ubl-renderer"
 	},
 	"files": [
-		"dist"
+		"dist",
+		"src",
+		"!src/**/*.test.ts",
+		"!src/**/*.test.tsx",
+		"!src/**/__tests__/**",
+		"CHANGELOG.md",
+		"LICENSE",
+		"README.md"
 	],
 	"type": "module",
+	"sideEffects": [
+		"**/*.css"
+	],
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"exports": {
@@ -30,7 +40,8 @@
 			"import": "./dist/index.js",
 			"types": "./dist/index.d.ts"
 		},
-		"./styles.css": "./dist/styles.css"
+		"./styles.css": "./dist/styles.css",
+		"./package.json": "./package.json"
 	},
 	"publishConfig": {
 		"access": "public"
@@ -43,9 +54,9 @@
 		"lint:fix": "oxlint --fix",
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
-		"test": "vitest run",
-		"test:watch": "vitest",
-		"test:coverage": "vitest run --coverage",
+		"test": "vitest run --root ../.. --project @financica/react-ubl-renderer",
+		"test:watch": "vitest --root ../.. --project @financica/react-ubl-renderer",
+		"test:coverage": "vitest --root ../.. --project @financica/react-ubl-renderer run --coverage",
 		"ci": "bun run lint && bun run format:check && bun run build && bun run typecheck && bun run test",
 		"prepack": "bun run build"
 	},

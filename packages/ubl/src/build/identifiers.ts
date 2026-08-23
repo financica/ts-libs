@@ -155,7 +155,7 @@ const VAT_PREFIX_TO_COUNTRY: Record<string, string> = {
  */
 export const resolveVatEndpoint = (params: {
 	vatNumber: string | null | undefined;
-	countryCode?: string | null;
+	countryCode?: string | null | undefined;
 }): UblEndpoint | null => {
 	const value = normalizeString(params.vatNumber);
 	if (!value) return null;

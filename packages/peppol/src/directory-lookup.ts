@@ -24,8 +24,8 @@ const toArray = (value: unknown): unknown[] => (Array.isArray(value) ? value : [
  */
 const extractName = (value: unknown): string | null => {
 	if (typeof value === "string") return toStringOrNull(value);
-	const first = toArray(value).find((entry) => isRecord(entry) && entry.name);
-	return isRecord(first) ? toStringOrNull(first.name) : null;
+	const first = toArray(value).find((entry) => isRecord(entry) && entry["name"]);
+	return isRecord(first) ? toStringOrNull(first["name"]) : null;
 };
 
 /**
@@ -50,14 +50,14 @@ export const lookupPeppolDirectory = async (
 		});
 		if (!response.ok) return null;
 		const body: unknown = await response.json();
-		const matches = isRecord(body) ? body.matches : undefined;
+		const matches = isRecord(body) ? body["matches"] : undefined;
 		const firstMatch = toArray(matches)[0];
-		const entities = isRecord(firstMatch) ? firstMatch.entities : undefined;
+		const entities = isRecord(firstMatch) ? firstMatch["entities"] : undefined;
 		const firstEntity = toArray(entities)[0];
 		if (!isRecord(firstEntity)) return null;
 		return {
-			name: extractName(firstEntity.name),
-			countryCode: toStringOrNull(firstEntity.countryCode),
+			name: extractName(firstEntity["name"]),
+			countryCode: toStringOrNull(firstEntity["countryCode"]),
 		};
 	} catch {
 		return null;

@@ -30,11 +30,11 @@ export interface NACECode {
 	code: string;
 	level: number;
 	description: LanguageDescriptions;
-	parent?: string;
-	includes?: string;
-	includesAlso?: string;
-	excludes?: string;
-	implementationRule?: string;
+	parent?: string | undefined;
+	includes?: string | undefined;
+	includesAlso?: string | undefined;
+	excludes?: string | undefined;
+	implementationRule?: string | undefined;
 	/**
 	 * Full explanatory note ("Explication" / "Toelichting"), as Markdown, per
 	 * language. Cross-references to other codes are local wikilinks, e.g.
@@ -42,7 +42,7 @@ export interface NACECode {
 	 * source KBO itself serves) and translated. Present only for codes that have
 	 * a note; `en` is always set when present.
 	 */
-	explanatoryNote?: LanguageDescriptions;
+	explanatoryNote?: LanguageDescriptions | undefined;
 }
 
 export interface NACEBELCode extends NACECode {

@@ -2,37 +2,37 @@
 
 export interface UblAddress {
 	street: string;
-	additionalStreet?: string;
+	additionalStreet?: string | undefined;
 	city: string;
 	postalZone: string;
-	countrySubentity?: string;
+	countrySubentity?: string | undefined;
 	countryCode: string;
 }
 
 export interface UblContact {
-	name?: string;
-	phone?: string;
-	email?: string;
+	name?: string | undefined;
+	phone?: string | undefined;
+	email?: string | undefined;
 }
 
 export interface UblPartyIdentification {
 	id: string;
-	schemeId?: string;
+	schemeId?: string | undefined;
 }
 
 export interface UblParty {
 	name: string;
-	registrationName?: string;
-	companyLegalForm?: string;
-	vatId?: string;
-	taxSchemeId?: string;
-	companyId?: string;
-	companyIdSchemeId?: string;
-	endpointId?: string;
-	endpointSchemeId?: string;
-	partyIdentifications?: UblPartyIdentification[];
-	address?: UblAddress;
-	contact?: UblContact;
+	registrationName?: string | undefined;
+	companyLegalForm?: string | undefined;
+	vatId?: string | undefined;
+	taxSchemeId?: string | undefined;
+	companyId?: string | undefined;
+	companyIdSchemeId?: string | undefined;
+	endpointId?: string | undefined;
+	endpointSchemeId?: string | undefined;
+	partyIdentifications?: UblPartyIdentification[] | undefined;
+	address?: UblAddress | undefined;
+	contact?: UblContact | undefined;
 }
 
 export interface UblItemProperty {
@@ -47,124 +47,124 @@ export interface UblLine {
 	unitCode: string;
 	unitPrice: number;
 	lineExtensionAmount: number;
-	taxPercent?: number;
-	taxAmount?: number;
-	taxCategoryId?: string;
-	taxSchemeId?: string;
-	taxSubtotals?: UblTaxSubtotal[];
-	allowanceCharges?: UblAllowanceCharge[];
-	discountAmount?: number;
-	chargeAmount?: number;
-	itemName?: string;
-	sellersItemId?: string;
-	buyersItemId?: string;
-	additionalItemProperties?: UblItemProperty[];
+	taxPercent?: number | undefined;
+	taxAmount?: number | undefined;
+	taxCategoryId?: string | undefined;
+	taxSchemeId?: string | undefined;
+	taxSubtotals?: UblTaxSubtotal[] | undefined;
+	allowanceCharges?: UblAllowanceCharge[] | undefined;
+	discountAmount?: number | undefined;
+	chargeAmount?: number | undefined;
+	itemName?: string | undefined;
+	sellersItemId?: string | undefined;
+	buyersItemId?: string | undefined;
+	additionalItemProperties?: UblItemProperty[] | undefined;
 	/** EN 16931 BT-134/BT-135: the line's own service period. */
-	invoicePeriod?: UblInvoicePeriod;
+	invoicePeriod?: UblInvoicePeriod | undefined;
 }
 
 export interface UblAllowanceCharge {
 	chargeIndicator: boolean;
 	amount: number;
-	baseAmount?: number;
-	multiplierFactorNumeric?: number;
-	reason?: string;
-	reasonCode?: string;
-	taxPercent?: number;
-	taxCategoryId?: string;
-	taxSchemeId?: string;
+	baseAmount?: number | undefined;
+	multiplierFactorNumeric?: number | undefined;
+	reason?: string | undefined;
+	reasonCode?: string | undefined;
+	taxPercent?: number | undefined;
+	taxCategoryId?: string | undefined;
+	taxSchemeId?: string | undefined;
 }
 
 export interface UblTaxSubtotal {
 	taxableAmount: number;
 	taxAmount: number;
 	taxPercent: number;
-	taxCategoryId?: string;
-	taxSchemeId?: string;
-	taxExemptionReason?: string;
+	taxCategoryId?: string | undefined;
+	taxSchemeId?: string | undefined;
+	taxExemptionReason?: string | undefined;
 }
 
 export interface UblMonetaryTotal {
 	lineExtensionAmount: number;
 	taxExclusiveAmount: number;
 	taxInclusiveAmount: number;
-	allowanceTotalAmount?: number;
-	chargeTotalAmount?: number;
-	prepaidAmount?: number;
-	payableRoundingAmount?: number;
+	allowanceTotalAmount?: number | undefined;
+	chargeTotalAmount?: number | undefined;
+	prepaidAmount?: number | undefined;
+	payableRoundingAmount?: number | undefined;
 	payableAmount: number;
 }
 
 export interface UblPaymentMeans {
 	code: string;
-	codeName?: string;
-	paymentId?: string;
-	iban?: string;
-	bic?: string;
-	accountName?: string;
-	mandateId?: string;
+	codeName?: string | undefined;
+	paymentId?: string | undefined;
+	iban?: string | undefined;
+	bic?: string | undefined;
+	accountName?: string | undefined;
+	mandateId?: string | undefined;
 }
 
 export interface UblInvoicePeriod {
-	startDate?: string;
-	endDate?: string;
-	descriptionCode?: string;
+	startDate?: string | undefined;
+	endDate?: string | undefined;
+	descriptionCode?: string | undefined;
 }
 
 export interface UblAttachment {
 	id: string;
-	filename?: string;
-	mimeCode?: string;
-	description?: string;
+	filename?: string | undefined;
+	mimeCode?: string | undefined;
+	description?: string | undefined;
 	base64Content?: string;
-	externalUri?: string;
+	externalUri?: string | undefined;
 }
 
 export interface UblDocumentReference {
 	id: string;
-	description?: string;
+	description?: string | undefined;
 }
 
 export interface UblDelivery {
-	actualDeliveryDate?: string;
-	address?: UblAddress;
+	actualDeliveryDate?: string | undefined;
+	address?: UblAddress | undefined;
 }
 
 export interface UblBillingReference {
-	invoiceId?: string;
-	invoiceIssueDate?: string;
+	invoiceId?: string | undefined;
+	invoiceIssueDate?: string | undefined;
 }
 
 export interface UblInvoice {
 	documentType: "Invoice" | "CreditNote";
-	customizationId?: string;
-	profileId?: string;
+	customizationId?: string | undefined;
+	profileId?: string | undefined;
 	id: string;
-	invoiceTypeCode?: string;
+	invoiceTypeCode?: string | undefined;
 	issueDate: string;
-	dueDate?: string;
-	taxPointDate?: string;
+	dueDate?: string | undefined;
+	taxPointDate?: string | undefined;
 	currency: string;
-	buyerReference?: string;
-	orderReference?: string;
-	salesOrderId?: string;
-	contractReference?: string;
-	projectReference?: string;
-	billingReference?: UblBillingReference;
+	buyerReference?: string | undefined;
+	orderReference?: string | undefined;
+	salesOrderId?: string | undefined;
+	contractReference?: string | undefined;
+	projectReference?: string | undefined;
+	billingReference?: UblBillingReference | undefined;
 	seller: UblParty;
 	buyer: UblParty;
-	delivery?: UblDelivery;
+	delivery?: UblDelivery | undefined;
 	lines: UblLine[];
 	taxSubtotals: UblTaxSubtotal[];
 	monetaryTotal: UblMonetaryTotal;
-	paymentMeans?: UblPaymentMeans;
-	paymentMeansList?: UblPaymentMeans[];
-	invoicePeriod?: UblInvoicePeriod;
-	note?: string;
-	paymentTermsNote?: string;
-	attachments?: UblAttachment[];
-	documentReferences?: UblDocumentReference[];
-	allowanceCharges?: UblAllowanceCharge[];
+	paymentMeans?: UblPaymentMeans | undefined;
+	paymentMeansList?: UblPaymentMeans[] | undefined;
+	invoicePeriod?: UblInvoicePeriod | undefined;
+	note?: string | undefined;
+	paymentTermsNote?: string | undefined;
+	attachments?: UblAttachment[] | undefined;
+	documentReferences?: UblDocumentReference[] | undefined;
+	allowanceCharges?: UblAllowanceCharge[] | undefined;
 }
 
 // --- Normalized DTO types ---

@@ -73,11 +73,11 @@ describe("serializeVatReturn", () => {
 
 	it("writes the declarant with a normalized VAT number and address", () => {
 		const dec = node(decl["ns2:Declarant"]);
-		expect(dec.VATNumber).toBe("0806153934");
-		expect(dec.Name).toBe("Acme BV");
-		expect(dec.PostCode).toBe("1000");
-		expect(dec.CountryCode).toBe("BE");
-		expect(dec.EmailAddress).toBe("vat@acme.example");
+		expect(dec["VATNumber"]).toBe("0806153934");
+		expect(dec["Name"]).toBe("Acme BV");
+		expect(dec["PostCode"]).toBe("1000");
+		expect(dec["CountryCode"]).toBe("BE");
+		expect(dec["EmailAddress"]).toBe("vat@acme.example");
 	});
 
 	it("writes a quarter period", () => {

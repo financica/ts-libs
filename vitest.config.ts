@@ -2,10 +2,9 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
 	test: {
-		// Each package keeps its own vitest.config.ts where it needs one
-		// (different test locations, jsdom, coverage tweaks); packages without
-		// one run on vitest defaults.
-		projects: ["packages/*/vitest.config.ts"],
+		// One project per package, on vitest defaults: tests live in `test/`
+		// (or next to the source as `*.test.ts`) and need no per-package config.
+		projects: [`${import.meta.dirname}/packages/*`],
 		coverage: {
 			provider: "v8",
 			reporter: ["text", "html"],

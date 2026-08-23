@@ -148,11 +148,11 @@ const readContact = (node: Node | undefined): TradeContact | undefined => {
 const readParty = (node: Node | undefined): TradeParty | undefined => {
 	if (!node) return undefined;
 	const party: TradeParty = {};
-	const ids = asArray(node.ID)
+	const ids = asArray(node["ID"])
 		.map((entry) => text(entry))
 		.filter((value): value is string => value !== undefined);
 	if (ids.length > 0) party.ids = ids;
-	const globalIds = asArray(node.GlobalID)
+	const globalIds = asArray(node["GlobalID"])
 		.map(schemedId)
 		.filter((value): value is SchemedId => value !== undefined);
 	if (globalIds.length > 0) party.globalIds = globalIds;
@@ -179,7 +179,7 @@ const readParty = (node: Node | undefined): TradeParty | undefined => {
 		child(child(node, "URIUniversalCommunication"), "URIID"),
 	);
 	if (electronicAddress) party.electronicAddress = electronicAddress;
-	for (const registration of asArray(node.SpecifiedTaxRegistration)) {
+	for (const registration of asArray(node["SpecifiedTaxRegistration"])) {
 		const idNode = child(registration, "ID");
 		const id = text(idNode);
 		if (id === undefined) continue;
@@ -265,7 +265,7 @@ const readLine = (node: Node, index: number, warnings: string[]): InvoiceLine =>
 	const buyerAssignedId = text(product, "BuyerAssignedID");
 	const productGlobalId = schemedId(child(product, "GlobalID"));
 	const originCountry = text(child(product, "OriginTradeCountry"), "ID");
-	const attributes = asArray(product?.ApplicableProductCharacteristic).flatMap(
+	const attributes = asArray(product?.["ApplicableProductCharacteristic"]).flatMap(
 		(entry) => {
 			const attributeName = text(entry, "Description");
 			const value = text(entry, "Value");
@@ -278,7 +278,7 @@ const readLine = (node: Node, index: number, warnings: string[]): InvoiceLine =>
 	const agreement = child(node, "SpecifiedLineTradeAgreement");
 	const grossPriceNode = child(agreement, "GrossPriceProductTradePrice");
 	const grossPrice = readPrice(grossPriceNode);
-	const grossAllowances = asArray(grossPriceNode?.AppliedTradeAllowanceCharge)
+	const grossAllowances = asArray(grossPriceNode?.["AppliedTradeAllowanceCharge"])
 		.map(readAllowanceCharge)
 		.filter((value): value is AllowanceCharge => value !== undefined);
 	const netPrice = readPrice(child(agreement, "NetPriceProductTradePrice"));
@@ -299,7 +299,7 @@ const readLine = (node: Node, index: number, warnings: string[]): InvoiceLine =>
 
 	const settlement = child(node, "SpecifiedLineTradeSettlement");
 	const tax = readTax(child(settlement, "ApplicableTradeTax"));
-	const allowanceCharges = asArray(settlement?.SpecifiedTradeAllowanceCharge);
+	const allowanceCharges = asArray(settlement?.["SpecifiedTradeAllowanceCharge"]);
 	const allowances = allowanceCharges
 		.filter((entry) => !isChargeIndicator(entry))
 		.map(readAllowanceCharge)
@@ -528,7 +528,7 @@ export const parseFacturXXml = (xml: string): FacturXParseResult => {
 		child(agreement, "ContractReferencedDocument"),
 		"IssuerAssignedID",
 	);
-	const additionalReferences = asArray(agreement?.AdditionalReferencedDocument)
+	const additionalReferences = asArray(agreement?.["AdditionalReferencedDocument"])
 		.map(readAdditionalReference)
 		.filter((value): value is AdditionalReference => value !== undefined);
 	const projectNode = child(agreement, "SpecifiedProcuringProject");
@@ -547,17 +547,19 @@ export const parseFacturXXml = (xml: string): FacturXParseResult => {
 		"IssuerAssignedID",
 	);
 
-	const lines = asArray(transaction?.IncludedSupplyChainTradeLineItem).map(
+	const lines = asArray(transaction?.["IncludedSupplyChainTradeLineItem"]).map(
 		(node, index) => readLine(node, index, warnings),
 	);
 
-	const paymentMeans = asArray(settlement?.SpecifiedTradeSettlementPaymentMeans)
+	const paymentMeans = asArray(settlement?.["SpecifiedTradeSettlementPaymentMeans"])
 		.map(readPaymentMeans)
 		.filter((value): value is PaymentMeans => value !== undefined);
-	const taxBreakdown = asArray(settlement?.ApplicableTradeTax)
+	const taxBreakdown = asArray(settlement?.["ApplicableTradeTax"])
 		.map(readTaxBreakdown)
 		.filter((value): value is TaxBreakdownEntry => value !== undefined);
-	const headerAllowanceCharges = asArray(settlement?.SpecifiedTradeAllowanceCharge);
+	const headerAllowanceCharges = asArray(
+		settlement?.["SpecifiedTradeAllowanceCharge"],
+	);
 	const toDocumentAllowanceCharge = (
 		node: Node,
 	): DocumentAllowanceCharge | undefined => {
@@ -593,7 +595,7 @@ export const parseFacturXXml = (xml: string): FacturXParseResult => {
 		settlement,
 		"SpecifiedTradeSettlementHeaderMonetarySummation",
 	);
-	const taxTotalNodes = asArray(summation?.TaxTotalAmount);
+	const taxTotalNodes = asArray(summation?.["TaxTotalAmount"]);
 	let taxTotal: number | undefined;
 	let taxTotalInTaxCurrency: number | undefined;
 	for (const node of taxTotalNodes) {
@@ -619,21 +621,19 @@ export const parseFacturXXml = (xml: string): FacturXParseResult => {
 	const prepaidAmount = decimal(summation, "TotalPrepaidAmount");
 	const duePayable = decimal(summation, "DuePayableAmount");
 
-	const precedingInvoices = asArray(settlement?.InvoiceReferencedDocument).flatMap(
-		(node): DocumentReference[] => {
-			const referenceId = text(node, "IssuerAssignedID");
-			if (referenceId === undefined) return [];
-			const referenceDate = isoDate(child(node, "FormattedIssueDateTime"));
-			return [
-				{
-					id: referenceId,
-					...(referenceDate !== undefined
-						? { issueDate: referenceDate }
-						: {}),
-				},
-			];
-		},
-	);
+	const precedingInvoices = asArray(
+		settlement?.["InvoiceReferencedDocument"],
+	).flatMap((node): DocumentReference[] => {
+		const referenceId = text(node, "IssuerAssignedID");
+		if (referenceId === undefined) return [];
+		const referenceDate = isoDate(child(node, "FormattedIssueDateTime"));
+		return [
+			{
+				id: referenceId,
+				...(referenceDate !== undefined ? { issueDate: referenceDate } : {}),
+			},
+		];
+	});
 
 	const invoice: FacturXInvoice = {
 		...(profileUrn !== undefined ? { profile: profileUrn } : {}),

@@ -410,7 +410,7 @@ function parseEntry(node: XmlNode): Camt053Entry {
 		bankTransactionCode: parseBankTransactionCode(child(node, "BkTxCd")),
 		amountDetails: parseAmountDetails(child(node, "AmtDtls")),
 		charges: parseCharges(children(node, "Chrgs")[0]),
-		reversalIndicator: node.RvslInd === "true" || node.RvslInd === true,
+		reversalIndicator: node["RvslInd"] === "true" || node["RvslInd"] === true,
 		additionalInformation: text(node, "AddtlNtryInf"),
 		entryDetails: children(node, "NtryDtls").map(parseEntryDetail),
 	};

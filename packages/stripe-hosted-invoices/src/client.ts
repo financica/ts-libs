@@ -327,7 +327,7 @@ export const fetchStripeCreditNotes = async (
 		return [];
 	}
 
-	const entries = isRecord(raw) && Array.isArray(raw.data) ? raw.data : [];
+	const entries = isRecord(raw) && Array.isArray(raw["data"]) ? raw["data"] : [];
 
 	const creditNotes = entries.map((entry) => coerceCreditNote(entry));
 	for (const creditNote of creditNotes) {

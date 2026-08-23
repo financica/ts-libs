@@ -17,7 +17,7 @@ import {
 const r120Residual = (line: {
 	quantity: number;
 	priceAmount: number;
-	baseQuantity?: number;
+	baseQuantity?: number | undefined;
 	lineExtensionAmount: number;
 }): number =>
 	Math.abs(

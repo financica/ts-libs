@@ -48,8 +48,8 @@ const node = (value: unknown): Record<string, unknown> =>
 
 const parseListing = (xml: string) => {
 	const parsed = node(parser.parse(xml));
-	const consignment = node(parsed.ClientListingConsignment);
-	return { consignment, listing: node(consignment.ClientListing) };
+	const consignment = node(parsed["ClientListingConsignment"]);
+	return { consignment, listing: node(consignment["ClientListing"]) };
 };
 
 describe("generateClientListingXml", () => {
@@ -69,7 +69,7 @@ describe("generateClientListingXml", () => {
 
 	it("includes the declarant block with all provided fields", () => {
 		const { listing } = parseListing(generateClientListingXml(sampleData));
-		expect(node(listing.Declarant)).toMatchObject({
+		expect(node(listing["Declarant"])).toMatchObject({
 			VATNumber: "1024232601",
 			Name: "Leclanche Consulting",
 			Street: "Rue du Poincon 51A",
@@ -86,26 +86,26 @@ describe("generateClientListingXml", () => {
 		expect(listing["@_ClientsNbr"]).toBe("2");
 		expect(listing["@_TurnOverSum"]).toBe("21000.00");
 		expect(listing["@_VATAmountSum"]).toBe("4410.00");
-		expect(listing.TurnOver).toBe("21000.00");
+		expect(listing["TurnOver"]).toBe("21000.00");
 	});
 
 	it("emits one Client element per row with sequence numbers and issuer", () => {
 		const { listing } = parseListing(generateClientListingXml(sampleData));
-		const clients = listing.Client as Record<string, unknown>[];
+		const clients = listing["Client"] as Record<string, unknown>[];
 		expect(clients).toHaveLength(2);
 		expect(clients[0]?.["@_SequenceNumber"]).toBe("1");
 		expect(clients[1]?.["@_SequenceNumber"]).toBe("2");
-		expect(node(clients[0]?.CompanyVATNumber)).toMatchObject({
+		expect(node(clients[0]?.["CompanyVATNumber"])).toMatchObject({
 			"#text": "0766280697",
 			"@_issuedBy": "BE",
 		});
-		expect(node(clients[0]).TurnOver).toBe("10500.00");
-		expect(node(clients[0]).VATAmount).toBe("2205.00");
+		expect(node(clients[0])["TurnOver"]).toBe("10500.00");
+		expect(node(clients[0])["VATAmount"]).toBe("2205.00");
 	});
 
 	it("includes the reporting period", () => {
 		const { listing } = parseListing(generateClientListingXml(sampleData));
-		expect(listing.Period).toBe("2025");
+		expect(listing["Period"]).toBe("2025");
 	});
 
 	it("omits optional declarant fields when not provided", () => {
@@ -120,9 +120,9 @@ describe("generateClientListingXml", () => {
 				countryCode: "BE",
 			},
 		});
-		const declarant = node(parseListing(xml).listing.Declarant);
-		expect(declarant.EmailAddress).toBeUndefined();
-		expect(declarant.Phone).toBeUndefined();
+		const declarant = node(parseListing(xml).listing["Declarant"]);
+		expect(declarant["EmailAddress"]).toBeUndefined();
+		expect(declarant["Phone"]).toBeUndefined();
 	});
 
 	it("emits zeroed totals and no Client elements for an empty client list", () => {
@@ -132,7 +132,7 @@ describe("generateClientListingXml", () => {
 		expect(listing["@_ClientsNbr"]).toBe("0");
 		expect(listing["@_TurnOverSum"]).toBe("0.00");
 		expect(listing["@_VATAmountSum"]).toBe("0.00");
-		expect(listing.Client).toBeUndefined();
+		expect(listing["Client"]).toBeUndefined();
 	});
 
 	it("MIN_TURNOVER_THRESHOLD selects the customers that must be reported", () => {
@@ -169,8 +169,8 @@ describe("generateClientListingXml", () => {
 				street: 'Rue "des" Fleurs',
 			},
 		});
-		const declarant = node(parseListing(xml).listing.Declarant);
-		expect(declarant.Name).toBe("Test & Co <Ltd>");
-		expect(declarant.Street).toBe('Rue "des" Fleurs');
+		const declarant = node(parseListing(xml).listing["Declarant"]);
+		expect(declarant["Name"]).toBe("Test & Co <Ltd>");
+		expect(declarant["Street"]).toBe('Rue "des" Fleurs');
 	});
 });

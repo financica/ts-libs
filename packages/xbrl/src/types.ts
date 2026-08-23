@@ -65,9 +65,9 @@ export interface XbrlSchemaRef {
 	/** URI of the taxonomy schema (xlink:href). */
 	href: string;
 	/** XLink role, if specified. */
-	role?: string;
+	role?: string | undefined;
 	/** XLink arcrole, if specified. */
-	arcrole?: string;
+	arcrole?: string | undefined;
 }
 
 /** A simple XLink reference to a linkbase document. */
@@ -75,9 +75,9 @@ export interface XbrlLinkbaseRef {
 	/** URI of the linkbase (xlink:href). */
 	href: string;
 	/** XLink role indicating the linkbase type. */
-	role?: string;
+	role?: string | undefined;
 	/** XLink arcrole. */
-	arcrole?: string;
+	arcrole?: string | undefined;
 }
 
 /** A reference to a custom role type definition. */
@@ -103,7 +103,7 @@ export interface XbrlQName {
 	/** Local name. */
 	localName: string;
 	/** Original prefixed form as it appeared in the document. */
-	prefix?: string;
+	prefix?: string | undefined;
 }
 
 /** Reporting context: who reported, for what period, under what conditions. */
@@ -118,7 +118,7 @@ export interface XbrlContext {
 	period: XbrlPeriod;
 
 	/** Scenario dimensions (arbitrary XML from non-XBRL namespaces). */
-	scenario?: XbrlDimensionMember[];
+	scenario?: XbrlDimensionMember[] | undefined;
 }
 
 /** Entity identifier within a context. */
@@ -128,15 +128,15 @@ export interface XbrlEntity {
 	/** Identifier value (e.g. "BE0410682657"). */
 	value: string;
 	/** Segment dimensions (arbitrary XML from non-XBRL namespaces). */
-	segment?: XbrlDimensionMember[];
+	segment?: XbrlDimensionMember[] | undefined;
 }
 
 /** A dimension member from a segment or scenario. */
 export interface XbrlDimensionMember {
 	/** Dimension QName, if this is an explicit or typed dimension. */
-	dimension?: XbrlQName;
+	dimension?: XbrlQName | undefined;
 	/** Member QName for explicit dimensions. */
-	member?: XbrlQName;
+	member?: XbrlQName | undefined;
 	/**
 	 * Text of the element carrying a typed dimension's value.
 	 *
@@ -145,13 +145,13 @@ export interface XbrlDimensionMember {
 	 * itself, so this is the child's text content. See {@link typedElement}
 	 * for which element that was.
 	 */
-	typedValue?: string;
+	typedValue?: string | undefined;
 	/** Name of the element carrying a typed dimension's value. */
-	typedElement?: XbrlQName;
+	typedElement?: XbrlQName | undefined;
 	/** Raw element name if not a recognized dimension. */
-	elementName?: string;
+	elementName?: string | undefined;
 	/** Raw text content. */
-	textContent?: string;
+	textContent?: string | undefined;
 }
 
 /** Reporting period: instant, duration, or forever. */
@@ -168,7 +168,7 @@ export interface XbrlUnit {
 	 * Simple unit: product of measures. Present when not a divide.
 	 * Multiple measures imply multiplication.
 	 */
-	measures?: XbrlQName[];
+	measures?: XbrlQName[] | undefined;
 	/** Complex unit: numerator/denominator (divide). */
 	divide?: {
 		numerator: XbrlQName[];
@@ -189,21 +189,21 @@ export interface XbrlItem {
 	/** Concept name as a resolved QName. */
 	name: XbrlQName;
 	/** Optional id attribute. */
-	id?: string;
+	id?: string | undefined;
 	/** Reference to a context id. Always present for items. */
 	contextRef: string;
 	/** Reference to a unit id. Present for numeric items. */
-	unitRef?: string;
+	unitRef?: string | undefined;
 	/**
 	 * Precision: number of significant digits, or "INF" for exact.
 	 * Mutually exclusive with decimals.
 	 */
-	precision?: number | "INF";
+	precision?: number | "INF" | undefined;
 	/**
 	 * Decimals: number of reliable decimal places, or "INF" for exact.
 	 * Mutually exclusive with precision.
 	 */
-	decimals?: number | "INF";
+	decimals?: number | "INF" | undefined;
 	/** Text value, or null if xsi:nil="true". */
 	value: string | null;
 	/** True if the item is nil (xsi:nil="true"). */
@@ -217,7 +217,7 @@ export interface XbrlTuple {
 	/** Tuple element name as a resolved QName. */
 	name: XbrlQName;
 	/** Optional id attribute. */
-	id?: string;
+	id?: string | undefined;
 	/** Child facts (items and/or nested tuples). */
 	children: XbrlFact[];
 }
@@ -249,7 +249,7 @@ export interface XbrlFootnoteResource {
 	/** Footnote role URI. */
 	role: string;
 	/** Language (xml:lang). */
-	lang?: string;
+	lang?: string | undefined;
 	/** Footnote text content (may contain XHTML). */
 	content: string;
 }
@@ -263,5 +263,5 @@ export interface XbrlFootnoteArc {
 	/** Arc role URI. */
 	arcrole: string;
 	/** Ordering hint. */
-	order?: number;
+	order?: number | undefined;
 }

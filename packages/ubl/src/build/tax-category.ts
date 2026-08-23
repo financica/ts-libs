@@ -59,21 +59,21 @@ export const taxCategoryFromReasonOrRate = (params: {
 		return {
 			id: "AE",
 			percent: 0,
-			exemptionReason: EXEMPTION_REASON_TEXT.reverse_charge,
+			exemptionReason: EXEMPTION_REASON_TEXT["reverse_charge"],
 		};
 	}
 	if (categoryHint === "K" || reason === "intra_community") {
 		return {
 			id: "K",
 			percent: 0,
-			exemptionReason: EXEMPTION_REASON_TEXT.intra_community,
+			exemptionReason: EXEMPTION_REASON_TEXT["intra_community"],
 		};
 	}
 	if (categoryHint === "G" || reason === "export") {
 		return {
 			id: "G",
 			percent: 0,
-			exemptionReason: EXEMPTION_REASON_TEXT.export,
+			exemptionReason: EXEMPTION_REASON_TEXT["export"],
 		};
 	}
 	if (categoryHint === "E" || (reason && EXEMPT_TAXABILITY_REASONS.has(reason))) {

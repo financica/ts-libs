@@ -104,12 +104,12 @@ const asArray = <T>(value: T | T[] | undefined): T[] =>
  */
 export const parseServiceGroupDocumentTypes = (xml: string): string[] => {
 	const parsed: unknown = xmlParser.parse(xml);
-	const serviceGroup = isRecord(parsed) ? parsed.ServiceGroup : undefined;
+	const serviceGroup = isRecord(parsed) ? parsed["ServiceGroup"] : undefined;
 	const collection = isRecord(serviceGroup)
-		? serviceGroup.ServiceMetadataReferenceCollection
+		? serviceGroup["ServiceMetadataReferenceCollection"]
 		: undefined;
 	const references = isRecord(collection)
-		? asArray(collection.ServiceMetadataReference)
+		? asArray(collection["ServiceMetadataReference"])
 		: [];
 
 	const docTypes = new Set<string>();
@@ -185,10 +185,12 @@ const resolveSmpBaseUrl = async (
  */
 export const isDnsNotFound = (error: unknown): boolean => {
 	const direct =
-		isRecord(error) && typeof error.code === "string" ? error.code : null;
+		isRecord(error) && typeof error["code"] === "string" ? error["code"] : null;
 	const cause =
-		isRecord(error) && isRecord(error.cause) && typeof error.cause.code === "string"
-			? error.cause.code
+		isRecord(error) &&
+		isRecord(error["cause"]) &&
+		typeof error["cause"]["code"] === "string"
+			? error["cause"]["code"]
 			: null;
 	const code = direct ?? cause;
 	return code === "ENOTFOUND" || code === "ENODATA";

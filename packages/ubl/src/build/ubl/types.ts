@@ -63,7 +63,7 @@ export interface UblTaxCategory {
 	id: string;
 	percent: number;
 	/** Required by EN 16931 (BR-E-10/BR-AE-10/…) for non-`S`/`Z` categories. */
-	exemptionReason?: string | null;
+	exemptionReason?: string | null | undefined;
 }
 
 export interface UblLine {
@@ -85,7 +85,7 @@ export interface UblLine {
 	 * cents, so `quantity × (priceAmount ÷ baseQuantity)` reproduces the line
 	 * net exactly (PEPPOL-EN16931-R120); see `deriveUnitPrice`.
 	 */
-	baseQuantity?: number;
+	baseQuantity?: number | undefined;
 	/** `cac:InvoicePeriod` (BT-134/BT-135) — the line's own service period. */
 	invoicePeriod?: UblPeriod | null;
 	taxCategory: UblTaxCategory;

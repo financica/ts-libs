@@ -13,11 +13,11 @@ export type XmlAttrs = Record<string, string | number | null | undefined>;
 
 export interface XmlElement {
 	name: string;
-	attrs?: XmlAttrs;
+	attrs?: XmlAttrs | undefined;
 	/** Leaf text content. Mutually exclusive with `children`. */
-	text?: string | number | null;
+	text?: string | number | null | undefined;
 	/** Child elements. Mutually exclusive with `text`. */
-	children?: XmlElement[];
+	children?: XmlElement[] | undefined;
 }
 
 /** Falsy children are dropped, so callers can write `cond && el(...)`. */

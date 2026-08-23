@@ -15,19 +15,19 @@ export interface CodaStatement {
 	/** Whether this is a duplicate file. */
 	isDuplicate: boolean;
 	/** File reference assigned by the bank. */
-	fileReference?: string;
+	fileReference?: string | undefined;
 	/** Name of the addressee. */
 	addressee: string;
 	/** BIC of the bank holding the account. */
-	bic?: string;
+	bic?: string | undefined;
 	/** Identification number of the Belgium-based account holder. */
-	companyId?: string;
+	companyId?: string | undefined;
 	/** Separate application code (5 positions). */
 	separateApplication: string;
 	/** Transaction reference (MT940 tag 20). */
-	transactionReference?: string;
+	transactionReference?: string | undefined;
 	/** Related reference (MT940 tag 21). */
-	relatedReference?: string;
+	relatedReference?: string | undefined;
 	/** CODA standard version number. */
 	version: number;
 
@@ -40,16 +40,16 @@ export interface CodaStatement {
 	/** CODA statement sequence number. */
 	codaStatementSequence: number;
 	/** Name of the account holder (from old balance record). */
-	accountHolderName?: string;
+	accountHolderName?: string | undefined;
 	/** Account description text. */
-	accountDescription?: string;
+	accountDescription?: string | undefined;
 	/** Opening balance. */
 	oldBalance: CodaBalance;
 
 	// ── New balance record (8) ────────────────────────────────────────
 
 	/** Closing balance. Absent in empty files without record 8. */
-	newBalance?: CodaBalance;
+	newBalance?: CodaBalance | undefined;
 
 	// ── Movements ─────────────────────────────────────────────────────
 
@@ -76,9 +76,9 @@ export interface CodaAccount {
 	/** Account number (BBAN or IBAN). */
 	number: string;
 	/** ISO currency code. */
-	currency?: string;
+	currency?: string | undefined;
 	/** ISO country code (available for Belgian BBAN). */
-	countryCode?: string;
+	countryCode?: string | undefined;
 }
 
 /** A balance (old or new) with amount and date. */
@@ -100,7 +100,7 @@ export interface CodaMovement {
 	/** Signed amount: positive for credit, negative for debit. */
 	amount: number;
 	/** Value date. Undefined if not known (000000). */
-	valueDate?: Date;
+	valueDate?: Date | undefined;
 	/** Entry/booking date. */
 	entryDate: Date;
 	/** 8-digit transaction code broken into type/family/transaction/category. */
@@ -110,38 +110,38 @@ export interface CodaMovement {
 	/** Whether the communication uses structured or free format. */
 	communicationType: "structured" | "unstructured";
 	/** 3-digit structured communication type code (e.g. 101, 102, 127). */
-	structuredCommunicationType?: number;
+	structuredCommunicationType?: number | undefined;
 	/** Paper statement sequence number. */
 	paperStatementSequence: number;
 	/** Globalisation code (1-9). Undefined if not set. */
-	globalisationCode?: number;
+	globalisationCode?: number | undefined;
 
 	// ── From record 2.2 ──────────────────────────────────────────────
 
 	/** Customer reference (up to 35 chars). */
-	customerReference?: string;
+	customerReference?: string | undefined;
 	/** BIC of the counterparty's bank. */
-	counterpartyBic?: string;
+	counterpartyBic?: string | undefined;
 	/**
 	 * R-transaction type.
 	 * 1=reject, 2=return, 3=refund, 4=reversal, 5=cancellation.
 	 */
-	rTransactionType?: number;
+	rTransactionType?: number | undefined;
 	/** ISO reason return code for R-transactions. */
-	rTransactionReason?: string;
+	rTransactionReason?: string | undefined;
 	/** SEPA CategoryPurpose code. */
-	categoryPurpose?: string;
+	categoryPurpose?: string | undefined;
 	/** SEPA Purpose code. */
-	purpose?: string;
+	purpose?: string | undefined;
 
 	// ── From record 2.3 ──────────────────────────────────────────────
 
 	/** Counterparty account number. */
-	counterpartyAccountNumber?: string;
+	counterpartyAccountNumber?: string | undefined;
 	/** Counterparty account currency. */
-	counterpartyAccountCurrency?: string;
+	counterpartyAccountCurrency?: string | undefined;
 	/** Counterparty name. */
-	counterpartyName?: string;
+	counterpartyName?: string | undefined;
 
 	// ── Linked information records ───────────────────────────────────
 
@@ -176,5 +176,5 @@ export interface CodaInformation {
 	/** Whether the communication uses structured or free format. */
 	communicationType: "structured" | "unstructured";
 	/** 3-digit structured communication type code. */
-	structuredCommunicationType?: number;
+	structuredCommunicationType?: number | undefined;
 }

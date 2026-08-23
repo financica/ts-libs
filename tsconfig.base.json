@@ -5,19 +5,24 @@
 		"module": "ESNext",
 		"moduleResolution": "bundler",
 		"types": ["node"],
-
 		"strict": true,
 		"noUncheckedIndexedAccess": true,
-
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"isolatedModules": true,
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
-
 		"declaration": true,
 		"declarationMap": true,
 		"sourceMap": true,
-		"noEmit": true
+		"noEmit": true,
+		"exactOptionalPropertyTypes": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"verbatimModuleSyntax": true
 	}
 }

@@ -15,8 +15,10 @@ import {
  */
 const stubFetch = (
 	routes: Array<[match: string, respond: () => Response]>,
-): typeof globalThis.fetch & { calls: Array<{ url: string; init?: RequestInit }> } => {
-	const calls: Array<{ url: string; init?: RequestInit }> = [];
+): typeof globalThis.fetch & {
+	calls: Array<{ url: string; init: RequestInit | undefined }>;
+} => {
+	const calls: Array<{ url: string; init: RequestInit | undefined }> = [];
 	const impl = ((input: RequestInfo | URL, init?: RequestInit) => {
 		const url = String(input);
 		calls.push({ url, init });

@@ -186,7 +186,7 @@ describe("normalizeUblResponse", () => {
 				attachments?: Array<Record<string, unknown>>;
 			};
 		};
-		expect(raw.invoice?.attachments?.[0]?.base64Content).toBeUndefined();
+		expect(raw.invoice?.attachments?.[0]?.["base64Content"]).toBeUndefined();
 	});
 
 	it.each([

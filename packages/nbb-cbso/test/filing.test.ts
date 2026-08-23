@@ -933,8 +933,8 @@ describe("ENUMERATIONS", () => {
 			expect.arrayContaining(["m31", "m32"]),
 		);
 		const brussels = courts.find((court) => court.code === "m31")?.labels;
-		expect(brussels?.fr).toMatch(/Bruxelles/);
-		expect(brussels?.nl).toMatch(/Brussel/);
+		expect(brussels?.["fr"]).toMatch(/Bruxelles/);
+		expect(brussels?.["nl"]).toMatch(/Brussel/);
 	});
 
 	it("carries the post-CSA legal forms a filer reports itself as", () => {
@@ -950,7 +950,9 @@ describe("ENUMERATIONS", () => {
 			["m060", "Economic interest grouping"],
 		]) {
 			expect(byCode.has(code ?? ""), `lgf:${code} is missing`).toBe(true);
-			expect(collapse(byCode.get(code ?? "")?.labels.en ?? "")).toContain(label);
+			expect(collapse(byCode.get(code ?? "")?.labels["en"] ?? "")).toContain(
+				label,
+			);
 		}
 	});
 

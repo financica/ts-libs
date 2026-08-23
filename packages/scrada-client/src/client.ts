@@ -68,14 +68,14 @@ const normalizeDocumentId = (value: unknown): string => {
 	if (typeof value === "string" && value.trim().length > 0) return value.trim();
 	if (value && typeof value === "object") {
 		const record = value as Record<string, unknown>;
-		if (typeof record.id === "string" && record.id.trim().length > 0) {
-			return record.id.trim();
+		if (typeof record["id"] === "string" && record["id"].trim().length > 0) {
+			return record["id"].trim();
 		}
 		if (
-			typeof record.documentID === "string" &&
-			record.documentID.trim().length > 0
+			typeof record["documentID"] === "string" &&
+			record["documentID"].trim().length > 0
 		) {
-			return record.documentID.trim();
+			return record["documentID"].trim();
 		}
 	}
 	throw new Error("Unable to resolve document ID from Scrada response");
@@ -127,7 +127,7 @@ export class ScradaApiClient {
 		const response = await this.fetchImpl(joinUrl(this.baseUrl, params.path), {
 			method: params.method ?? "GET",
 			headers: this.buildHeaders(params.headers),
-			body: params.body,
+			...(params.body !== undefined ? { body: params.body } : {}),
 		});
 
 		if (!response.ok) {
@@ -263,7 +263,7 @@ export class ScradaApiClient {
 		segment: ScradaOutboundSegment;
 		body: BodyInit;
 		contentType: "application/json" | "application/xml";
-		idempotencyKey?: string;
+		idempotencyKey?: string | undefined;
 		extraHeaders?: Record<string, string>;
 	}): Promise<string> {
 		const headers: Record<string, string> = {
@@ -418,8 +418,8 @@ export class ScradaApiClient {
 export const createScradaApiClientFromEnv = (
 	env: NodeJS.ProcessEnv = process.env,
 ): ScradaApiClient => {
-	const apiKey = env.SCRADA_API_KEY;
-	const password = env.SCRADA_PASSWORD;
+	const apiKey = env["SCRADA_API_KEY"];
+	const password = env["SCRADA_PASSWORD"];
 	if (!apiKey || !password) {
 		throw new Error(
 			"Scrada credentials are not configured. Set SCRADA_API_KEY and SCRADA_PASSWORD.",
@@ -429,6 +429,6 @@ export const createScradaApiClientFromEnv = (
 	return new ScradaApiClient({
 		apiKey,
 		password,
-		baseUrl: env.SCRADA_API_BASE_URL,
+		...(env["SCRADA_API_BASE_URL"] ? { baseUrl: env["SCRADA_API_BASE_URL"] } : {}),
 	});
 };

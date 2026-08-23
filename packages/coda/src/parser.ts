@@ -143,8 +143,8 @@ function parseAccountField(structureCode: string, field: string): CodaAccount {
 }
 
 function parseCounterpartyAccount(field: string): {
-	number?: string;
-	currency?: string;
+	number?: string | undefined;
+	currency?: string | undefined;
 } {
 	const trimmed = field.trimEnd();
 	if (!trimmed) return {};
@@ -162,7 +162,7 @@ function parseCounterpartyAccount(field: string): {
 interface ParsedComm {
 	rawContent: string;
 	communicationType: "structured" | "unstructured";
-	structuredCommunicationType?: number;
+	structuredCommunicationType?: number | undefined;
 }
 
 function parseCommunicationField(typeChar: string, field: string): ParsedComm {
@@ -183,13 +183,13 @@ interface HeaderResult {
 	creationDate: Date;
 	bankId: number;
 	isDuplicate: boolean;
-	fileReference?: string;
+	fileReference?: string | undefined;
 	addressee: string;
-	bic?: string;
-	companyId?: string;
+	bic?: string | undefined;
+	companyId?: string | undefined;
 	separateApplication: string;
-	transactionReference?: string;
-	relatedReference?: string;
+	transactionReference?: string | undefined;
+	relatedReference?: string | undefined;
 	version: number;
 }
 
@@ -214,8 +214,8 @@ interface OldBalanceResult {
 	account: CodaAccount;
 	paperStatementSequence: number;
 	codaStatementSequence: number;
-	accountHolderName?: string;
-	accountDescription?: string;
+	accountHolderName?: string | undefined;
+	accountDescription?: string | undefined;
 	oldBalance: CodaBalance;
 }
 
@@ -239,12 +239,12 @@ interface Raw21 {
 	detailNumber: number;
 	bankReference: string;
 	amount: number;
-	valueDate?: Date;
+	valueDate?: Date | undefined;
 	entryDate: Date;
 	transactionCode: CodaTransactionCode;
 	comm: ParsedComm;
 	paperStatementSequence: number;
-	globalisationCode?: number;
+	globalisationCode?: number | undefined;
 }
 
 function parseRecord21(line: string): Raw21 | null {
@@ -268,12 +268,12 @@ interface Raw22 {
 	sequenceNumber: number;
 	detailNumber: number;
 	commContinuation: string;
-	customerReference?: string;
-	counterpartyBic?: string;
-	rTransactionType?: number;
-	rTransactionReason?: string;
-	categoryPurpose?: string;
-	purpose?: string;
+	customerReference?: string | undefined;
+	counterpartyBic?: string | undefined;
+	rTransactionType?: number | undefined;
+	rTransactionReason?: string | undefined;
+	categoryPurpose?: string | undefined;
+	purpose?: string | undefined;
 }
 
 function parseRecord22(line: string): Raw22 | null {

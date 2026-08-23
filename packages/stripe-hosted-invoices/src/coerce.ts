@@ -53,8 +53,8 @@ const LINE_AMOUNT_KEYS = ["amount", "subtotal", "unit_amount"] as const;
 
 const coerceLineItem = (raw: Record<string, unknown>): StripeLineItem => {
 	const line = coerceAmounts<StripeLineItem>(raw, LINE_AMOUNT_KEYS);
-	const taxAmounts = coerceArray(raw.tax_amounts, coerceTaxAmount);
-	const discountAmounts = coerceArray(raw.discount_amounts, coerceDiscountAmount);
+	const taxAmounts = coerceArray(raw["tax_amounts"], coerceTaxAmount);
+	const discountAmounts = coerceArray(raw["discount_amounts"], coerceDiscountAmount);
 	if (taxAmounts) line.tax_amounts = taxAmounts;
 	if (discountAmounts) line.discount_amounts = discountAmounts;
 	return line;
@@ -70,21 +70,21 @@ export const coerceHostedInvoice = (raw: unknown): StripeHostedInvoice | null =>
 	if (!isRecord(raw)) return null;
 	const invoice = coerceAmounts<StripeHostedInvoice>(raw, INVOICE_AMOUNT_KEYS);
 
-	const totalTaxAmounts = coerceArray(raw.total_tax_amounts, coerceTaxAmount);
+	const totalTaxAmounts = coerceArray(raw["total_tax_amounts"], coerceTaxAmount);
 	if (totalTaxAmounts) invoice.total_tax_amounts = totalTaxAmounts;
 
 	const totalDiscountAmounts = coerceArray(
-		raw.total_discount_amounts,
+		raw["total_discount_amounts"],
 		coerceDiscountAmount,
 	);
 	if (totalDiscountAmounts) invoice.total_discount_amounts = totalDiscountAmounts;
 
-	if (isRecord(raw.shipping_cost)) {
-		invoice.shipping_cost = coerceAmounts(raw.shipping_cost, ["amount_tax"]);
+	if (isRecord(raw["shipping_cost"])) {
+		invoice.shipping_cost = coerceAmounts(raw["shipping_cost"], ["amount_tax"]);
 	}
-	if (isRecord(raw.lines)) {
-		const data = coerceArray(raw.lines.data, coerceLineItem);
-		invoice.lines = { ...raw.lines, ...(data ? { data } : {}) };
+	if (isRecord(raw["lines"])) {
+		const data = coerceArray(raw["lines"]["data"], coerceLineItem);
+		invoice.lines = { ...raw["lines"], ...(data ? { data } : {}) };
 	}
 	return invoice;
 };
@@ -95,8 +95,8 @@ export const coerceLinesPage = (
 ): { data: StripeLineItem[]; has_more: boolean } | null => {
 	if (!isRecord(raw)) return null;
 	return {
-		data: coerceArray(raw.data, coerceLineItem) ?? [],
-		has_more: raw.has_more === true,
+		data: coerceArray(raw["data"], coerceLineItem) ?? [],
+		has_more: raw["has_more"] === true,
 	};
 };
 
@@ -109,9 +109,9 @@ const CREDIT_NOTE_LINE_AMOUNT_KEYS = [
 
 const coerceCreditNoteLine = (raw: Record<string, unknown>): StripeCreditNoteLine => {
 	const line = coerceAmounts<StripeCreditNoteLine>(raw, CREDIT_NOTE_LINE_AMOUNT_KEYS);
-	const taxAmounts = coerceArray(raw.tax_amounts, coerceTaxAmount);
-	const taxes = coerceArray(raw.taxes, coerceTaxAmount);
-	const discountAmounts = coerceArray(raw.discount_amounts, coerceDiscountAmount);
+	const taxAmounts = coerceArray(raw["tax_amounts"], coerceTaxAmount);
+	const taxes = coerceArray(raw["taxes"], coerceTaxAmount);
+	const discountAmounts = coerceArray(raw["discount_amounts"], coerceDiscountAmount);
 	if (taxAmounts) line.tax_amounts = taxAmounts;
 	if (taxes) line.taxes = taxes;
 	if (discountAmounts) line.discount_amounts = discountAmounts;
@@ -137,27 +137,27 @@ const CREDIT_NOTE_AMOUNT_KEYS = [
  * it, so one unreadable credit note is skipped rather than discarding the rest.
  */
 export const coerceCreditNote = (raw: unknown): StripeCreditNote | null => {
-	if (!isRecord(raw) || typeof raw.id !== "string" || raw.id.length === 0) {
+	if (!isRecord(raw) || typeof raw["id"] !== "string" || raw["id"].length === 0) {
 		return null;
 	}
 	const creditNote = coerceAmounts<StripeCreditNote>(raw, CREDIT_NOTE_AMOUNT_KEYS);
 
-	const totalTaxes = coerceArray(raw.total_taxes, coerceTaxAmount);
-	const taxAmounts = coerceArray(raw.tax_amounts, coerceTaxAmount);
+	const totalTaxes = coerceArray(raw["total_taxes"], coerceTaxAmount);
+	const taxAmounts = coerceArray(raw["tax_amounts"], coerceTaxAmount);
 	if (totalTaxes) creditNote.total_taxes = totalTaxes;
 	if (taxAmounts) creditNote.tax_amounts = taxAmounts;
 
-	const refunds = coerceArray(raw.refunds, (entry) =>
+	const refunds = coerceArray(raw["refunds"], (entry) =>
 		coerceAmounts(entry, ["amount_refunded"]),
 	);
 	if (refunds) creditNote.refunds = refunds;
 
-	if (isRecord(raw.shipping_cost)) {
-		creditNote.shipping_cost = coerceAmounts(raw.shipping_cost, ["amount_tax"]);
+	if (isRecord(raw["shipping_cost"])) {
+		creditNote.shipping_cost = coerceAmounts(raw["shipping_cost"], ["amount_tax"]);
 	}
-	if (isRecord(raw.lines)) {
-		const data = coerceArray(raw.lines.data, coerceCreditNoteLine);
-		creditNote.lines = { ...raw.lines, ...(data ? { data } : {}) };
+	if (isRecord(raw["lines"])) {
+		const data = coerceArray(raw["lines"]["data"], coerceCreditNoteLine);
+		creditNote.lines = { ...raw["lines"], ...(data ? { data } : {}) };
 	}
 	return creditNote;
 };
@@ -168,7 +168,7 @@ export const coerceCreditNoteLinesPage = (
 ): { data: StripeCreditNoteLine[]; has_more: boolean } | null => {
 	if (!isRecord(raw)) return null;
 	return {
-		data: coerceArray(raw.data, coerceCreditNoteLine) ?? [],
-		has_more: raw.has_more === true,
+		data: coerceArray(raw["data"], coerceCreditNoteLine) ?? [],
+		has_more: raw["has_more"] === true,
 	};
 };

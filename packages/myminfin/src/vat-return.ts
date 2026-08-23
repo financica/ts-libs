@@ -507,17 +507,12 @@ export interface BuildBelgianVatReturnResult {
 export function buildBelgianVatReturn(
 	input: BuildBelgianVatReturnInput,
 ): BuildBelgianVatReturnResult {
-	const { grid, warnings } = computeBelgianVatGrid(input.figures);
+	const { figures, askRestitution, ...options } = input;
+	const { grid, warnings } = computeBelgianVatGrid(figures);
 	const xml = serializeVatReturn({
-		declarant: input.declarant,
-		period: input.period,
+		...options,
 		grid,
-		sequenceNumber: input.sequenceNumber,
-		declarantReference: input.declarantReference,
-		clientListingNihil: input.clientListingNihil,
-		askRestitution: input.askRestitution ?? grid[72] !== undefined,
-		askPayment: input.askPayment,
-		replacedDeclaration: input.replacedDeclaration,
+		askRestitution: askRestitution ?? grid[72] !== undefined,
 	});
 	return { xml, grid, warnings };
 }

@@ -60,8 +60,8 @@ describe("findDeep", () => {
 	// pathological payload and a blown stack, so both are asserted directly.
 	it("terminates on a self-referential payload instead of recursing forever", () => {
 		const cyclic: Record<string, unknown> = { id: "in_1" };
-		cyclic.self = cyclic;
-		cyclic.child = { parent: cyclic };
+		cyclic["self"] = cyclic;
+		cyclic["child"] = { parent: cyclic };
 		expect(findDeep(cyclic, "ephemeral_key")).toBeUndefined();
 	});
 

@@ -11,9 +11,17 @@
 		"directory": "packages/ubl"
 	},
 	"files": [
-		"dist"
+		"dist",
+		"src",
+		"!src/**/*.test.ts",
+		"!src/**/*.test.tsx",
+		"!src/**/__tests__/**",
+		"CHANGELOG.md",
+		"LICENSE",
+		"README.md"
 	],
 	"type": "module",
+	"sideEffects": false,
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"exports": {
@@ -24,7 +32,8 @@
 		"./build": {
 			"types": "./dist/build/index.d.ts",
 			"import": "./dist/build/index.js"
-		}
+		},
+		"./package.json": "./package.json"
 	},
 	"publishConfig": {
 		"access": "public"
@@ -37,9 +46,9 @@
 		"lint:fix": "oxlint --fix",
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
-		"test": "vitest run",
-		"test:watch": "vitest",
-		"test:coverage": "vitest run --coverage",
+		"test": "vitest run --root ../.. --project @financica/ubl",
+		"test:watch": "vitest --root ../.. --project @financica/ubl",
+		"test:coverage": "vitest --root ../.. --project @financica/ubl run --coverage",
 		"ci": "bun run lint && bun run format:check && bun run build && bun run typecheck && bun run test",
 		"prepack": "bun run build"
 	},

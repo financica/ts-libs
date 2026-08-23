@@ -36,11 +36,15 @@ export const el = (
 	if (Array.isArray(content)) {
 		return {
 			name,
-			attrs: attrs ?? undefined,
+			...(attrs ? { attrs } : {}),
 			children: content.filter((c): c is XmlElement => Boolean(c)),
 		};
 	}
-	return { name, attrs: attrs ?? undefined, text: content ?? undefined };
+	return {
+		name,
+		...(attrs ? { attrs } : {}),
+		...(content !== undefined ? { text: content } : {}),
+	};
 };
 
 const escapeText = (value: string): string =>

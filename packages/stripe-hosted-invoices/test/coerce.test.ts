@@ -33,9 +33,9 @@ describe("coerceHostedInvoice", () => {
 			lines: { data: [{ id: "il_1", future_line_field: "kept" }], url: "/v1/…" },
 		});
 
-		expect(invoice?.some_future_field).toEqual({ nested: true });
+		expect(invoice?.["some_future_field"]).toEqual({ nested: true });
 		expect(invoice?.lines?.url).toBe("/v1/…");
-		expect(invoice?.lines?.data?.[0]?.future_line_field).toBe("kept");
+		expect(invoice?.lines?.data?.[0]?.["future_line_field"]).toBe("kept");
 	});
 
 	it("leaves an unreadable money field null rather than defaulting it to zero", () => {

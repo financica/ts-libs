@@ -39,7 +39,10 @@ export const renderUblInvoiceHtml = (
 		throw new Error("renderUblInvoiceHtml: could not parse the provided UBL XML.");
 	}
 	const body = renderToStaticMarkup(
-		createElement(UblInvoice, { invoice, locale: options.locale }),
+		createElement(UblInvoice, {
+			invoice,
+			...(options.locale !== undefined ? { locale: options.locale } : {}),
+		}),
 	);
 	const label = invoice.documentType === "CreditNote" ? "Credit Note" : "Invoice";
 	const title = `${label} ${invoice.id || ""}`.trim();

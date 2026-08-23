@@ -10,7 +10,7 @@ export interface UnitPrice {
 	/** `cbc:PriceAmount` (BT-146). */
 	priceAmount: number;
 	/** `cbc:BaseQuantity` (BT-149) — the units `priceAmount` covers. Omitted = 1. */
-	baseQuantity?: number;
+	baseQuantity?: number | undefined;
 }
 
 /**
