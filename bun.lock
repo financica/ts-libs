@@ -23,14 +23,14 @@
     },
     "packages/camt053": {
       "name": "@financica/camt053",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "dependencies": {
         "fast-xml-parser": "^5.11.0",
       },
     },
     "packages/coda": {
       "name": "@financica/coda",
-      "version": "0.1.0",
+      "version": "0.2.0",
     },
     "packages/ecb-client": {
       "name": "@financica/ecb-client",
@@ -45,7 +45,7 @@
     },
     "packages/facturx": {
       "name": "@financica/facturx",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "dependencies": {
         "@cantoo/pdf-lib": "^2.8.4",
         "fast-xml-parser": "^5.11.0",
@@ -104,7 +104,7 @@
     },
     "packages/react-ubl-renderer": {
       "name": "@financica/react-ubl-renderer",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "devDependencies": {
         "@financica/ubl": "workspace:*",
         "@types/react": "^19.2.17",
@@ -114,7 +114,7 @@
         "react-dom": "^19.2.7",
       },
       "peerDependencies": {
-        "@financica/ubl": ">=0.6.0 <1.0.0",
+        "@financica/ubl": ">=0.16.0 <1.0.0",
         "react": ">=18",
         "react-dom": ">=18",
       },
@@ -139,7 +139,7 @@
     },
     "packages/stripe-ubl": {
       "name": "@financica/stripe-ubl",
-      "version": "1.3.0",
+      "version": "2.0.0",
       "dependencies": {
         "@financica/ubl": "^0.14.0",
       },
@@ -152,7 +152,7 @@
     },
     "packages/ubl": {
       "name": "@financica/ubl",
-      "version": "0.15.1",
+      "version": "0.16.0",
       "dependencies": {
         "@financica/peppol": ">=0.8.0 <1.0.0",
         "@xmldom/xmldom": "^0.9.11",

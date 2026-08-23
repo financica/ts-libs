@@ -1,13 +1,11 @@
 # Changelog
 
-## Unreleased
+## 2.0.0
 
 ### Changed
 
 - **BREAKING: `UblSupplier.vatStatus` takes the new string union** from `@financica/ubl` (`"subject" | "not_subject" | "small_business"`). The exemption coercion moved to `@financica/ubl/build`'s `coerceLinesForSupplierVatStatus`; output is unchanged for Belgian suppliers and now uses a generic reason for other countries.
 - **BREAKING: `buildCustomerPartyFromStripeInvoice` returns the `UblParty` directly.** The `{ customer, customerName }` wrapper is gone; `customerName` was always `customer.name`.
-
-## 1.3.0
 
 ### Added
 
