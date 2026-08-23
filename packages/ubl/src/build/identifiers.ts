@@ -248,9 +248,9 @@ export const extractCustomerTaxIdentifiers = (
 			vatNumber = value;
 			continue;
 		}
-		if (!taxNumber && type.includes("tax")) {
-			taxNumber = value;
-		}
+		// Any other typed id (ca_gst_hst, au_abn, us_ein, ...) is a registration
+		// number: it goes to BT-30, not BT-31.
+		if (!taxNumber) taxNumber = value;
 	}
 
 	return { peppolID, glnNumber, taxNumber, vatNumber };

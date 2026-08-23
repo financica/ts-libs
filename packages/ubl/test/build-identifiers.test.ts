@@ -96,6 +96,23 @@ describe("extractCustomerTaxIdentifiers", () => {
 		expect(ids.peppolID).toBe("0208:0793904121");
 	});
 
+	it("keeps a non-VAT registration number as the tax number", () => {
+		const ids = extractCustomerTaxIdentifiers([
+			{ type: "ca_gst_hst", value: "798718490RT0001" },
+			{ type: "ca_qst", value: "1223161819TQ0001" },
+		]);
+		expect(ids).toEqual({
+			peppolID: null,
+			glnNumber: null,
+			taxNumber: "798718490RT0001",
+			vatNumber: null,
+		});
+		expect(
+			extractCustomerTaxIdentifiers([{ type: "au_abn", value: "51824753556" }])
+				.taxNumber,
+		).toBe("51824753556");
+	});
+
 	it("returns nulls for empty/non-array input", () => {
 		expect(extractCustomerTaxIdentifiers(null)).toEqual({
 			peppolID: null,

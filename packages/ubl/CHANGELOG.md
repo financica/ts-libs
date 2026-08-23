@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.15.1
+
+### Fixed
+
+- **`extractCustomerTaxIdentifiers` no longer drops non-VAT registration numbers.** An entry was classified by substring of its type (`vat`, `tax`, `peppol`, `gln`), so `ca_gst_hst`, `au_abn`, `us_ein`, `ch_uid` and most of the Stripe taxonomy vanished and a seller with only such an id failed the identifier check. Any other typed entry is now the registration number (BT-30).
+
 ## 0.13.0
 
 ### Added
