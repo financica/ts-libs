@@ -1,4 +1,8 @@
-import { normalizeParticipantValue } from "@financica/peppol/identifiers";
+import { getPeppolIdentifierSchemes } from "@financica/peppol/countries";
+import {
+	countryFromVatNumber,
+	normalizeParticipantValue,
+} from "@financica/peppol/identifiers";
 import type { UblCompanyId, UblEndpoint } from "./ubl/types";
 import { normalizeString } from "./utils";
 
@@ -22,19 +26,11 @@ export const normalizeCompanyNumberForCountry = (
 	return companyNumber.trim();
 };
 
-const COMPANY_ID_SCHEME_BY_COUNTRY: Record<string, string> = {
-	BE: "0208",
-	NL: "0106",
-	FR: "0002",
-};
-
 /**
- * Country code → Peppol/ISO 6523 ICD scheme for a legal registration number
- * (`cac:PartyLegalEntity/cbc:CompanyID/@schemeID`).
- *
- *   BE → 0208 (Belgian enterprise number, CBE/KBO/BCE)
- *   NL → 0106 (Netherlands KvK)
- *   FR → 0002 (France SIRENE)
+ * Peppol/ISO 6523 ICD scheme for a legal registration number
+ * (`cac:PartyLegalEntity/cbc:CompanyID/@schemeID`), e.g. BE → `0208`
+ * (enterprise number), NL → `0106` (KvK), FR → `0002` (SIRENE). The table is
+ * `@financica/peppol`'s country profiles.
  *
  * Falls back to inspecting the number's country prefix (e.g. `BE0793904121`).
  * Returns `null` when the scheme can't be determined, in which case the
@@ -47,20 +43,17 @@ export const resolveCompanyIdScheme = (params: {
 	const companyNumber = normalizeString(params.companyNumber);
 	if (!companyNumber) return null;
 
-	const normalizedCountry =
-		normalizeString(params.countryCode)?.toUpperCase() ?? null;
-	if (normalizedCountry && normalizedCountry in COMPANY_ID_SCHEME_BY_COUNTRY) {
-		return COMPANY_ID_SCHEME_BY_COUNTRY[normalizedCountry] ?? null;
-	}
+	const fromCountry = getPeppolIdentifierSchemes(
+		params.countryCode,
+	)?.companyIdentifierScheme;
+	if (fromCountry) return fromCountry;
 
 	// Only sniffing the country prefix, e.g. `BE0793904121` → `BE`.
-	const countryPrefix = companyNumber
+	const prefix = companyNumber
 		.replace(/[^A-Za-z]/g, "")
 		.toUpperCase()
 		.slice(0, 2);
-	return countryPrefix in COMPANY_ID_SCHEME_BY_COUNTRY
-		? (COMPANY_ID_SCHEME_BY_COUNTRY[countryPrefix] ?? null)
-		: null;
+	return getPeppolIdentifierSchemes(prefix)?.companyIdentifierScheme ?? null;
 };
 
 /**
@@ -86,68 +79,14 @@ export const buildCompanyId = (params: {
 };
 
 /**
- * Country code → Peppol EAS scheme for a *VAT* identifier, keyed by ISO 3166-1
- * alpha-2. Source: Peppol Code Lists – Participant Identifier Schemes (EAS),
- * Peppol BIS Billing 3.0 (November 2025 release).
- *
- * Only countries that publish a VAT-based EAS scheme appear here. Some (e.g.
- * SE/DK/NO) address Peppol participants by organisation number rather than VAT
- * and are intentionally absent — see {@link resolveCompanyIdScheme}.
- */
-const VAT_SCHEME_BY_COUNTRY: Record<string, string> = {
-	AD: "9922", // Andorra
-	AL: "9923", // Albania
-	AT: "9914", // Austria
-	BA: "9924", // Bosnia and Herzegovina
-	BE: "9925", // Belgium
-	BG: "9926", // Bulgaria
-	CH: "9927", // Switzerland
-	CY: "9928", // Cyprus
-	CZ: "9929", // Czech Republic
-	DE: "9930", // Germany
-	EE: "9931", // Estonia
-	ES: "9920", // Spain (Spanish Tax Administration)
-	FI: "0213", // Finland (Finnish VAT Identifier)
-	FR: "9957", // France
-	GB: "9932", // United Kingdom
-	GR: "9933", // Greece (VAT prefix "EL")
-	HR: "9934", // Croatia
-	HU: "9910", // Hungary
-	IE: "9935", // Ireland
-	LI: "9936", // Liechtenstein
-	LT: "9937", // Lithuania
-	LU: "9938", // Luxembourg
-	LV: "9939", // Latvia
-	MC: "9940", // Monaco
-	ME: "9941", // Montenegro
-	MK: "9942", // North Macedonia
-	MT: "9943", // Malta
-	NL: "9944", // Netherlands
-	PL: "9945", // Poland
-	PT: "9946", // Portugal
-	RO: "9947", // Romania
-	RS: "9948", // Serbia
-	SI: "9949", // Slovenia
-	SK: "9950", // Slovakia
-	SM: "9951", // San Marino
-	TR: "9952", // Turkey
-	VA: "9953", // Holy See / Vatican City
-};
-
-/**
- * VAT registration prefixes that differ from the ISO 3166-1 alpha-2 country
- * code, so a VAT number's leading two letters still resolve to the right scheme.
- */
-const VAT_PREFIX_TO_COUNTRY: Record<string, string> = {
-	EL: "GR", // Greece issues VAT numbers with the "EL" prefix
-	XI: "GB", // Northern Ireland VAT is issued under the UK scheme
-};
-
-/**
  * Resolve the Peppol participant identifier for a VAT number, deriving the EAS
  * scheme from the number's own country prefix (falling back to `countryCode`).
  *
  *   `BE0206582284` → `{ scheme: "9925", value: "BE0206582284" }`
+ *
+ * The scheme comes from `@financica/peppol`'s country resolution, so countries
+ * that route on their registry number alone (Norway, Denmark) yield `null`
+ * here — their VAT number is not a Peppol participant identifier.
  *
  * The value keeps its country prefix, matching how participants register (the
  * Peppol directory lists this party as `9925:be0206582284`). Returns `null`
@@ -160,18 +99,10 @@ export const resolveVatEndpoint = (params: {
 	const value = normalizeString(params.vatNumber);
 	if (!value) return null;
 
-	const prefix = value
-		.replace(/[^A-Za-z0-9]/g, "")
-		.toUpperCase()
-		.slice(0, 2);
-	const fromPrefix = /^[A-Z]{2}$/.test(prefix)
-		? (VAT_PREFIX_TO_COUNTRY[prefix] ?? prefix)
-		: null;
-	const fromCountry = normalizeString(params.countryCode)?.toUpperCase() ?? null;
-
-	const country =
-		fromPrefix && fromPrefix in VAT_SCHEME_BY_COUNTRY ? fromPrefix : fromCountry;
-	const scheme = country ? VAT_SCHEME_BY_COUNTRY[country] : undefined;
+	const fromPrefix = countryFromVatNumber(value);
+	const scheme =
+		getPeppolIdentifierSchemes(fromPrefix)?.vatIdentifierScheme ??
+		getPeppolIdentifierSchemes(params.countryCode)?.vatIdentifierScheme;
 	if (!scheme) return null;
 
 	// Every scheme in the table is a VAT scheme, whose value carries no

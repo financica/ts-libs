@@ -15,6 +15,7 @@
  * Free of Node built-ins, so it is safe to import in a browser bundle.
  */
 
+import { getVatParticipantScheme } from "./identifiers";
 import { getPeppolCountryScheme } from "./schemes";
 
 /** Primary network the country's legal mandate routes over. */
@@ -174,6 +175,15 @@ export interface PeppolIdentifierSchemes {
 }
 
 /**
+ * Legal-registry EAS schemes for countries that have no full profile yet but
+ * whose registration-number scheme is known. A country is promoted out of
+ * this table into {@link EINVOICING_PROFILES} once its profile is verified.
+ */
+const COMPANY_REGISTRY_SCHEME_BY_COUNTRY: Record<string, string> = {
+	FR: "0002", // SIRENE (SIREN, 9 digits)
+};
+
+/**
  * The Peppol identifier schemes for addressing a participant in `country`.
  *
  * Resolution combines the two country tables: a hand-verified
@@ -183,12 +193,14 @@ export interface PeppolIdentifierSchemes {
  * full profile we fall back to
  * the {@link PEPPOL_COUNTRY_SCHEMES} addressing table, whose scheme is
  * VAT-based for every unprofiled country (only Norway and Denmark use a
- * registry scheme, and both are profiled). This is what keeps an unprofiled
- * sender — a German VAT, say — addressed under its own scheme (`9930`) instead
- * of a provider's Belgian default (`9925`).
+ * registry scheme, and both are profiled), and last to the full `CC:VAT` EAS
+ * code list (which also covers non-EU countries such as Switzerland's
+ * neighbours and the Balkans). This is what keeps an unprofiled sender — a
+ * German VAT, say — addressed under its own scheme (`9930`) instead of a
+ * provider's Belgian default (`9925`).
  *
- * Returns null only for a country in neither table (outside Peppol's reach),
- * where the caller should apply its provider default.
+ * Returns null only for a country in none of these tables (outside Peppol's
+ * reach), where the caller should apply its provider default.
  */
 export const getPeppolIdentifierSchemes = (
 	country: string | null | undefined,
@@ -200,9 +212,11 @@ export const getPeppolIdentifierSchemes = (
 			vatIdentifierScheme: profile.vatIdentifierScheme,
 		};
 	}
-	const scheme = getPeppolCountryScheme(country);
-	if (scheme) {
-		return { companyIdentifierScheme: null, vatIdentifierScheme: scheme.scheme };
-	}
-	return null;
+	const normalized = country?.trim().toUpperCase() ?? null;
+	const companyIdentifierScheme =
+		(normalized && COMPANY_REGISTRY_SCHEME_BY_COUNTRY[normalized]) ?? null;
+	const vatIdentifierScheme =
+		getPeppolCountryScheme(country)?.scheme ?? getVatParticipantScheme(country);
+	if (!companyIdentifierScheme && !vatIdentifierScheme) return null;
+	return { companyIdentifierScheme, vatIdentifierScheme };
 };

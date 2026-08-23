@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.8.0
+
+### Added
+
+- **`getPeppolIdentifierSchemes` now covers every country with a `CC:VAT` EAS scheme.** After the hand-verified profiles and the EU addressing table, it falls back to the full EAS code list, so Switzerland, Serbia, Andorra and the other non-EU VAT schemes resolve instead of returning null. France's SIRENE (`0002`) is known as its registry scheme.
+- **`getVatParticipantScheme(country)`** (raw `CC:VAT` code-list lookup) and **`countryFromVatNumber(vatNumber)`** (prefix → country, handling `EL` → GR and `XI` → GB) are exported from `@financica/peppol/identifiers`.
+
 ## 0.7.0
 
 ### Added

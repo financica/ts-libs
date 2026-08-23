@@ -21,7 +21,9 @@ export {
 } from "./document-types";
 export { type PeppolDirectoryEntry, lookupPeppolDirectory } from "./directory-lookup";
 export {
+	countryFromVatNumber,
 	getPeppolParticipantScheme,
+	getVatParticipantScheme,
 	normalizeParticipantValue,
 	buildParticipantId,
 	PEPPOL_PARTICIPANT_SCHEMES,

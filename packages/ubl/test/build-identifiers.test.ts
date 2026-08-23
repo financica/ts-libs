@@ -146,8 +146,21 @@ describe("resolveVatEndpoint", () => {
 		});
 	});
 
-	it("returns null for countries without a VAT EAS scheme (e.g. Sweden)", () => {
-		expect(resolveVatEndpoint({ vatNumber: "SE556677889901" })).toBeNull();
+	it("returns null for countries that route on the registry number (Norway)", () => {
+		expect(resolveVatEndpoint({ vatNumber: "NO999999999MVA" })).toBeNull();
+	});
+
+	it("uses @financica/peppol's country resolution (Sweden 9955, Italy 0211)", () => {
+		expect(resolveVatEndpoint({ vatNumber: "SE556677889901" })).toEqual({
+			scheme: "9955",
+			value: "SE556677889901",
+		});
+		expect(resolveVatEndpoint({ vatNumber: "IT12345678901" })?.scheme).toBe("0211");
+	});
+
+	it("covers non-EU VAT schemes from the full EAS list (Switzerland, Serbia)", () => {
+		expect(resolveVatEndpoint({ vatNumber: "CHE123456789" })?.scheme).toBe("9927");
+		expect(resolveVatEndpoint({ vatNumber: "RS123456789" })?.scheme).toBe("9948");
 	});
 
 	it("returns null for empty input", () => {

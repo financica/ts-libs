@@ -53,7 +53,7 @@
 		"prepack": "bun run build"
 	},
 	"dependencies": {
-		"@financica/peppol": ">=0.7.0 <1.0.0",
+		"@financica/peppol": ">=0.8.0 <1.0.0",
 		"@xmldom/xmldom": "^0.9.11"
 	},
 	"engines": {

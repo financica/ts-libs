@@ -201,6 +201,51 @@ export const getPeppolParticipantScheme = (
  * so `0208:0762.747.721` becomes `0208:0762747721` while the German Leitweg-ID
  * `0204:991-07335-68` and every uncatalogued scheme survive intact.
  */
+/**
+ * VAT registration prefixes that differ from the ISO 3166-1 alpha-2 country
+ * code, so a VAT number's leading two letters still resolve to the right
+ * country: Greece issues `EL…`, Northern Ireland `XI…` under the UK scheme.
+ */
+const VAT_PREFIX_TO_COUNTRY: Record<string, string> = {
+	EL: "GR",
+	XI: "GB",
+};
+
+/**
+ * The country a VAT number belongs to, from its two-letter prefix (`BE0123…` →
+ * `BE`, `EL123…` → `GR`). Returns null when the value has no alphabetic
+ * prefix.
+ */
+export const countryFromVatNumber = (vatNumber: string): string | null => {
+	const prefix = vatNumber
+		.replace(/[^A-Za-z0-9]/g, "")
+		.toUpperCase()
+		.slice(0, 2);
+	if (!/^[A-Z]{2}$/.test(prefix)) return null;
+	return VAT_PREFIX_TO_COUNTRY[prefix] ?? prefix;
+};
+
+const VAT_SCHEME_BY_COUNTRY: Record<string, string> = Object.fromEntries(
+	Object.entries(VAT_SCHEMES).map(([scheme, schemeId]) => [
+		schemeId.slice(0, 2),
+		scheme,
+	]),
+);
+
+/**
+ * The EAS scheme that registers a `country`'s VAT number as a Peppol
+ * participant identifier (`BE` → `9925`), from the full `CC:VAT` EAS list, or
+ * null when the country has none. This is the raw code-list fact; prefer
+ * `getPeppolIdentifierSchemes` (countries.ts), which also applies the
+ * hand-verified country profiles and preferred addressing schemes.
+ */
+export const getVatParticipantScheme = (
+	countryCode: string | null | undefined,
+): string | null => {
+	const country = countryCode?.trim().toUpperCase();
+	return country ? (VAT_SCHEME_BY_COUNTRY[country] ?? null) : null;
+};
+
 export const normalizeParticipantValue = (scheme: string, value: string): string => {
 	const cleaned = value.trim().replace(/\s+/g, "").replace(ILLEGAL_VALUE_CHARS, "");
 	return getPeppolParticipantScheme(scheme)?.separatorFree
