@@ -1,6 +1,6 @@
 {
 	"name": "@financica/react-ubl-renderer",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"description": "Render parsed UBL / Peppol BIS Billing 3.0 invoices as a React component or a standalone HTML document.",
 	"keywords": [
 		"e-invoicing",
@@ -69,7 +69,7 @@
 		"react-dom": "^19.2.7"
 	},
 	"peerDependencies": {
-		"@financica/ubl": ">=0.16.0 <1.0.0",
+		"@financica/ubl": ">=0.17.0 <1.0.0",
 		"react": ">=18",
 		"react-dom": ">=18"
 	},
