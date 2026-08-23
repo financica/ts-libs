@@ -124,7 +124,7 @@ describe("the period reaches the emitted XML", () => {
 				},
 				companyNumber: "0800279001",
 				vatNumber: "BE0800279001",
-				vatStatus: 1,
+				vatStatus: "subject",
 				peppolID: "0208:0800279001",
 			},
 		});

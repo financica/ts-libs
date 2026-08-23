@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 (2026-08-18)
+
+### Fixed
+
+- **Re-attaching `factur-x.xml` no longer leaves a dangling `/AF` entry.** `removeEmbeddedFile` deleted the old filespec while walking the name tree, so the later catalog `/AF` pass could not resolve it and kept a reference to a deleted object — invalid under PDF/A-3, so a validator rejected the second attach.
+
 ## 0.1.0 (2026-07-10)
 
 Initial release.

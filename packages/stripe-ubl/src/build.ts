@@ -3,7 +3,7 @@ import {
 	buildTaxTotals,
 	centsToDecimal,
 	reconcileLinesToExclTotal,
-	type SupplierVatStatus,
+	coerceLinesForSupplierVatStatus,
 	serializeUblDocument,
 	type UblAttachment,
 	type UblDocument,
@@ -28,26 +28,6 @@ const validateCurrency = (currency: string): string => {
 		throw new Error(`Invalid currency code: ${String(currency)}`);
 	}
 	return upper;
-};
-
-/**
- * When the supplier does not charge VAT (status 2/3), coerce every line to a
- * non-charging exempt category with an appropriate reason so the document
- * reports no VAT, regardless of what the upstream line tax data implied.
- */
-const coerceForVatStatus = (
-	lines: UblLine[],
-	vatStatus: SupplierVatStatus,
-): UblLine[] => {
-	if (vatStatus === 1) return lines;
-	const exemptionReason =
-		vatStatus === 3
-			? "Exempt — small business scheme (Article 56bis)"
-			: "Seller not subject to VAT";
-	return lines.map((line) => ({
-		...line,
-		taxCategory: { id: "E", percent: 0, exemptionReason },
-	}));
 };
 
 const authoritativeExclVat = (
@@ -118,12 +98,16 @@ export const buildUblInvoiceDocument = (params: BuildUblInvoiceParams): UblDocum
 		isoDateFromUnixSeconds(invoiceDateTimestamp) ??
 		new Date().toISOString().slice(0, 10);
 
-	const { customer } = buildCustomerPartyFromStripeInvoice(
+	const customer = buildCustomerPartyFromStripeInvoice(
 		invoice,
 		params.customerEndpoint,
 	);
 
-	let lines = coerceForVatStatus(buildInvoiceLines(invoice), supplier.vatStatus);
+	let lines = coerceLinesForSupplierVatStatus(
+		buildInvoiceLines(invoice),
+		supplier.vatStatus,
+		supplier.countryCode,
+	);
 	const authExcl = authoritativeExclVat(invoice.total_excluding_tax);
 	if (authExcl != null) lines = reconcileLinesToExclTotal(lines, authExcl);
 	const { taxTotal, monetaryTotal } = buildTotalsWithSettlement(
@@ -205,17 +189,18 @@ export const buildUblCreditNoteDocument = (
 		isoDateFromUnixSeconds(creditNote.effective_at) ??
 		new Date(creditNote.created * 1000).toISOString().slice(0, 10);
 
-	const { customer } = buildCustomerPartyFromStripeInvoice(
+	const customer = buildCustomerPartyFromStripeInvoice(
 		invoice,
 		params.customerEndpoint,
 	);
 
-	let lines = coerceForVatStatus(
+	let lines = coerceLinesForSupplierVatStatus(
 		buildCreditNoteLines(
 			creditNote,
 			normalizeString(invoice.description) ?? "Credit note",
 		),
 		supplier.vatStatus,
+		supplier.countryCode,
 	);
 	const authExcl = authoritativeExclVat(creditNote.total_excluding_tax);
 	if (authExcl != null) lines = reconcileLinesToExclTotal(lines, authExcl);

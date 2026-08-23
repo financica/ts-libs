@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.3.0
+
+### Added
+
+- **`@financica/be-vat-account/amount` and `@financica/be-vat-account/operations` subpath exports.** The root entry statically imports `unpdf`, so a consumer that only wanted `parseLocalizedAmount` dragged ~1.6 MB of PDF machinery into its browser bundle (measured in Financica, where the amount parser is reachable from a client component and the bundler did not shake the barrel despite `sideEffects: false`). Both subpaths are pure and import nothing else. The root export is unchanged.
+
+## 0.2.0
+
+### Added
+
+- **`operationKind(code)` classifies a statement operation code** as `declaration`, `settlement`, `late-interest`, `fine` or `other` (type `OperationKind`). Only the leading letter is significant, so `A-12.2025` and `A` classify the same. Previously every consumer re-derived the categories itself.
+- **`declarationPeriodEnd(code)` returns the ISO date a declaration code covers** (`A-06.2025` -> `2025-06-30`), `null` for anything else. The statement registers a declaration ~20 days into the _next_ period, so measuring at the registration date drags the next period's VAT into this one.
+- **`parseLocalizedAmount` and `EUROPEAN_AMOUNT_RE` are now exported** from the package entry; they were public in source only.
+
 ## 0.1.0
 
 Initial release.

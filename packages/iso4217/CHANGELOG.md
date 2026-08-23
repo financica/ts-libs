@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.0
+
+### Fixed
+
+- **`formatAmount` no longer throws when only one of `minimumFractionDigits` / `maximumFractionDigits` is supplied.** `Intl.NumberFormat` rejects `min > max`, so a caller-supplied bound that crossed the currency's minor units raised a `RangeError`. The supplied bound now widens the default on the other side instead.
+
+### Changed
+
+- **Currency records are frozen and typed with `satisfies Currency`**, so `countryCodes` keeps its literal type instead of widening to `string[]`.
+
 ## 0.1.0
 
 Initial release.

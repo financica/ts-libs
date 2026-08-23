@@ -52,6 +52,7 @@ export {
 	type UnitPrice,
 } from "./numeric";
 export {
+	coerceLinesForSupplierVatStatus,
 	EXEMPT_TAXABILITY_REASONS,
 	resolveTaxCategoryFromTaxAmounts,
 	type TaxAmountInfo,

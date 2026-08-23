@@ -20,7 +20,7 @@ const buildSupplier = (overrides: Partial<UblSupplier> = {}): UblSupplier => ({
 	},
 	companyNumber: "0800279001",
 	vatNumber: "BE0800279001",
-	vatStatus: 1,
+	vatStatus: "subject",
 	peppolID: "0208:0800279001",
 	...overrides,
 });
@@ -396,7 +396,7 @@ describe("buildUblInvoiceDocument", () => {
 		expect(doc.lines[0]?.taxCategory).toEqual({ id: "S", percent: 21 });
 	});
 
-	it("coerces all lines to exempt when the supplier is a franchise (vatStatus 3)", () => {
+	it("coerces all lines to exempt when the supplier is a franchise (small_business)", () => {
 		const doc = buildUblInvoiceDocument({
 			invoice: buildStripeInvoice({
 				subtotal: 10000,
@@ -412,7 +412,7 @@ describe("buildUblInvoiceDocument", () => {
 					},
 				]),
 			}),
-			supplier: buildSupplier({ vatStatus: 3 }),
+			supplier: buildSupplier({ vatStatus: "small_business" }),
 		});
 
 		expect(doc.lines[0]?.taxCategory.id).toBe("E");

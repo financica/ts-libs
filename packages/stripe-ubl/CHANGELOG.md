@@ -1,5 +1,28 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **BREAKING: `UblSupplier.vatStatus` takes the new string union** from `@financica/ubl` (`"subject" | "not_subject" | "small_business"`). The exemption coercion moved to `@financica/ubl/build`'s `coerceLinesForSupplierVatStatus`; output is unchanged for Belgian suppliers and now uses a generic reason for other countries.
+- **BREAKING: `buildCustomerPartyFromStripeInvoice` returns the `UblParty` directly.** The `{ customer, customerName }` wrapper is gone; `customerName` was always `customer.name`.
+
+## 1.3.0
+
+### Added
+
+- **A credit note without a memo carries its Stripe `reason` as a BT-21 coded note.** Stripe's `credit_note.reason` (e.g. `order_change`) was dropped whenever there was no memo, leaving the receiver with no reason for the credit. It is now emitted as `#ACD#order change` in `cbc:Note`, the EN 16931 UBL binding for a reason note (UNTDID 4451 `ACD`). A memo, being the sender's own words, still wins when present.
+
+## 1.2.0
+
+### Added
+
+- **The Stripe `footer` now reaches the BT-22 note.** Only `invoice.description` was emitted; the footer, where legal mentions usually live, was lost. Memo and footer are joined with a blank line into the single document-level `cbc:Note`, via the exported `stripeInvoiceNote(invoice)` so importers can store the same text a Peppol receiver sees.
+
+### Changed
+
+- Requires `@financica/ubl` `^0.14.0`, the release this package's period and note emission builds on.
+
 ## 1.1.0
 
 ### Added

@@ -25,7 +25,8 @@
 		"lint:fix": "oxlint --fix",
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
-		"ci": "bun run lint && bun run format:check && bun run build && bun run typecheck && bun run test"
+		"ci": "bun run lint && bun run format:check && bun run check:changelogs && bun run build && bun run typecheck && bun run test",
+		"check:changelogs": "bun scripts/check-changelogs.ts"
 	},
 	"devDependencies": {
 		"@types/node": "^26.2.0",

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.1
+
+### Fixed
+
+- **Taxonomy checks using `and` / `or` now evaluate instead of throwing.** The expression parser short-circuited `logical()`, so when the left side decided the result the right side was never consumed and `$a eq 1 or $b eq 3` was rejected as "unexpected trailing input". Every published check with a logical operator hit this; both sides are now parsed before they are combined (the grammar has no side effects, so evaluating both is free).
+
 ## 0.6.0
 
 Breaking: `NbbFilingInput.taxonomy` is the taxonomy module itself, imported

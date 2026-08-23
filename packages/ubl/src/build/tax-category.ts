@@ -1,4 +1,5 @@
-import type { UblTaxCategory } from "./ubl/types";
+import type { SupplierVatStatus } from "./party";
+import type { UblLine, UblTaxCategory } from "./ubl/types";
 import { normalizeString } from "./utils";
 
 /**
@@ -114,4 +115,38 @@ export const resolveTaxCategoryFromTaxAmounts = (
 		}
 	}
 	return taxCategoryFromReasonOrRate({ taxabilityReason: null, rate });
+};
+
+/**
+ * BT-120 text for a small-business/franchise exemption, by supplier country.
+ * Countries without a specific legal reference fall back to the generic text.
+ */
+const SMALL_BUSINESS_EXEMPTION_REASON_BY_COUNTRY: Record<string, string> = {
+	BE: "Exempt — small business scheme (Article 56bis)",
+};
+const SMALL_BUSINESS_EXEMPTION_REASON = "Exempt — small business scheme";
+const NOT_SUBJECT_EXEMPTION_REASON = "Seller not subject to VAT";
+
+/**
+ * When the supplier does not charge VAT, coerce every line to a non-charging
+ * exempt category (`E`, 0%) with the appropriate BT-120 reason, so the document
+ * reports no VAT regardless of what the upstream line tax data implied. Lines
+ * are returned untouched for a `subject` supplier.
+ */
+export const coerceLinesForSupplierVatStatus = (
+	lines: UblLine[],
+	vatStatus: SupplierVatStatus,
+	supplierCountryCode?: string | null,
+): UblLine[] => {
+	if (vatStatus === "subject") return lines;
+	const country = normalizeString(supplierCountryCode)?.toUpperCase();
+	const exemptionReason =
+		vatStatus === "small_business"
+			? ((country && SMALL_BUSINESS_EXEMPTION_REASON_BY_COUNTRY[country]) ??
+				SMALL_BUSINESS_EXEMPTION_REASON)
+			: NOT_SUBJECT_EXEMPTION_REASON;
+	return lines.map((line) => ({
+		...line,
+		taxCategory: { id: "E", percent: 0, exemptionReason },
+	}));
 };

@@ -22,7 +22,7 @@ import type Stripe from "stripe";
 export const buildCustomerPartyFromStripeInvoice = (
 	invoice: Stripe.Invoice,
 	endpointOverride?: UblEndpoint | null,
-): { customer: UblParty; customerName: string } => {
+): UblParty => {
 	const address = normalizeAddress(invoice.customer_address, null);
 	const stripeTaxIds = invoice.customer_tax_ids?.map((taxId) => ({
 		type: taxId.type,
@@ -31,7 +31,7 @@ export const buildCustomerPartyFromStripeInvoice = (
 	const ids = extractCustomerTaxIdentifiers(stripeTaxIds);
 	const customerName = invoice.customer_name ?? invoice.customer_email ?? "Customer";
 
-	const customer = buildCustomerParty(
+	return buildCustomerParty(
 		{
 			name: customerName,
 			address,
@@ -43,6 +43,4 @@ export const buildCustomerPartyFromStripeInvoice = (
 		},
 		endpointOverride,
 	);
-
-	return { customer, customerName };
 };

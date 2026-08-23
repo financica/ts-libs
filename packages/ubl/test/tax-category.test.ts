@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { taxCategoryFromReasonOrRate } from "../src/build/index.js";
+import {
+	coerceLinesForSupplierVatStatus,
+	taxCategoryFromReasonOrRate,
+	type UblLine,
+} from "../src/build/index.js";
 
 describe("taxCategoryFromReasonOrRate", () => {
 	it("maps reverse charge to AE with the standard reason", () => {
@@ -56,5 +60,40 @@ describe("taxCategoryFromReasonOrRate", () => {
 				rate: 21,
 			}).id,
 		).toBe("E");
+	});
+});
+
+describe("coerceLinesForSupplierVatStatus", () => {
+	const line: UblLine = {
+		id: "1",
+		name: "Item",
+		quantity: 1,
+		unitCode: "C62",
+		lineExtensionAmount: 10,
+		priceAmount: 10,
+		taxCategory: { id: "S", percent: 21 },
+	};
+
+	it("leaves lines untouched for a VAT-subject supplier", () => {
+		expect(coerceLinesForSupplierVatStatus([line], "subject")).toEqual([line]);
+	});
+
+	it("coerces to E/0% with a generic reason for a non-subject supplier", () => {
+		const [out] = coerceLinesForSupplierVatStatus([line], "not_subject", "BE");
+		expect(out?.taxCategory).toEqual({
+			id: "E",
+			percent: 0,
+			exemptionReason: "Seller not subject to VAT",
+		});
+	});
+
+	it("uses the country-specific legal reference for a Belgian small business", () => {
+		const [out] = coerceLinesForSupplierVatStatus([line], "small_business", "be");
+		expect(out?.taxCategory.exemptionReason).toMatch(/56bis/);
+	});
+
+	it("falls back to the generic small-business text elsewhere", () => {
+		const [out] = coerceLinesForSupplierVatStatus([line], "small_business", "NL");
+		expect(out?.taxCategory.exemptionReason).toBe("Exempt — small business scheme");
 	});
 });

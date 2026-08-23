@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1
+
+### Fixed
+
+- **An empty `OBS_VALUE` is rejected instead of parsing as a rate of 0.** `Number("")` is `0`, so a blank observation in the ECB CSV passed the `isFinite` guard and came back as a zero exchange rate; the value is now trimmed and a blank one is treated as missing.
+
 ## 0.2.0
 
 ### Added

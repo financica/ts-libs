@@ -7,14 +7,17 @@ import { normalizeString } from "./utils";
  * Supplier (seller) VAT status. Drives how zero-VAT lines are reported when the
  * seller does not charge VAT:
  *
- *   1 — Subject to VAT (the normal case): line categories come from the data.
- *   2 — Not subject to VAT.
- *   3 — Small business / franchise exemption (e.g. Belgian Article 56bis).
+ *   - `subject` — subject to VAT (the normal case): line categories come from
+ *     the data.
+ *   - `not_subject` — not subject to VAT.
+ *   - `small_business` — small business / franchise exemption (e.g. Belgian
+ *     Article 56bis).
  *
- * For statuses 2 and 3, stripe-ubl's `coerceForVatStatus` coerces all line
- * categories to a non-charging exempt category so no VAT is reported.
+ * For the last two, `coerceLinesForSupplierVatStatus` (tax-category.ts) turns
+ * every line into a non-charging exempt category so no VAT is reported.
+ * Providers that encode this numerically (Scrada: 1/2/3) map at their boundary.
  */
-export type SupplierVatStatus = 1 | 2 | 3;
+export type SupplierVatStatus = "subject" | "not_subject" | "small_business";
 
 /**
  * Caller-provided supplier data, normalized into a stable shape.

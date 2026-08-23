@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.1.0
+
+### Fixed
+
+- **Division-to-section mapping follows NACE Rev. 2.1.** The map still described Rev. 2: division 45 is merged into 46/47, sections J–U shifted and section V was added by Regulation (EU) 2023/137, so codes in those ranges resolved to the wrong section.
+- **CRLF data files parse cleanly.** The TSV parser split on `\n` alone, leaving a trailing `\r` on the last field of every row.
+
 ## 3.0.0
 
 ### Changed

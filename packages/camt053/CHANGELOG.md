@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0
+
+### Added
+
+- **`CAMT053_NS_PREFIX` is exported.** Consumers sniffing a file for the format were hardcoding their own copy of the CAMT.053 namespace URI prefix; it now comes from the parser that actually matches on it.
+
 ## 0.1.0
 
 ### Added
