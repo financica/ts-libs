@@ -38,7 +38,7 @@ describe("toUblPeriod", () => {
 		{ name: "missing an end", start: unix("2026-01-01"), end: null },
 		{ name: "missing a start", start: null, end: unix("2026-02-01") },
 	])("reports no period when the range is $name", ({ start, end }) => {
-		expect(toUblPeriod(start, end)).toBeNull();
+		expect(toUblPeriod(start, end)).toBeUndefined();
 	});
 });
 
@@ -64,7 +64,7 @@ describe("resolveInvoicePeriod", () => {
 	});
 
 	it("reports nothing for a one-off invoice with no periods anywhere", () => {
-		expect(resolveInvoicePeriod(invoiceWith([]))).toBeNull();
+		expect(resolveInvoicePeriod(invoiceWith([]))).toBeUndefined();
 	});
 });
 

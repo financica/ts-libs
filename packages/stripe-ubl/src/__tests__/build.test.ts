@@ -116,21 +116,21 @@ describe("buildUblInvoiceDocument", () => {
 			supplier: buildSupplier(),
 		});
 
-		expect(doc.documentType).toBe("invoice");
+		expect(doc.documentType).toBe("Invoice");
 		expect(doc.id).toBe("INV-001");
 		expect(doc.currency).toBe("EUR");
 		expect(doc.monetaryTotal.taxExclusiveAmount).toBe(100);
 		expect(doc.taxTotal.taxAmount).toBe(21);
 		expect(doc.monetaryTotal.taxInclusiveAmount).toBe(121);
 		expect(doc.monetaryTotal.payableAmount).toBe(121);
-		expect(doc.supplier.name).toBe("Acme BE");
-		expect(doc.supplier.endpoint).toEqual({ scheme: "0208", value: "0800279001" });
-		expect(doc.supplier.companyId).toEqual({ value: "0800279001", scheme: "0208" });
-		expect(doc.customer.name).toBe("Test Customer");
-		expect(doc.customer.vatNumber).toBe("BE0733756597");
+		expect(doc.seller.name).toBe("Acme BE");
+		expect(doc.seller.endpoint).toEqual({ scheme: "0208", value: "0800279001" });
+		expect(doc.seller.companyId).toEqual({ value: "0800279001", scheme: "0208" });
+		expect(doc.buyer.name).toBe("Test Customer");
+		expect(doc.buyer.vatId).toBe("BE0733756597");
 		// The VAT-only customer must still get a routable Peppol endpoint: the
 		// Belgian VAT maps to EAS scheme 9925.
-		expect(doc.customer.endpoint).toEqual({
+		expect(doc.buyer.endpoint).toEqual({
 			scheme: "9925",
 			value: "BE0733756597",
 		});
@@ -148,7 +148,7 @@ describe("buildUblInvoiceDocument", () => {
 				invoice: buildStripeInvoice({ description: null, footer: null }),
 				supplier: buildSupplier(),
 			}).note,
-		).toBeNull();
+		).toBeUndefined();
 	});
 
 	it("converts amounts to a rate-derived VAT breakdown (BR-CO-17)", () => {
@@ -227,7 +227,7 @@ describe("buildUblInvoiceDocument", () => {
 			supplier: buildSupplier(),
 		});
 		expect(doc.monetaryTotal.payableAmount).toBe(0);
-		expect(doc.dueDate).toBeNull();
+		expect(doc.dueDate).toBeUndefined();
 	});
 
 	it("keeps a due date Stripe did supply even once settled", () => {
@@ -269,8 +269,8 @@ describe("buildUblInvoiceDocument", () => {
 			supplier: buildSupplier(),
 		});
 
-		expect(doc.lines[0]?.taxCategory.id).toBe("AE");
-		expect(doc.lines[0]?.taxCategory.exemptionReason).toBe("Reverse charge");
+		expect(doc.lines[0]?.taxCategory?.id).toBe("AE");
+		expect(doc.lines[0]?.taxCategory?.exemptionReason).toBe("Reverse charge");
 		expect(doc.taxTotal.taxAmount).toBe(0);
 	});
 
@@ -292,7 +292,7 @@ describe("buildUblInvoiceDocument", () => {
 			}),
 			supplier: buildSupplier(),
 		});
-		expect(doc.lines[0]?.taxCategory.id).toBe("Z");
+		expect(doc.lines[0]?.taxCategory?.id).toBe("Z");
 	});
 
 	it("reads VAT from line.taxes when tax_amounts is empty", () => {
@@ -391,7 +391,7 @@ describe("buildUblInvoiceDocument", () => {
 		});
 
 		expect(doc.lines).toHaveLength(1);
-		expect(doc.lines[0]?.name).toBe("Consulting services");
+		expect(doc.lines[0]?.description).toBe("Consulting services");
 		expect(doc.lines[0]?.lineExtensionAmount).toBe(100);
 		expect(doc.lines[0]?.taxCategory).toEqual({ id: "S", percent: 21 });
 	});
@@ -415,8 +415,8 @@ describe("buildUblInvoiceDocument", () => {
 			supplier: buildSupplier({ vatStatus: "small_business" }),
 		});
 
-		expect(doc.lines[0]?.taxCategory.id).toBe("E");
-		expect(doc.lines[0]?.taxCategory.exemptionReason).toMatch(/56bis/);
+		expect(doc.lines[0]?.taxCategory?.id).toBe("E");
+		expect(doc.lines[0]?.taxCategory?.exemptionReason).toMatch(/56bis/);
 		expect(doc.taxTotal.taxAmount).toBe(0);
 	});
 
@@ -432,7 +432,7 @@ describe("buildUblInvoiceDocument", () => {
 			}),
 			supplier: buildSupplier(),
 		});
-		expect(doc.customer.address.countryCode).toBeNull();
+		expect(doc.buyer.address?.countryCode).toBeUndefined();
 	});
 });
 
@@ -466,10 +466,10 @@ describe("buildUblCreditNoteDocument", () => {
 			invoice: buildStripeInvoice(),
 			supplier: buildSupplier(),
 		});
-		expect(doc.documentType).toBe("creditNote");
+		expect(doc.documentType).toBe("CreditNote");
 		expect(doc.id).toBe("CN-001");
-		expect(doc.precedingInvoiceId).toBe("INV-001");
-		expect(doc.dueDate).toBeNull();
+		expect(doc.billingReference).toEqual({ invoiceId: "INV-001" });
+		expect(doc.dueDate).toBeUndefined();
 	});
 
 	it("derives the customer party from the parent invoice", () => {
@@ -478,8 +478,8 @@ describe("buildUblCreditNoteDocument", () => {
 			invoice: buildStripeInvoice(),
 			supplier: buildSupplier(),
 		});
-		expect(doc.customer.name).toBe("Test Customer");
-		expect(doc.customer.vatNumber).toBe("BE0733756597");
+		expect(doc.buyer.name).toBe("Test Customer");
+		expect(doc.buyer.vatId).toBe("BE0733756597");
 	});
 
 	it("uses effective_at as the issue date", () => {
@@ -534,7 +534,7 @@ describe("customer Peppol endpoint resolution", () => {
 			invoice: buildStripeInvoice(overrides),
 			supplier: buildSupplier(),
 			...opts,
-		}).customer.endpoint;
+		}).buyer.endpoint;
 
 	it("prefers an explicit Peppol ID over the VAT number", () => {
 		expect(
@@ -573,13 +573,13 @@ describe("customer Peppol endpoint resolution", () => {
 		).toEqual({ scheme: "0208", value: "0733756597" });
 	});
 
-	it("leaves the endpoint null when no identifier resolves to a scheme", () => {
+	it("leaves the endpoint absent when no identifier resolves to a scheme", () => {
 		expect(
 			endpointOf({
 				customer_address: { country: "US" },
 				customer_tax_ids: [],
 			}),
-		).toBeNull();
+		).toBeUndefined();
 	});
 });
 
@@ -655,7 +655,7 @@ describe("prepaid amount (BT-113)", () => {
 		expect(doc.monetaryTotal.taxInclusiveAmount).toBe(605.61);
 		expect(doc.monetaryTotal.prepaidAmount).toBe(605.61);
 		expect(doc.monetaryTotal.payableAmount).toBe(0);
-		expect(doc.dueDate).toBeNull();
+		expect(doc.dueDate).toBeUndefined();
 	});
 
 	it("serializes cbc:PrepaidAmount before cbc:PayableAmount", () => {
@@ -724,10 +724,10 @@ describe("prepaid amount (BT-113)", () => {
 			supplier: buildSupplier(),
 		});
 
-		expect(creditNoteDoc.precedingInvoiceId).toBe("INV-001");
+		expect(creditNoteDoc.billingReference?.invoiceId).toBe("INV-001");
 		expect(
-			invoiceDoc.monetaryTotal.payableAmount -
-				creditNoteDoc.monetaryTotal.payableAmount,
+			(invoiceDoc.monetaryTotal.payableAmount ?? 0) -
+				(creditNoteDoc.monetaryTotal.payableAmount ?? 0),
 		).toBe(0);
 	});
 

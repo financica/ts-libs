@@ -15,7 +15,9 @@ import type {
 	UblParty,
 	UblPartyIdentification,
 	UblPaymentMeans,
+	UblTaxCategory,
 	UblTaxSubtotal,
+	UblTaxTotal,
 } from "./types.js";
 import { UblParseError } from "./errors.js";
 import { CAC_NS, CBC_NS, parseXmlDocument } from "./xml-dom.js";
@@ -163,6 +165,13 @@ function parseParty(root: Element, role: string): UblParty {
 		? legalEntity.getElementsByTagNameNS(CBC_NS, "CompanyID")[0]
 		: null;
 
+	const endpointValue = trimmed(endpointEl?.textContent);
+	const companyIdValue = companyIdEl
+		? trimmed(companyIdEl.textContent)
+		: partyId
+			? cbcText(partyId, "ID")
+			: undefined;
+
 	return {
 		name: partyName ? cbcText(partyName, "Name") : undefined,
 		registrationName: legalEntity
@@ -173,14 +182,14 @@ function parseParty(root: Element, role: string): UblParty {
 			: undefined,
 		vatId: taxScheme ? cbcText(taxScheme, "CompanyID") : undefined,
 		taxSchemeId: parseTaxSchemeId(taxScheme),
-		companyId: companyIdEl
-			? trimmed(companyIdEl.textContent)
-			: partyId
-				? cbcText(partyId, "ID")
+		companyId:
+			companyIdValue !== undefined
+				? { value: companyIdValue, scheme: attribute(companyIdEl, "schemeID") }
 				: undefined,
-		companyIdSchemeId: attribute(companyIdEl, "schemeID"),
-		endpointId: trimmed(endpointEl?.textContent),
-		endpointSchemeId: attribute(endpointEl, "schemeID"),
+		endpoint:
+			endpointValue !== undefined
+				? { value: endpointValue, scheme: attribute(endpointEl, "schemeID") }
+				: undefined,
 		partyIdentifications:
 			partyIdentifications.length > 0 ? partyIdentifications : undefined,
 		address: parseAddress(party),
@@ -188,16 +197,40 @@ function parseParty(root: Element, role: string): UblParty {
 	};
 }
 
+/**
+ * `cac:TaxCategory` / `cac:ClassifiedTaxCategory`. Emitted whenever the
+ * element states anything; `percentFallback` covers the E-FFF habit of putting
+ * `cbc:Percent` on the subtotal instead of inside the category.
+ */
+function parseTaxCategory(
+	cat: Element | null,
+	percentFallback?: Element,
+): UblTaxCategory | undefined {
+	const percentFromParent = percentFallback
+		? cbcDirectNumber(percentFallback, "Percent")
+		: undefined;
+	if (!cat) {
+		return percentFromParent !== undefined
+			? { percent: percentFromParent }
+			: undefined;
+	}
+	const category: UblTaxCategory = {
+		id: cbcText(cat, "ID"),
+		percent: cbcNumber(cat, "Percent") ?? percentFromParent,
+		schemeId: parseTaxSchemeId(cat),
+		exemptionReason: cbcText(cat, "TaxExemptionReason"),
+		exemptionReasonCode: cbcText(cat, "TaxExemptionReasonCode"),
+	};
+	return Object.values(category).some((value) => value !== undefined)
+		? category
+		: undefined;
+}
+
 function parseTaxSubtotal(sub: Element): UblTaxSubtotal {
-	const cat = cacElement(sub, "TaxCategory");
 	return {
 		taxableAmount: cbcNumber(sub, "TaxableAmount"),
 		taxAmount: cbcNumber(sub, "TaxAmount"),
-		taxPercent:
-			(cat ? cbcNumber(cat, "Percent") : undefined) ?? cbcNumber(sub, "Percent"),
-		taxCategoryId: cat ? cbcText(cat, "ID") : undefined,
-		taxSchemeId: parseTaxSchemeId(cat),
-		taxExemptionReason: cat ? cbcText(cat, "TaxExemptionReason") : undefined,
+		category: parseTaxCategory(cacElement(sub, "TaxCategory"), sub),
 	};
 }
 
@@ -205,10 +238,18 @@ function parseTaxSubtotalsFromTaxTotal(taxTotal: Element): UblTaxSubtotal[] {
 	return cacDirectElements(taxTotal, "TaxSubtotal").map(parseTaxSubtotal);
 }
 
-function parseTaxSubtotals(root: Element): UblTaxSubtotal[] {
+/**
+ * `cac:TaxTotal` (BG-22). BT-110 is read from the first `cac:TaxTotal` as
+ * stated, never summed from the subtotals; the subtotals of every `TaxTotal`
+ * (a second one carries the accounting-currency figure) are concatenated.
+ */
+function parseTaxTotal(root: Element): UblTaxTotal {
 	const taxTotals = cacDirectElements(root, "TaxTotal");
-	if (taxTotals.length === 0) return [];
-	return taxTotals.flatMap(parseTaxSubtotalsFromTaxTotal);
+	const first = taxTotals[0];
+	return {
+		taxAmount: first ? cbcDirectNumber(first, "TaxAmount") : undefined,
+		subtotals: taxTotals.flatMap(parseTaxSubtotalsFromTaxTotal),
+	};
 }
 
 function parseAllowanceCharge(charge: Element): UblAllowanceCharge {
@@ -222,14 +263,28 @@ function parseAllowanceCharge(charge: Element): UblAllowanceCharge {
 		multiplierFactorNumeric: cbcDirectNumber(charge, "MultiplierFactorNumeric"),
 		reason: cbcText(charge, "AllowanceChargeReason"),
 		reasonCode: cbcText(charge, "AllowanceChargeReasonCode"),
-		taxPercent: taxCategory ? cbcNumber(taxCategory, "Percent") : undefined,
-		taxCategoryId: taxCategory ? cbcText(taxCategory, "ID") : undefined,
-		taxSchemeId: parseTaxSchemeId(taxCategory),
+		taxCategory: parseTaxCategory(taxCategory),
 	};
 }
 
 function parseAllowanceCharges(parent: Element): UblAllowanceCharge[] {
 	return cacDirectElements(parent, "AllowanceCharge").map(parseAllowanceCharge);
+}
+
+function mergeTaxCategories(
+	preferred: UblTaxCategory | undefined,
+	fallback: UblTaxCategory | undefined,
+): UblTaxCategory | undefined {
+	if (!preferred) return fallback;
+	if (!fallback) return preferred;
+	return {
+		id: preferred.id ?? fallback.id,
+		percent: preferred.percent ?? fallback.percent,
+		schemeId: preferred.schemeId ?? fallback.schemeId,
+		exemptionReason: preferred.exemptionReason ?? fallback.exemptionReason,
+		exemptionReasonCode:
+			preferred.exemptionReasonCode ?? fallback.exemptionReasonCode,
+	};
 }
 
 function parseLines(root: Element, isCreditNote: boolean): UblLine[] {
@@ -239,7 +294,9 @@ function parseLines(root: Element, isCreditNote: boolean): UblLine[] {
 	return cacElements(root, lineTag).map((line) => {
 		const item = cacElement(line, "Item");
 		const price = cacElement(line, "Price");
-		const taxCategory = item ? cacElement(item, "ClassifiedTaxCategory") : null;
+		const classifiedCategory = parseTaxCategory(
+			item ? cacElement(item, "ClassifiedTaxCategory") : null,
+		);
 		const sellersId = item ? cacElement(item, "SellersItemIdentification") : null;
 		const buyersId = item ? cacElement(item, "BuyersItemIdentification") : null;
 		const qtyEl = line.getElementsByTagNameNS(CBC_NS, qtyTag)[0];
@@ -255,9 +312,11 @@ function parseLines(root: Element, isCreditNote: boolean): UblLine[] {
 		const taxAmountFromLineTotal = lineTaxTotal
 			? cbcDirectNumber(lineTaxTotal, "TaxAmount")
 			: undefined;
-		const taxPercent =
-			lineTaxSubtotals[0]?.taxPercent ??
-			(taxCategory ? cbcNumber(taxCategory, "Percent") : undefined);
+		// A line-level TaxSubtotal (E-FFF) wins over the classified category,
+		// field by field.
+		const subtotalCategory = lineTaxSubtotals[0]?.category;
+		const taxCategory = mergeTaxCategories(subtotalCategory, classifiedCategory);
+		const taxPercent = taxCategory?.percent;
 		const computedTaxAmount =
 			taxPercent !== undefined && lineExtensionAmount !== undefined
 				? Number(((lineExtensionAmount * taxPercent) / 100).toFixed(2))
@@ -309,17 +368,13 @@ function parseLines(root: Element, isCreditNote: boolean): UblLine[] {
 			unitCode: attribute(qtyEl, "unitCode"),
 			unitPrice,
 			lineExtensionAmount,
-			taxPercent,
+			baseQuantity: priceBaseQuantity,
+			taxCategory,
 			taxAmount:
 				taxAmountFromLineTotal ??
 				(lineTaxSubtotals.length > 0
 					? taxAmountFromSubtotals
 					: computedTaxAmount),
-			taxCategoryId:
-				lineTaxSubtotals[0]?.taxCategoryId ??
-				(taxCategory ? cbcText(taxCategory, "ID") : undefined),
-			taxSchemeId:
-				lineTaxSubtotals[0]?.taxSchemeId ?? parseTaxSchemeId(taxCategory),
 			taxSubtotals: lineTaxSubtotals.length > 0 ? lineTaxSubtotals : undefined,
 			allowanceCharges:
 				allowanceCharges.length > 0 ? allowanceCharges : undefined,
@@ -582,7 +637,7 @@ export function parseUblInvoice(xml: string): UblInvoice | null {
 		buyer: parseParty(root, "AccountingCustomerParty"),
 		delivery: parseDelivery(root),
 		lines: parseLines(root, isCreditNote),
-		taxSubtotals: parseTaxSubtotals(root),
+		taxTotal: parseTaxTotal(root),
 		monetaryTotal: parseMonetaryTotal(root),
 		paymentMeansList,
 		paymentMeans: paymentMeansList?.[0],

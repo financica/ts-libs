@@ -1,7 +1,7 @@
 import { type AddressInput, normalizeAddress } from "./address";
 import { buildCompanyId, parsePeppolEndpoint, resolveVatEndpoint } from "./identifiers";
-import type { UblAddress, UblEndpoint, UblParty } from "./ubl/types";
-import { normalizeString } from "./utils";
+import type { UblAddress, UblEndpoint, UblParty } from "../types";
+import { compact, normalizeString } from "./utils";
 
 /**
  * Supplier (seller) VAT status. Drives how zero-VAT lines are reported when the
@@ -45,20 +45,20 @@ export interface UblSupplier {
 	peppolID?: string | null;
 }
 
-/** Convert a {@link UblSupplier} into the supplier (seller) party. */
+/** Convert a {@link UblSupplier} into the seller party (`cac:AccountingSupplierParty`). */
 export const buildSupplierParty = (supplier: UblSupplier): UblParty => {
 	const address = normalizeAddress(supplier.address, supplier.countryCode);
-	return {
+	return compact({
 		endpoint: parsePeppolEndpoint(supplier.peppolID),
 		name: supplier.name,
+		registrationName: supplier.name,
 		address,
-		vatNumber: normalizeString(supplier.vatNumber),
-		legalName: supplier.name,
+		vatId: normalizeString(supplier.vatNumber),
 		companyId: buildCompanyId({
 			countryCode: supplier.countryCode,
 			companyNumber: supplier.companyNumber ?? null,
 		}),
-	};
+	});
 };
 
 /**
@@ -91,7 +91,7 @@ export interface UblCustomer {
 }
 
 /**
- * Convert a {@link UblCustomer} into the customer (buyer) party.
+ * Convert a {@link UblCustomer} into the buyer party (`cac:AccountingCustomerParty`).
  *
  * The Peppol `EndpointID` (BT-49) — which routes the document — is resolved in
  * priority order: an explicit `endpointOverride` (e.g. a confirmed-registered
@@ -106,22 +106,24 @@ export const buildCustomerParty = (
 	endpointOverride?: UblEndpoint | null,
 ): UblParty => {
 	const countryCode =
-		normalizeString(customer.countryCode) ?? customer.address.countryCode;
+		normalizeString(customer.countryCode) ?? customer.address.countryCode ?? null;
 	const endpoint =
 		endpointOverride ??
 		parsePeppolEndpoint(customer.peppolID) ??
-		(customer.glnNumber ? { scheme: "0088", value: customer.glnNumber } : null) ??
+		(customer.glnNumber
+			? { scheme: "0088", value: customer.glnNumber }
+			: undefined) ??
 		resolveVatEndpoint({ vatNumber: customer.vatNumber, countryCode });
 
-	return {
+	return compact({
 		endpoint,
 		name: customer.name,
+		registrationName: customer.name,
 		address: customer.address,
-		vatNumber: normalizeString(customer.vatNumber),
-		legalName: customer.name,
+		vatId: normalizeString(customer.vatNumber),
 		companyId: buildCompanyId({
 			countryCode,
 			companyNumber: customer.taxNumber ?? null,
 		}),
-	};
+	});
 };

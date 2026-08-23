@@ -50,7 +50,7 @@ export const renderUblInvoiceHtml = (
 		}),
 	);
 	const label = invoice.documentType === "CreditNote" ? "Credit Note" : "Invoice";
-	const title = `${label} ${invoice.id || ""}`.trim();
+	const title = `${label} ${invoice.id}`;
 	return `<!doctype html>
 <html lang="en">
 <head>

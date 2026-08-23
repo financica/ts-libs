@@ -66,11 +66,11 @@ describe("taxCategoryFromReasonOrRate", () => {
 describe("coerceLinesForSupplierVatStatus", () => {
 	const line: UblLine = {
 		id: "1",
-		name: "Item",
+		description: "Item",
 		quantity: 1,
 		unitCode: "C62",
 		lineExtensionAmount: 10,
-		priceAmount: 10,
+		unitPrice: 10,
 		taxCategory: { id: "S", percent: 21 },
 	};
 
@@ -89,11 +89,13 @@ describe("coerceLinesForSupplierVatStatus", () => {
 
 	it("uses the country-specific legal reference for a Belgian small business", () => {
 		const [out] = coerceLinesForSupplierVatStatus([line], "small_business", "be");
-		expect(out?.taxCategory.exemptionReason).toMatch(/56bis/);
+		expect(out?.taxCategory?.exemptionReason).toMatch(/56bis/);
 	});
 
 	it("falls back to the generic small-business text elsewhere", () => {
 		const [out] = coerceLinesForSupplierVatStatus([line], "small_business", "NL");
-		expect(out?.taxCategory.exemptionReason).toBe("Exempt — small business scheme");
+		expect(out?.taxCategory?.exemptionReason).toBe(
+			"Exempt — small business scheme",
+		);
 	});
 });

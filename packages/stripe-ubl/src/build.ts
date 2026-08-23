@@ -4,9 +4,9 @@ import {
 	centsToDecimal,
 	reconcileLinesToExclTotal,
 	coerceLinesForSupplierVatStatus,
-	serializeUblDocument,
+	serializeUblInvoice,
 	type UblAttachment,
-	type UblDocument,
+	type UblInvoice,
 	type UblEndpoint,
 	type UblLine,
 	type UblSupplier,
@@ -54,7 +54,7 @@ const buildTotalsWithSettlement = (
 	const prepaidAmount = resolvePrepaidAmount({
 		settledCents,
 		grossCents,
-		taxInclusiveAmount: totals.monetaryTotal.taxInclusiveAmount,
+		taxInclusiveAmount: totals.monetaryTotal.taxInclusiveAmount ?? 0,
 	});
 	return prepaidAmount === undefined
 		? totals
@@ -80,14 +80,14 @@ export interface BuildUblInvoiceParams {
 }
 
 /**
- * Build a Peppol BIS Billing 3.0 invoice {@link UblDocument} from a
+ * Build a Peppol BIS Billing 3.0 invoice {@link UblInvoice} from a
  * `Stripe.Invoice`.
  *
  * Line nets are reconciled against Stripe's authoritative
  * `invoice.total_excluding_tax`, and the VAT breakdown is derived from the
  * reconciled lines (see {@link buildTaxTotals}).
  */
-export const buildUblInvoiceDocument = (params: BuildUblInvoiceParams): UblDocument => {
+export const buildUblInvoiceDocument = (params: BuildUblInvoiceParams): UblInvoice => {
 	const { invoice, supplier, attachment } = params;
 
 	// Use finalized_at (when the invoice was issued) rather than created (when
@@ -98,10 +98,7 @@ export const buildUblInvoiceDocument = (params: BuildUblInvoiceParams): UblDocum
 		isoDateFromUnixSeconds(invoiceDateTimestamp) ??
 		new Date().toISOString().slice(0, 10);
 
-	const customer = buildCustomerPartyFromStripeInvoice(
-		invoice,
-		params.customerEndpoint,
-	);
+	const buyer = buildCustomerPartyFromStripeInvoice(invoice, params.customerEndpoint);
 
 	let lines = coerceLinesForSupplierVatStatus(
 		buildInvoiceLines(invoice),
@@ -117,7 +114,7 @@ export const buildUblInvoiceDocument = (params: BuildUblInvoiceParams): UblDocum
 	);
 
 	return {
-		documentType: "invoice",
+		documentType: "Invoice",
 		id: invoice.number ?? invoice.id,
 		issueDate,
 		// BT-9. Peppol BR-CO-25 requires a payment due date (or payment terms)
@@ -129,17 +126,16 @@ export const buildUblInvoiceDocument = (params: BuildUblInvoiceParams): UblDocum
 		// invoice that is not due.
 		dueDate:
 			isoDateFromUnixSeconds(invoice.due_date) ??
-			(monetaryTotal.payableAmount > 0 ? issueDate : null),
-		note: stripeInvoiceNote(invoice),
+			((monetaryTotal.payableAmount ?? 0) > 0 ? issueDate : undefined),
+		note: stripeInvoiceNote(invoice) ?? undefined,
 		currency: validateCurrency(invoice.currency),
-		buyerReference: normalizeString(params.buyerReference),
+		buyerReference: normalizeString(params.buyerReference) ?? undefined,
 		// BT-73/BT-74. A subscription invoice that does not say what it bills
 		// for forces the receiver to infer it from the issue date, which is
 		// exactly what goes wrong across a year end.
 		invoicePeriod: resolveInvoicePeriod(invoice),
-		precedingInvoiceId: null,
-		supplier: buildSupplierParty(supplier),
-		customer,
+		seller: buildSupplierParty(supplier),
+		buyer,
 		lines,
 		taxTotal,
 		monetaryTotal,
@@ -150,7 +146,7 @@ export const buildUblInvoiceDocument = (params: BuildUblInvoiceParams): UblDocum
 /** Build a BIS Billing 3.0 invoice as a UBL XML string from a `Stripe.Invoice`. */
 export const buildUblInvoiceFromStripeInvoice = (
 	params: BuildUblInvoiceParams,
-): string => serializeUblDocument(buildUblInvoiceDocument(params));
+): string => serializeUblInvoice(buildUblInvoiceDocument(params));
 
 export interface BuildUblCreditNoteParams {
 	/** Fully-retrieved Stripe credit note. */
@@ -173,7 +169,7 @@ const creditNoteReasonNote = (
 };
 
 /**
- * Build a Peppol BIS Billing 3.0 credit note {@link UblDocument} from a
+ * Build a Peppol BIS Billing 3.0 credit note {@link UblInvoice} from a
  * `Stripe.CreditNote` and its parent `Stripe.Invoice`.
  *
  * The customer is resolved from the original invoice (Stripe credit notes don't
@@ -182,17 +178,14 @@ const creditNoteReasonNote = (
  */
 export const buildUblCreditNoteDocument = (
 	params: BuildUblCreditNoteParams,
-): UblDocument => {
+): UblInvoice => {
 	const { creditNote, invoice, supplier, attachment } = params;
 
 	const issueDate =
 		isoDateFromUnixSeconds(creditNote.effective_at) ??
 		new Date(creditNote.created * 1000).toISOString().slice(0, 10);
 
-	const customer = buildCustomerPartyFromStripeInvoice(
-		invoice,
-		params.customerEndpoint,
-	);
+	const buyer = buildCustomerPartyFromStripeInvoice(invoice, params.customerEndpoint);
 
 	let lines = coerceLinesForSupplierVatStatus(
 		buildCreditNoteLines(
@@ -211,10 +204,9 @@ export const buildUblCreditNoteDocument = (
 	);
 
 	return {
-		documentType: "creditNote",
+		documentType: "CreditNote",
 		id: creditNote.number ?? creditNote.id,
 		issueDate,
-		dueDate: null,
 		// The memo is the sender's own words. Without one, a Stripe credit
 		// reason travels as a BT-21 coded note (UNTDID 4451 `ACD` = Reason),
 		// the EN 16931 way of marking a note as the credit's reason.
@@ -224,10 +216,10 @@ export const buildUblCreditNoteDocument = (
 			normalizeString(invoice.description) ??
 			"Credit note",
 		currency: validateCurrency(creditNote.currency),
-		buyerReference: normalizeString(params.buyerReference),
-		precedingInvoiceId: invoice.number ?? invoice.id ?? null,
-		supplier: buildSupplierParty(supplier),
-		customer,
+		buyerReference: normalizeString(params.buyerReference) ?? undefined,
+		billingReference: { invoiceId: invoice.number ?? invoice.id },
+		seller: buildSupplierParty(supplier),
+		buyer,
 		lines,
 		taxTotal,
 		monetaryTotal,
@@ -238,4 +230,4 @@ export const buildUblCreditNoteDocument = (
 /** Build a BIS Billing 3.0 credit note as a UBL XML string. */
 export const buildUblCreditNoteFromStripeCreditNote = (
 	params: BuildUblCreditNoteParams,
-): string => serializeUblDocument(buildUblCreditNoteDocument(params));
+): string => serializeUblInvoice(buildUblCreditNoteDocument(params));

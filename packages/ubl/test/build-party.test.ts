@@ -59,13 +59,14 @@ describe("buildCustomerParty", () => {
 		expect(party.endpoint).toEqual({ scheme: "0208", value: "0800279001" });
 	});
 
-	it("leaves the endpoint null when no identifier resolves to a scheme", () => {
+	it("leaves the endpoint absent when no identifier resolves to a scheme", () => {
 		const party = buildCustomerParty({
 			name: "Cash customer",
 			address: addressIn("US"),
 			countryCode: "US",
 		});
-		expect(party.endpoint).toBeNull();
+		expect(party.endpoint).toBeUndefined();
+		expect("endpoint" in party).toBe(false);
 	});
 
 	it("carries the VAT number and a scheme-qualified CompanyID onto the party", () => {
@@ -76,8 +77,8 @@ describe("buildCustomerParty", () => {
 			vatNumber: "BE1006119434",
 			taxNumber: "BE1006119434",
 		});
-		expect(party.vatNumber).toBe("BE1006119434");
+		expect(party.vatId).toBe("BE1006119434");
 		expect(party.companyId).toEqual({ scheme: "0208", value: "1006119434" });
-		expect(party.legalName).toBe("Seven Camp");
+		expect(party.registrationName).toBe("Seven Camp");
 	});
 });

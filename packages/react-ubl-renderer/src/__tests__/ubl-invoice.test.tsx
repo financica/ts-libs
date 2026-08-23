@@ -23,8 +23,8 @@ const baseInvoice: UblInvoiceData = {
 	seller: {
 		name: "Acme BV",
 		vatId: "BE0123456789",
-		endpointId: "0793904121",
-		endpointSchemeId: "0208",
+		endpoint: { value: "0793904121", scheme: "0208" },
+		companyId: { value: "0123456789", scheme: "0208" },
 		address: {
 			street: "Main Street 10",
 			city: "Brussels",
@@ -50,15 +50,17 @@ const baseInvoice: UblInvoiceData = {
 			unitCode: "C62",
 			unitPrice: 50,
 			lineExtensionAmount: 100,
-			taxPercent: 21,
 			taxAmount: 21,
-			taxCategoryId: "S",
+			taxCategory: { id: "S", percent: 21 },
 			itemName: "Consulting",
 		},
 	],
-	taxSubtotals: [
-		{ taxableAmount: 100, taxAmount: 21, taxPercent: 21, taxCategoryId: "S" },
-	],
+	taxTotal: {
+		taxAmount: 21,
+		subtotals: [
+			{ taxableAmount: 100, taxAmount: 21, category: { id: "S", percent: 21 } },
+		],
+	},
 	monetaryTotal: {
 		lineExtensionAmount: 100,
 		taxExclusiveAmount: 100,
@@ -109,11 +111,10 @@ describe("UblInvoice", () => {
 			baseInvoice.buyer.name,
 		]);
 
-		// Peppol endpoint is shown as scheme:value in the party field list.
+		// Peppol endpoint and company id are shown as scheme:value in the party field list.
 		const dds = Array.from(root.getElementsByTagName("dd")).map(text);
-		expect(dds).toContain(
-			`${baseInvoice.seller.endpointSchemeId}:${baseInvoice.seller.endpointId}`,
-		);
+		expect(dds).toContain("0208:0793904121");
+		expect(dds).toContain("0208:0123456789");
 
 		// Grand total is the tax-inclusive amount, formatted by the same formatter.
 		const totals = byClass(root, "ubl-totals")[0]!;
@@ -154,18 +155,38 @@ describe("UblInvoice", () => {
 		expect(byClass(root, "ubl-reference")).toHaveLength(0);
 	});
 
-	it("falls back to the registration name when PartyName is empty", () => {
+	it("falls back to the registration name when PartyName is absent", () => {
+		const { name: _name, ...seller } = baseInvoice.seller;
 		const root = parse(
 			render({
 				...baseInvoice,
-				seller: {
-					...baseInvoice.seller,
-					name: "",
-					registrationName: "Acme Legal BV",
-				},
+				seller: { ...seller, registrationName: "Acme Legal BV" },
 			}),
 		);
 		expect(text(byClass(root, "ubl-party-name")[0])).toBe("Acme Legal BV");
+	});
+
+	it("shows the line tax rate from the classified tax category and a base quantity", () => {
+		const root = parse(
+			render({
+				...baseInvoice,
+				lines: [
+					{ ...baseInvoice.lines[0]!, baseQuantity: 14, unitPrice: 67.14 },
+				],
+			}),
+		);
+		const cells = Array.from(
+			root.getElementsByTagName("tbody")[0]!.getElementsByTagName("td"),
+		).map(text);
+		expect(cells[3]).toBe(`${formatMoney("EUR", 67.14, LOCALE)} per 14`);
+		expect(cells[4]).toContain(formatPercent(21));
+		// A base quantity of 1 (or absent) adds nothing.
+		const plain = Array.from(
+			parse(render(baseInvoice))
+				.getElementsByTagName("tbody")[0]!
+				.getElementsByTagName("td"),
+		).map(text);
+		expect(plain[3]).toBe(formatMoney("EUR", 50, LOCALE));
 	});
 
 	it("escapes untrusted text fields", () => {
@@ -231,6 +252,48 @@ describe("UblInvoice totals", () => {
 		expect(nonZero).toEqual(
 			expect.arrayContaining(["Amount paid", "Discount", "Charges", "Rounding"]),
 		);
+	});
+
+	it("shows the VAT breakdown with category, rate and exemption reason", () => {
+		const root = parse(
+			render({
+				...baseInvoice,
+				taxTotal: {
+					taxAmount: 0,
+					subtotals: [
+						{
+							taxableAmount: 100,
+							taxAmount: 0,
+							category: {
+								id: "AE",
+								percent: 0,
+								exemptionReason: "Reverse charge art. 196",
+							},
+						},
+					],
+				},
+			}),
+		);
+		const label = byClass(root, "ubl-tax-label")[0]!;
+		expect(text(label)).toContain("Reverse charge (0%)");
+		expect(text(byClass(root, "ubl-exemption-note")[0])).toBe(
+			"Reverse charge art. 196",
+		);
+	});
+
+	it("prefers the stated tax total (BT-110) over the summed breakdown when there is none", () => {
+		const stated = labels({
+			...baseInvoice,
+			taxTotal: { taxAmount: 21, subtotals: [] },
+		});
+		expect(stated).toContain("VAT");
+		const root = parse(
+			render({ ...baseInvoice, taxTotal: { taxAmount: 21, subtotals: [] } }),
+		);
+		const vatRow = byClass(root, "ubl-totals-row").find(
+			(row) => text(row.firstChild as El) === "VAT",
+		)!;
+		expect(text(vatRow.lastChild as El)).toBe(formatMoney("EUR", 21, LOCALE));
 	});
 
 	it("renders a single placeholder row when there are no lines", () => {
@@ -303,7 +366,7 @@ describe("UblInvoice xml input", () => {
 			seller: {},
 			buyer: { registrationName: "Buyer Ltd" },
 			lines: [{ id: "1" }],
-			taxSubtotals: [],
+			taxTotal: { subtotals: [] },
 			monetaryTotal: {},
 		};
 		const root = parse(renderToStaticMarkup(<UblInvoice invoice={sparse} />));
@@ -377,9 +440,5 @@ describe("format helpers", () => {
 
 	it("falls back to a plain `amount CODE` when the currency code is invalid", () => {
 		expect(formatMoney("NOPE", 12.5, LOCALE)).toBe("12.50 NOPE");
-	});
-
-	it("defaults an empty currency to EUR", () => {
-		expect(formatMoney("", 1, LOCALE)).toBe(formatMoney("EUR", 1, LOCALE));
 	});
 });

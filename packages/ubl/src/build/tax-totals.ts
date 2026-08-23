@@ -1,11 +1,15 @@
-import { deriveUnitPrice, roundCurrency } from "./numeric";
+import { UblBuildError } from "../errors";
 import type {
 	UblLine,
 	UblMonetaryTotal,
 	UblTaxCategory,
 	UblTaxSubtotal,
 	UblTaxTotal,
-} from "./ubl/types";
+} from "../types";
+import { deriveUnitPrice, roundCurrency } from "./numeric";
+import { compact } from "./utils";
+
+const lineNet = (line: UblLine): number => line.lineExtensionAmount ?? 0;
 
 /**
  * Adjust the largest line's net amount so the line nets sum to the
@@ -22,39 +26,38 @@ export const reconcileLinesToExclTotal = (
 	authoritativeTotalExclVat: number,
 ): UblLine[] => {
 	if (lines.length === 0) return lines;
-	const computed = roundCurrency(
-		lines.reduce((sum, line) => sum + line.lineExtensionAmount, 0),
-	);
+	const computed = roundCurrency(lines.reduce((sum, line) => sum + lineNet(line), 0));
 	const diff = roundCurrency(authoritativeTotalExclVat - computed);
 	if (diff === 0) return lines;
 
 	const largestIdx = lines.reduce(
 		(maxIdx, line, idx, arr) =>
-			line.lineExtensionAmount > (arr[maxIdx]?.lineExtensionAmount ?? 0)
-				? idx
-				: maxIdx,
+			lineNet(line) > lineNet(arr[maxIdx] ?? line) ? idx : maxIdx,
 		0,
 	);
 
 	return lines.map((line, idx) => {
 		if (idx !== largestIdx) return line;
-		const adjusted = roundCurrency(line.lineExtensionAmount + diff);
+		const adjusted = roundCurrency(lineNet(line) + diff);
 		// Re-derive the price from the adjusted net through the shared helper —
 		// nudging the net without re-deriving BT-146/BT-149 to match is exactly
 		// what PEPPOL-EN16931-R120 rejects. Assign `baseQuantity` unconditionally
 		// so a line that no longer needs one doesn't keep a stale value.
-		const { priceAmount, baseQuantity } = deriveUnitPrice(adjusted, line.quantity);
-		return {
+		const { unitPrice, baseQuantity } = deriveUnitPrice(
+			adjusted,
+			line.quantity ?? 0,
+		);
+		return compact({
 			...line,
 			lineExtensionAmount: adjusted,
-			priceAmount,
+			unitPrice,
 			baseQuantity,
-		};
+		});
 	});
 };
 
 const categoryKey = (category: UblTaxCategory): string =>
-	`${category.id}:${category.percent}`;
+	`${category.id ?? ""}:${category.percent ?? ""}`;
 
 export interface BuildTaxTotalsResult {
 	taxTotal: UblTaxTotal;
@@ -87,6 +90,9 @@ export interface BuildTaxTotalsOptions {
  * invariant holds by construction. The result is *not* clamped: a prepayment
  * exceeding the total yields a negative payable amount, surfacing the upstream
  * overpayment rather than hiding it.
+ *
+ * @throws {UblBuildError} for a line without a `taxCategory` — there is no
+ * VAT breakdown to put it in.
  */
 export const buildTaxTotals = (
 	lines: UblLine[],
@@ -98,28 +104,33 @@ export const buildTaxTotals = (
 	>();
 
 	for (const line of lines) {
+		if (!line.taxCategory) {
+			throw new UblBuildError(
+				`Line ${line.id} has no taxCategory (BT-151); cannot build the VAT breakdown`,
+			);
+		}
 		const key = categoryKey(line.taxCategory);
 		const current = groups.get(key) ?? {
 			category: line.taxCategory,
 			taxableAmount: 0,
 		};
-		current.taxableAmount = roundCurrency(
-			current.taxableAmount + line.lineExtensionAmount,
-		);
+		current.taxableAmount = roundCurrency(current.taxableAmount + lineNet(line));
 		groups.set(key, current);
 	}
 
 	const subtotals: UblTaxSubtotal[] = Array.from(groups.values()).map((group) => ({
 		taxableAmount: group.taxableAmount,
-		taxAmount: roundCurrency((group.taxableAmount * group.category.percent) / 100),
+		taxAmount: roundCurrency(
+			(group.taxableAmount * (group.category.percent ?? 0)) / 100,
+		),
 		category: group.category,
 	}));
 
 	const lineExtensionAmount = roundCurrency(
-		lines.reduce((sum, line) => sum + line.lineExtensionAmount, 0),
+		lines.reduce((sum, line) => sum + lineNet(line), 0),
 	);
 	const taxAmount = roundCurrency(
-		subtotals.reduce((sum, subtotal) => sum + subtotal.taxAmount, 0),
+		subtotals.reduce((sum, subtotal) => sum + (subtotal.taxAmount ?? 0), 0),
 	);
 	const taxInclusiveAmount = roundCurrency(lineExtensionAmount + taxAmount);
 

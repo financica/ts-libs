@@ -78,16 +78,20 @@ const PartyField: React.FC<{ label: string; value: string | null | undefined }> 
 	) : null;
 
 const Party: React.FC<{ party: UblParty }> = ({ party }) => {
-	const displayName =
-		party.name?.trim() || party.registrationName?.trim() || "Unknown";
-	const endpoint = party.endpointId
-		? party.endpointSchemeId
-			? `${party.endpointSchemeId}:${party.endpointId}`
-			: party.endpointId
+	const displayName = party.name ?? party.registrationName ?? "Unknown";
+	const endpoint = party.endpoint
+		? party.endpoint.scheme
+			? `${party.endpoint.scheme}:${party.endpoint.value}`
+			: party.endpoint.value
+		: null;
+	const companyId = party.companyId
+		? party.companyId.scheme
+			? `${party.companyId.scheme}:${party.companyId.value}`
+			: party.companyId.value
 		: null;
 	const lines = addressLines(party.address);
 	const registration =
-		party.registrationName && party.registrationName.trim() !== displayName
+		party.registrationName !== undefined && party.registrationName !== displayName
 			? party.registrationName
 			: null;
 
@@ -110,7 +114,7 @@ const Party: React.FC<{ party: UblParty }> = ({ party }) => {
 			)}
 			<dl className="ubl-party-fields">
 				<PartyField label="VAT ID" value={party.vatId} />
-				<PartyField label="Tax ID" value={party.companyId} />
+				<PartyField label="Tax ID" value={companyId} />
 				<PartyField label="Endpoint" value={endpoint} />
 				<PartyField label="Registration" value={registration} />
 				<PartyField label="Legal form" value={party.companyLegalForm} />
@@ -128,13 +132,13 @@ const LineRow: React.FC<{
 	currency: string;
 	locale: string;
 }> = ({ line, index, currency, locale }) => {
-	// Blank strings are tolerated alongside absent keys: a pre-parsed `invoice`
-	// may come from a store written by an older parser.
-	const name = line.itemName?.trim() || line.description?.trim() || "Line item";
+	const name = line.itemName ?? line.description ?? "Line item";
 	const secondary =
-		line.description?.trim() && line.description.trim() !== name
-			? line.description.trim()
+		line.description !== undefined && line.description !== name
+			? line.description
 			: null;
+	const taxPercent = line.taxCategory?.percent;
+	const baseQuantity = line.baseQuantity;
 	return (
 		<tr>
 			<td>{index + 1}</td>
@@ -155,15 +159,16 @@ const LineRow: React.FC<{
 			</td>
 			<td className="ubl-num">
 				{formatMoney(currency, finite(line.unitPrice), locale)}
+				{isFiniteNumber(baseQuantity) && baseQuantity > 1 ? (
+					<small className="ubl-muted"> per {baseQuantity}</small>
+				) : null}
 			</td>
 			<td className="ubl-num">
 				{formatMoney(currency, finite(line.taxAmount), locale)}
-				{isFiniteNumber(line.taxPercent) ? (
+				{isFiniteNumber(taxPercent) ? (
 					<>
 						<br />
-						<small className="ubl-muted">
-							{formatPercent(line.taxPercent)}
-						</small>
+						<small className="ubl-muted">{formatPercent(taxPercent)}</small>
 					</>
 				) : null}
 			</td>
@@ -182,21 +187,22 @@ const TaxBreakdownRow: React.FC<{
 	currency: string;
 	locale: string;
 }> = ({ subtotal, currency, locale }) => {
-	const rateLabel = isFiniteNumber(subtotal.taxPercent)
-		? formatPercent(subtotal.taxPercent)
+	const category = subtotal.category;
+	const rateLabel = isFiniteNumber(category?.percent)
+		? formatPercent(category.percent)
 		: null;
 	const categoryLabel =
-		(subtotal.taxCategoryId ? TAX_CATEGORY_LABELS[subtotal.taxCategoryId] : null) ||
-		subtotal.taxCategoryId ||
+		(category?.id ? TAX_CATEGORY_LABELS[category.id] : null) ||
+		category?.id ||
 		"VAT";
 	const label = rateLabel ? `${categoryLabel} (${rateLabel})` : categoryLabel;
 	return (
 		<div className="ubl-totals-row">
 			<span className="ubl-tax-label">
 				{label}
-				{subtotal.taxExemptionReason ? (
+				{category?.exemptionReason ? (
 					<span className="ubl-exemption-note">
-						{subtotal.taxExemptionReason}
+						{category.exemptionReason}
 					</span>
 				) : null}
 				<br />
@@ -272,11 +278,11 @@ export const UblInvoice: React.FC<UblInvoiceProps> = (props) => {
 
 	if (!invoice) return <>{props.fallback ?? null}</>;
 
-	const currency = invoice.currency || "EUR";
+	const currency = invoice.currency;
 	const money = (value: number) => formatMoney(currency, value, locale);
 	const isCreditNote = invoice.documentType === "CreditNote";
 	const documentLabel = isCreditNote ? "Credit Note" : "Invoice";
-	const documentNumber = invoice.id || "-";
+	const documentNumber = invoice.id;
 
 	const total = finite(invoice.monetaryTotal.taxInclusiveAmount);
 	const subtotal = finite(invoice.monetaryTotal.lineExtensionAmount);
@@ -285,12 +291,15 @@ export const UblInvoice: React.FC<UblInvoiceProps> = (props) => {
 	const prepaid = invoice.monetaryTotal.prepaidAmount ?? 0;
 	const rounding = invoice.monetaryTotal.payableRoundingAmount ?? 0;
 	const payable = invoice.monetaryTotal.payableAmount ?? total;
-	const taxTotal = invoice.taxSubtotals.reduce(
-		(sum, entry) => sum + finite(entry.taxAmount),
-		0,
-	);
+	// BT-110 as the document states it; summed from the breakdown only when absent.
+	const taxTotal =
+		invoice.taxTotal.taxAmount ??
+		invoice.taxTotal.subtotals.reduce(
+			(sum, entry) => sum + finite(entry.taxAmount),
+			0,
+		);
 	const showPayable = Math.abs(payable - total) > 0.005;
-	const hasTaxBreakdown = invoice.taxSubtotals.length > 0;
+	const hasTaxBreakdown = invoice.taxTotal.subtotals.length > 0;
 
 	const paymentMeansList =
 		invoice.paymentMeansList ??
@@ -390,7 +399,7 @@ export const UblInvoice: React.FC<UblInvoiceProps> = (props) => {
 						{invoice.lines.length > 0 ? (
 							invoice.lines.map((line, index) => (
 								<LineRow
-									key={line.id || index}
+									key={line.id}
 									line={line}
 									index={index}
 									currency={currency}
@@ -426,7 +435,7 @@ export const UblInvoice: React.FC<UblInvoiceProps> = (props) => {
 				{hasTaxBreakdown ? (
 					<>
 						<hr className="ubl-totals-divider" />
-						{invoice.taxSubtotals.map((subtotalEntry, index) => (
+						{invoice.taxTotal.subtotals.map((subtotalEntry, index) => (
 							<TaxBreakdownRow
 								key={index}
 								subtotal={subtotalEntry}

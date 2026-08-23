@@ -1,5 +1,5 @@
 import type { SupplierVatStatus } from "./party";
-import type { UblLine, UblTaxCategory } from "./ubl/types";
+import type { UblLine, UblTaxCategory } from "../types";
 import { normalizeString } from "./utils";
 
 /**
@@ -34,8 +34,8 @@ export interface TaxAmountInfo {
 	tax_rate_percentage?: number | null;
 }
 
-const normalizeTaxCategoryId = (value: string | null | undefined): string | null =>
-	normalizeString(value)?.toUpperCase() ?? null;
+const normalizeTaxCategoryId = (value: string | null | undefined): string | undefined =>
+	normalizeString(value)?.toUpperCase();
 
 /**
  * Map an explicit UBL category hint, a Stripe `taxability_reason`, and/or a
@@ -82,7 +82,8 @@ export const taxCategoryFromReasonOrRate = (params: {
 			id: "E",
 			percent: 0,
 			exemptionReason:
-				(reason ? EXEMPTION_REASON_TEXT[reason] : null) ?? "Exempt from VAT",
+				(reason ? EXEMPTION_REASON_TEXT[reason] : undefined) ??
+				"Exempt from VAT",
 		};
 	}
 	if (categoryHint === "Z" || reason === "zero_rated" || params.rate <= 0) {

@@ -5,7 +5,7 @@ TypeScript toolkit for [UBL (Universal Business Language)](https://www.oasis-ope
 The package is split into two entry points:
 
 - `@financica/ubl` — the parse side: read UBL XML into typed objects (`parseUblInvoice`, `normalizeUblResponse`, MLR parsing).
-- `@financica/ubl/build` — the build side: assemble a `UblDocument` and serialize it to Peppol BIS Billing 3.0 XML.
+- `@financica/ubl/build` — the build side: assemble a `UblInvoice` (the same model the parser produces) and serialize it to Peppol BIS Billing 3.0 XML.
 
 ## Installation
 
@@ -62,59 +62,55 @@ Handles UTF-8 BOM stripping automatically.
 
 ### Build UBL XML
 
-Construct a `UblDocument`, a vendor-neutral mirror of the Peppol BIS Billing 3.0
-fields, and serialize it with `serializeUblDocument`.
+Construct a `UblInvoice` — the same model `parseUblInvoice` returns — and
+serialize it with `serializeUblInvoice`. The model is permissive (the parser
+reads whatever a document states); the serializer enforces what EN 16931 /
+Peppol BIS make mandatory and throws `UblBuildError`, naming the field, when
+something is missing.
 
 ```typescript
-import { serializeUblDocument, type UblDocument } from "@financica/ubl/build";
+import { serializeUblInvoice, type UblInvoice } from "@financica/ubl/build";
 
-const doc: UblDocument = {
-	documentType: "invoice",
+const doc: UblInvoice = {
+	documentType: "Invoice",
 	id: "INV-001",
 	issueDate: "2026-01-15",
 	dueDate: "2026-02-14",
-	note: null,
 	currency: "EUR",
-	buyerReference: null,
-	precedingInvoiceId: null,
-	supplier: {
+	seller: {
 		endpoint: { scheme: "0208", value: "0800279001" },
 		name: "Acme BV",
-		legalName: "Acme BV",
-		vatNumber: "BE0800279001",
+		registrationName: "Acme BV",
+		vatId: "BE0800279001",
 		companyId: { value: "0800279001", scheme: "0208" },
 		address: {
 			street: "Rue de la Loi 1",
-			additionalStreet: null,
 			city: "Brussels",
 			postalZone: "1000",
-			countrySubentity: null,
 			countryCode: "BE",
 		},
 	},
-	customer: {
+	buyer: {
 		endpoint: { scheme: "0208", value: "0123456789" },
 		name: "Globex SA",
-		legalName: "Globex SA",
-		vatNumber: "BE0123456789",
+		registrationName: "Globex SA",
+		vatId: "BE0123456789",
 		companyId: { value: "0123456789", scheme: "0208" },
 		address: {
 			street: "Avenue Louise 50",
-			additionalStreet: null,
 			city: "Brussels",
 			postalZone: "1050",
-			countrySubentity: null,
 			countryCode: "BE",
 		},
 	},
 	lines: [
 		{
 			id: "1",
-			name: "Consulting services",
+			description: "Consulting services",
 			quantity: 1,
 			unitCode: "C62",
 			lineExtensionAmount: 100,
-			priceAmount: 100,
+			unitPrice: 100,
 			taxCategory: { id: "S", percent: 21 },
 		},
 	],
@@ -130,14 +126,13 @@ const doc: UblDocument = {
 		taxInclusiveAmount: 121,
 		payableAmount: 121,
 	},
-	attachments: [],
 };
 
-const xml = serializeUblDocument(doc);
+const xml = serializeUblInvoice(doc);
 ```
 
-Set `documentType: "creditNote"` (with `precedingInvoiceId` referencing the
-original invoice) to emit a `CreditNote` instead.
+Set `documentType: "CreditNote"` (with `billingReference: { invoiceId }`
+referencing the original invoice) to emit a `CreditNote` instead.
 
 For a document that is already paid, pass the settled gross amount as
 `prepaidAmount` (BT-113) so `payableAmount` (BT-115) reports what is actually

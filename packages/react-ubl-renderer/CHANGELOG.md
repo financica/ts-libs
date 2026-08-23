@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **BREAKING: reads the unified `@financica/ubl` model (Unreleased, > 0.16).** The renderer reads `party.endpoint.{value,scheme}`, `party.companyId.{value,scheme}`, `line.taxCategory.percent`, `invoice.taxTotal.subtotals` and each subtotal's `category.{id,percent,exemptionReason}` instead of the flat `endpointId`/`companyId`/`taxPercent`/`taxSubtotals` fields. The legacy shape and the `""`/`0` sentinels of older stores are no longer tolerated: an absent field is an absent key, and `id`/`currency` are used as stated. Visible changes for the same document: the "Tax ID" party field shows `scheme:value` when the company id carries a scheme (previously the bare value); the "VAT" totals row (shown only when the document has no VAT breakdown) uses the stated `taxTotal.taxAmount` (BT-110) and falls back to summing the subtotals only when it is absent; a line with `baseQuantity > 1` shows "per N" after its unit price.
+
 ## 0.3.0
 
 ### Changed

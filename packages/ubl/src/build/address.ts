@@ -1,10 +1,10 @@
-import type { UblAddress } from "./ubl/types";
-import { normalizeString } from "./utils";
+import type { UblAddress } from "../types";
+import { compact, normalizeString } from "./utils";
 
-const normalizeCountryCode = (value: string | null | undefined): string | null => {
+const normalizeCountryCode = (value: string | null | undefined): string | undefined => {
 	const trimmed = normalizeString(value);
-	if (!trimmed) return null;
-	return trimmed.length >= 2 ? trimmed.toUpperCase().slice(0, 2) : null;
+	if (!trimmed) return undefined;
+	return trimmed.length >= 2 ? trimmed.toUpperCase().slice(0, 2) : undefined;
 };
 
 /**
@@ -30,7 +30,7 @@ export interface AddressInput {
 
 /**
  * Normalize a free-form address (Stripe shape, custom shape, or an internal
- * shape) into a {@link UblAddress}.
+ * shape) into a {@link UblAddress}. An absent part is an absent key.
  *
  * Accepts both `line1`/`postal_code`/`country` (Stripe) and `street`/`zip_code`
  * (legacy/internal) keys. Falls back to `fallbackCountryCode` when the address
@@ -47,12 +47,11 @@ export const normalizeAddress = (
 		normalizeCountryCode(normalizeString(record.country)) ??
 		normalizeCountryCode(normalizeString(record.country_code)) ??
 		normalizeCountryCode(fallbackCountryCode);
-	return {
+	return compact({
 		street:
 			normalizeString(record.line1) ??
 			normalizeString(record.street) ??
-			fallbackLine ??
-			null,
+			normalizeString(fallbackLine),
 		additionalStreet: normalizeString(record.line2),
 		city: normalizeString(record.city),
 		postalZone:
@@ -60,5 +59,5 @@ export const normalizeAddress = (
 		countrySubentity:
 			normalizeString(record.state) ?? normalizeString(record.country_subentity),
 		countryCode,
-	};
+	});
 };

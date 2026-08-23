@@ -3,8 +3,8 @@ import {
 	countryFromVatNumber,
 	normalizeParticipantValue,
 } from "@financica/peppol/identifiers";
-import type { UblCompanyId, UblEndpoint } from "./ubl/types";
-import { normalizeString } from "./utils";
+import type { UblCompanyId, UblEndpoint } from "../types";
+import { compact, normalizeString } from "./utils";
 
 const normalizeBelgianCompanyNumber = (value: string | null | undefined) => {
 	if (!value) return "";
@@ -33,19 +33,19 @@ export const normalizeCompanyNumberForCountry = (
  * `@financica/peppol`'s country profiles.
  *
  * Falls back to inspecting the number's country prefix (e.g. `BE0793904121`).
- * Returns `null` when the scheme can't be determined, in which case the
+ * Returns `undefined` when the scheme can't be determined, in which case the
  * CompanyID is emitted without a `schemeID` attribute.
  */
 export const resolveCompanyIdScheme = (params: {
 	countryCode: string | null;
 	companyNumber: string | null;
-}): string | null => {
+}): string | undefined => {
 	const companyNumber = normalizeString(params.companyNumber);
-	if (!companyNumber) return null;
+	if (!companyNumber) return undefined;
 
-	const fromCountry = getPeppolIdentifierSchemes(
-		params.countryCode,
-	)?.companyIdentifierScheme;
+	const fromCountry =
+		getPeppolIdentifierSchemes(params.countryCode)?.companyIdentifierScheme ??
+		undefined;
 	if (fromCountry) return fromCountry;
 
 	// Only sniffing the country prefix, e.g. `BE0793904121` → `BE`.
@@ -53,29 +53,29 @@ export const resolveCompanyIdScheme = (params: {
 		.replace(/[^A-Za-z]/g, "")
 		.toUpperCase()
 		.slice(0, 2);
-	return getPeppolIdentifierSchemes(prefix)?.companyIdentifierScheme ?? null;
+	return getPeppolIdentifierSchemes(prefix)?.companyIdentifierScheme ?? undefined;
 };
 
 /**
  * Build the `cac:PartyLegalEntity/cbc:CompanyID` value for a party, with the
- * country-appropriate ICD scheme when known. Returns `null` when there is no
+ * country-appropriate ICD scheme when known. Returns `undefined` when there is no
  * company number.
  */
 export const buildCompanyId = (params: {
 	countryCode: string | null;
 	companyNumber: string | null;
-}): UblCompanyId | null => {
+}): UblCompanyId | undefined => {
 	const normalized = normalizeString(
 		normalizeCompanyNumberForCountry(params.countryCode, params.companyNumber),
 	);
-	if (!normalized) return null;
-	return {
+	if (!normalized) return undefined;
+	return compact({
 		value: normalized,
 		scheme: resolveCompanyIdScheme({
 			countryCode: params.countryCode,
 			companyNumber: normalized,
 		}),
-	};
+	});
 };
 
 /**
@@ -85,30 +85,30 @@ export const buildCompanyId = (params: {
  *   `BE0206582284` → `{ scheme: "9925", value: "BE0206582284" }`
  *
  * The scheme comes from `@financica/peppol`'s country resolution, so countries
- * that route on their registry number alone (Norway, Denmark) yield `null`
+ * that route on their registry number alone (Norway, Denmark) yield `undefined`
  * here — their VAT number is not a Peppol participant identifier.
  *
  * The value keeps its country prefix, matching how participants register (the
- * Peppol directory lists this party as `9925:be0206582284`). Returns `null`
+ * Peppol directory lists this party as `9925:be0206582284`). Returns `undefined`
  * when the country has no VAT EAS scheme or the input is empty.
  */
 export const resolveVatEndpoint = (params: {
 	vatNumber: string | null | undefined;
 	countryCode?: string | null | undefined;
-}): UblEndpoint | null => {
+}): UblEndpoint | undefined => {
 	const value = normalizeString(params.vatNumber);
-	if (!value) return null;
+	if (!value) return undefined;
 
 	const fromPrefix = countryFromVatNumber(value);
 	const scheme =
 		getPeppolIdentifierSchemes(fromPrefix)?.vatIdentifierScheme ??
 		getPeppolIdentifierSchemes(params.countryCode)?.vatIdentifierScheme;
-	if (!scheme) return null;
+	if (!scheme) return undefined;
 
 	// Every scheme in the table is a VAT scheme, whose value carries no
 	// separator, so the printed dots/spaces are dropped.
 	const cleaned = normalizeParticipantValue(scheme, value).toUpperCase();
-	if (!cleaned) return null;
+	if (!cleaned) return undefined;
 
 	return { scheme, value: cleaned };
 };
@@ -117,19 +117,19 @@ export const resolveVatEndpoint = (params: {
  * Parse a Peppol participant identifier into a {@link UblEndpoint}.
  *
  * Accepts the canonical `scheme:value` form (e.g. `0208:0800279001`). Returns
- * `null` for values without an explicit scheme, since `cbc:EndpointID` requires
+ * `undefined` for values without an explicit scheme, since `cbc:EndpointID` requires
  * a `schemeID` and guessing one would mis-route the document.
  */
 export const parsePeppolEndpoint = (
 	peppolId: string | null | undefined,
-): UblEndpoint | null => {
+): UblEndpoint | undefined => {
 	const normalized = normalizeString(peppolId);
-	if (!normalized) return null;
+	if (!normalized) return undefined;
 	const separatorIndex = normalized.indexOf(":");
-	if (separatorIndex <= 0) return null;
+	if (separatorIndex <= 0) return undefined;
 	const scheme = normalized.slice(0, separatorIndex).trim();
 	const value = normalized.slice(separatorIndex + 1).trim();
-	if (!scheme || !value) return null;
+	if (!scheme || !value) return undefined;
 	return { scheme, value };
 };
 
@@ -150,8 +150,8 @@ export interface CustomerTaxIdInput {
 	value: string | null | undefined;
 }
 
-const normalizeIdentifierType = (value: string | null) =>
-	value?.toLowerCase().replace(/[^a-z0-9]+/g, "_") ?? null;
+const normalizeIdentifierType = (value: string | undefined) =>
+	value?.toLowerCase().replace(/[^a-z0-9]+/g, "_");
 
 /**
  * Pick the first usable Peppol identifier, GLN, VAT number, and tax number
@@ -217,7 +217,7 @@ export const listPeppolReceiverIdentifierCandidates = (
 	countryCode?: string | null,
 ): string[] => {
 	const candidates: string[] = [];
-	const add = (id: { scheme?: string | null; value: string } | null) => {
+	const add = (id: { scheme?: string | undefined; value: string } | undefined) => {
 		if (id?.scheme && id.value) candidates.push(`${id.scheme}:${id.value}`);
 	};
 

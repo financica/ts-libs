@@ -110,9 +110,9 @@ const sanitizeAllowanceCharges = (charges?: UblAllowanceCharge[]) =>
 		multiplier_factor_numeric: toNumberOrNull(charge.multiplierFactorNumeric),
 		reason: normalizeText(charge.reason),
 		reason_code: normalizeText(charge.reasonCode),
-		tax_percent: toNumberOrNull(charge.taxPercent),
-		tax_category_id: normalizeText(charge.taxCategoryId),
-		tax_scheme_id: normalizeText(charge.taxSchemeId),
+		tax_percent: toNumberOrNull(charge.taxCategory?.percent),
+		tax_category_id: normalizeText(charge.taxCategory?.id),
+		tax_scheme_id: normalizeText(charge.taxCategory?.schemeId),
 	}));
 
 const sanitizeRawUbl = (ubl: UblInvoice) => ({
@@ -124,11 +124,12 @@ const sanitizeRawUbl = (ubl: UblInvoice) => ({
 // --- Summation helpers ---
 
 const sumTaxTotal = (ubl: UblInvoice): number | null => {
-	const subtotalSum = ubl.taxSubtotals.reduce(
+	const { subtotals } = ubl.taxTotal;
+	const subtotalSum = subtotals.reduce(
 		(sum, subtotal) => sum + (subtotal.taxAmount ?? 0),
 		0,
 	);
-	if (ubl.taxSubtotals.length > 0 && Number.isFinite(subtotalSum)) {
+	if (subtotals.length > 0 && Number.isFinite(subtotalSum)) {
 		return subtotalSum;
 	}
 	const { taxInclusiveAmount, taxExclusiveAmount } = ubl.monetaryTotal;
@@ -217,7 +218,7 @@ export const normalizeUblResponse = (
 		unit_price: toNumberOrNull(line.unitPrice),
 		amount: toNumberOrNull(line.lineExtensionAmount),
 		tax_amount: toNumberOrNull(line.taxAmount),
-		tax_rate: toNumberOrNull(line.taxPercent),
+		tax_rate: toNumberOrNull(line.taxCategory?.percent),
 		product_code:
 			normalizeText(line.sellersItemId) ?? normalizeText(line.buyersItemId),
 		discount_amount: toNumberOrNull(line.discountAmount),
@@ -228,8 +229,8 @@ export const normalizeUblResponse = (
 			item_name: normalizeText(line.itemName),
 			sellers_item_id: normalizeText(line.sellersItemId),
 			buyers_item_id: normalizeText(line.buyersItemId),
-			tax_category_id: normalizeText(line.taxCategoryId),
-			tax_scheme_id: normalizeText(line.taxSchemeId),
+			tax_category_id: normalizeText(line.taxCategory?.id),
+			tax_scheme_id: normalizeText(line.taxCategory?.schemeId),
 			tax_subtotals: line.taxSubtotals ?? [],
 			allowance_charges: sanitizeAllowanceCharges(line.allowanceCharges),
 			charge_amount: toNumberOrNull(line.chargeAmount),
@@ -286,7 +287,7 @@ export const normalizeUblResponse = (
 				address: supplierAddress,
 				tax_id:
 					normalizeText(ubl.seller.vatId) ??
-					normalizeText(ubl.seller.companyId),
+					normalizeText(ubl.seller.companyId?.value),
 				iban: normalizeText(ubl.paymentMeans?.iban),
 				bic: normalizeText(ubl.paymentMeans?.bic),
 			},
@@ -297,7 +298,7 @@ export const normalizeUblResponse = (
 				address: receiverAddress,
 				tax_id:
 					normalizeText(ubl.buyer.vatId) ??
-					normalizeText(ubl.buyer.companyId),
+					normalizeText(ubl.buyer.companyId?.value),
 			},
 			extra: {
 				document_type: ubl.documentType,
@@ -333,11 +334,11 @@ export const normalizeUblResponse = (
 						}
 					: null,
 				supplier: {
-					endpoint_id: normalizeText(ubl.seller.endpointId),
-					endpoint_scheme_id: normalizeText(ubl.seller.endpointSchemeId),
+					endpoint_id: normalizeText(ubl.seller.endpoint?.value),
+					endpoint_scheme_id: normalizeText(ubl.seller.endpoint?.scheme),
 					registration_name: normalizeText(ubl.seller.registrationName),
 					company_legal_form: normalizeText(ubl.seller.companyLegalForm),
-					company_id_scheme_id: normalizeText(ubl.seller.companyIdSchemeId),
+					company_id_scheme_id: normalizeText(ubl.seller.companyId?.scheme),
 					tax_scheme_id: normalizeText(ubl.seller.taxSchemeId),
 					party_identifications: ubl.seller.partyIdentifications ?? [],
 					contact_name: normalizeText(ubl.seller.contact?.name),
@@ -345,11 +346,11 @@ export const normalizeUblResponse = (
 					contact_email: normalizeText(ubl.seller.contact?.email),
 				},
 				receiver: {
-					endpoint_id: normalizeText(ubl.buyer.endpointId),
-					endpoint_scheme_id: normalizeText(ubl.buyer.endpointSchemeId),
+					endpoint_id: normalizeText(ubl.buyer.endpoint?.value),
+					endpoint_scheme_id: normalizeText(ubl.buyer.endpoint?.scheme),
 					registration_name: normalizeText(ubl.buyer.registrationName),
 					company_legal_form: normalizeText(ubl.buyer.companyLegalForm),
-					company_id_scheme_id: normalizeText(ubl.buyer.companyIdSchemeId),
+					company_id_scheme_id: normalizeText(ubl.buyer.companyId?.scheme),
 					tax_scheme_id: normalizeText(ubl.buyer.taxSchemeId),
 					party_identifications: ubl.buyer.partyIdentifications ?? [],
 					contact_name: normalizeText(ubl.buyer.contact?.name),
@@ -358,7 +359,7 @@ export const normalizeUblResponse = (
 				},
 				supplier_address_structured: supplierAddressStructured,
 				receiver_address_structured: receiverAddressStructured,
-				tax_subtotals: ubl.taxSubtotals,
+				tax_subtotals: ubl.taxTotal.subtotals,
 				allowance_charges: sanitizeAllowanceCharges(ubl.allowanceCharges),
 				attachments: attachmentMetadata,
 				document_references: ubl.documentReferences ?? [],

@@ -1,26 +1,36 @@
-// Generic Peppol BIS Billing 3.0 UBL build core: a document model, a
-// serializer, and the party/tax/identifier/attachment builders shared by every
-// "X → UBL" adapter (e.g. @financica/stripe-ubl, and app-specific row builders).
-// Exposed under the `@financica/ubl/build` subpath so its build-side types do
-// not collide with the parse-side types exported from the package root.
+// Generic Peppol BIS Billing 3.0 UBL build core: a serializer and the
+// party/tax/identifier/attachment builders shared by every "X → UBL" adapter
+// (e.g. @financica/stripe-ubl, and app-specific row builders). The document
+// model is the one the parser produces (`../types`), re-exported here so a
+// build-side caller needs only this subpath.
 
 // ── UBL document model + serializer ────────────────────────────────────
 export * from "./ubl/constants";
-export { serializeUblDocument } from "./ubl/serialize";
+export { UblBuildError } from "../errors";
+export { serializeUblDocument, serializeUblInvoice } from "./ubl/serialize";
 export type {
 	UblAddress,
 	UblAttachment,
+	UblBillingReference,
 	UblCompanyId,
-	UblDocument,
 	UblEndpoint,
+	UblInvoice,
+	UblInvoicePeriod,
 	UblLine,
 	UblMonetaryTotal,
 	UblParty,
-	UblPeriod,
 	UblTaxCategory,
 	UblTaxSubtotal,
 	UblTaxTotal,
-} from "./ubl/types";
+} from "../types";
+import type {
+	UblInvoice as _UblInvoice,
+	UblInvoicePeriod as _UblInvoicePeriod,
+} from "../types";
+/** @deprecated The build and parse models are one; use {@link UblInvoice}. */
+export type UblDocument = _UblInvoice;
+/** @deprecated Use {@link UblInvoicePeriod}. */
+export type UblPeriod = _UblInvoicePeriod;
 
 // ── Party builders ─────────────────────────────────────────────────────
 export {

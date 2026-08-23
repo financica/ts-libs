@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **BREAKING: builds the unified `@financica/ubl` model.** `buildUblInvoiceDocument` / `buildUblCreditNoteDocument` return a `UblInvoice` (the former `UblDocument`, still re-exported as a deprecated alias) with the renamed fields from `@financica/ubl`'s Unreleased entry: `seller`/`buyer` (was `supplier`/`customer`), `vatId`, `registrationName`, per-unit `unitPrice` (was `priceAmount`), line `description` (was `name`), attachment `base64Content`, `billingReference: { invoiceId }` (was `precedingInvoiceId`), `documentType: "Invoice" | "CreditNote"`, and `endpoint`/`companyId` objects. Absent fields are absent keys instead of `null`: `toUblPeriod` and `resolveInvoicePeriod` return `undefined` when there is no period, and `dueDate`, `note`, `buyerReference` and `buyer.endpoint` are omitted rather than `null`. `buildUblInvoiceFromStripeInvoice` / `buildUblCreditNoteFromStripeCreditNote` go through `serializeUblInvoice`, which now throws `UblBuildError` for a document missing a mandatory field. The Stripe-side inputs (`UblSupplier`, `customerEndpoint`, `buyerReference`) still accept `null`.
+- On the wire, via the `@financica/ubl` serializer: the line description is written as `cbc:Description` (in addition to `cbc:Name`), and `cbc:CustomizationID`, `cbc:ProfileID` and the type code are written from the model with the BIS defaults. Amounts, parties, periods and the credit note's `cac:BillingReference` are unchanged.
+
 ## 2.0.0
 
 ### Changed

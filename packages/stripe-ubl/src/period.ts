@@ -1,11 +1,11 @@
-import type { UblPeriod } from "@financica/ubl/build";
+import type { UblInvoicePeriod } from "@financica/ubl/build";
 import type Stripe from "stripe";
 
-/** A Unix-seconds timestamp as an ISO `YYYY-MM-DD` date; `null` when absent. */
+/** A Unix-seconds timestamp as an ISO `YYYY-MM-DD` date; `undefined` when absent. */
 export const isoDateFromUnixSeconds = (
 	seconds: number | null | undefined,
-): string | null =>
-	seconds ? new Date(seconds * 1000).toISOString().slice(0, 10) : null;
+): string | undefined =>
+	seconds ? new Date(seconds * 1000).toISOString().slice(0, 10) : undefined;
 
 const addDays = (isoDate: string, days: number): string => {
 	const parsed = Date.parse(`${isoDate}T00:00:00Z`);
@@ -32,10 +32,10 @@ const addDays = (isoDate: string, days: number): string => {
 export const toUblPeriod = (
 	start: number | null | undefined,
 	end: number | null | undefined,
-): UblPeriod | null => {
+): UblInvoicePeriod | undefined => {
 	const startDate = isoDateFromUnixSeconds(start);
 	const endDate = isoDateFromUnixSeconds(end);
-	if (!startDate || !endDate || endDate <= startDate) return null;
+	if (!startDate || !endDate || endDate <= startDate) return undefined;
 	return { startDate, endDate: addDays(endDate, -1) };
 };
 
@@ -48,10 +48,12 @@ export const toUblPeriod = (
  * The invoice-level pair is the fallback for an invoice whose lines state no
  * period at all.
  */
-export const resolveInvoicePeriod = (invoice: Stripe.Invoice): UblPeriod | null => {
+export const resolveInvoicePeriod = (
+	invoice: Stripe.Invoice,
+): UblInvoicePeriod | undefined => {
 	const linePeriods = (invoice.lines?.data ?? [])
 		.map((line) => toUblPeriod(line.period?.start, line.period?.end))
-		.filter((period): period is UblPeriod => period !== null);
+		.filter((period): period is UblInvoicePeriod => period !== undefined);
 
 	if (linePeriods.length === 0) {
 		return toUblPeriod(invoice.period_start, invoice.period_end);
@@ -59,10 +61,10 @@ export const resolveInvoicePeriod = (invoice: Stripe.Invoice): UblPeriod | null 
 
 	const startDates = linePeriods
 		.map((period) => period.startDate)
-		.filter((date): date is string => date !== null);
+		.filter((date): date is string => date !== undefined);
 	const endDates = linePeriods
 		.map((period) => period.endDate)
-		.filter((date): date is string => date !== null);
+		.filter((date): date is string => date !== undefined);
 
 	return {
 		startDate: startDates.reduce((a, b) => (b < a ? b : a)),

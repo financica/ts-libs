@@ -7,11 +7,11 @@ import {
 
 const line = (overrides: Partial<UblLine> = {}): UblLine => ({
 	id: "1",
-	name: "Item",
+	description: "Item",
 	quantity: 1,
 	unitCode: "C62",
 	lineExtensionAmount: 100,
-	priceAmount: 100,
+	unitPrice: 100,
 	taxCategory: { id: "S", percent: 21 },
 	...overrides,
 });
@@ -58,7 +58,7 @@ describe("buildTaxTotals", () => {
 		// 500.50 @ 21% = 105.105, which rounds up to 105.11. A cents-summed
 		// figure of 105.10 would fail BR-CO-17; we emit the derived value.
 		const { taxTotal, monetaryTotal } = buildTaxTotals([
-			line({ lineExtensionAmount: 500.5, priceAmount: 500.5 }),
+			line({ lineExtensionAmount: 500.5, unitPrice: 500.5 }),
 		]);
 		expect(taxTotal.taxAmount).toBe(105.11);
 		expect(monetaryTotal.taxInclusiveAmount).toBe(605.61);

@@ -18,7 +18,7 @@ import { normalizeString, toNumber } from "./utils";
 // Stripe gives a line *total*, not a unit price, so every line's `cac:Price` is
 // derived from it by `deriveUnitPrice` (BT-146, plus BT-149 when the net doesn't
 // divide evenly into cents) — which is what keeps
-// `quantity × (priceAmount ÷ baseQuantity) = lineExtensionAmount` and satisfies
+// `quantity × unitPrice = lineExtensionAmount` and satisfies
 // PEPPOL-EN16931-R120.
 //
 // Line-level discounts are folded into the net amount rather than emitted as a
@@ -30,11 +30,11 @@ import { normalizeString, toNumber } from "./utils";
  * the UBL document still has at least one line that reconciles with the header.
  */
 const buildFallbackLine = (params: {
-	name: string;
+	description: string;
 	taxBaseCents: number;
 	taxCents: number;
 }): UblLine => {
-	const { name, taxBaseCents, taxCents } = params;
+	const { description, taxBaseCents, taxCents } = params;
 	const vatPercentage =
 		taxBaseCents > 0 && taxCents > 0
 			? roundCurrency((taxCents / taxBaseCents) * 100)
@@ -42,11 +42,11 @@ const buildFallbackLine = (params: {
 	const net = centsToDecimal(taxBaseCents);
 	return {
 		id: "1",
-		name,
+		description,
 		quantity: 1,
 		unitCode: DEFAULT_UNIT_CODE,
 		lineExtensionAmount: net,
-		priceAmount: net,
+		unitPrice: net,
 		taxCategory: resolveTaxCategoryFromTaxAmounts([], vatPercentage),
 	};
 };
@@ -90,7 +90,7 @@ export const buildInvoiceLines = (invoice: Stripe.Invoice): UblLine[] => {
 		// post-line-discount.
 		return [
 			buildFallbackLine({
-				name: normalizeString(invoice.description) ?? "Invoice",
+				description: normalizeString(invoice.description) ?? "Invoice",
 				taxBaseCents: invoice.total_excluding_tax ?? invoice.subtotal,
 				taxCents: invoiceTaxCents,
 			}),
@@ -116,11 +116,11 @@ export const buildInvoiceLines = (invoice: Stripe.Invoice): UblLine[] => {
 
 		return {
 			id: String(index + 1),
-			name: normalizeString(line.description) ?? `Line ${index + 1}`,
+			description: normalizeString(line.description) ?? `Line ${index + 1}`,
 			quantity,
 			unitCode: DEFAULT_UNIT_CODE,
 			lineExtensionAmount: netTotal,
-			priceAmount: price.priceAmount,
+			unitPrice: price.unitPrice,
 			baseQuantity: price.baseQuantity,
 			// BT-134/BT-135. Kept per line, not folded into the document period:
 			// a proration covers a different window than the rest of the invoice,
@@ -145,7 +145,7 @@ export const buildCreditNoteLines = (
 	if (stripeLines.length === 0) {
 		return [
 			buildFallbackLine({
-				name: normalizeString(creditNote.memo) ?? fallbackItemName,
+				description: normalizeString(creditNote.memo) ?? fallbackItemName,
 				taxBaseCents: creditNote.total_excluding_tax ?? creditNote.subtotal,
 				taxCents: creditNoteTaxCents,
 			}),
@@ -164,11 +164,11 @@ export const buildCreditNoteLines = (
 
 		return {
 			id: String(index + 1),
-			name: normalizeString(line.description) ?? `Line ${index + 1}`,
+			description: normalizeString(line.description) ?? `Line ${index + 1}`,
 			quantity,
 			unitCode: DEFAULT_UNIT_CODE,
 			lineExtensionAmount: netTotal,
-			priceAmount: price.priceAmount,
+			unitPrice: price.unitPrice,
 			baseQuantity: price.baseQuantity,
 			taxCategory: resolveTaxCategoryFromTaxAmounts(taxAmounts, vatPercentage),
 		};

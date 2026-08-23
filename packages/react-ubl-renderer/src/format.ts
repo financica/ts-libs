@@ -9,16 +9,15 @@ export const formatMoney = (
 	value: number,
 	locale: string,
 ): string => {
-	const code = currency || "EUR";
 	try {
 		return new Intl.NumberFormat(locale, {
 			style: "currency",
-			currency: code,
+			currency,
 			minimumFractionDigits: 2,
 			maximumFractionDigits: 2,
 		}).format(value);
 	} catch {
-		return `${value.toFixed(2)} ${code}`;
+		return `${value.toFixed(2)} ${currency}`;
 	}
 };
 

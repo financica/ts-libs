@@ -3,7 +3,7 @@ export {
 	isPdfLikeAttachment,
 	type UblEmbeddedAttachment,
 } from "./attachments.js";
-export { UblParseError } from "./errors.js";
+export { UblBuildError, UblParseError } from "./errors.js";
 export { parseUblInvoice } from "./parser.js";
 export {
 	isPeppolMessageLevelResponse,
@@ -25,9 +25,11 @@ export type {
 	UblAllowanceCharge,
 	UblAttachment,
 	UblBillingReference,
+	UblCompanyId,
 	UblContact,
 	UblDelivery,
 	UblDocumentReference,
+	UblEndpoint,
 	UblInvoice,
 	UblInvoicePeriod,
 	UblItemProperty,
@@ -36,5 +38,7 @@ export type {
 	UblParty,
 	UblPartyIdentification,
 	UblPaymentMeans,
+	UblTaxCategory,
 	UblTaxSubtotal,
+	UblTaxTotal,
 } from "./types.js";

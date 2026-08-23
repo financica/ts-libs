@@ -4,25 +4,25 @@ import {
 	reconcileLinesToExclTotal,
 	roundCurrency,
 	serializeUblDocument,
-	type UblDocument,
+	type UblInvoice,
 	type UblLine,
 	type UblParty,
 } from "../src/build/index.js";
 
 /**
  * PEPPOL-EN16931-R120, as the validator states it: the line net amount must
- * equal `quantity × (priceAmount ÷ baseQuantity)` (plus charges, less
- * allowances) within a 0.02 tolerance, with `baseQuantity` defaulting to 1.
+ * equal `quantity × (PriceAmount ÷ BaseQuantity)` (plus charges, less
+ * allowances) within a 0.02 tolerance, with `BaseQuantity` defaulting to 1.
+ * The model holds the per-unit price, so `PriceAmount ÷ BaseQuantity` is
+ * `unitPrice` as such.
  */
 const r120Residual = (line: {
-	quantity: number;
-	priceAmount: number;
-	baseQuantity?: number | undefined;
-	lineExtensionAmount: number;
+	quantity?: number | undefined;
+	unitPrice?: number | undefined;
+	lineExtensionAmount?: number | undefined;
 }): number =>
 	Math.abs(
-		line.quantity * (line.priceAmount / (line.baseQuantity ?? 1)) -
-			line.lineExtensionAmount,
+		(line.quantity ?? 0) * (line.unitPrice ?? 0) - (line.lineExtensionAmount ?? 0),
 	);
 
 // The residual is exact up to IEEE-754 noise, so assert it is many orders of
@@ -32,9 +32,9 @@ const NEGLIGIBLE = 1e-9;
 
 describe("deriveUnitPrice", () => {
 	it("uses a plain cent unit price when the net divides evenly", () => {
-		expect(deriveUnitPrice(56, 14)).toEqual({ priceAmount: 4 });
-		expect(deriveUnitPrice(100, 1)).toEqual({ priceAmount: 100 });
-		expect(deriveUnitPrice(30, 4)).toEqual({ priceAmount: 7.5 });
+		expect(deriveUnitPrice(56, 14)).toEqual({ unitPrice: 4 });
+		expect(deriveUnitPrice(100, 1)).toEqual({ unitPrice: 100 });
+		expect(deriveUnitPrice(30, 4)).toEqual({ unitPrice: 7.5 });
 	});
 
 	it("prices via BT-149 when the net does not divide into cents", () => {
@@ -42,7 +42,7 @@ describe("deriveUnitPrice", () => {
 		// 67.142857… to 67.14 gives 939.96 — off by 0.04, double the tolerance,
 		// and Scrada rejected the credit note as a fatal validation error.
 		expect(deriveUnitPrice(940, 14)).toEqual({
-			priceAmount: 940,
+			unitPrice: 940 / 14,
 			baseQuantity: 14,
 		});
 	});
@@ -71,18 +71,18 @@ describe("deriveUnitPrice", () => {
 
 	it("floors the base quantity at 1 so BT-149 stays positive (R121)", () => {
 		// A zero quantity still has to price something, and BT-149 must be > 0.
-		expect(deriveUnitPrice(940, 0)).toEqual({ priceAmount: 940 });
-		expect(deriveUnitPrice(0, 0)).toEqual({ priceAmount: 0 });
+		expect(deriveUnitPrice(940, 0)).toEqual({ unitPrice: 940 });
+		expect(deriveUnitPrice(0, 0)).toEqual({ unitPrice: 0 });
 	});
 });
 
 const line = (overrides: Partial<UblLine> = {}): UblLine => ({
 	id: "1",
-	name: "Item",
+	description: "Item",
 	quantity: 1,
 	unitCode: "C62",
 	lineExtensionAmount: 100,
-	priceAmount: 100,
+	unitPrice: 100,
 	taxCategory: { id: "S", percent: 21 },
 	...overrides,
 });
@@ -92,7 +92,7 @@ describe("reconcileLinesToExclTotal", () => {
 		// Adjusting the net without re-deriving the price is itself an R120
 		// violation — the old code re-divided at cent precision and reintroduced it.
 		const [adjusted] = reconcileLinesToExclTotal(
-			[line({ quantity: 14, lineExtensionAmount: 939.96, priceAmount: 67.14 })],
+			[line({ quantity: 14, lineExtensionAmount: 939.96, unitPrice: 67.14 })],
 			940,
 		);
 
@@ -106,7 +106,7 @@ describe("reconcileLinesToExclTotal", () => {
 				line({
 					quantity: 14,
 					lineExtensionAmount: 940,
-					priceAmount: 940,
+					unitPrice: 940 / 14,
 					baseQuantity: 14,
 				}),
 			],
@@ -114,7 +114,7 @@ describe("reconcileLinesToExclTotal", () => {
 		);
 
 		expect(adjusted?.lineExtensionAmount).toBe(56);
-		expect(adjusted?.priceAmount).toBe(4);
+		expect(adjusted?.unitPrice).toBe(4);
 		expect(adjusted?.baseQuantity).toBeUndefined();
 	});
 });
@@ -124,30 +124,25 @@ const party = (overrides: Partial<UblParty> = {}): UblParty => ({
 	name: "Acme BE",
 	address: {
 		street: "Rue de la Loi 16",
-		additionalStreet: null,
 		city: "Brussels",
 		postalZone: "1000",
-		countrySubentity: null,
 		countryCode: "BE",
 	},
-	vatNumber: "BE0800279001",
-	legalName: "Acme BE",
+	vatId: "BE0800279001",
+	registrationName: "Acme BE",
 	companyId: { value: "0800279001", scheme: "0208" },
 	...overrides,
 });
 
 describe("serializeUblDocument — cac:Price", () => {
-	const docWithLine = (priced: UblLine): UblDocument => ({
-		documentType: "creditNote",
+	const docWithLine = (priced: UblLine): UblInvoice => ({
+		documentType: "CreditNote",
 		id: "CN-001",
 		issueDate: "2026-07-30",
-		dueDate: null,
-		note: null,
 		currency: "EUR",
 		buyerReference: "CN-001",
-		precedingInvoiceId: null,
-		supplier: party(),
-		customer: party({ name: "Customer", endpoint: null, companyId: null }),
+		seller: party(),
+		buyer: party({ name: "Customer", endpoint: undefined, companyId: undefined }),
 		lines: [priced],
 		taxTotal: { taxAmount: 0, subtotals: [] },
 		monetaryTotal: {
@@ -156,16 +151,15 @@ describe("serializeUblDocument — cac:Price", () => {
 			taxInclusiveAmount: priced.lineExtensionAmount,
 			payableAmount: priced.lineExtensionAmount,
 		},
-		attachments: [],
 	});
 
 	const baseLine: UblLine = {
 		id: "1",
-		name: "Ceramics Team Building",
+		description: "Ceramics Team Building",
 		quantity: 14,
 		unitCode: "C62",
 		lineExtensionAmount: 940,
-		priceAmount: 940,
+		unitPrice: 940 / 14,
 		taxCategory: { id: "S", percent: 0 },
 	};
 
@@ -174,6 +168,9 @@ describe("serializeUblDocument — cac:Price", () => {
 			docWithLine({ ...baseLine, baseQuantity: 14 }),
 		);
 
+		expect(xml).toContain(
+			'<cbc:PriceAmount currencyID="EUR">940.00</cbc:PriceAmount>',
+		);
 		expect(xml).toContain('<cbc:BaseQuantity unitCode="C62">14</cbc:BaseQuantity>');
 		// BT-149 follows BT-146 inside cac:Price — UBL element order is fixed.
 		expect(xml.indexOf("<cbc:PriceAmount")).toBeLessThan(
@@ -183,7 +180,7 @@ describe("serializeUblDocument — cac:Price", () => {
 
 	it("omits cbc:BaseQuantity when the price needs no base quantity", () => {
 		const xml = serializeUblDocument(
-			docWithLine({ ...baseLine, lineExtensionAmount: 56, priceAmount: 4 }),
+			docWithLine({ ...baseLine, lineExtensionAmount: 56, unitPrice: 4 }),
 		);
 
 		expect(xml).not.toContain("cbc:BaseQuantity");

@@ -5,7 +5,7 @@ import type { UblLine } from "../index";
 
 /**
  * PEPPOL-EN16931-R120: the line net amount must equal
- * `quantity × (priceAmount ÷ baseQuantity)` within a 0.02 tolerance, with
+ * `quantity × unitPrice` (with `PriceAmount = unitPrice × baseQuantity`) within a 0.02 tolerance, with
  * `baseQuantity` defaulting to 1.
  *
  * Stripe reports a line *total* and a quantity but no exact unit price, so
@@ -16,8 +16,7 @@ const R120_TOLERANCE = 0.02;
 
 const r120Residual = (line: UblLine): number =>
 	Math.abs(
-		line.quantity * (line.priceAmount / (line.baseQuantity ?? 1)) -
-			line.lineExtensionAmount,
+		(line.quantity ?? 0) * (line.unitPrice ?? 0) - (line.lineExtensionAmount ?? 0),
 	);
 
 const expectR120 = (lines: UblLine[]) => {
@@ -105,7 +104,7 @@ describe("R120 line pricing", () => {
 		expect(lines[0]?.lineExtensionAmount).toBe(940);
 		expect(lines[1]?.lineExtensionAmount).toBe(56);
 		// The evenly-divisible line keeps a natural per-unit price.
-		expect(lines[1]?.priceAmount).toBe(4);
+		expect(lines[1]?.unitPrice).toBe(4);
 		expect(lines[1]?.baseQuantity).toBeUndefined();
 	});
 

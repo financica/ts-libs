@@ -49,13 +49,13 @@ describe("resolveCompanyIdScheme", () => {
 		).toBe("0208");
 	});
 
-	it("returns null for unsupported countries and empty input", () => {
+	it("returns undefined for unsupported countries and empty input", () => {
 		expect(
 			resolveCompanyIdScheme({ countryCode: "DE", companyNumber: "12345" }),
-		).toBeNull();
+		).toBeUndefined();
 		expect(
 			resolveCompanyIdScheme({ countryCode: "BE", companyNumber: null }),
-		).toBeNull();
+		).toBeUndefined();
 	});
 });
 
@@ -66,8 +66,10 @@ describe("buildCompanyId", () => {
 		).toEqual({ value: "0793904121", scheme: "0208" });
 	});
 
-	it("returns null when there is no company number", () => {
-		expect(buildCompanyId({ countryCode: "BE", companyNumber: null })).toBeNull();
+	it("returns undefined when there is no company number", () => {
+		expect(
+			buildCompanyId({ countryCode: "BE", companyNumber: null }),
+		).toBeUndefined();
 	});
 });
 
@@ -79,10 +81,10 @@ describe("parsePeppolEndpoint", () => {
 		});
 	});
 
-	it("returns null without an explicit scheme", () => {
-		expect(parsePeppolEndpoint("0800279001")).toBeNull();
-		expect(parsePeppolEndpoint(null)).toBeNull();
-		expect(parsePeppolEndpoint(":value")).toBeNull();
+	it("returns undefined without an explicit scheme", () => {
+		expect(parsePeppolEndpoint("0800279001")).toBeUndefined();
+		expect(parsePeppolEndpoint(null)).toBeUndefined();
+		expect(parsePeppolEndpoint(":value")).toBeUndefined();
 	});
 });
 
@@ -146,8 +148,8 @@ describe("resolveVatEndpoint", () => {
 		});
 	});
 
-	it("returns null for countries that route on the registry number (Norway)", () => {
-		expect(resolveVatEndpoint({ vatNumber: "NO999999999MVA" })).toBeNull();
+	it("returns undefined for countries that route on the registry number (Norway)", () => {
+		expect(resolveVatEndpoint({ vatNumber: "NO999999999MVA" })).toBeUndefined();
 	});
 
 	it("uses @financica/peppol's country resolution (Sweden 9955, Italy 0211)", () => {
@@ -163,8 +165,8 @@ describe("resolveVatEndpoint", () => {
 		expect(resolveVatEndpoint({ vatNumber: "RS123456789" })?.scheme).toBe("9948");
 	});
 
-	it("returns null for empty input", () => {
-		expect(resolveVatEndpoint({ vatNumber: null })).toBeNull();
+	it("returns undefined for empty input", () => {
+		expect(resolveVatEndpoint({ vatNumber: null })).toBeUndefined();
 	});
 
 	it("drops the printed punctuation a VAT scheme's value never carries", () => {

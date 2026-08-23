@@ -35,7 +35,7 @@ export const buildCustomerPartyFromStripeInvoice = (
 		{
 			name: customerName,
 			address,
-			countryCode: address.countryCode,
+			countryCode: address.countryCode ?? null,
 			peppolID: ids.peppolID,
 			glnNumber: ids.glnNumber,
 			taxNumber: ids.taxNumber,

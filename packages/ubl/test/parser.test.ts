@@ -70,12 +70,12 @@ describe("parseUblInvoice", () => {
 		const xml = readFixture("ubl-invoice.xml");
 		const invoice = parseUblInvoice(xml)!;
 
-		expect(invoice.taxSubtotals).toHaveLength(1);
-		expect(invoice.taxSubtotals[0]).toMatchObject({
+		expect(invoice.taxTotal.taxAmount).toBe(21);
+		expect(invoice.taxTotal.subtotals).toHaveLength(1);
+		expect(invoice.taxTotal.subtotals[0]).toEqual({
 			taxableAmount: 100,
 			taxAmount: 21,
-			taxPercent: 21,
-			taxCategoryId: "S",
+			category: { id: "S", percent: 21 },
 		});
 	});
 
@@ -91,7 +91,7 @@ describe("parseUblInvoice", () => {
 			unitCode: "C62",
 			unitPrice: 50,
 			lineExtensionAmount: 100,
-			taxPercent: 21,
+			taxCategory: { id: "S", percent: 21 },
 			itemName: "Consulting",
 			sellersItemId: "CONSULT-01",
 		});
@@ -188,8 +188,7 @@ describe("parseUblInvoice", () => {
 		expect(invoice.lines[0]!.taxSubtotals![0]).toMatchObject({
 			taxableAmount: 90,
 			taxAmount: 18.9,
-			taxPercent: 21,
-			taxCategoryId: "S",
+			category: { id: "S", percent: 21 },
 		});
 	});
 
@@ -240,10 +239,11 @@ describe("parseUblInvoice", () => {
 		const xml = readFixture("ubl-invoice-extended.xml");
 		const invoice = parseUblInvoice(xml)!;
 
-		expect(invoice.seller.endpointId).toBe("0898218515");
-		expect(invoice.seller.endpointSchemeId).toBe("0208");
-		expect(invoice.buyer.endpointId).toBe("1006119434");
-		expect(invoice.buyer.endpointSchemeId).toBe("0208");
+		expect(invoice.seller.endpoint).toEqual({
+			value: "0898218515",
+			scheme: "0208",
+		});
+		expect(invoice.buyer.endpoint).toEqual({ value: "1006119434", scheme: "0208" });
 	});
 
 	it("extracts invoice period", () => {
@@ -350,7 +350,7 @@ describe("parseUblInvoice", () => {
 		expect(invoice.seller.address).toEqual({ city: "Ghent" });
 		expect(invoice.buyer).toEqual({});
 		expect(invoice.monetaryTotal).toEqual({});
-		expect(invoice.taxSubtotals).toEqual([]);
+		expect(invoice.taxTotal).toEqual({ subtotals: [] });
 		const line = invoice.lines[0]!;
 		expect(line.description).toBeUndefined();
 		expect(line.unitCode).toBeUndefined();
@@ -531,10 +531,14 @@ describe("parseUblInvoice", () => {
 			const xml = readFixture("ubl-invoice-proximus.xml");
 			const invoice = parseUblInvoice(xml)!;
 
-			expect(invoice.seller.companyId).toBe("0202239951");
-			expect(invoice.seller.companyIdSchemeId).toBe("0208");
-			expect(invoice.buyer.companyId).toBe("0766280697");
-			expect(invoice.buyer.companyIdSchemeId).toBe("0208");
+			expect(invoice.seller.companyId).toEqual({
+				value: "0202239951",
+				scheme: "0208",
+			});
+			expect(invoice.buyer.companyId).toEqual({
+				value: "0766280697",
+				scheme: "0208",
+			});
 		});
 
 		it("normalizes N/A buyer reference to undefined", () => {
@@ -565,12 +569,11 @@ describe("parseUblInvoice", () => {
 			const xml = readFixture("ubl-invoice-efff.xml");
 			const invoice = parseUblInvoice(xml)!;
 
-			expect(invoice.taxSubtotals).toHaveLength(1);
-			expect(invoice.taxSubtotals[0]).toMatchObject({
+			expect(invoice.taxTotal.subtotals).toHaveLength(1);
+			expect(invoice.taxTotal.subtotals[0]).toMatchObject({
 				taxableAmount: 1500,
 				taxAmount: 315,
-				taxPercent: 21,
-				taxCategoryId: "S",
+				category: { id: "S", percent: 21 },
 			});
 		});
 
@@ -580,7 +583,7 @@ describe("parseUblInvoice", () => {
 
 			expect(invoice.lines).toHaveLength(1);
 			expect(invoice.lines[0]).toMatchObject({
-				taxPercent: 21,
+				taxCategory: { id: "S", percent: 21 },
 				taxAmount: 315,
 				lineExtensionAmount: 1500,
 			});
@@ -592,12 +595,14 @@ describe("parseUblInvoice", () => {
 
 			expect(invoice.seller.name).toBe("Supplier BVBA");
 			expect(invoice.seller.vatId).toBeUndefined();
-			expect(invoice.seller.companyId).toBe("BE0123456789");
-			expect(invoice.seller.endpointId).toBe("BE0123456789");
-			expect(invoice.seller.endpointSchemeId).toBe("9925");
+			expect(invoice.seller.companyId).toEqual({ value: "BE0123456789" });
+			expect(invoice.seller.endpoint).toEqual({
+				value: "BE0123456789",
+				scheme: "9925",
+			});
 
 			expect(invoice.buyer.name).toBe("Client NV");
-			expect(invoice.buyer.companyId).toBe("BE9876543210");
+			expect(invoice.buyer.companyId).toEqual({ value: "BE9876543210" });
 			expect(invoice.buyer.contact).toMatchObject({
 				name: "Client NV",
 				email: "billing@client.be",

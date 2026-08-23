@@ -97,18 +97,18 @@ const ubl = buildUblCreditNoteFromStripeCreditNote({ creditNote, invoice, suppli
 
 ### Building the model without serializing
 
-`buildUblInvoiceFromStripeInvoice` is `serializeUblDocument(buildUblInvoiceDocument(...))`. Use the document builder when you want to inspect or tweak the model before serializing:
+`buildUblInvoiceFromStripeInvoice` is `serializeUblInvoice(buildUblInvoiceDocument(...))`. Use the document builder when you want to inspect or tweak the model before serializing. `serializeUblInvoice` validates what EN 16931 / Peppol BIS make mandatory and throws `UblBuildError` naming the missing field:
 
 ```ts
 import {
 	buildUblInvoiceDocument,
-	serializeUblDocument,
+	serializeUblInvoice,
 	sanitizeUblDocumentForAudit,
 } from "@financica/stripe-ubl";
 
 const doc = buildUblInvoiceDocument({ invoice, supplier });
-auditLog(sanitizeUblDocumentForAudit(doc)); // redacts attachment base64
-const ubl = serializeUblDocument(doc);
+auditLog(sanitizeUblDocumentForAudit(doc)); // redacts attachment base64Content
+const ubl = serializeUblInvoice(doc);
 ```
 
 ## What gets reconciled
@@ -164,17 +164,17 @@ For `2` and `3`, every line is coerced to category `E` with an appropriate exemp
 buildUblInvoiceFromStripeInvoice(params): string
 buildUblCreditNoteFromStripeCreditNote(params): string
 
-// Mid-level (Stripe → UblDocument model)
-buildUblInvoiceDocument(params): UblDocument
-buildUblCreditNoteDocument(params): UblDocument
+// Mid-level (Stripe → UblInvoice model)
+buildUblInvoiceDocument(params): UblInvoice
+buildUblCreditNoteDocument(params): UblInvoice
 
-// Serializer (UblDocument → XML) + audit helper
-serializeUblDocument(doc): string
-sanitizeUblDocumentForAudit(doc): UblDocument
+// Serializer (UblInvoice → XML, throws UblBuildError) + audit helper
+serializeUblInvoice(doc): string
+sanitizeUblDocumentForAudit(doc): UblInvoice
 
 // Party builders
 buildSupplierParty(supplier): UblParty
-buildCustomerPartyFromStripeInvoice(invoice): { customer, customerName }
+buildCustomerPartyFromStripeInvoice(invoice, endpointOverride?): UblParty
 
 // Lines, VAT breakdown, reconciliation
 buildInvoiceLines(invoice) / buildCreditNoteLines(creditNote, fallbackName)

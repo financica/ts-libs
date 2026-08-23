@@ -74,6 +74,12 @@ if (invoice) {
 
 The same `invoice` overload is available on `renderUblInvoiceHtml(invoice)`.
 
+The `invoice` object must be in the current `@financica/ubl` shape: an absent
+field is an absent key (no `""`/`0` placeholders), parties carry
+`endpoint`/`companyId` as `{ value, scheme? }`, lines carry `taxCategory`, and
+the VAT breakdown lives in `taxTotal.subtotals`. Stored parses from older
+versions of the parser need migrating before they are passed in.
+
 ## License
 
 MIT
