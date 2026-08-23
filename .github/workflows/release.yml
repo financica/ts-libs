@@ -1,0 +1,40 @@
+name: Release
+
+# Publishes one package per tag `<package>@<version>` (e.g. `peppol@0.8.0`)
+# via npm trusted publishing (OIDC): no token, no OTP, provenance attached.
+# Each package must be registered once on npmjs.com under
+# Settings -> Trusted Publisher with this repo and workflow file name.
+
+on:
+    push:
+        tags: ["*@*"]
+
+permissions:
+    contents: read
+    id-token: write
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v7
+            - uses: oven-sh/setup-bun@v2
+              with:
+                  bun-version: 1.3.14
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  registry-url: https://registry.npmjs.org
+            - run: npm install -g npm@latest
+            - run: bun install --frozen-lockfile
+            - name: Resolve package from tag
+              id: tag
+              run: |
+                  name="${GITHUB_REF_NAME%@*}"
+                  version="${GITHUB_REF_NAME##*@}"
+                  test -d "packages/$name" || { echo "no package $name"; exit 1; }
+                  actual=$(node -p "require('./packages/$name/package.json').version")
+                  test "$actual" = "$version" || { echo "tag $version != package.json $actual"; exit 1; }
+                  echo "dir=packages/$name" >> "$GITHUB_OUTPUT"
+            - run: npm publish --access public
+              working-directory: ${{ steps.tag.outputs.dir }}
