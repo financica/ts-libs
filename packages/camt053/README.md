@@ -45,6 +45,16 @@ if (report) {
 }
 ```
 
+## Writing
+
+```typescript
+import { serializeCamt053 } from "@financica/camt053";
+
+const xml = serializeCamt053(report); // camt.053.001.04, elements in schema order
+```
+
+`parseCamt053(serializeCamt053(report))` reproduces `report`. A date at UTC midnight is written as `Dt`, any other instant as a UTC `DtTm`.
+
 ## Detecting the format
 
 `CAMT053_NS_PREFIX` is the namespace prefix every CAMT.053 version shares, so a

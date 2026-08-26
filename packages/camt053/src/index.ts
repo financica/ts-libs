@@ -1,4 +1,5 @@
 export { CAMT053_NS_PREFIX, Camt053ParseError, parseCamt053 } from "./parser.js";
+export { CAMT053_SERIALIZED_NS, serializeCamt053 } from "./serializer.js";
 export type {
 	Camt053Account,
 	Camt053AmountDetails,

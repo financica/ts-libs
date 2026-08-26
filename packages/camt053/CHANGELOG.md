@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0
+
+### Added
+
+- `serializeCamt053(report)` writes a `Camt053Report` as a camt.053.001.04 document, elements in schema order. `parseCamt053(serializeCamt053(report))` reproduces `report`. A date at UTC midnight is written as `Dt`, any other instant as a UTC `DtTm`. `CAMT053_SERIALIZED_NS` names the namespace written.
+
 ## 0.3.0
 
 ### Changed
