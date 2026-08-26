@@ -1,8 +1,8 @@
 # @financica/coda
 
-TypeScript parser for [CODA](https://www.febelfin.be/en/expertise/electronic-banking/standards) (Coded statement of account) bank files. CODA is the Belgian standard, maintained by Febelfin, for electronic bank-to-customer account statements.
+TypeScript parser and serializer for [CODA](https://www.febelfin.be/en/expertise/electronic-banking/standards) (Coded statement of account) bank files. CODA is the Belgian standard, maintained by Febelfin, for electronic bank-to-customer account statements.
 
-Parses CODA v2.x files into fully typed objects. Returns `null` when the content is not a CODA file; throws `CodaParseError` when it is one but is broken.
+Parses CODA v2.x files into fully typed objects, and writes those objects back out as CODA. `parseCoda` returns `null` when the content is not a CODA file and throws `CodaParseError` when it is one but is broken.
 
 ## Installation
 
@@ -71,11 +71,25 @@ The parser extracts all fields defined in the CODA v2.8 standard:
 - **Free communications (record 4)**: free-text messages, grouped by sequence number
 - **Trailer (record 9)**: debit and credit movement totals
 
+### Writing
+
+```typescript
+import { serializeCoda } from "@financica/coda";
+import { writeFileSync } from "node:fs";
+
+// Banks write CODA as ISO-8859-1; encode it that way so every record stays 128 bytes.
+writeFileSync("statement.cod", Buffer.from(serializeCoda(file), "latin1"));
+```
+
 ## API reference
 
 ### `parseCoda(content: string): CodaFile | null`
 
 Parse a CODA file. Returns `null` if the input is empty or doesn't start with a CODA header record (record 0 with a DDMMYY creation date); throws `CodaParseError` if it does but a mandatory record or field is missing or invalid. Handles both `\n` and `\r\n` line endings. Multiple statements in a single file (delimited by record 0 boundaries) are supported.
+
+### `serializeCoda(file: CodaFile): string`
+
+Write a `CodaFile` as CODA 2.x text: 128-column records terminated by `\r\n`, one record group (0, 1, 2.x/3.x, 8, 4, 9) per statement. `parseCoda(serializeCoda(file))` reproduces `file`. Text is clipped to its field; characters outside Latin-1 become `?`. When a statement has no `totalDebit`/`totalCredit`, the trailer totals are summed from its top-level movements.
 
 ### Types
 

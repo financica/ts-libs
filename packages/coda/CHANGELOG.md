@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0
+
+### Added
+
+- `serializeCoda(file)` writes a `CodaFile` back to CODA 2.x text (128-column CRLF records, one record group per statement). `parseCoda(serializeCoda(file))` reproduces `file`; text is clipped to its field and characters outside Latin-1 become `?`, so the output is fixed-width once encoded as ISO-8859-1. Trailer totals and record counts are computed when the statement carries none.
+
 ## 0.2.0
 
 ### Changed

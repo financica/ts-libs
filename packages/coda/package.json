@@ -1,7 +1,7 @@
 {
 	"name": "@financica/coda",
-	"version": "0.2.0",
-	"description": "TypeScript parser for Belgian CODA (Coded statement of account) bank files",
+	"version": "0.3.0",
+	"description": "TypeScript parser and serializer for Belgian CODA (Coded statement of account) bank files",
 	"homepage": "https://github.com/financica/ts-libs/tree/main/packages/coda#readme",
 	"bugs": "https://github.com/financica/ts-libs/issues",
 	"license": "MIT",
