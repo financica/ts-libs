@@ -14,6 +14,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Enterprise number",
+		labels: {
+			de: "Unternehmensnummer",
+			en: "Enterprise number",
+			fr: "Numéro d'entreprise",
+			nl: "Ondernemingsnummer",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -26,6 +32,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:mmt": "mmt:m1",
 		},
 		label: "Enterprise number",
+		labels: {
+			de: "Unternehmensnummer",
+			en: "Enterprise number",
+			fr: "Numéro d'entreprise",
+			nl: "Ondernemingsnummer",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -38,6 +50,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:mmt": "mmt:m2",
 		},
 		label: "Enterprise number",
+		labels: {
+			de: "Unternehmensnummer",
+			en: "Enterprise number",
+			fr: "Numéro d'entreprise",
+			nl: "Ondernemingsnummer",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -49,6 +67,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Enterprise number",
+		labels: {
+			de: "Unternehmensnummer",
+			en: "Enterprise number",
+			fr: "Numéro d'entreprise",
+			nl: "Ondernemingsnummer",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -61,6 +85,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:dcl": "dcl:m2",
 		},
 		label: "Enterprise number",
+		labels: {
+			de: "Unternehmensnummer",
+			en: "Enterprise number",
+			fr: "Numéro d'entreprise",
+			nl: "Ondernemingsnummer",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -71,6 +101,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Accounts approved by the general assembly of",
+		labels: {
+			de: "Jahresabschluss, der durch die Generalversammlung vom",
+			en: "Accounts approved by the general assembly of",
+			fr: "Comptes annuels approuvés par l'assemblée générale du",
+			nl: "Jaarrekening goedgekeurd door de algemene vergadering van",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -82,6 +118,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:mmt": "mmt:m1",
 		},
 		label: "Accounts approved by the general assembly of",
+		labels: {
+			de: "Jahresabschluss, der durch die Generalversammlung vom",
+			en: "Accounts approved by the general assembly of",
+			fr: "Comptes annuels approuvés par l'assemblée générale du",
+			nl: "Jaarrekening goedgekeurd door de algemene vergadering van",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -93,6 +135,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:mmt": "mmt:m2",
 		},
 		label: "Accounts approved by the general assembly of",
+		labels: {
+			de: "Jahresabschluss, der durch die Generalversammlung vom",
+			en: "Accounts approved by the general assembly of",
+			fr: "Comptes annuels approuvés par l'assemblée générale du",
+			nl: "Jaarrekening goedgekeurd door de algemene vergadering van",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -103,6 +151,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Accounts approved by the general assembly of",
+		labels: {
+			de: "Jahresabschluss, der durch die Generalversammlung vom",
+			en: "Accounts approved by the general assembly of",
+			fr: "Comptes annuels approuvés par l'assemblée générale du",
+			nl: "Jaarrekening goedgekeurd door de algemene vergadering van",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -114,6 +168,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:dcl": "dcl:m2",
 		},
 		label: "Accounts approved by the general assembly of",
+		labels: {
+			de: "Jahresabschluss, der durch die Generalversammlung vom",
+			en: "Accounts approved by the general assembly of",
+			fr: "Comptes annuels approuvés par l'assemblée générale du",
+			nl: "Jaarrekening goedgekeurd door de algemene vergadering van",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -124,6 +184,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:bas": "bas:m27",
 		},
 		label: "Financial period",
+		labels: {
+			de: "Geschäftsjahres",
+			en: "Financial period",
+			fr: "Exercice",
+			nl: "Boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -136,6 +202,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:bas": "bas:m27",
 		},
 		label: "Financial period",
+		labels: {
+			de: "Geschäftsjahres",
+			en: "Financial period",
+			fr: "Exercice",
+			nl: "Boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -147,6 +219,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Financial period",
+		labels: {
+			de: "Geschäftsjahres",
+			en: "Financial period",
+			fr: "Exercice",
+			nl: "Boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -160,6 +238,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:bas": "bas:m27",
 		},
 		label: "Are data related to the preceding period identical to data published before ?",
+		labels: {
+			de: "Sind die Beträge des vorangegangenen Geschäftsjahres mit den für das Vorjahr veröffentl. identisch ?",
+			en: "Are data related to the preceding period identical to data published before ?",
+			fr: "Les montants relatifs à l'exercice précédent sont-ils identiques à ceux publiés antérieurement ?",
+			nl: "Zijn de bedragen van het vorige boekjaar identiek met die welke eerder openbaar werden gemaakt ?",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -171,6 +255,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:bas": "bas:m27",
 		},
 		label: "Are data related to the preceding period identical to data published before ?",
+		labels: {
+			de: "Sind die Beträge des vorangegangenen Geschäftsjahres mit den für das Vorjahr veröffentl. identisch ?",
+			en: "Are data related to the preceding period identical to data published before ?",
+			fr: "Les montants relatifs à l'exercice précédent sont-ils identiques à ceux publiés antérieurement ?",
+			nl: "Zijn de bedragen van het vorige boekjaar identiek met die welke eerder openbaar werden gemaakt ?",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -181,6 +271,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Are data related to the preceding period identical to data published before ?",
+		labels: {
+			de: "Sind die Beträge des vorangegangenen Geschäftsjahres mit den für das Vorjahr veröffentl. identisch ?",
+			en: "Are data related to the preceding period identical to data published before ?",
+			fr: "Les montants relatifs à l'exercice précédent sont-ils identiques à ceux publiés antérieurement ?",
+			nl: "Zijn de bedragen van het vorige boekjaar identiek met die welke eerder openbaar werden gemaakt ?",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -192,6 +288,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:bas": "bas:m27",
 		},
 		label: "Is this a correction for an annual account already accepted by the NBB for the same exercise ?",
+		labels: {
+			de: "Handelt es sich um eine Berichtigung eines Jahresabschlusses der schon durch die BNB akzeptiert worden ist ?",
+			en: "Is this a correction for an annual account already accepted by the NBB for the same exercise ?",
+			fr: "S'agit-il d'un dépôt rectificatif à un compte annuel déjà accepté par la BNB pour le même exercice comptable et dans la même langue ?",
+			nl: "Betreft het een verbeterde neerlegging van een reeds door de NBB aanvaarde jaarrekening voor hetzelfde boekjaar en in dezelfde taal ?",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -203,6 +305,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:bas": "bas:m27",
 		},
 		label: "Is this a correction for an annual account already accepted by the NBB for the same exercise ?",
+		labels: {
+			de: "Handelt es sich um eine Berichtigung eines Jahresabschlusses der schon durch die BNB akzeptiert worden ist ?",
+			en: "Is this a correction for an annual account already accepted by the NBB for the same exercise ?",
+			fr: "S'agit-il d'un dépôt rectificatif à un compte annuel déjà accepté par la BNB pour le même exercice comptable et dans la même langue ?",
+			nl: "Betreft het een verbeterde neerlegging van een reeds door de NBB aanvaarde jaarrekening voor hetzelfde boekjaar en in dezelfde taal ?",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -214,6 +322,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Is this a correction for an annual account already accepted by the NBB for the same exercise ?",
+		labels: {
+			de: "Handelt es sich um eine Berichtigung eines Jahresabschlusses der schon durch die BNB akzeptiert worden ist ?",
+			en: "Is this a correction for an annual account already accepted by the NBB for the same exercise ?",
+			fr: "S'agit-il d'un dépôt rectificatif à un compte annuel déjà accepté par la BNB pour le même exercice comptable et dans la même langue ?",
+			nl: "Betreft het een verbeterde neerlegging van een reeds door de NBB aanvaarde jaarrekening voor hetzelfde boekjaar en in dezelfde taal ?",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -225,6 +339,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:bas": "bas:m27",
 		},
 		label: "Is it a company in liquidation ?",
+		labels: {
+			de: "Ist es ein gesellschaft in Liquidation?",
+			en: "Is it a company in liquidation ?",
+			fr: "Est-ce une société en liquidation ?",
+			nl: "Is het een onderneming in vereffening ?",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -236,6 +356,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:bas": "bas:m27",
 		},
 		label: "Is it a company in liquidation ?",
+		labels: {
+			de: "Ist es ein gesellschaft in Liquidation?",
+			en: "Is it a company in liquidation ?",
+			fr: "Est-ce une société en liquidation ?",
+			nl: "Is het een onderneming in vereffening ?",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -246,6 +372,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Is it a company in liquidation ?",
+		labels: {
+			de: "Ist es ein gesellschaft in Liquidation?",
+			en: "Is it a company in liquidation ?",
+			fr: "Est-ce une société en liquidation ?",
+			nl: "Is het een onderneming in vereffening ?",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -256,6 +388,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Period end date of annual account to correct",
+		labels: {
+			de: "Abschlussdatum der zu korrigierenden Bilanz",
+			en: "Period end date of annual account to correct",
+			fr: "Date de fin d'exercice du compte annuel à rectifier",
+			nl: "Afsluitingsdatum van de jaarrekening die verbeterd dient neergelegd te worden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -266,6 +404,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Schema of annual account to correct",
+		labels: {
+			de: "Schema der zu korrigierenden Bilanz",
+			en: "Schema of annual account to correct",
+			fr: "Schéma du compte annuel à rectifier",
+			nl: "Schema van de jaarrekening die verbeterd dient neergelegd te worden",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -276,6 +420,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:dcl": "dcl:m2",
 		},
 		label: "Schema of annual account to correct",
+		labels: {
+			de: "Schema der zu korrigierenden Bilanz",
+			en: "Schema of annual account to correct",
+			fr: "Schéma du compte annuel à rectifier",
+			nl: "Schema van de jaarrekening die verbeterd dient neergelegd te worden",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -286,6 +436,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Language code of annual account to correct",
+		labels: {
+			de: "Sprachkode der zu korrigierenden Bilanz",
+			en: "Language code of annual account to correct",
+			fr: "Code langue du compte annuel à rectifier",
+			nl: "Taalcode van de jaarrekening die verbeterd dient neergelegd te worden",
+		},
 	},
 	{
 		section: "s.01.00.1",
@@ -297,6 +453,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:dcl": "dcl:m2",
 		},
 		label: "Language code of annual account to correct",
+		labels: {
+			de: "Sprachkode der zu korrigierenden Bilanz",
+			en: "Language code of annual account to correct",
+			fr: "Code langue du compte annuel à rectifier",
+			nl: "Taalcode van de jaarrekening die verbeterd dient neergelegd te worden",
+		},
 	},
 	{
 		section: "s.01.00.2",
@@ -307,6 +469,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Name",
+		labels: {
+			de: "Name",
+			en: "Name",
+			fr: "Dénomination",
+			nl: "Naam",
+		},
 	},
 	{
 		section: "s.01.00.2",
@@ -318,6 +486,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.01.00.2",
@@ -328,6 +502,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.01.00.2",
@@ -339,6 +519,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.01.00.2",
@@ -350,6 +536,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "N°",
+		labels: {
+			de: "Nr",
+			en: "N°",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.01.00.2",
@@ -361,6 +553,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.01.00.2",
@@ -373,6 +571,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.01.00.2",
@@ -384,6 +588,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Postal code - other",
+		labels: {
+			de: "Postleitzahl - Sonstiges",
+			en: "Postal code - other",
+			fr: "Code postal - autre",
+			nl: "Postcode - andere",
+		},
 	},
 	{
 		section: "s.01.00.2",
@@ -395,6 +605,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Town - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "Town - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.01.00.2",
@@ -407,6 +623,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.01.00.2",
@@ -418,6 +640,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.01.00.2",
@@ -428,6 +656,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.01.00.2",
@@ -437,6 +671,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.01.00.2",
@@ -447,6 +687,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Date of filing the most recent document mentioning the date of publication of the deed of incorporation and of the deed of amendment of the articles of association",
+		labels: {
+			de: "Datum der Hinterlegung der letzten Urkunde, die das Veröffentlichungsdatum der Errichtungs- bzw. Änderungsurkunde der Satzungen anführt.",
+			en: "Date of filing the most recent document mentioning the date of publication of the deed of incorporation and of the deed of amendment of the articles of association",
+			fr: "Date de dépôt de l'acte constitutif ou du document le plus récent mentionnant la date de publication des actes constitutif et modificatif(s) des statuts.",
+			nl: "DATUM van de neerlegging van het recentste stuk dat de datum van bekendmaking van de oprichtingsakte en van de akte tot statutenwijziging vermeldt.",
+		},
 	},
 	{
 		section: "s.01.00.2",
@@ -458,6 +704,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "E-mail address",
+		labels: {
+			de: "E-Mail-Adresse",
+			en: "E-mail address",
+			fr: "Adresse E-mail",
+			nl: "E-mail adres",
+		},
 	},
 	{
 		section: "s.01.00.2",
@@ -469,6 +721,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:part": "part:m2",
 		},
 		label: "Entity website",
+		labels: {
+			de: "Website",
+			en: "Entity website",
+			fr: "Adresse Internet",
+			nl: "Website",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -494,6 +752,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -517,6 +781,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -539,6 +809,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -562,6 +838,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -585,6 +867,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -610,6 +898,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -635,6 +929,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -659,6 +959,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -684,6 +990,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -709,6 +1021,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -734,6 +1052,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -759,6 +1083,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -784,6 +1114,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -809,6 +1145,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -834,6 +1176,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -858,6 +1206,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -883,6 +1237,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -908,6 +1268,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -932,6 +1298,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -956,6 +1328,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -980,6 +1358,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1004,6 +1388,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1028,6 +1418,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1052,6 +1448,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1076,6 +1478,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1100,6 +1508,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1123,6 +1537,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1146,6 +1566,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1169,6 +1595,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1193,6 +1625,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1219,6 +1657,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1244,6 +1688,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1269,6 +1719,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1294,6 +1750,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1318,6 +1780,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1342,6 +1810,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1366,6 +1840,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1390,6 +1870,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1416,6 +1902,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1441,6 +1933,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1466,6 +1964,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1491,6 +1995,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1516,6 +2026,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1539,6 +2055,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1561,6 +2083,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1584,6 +2112,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1607,6 +2141,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1632,6 +2172,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1657,6 +2203,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1682,6 +2234,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1707,6 +2265,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1732,6 +2296,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1756,6 +2326,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1780,6 +2356,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1804,6 +2386,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1828,6 +2416,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1852,6 +2446,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1876,6 +2476,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1900,6 +2506,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1924,6 +2536,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1947,6 +2565,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1970,6 +2594,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -1993,6 +2623,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2017,6 +2653,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2043,6 +2685,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2068,6 +2716,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2093,6 +2747,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2118,6 +2778,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2142,6 +2808,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2166,6 +2838,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2190,6 +2868,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2214,6 +2898,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2240,6 +2930,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2265,6 +2961,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2290,6 +2992,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2315,6 +3023,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2339,6 +3053,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2363,6 +3083,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2386,6 +3112,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2409,6 +3141,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2432,6 +3170,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2456,6 +3200,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2482,6 +3232,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2507,6 +3263,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2532,6 +3294,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2557,6 +3325,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2581,6 +3355,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2605,6 +3385,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2629,6 +3415,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2653,6 +3445,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2679,6 +3477,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2704,6 +3508,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2729,6 +3539,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2754,6 +3570,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2778,6 +3600,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2802,6 +3630,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2825,6 +3659,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2848,6 +3688,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2871,6 +3717,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2895,6 +3747,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2921,6 +3779,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2946,6 +3810,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2971,6 +3841,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -2996,6 +3872,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3020,6 +3902,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3044,6 +3932,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3068,6 +3962,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3092,6 +3992,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3118,6 +4024,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3143,6 +4055,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3168,6 +4086,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3193,6 +4117,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3218,6 +4148,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3242,6 +4178,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3265,6 +4207,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3288,6 +4236,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3311,6 +4265,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3336,6 +4296,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3362,6 +4328,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3387,6 +4359,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3412,6 +4390,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3437,6 +4421,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3462,6 +4452,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3487,6 +4483,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3512,6 +4514,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3537,6 +4545,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3563,6 +4577,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3588,6 +4608,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3613,6 +4639,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3638,6 +4670,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3662,6 +4700,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Postal code - other",
+		labels: {
+			de: "Postleitzahl - Sonstiges",
+			en: "Postal code - other",
+			fr: "Code postal - autre",
+			nl: "Postcode - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3686,6 +4730,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Postal code - other",
+		labels: {
+			de: "Postleitzahl - Sonstiges",
+			en: "Postal code - other",
+			fr: "Code postal - autre",
+			nl: "Postcode - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3710,6 +4760,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Postal code - other",
+		labels: {
+			de: "Postleitzahl - Sonstiges",
+			en: "Postal code - other",
+			fr: "Code postal - autre",
+			nl: "Postcode - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3734,6 +4790,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Postal code - other",
+		labels: {
+			de: "Postleitzahl - Sonstiges",
+			en: "Postal code - other",
+			fr: "Code postal - autre",
+			nl: "Postcode - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3758,6 +4820,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Postal code - other",
+		labels: {
+			de: "Postleitzahl - Sonstiges",
+			en: "Postal code - other",
+			fr: "Code postal - autre",
+			nl: "Postcode - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3782,6 +4850,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Postal code - other",
+		labels: {
+			de: "Postleitzahl - Sonstiges",
+			en: "Postal code - other",
+			fr: "Code postal - autre",
+			nl: "Postcode - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3806,6 +4880,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3830,6 +4910,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3853,6 +4939,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3876,6 +4968,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3899,6 +4997,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3923,6 +5027,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3949,6 +5059,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3974,6 +5090,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -3999,6 +5121,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4024,6 +5152,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4048,6 +5182,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4072,6 +5212,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4096,6 +5242,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4120,6 +5272,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4146,6 +5304,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4171,6 +5335,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4196,6 +5366,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4221,6 +5397,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4246,6 +5428,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4270,6 +5458,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4293,6 +5487,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4316,6 +5516,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4339,6 +5545,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4364,6 +5576,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4390,6 +5608,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4415,6 +5639,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4440,6 +5670,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4465,6 +5701,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4490,6 +5732,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4515,6 +5763,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4540,6 +5794,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4565,6 +5825,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4591,6 +5857,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4616,6 +5888,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4641,6 +5919,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4666,6 +5950,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4690,6 +5980,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4714,6 +6010,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4738,6 +6040,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4762,6 +6070,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4786,6 +6100,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4810,6 +6130,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4834,6 +6160,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Profession",
+		labels: {
+			de: "Beruf",
+			en: "Profession",
+			fr: "Profession",
+			nl: "Beroep",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4857,6 +6189,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Profession",
+		labels: {
+			de: "Beruf",
+			en: "Profession",
+			fr: "Profession",
+			nl: "Beroep",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4879,6 +6217,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Profession",
+		labels: {
+			de: "Beruf",
+			en: "Profession",
+			fr: "Profession",
+			nl: "Beroep",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4902,6 +6246,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Profession",
+		labels: {
+			de: "Beruf",
+			en: "Profession",
+			fr: "Profession",
+			nl: "Beroep",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4925,6 +6275,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Profession",
+		labels: {
+			de: "Beruf",
+			en: "Profession",
+			fr: "Profession",
+			nl: "Beroep",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4949,6 +6305,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Profession",
+		labels: {
+			de: "Beruf",
+			en: "Profession",
+			fr: "Profession",
+			nl: "Beroep",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4974,6 +6336,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Profession",
+		labels: {
+			de: "Beruf",
+			en: "Profession",
+			fr: "Profession",
+			nl: "Beroep",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -4999,6 +6367,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Profession",
+		labels: {
+			de: "Beruf",
+			en: "Profession",
+			fr: "Profession",
+			nl: "Beroep",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5023,6 +6397,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Profession",
+		labels: {
+			de: "Beruf",
+			en: "Profession",
+			fr: "Profession",
+			nl: "Beroep",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5047,6 +6427,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Profession",
+		labels: {
+			de: "Beruf",
+			en: "Profession",
+			fr: "Profession",
+			nl: "Beroep",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5071,6 +6457,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Profession",
+		labels: {
+			de: "Beruf",
+			en: "Profession",
+			fr: "Profession",
+			nl: "Beroep",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5095,6 +6487,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Profession",
+		labels: {
+			de: "Beruf",
+			en: "Profession",
+			fr: "Profession",
+			nl: "Beroep",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5120,6 +6518,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Profession",
+		labels: {
+			de: "Beruf",
+			en: "Profession",
+			fr: "Profession",
+			nl: "Beroep",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5145,6 +6549,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Profession",
+		labels: {
+			de: "Beruf",
+			en: "Profession",
+			fr: "Profession",
+			nl: "Beroep",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5169,6 +6579,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5193,6 +6609,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5216,6 +6638,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5239,6 +6667,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5262,6 +6696,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5286,6 +6726,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5312,6 +6758,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5337,6 +6789,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5362,6 +6820,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5387,6 +6851,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5411,6 +6881,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5435,6 +6911,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5459,6 +6941,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5483,6 +6971,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5509,6 +7003,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5534,6 +7034,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5559,6 +7065,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.02.01.0.ghi",
@@ -5584,6 +7096,12 @@ const datapoints0: readonly Datapoint[] = [
 			"dim:open",
 		],
 		label: "Number",
+		labels: {
+			de: "Mitgliedsnummer",
+			en: "Number",
+			fr: "Numéro de membre",
+			nl: "Lidmaatschapsnummer",
+		},
 	},
 	{
 		section: "s.03.01.0.g",
@@ -5595,6 +7113,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "20",
 		label: "FORMATION EXPENSES",
+		labels: {
+			de: "ERRICHTUNGS- UND ERWEITERUNGSAUFWENDUNGEN",
+			en: "FORMATION EXPENSES",
+			fr: "FRAIS D'ÉTABLISSEMENT",
+			nl: "OPRICHTINGSKOSTEN",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5609,6 +7133,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "285/8",
 		label: "Amounts receivable and cash guarantees",
+		labels: {
+			de: "Forderungen und gezahlte Kautionen",
+			en: "Amounts receivable and cash guarantees",
+			fr: "Créances et cautionnements en numéraire",
+			nl: "Vorderingen en borgtochten in contanten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5623,6 +7153,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "284",
 		label: "Shares",
+		labels: {
+			de: "Aktien oder Anteile",
+			en: "Shares",
+			fr: "Actions et parts",
+			nl: "Aandelen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5637,6 +7173,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "284/8",
 		label: "Other financial assets",
+		labels: {
+			de: "Sonstige Finanzanlagen",
+			en: "Other financial assets",
+			fr: "Autres immobilisations financières",
+			nl: "Andere financiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5652,6 +7194,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "283",
 		label: "Amounts receivable",
+		labels: {
+			de: "Forderungen",
+			en: "Amounts receivable",
+			fr: "Créances",
+			nl: "Vorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5667,6 +7215,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "282",
 		label: "Participating interests",
+		labels: {
+			de: "Beteiligungen",
+			en: "Participating interests",
+			fr: "Participations",
+			nl: "Deelnemingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5682,6 +7236,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "282/3",
 		label: "Companies linked by participating interests",
+		labels: {
+			de: "Gesellschaften, mit denen ein Beteiligungs-verhältnis besteht",
+			en: "Companies linked by participating interests",
+			fr: "Sociétés avec lesquelles il existe un lien de participation",
+			nl: "Vennootschappen waarmee een deelnemingsverhouding bestaat",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5697,6 +7257,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "281",
 		label: "Amounts receivable",
+		labels: {
+			de: "Forderungen",
+			en: "Amounts receivable",
+			fr: "Créances",
+			nl: "Vorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5712,6 +7278,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "280",
 		label: "Participating interests in affiliated enterprises",
+		labels: {
+			de: "Beteiligungen an Verbundenen Gesellschaften",
+			en: "Participating interests in affiliated enterprises",
+			fr: "Participations dans les sociétés liées",
+			nl: "Deelnemingen in verbonden vennootschappen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5727,6 +7299,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "280/1",
 		label: "Affiliated entities",
+		labels: {
+			de: "Verbundene Körperschaften",
+			en: "Affiliated entities",
+			fr: "Entités liées",
+			nl: "Verbonden entiteiten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5740,6 +7318,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "28",
 		label: "Financial fixed assets",
+		labels: {
+			de: "Finanzanlagen",
+			en: "Financial fixed assets",
+			fr: "Immobilisations financières",
+			nl: "Financiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5753,6 +7337,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "27",
 		label: "Tangible fixed assets under construction and advance payments",
+		labels: {
+			de: "Anlagen im Bau und geleistete Anzahlungen",
+			en: "Tangible fixed assets under construction and advance payments",
+			fr: "Immobilisations en cours et acomptes versés",
+			nl: "Activa in aanbouw en vooruitbetalingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5767,6 +7357,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "26",
 		label: "Other tangible fixed assets",
+		labels: {
+			de: "Sonstige Sachanlagen",
+			en: "Other tangible fixed assets",
+			fr: "Autres immobilisations corporelles",
+			nl: "Overige materiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5780,6 +7376,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "25",
 		label: "Leasing and similar rights",
+		labels: {
+			de: "Leasing und ähnliche Rechte",
+			en: "Leasing and similar rights",
+			fr: "Location-financement et droits similaires",
+			nl: "Leasing en soortgelijke rechten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5793,6 +7395,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "24",
 		label: "Furniture and vehicles",
+		labels: {
+			de: "Geschäftsausstattung und Fuhrpark",
+			en: "Furniture and vehicles",
+			fr: "Mobilier et matériel roulant",
+			nl: "Meubilair en rollend materieel",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5806,6 +7414,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "23",
 		label: "Plant, machinery and equipment",
+		labels: {
+			de: "Anlagen, Maschinen und Betriebsausstattung",
+			en: "Plant, machinery and equipment",
+			fr: "Installations, machines et outillage",
+			nl: "Installaties, machines en uitrusting",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5819,6 +7433,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "22",
 		label: "Land and buildings",
+		labels: {
+			de: "Grundstücke und Bauten",
+			en: "Land and buildings",
+			fr: "Terrains et constructions",
+			nl: "Terreinen en gebouwen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5832,6 +7452,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "22/27",
 		label: "Tangible fixed assets",
+		labels: {
+			de: "Sachanlagen",
+			en: "Tangible fixed assets",
+			fr: "Immobilisations corporelles",
+			nl: "Materiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5845,6 +7471,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "21",
 		label: "Intangible fixed assets",
+		labels: {
+			de: "Immaterielle Anlagewerte",
+			en: "Intangible fixed assets",
+			fr: "Immobilisations incorporelles",
+			nl: "Immateriële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5857,6 +7489,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "21/28",
 		label: "FIXED ASSETS",
+		labels: {
+			de: "ANLAGEVERMÖGEN",
+			en: "FIXED ASSETS",
+			fr: "ACTIFS IMMOBILISÉS",
+			nl: "VASTE ACTIVA",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5871,6 +7509,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "290",
 		label: "Trade debtors",
+		labels: {
+			de: "Forderungen aus Lieferungen und Leistungen",
+			en: "Trade debtors",
+			fr: "Créances commerciales",
+			nl: "Handelsvorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5885,6 +7529,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "291",
 		label: "Other amounts receivable",
+		labels: {
+			de: "Sonstige Forderungen",
+			en: "Other amounts receivable",
+			fr: "Autres créances",
+			nl: "Overige vorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5898,6 +7548,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "29",
 		label: "Amounts receivable after more than one year",
+		labels: {
+			de: "Forderungen mit einer Restlaufzeit von mehr als einem Jahr",
+			en: "Amounts receivable after more than one year",
+			fr: "Créances à plus d'un an",
+			nl: "Vorderingen op meer dan één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5911,6 +7567,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "30/31",
 		label: "Raw materials and consumables",
+		labels: {
+			de: "Roh-, Hilfs- und Betriebsstoffe",
+			en: "Raw materials and consumables",
+			fr: "Approvisionnements",
+			nl: "Grond- en hulpstoffen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5924,6 +7586,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "32",
 		label: "Work in progress",
+		labels: {
+			de: "Unfertige Erzeugnisse",
+			en: "Work in progress",
+			fr: "En-cours de fabrication",
+			nl: "Goederen in bewerking",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5937,6 +7605,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "33",
 		label: "Finished goods",
+		labels: {
+			de: "Fertige Erzeugnisse",
+			en: "Finished goods",
+			fr: "Produits finis",
+			nl: "Gereed product",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5950,6 +7624,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "34",
 		label: "Goods purchased for resale",
+		labels: {
+			de: "Waren",
+			en: "Goods purchased for resale",
+			fr: "Marchandises",
+			nl: "Handelsgoederen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5965,6 +7645,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "35",
 		label: "Immovable property intended for sale",
+		labels: {
+			de: "Zum Verkauf bestimmte unbewegliche Gegenstände",
+			en: "Immovable property intended for sale",
+			fr: "Immeubles destinés à la vente",
+			nl: "Onroerende goederen bestemd voor verkoop",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5978,6 +7664,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "36",
 		label: "Advance payments",
+		labels: {
+			de: "Geleistete Anzahlungen",
+			en: "Advance payments",
+			fr: "Acomptes versés",
+			nl: "Vooruitbetalingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -5991,6 +7683,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "30/36",
 		label: "Stocks",
+		labels: {
+			de: "Vorräte",
+			en: "Stocks",
+			fr: "Stocks",
+			nl: "Voorraden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6004,6 +7702,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "37",
 		label: "Contracts in progress",
+		labels: {
+			de: "In Ausführung befindliche Bestellungen",
+			en: "Contracts in progress",
+			fr: "Commandes en cours d'exécution",
+			nl: "Bestellingen in uitvoering",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6017,6 +7721,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "3",
 		label: "Stocks and contracts in progress",
+		labels: {
+			de: "Vorräte und in Ausführung befindliche Bestellungen",
+			en: "Stocks and contracts in progress",
+			fr: "Stocks et commandes en cours d'exécution",
+			nl: "Voorraden en bestellingen in uitvoering",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6031,6 +7741,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "40",
 		label: "Trade debtors",
+		labels: {
+			de: "Forderungen aus Lieferungen und Leistungen",
+			en: "Trade debtors",
+			fr: "Créances commerciales",
+			nl: "Handelsvorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6045,6 +7761,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "41",
 		label: "Other amounts receivable",
+		labels: {
+			de: "Sonstige Forderungen",
+			en: "Other amounts receivable",
+			fr: "Autres créances",
+			nl: "Overige vorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6058,6 +7780,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "40/41",
 		label: "Amounts receivable within one year",
+		labels: {
+			de: "Forderungen mit einer Restlaufzeit bis zu einem Jahr",
+			en: "Amounts receivable within one year",
+			fr: "Créances à un an au plus",
+			nl: "Vorderingen op ten hoogste één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6070,6 +7798,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "50/53",
 		label: "Current investments",
+		labels: {
+			de: "Geldanlagen",
+			en: "Current investments",
+			fr: "Placements de trésorerie",
+			nl: "Geldbeleggingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6082,6 +7816,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "54/58",
 		label: "Cash at bank and in hand",
+		labels: {
+			de: "Flüssige Mittel",
+			en: "Cash at bank and in hand",
+			fr: "Valeurs disponibles",
+			nl: "Liquide middelen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6094,6 +7834,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "490/1",
 		label: "Deferred charges and accrued income",
+		labels: {
+			de: "Rechnungsabgrenzungsposten",
+			en: "Deferred charges and accrued income",
+			fr: "Comptes de régularisation",
+			nl: "Overlopende rekeningen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6106,6 +7852,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "29/58",
 		label: "CURRENT ASSETS",
+		labels: {
+			de: "UMLAUFVERMÖGEN",
+			en: "CURRENT ASSETS",
+			fr: "ACTIFS CIRCULANTS",
+			nl: "VLOTTENDE ACTIVA",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6118,6 +7870,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "20/58",
 		label: "TOTAL ASSETS",
+		labels: {
+			de: "SUMME DER AKTIVA",
+			en: "TOTAL ASSETS",
+			fr: "TOTAL DE L'ACTIF",
+			nl: "TOTAAL VAN DE ACTIVA",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6131,6 +7889,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "10",
 		label: "Association or foundation Funds",
+		labels: {
+			de: "Vermögen der Vereinigung oder Stiftung",
+			en: "Association or foundation Funds",
+			fr: "Fonds de l'association ou de la fondation",
+			nl: "Fondsen van de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6144,6 +7908,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "12",
 		label: "Revaluation surpluses",
+		labels: {
+			de: "Neubewertungsrücklagen",
+			en: "Revaluation surpluses",
+			fr: "Plus-values de réévaluation",
+			nl: "Herwaarderingsmeerwaarden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6157,6 +7927,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "13",
 		label: "Allocated funds",
+		labels: {
+			de: "Zweckgebundenes Vermögen und sonstige Rûcklagen",
+			en: "Allocated funds",
+			fr: "Fonds affectés et autres réserves",
+			nl: "Bestemde fondsen en andere reserves",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6171,6 +7947,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "14",
 		label: "Accumulated profits (losses)",
+		labels: {
+			de: "Gewinnvortrag (Verlustvortrag)",
+			en: "Accumulated profits (losses)",
+			fr: "Bénéfice (Perte) reporté(e)",
+			nl: "Overgedragen winst (verlies)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6184,6 +7966,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "15",
 		label: "Investment grants",
+		labels: {
+			de: "Kapitalsubventionen",
+			en: "Investment grants",
+			fr: "Subsides en capital",
+			nl: "Kapitaalsubsidies",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6197,6 +7985,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "10/15",
 		label: "EQUITY",
+		labels: {
+			de: "EIGENKAPITAL",
+			en: "EQUITY",
+			fr: "FONDS SOCIAL",
+			nl: "EIGEN VERMOGEN",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6211,6 +8005,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "160",
 		label: "Pensions and similar obligations",
+		labels: {
+			de: "Pensionen und ähnliche Verpflichtungen",
+			en: "Pensions and similar obligations",
+			fr: "Pensions et obligations similaires",
+			nl: "Pensioenen en soortgelijke verplichtingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6225,6 +8025,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "161",
 		label: "Taxation",
+		labels: {
+			de: "Steuern",
+			en: "Taxation",
+			fr: "Charges fiscales",
+			nl: "Belastingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6239,6 +8045,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "162",
 		label: "Major repairs and maintenance",
+		labels: {
+			de: "Große Reparaturen und Instandhaltungsarbeiten",
+			en: "Major repairs and maintenance",
+			fr: "Grosses réparations et gros entretien",
+			nl: "Grote herstellings- en onderhoudswerken",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6253,6 +8065,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "163",
 		label: "Environmental obligations",
+		labels: {
+			de: "Umweltschutzverpflichtungen",
+			en: "Environmental obligations",
+			fr: "Obligations environnementales",
+			nl: "Milieuverplichtingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6267,6 +8085,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "164/5",
 		label: "Other liabilities and charges",
+		labels: {
+			de: "Sonstige Risiken und Aufwendungen",
+			en: "Other liabilities and charges",
+			fr: "Autres risques et charges",
+			nl: "Overige risico's en kosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6280,6 +8104,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "160/5",
 		label: "Provisions for liabilities and charges",
+		labels: {
+			de: "Rückstellungen für Risiken und Aufwendungen",
+			en: "Provisions for liabilities and charges",
+			fr: "Provisions pour risques et charges",
+			nl: "Voorzieningen voor risico's en kosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6293,6 +8123,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "168",
 		label: "Deferred taxes",
+		labels: {
+			de: "Aufgeschobene Steuern",
+			en: "Deferred taxes",
+			fr: "Impôts différés",
+			nl: "Uitgestelde belastingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6306,6 +8142,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "167",
 		label: "Provisions for grants and legacies to reimburse and gifts with a recovery right",
+		labels: {
+			de: "Rückstellungen für zurückzuzahlende Subventionen und Legate und für Schenkungen mit Rücknahmerecht",
+			en: "Provisions for grants and legacies to reimburse and gifts with a recovery right",
+			fr: "Provisions pour subsides et legs à rembourser et pour dons avec droit de reprise",
+			nl: "Voorzieningen voor terug te betalen subsidies en legaten en voor schenkingen met terugnemingsrecht",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6318,6 +8160,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "16",
 		label: "PROVISIONS AND DEFERRED TAXES",
+		labels: {
+			de: "RÜCKSTELLUNGEN UND AUFGESCHOBENE STEUERN",
+			en: "PROVISIONS AND DEFERRED TAXES",
+			fr: "PROVISIONS ET IMPÔTS DIFFÉRÉS",
+			nl: "VOORZIENINGEN EN UITGESTELDE BELASTINGEN",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6333,6 +8181,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "170",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6348,6 +8202,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "171",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6363,6 +8223,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "172",
 		label: "Leasing and other similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and other similar obligations",
+			fr: "Dettes de location-financement assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6378,6 +8244,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "173",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6393,6 +8265,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "174",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6407,6 +8285,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "170/4",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6422,6 +8306,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "1750",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6437,6 +8327,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "1751",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6451,6 +8347,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "175",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6465,6 +8367,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "176",
 		label: "Advances received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advances received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6479,6 +8387,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "178/9",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6492,6 +8406,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "17",
 		label: "Amounts payable after more than one year",
+		labels: {
+			de: "Verbindlichkeiten mit einer Restlaufzeit von mehr als einem Jahr",
+			en: "Amounts payable after more than one year",
+			fr: "Dettes à plus d'un an",
+			nl: "Schulden op meer dan één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6505,6 +8425,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "42",
 		label: "Current portion of amounts payable after more than one year falling due within one year",
+		labels: {
+			de: "Innerhalb eines Jahres fällig werdende Verbindlichkeiten mit einer ursprünglichen Laufzeit von mehr als 1 Jahr",
+			en: "Current portion of amounts payable after more than one year falling due within one year",
+			fr: "Dettes à plus d'un an échéant dans l'année",
+			nl: "Schulden op meer dan één jaar die binnen het jaar vervallen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6520,6 +8446,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "430/8",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6535,6 +8467,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "439",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6549,6 +8487,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "43",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6564,6 +8508,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "440/4",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6579,6 +8529,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "441",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6593,6 +8549,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "44",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6607,6 +8569,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "46",
 		label: "Advances received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advances received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6621,6 +8589,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "450/3",
 		label: "Taxes",
+		labels: {
+			de: "Steuern",
+			en: "Taxes",
+			fr: "Impôts",
+			nl: "Belastingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6635,6 +8609,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "454/9",
 		label: "Remuneration and social security",
+		labels: {
+			de: "Arbeitsentgelte und Soziallasten",
+			en: "Remuneration and social security",
+			fr: "Rémunérations et charges sociales",
+			nl: "Bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6649,6 +8629,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "45",
 		label: "Taxes, remuneration and social security",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Steuern, Arbeitsentgelten und Soziallasten",
+			en: "Taxes, remuneration and social security",
+			fr: "Dettes fiscales, salariales et sociales",
+			nl: "Schulden met betrekking tot belastingen, bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6663,6 +8649,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "48",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6676,6 +8668,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "42/48",
 		label: "Amounts payable within one year",
+		labels: {
+			de: "Verbindlichkeiten mit einer Restlaufzeit bis zu 1 Jahr",
+			en: "Amounts payable within one year",
+			fr: "Dettes à un an au plus",
+			nl: "Schulden op ten hoogste één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6688,6 +8686,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "492/3",
 		label: "Accruals and deferred income",
+		labels: {
+			de: "Rechnungsabgrenzungsposten",
+			en: "Accruals and deferred income",
+			fr: "Comptes de régularisation",
+			nl: "Overlopende rekeningen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6700,6 +8704,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "17/49",
 		label: "AMOUNTS PAYABLE",
+		labels: {
+			de: "VERBINDLICHKEITEN",
+			en: "AMOUNTS PAYABLE",
+			fr: "DETTES",
+			nl: "SCHULDEN",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6712,6 +8722,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "10/49",
 		label: "TOTAL LIABILITIES",
+		labels: {
+			de: "SUMME DER PASSIVA",
+			en: "TOTAL LIABILITIES",
+			fr: "TOTAL DU PASSIF",
+			nl: "TOTAAL VAN DE PASSIVA",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6725,6 +8741,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "70",
 		label: "Turnover",
+		labels: {
+			de: "Umsatzerlöse",
+			en: "Turnover",
+			fr: "Chiffre d'affaires",
+			nl: "Omzet",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6738,6 +8760,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "71",
 		label: "Stocks of finished goods and work and contracts in progress: increase (decrease)",
+		labels: {
+			de: "Bestände an unfertigen und fertigen Erzeugnissen und an in Ausführung befindlichen Bestellungen: Zunahme (Abnahme)",
+			en: "Stocks of finished goods and work and contracts in progress: increase (decrease)",
+			fr: "En-cours de fabrication, produits finis et commandes en cours d'exécution: augmentation (réduction)",
+			nl: "Voorraad goederen in bewerking en gereed product en bestellingen in uitvoering: toename (afname)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6752,6 +8780,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "72",
 		label: "Own work capitalised",
+		labels: {
+			de: "Andere aktivierte Eigenleistungen",
+			en: "Own work capitalised",
+			fr: "Production immobilisée",
+			nl: "Geproduceerde vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6766,6 +8800,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "74",
 		label: "Other operating income",
+		labels: {
+			de: "Sonstige betriebliche Erträge",
+			en: "Other operating income",
+			fr: "Autres produits d'exploitation",
+			nl: "Andere bedrijfsopbrengsten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6780,6 +8820,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "76A",
 		label: "Non-recurring operating income",
+		labels: {
+			de: "Nicht wiederkehrende betriebliche Erträge",
+			en: "Non-recurring operating income",
+			fr: "Produits d'exploitation non récurrents",
+			nl: "Niet-recurrente bedrijfsopbrengsten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6793,6 +8839,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "73",
 		label: "Contributions, gifts, legacies and grants",
+		labels: {
+			de: "Beiträge, Schenkungen, Legate und Subventionen",
+			en: "Contributions, gifts, legacies and grants",
+			fr: "Cotisations, dons, legs et subsides",
+			nl: "Lidgeld, schenkingen, legaten en subsidies",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6806,6 +8858,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "70/76A",
 		label: "Operating income",
+		labels: {
+			de: "Betriebliche Erträge",
+			en: "Operating income",
+			fr: "Ventes et prestations",
+			nl: "Bedrijfsopbrengsten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6819,6 +8877,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "600/8",
 		label: "Purchases",
+		labels: {
+			de: "Käufe",
+			en: "Purchases",
+			fr: "Achats",
+			nl: "Aankopen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6832,6 +8896,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "609",
 		label: "Stocks: decrease (increase)",
+		labels: {
+			de: "Bestände: Abnahme (Zunahme)",
+			en: "Stocks: decrease (increase)",
+			fr: "Stocks: réduction (augmentation)",
+			nl: "Voorraad: afname (toename)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6845,6 +8915,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "60",
 		label: "Raw materials, consumables",
+		labels: {
+			de: "Waren, Roh-, Hilfs- und Betriebsstoffe",
+			en: "Raw materials, consumables",
+			fr: "Approvisionnements et marchandises",
+			nl: "Handelsgoederen, grond- en hulpstoffen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6858,6 +8934,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "61",
 		label: "Services and other goods",
+		labels: {
+			de: "Übrige Lieferungen und Leistungen",
+			en: "Services and other goods",
+			fr: "Services et biens divers",
+			nl: "Diensten en diverse goederen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6871,6 +8953,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "62",
 		label: "Remuneration, social security costs and pensions",
+		labels: {
+			de: "Arbeitsentgelte, Soziallasten und Pensionen",
+			en: "Remuneration, social security costs and pensions",
+			fr: "Rémunérations, charges sociales et pensions",
+			nl: "Bezoldigingen, sociale lasten en pensioenen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6886,6 +8974,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "630",
 		label: "Depreciation of and other amounts written off formation expenses, intangible and tangible fixed assets",
+		labels: {
+			de: "Abschreibungen und Wertminderungen auf Errichtungs- und Erweiterungsaufwendungen, auf immaterielle Anlagewerte und Sachanlagen",
+			en: "Depreciation of and other amounts written off formation expenses, intangible and tangible fixed assets",
+			fr: "Amortissements et réductions de valeur sur frais d'établissement, sur immobilisations incorporelles et corporelles",
+			nl: "Afschrijvingen en waardeverminderingen op oprichtingskosten, op immateriële en materiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6902,6 +8996,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "631/4",
 		label: "Amounts written off stocks, contracts in progress and trade debtors: Appropriations (write-backs)",
+		labels: {
+			de: "Wertminderungen von Vorräten, in Ausführung befindlichen Bestellungen und Forderungen aus Lieferungen und Leistungen: Zuführungen (Rücknahmen)",
+			en: "Amounts written off stocks, contracts in progress and trade debtors: Appropriations (write-backs)",
+			fr: "Réductions de valeur sur stocks, sur commandes en cours d'exécution et sur créances commerciales: dotations (reprises)",
+			nl: "Waardeverminderingen op voorraden, op bestellingen in uitvoering en op handelsvorderingen: toevoegingen (terugnemingen)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6916,6 +9016,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "635/9",
 		label: "Provisions for liabilities and charges: Appropriations (uses and write-backs)",
+		labels: {
+			de: "Rückstellungen für Risiken und Aufwendungen: Zuführungen (Verbrauch und Auflösungen)",
+			en: "Provisions for liabilities and charges: Appropriations (uses and write-backs)",
+			fr: "Provisions pour risques et charges: dotations (utilisations et reprises)",
+			nl: "Voorzieningen voor risico's en kosten: toevoegingen (bestedingen en terugnemingen)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6930,6 +9036,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "640/8",
 		label: "Other operating charges",
+		labels: {
+			de: "Sonstige betriebliche Aufwendungen",
+			en: "Other operating charges",
+			fr: "Autres charges d'exploitation",
+			nl: "Andere bedrijfskosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6945,6 +9057,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "649",
 		label: "Operating charges carried to assets as restructuring costs",
+		labels: {
+			de: "Auf der Aktivseite als Restrukturierungskosten ausgewiesene betriebliche Aufwendungen",
+			en: "Operating charges carried to assets as restructuring costs",
+			fr: "Charges d'exploitation portées à l'actif au titre de frais de restructuration",
+			nl: "Als herstructureringskosten geactiveerde bedrijfskosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6959,6 +9077,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "66A",
 		label: "Non-recurring operating charges",
+		labels: {
+			de: "Nicht wiederkehrende betriebliche Aufwendungen",
+			en: "Non-recurring operating charges",
+			fr: "Charges d'exploitation non récurrentes",
+			nl: "Niet-recurrente bedrijfskosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6972,6 +9096,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "60/66A",
 		label: "Operating charges",
+		labels: {
+			de: "Betriebliche Aufwendungen",
+			en: "Operating charges",
+			fr: "Coût des ventes et des prestations",
+			nl: "Bedrijfskosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -6985,6 +9115,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "9901",
 		label: "Operating profit (loss)",
+		labels: {
+			de: "Betriebsgewinn (Betriebsverlust)",
+			en: "Operating profit (loss)",
+			fr: "Bénéfice (Perte) d'exploitation",
+			nl: "Bedrijfswinst (Bedrijfsverlies)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7000,6 +9136,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "750",
 		label: "Income from financial fixed assets",
+		labels: {
+			de: "Erträge aus Finanzanlagen",
+			en: "Income from financial fixed assets",
+			fr: "Produits des immobilisations financières",
+			nl: "Opbrengsten uit financiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7015,6 +9157,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "751",
 		label: "Income from current assets",
+		labels: {
+			de: "Erträge aus Gegenständen des Umlaufvermögens",
+			en: "Income from current assets",
+			fr: "Produits des actifs circulants",
+			nl: "Opbrengsten uit vlottende activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7029,6 +9177,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "752/9",
 		label: "Other financial income",
+		labels: {
+			de: "Sonstige Finanzerträge",
+			en: "Other financial income",
+			fr: "Autres produits financiers",
+			nl: "Andere financiële opbrengsten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7043,6 +9197,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "75",
 		label: "Recurring financial income",
+		labels: {
+			de: "Wiederkehrende Finanzerträge",
+			en: "Recurring financial income",
+			fr: "Produits financiers récurrents",
+			nl: "Recurrente financiële opbrengsten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7057,6 +9217,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "76B",
 		label: "Non-recurring financial income",
+		labels: {
+			de: "Nicht wiederkehrende Finanzerträge",
+			en: "Non-recurring financial income",
+			fr: "Produits financiers non récurrents",
+			nl: "Niet-recurrente financiële opbrengsten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7070,6 +9236,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "75/76B",
 		label: "Financial income Financial income",
+		labels: {
+			de: "Finanzerträge",
+			en: "Financial income Financial income",
+			fr: "Produits financiers",
+			nl: "Financiële opbrengsten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7085,6 +9257,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "650",
 		label: "Debt charges",
+		labels: {
+			de: "Aufwendungen für Verbindlichkeiten",
+			en: "Debt charges",
+			fr: "Charges des dettes",
+			nl: "Kosten van schulden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7101,6 +9279,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "651",
 		label: "Amounts written off current assets except stocks, contracts in progress and trade debtors: appropriations (write-backs)",
+		labels: {
+			de: "Wertminderungen von Gegenständen des Umlaufvermögens mit Ausnahme der Vorräten, in Ausführung befindlichen Bestellungen und Forderungen aus Lieferungen und Leistungen: Zuführungen (Rücknahmen)",
+			en: "Amounts written off current assets except stocks, contracts in progress and trade debtors: appropriations (write-backs)",
+			fr: "Réductions de valeur sur actifs circulants autres que stocks, commandes en cours et créances commerciales: dotations (reprises)",
+			nl: "Waardeverminderingen op vlottende activa andere dan voorraden, bestellingen in uitvoering en handelsvorderingen: toevoegingen (terugnemingen)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7115,6 +9299,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "652/9",
 		label: "Other financial charges",
+		labels: {
+			de: "Sonstige Finanzaufwendungen",
+			en: "Other financial charges",
+			fr: "Autres charges financières",
+			nl: "Andere financiële kosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7129,6 +9319,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "65",
 		label: "Recurring financial charges",
+		labels: {
+			de: "Wiederkehrende Finanzaufwendungen",
+			en: "Recurring financial charges",
+			fr: "Charges financières récurrentes",
+			nl: "Recurrente financiële kosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7143,6 +9339,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "66B",
 		label: "Non-recurring financial charges",
+		labels: {
+			de: "Nicht wiederkehrende Finanzaufwendungen",
+			en: "Non-recurring financial charges",
+			fr: "Charges financières non récurrentes",
+			nl: "Niet-recurrente financiële kosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7156,6 +9358,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "65/66B",
 		label: "Financial charges",
+		labels: {
+			de: "Finanzaufwendungen",
+			en: "Financial charges",
+			fr: "Charges financières",
+			nl: "Financiële kosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7169,6 +9377,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "9903",
 		label: "Gain (loss) for the period before taxes",
+		labels: {
+			de: "Gewinn (Verlust) des Geschäftsjahres vor Steuern",
+			en: "Gain (loss) for the period before taxes",
+			fr: "Bénéfice (Perte) de l'exercice avant impôts",
+			nl: "Winst (Verlies) van het boekjaar vóór belasting",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7183,6 +9397,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "780",
 		label: "Transfer from deferred taxes",
+		labels: {
+			de: "Auflösung von aufgeschobenen Steuern",
+			en: "Transfer from deferred taxes",
+			fr: "Prélèvement sur les impôts différés",
+			nl: "Onttrekking aan de uitgestelde belastingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7197,6 +9417,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "680",
 		label: "Transfer to deferred taxes",
+		labels: {
+			de: "Zuführung zu aufgeschobenen Steuern",
+			en: "Transfer to deferred taxes",
+			fr: "Transfert aux impôts différés",
+			nl: "Overboeking naar de uitgestelde belastingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7210,6 +9436,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "670/3",
 		label: "Taxes",
+		labels: {
+			de: "Steuern",
+			en: "Taxes",
+			fr: "Impôts",
+			nl: "Belastingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7223,6 +9455,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "77",
 		label: "Adjustment of income taxes and write-back of tax provisions",
+		labels: {
+			de: "Steuererstattung und Auflösung von Steuerrückstellungen",
+			en: "Adjustment of income taxes and write-back of tax provisions",
+			fr: "Régularisation d'impôts et reprise de provisions fiscales",
+			nl: "Regularisering van belastingen en terugneming van voorzieningen voor belastingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7236,6 +9474,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "67/77",
 		label: "Income taxes",
+		labels: {
+			de: "Steuern auf das Ergebnis",
+			en: "Income taxes",
+			fr: "Impôts sur le résultat",
+			nl: "Belastingen op het resultaat",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7248,6 +9492,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "9904",
 		label: "Gain (loss) of the period",
+		labels: {
+			de: "Gewinn (Verlust) des Geschäftsjahres",
+			en: "Gain (loss) of the period",
+			fr: "Bénéfice (Perte) de l'exercice",
+			nl: "Winst (Verlies) van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7262,6 +9512,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "789",
 		label: "Transfer from untaxed reserves",
+		labels: {
+			de: "Entnahmen aus den steuerfreien Rücklagen",
+			en: "Transfer from untaxed reserves",
+			fr: "Prélèvement sur les réserves immunisées",
+			nl: "Onttrekking aan de belastingvrije reserves",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7276,6 +9532,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "689",
 		label: "Transfer to untaxed reserves",
+		labels: {
+			de: "Einstellung in die steuerfreien Rücklagen",
+			en: "Transfer to untaxed reserves",
+			fr: "Transfert aux réserves immunisées",
+			nl: "Overboeking naar de belastingvrije reserves",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7289,6 +9551,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "9905",
 		label: "Gain (loss) of the period available for appropriation",
+		labels: {
+			de: "Zu verwendender Gewinn (anzurechnender Verlust) des Geschäftsjahres",
+			en: "Gain (loss) of the period available for appropriation",
+			fr: "Bénéfice (Perte) de l'exercice à affecter",
+			nl: "Te bestemmen winst (verlies) van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7302,6 +9570,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "(9905)",
 		label: "Gain (loss) of the period available for appropriation",
+		labels: {
+			de: "Zu verwendender Gewinn (anzurechnender Verlust) des Geschäftsjahres",
+			en: "Gain (loss) of the period available for appropriation",
+			fr: "Bénéfice (Perte) de l'exercice à affecter",
+			nl: "Te bestemmen winst (verlies) van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7315,6 +9589,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "14P",
 		label: "Profit (loss) brought forward",
+		labels: {
+			de: "Gewinnvortrag (Verlustvortrag) aus dem Vorjahr",
+			en: "Profit (loss) brought forward",
+			fr: "Bénéfice (Perte) reporté(e) de l'exercice précédent",
+			nl: "Overgedragen winst (verlies) van het vorige boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7328,6 +9608,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "9906",
 		label: "Profit (loss) to be appropriated",
+		labels: {
+			de: "Zu verwendender Gewinnsaldo (anzurechnender Verlustsaldo)",
+			en: "Profit (loss) to be appropriated",
+			fr: "Bénéfice (Perte) à affecter",
+			nl: "Te bestemmen winst (verlies)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7342,6 +9628,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "791",
 		label: "Withdrawals from capital and reserves",
+		labels: {
+			de: "Entnahmen aus dem Eigenkapital: Vermögen, zweckgebundene Vermögen und sonstige Rücklagen",
+			en: "Withdrawals from capital and reserves",
+			fr: "Prélèvement sur les capitaux propres: fonds, fonds affectés et autres réserves",
+			nl: "Onttrekking aan het eigen vermogen: fondsen, bestemde fondsen en andere reserves",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7355,6 +9647,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "691",
 		label: "Appropriations to allocated funds",
+		labels: {
+			de: "Zuweisungen an die zweckgebundenen Vermögen und sonstige Rücklagen",
+			en: "Appropriations to allocated funds",
+			fr: "Affectation aux fonds affectés et autres réserves",
+			nl: "Toevoeging aan de bestemde fondsen en andere reserves",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7369,6 +9667,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "(14)",
 		label: "Profit (loss) to be carried forward",
+		labels: {
+			de: "Vorzutragender Gewinn (Verlust)",
+			en: "Profit (loss) to be carried forward",
+			fr: "Bénéfice (Perte) à reporter",
+			nl: "Over te dragen winst (verlies)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7383,6 +9687,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "20P",
 		label: "Net book value at the end of the period",
+		labels: {
+			de: "Nettobuchwert am Ende des Geschäftsjahres",
+			en: "Net book value at the end of the period",
+			fr: "Valeur comptable nette au terme de l'exercice",
+			nl: "Nettoboekwaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -7396,6 +9706,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8002",
 		label: "New expenses incurred",
+		labels: {
+			de: "Zugänge",
+			en: "New expenses incurred",
+			fr: "Nouveaux frais engagés",
+			nl: "Nieuwe kosten van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -7410,6 +9726,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8002",
 		label: "New expenses incurred",
+		labels: {
+			de: "Zugänge",
+			en: "New expenses incurred",
+			fr: "Nouveaux frais engagés",
+			nl: "Nieuwe kosten van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -7424,6 +9746,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8003",
 		label: "Depreciation",
+		labels: {
+			de: "Abschreibungen",
+			en: "Depreciation",
+			fr: "Amortissements",
+			nl: "Afschrijvingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -7439,6 +9767,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8003",
 		label: "Depreciation",
+		labels: {
+			de: "Abschreibungen",
+			en: "Depreciation",
+			fr: "Amortissements",
+			nl: "Afschrijvingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -7452,6 +9786,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8004",
 		label: "Other",
+		labels: {
+			de: "Sonstige",
+			en: "Other",
+			fr: "Autres",
+			nl: "Andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -7466,6 +9806,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8004",
 		label: "Other",
+		labels: {
+			de: "Sonstige",
+			en: "Other",
+			fr: "Autres",
+			nl: "Andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -7478,6 +9824,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "(20)",
 		label: "Net book value at the end of the period",
+		labels: {
+			de: "Nettobuchwert am Ende des Geschäftsjahres",
+			en: "Net book value at the end of the period",
+			fr: "Valeur comptable nette au terme de l'exercice",
+			nl: "Nettoboekwaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -7491,6 +9843,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "(20)",
 		label: "Net book value at the end of the period",
+		labels: {
+			de: "Nettobuchwert am Ende des Geschäftsjahres",
+			en: "Net book value at the end of the period",
+			fr: "Valeur comptable nette au terme de l'exercice",
+			nl: "Nettoboekwaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -7503,6 +9861,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "200/2",
 		label: "Formation expenses, loan issue expenses and other formation expenses",
+		labels: {
+			de: "Kosten der Gründung, Kosten der Emission von Anleihen und andere Errichtungs- und Erweiterungsaufwendungen",
+			en: "Formation expenses, loan issue expenses and other formation expenses",
+			fr: "Frais de constitution, frais d'émission d'emprunts et autres frais d'établissement",
+			nl: "Kosten van oprichting, kosten bij uitgifte van leningen en andere oprichtingskosten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -7516,6 +9880,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "200/2",
 		label: "Formation expenses, loan issue expenses and other formation expenses",
+		labels: {
+			de: "Kosten der Gründung, Kosten der Emission von Anleihen und andere Errichtungs- und Erweiterungsaufwendungen",
+			en: "Formation expenses, loan issue expenses and other formation expenses",
+			fr: "Frais de constitution, frais d'émission d'emprunts et autres frais d'établissement",
+			nl: "Kosten van oprichting, kosten bij uitgifte van leningen en andere oprichtingskosten",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -7528,6 +9898,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "204",
 		label: "Restructuring costs",
+		labels: {
+			de: "Restrukturierungskosten",
+			en: "Restructuring costs",
+			fr: "Frais de restructuration",
+			nl: "Herstructureringskosten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -7541,6 +9917,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "204",
 		label: "Restructuring costs",
+		labels: {
+			de: "Restrukturierungskosten",
+			en: "Restructuring costs",
+			fr: "Frais de restructuration",
+			nl: "Herstructureringskosten",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -7555,6 +9937,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8051P",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7570,6 +9958,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8021",
 		label: "Acquisitions, including produced fixed assets",
+		labels: {
+			de: "Anschaffungen einschließlich aktivierter Eigenleistungen",
+			en: "Acquisitions, including produced fixed assets",
+			fr: "Acquisitions, y compris la production immobilisée",
+			nl: "Aanschaffingen, met inbegrip van de geproduceerde vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7584,6 +9978,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8031",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et désaffectations",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7598,6 +9998,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8041",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7612,6 +10018,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8051",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7627,6 +10039,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8121P",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7642,6 +10060,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8071",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actés",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7657,6 +10081,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8081",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Repris",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7672,6 +10102,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8091",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquis de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7687,6 +10123,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8101",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulés à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7702,6 +10144,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8111",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférés d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7716,6 +10164,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8121",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7729,6 +10183,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "210",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7743,6 +10203,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8052P",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7757,6 +10223,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8022",
 		label: "Acquisitions, including produced fixed assets",
+		labels: {
+			de: "Anschaffungen einschließlich aktivierter Eigenleistungen",
+			en: "Acquisitions, including produced fixed assets",
+			fr: "Acquisitions, y compris la production immobilisée",
+			nl: "Aanschaffingen, met inbegrip van de geproduceerde vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7770,6 +10242,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8032",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et désaffectations",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7783,6 +10261,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8042",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7796,6 +10280,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8052",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7810,6 +10300,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8122P",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7824,6 +10320,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8072",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actés",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7837,6 +10339,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8082",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Repris",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7850,6 +10358,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8092",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquis de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7863,6 +10377,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8102",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulés à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7877,6 +10397,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8112",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférés d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7890,6 +10416,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8122",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7902,6 +10434,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "211",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7916,6 +10454,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8053P",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7930,6 +10474,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8023",
 		label: "Acquisitions, including produced fixed assets",
+		labels: {
+			de: "Anschaffungen einschließlich aktivierter Eigenleistungen",
+			en: "Acquisitions, including produced fixed assets",
+			fr: "Acquisitions, y compris la production immobilisée",
+			nl: "Aanschaffingen, met inbegrip van de geproduceerde vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7943,6 +10493,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8033",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et désaffectations",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7956,6 +10512,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8043",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7969,6 +10531,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8053",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7983,6 +10551,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8123P",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -7997,6 +10571,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8073",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actés",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8010,6 +10590,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8083",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Repris",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8023,6 +10609,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8093",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquis de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8036,6 +10628,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8103",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulés à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8050,6 +10648,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8113",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférés d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8063,6 +10667,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8123",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8075,6 +10685,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "212",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8089,6 +10705,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8054P",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8103,6 +10725,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8024",
 		label: "Acquisitions, including produced fixed assets",
+		labels: {
+			de: "Anschaffungen einschließlich aktivierter Eigenleistungen",
+			en: "Acquisitions, including produced fixed assets",
+			fr: "Acquisitions, y compris la production immobilisée",
+			nl: "Aanschaffingen, met inbegrip van de geproduceerde vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8116,6 +10744,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8034",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et désaffectations",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8129,6 +10763,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8044",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8142,6 +10782,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8054",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8156,6 +10802,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8124P",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8170,6 +10822,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8074",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actés",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8183,6 +10841,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8084",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Repris",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8196,6 +10860,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8094",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquis de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8209,6 +10879,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8104",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulés à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8223,6 +10899,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8114",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférés d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8236,6 +10918,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8124",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8248,6 +10936,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "213",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -8261,6 +10955,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8321",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8274,6 +10974,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8321",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8287,6 +10993,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8311",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférés d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8301,6 +11013,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8311",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférés d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8314,6 +11032,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8301",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulés à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8328,6 +11052,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8301",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulés à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8341,6 +11071,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8291",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquis de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8355,6 +11091,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8291",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquis de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8368,6 +11110,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8281",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Repris",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8382,6 +11130,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8281",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Repris",
+			nl: "Teruggenomen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8395,6 +11149,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8271",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actés",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8409,6 +11169,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8271",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actés",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8423,6 +11189,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8321P",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8435,6 +11207,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8191",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8448,6 +11226,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8191",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8461,6 +11245,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8181",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8475,6 +11265,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8181",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8488,6 +11284,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8171",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et désaffectations",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8502,6 +11304,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8171",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et désaffectations",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8515,6 +11323,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8161",
 		label: "Acquisitions, including produced fixed assets",
+		labels: {
+			de: "Anschaffungen einschließlich aktivierter Eigenleistungen",
+			en: "Acquisitions, including produced fixed assets",
+			fr: "Acquisitions, y compris la production immobilisée",
+			nl: "Aanschaffingen, met inbegrip van de geproduceerde vaste activa",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8529,6 +11343,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8161",
 		label: "Acquisitions, including produced fixed assets",
+		labels: {
+			de: "Anschaffungen einschließlich aktivierter Eigenleistungen",
+			en: "Acquisitions, including produced fixed assets",
+			fr: "Acquisitions, y compris la production immobilisée",
+			nl: "Aanschaffingen, met inbegrip van de geproduceerde vaste activa",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8543,6 +11363,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8191P",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8557,6 +11383,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8251P",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8570,6 +11402,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8211",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8584,6 +11422,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8211",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8597,6 +11441,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8221",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8611,6 +11461,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8221",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8624,6 +11480,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8231",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8638,6 +11500,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8231",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8651,6 +11519,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8241",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8665,6 +11539,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8241",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8677,6 +11557,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8251",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8690,6 +11576,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8251",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8702,6 +11594,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "(22)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8715,6 +11613,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "(22)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8727,6 +11631,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "22/91",
 		label: "Owned by the association or the foundation in full property",
+		labels: {
+			de: "Im Volleigentum der Vereinigung oder Stiftung",
+			en: "Owned by the association or the foundation in full property",
+			fr: "Appartenant à l'association ou à la fondation en pleine propriété",
+			nl: "In volle eigendom van de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8740,6 +11650,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "22/91",
 		label: "Owned by the association or the foundation in full property",
+		labels: {
+			de: "Im Volleigentum der Vereinigung oder Stiftung",
+			en: "Owned by the association or the foundation in full property",
+			fr: "Appartenant à l'association ou à la fondation en pleine propriété",
+			nl: "In volle eigendom van de vereniging of stichting",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8752,6 +11668,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8322",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8765,6 +11687,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8322",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8778,6 +11706,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8312",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférés d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8792,6 +11726,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8312",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférés d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8805,6 +11745,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8302",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulés à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8819,6 +11765,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8302",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulés à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8832,6 +11784,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8292",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquis de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8846,6 +11804,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8292",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquis de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8859,6 +11823,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8282",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Repris",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8873,6 +11843,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8282",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Repris",
+			nl: "Teruggenomen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8886,6 +11862,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8272",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actés",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8900,6 +11882,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8272",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actés",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8914,6 +11902,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8322P",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8926,6 +11920,12 @@ const datapoints0: readonly Datapoint[] = [
 		},
 		code: "8192",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 ];
@@ -8942,6 +11942,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8192",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8955,6 +11961,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8182",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8969,6 +11981,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8182",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -8982,6 +12000,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8172",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et désaffectations",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -8996,6 +12020,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8172",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et désaffectations",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9009,6 +12039,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8162",
 		label: "Acquisitions, including produced fixed assets",
+		labels: {
+			de: "Anschaffungen einschließlich aktivierter Eigenleistungen",
+			en: "Acquisitions, including produced fixed assets",
+			fr: "Acquisitions, y compris la production immobilisée",
+			nl: "Aanschaffingen, met inbegrip van de geproduceerde vaste activa",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9023,6 +12059,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8162",
 		label: "Acquisitions, including produced fixed assets",
+		labels: {
+			de: "Anschaffungen einschließlich aktivierter Eigenleistungen",
+			en: "Acquisitions, including produced fixed assets",
+			fr: "Acquisitions, y compris la production immobilisée",
+			nl: "Aanschaffingen, met inbegrip van de geproduceerde vaste activa",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9037,6 +12079,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8192P",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9051,6 +12099,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8252P",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9064,6 +12118,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8212",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9078,6 +12138,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8212",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9091,6 +12157,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8222",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9105,6 +12177,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8222",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9118,6 +12196,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8232",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9132,6 +12216,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8232",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9145,6 +12235,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8242",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9159,6 +12255,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8242",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9171,6 +12273,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8252",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9184,6 +12292,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8252",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9196,6 +12310,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(23)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9209,6 +12329,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(23)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9221,6 +12347,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "231",
 		label: "Owned by the association or the foundation in full property",
+		labels: {
+			de: "Im Volleigentum der Vereinigung oder Stiftung",
+			en: "Owned by the association or the foundation in full property",
+			fr: "Appartenant à l'association ou à la fondation en pleine propriété",
+			nl: "In volle eigendom van de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9234,6 +12366,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "231",
 		label: "Owned by the association or the foundation in full property",
+		labels: {
+			de: "Im Volleigentum der Vereinigung oder Stiftung",
+			en: "Owned by the association or the foundation in full property",
+			fr: "Appartenant à l'association ou à la fondation en pleine propriété",
+			nl: "In volle eigendom van de vereniging of stichting",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9246,6 +12384,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8323",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9259,6 +12403,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8323",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9272,6 +12422,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8313",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférés d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9286,6 +12442,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8313",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférés d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9299,6 +12461,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8303",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulés à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9313,6 +12481,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8303",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulés à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9326,6 +12500,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8293",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquis de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9340,6 +12520,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8293",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquis de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9353,6 +12539,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8283",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Repris",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9367,6 +12559,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8283",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Repris",
+			nl: "Teruggenomen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9380,6 +12578,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8273",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actés",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9394,6 +12598,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8273",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actés",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9408,6 +12618,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8323P",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9420,6 +12636,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8193",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9433,6 +12655,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8193",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9446,6 +12674,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8183",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9460,6 +12694,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8183",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9473,6 +12713,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8173",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et désaffectations",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9487,6 +12733,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8173",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et désaffectations",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9500,6 +12752,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8163",
 		label: "Acquisitions, including produced fixed assets",
+		labels: {
+			de: "Anschaffungen einschließlich aktivierter Eigenleistungen",
+			en: "Acquisitions, including produced fixed assets",
+			fr: "Acquisitions, y compris la production immobilisée",
+			nl: "Aanschaffingen, met inbegrip van de geproduceerde vaste activa",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9514,6 +12772,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8163",
 		label: "Acquisitions, including produced fixed assets",
+		labels: {
+			de: "Anschaffungen einschließlich aktivierter Eigenleistungen",
+			en: "Acquisitions, including produced fixed assets",
+			fr: "Acquisitions, y compris la production immobilisée",
+			nl: "Aanschaffingen, met inbegrip van de geproduceerde vaste activa",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9528,6 +12792,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8193P",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9542,6 +12812,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8253P",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9555,6 +12831,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8213",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9569,6 +12851,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8213",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9582,6 +12870,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8223",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9596,6 +12890,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8223",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9609,6 +12909,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8233",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9623,6 +12929,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8233",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9636,6 +12948,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8243",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9650,6 +12968,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8243",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9662,6 +12986,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8253",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9675,6 +13005,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8253",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9687,6 +13023,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(24)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9700,6 +13042,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(24)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9712,6 +13060,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "241",
 		label: "Owned by the association or the foundation in full property",
+		labels: {
+			de: "Im Volleigentum der Vereinigung oder Stiftung",
+			en: "Owned by the association or the foundation in full property",
+			fr: "Appartenant à l'association ou à la fondation en pleine propriété",
+			nl: "In volle eigendom van de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9725,6 +13079,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "241",
 		label: "Owned by the association or the foundation in full property",
+		labels: {
+			de: "Im Volleigentum der Vereinigung oder Stiftung",
+			en: "Owned by the association or the foundation in full property",
+			fr: "Appartenant à l'association ou à la fondation en pleine propriété",
+			nl: "In volle eigendom van de vereniging of stichting",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9737,6 +13097,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8324",
 		label: "Amortisations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Amortisations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9750,6 +13116,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8324",
 		label: "Amortisations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Amortisations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9763,6 +13135,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8314",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférés d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9777,6 +13155,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8314",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférés d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9790,6 +13174,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8304",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulés à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9804,6 +13194,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8304",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulés à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9817,6 +13213,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8294",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquis de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9831,6 +13233,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8294",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquis de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9844,6 +13252,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8284",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Repris",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9858,6 +13272,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8284",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Repris",
+			nl: "Teruggenomen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9871,6 +13291,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8274",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actés",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9885,6 +13311,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8274",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actés",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9899,6 +13331,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8324P",
 		label: "Amortisations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Amortisations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9911,6 +13349,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8194",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9924,6 +13368,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8194",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9937,6 +13387,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8184",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9951,6 +13407,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8184",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9964,6 +13426,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8174",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et désaffectations",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -9978,6 +13446,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8174",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et désaffectations",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -9991,6 +13465,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8164",
 		label: "Acquisitions, including produced fixed assets",
+		labels: {
+			de: "Anschaffungen einschließlich aktivierter Eigenleistungen",
+			en: "Acquisitions, including produced fixed assets",
+			fr: "Acquisitions, y compris la production immobilisée",
+			nl: "Aanschaffingen, met inbegrip van de geproduceerde vaste activa",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10005,6 +13485,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8164",
 		label: "Acquisitions, including produced fixed assets",
+		labels: {
+			de: "Anschaffungen einschließlich aktivierter Eigenleistungen",
+			en: "Acquisitions, including produced fixed assets",
+			fr: "Acquisitions, y compris la production immobilisée",
+			nl: "Aanschaffingen, met inbegrip van de geproduceerde vaste activa",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10019,6 +13505,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8194P",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10033,6 +13525,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8254P",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10046,6 +13544,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8214",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10060,6 +13564,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8214",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10073,6 +13583,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8224",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10087,6 +13603,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8224",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10100,6 +13622,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8234",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10114,6 +13642,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8234",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10127,6 +13661,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8244",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10141,6 +13681,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8244",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10153,6 +13699,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8254",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10166,6 +13718,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8254",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10178,6 +13736,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(25)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10191,6 +13755,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(25)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10203,6 +13773,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "250",
 		label: "Land and buildings",
+		labels: {
+			de: "Grundstücke und Bauten",
+			en: "Land and buildings",
+			fr: "Terrains et constructions",
+			nl: "Terreinen en gebouwen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10216,6 +13792,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "250",
 		label: "Land and buildings",
+		labels: {
+			de: "Grundstücke und Bauten",
+			en: "Land and buildings",
+			fr: "Terrains et constructions",
+			nl: "Terreinen en gebouwen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10228,6 +13810,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "251",
 		label: "Plant, machinery and equipment",
+		labels: {
+			de: "Anlagen, Maschinen und Betriebsausstattung",
+			en: "Plant, machinery and equipment",
+			fr: "Installations, machines et outillage",
+			nl: "Installaties, machines en uitrusting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10241,6 +13829,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "251",
 		label: "Plant, machinery and equipment",
+		labels: {
+			de: "Anlagen, Maschinen und Betriebsausstattung",
+			en: "Plant, machinery and equipment",
+			fr: "Installations, machines et outillage",
+			nl: "Installaties, machines en uitrusting",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10253,6 +13847,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "252",
 		label: "Furniture and vehicles",
+		labels: {
+			de: "Geschäftsausstattung und Fuhrpark",
+			en: "Furniture and vehicles",
+			fr: "Mobilier et matériel roulant",
+			nl: "Meubilair en rollend materieel",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10266,6 +13866,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "252",
 		label: "Furniture and vehicles",
+		labels: {
+			de: "Geschäftsausstattung und Fuhrpark",
+			en: "Furniture and vehicles",
+			fr: "Mobilier et matériel roulant",
+			nl: "Meubilair en rollend materieel",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10280,6 +13886,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8325",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10295,6 +13907,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8325",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10310,6 +13928,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8315",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférés d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10326,6 +13950,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8315",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférés d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10341,6 +13971,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8305",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulés à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10357,6 +13993,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8305",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulés à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10372,6 +14014,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8295",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquis de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10388,6 +14036,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8295",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquis de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10403,6 +14057,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8285",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Repris",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10419,6 +14079,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8285",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Repris",
+			nl: "Teruggenomen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10434,6 +14100,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8275",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actés",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10450,6 +14122,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8275",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actés",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10466,6 +14144,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8325P",
 		label: "Depreciations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Depreciations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10480,6 +14164,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8195",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10495,6 +14185,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8195",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10510,6 +14206,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8185",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10526,6 +14228,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8185",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10541,6 +14249,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8175",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et désaffectations",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10557,6 +14271,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8175",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et désaffectations",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10572,6 +14292,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8165",
 		label: "Acquisitions, including produced fixed assets",
+		labels: {
+			de: "Anschaffungen einschließlich aktivierter Eigenleistungen",
+			en: "Acquisitions, including produced fixed assets",
+			fr: "Acquisitions, y compris la production immobilisée",
+			nl: "Aanschaffingen, met inbegrip van de geproduceerde vaste activa",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10588,6 +14314,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8165",
 		label: "Acquisitions, including produced fixed assets",
+		labels: {
+			de: "Anschaffungen einschließlich aktivierter Eigenleistungen",
+			en: "Acquisitions, including produced fixed assets",
+			fr: "Acquisitions, y compris la production immobilisée",
+			nl: "Aanschaffingen, met inbegrip van de geproduceerde vaste activa",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10604,6 +14336,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8195P",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10620,6 +14358,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8255P",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10635,6 +14379,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8215",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10651,6 +14401,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8215",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10666,6 +14422,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8225",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10682,6 +14444,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8225",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10697,6 +14465,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8235",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10713,6 +14487,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8235",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10728,6 +14508,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8245",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10744,6 +14530,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8245",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10758,6 +14550,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8255",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10773,6 +14571,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8255",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10786,6 +14590,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(26)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10800,6 +14610,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(26)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10814,6 +14630,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "261",
 		label: "Owned by the association or the foundation in full property",
+		labels: {
+			de: "Im Volleigentum der Vereinigung oder Stiftung",
+			en: "Owned by the association or the foundation in full property",
+			fr: "Appartenant à l'association ou à la fondation en pleine propriété",
+			nl: "In volle eigendom van de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10829,6 +14651,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "261",
 		label: "Owned by the association or the foundation in full property",
+		labels: {
+			de: "Im Volleigentum der Vereinigung oder Stiftung",
+			en: "Owned by the association or the foundation in full property",
+			fr: "Appartenant à l'association ou à la fondation en pleine propriété",
+			nl: "In volle eigendom van de vereniging of stichting",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10841,6 +14669,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8326",
 		label: "Amortisations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Amortisations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10854,6 +14688,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8326",
 		label: "Amortisations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Amortisations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10867,6 +14707,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8316",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférés d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10881,6 +14727,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8316",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférés d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10894,6 +14746,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8306",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulés à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10908,6 +14766,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8306",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulés à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10921,6 +14785,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8296",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquis de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10935,6 +14805,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8296",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquis de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10948,6 +14824,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8286",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Repris",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10962,6 +14844,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8286",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Repris",
+			nl: "Teruggenomen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -10975,6 +14863,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8276",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actés",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -10989,6 +14883,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8276",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actés",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11003,6 +14903,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8326P",
 		label: "Amortisations and amounts written down at the end of the period",
+		labels: {
+			de: "Abschreibungen und Wertminderungen am Ende des Geschäftsjahres",
+			en: "Amortisations and amounts written down at the end of the period",
+			fr: "Amortissements et réductions de valeur au terme de l'exercice",
+			nl: "Afschrijvingen en waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11015,6 +14921,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8196",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11028,6 +14940,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8196",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11041,6 +14959,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8186",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11055,6 +14979,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8186",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11068,6 +14998,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8176",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et désaffectations",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11082,6 +15018,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8176",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et désaffectations",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11095,6 +15037,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8166",
 		label: "Acquisitions, including produced fixed assets",
+		labels: {
+			de: "Anschaffungen einschließlich aktivierter Eigenleistungen",
+			en: "Acquisitions, including produced fixed assets",
+			fr: "Acquisitions, y compris la production immobilisée",
+			nl: "Aanschaffingen, met inbegrip van de geproduceerde vaste activa",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11109,6 +15057,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8166",
 		label: "Acquisitions, including produced fixed assets",
+		labels: {
+			de: "Anschaffungen einschließlich aktivierter Eigenleistungen",
+			en: "Acquisitions, including produced fixed assets",
+			fr: "Acquisitions, y compris la production immobilisée",
+			nl: "Aanschaffingen, met inbegrip van de geproduceerde vaste activa",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11123,6 +15077,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8196P",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11137,6 +15097,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8256P",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11150,6 +15116,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8216",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11164,6 +15136,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8216",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11177,6 +15155,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8226",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11191,6 +15175,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8226",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11204,6 +15194,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8236",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11218,6 +15214,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8236",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11231,6 +15233,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8246",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11245,6 +15253,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8246",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11257,6 +15271,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8256",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11270,6 +15290,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8256",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11282,6 +15308,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(27)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11295,6 +15327,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(27)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11309,6 +15347,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8521",
 		label: "Amounts written down at the end of the period",
+		labels: {
+			de: "Wertminderungen am Ende des Geschäftsjahres",
+			en: "Amounts written down at the end of the period",
+			fr: "Réductions de valeur au terme de l'exercice",
+			nl: "Waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11324,6 +15368,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8521",
 		label: "Amounts written down at the end of the period",
+		labels: {
+			de: "Wertminderungen am Ende des Geschäftsjahres",
+			en: "Amounts written down at the end of the period",
+			fr: "Réductions de valeur au terme de l'exercice",
+			nl: "Waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11339,6 +15389,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8511",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11355,6 +15411,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8511",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11370,6 +15432,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8501",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulées à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11386,6 +15454,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8501",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulées à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11401,6 +15475,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8491",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11417,6 +15497,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8491",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11432,6 +15518,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8481",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Reprises",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11448,6 +15540,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8481",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Reprises",
+			nl: "Teruggenomen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11463,6 +15561,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8471",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11479,6 +15583,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8471",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11495,6 +15605,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8521P",
 		label: "Amounts written down at the end of the period",
+		labels: {
+			de: "Wertminderungen am Ende des Geschäftsjahres",
+			en: "Amounts written down at the end of the period",
+			fr: "Réductions de valeur au terme de l'exercice",
+			nl: "Waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11509,6 +15625,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8391",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11524,6 +15646,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8391",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11539,6 +15667,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8381",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11555,6 +15689,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8381",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11570,6 +15710,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8371",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et retraits",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11586,6 +15732,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8371",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et retraits",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11601,6 +15753,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8361",
 		label: "Acquisitions",
+		labels: {
+			de: "Anschaffungen",
+			en: "Acquisitions",
+			fr: "Acquisitions",
+			nl: "Aanschaffingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11617,6 +15775,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8361",
 		label: "Acquisitions",
+		labels: {
+			de: "Anschaffungen",
+			en: "Acquisitions",
+			fr: "Acquisitions",
+			nl: "Aanschaffingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11633,6 +15797,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8391P",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11649,6 +15819,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8451P",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11664,6 +15840,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8411",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11680,6 +15862,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8411",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11695,6 +15883,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8421",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11711,6 +15905,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8421",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11726,6 +15926,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8431",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11742,6 +15948,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8431",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11757,6 +15969,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8441",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11773,6 +15991,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8441",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11787,6 +16011,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8451",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11802,6 +16032,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8451",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11818,6 +16054,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8551P",
 		label: "Uncalled amounts at the end of the period",
+		labels: {
+			de: "Nicht eingeforderte Beträge am Ende des Geschäftsjahres",
+			en: "Uncalled amounts at the end of the period",
+			fr: "Montants non appelés au terme de l'exercice",
+			nl: "Niet-opgevraagde bedragen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11833,6 +16075,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8541",
 		label: "Movements during the period",
+		labels: {
+			de: "Veränderungen im Geschäftsjahr",
+			en: "Movements during the period",
+			fr: "Mutations de l'exercice",
+			nl: "Mutaties tijdens het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11849,6 +16097,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8541",
 		label: "Movements during the period",
+		labels: {
+			de: "Veränderungen im Geschäftsjahr",
+			en: "Movements during the period",
+			fr: "Mutations de l'exercice",
+			nl: "Mutaties tijdens het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11863,6 +16117,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8551",
 		label: "Uncalled amounts at the end of the period",
+		labels: {
+			de: "Nicht eingeforderte Beträge am Ende des Geschäftsjahres",
+			en: "Uncalled amounts at the end of the period",
+			fr: "Montants non appelés au terme de l'exercice",
+			nl: "Niet-opgevraagde bedragen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11878,6 +16138,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8551",
 		label: "Uncalled amounts at the end of the period",
+		labels: {
+			de: "Nicht eingeforderte Beträge am Ende des Geschäftsjahres",
+			en: "Uncalled amounts at the end of the period",
+			fr: "Montants non appelés au terme de l'exercice",
+			nl: "Niet-opgevraagde bedragen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11892,6 +16158,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(280)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11907,6 +16179,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(280)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11922,6 +16200,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "281P",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11936,6 +16220,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8581",
 		label: "Additions",
+		labels: {
+			de: "Zugänge",
+			en: "Additions",
+			fr: "Additions",
+			nl: "Toevoegingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11951,6 +16241,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8581",
 		label: "Additions",
+		labels: {
+			de: "Zugänge",
+			en: "Additions",
+			fr: "Additions",
+			nl: "Toevoegingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11965,6 +16261,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8591",
 		label: "Repayments",
+		labels: {
+			de: "Rückzahlungen",
+			en: "Repayments",
+			fr: "Remboursements",
+			nl: "Terugbetalingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -11980,6 +16282,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8591",
 		label: "Repayments",
+		labels: {
+			de: "Rückzahlungen",
+			en: "Repayments",
+			fr: "Remboursements",
+			nl: "Terugbetalingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -11995,6 +16303,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8601",
 		label: "Amounts written down",
+		labels: {
+			de: "Gebuchte Wertminderungen",
+			en: "Amounts written down",
+			fr: "Réductions de valeur actées",
+			nl: "Geboekte waardeverminderingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12011,6 +16325,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8601",
 		label: "Amounts written down",
+		labels: {
+			de: "Gebuchte Wertminderungen",
+			en: "Amounts written down",
+			fr: "Réductions de valeur actées",
+			nl: "Geboekte waardeverminderingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12026,6 +16346,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8611",
 		label: "Amounts written back",
+		labels: {
+			de: "Zurückgenommene Wertminderungen",
+			en: "Amounts written back",
+			fr: "Réductions de valeur reprises",
+			nl: "Teruggenomen waardeverminderingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12042,6 +16368,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8611",
 		label: "Amounts written back",
+		labels: {
+			de: "Zurückgenommene Wertminderungen",
+			en: "Amounts written back",
+			fr: "Réductions de valeur reprises",
+			nl: "Teruggenomen waardeverminderingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12057,6 +16389,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8621",
 		label: "Exchange differences",
+		labels: {
+			de: "Wechselkursdifferenzen",
+			en: "Exchange differences",
+			fr: "Différences de change",
+			nl: "Wisselkoersverschillen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12073,6 +16411,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8621",
 		label: "Exchange differences",
+		labels: {
+			de: "Wechselkursdifferenzen",
+			en: "Exchange differences",
+			fr: "Différences de change",
+			nl: "Wisselkoersverschillen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12087,6 +16431,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8631",
 		label: "Other movements",
+		labels: {
+			de: "Sonstige Veränderungen",
+			en: "Other movements",
+			fr: "Autres",
+			nl: "Overige mutaties",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12102,6 +16452,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8631",
 		label: "Other movements",
+		labels: {
+			de: "Sonstige Veränderungen",
+			en: "Other movements",
+			fr: "Autres",
+			nl: "Overige mutaties",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12116,6 +16472,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(281)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12131,6 +16493,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(281)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12146,6 +16514,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8651",
 		label: "ACCUMULATED AMOUNTS WRITTEN OFF AMOUNTS RECEIVABLE AT END OF THE PERIOD",
+		labels: {
+			de: "KUMULIERTE WERTMINDERUNGEN AUF FORDERUNGEN AM ENDE DES GESCHÄFTSJAHRES",
+			en: "ACCUMULATED AMOUNTS WRITTEN OFF AMOUNTS RECEIVABLE AT END OF THE PERIOD",
+			fr: "RÉDUCTIONS DE VALEUR CUMULÉES SUR CRÉANCES AU TERME DE L'EXERCICE",
+			nl: "GECUMULEERDE WAARDEVERMINDERINGEN OP VORDERINGEN PER EINDE BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12162,6 +16536,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8651",
 		label: "ACCUMULATED AMOUNTS WRITTEN OFF AMOUNTS RECEIVABLE AT END OF THE PERIOD",
+		labels: {
+			de: "KUMULIERTE WERTMINDERUNGEN AUF FORDERUNGEN AM ENDE DES GESCHÄFTSJAHRES",
+			en: "ACCUMULATED AMOUNTS WRITTEN OFF AMOUNTS RECEIVABLE AT END OF THE PERIOD",
+			fr: "RÉDUCTIONS DE VALEUR CUMULÉES SUR CRÉANCES AU TERME DE L'EXERCICE",
+			nl: "GECUMULEERDE WAARDEVERMINDERINGEN OP VORDERINGEN PER EINDE BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12176,6 +16556,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8522",
 		label: "Amounts written down at the end of the period",
+		labels: {
+			de: "Wertminderungen am Ende des Geschäftsjahres",
+			en: "Amounts written down at the end of the period",
+			fr: "Réductions de valeur au terme de l'exercice",
+			nl: "Waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12191,6 +16577,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8522",
 		label: "Amounts written down at the end of the period",
+		labels: {
+			de: "Wertminderungen am Ende des Geschäftsjahres",
+			en: "Amounts written down at the end of the period",
+			fr: "Réductions de valeur au terme de l'exercice",
+			nl: "Waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12206,6 +16598,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8512",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12222,6 +16620,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8512",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12237,6 +16641,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8502",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulées à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12253,6 +16663,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8502",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulées à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12268,6 +16684,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8492",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12284,6 +16706,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8492",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12299,6 +16727,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8482",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Reprises",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12315,6 +16749,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8482",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Reprises",
+			nl: "Teruggenomen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12330,6 +16770,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8472",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12346,6 +16792,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8472",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12362,6 +16814,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8522P",
 		label: "Amounts written down at the end of the period",
+		labels: {
+			de: "Wertminderungen am Ende des Geschäftsjahres",
+			en: "Amounts written down at the end of the period",
+			fr: "Réductions de valeur au terme de l'exercice",
+			nl: "Waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12376,6 +16834,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8392",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12391,6 +16855,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8392",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12406,6 +16876,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8382",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12422,6 +16898,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8382",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12437,6 +16919,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8372",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et retraits",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12453,6 +16941,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8372",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et retraits",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12468,6 +16962,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8362",
 		label: "Acquisitions",
+		labels: {
+			de: "Anschaffungen",
+			en: "Acquisitions",
+			fr: "Acquisitions",
+			nl: "Aanschaffingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12484,6 +16984,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8362",
 		label: "Acquisitions",
+		labels: {
+			de: "Anschaffungen",
+			en: "Acquisitions",
+			fr: "Acquisitions",
+			nl: "Aanschaffingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12500,6 +17006,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8392P",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12516,6 +17028,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8452P",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12531,6 +17049,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8412",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12547,6 +17071,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8412",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12562,6 +17092,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8422",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12578,6 +17114,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8422",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12593,6 +17135,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8432",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12609,6 +17157,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8432",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12624,6 +17178,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8442",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12640,6 +17200,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8442",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12654,6 +17220,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8452",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12669,6 +17241,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8452",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12685,6 +17263,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8552P",
 		label: "Uncalled amounts at the end of the period",
+		labels: {
+			de: "Nicht eingeforderte Beträge am Ende des Geschäftsjahres",
+			en: "Uncalled amounts at the end of the period",
+			fr: "Montants non appelés au terme de l'exercice",
+			nl: "Niet-opgevraagde bedragen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12700,6 +17284,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8542",
 		label: "Movements during the period",
+		labels: {
+			de: "Veränderungen im Geschäftsjahr",
+			en: "Movements during the period",
+			fr: "Mutations de l'exercice",
+			nl: "Mutaties tijdens het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12716,6 +17306,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8542",
 		label: "Movements during the period",
+		labels: {
+			de: "Veränderungen im Geschäftsjahr",
+			en: "Movements during the period",
+			fr: "Mutations de l'exercice",
+			nl: "Mutaties tijdens het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12730,6 +17326,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8552",
 		label: "Uncalled amounts at the end of the period",
+		labels: {
+			de: "Nicht eingeforderte Beträge am Ende des Geschäftsjahres",
+			en: "Uncalled amounts at the end of the period",
+			fr: "Montants non appelés au terme de l'exercice",
+			nl: "Niet-opgevraagde bedragen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12745,6 +17347,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8552",
 		label: "Uncalled amounts at the end of the period",
+		labels: {
+			de: "Nicht eingeforderte Beträge am Ende des Geschäftsjahres",
+			en: "Uncalled amounts at the end of the period",
+			fr: "Montants non appelés au terme de l'exercice",
+			nl: "Niet-opgevraagde bedragen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12759,6 +17367,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(282)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12774,6 +17388,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(282)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12789,6 +17409,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "283P",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12803,6 +17429,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8582",
 		label: "Additions",
+		labels: {
+			de: "Zugänge",
+			en: "Additions",
+			fr: "Additions",
+			nl: "Toevoegingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12818,6 +17450,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8582",
 		label: "Additions",
+		labels: {
+			de: "Zugänge",
+			en: "Additions",
+			fr: "Additions",
+			nl: "Toevoegingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12832,6 +17470,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8592",
 		label: "Repayments",
+		labels: {
+			de: "Rückzahlungen",
+			en: "Repayments",
+			fr: "Remboursements",
+			nl: "Terugbetalingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12847,6 +17491,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8592",
 		label: "Repayments",
+		labels: {
+			de: "Rückzahlungen",
+			en: "Repayments",
+			fr: "Remboursements",
+			nl: "Terugbetalingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12862,6 +17512,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8602",
 		label: "Amounts written down",
+		labels: {
+			de: "Gebuchte Wertminderungen",
+			en: "Amounts written down",
+			fr: "Réductions de valeur actées",
+			nl: "Geboekte waardeverminderingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12878,6 +17534,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8602",
 		label: "Amounts written down",
+		labels: {
+			de: "Gebuchte Wertminderungen",
+			en: "Amounts written down",
+			fr: "Réductions de valeur actées",
+			nl: "Geboekte waardeverminderingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12893,6 +17555,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8612",
 		label: "Amounts written back",
+		labels: {
+			de: "Zurückgenommene Wertminderungen",
+			en: "Amounts written back",
+			fr: "Réductions de valeur reprises",
+			nl: "Teruggenomen waardeverminderingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12909,6 +17577,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8612",
 		label: "Amounts written back",
+		labels: {
+			de: "Zurückgenommene Wertminderungen",
+			en: "Amounts written back",
+			fr: "Réductions de valeur reprises",
+			nl: "Teruggenomen waardeverminderingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12924,6 +17598,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8622",
 		label: "Exchange differences",
+		labels: {
+			de: "Wechselkursdifferenzen",
+			en: "Exchange differences",
+			fr: "Différences de change",
+			nl: "Wisselkoersverschillen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12940,6 +17620,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8622",
 		label: "Exchange differences",
+		labels: {
+			de: "Wechselkursdifferenzen",
+			en: "Exchange differences",
+			fr: "Différences de change",
+			nl: "Wisselkoersverschillen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12954,6 +17640,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8632",
 		label: "Other movements",
+		labels: {
+			de: "Sonstige Veränderungen",
+			en: "Other movements",
+			fr: "Autres",
+			nl: "Overige mutaties",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12969,6 +17661,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8632",
 		label: "Other movements",
+		labels: {
+			de: "Sonstige Veränderungen",
+			en: "Other movements",
+			fr: "Autres",
+			nl: "Overige mutaties",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -12983,6 +17681,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(283)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -12998,6 +17702,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(283)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13013,6 +17723,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8652",
 		label: "ACCUMULATED AMOUNTS WRITTEN OFF AMOUNTS RECEIVABLE AT END OF THE PERIOD",
+		labels: {
+			de: "KUMULIERTE WERTMINDERUNGEN AUF FORDERUNGEN AM ENDE DES GESCHÄFTSJAHRES",
+			en: "ACCUMULATED AMOUNTS WRITTEN OFF AMOUNTS RECEIVABLE AT END OF THE PERIOD",
+			fr: "RÉDUCTIONS DE VALEUR CUMULÉES SUR CRÉANCES AU TERME DE L'EXERCICE",
+			nl: "GECUMULEERDE WAARDEVERMINDERINGEN OP VORDERINGEN PER EINDE BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13029,6 +17745,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8652",
 		label: "ACCUMULATED AMOUNTS WRITTEN OFF AMOUNTS RECEIVABLE AT END OF THE PERIOD",
+		labels: {
+			de: "KUMULIERTE WERTMINDERUNGEN AUF FORDERUNGEN AM ENDE DES GESCHÄFTSJAHRES",
+			en: "ACCUMULATED AMOUNTS WRITTEN OFF AMOUNTS RECEIVABLE AT END OF THE PERIOD",
+			fr: "RÉDUCTIONS DE VALEUR CUMULÉES SUR CRÉANCES AU TERME DE L'EXERCICE",
+			nl: "GECUMULEERDE WAARDEVERMINDERINGEN OP VORDERINGEN PER EINDE BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13043,6 +17765,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8523",
 		label: "Amounts written down at the end of the period",
+		labels: {
+			de: "Wertminderungen am Ende des Geschäftsjahres",
+			en: "Amounts written down at the end of the period",
+			fr: "Réductions de valeur au terme de l'exercice",
+			nl: "Waardeverminderingen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13058,6 +17786,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8523",
 		label: "Amounts written down at the end of the period",
+		labels: {
+			de: "Wertminderungen am Ende des Geschäftsjahres",
+			en: "Amounts written down at the end of the period",
+			fr: "Réductions de valeur au terme de l'exercice",
+			nl: "Waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13073,6 +17807,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8513",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13089,6 +17829,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8513",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13104,6 +17850,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8503",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulées à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13120,6 +17872,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8503",
 		label: "Cancelled owing to sales and disposals",
+		labels: {
+			de: "Aufgrund von Veräußerungen und Außerdienststellungen gelöscht",
+			en: "Cancelled owing to sales and disposals",
+			fr: "Annulées à la suite de cessions et désaffectations",
+			nl: "Afgeboekt na overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13135,6 +17893,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8493",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13151,6 +17915,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8493",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13166,6 +17936,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8483",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Reprises",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13182,6 +17958,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8483",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Reprises",
+			nl: "Teruggenomen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13197,6 +17979,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8473",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13213,6 +18001,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8473",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13229,6 +18023,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8523P",
 		label: "Amounts written down at the end of the period",
+		labels: {
+			de: "Wertminderungen am Ende des Geschäftsjahres",
+			en: "Amounts written down at the end of the period",
+			fr: "Réductions de valeur au terme de l'exercice",
+			nl: "Waardeverminderingen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13243,6 +18043,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8393",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13258,6 +18064,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8393",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13273,6 +18085,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8383",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13289,6 +18107,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8383",
 		label: "Transfers from one heading to another",
+		labels: {
+			de: "Umbuchungen von einem Posten in einen anderen",
+			en: "Transfers from one heading to another",
+			fr: "Transferts d'une rubrique à une autre",
+			nl: "Overboekingen van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13304,6 +18128,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8373",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et retraits",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13320,6 +18150,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8373",
 		label: "Sales and disposals",
+		labels: {
+			de: "Veräußerungen und Außerdienststellungen",
+			en: "Sales and disposals",
+			fr: "Cessions et retraits",
+			nl: "Overdrachten en buitengebruikstellingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13335,6 +18171,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8363",
 		label: "Acquisitions",
+		labels: {
+			de: "Anschaffungen",
+			en: "Acquisitions",
+			fr: "Acquisitions",
+			nl: "Aanschaffingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13351,6 +18193,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8363",
 		label: "Acquisitions",
+		labels: {
+			de: "Anschaffungen",
+			en: "Acquisitions",
+			fr: "Acquisitions",
+			nl: "Aanschaffingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13367,6 +18215,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8393P",
 		label: "Acquisition value at the end of the period",
+		labels: {
+			de: "Anschaffungswert am Ende des Geschäftsjahres",
+			en: "Acquisition value at the end of the period",
+			fr: "Valeur d'acquisition au terme de l'exercice",
+			nl: "Aanschaffingswaarde per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13383,6 +18237,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8453P",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13398,6 +18258,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8413",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13414,6 +18280,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8413",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13429,6 +18301,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8423",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13445,6 +18323,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8423",
 		label: "Acquisitions from third parties",
+		labels: {
+			de: "Von Dritten erworben",
+			en: "Acquisitions from third parties",
+			fr: "Acquises de tiers",
+			nl: "Verworven van derden",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13460,6 +18344,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8433",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13476,6 +18366,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8433",
 		label: "Cancelled",
+		labels: {
+			de: "Gelöscht",
+			en: "Cancelled",
+			fr: "Annulées",
+			nl: "Afgeboekt",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13491,6 +18387,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8443",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13507,6 +18409,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8443",
 		label: "Transferred from one heading to another",
+		labels: {
+			de: "Von einem Posten in einen anderen umgebucht",
+			en: "Transferred from one heading to another",
+			fr: "Transférées d'une rubrique à une autre",
+			nl: "Overgeboekt van een post naar een andere",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13521,6 +18429,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8453",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13536,6 +18450,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8453",
 		label: "Revaluation surpluses at the end of the period",
+		labels: {
+			de: "Mehrwerte am Ende des Geschäftsjahres",
+			en: "Revaluation surpluses at the end of the period",
+			fr: "Plus-values au terme de l'exercice",
+			nl: "Meerwaarden per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13552,6 +18472,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8553P",
 		label: "Uncalled amounts at the end of the period",
+		labels: {
+			de: "Nicht eingeforderte Beträge am Ende des Geschäftsjahres",
+			en: "Uncalled amounts at the end of the period",
+			fr: "Montants non appelés au terme de l'exercice",
+			nl: "Niet-opgevraagde bedragen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13567,6 +18493,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8543",
 		label: "Movements during the period",
+		labels: {
+			de: "Veränderungen im Geschäftsjahr",
+			en: "Movements during the period",
+			fr: "Mutations de l'exercice",
+			nl: "Mutaties tijdens het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13583,6 +18515,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8543",
 		label: "Movements during the period",
+		labels: {
+			de: "Veränderungen im Geschäftsjahr",
+			en: "Movements during the period",
+			fr: "Mutations de l'exercice",
+			nl: "Mutaties tijdens het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13597,6 +18535,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8553",
 		label: "Uncalled amounts at the end of the period",
+		labels: {
+			de: "Nicht eingeforderte Beträge am Ende des Geschäftsjahres",
+			en: "Uncalled amounts at the end of the period",
+			fr: "Montants non appelés au terme de l'exercice",
+			nl: "Niet-opgevraagde bedragen per einde van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13612,6 +18556,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8553",
 		label: "Uncalled amounts at the end of the period",
+		labels: {
+			de: "Nicht eingeforderte Beträge am Ende des Geschäftsjahres",
+			en: "Uncalled amounts at the end of the period",
+			fr: "Montants non appelés au terme de l'exercice",
+			nl: "Niet-opgevraagde bedragen per einde van het boekjaar",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13625,6 +18575,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(284)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13639,6 +18595,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(284)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13653,6 +18615,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "285/8P",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13667,6 +18635,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8583",
 		label: "Additions",
+		labels: {
+			de: "Zugänge",
+			en: "Additions",
+			fr: "Additions",
+			nl: "Toevoegingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13682,6 +18656,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8583",
 		label: "Additions",
+		labels: {
+			de: "Zugänge",
+			en: "Additions",
+			fr: "Additions",
+			nl: "Toevoegingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13696,6 +18676,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8593",
 		label: "Repayments",
+		labels: {
+			de: "Rückzahlungen",
+			en: "Repayments",
+			fr: "Remboursements",
+			nl: "Terugbetalingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13711,6 +18697,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8593",
 		label: "Repayments",
+		labels: {
+			de: "Rückzahlungen",
+			en: "Repayments",
+			fr: "Remboursements",
+			nl: "Terugbetalingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13726,6 +18718,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8603",
 		label: "Amounts written down",
+		labels: {
+			de: "Gebuchte Wertminderungen",
+			en: "Amounts written down",
+			fr: "Réductions de valeur actées",
+			nl: "Geboekte waardeverminderingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13742,6 +18740,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8603",
 		label: "Amounts written down",
+		labels: {
+			de: "Gebuchte Wertminderungen",
+			en: "Amounts written down",
+			fr: "Réductions de valeur actées",
+			nl: "Geboekte waardeverminderingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13757,6 +18761,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8613",
 		label: "Amounts written back",
+		labels: {
+			de: "Zurückgenommene Wertminderungen",
+			en: "Amounts written back",
+			fr: "Réductions de valeur reprises",
+			nl: "Teruggenomen waardeverminderingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13773,6 +18783,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8613",
 		label: "Amounts written back",
+		labels: {
+			de: "Zurückgenommene Wertminderungen",
+			en: "Amounts written back",
+			fr: "Réductions de valeur reprises",
+			nl: "Teruggenomen waardeverminderingen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13788,6 +18804,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8623",
 		label: "Exchange differences",
+		labels: {
+			de: "Wechselkursdifferenzen",
+			en: "Exchange differences",
+			fr: "Différences de change",
+			nl: "Wisselkoersverschillen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13804,6 +18826,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8623",
 		label: "Exchange differences",
+		labels: {
+			de: "Wechselkursdifferenzen",
+			en: "Exchange differences",
+			fr: "Différences de change",
+			nl: "Wisselkoersverschillen",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13818,6 +18846,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8633",
 		label: "Other movements",
+		labels: {
+			de: "Sonstige Veränderungen",
+			en: "Other movements",
+			fr: "Autres",
+			nl: "Overige mutaties",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13833,6 +18867,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8633",
 		label: "Other movements",
+		labels: {
+			de: "Sonstige Veränderungen",
+			en: "Other movements",
+			fr: "Autres",
+			nl: "Overige mutaties",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13846,6 +18886,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(285/8)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13860,6 +18906,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "(285/8)",
 		label: "NET BOOK VALUE AT THE END OF THE PERIOD",
+		labels: {
+			de: "NETTOBUCHWERT AM ENDE DES GESCHÄFTSJAHRES",
+			en: "NET BOOK VALUE AT THE END OF THE PERIOD",
+			fr: "VALEUR COMPTABLE NETTE AU TERME DE L'EXERCICE",
+			nl: "NETTOBOEKWAARDE PER EINDE VAN HET BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13875,6 +18927,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8653",
 		label: "ACCUMULATED AMOUNTS WRITTEN OFF AMOUNTS RECEIVABLE AT END OF THE PERIOD",
+		labels: {
+			de: "KUMULIERTE WERTMINDERUNGEN AUF FORDERUNGEN AM ENDE DES GESCHÄFTSJAHRES",
+			en: "ACCUMULATED AMOUNTS WRITTEN OFF AMOUNTS RECEIVABLE AT END OF THE PERIOD",
+			fr: "RÉDUCTIONS DE VALEUR CUMULÉES SUR CRÉANCES AU TERME DE L'EXERCICE",
+			nl: "GECUMULEERDE WAARDEVERMINDERINGEN OP VORDERINGEN PER EINDE BOEKJAAR",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -13891,6 +18949,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		code: "8653",
 		label: "ACCUMULATED AMOUNTS WRITTEN OFF AMOUNTS RECEIVABLE AT END OF THE PERIOD",
+		labels: {
+			de: "KUMULIERTE WERTMINDERUNGEN AUF FORDERUNGEN AM ENDE DES GESCHÄFTSJAHRES",
+			en: "ACCUMULATED AMOUNTS WRITTEN OFF AMOUNTS RECEIVABLE AT END OF THE PERIOD",
+			fr: "RÉDUCTIONS DE VALEUR CUMULÉES SUR CRÉANCES AU TERME DE L'EXERCICE",
+			nl: "GECUMULEERDE WAARDEVERMINDERINGEN OP VORDERINGEN PER EINDE BOEKJAAR",
+		},
 		previousPeriod: "prd:m2",
 	},
 	{
@@ -13906,6 +18970,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -13916,6 +18986,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -13927,6 +19003,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -13938,6 +19020,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -13949,6 +19037,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -13962,6 +19056,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -13975,6 +19075,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -13986,6 +19092,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -13997,6 +19109,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14008,6 +19126,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14019,6 +19143,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14032,6 +19162,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14043,6 +19179,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14054,6 +19196,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14065,6 +19213,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14076,6 +19230,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14089,6 +19249,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14100,6 +19266,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14111,6 +19283,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14122,6 +19300,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14133,6 +19317,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14146,6 +19336,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14157,6 +19353,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14168,6 +19370,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14179,6 +19387,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14190,6 +19404,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14204,6 +19424,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14215,6 +19441,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14226,6 +19458,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14237,6 +19475,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14248,6 +19492,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14261,6 +19511,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Postal code - other",
+		labels: {
+			de: "Postleitzahl - Sonstiges",
+			en: "Postal code - other",
+			fr: "Code postal - autre",
+			nl: "Postcode - andere",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14274,6 +19530,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14285,6 +19547,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14296,6 +19564,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14307,6 +19581,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14318,6 +19598,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14332,6 +19618,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14343,6 +19635,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14354,6 +19652,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14365,6 +19669,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14376,6 +19686,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14389,6 +19705,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14402,6 +19724,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14412,6 +19740,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14422,6 +19756,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14432,6 +19772,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14444,6 +19790,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14458,6 +19810,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Annual accounts as per",
+		labels: {
+			de: "Jahresabschluss aufgestellt am",
+			en: "Annual accounts as per",
+			fr: "Comptes annuels arrêtés au",
+			nl: "Jaarrekening per",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14470,6 +19828,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Annual accounts as per",
+		labels: {
+			de: "Jahresabschluss aufgestellt am",
+			en: "Annual accounts as per",
+			fr: "Comptes annuels arrêtés au",
+			nl: "Jaarrekening per",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14481,6 +19845,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Annual accounts as per",
+		labels: {
+			de: "Jahresabschluss aufgestellt am",
+			en: "Annual accounts as per",
+			fr: "Comptes annuels arrêtés au",
+			nl: "Jaarrekening per",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14492,6 +19862,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Annual accounts as per",
+		labels: {
+			de: "Jahresabschluss aufgestellt am",
+			en: "Annual accounts as per",
+			fr: "Comptes annuels arrêtés au",
+			nl: "Jaarrekening per",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14503,6 +19879,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Annual accounts as per",
+		labels: {
+			de: "Jahresabschluss aufgestellt am",
+			en: "Annual accounts as per",
+			fr: "Comptes annuels arrêtés au",
+			nl: "Jaarrekening per",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14515,6 +19897,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Currency code",
+		labels: {
+			de: "Währungseinheiten",
+			en: "Currency code",
+			fr: "Code devise",
+			nl: "Muntcode",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14528,6 +19916,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Equity - (+) or (-) (in units)",
+		labels: {
+			de: "Eigenkapital - (+) oder (-) (in Währungseinheiten)",
+			en: "Equity - (+) or (-) (in units)",
+			fr: "Capitaux propres - (+) ou (-) (en unités)",
+			nl: "Eigen vermogen - (+) of (-) (in eenheden)",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14539,6 +19933,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Equity - (+) or (-) (in units)",
+		labels: {
+			de: "Eigenkapital - (+) oder (-) (in Währungseinheiten)",
+			en: "Equity - (+) or (-) (in units)",
+			fr: "Capitaux propres - (+) ou (-) (en unités)",
+			nl: "Eigen vermogen - (+) of (-) (in eenheden)",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14550,6 +19950,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Equity - (+) or (-) (in units)",
+		labels: {
+			de: "Eigenkapital - (+) oder (-) (in Währungseinheiten)",
+			en: "Equity - (+) or (-) (in units)",
+			fr: "Capitaux propres - (+) ou (-) (en unités)",
+			nl: "Eigen vermogen - (+) of (-) (in eenheden)",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14561,6 +19967,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Equity - (+) or (-) (in units)",
+		labels: {
+			de: "Eigenkapital - (+) oder (-) (in Währungseinheiten)",
+			en: "Equity - (+) or (-) (in units)",
+			fr: "Capitaux propres - (+) ou (-) (en unités)",
+			nl: "Eigen vermogen - (+) of (-) (in eenheden)",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14572,6 +19984,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Equity - (+) or (-) (in units)",
+		labels: {
+			de: "Eigenkapital - (+) oder (-) (in Währungseinheiten)",
+			en: "Equity - (+) or (-) (in units)",
+			fr: "Capitaux propres - (+) ou (-) (en unités)",
+			nl: "Eigen vermogen - (+) of (-) (in eenheden)",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14585,6 +20003,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Net result - (+) or (-) (in units)",
+		labels: {
+			de: "Nettoergebnis - (+) oder (-) (in Währungseinheiten)",
+			en: "Net result - (+) or (-) (in units)",
+			fr: "Résultat net - (+) ou (-) (en unités)",
+			nl: "Nettoresultaat - (+) of (-) (in eenheden)",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14596,6 +20020,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Net result - (+) or (-) (in units)",
+		labels: {
+			de: "Nettoergebnis - (+) oder (-) (in Währungseinheiten)",
+			en: "Net result - (+) or (-) (in units)",
+			fr: "Résultat net - (+) ou (-) (en unités)",
+			nl: "Nettoresultaat - (+) of (-) (in eenheden)",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14607,6 +20037,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Net result - (+) or (-) (in units)",
+		labels: {
+			de: "Nettoergebnis - (+) oder (-) (in Währungseinheiten)",
+			en: "Net result - (+) or (-) (in units)",
+			fr: "Résultat net - (+) ou (-) (en unités)",
+			nl: "Nettoresultaat - (+) of (-) (in eenheden)",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14618,6 +20054,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Net result - (+) or (-) (in units)",
+		labels: {
+			de: "Nettoergebnis - (+) oder (-) (in Währungseinheiten)",
+			en: "Net result - (+) or (-) (in units)",
+			fr: "Résultat net - (+) ou (-) (en unités)",
+			nl: "Nettoresultaat - (+) of (-) (in eenheden)",
+		},
 	},
 	{
 		section: "s.06.05.1.g",
@@ -14629,6 +20071,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open", "dim:ptpn"],
 		label: "Net result - (+) or (-) (in units)",
+		labels: {
+			de: "Nettoergebnis - (+) oder (-) (in Währungseinheiten)",
+			en: "Net result - (+) or (-) (in units)",
+			fr: "Résultat net - (+) ou (-) (en unités)",
+			nl: "Nettoresultaat - (+) of (-) (in eenheden)",
+		},
 	},
 	{
 		section: "s.06.05.2.g",
@@ -14643,6 +20091,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:curn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.2.g",
@@ -14656,6 +20110,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:curn"],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.06.05.2.g",
@@ -14669,6 +20129,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:curn"],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.06.05.2.g",
@@ -14682,6 +20148,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:curn"],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.06.05.2.g",
@@ -14695,6 +20167,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:curn"],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.06.05.2.g",
@@ -14708,6 +20186,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:curn"],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.06.05.2.g",
@@ -14722,6 +20206,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:curn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.2.g",
@@ -14735,6 +20225,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:curn"],
 		label: "Postal code - other",
+		labels: {
+			de: "Postleitzahl - Sonstiges",
+			en: "Postal code - other",
+			fr: "Code postal - autre",
+			nl: "Postcode - andere",
+		},
 	},
 	{
 		section: "s.06.05.2.g",
@@ -14748,6 +20244,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:curn"],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.06.05.2.g",
@@ -14762,6 +20264,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:curn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.2.g",
@@ -14775,6 +20283,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:curn"],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.06.05.2.g",
@@ -14788,6 +20302,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:curn"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.2.g",
@@ -14800,6 +20320,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:curn"],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.06.05.2.g",
@@ -14814,6 +20340,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:curn"],
 		label: "Publication code of the annual accounts",
+		labels: {
+			de: "Veröffentlichungskode der Bilanzen des Unternehmens",
+			en: "Publication code of the annual accounts",
+			fr: "Code de publication des comptes annuels",
+			nl: "Openbaarmakingscode met betrekking tot de jaarrekening",
+		},
 	},
 	{
 		section: "s.06.05.3.g",
@@ -14828,6 +20360,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:olen"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.3.g",
@@ -14841,6 +20379,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:olen"],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.06.05.3.g",
@@ -14854,6 +20398,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:olen"],
 		label: "Value",
+		labels: {
+			de: "Angabe",
+			en: "Value",
+			fr: "Valeur",
+			nl: "Opgave nummer",
+		},
 	},
 	{
 		section: "s.06.05.3.g",
@@ -14867,6 +20417,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:olen"],
 		label: "Street",
+		labels: {
+			de: "Straβe",
+			en: "Street",
+			fr: "Rue",
+			nl: "Straat",
+		},
 	},
 	{
 		section: "s.06.05.3.g",
@@ -14880,6 +20436,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:olen"],
 		label: "Nr",
+		labels: {
+			de: "Nr",
+			en: "Nr",
+			fr: "N°",
+			nl: "Nr",
+		},
 	},
 	{
 		section: "s.06.05.3.g",
@@ -14893,6 +20455,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:olen"],
 		label: "Box",
+		labels: {
+			de: "Briefkasten",
+			en: "Box",
+			fr: "Boîte",
+			nl: "Bus",
+		},
 	},
 	{
 		section: "s.06.05.3.g",
@@ -14907,6 +20475,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:olen"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.3.g",
@@ -14920,6 +20494,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:olen"],
 		label: "Postal code - other",
+		labels: {
+			de: "Postleitzahl - Sonstiges",
+			en: "Postal code - other",
+			fr: "Code postal - autre",
+			nl: "Postcode - andere",
+		},
 	},
 	{
 		section: "s.06.05.3.g",
@@ -14933,6 +20513,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:olen"],
 		label: "City - other",
+		labels: {
+			de: "Gemeinde - Sonstiges",
+			en: "City - other",
+			fr: "Commune - autre",
+			nl: "Gemeente - andere",
+		},
 	},
 	{
 		section: "s.06.05.3.g",
@@ -14947,6 +20533,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:olen"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.3.g",
@@ -14960,6 +20552,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:olen"],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.06.05.3.g",
@@ -14973,6 +20571,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:olen"],
 		label: "List",
+		labels: {
+			de: "Liste",
+			en: "List",
+			fr: "Liste",
+			nl: "Lijst",
+		},
 	},
 	{
 		section: "s.06.05.3.g",
@@ -14985,6 +20589,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:olen"],
 		label: "Other",
+		labels: {
+			de: "Sonstiges",
+			en: "Other",
+			fr: "Autre",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.06.06.0.g",
@@ -14999,6 +20609,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8681",
 		label: "Shares - Book value increased with the uncalled amount",
+		labels: {
+			de: "Anteile - Buchwert, erhöht um den nicht eingeforderten Betrag",
+			en: "Shares - Book value increased with the uncalled amount",
+			fr: "Actions et parts - Valeur comptable augmentée du montant non appelé",
+			nl: "Aandelen - Boekwaarde verhoogd met het niet-opgevraagde bedrag",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -15016,6 +20632,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8681",
 		label: "Shares - Book value increased with the uncalled amount",
+		labels: {
+			de: "Anteile - Buchwert, erhöht um den nicht eingeforderten Betrag",
+			en: "Shares - Book value increased with the uncalled amount",
+			fr: "Actions et parts - Valeur comptable augmentée du montant non appelé",
+			nl: "Aandelen - Boekwaarde verhoogd met het niet-opgevraagde bedrag",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15032,6 +20654,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8681",
 		label: "Shares - Book value increased with the uncalled amount",
+		labels: {
+			de: "Anteile - Buchwert, erhöht um den nicht eingeforderten Betrag",
+			en: "Shares - Book value increased with the uncalled amount",
+			fr: "Actions et parts - Valeur comptable augmentée du montant non appelé",
+			nl: "Aandelen - Boekwaarde verhoogd met het niet-opgevraagde bedrag",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15046,6 +20674,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8682",
 		label: "Shares - Uncalled amount",
+		labels: {
+			de: "Anteile - Nicht eingeforderter Betrag",
+			en: "Shares - Uncalled amount",
+			fr: "Actions et parts - Montant non appelé",
+			nl: "Aandelen - Niet-opgevraagd bedrag",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -15062,6 +20696,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8682",
 		label: "Shares - Uncalled amount",
+		labels: {
+			de: "Anteile - Nicht eingeforderter Betrag",
+			en: "Shares - Uncalled amount",
+			fr: "Actions et parts - Montant non appelé",
+			nl: "Aandelen - Niet-opgevraagd bedrag",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15077,6 +20717,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8682",
 		label: "Shares - Uncalled amount",
+		labels: {
+			de: "Anteile - Nicht eingeforderter Betrag",
+			en: "Shares - Uncalled amount",
+			fr: "Actions et parts - Montant non appelé",
+			nl: "Aandelen - Niet-opgevraagd bedrag",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15090,6 +20736,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8683",
 		label: "Precious metals and works of art",
+		labels: {
+			de: "Edelmetalle und Kunstwerke",
+			en: "Precious metals and works of art",
+			fr: "Métaux précieux et œuvres d'art",
+			nl: "Edele metalen en kunstwerken",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -15105,6 +20757,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8683",
 		label: "Precious metals and works of art",
+		labels: {
+			de: "Edelmetalle und Kunstwerke",
+			en: "Precious metals and works of art",
+			fr: "Métaux précieux et œuvres d'art",
+			nl: "Edele metalen en kunstwerken",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15119,6 +20777,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8683",
 		label: "Precious metals and works of art",
+		labels: {
+			de: "Edelmetalle und Kunstwerke",
+			en: "Precious metals and works of art",
+			fr: "Métaux précieux et œuvres d'art",
+			nl: "Edele metalen en kunstwerken",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15132,6 +20796,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "51",
 		label: "Shares and current investments other than fixed income investments",
+		labels: {
+			de: "Anteile und Geldanlagen, andere als festverzinsliche Anlagen",
+			en: "Shares and current investments other than fixed income investments",
+			fr: "Actions, parts et placements autres que placements à revenu fixe",
+			nl: "Aandelen en geldbeleggingen andere dan vastrentende beleggingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -15147,6 +20817,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8684",
 		label: "Fixed income securities issued by credit institutions",
+		labels: {
+			de: "Festverzinsliche Wertpapiere ausgegeben durch Kreditinstitute",
+			en: "Fixed income securities issued by credit institutions",
+			fr: "Titres à revenu fixe émis par des établissements de crédit",
+			nl: "Vastrentende effecten uitgegeven door kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -15163,6 +20839,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8684",
 		label: "Fixed income securities issued by credit institutions",
+		labels: {
+			de: "Festverzinsliche Wertpapiere ausgegeben durch Kreditinstitute",
+			en: "Fixed income securities issued by credit institutions",
+			fr: "Titres à revenu fixe émis par des établissements de crédit",
+			nl: "Vastrentende effecten uitgegeven door kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15178,6 +20860,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8684",
 		label: "Fixed income securities issued by credit institutions",
+		labels: {
+			de: "Festverzinsliche Wertpapiere ausgegeben durch Kreditinstitute",
+			en: "Fixed income securities issued by credit institutions",
+			fr: "Titres à revenu fixe émis par des établissements de crédit",
+			nl: "Vastrentende effecten uitgegeven door kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15191,6 +20879,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "52",
 		label: "Fixed income securities",
+		labels: {
+			de: "Festverzinsliche Wertpapiere",
+			en: "Fixed income securities",
+			fr: "Titres à revenu fixe",
+			nl: "Vastrentende effecten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -15206,6 +20900,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "52",
 		label: "Fixed income securities",
+		labels: {
+			de: "Festverzinsliche Wertpapiere",
+			en: "Fixed income securities",
+			fr: "Titres à revenu fixe",
+			nl: "Vastrentende effecten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15220,6 +20920,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "52",
 		label: "Fixed income securities",
+		labels: {
+			de: "Festverzinsliche Wertpapiere",
+			en: "Fixed income securities",
+			fr: "Titres à revenu fixe",
+			nl: "Vastrentende effecten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15234,6 +20940,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8686",
 		label: "up to one month",
+		labels: {
+			de: "höchstens einem Monat",
+			en: "up to one month",
+			fr: "d'un mois au plus",
+			nl: "hoogstens één maand",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -15250,6 +20962,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8686",
 		label: "up to one month",
+		labels: {
+			de: "höchstens einem Monat",
+			en: "up to one month",
+			fr: "d'un mois au plus",
+			nl: "hoogstens één maand",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15265,6 +20983,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8686",
 		label: "up to one month",
+		labels: {
+			de: "höchstens einem Monat",
+			en: "up to one month",
+			fr: "d'un mois au plus",
+			nl: "hoogstens één maand",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15279,6 +21003,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8687",
 		label: "between one month and one year",
+		labels: {
+			de: "mehr als einem Monat und höchstens einem Jahr",
+			en: "between one month and one year",
+			fr: "de plus d'un mois à un an au plus",
+			nl: "meer dan één maand en hoogstens één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -15295,6 +21025,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8687",
 		label: "between one month and one year",
+		labels: {
+			de: "mehr als einem Monat und höchstens einem Jahr",
+			en: "between one month and one year",
+			fr: "de plus d'un mois à un an au plus",
+			nl: "meer dan één maand en hoogstens één jaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15310,6 +21046,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8687",
 		label: "between one month and one year",
+		labels: {
+			de: "mehr als einem Monat und höchstens einem Jahr",
+			en: "between one month and one year",
+			fr: "de plus d'un mois à un an au plus",
+			nl: "meer dan één maand en hoogstens één jaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15324,6 +21066,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8688",
 		label: "over one year",
+		labels: {
+			de: "mehr als einem Jahr",
+			en: "over one year",
+			fr: "de plus d'un an",
+			nl: "meer dan één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -15340,6 +21088,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8688",
 		label: "over one year",
+		labels: {
+			de: "mehr als einem Jahr",
+			en: "over one year",
+			fr: "de plus d'un an",
+			nl: "meer dan één jaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15355,6 +21109,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8688",
 		label: "over one year",
+		labels: {
+			de: "mehr als einem Jahr",
+			en: "over one year",
+			fr: "de plus d'un an",
+			nl: "meer dan één jaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15368,6 +21128,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "53",
 		label: "Fixed term accounts with credit institutions",
+		labels: {
+			de: "Terminkonten bei Kreditinstituten",
+			en: "Fixed term accounts with credit institutions",
+			fr: "Comptes à terme détenus auprès des établissements de crédit",
+			nl: "Termijnrekeningen bij kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -15383,6 +21149,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "53",
 		label: "Fixed term accounts with credit institutions",
+		labels: {
+			de: "Terminkonten bei Kreditinstituten",
+			en: "Fixed term accounts with credit institutions",
+			fr: "Comptes à terme détenus auprès des établissements de crédit",
+			nl: "Termijnrekeningen bij kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15397,6 +21169,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "53",
 		label: "Fixed term accounts with credit institutions",
+		labels: {
+			de: "Terminkonten bei Kreditinstituten",
+			en: "Fixed term accounts with credit institutions",
+			fr: "Comptes à terme détenus auprès des établissements de crédit",
+			nl: "Termijnrekeningen bij kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15411,6 +21189,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8689",
 		label: "Other investments not mentioned above",
+		labels: {
+			de: "Übrige nicht obengenannte Geldanlagen",
+			en: "Other investments not mentioned above",
+			fr: "Autres placements de trésorerie non repris ci-avant",
+			nl: "Hierboven niet-opgenomen overige geldbeleggingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -15427,6 +21211,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8689",
 		label: "Other investments not mentioned above",
+		labels: {
+			de: "Übrige nicht obengenannte Geldanlagen",
+			en: "Other investments not mentioned above",
+			fr: "Autres placements de trésorerie non repris ci-avant",
+			nl: "Hierboven niet-opgenomen overige geldbeleggingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15442,6 +21232,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8689",
 		label: "Other investments not mentioned above",
+		labels: {
+			de: "Übrige nicht obengenannte Geldanlagen",
+			en: "Other investments not mentioned above",
+			fr: "Autres placements de trésorerie non repris ci-avant",
+			nl: "Hierboven niet-opgenomen overige geldbeleggingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15454,6 +21250,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Opening equity",
+		labels: {
+			de: "Ausgangsvermögen",
+			en: "Opening equity",
+			fr: "Patrimoine de départ",
+			nl: "Beginvermogen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -15468,6 +21270,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Opening equity",
+		labels: {
+			de: "Ausgangsvermögen",
+			en: "Opening equity",
+			fr: "Patrimoine de départ",
+			nl: "Beginvermogen",
+		},
 	},
 	{
 		section: "s.06.07.0.g",
@@ -15480,6 +21288,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Opening equity",
+		labels: {
+			de: "Ausgangsvermögen",
+			en: "Opening equity",
+			fr: "Patrimoine de départ",
+			nl: "Beginvermogen",
+		},
 	},
 	{
 		section: "s.06.07.0.g",
@@ -15490,6 +21304,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Opening equity",
+		labels: {
+			de: "Ausgangsvermögen",
+			en: "Opening equity",
+			fr: "Patrimoine de départ",
+			nl: "Beginvermogen",
+		},
 	},
 	{
 		section: "s.06.07.0.g",
@@ -15502,6 +21322,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Opening equity",
+		labels: {
+			de: "Ausgangsvermögen",
+			en: "Opening equity",
+			fr: "Patrimoine de départ",
+			nl: "Beginvermogen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15515,6 +21341,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Opening equity",
+		labels: {
+			de: "Ausgangsvermögen",
+			en: "Opening equity",
+			fr: "Patrimoine de départ",
+			nl: "Beginvermogen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15527,6 +21359,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Permanent financing",
+		labels: {
+			de: "Langfristige Mittel",
+			en: "Permanent financing",
+			fr: "Moyens permanents",
+			nl: "Permanente financiering",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -15541,6 +21379,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Permanent financing",
+		labels: {
+			de: "Langfristige Mittel",
+			en: "Permanent financing",
+			fr: "Moyens permanents",
+			nl: "Permanente financiering",
+		},
 	},
 	{
 		section: "s.06.07.0.g",
@@ -15553,6 +21397,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Permanent financing",
+		labels: {
+			de: "Langfristige Mittel",
+			en: "Permanent financing",
+			fr: "Moyens permanents",
+			nl: "Permanente financiering",
+		},
 	},
 	{
 		section: "s.06.07.0.g",
@@ -15563,6 +21413,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Permanent financing",
+		labels: {
+			de: "Langfristige Mittel",
+			en: "Permanent financing",
+			fr: "Moyens permanents",
+			nl: "Permanente financiering",
+		},
 	},
 	{
 		section: "s.06.07.0.g",
@@ -15575,6 +21431,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Permanent financing",
+		labels: {
+			de: "Langfristige Mittel",
+			en: "Permanent financing",
+			fr: "Moyens permanents",
+			nl: "Permanente financiering",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15588,6 +21450,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Permanent financing",
+		labels: {
+			de: "Langfristige Mittel",
+			en: "Permanent financing",
+			fr: "Moyens permanents",
+			nl: "Permanente financiering",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15601,6 +21469,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Valuation rules to calculate allocated funds (heading 13 of liabilities)",
+		labels: {
+			de: "Angewandte Bewertungsregeln zur Bestimmung der zweckgebundenen Beträge (Posten 13 der Passiva)",
+			en: "Valuation rules to calculate allocated funds (heading 13 of liabilities)",
+			fr: "Règles d'évaluation adoptées pour la détermination des montants affectés (rubrique 13 du passif)",
+			nl: "Waarderingsregels gekozen om de bestemde bedragen te bepalen (post 13 van de passiva)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -15615,6 +21489,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Valuation rules to calculate allocated funds (heading 13 of liabilities)",
+		labels: {
+			de: "Angewandte Bewertungsregeln zur Bestimmung der zweckgebundenen Beträge (Posten 13 der Passiva)",
+			en: "Valuation rules to calculate allocated funds (heading 13 of liabilities)",
+			fr: "Règles d'évaluation adoptées pour la détermination des montants affectés (rubrique 13 du passif)",
+			nl: "Waarderingsregels gekozen om de bestemde bedragen te bepalen (post 13 van de passiva)",
+		},
 	},
 	{
 		section: "s.06.07.0.g",
@@ -15628,6 +21508,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Valuation rules to calculate allocated funds (heading 13 of liabilities)",
+		labels: {
+			de: "Angewandte Bewertungsregeln zur Bestimmung der zweckgebundenen Beträge (Posten 13 der Passiva)",
+			en: "Valuation rules to calculate allocated funds (heading 13 of liabilities)",
+			fr: "Règles d'évaluation adoptées pour la détermination des montants affectés (rubrique 13 du passif)",
+			nl: "Waarderingsregels gekozen om de bestemde bedragen te bepalen (post 13 van de passiva)",
+		},
 	},
 	{
 		section: "s.06.07.0.g",
@@ -15640,6 +21526,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Valuation rules to calculate allocated funds (heading 13 of liabilities)",
+		labels: {
+			de: "Angewandte Bewertungsregeln zur Bestimmung der zweckgebundenen Beträge (Posten 13 der Passiva)",
+			en: "Valuation rules to calculate allocated funds (heading 13 of liabilities)",
+			fr: "Règles d'évaluation adoptées pour la détermination des montants affectés (rubrique 13 du passif)",
+			nl: "Waarderingsregels gekozen om de bestemde bedragen te bepalen (post 13 van de passiva)",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15653,6 +21545,12 @@ const datapoints1: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Valuation rules to calculate allocated funds (heading 13 of liabilities)",
+		labels: {
+			de: "Angewandte Bewertungsregeln zur Bestimmung der zweckgebundenen Beträge (Posten 13 der Passiva)",
+			en: "Valuation rules to calculate allocated funds (heading 13 of liabilities)",
+			fr: "Règles d'évaluation adoptées pour la détermination des montants affectés (rubrique 13 du passif)",
+			nl: "Waarderingsregels gekozen om de bestemde bedragen te bepalen (post 13 van de passiva)",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15668,6 +21566,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8811",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15683,6 +21587,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8811",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15699,6 +21609,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8811",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15715,6 +21631,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8811",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15730,6 +21652,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8821",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15746,6 +21674,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8821",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15762,6 +21696,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8821",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15777,6 +21717,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8831",
 		label: "Leasing and other similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and other similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15793,6 +21739,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8831",
 		label: "Leasing and other similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and other similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15809,6 +21761,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8831",
 		label: "Leasing and other similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and other similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15824,6 +21782,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8841",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15840,6 +21804,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8841",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15856,6 +21826,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8841",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15871,6 +21847,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8851",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15886,6 +21868,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8851",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15902,6 +21890,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8851",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15918,6 +21912,12 @@ const datapoints1: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8851",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 ];
@@ -15935,6 +21935,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8801",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15950,6 +21956,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8801",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15965,6 +21977,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8801",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15980,6 +21998,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8871",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -15996,6 +22020,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8871",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16012,6 +22042,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8871",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16027,6 +22063,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8881",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16043,6 +22085,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8881",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16059,6 +22107,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8881",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16073,6 +22127,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8861",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16088,6 +22148,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8861",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16103,6 +22169,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8861",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16117,6 +22189,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8891",
 		label: "Advance payments received on contract in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contract in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16131,6 +22209,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8891",
 		label: "Advance payments received on contract in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contract in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16146,6 +22230,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8891",
 		label: "Advance payments received on contract in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contract in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16161,6 +22251,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8891",
 		label: "Advance payments received on contract in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contract in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16175,6 +22271,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8901",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16190,6 +22292,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8901",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16205,6 +22313,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8901",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16218,6 +22332,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "(42)",
 		label: "Total current portion of amounts payable after more than one year falling due within one year",
+		labels: {
+			de: "Summe der innerhalb eines Jahres fällig werdende Verbindlichkeiten mit einer ursprünglichen Laufzeit von mehr als einem Jahr",
+			en: "Total current portion of amounts payable after more than one year falling due within one year",
+			fr: "Total des dettes à plus d'un an échéant dans l'année",
+			nl: "Totaal der schulden op meer dan één jaar die binnen het jaar vervallen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16231,6 +22351,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "(42)",
 		label: "Total current portion of amounts payable after more than one year falling due within one year",
+		labels: {
+			de: "Summe der innerhalb eines Jahres fällig werdende Verbindlichkeiten mit einer ursprünglichen Laufzeit von mehr als einem Jahr",
+			en: "Total current portion of amounts payable after more than one year falling due within one year",
+			fr: "Total des dettes à plus d'un an échéant dans l'année",
+			nl: "Totaal der schulden op meer dan één jaar die binnen het jaar vervallen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16245,6 +22371,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "(42)",
 		label: "Total current portion of amounts payable after more than one year falling due within one year",
+		labels: {
+			de: "Summe der innerhalb eines Jahres fällig werdende Verbindlichkeiten mit einer ursprünglichen Laufzeit von mehr als einem Jahr",
+			en: "Total current portion of amounts payable after more than one year falling due within one year",
+			fr: "Total des dettes à plus d'un an échéant dans l'année",
+			nl: "Totaal der schulden op meer dan één jaar die binnen het jaar vervallen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16259,6 +22391,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "(42)",
 		label: "Total current portion of amounts payable after more than one year falling due within one year",
+		labels: {
+			de: "Summe der innerhalb eines Jahres fällig werdende Verbindlichkeiten mit einer ursprünglichen Laufzeit von mehr als einem Jahr",
+			en: "Total current portion of amounts payable after more than one year falling due within one year",
+			fr: "Total des dettes à plus d'un an échéant dans l'année",
+			nl: "Totaal der schulden op meer dan één jaar die binnen het jaar vervallen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16274,6 +22412,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8812",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16289,6 +22433,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8812",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16305,6 +22455,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8812",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16321,6 +22477,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8812",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16336,6 +22498,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8822",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16352,6 +22520,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8822",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16368,6 +22542,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8822",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16383,6 +22563,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8832",
 		label: "Leasing and other similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and other similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16399,6 +22585,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8832",
 		label: "Leasing and other similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and other similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16415,6 +22607,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8832",
 		label: "Leasing and other similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and other similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16430,6 +22628,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8842",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16446,6 +22650,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8842",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16462,6 +22672,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8842",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16477,6 +22693,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8852",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16492,6 +22714,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8852",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16508,6 +22736,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8852",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16524,6 +22758,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8852",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16538,6 +22778,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8802",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16553,6 +22799,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8802",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16568,6 +22820,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8802",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16583,6 +22841,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8872",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16599,6 +22863,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8872",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16615,6 +22885,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8872",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16630,6 +22906,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8882",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16646,6 +22928,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8882",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16662,6 +22950,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8882",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16676,6 +22970,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8862",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16691,6 +22991,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8862",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16706,6 +23012,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8862",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16720,6 +23032,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8892",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16734,6 +23052,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8892",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16749,6 +23073,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8892",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16764,6 +23094,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8892",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16778,6 +23114,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8902",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16793,6 +23135,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8902",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16808,6 +23156,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8902",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16821,6 +23175,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8912",
 		label: "Total amounts payable with a remaining term of more than one but not more than five years",
+		labels: {
+			de: "Summe der Verbindlichkeiten mit einer Restlaufzeit von mehr als einem Jahr aber höchstens 5 Jahren",
+			en: "Total amounts payable with a remaining term of more than one but not more than five years",
+			fr: "Total des dettes ayant plus d'un an mais 5 ans au plus à courir",
+			nl: "Totaal der schulden met een resterende looptijd van meer dan één jaar doch hoogstens 5 jaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16835,6 +23195,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8912",
 		label: "Total amounts payable with a remaining term of more than one but not more than five years",
+		labels: {
+			de: "Summe der Verbindlichkeiten mit einer Restlaufzeit von mehr als einem Jahr aber höchstens 5 Jahren",
+			en: "Total amounts payable with a remaining term of more than one but not more than five years",
+			fr: "Total des dettes ayant plus d'un an mais 5 ans au plus à courir",
+			nl: "Totaal der schulden met een resterende looptijd van meer dan één jaar doch hoogstens 5 jaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16849,6 +23215,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8912",
 		label: "Total amounts payable with a remaining term of more than one but not more than five years",
+		labels: {
+			de: "Summe der Verbindlichkeiten mit einer Restlaufzeit von mehr als einem Jahr aber höchstens 5 Jahren",
+			en: "Total amounts payable with a remaining term of more than one but not more than five years",
+			fr: "Total des dettes ayant plus d'un an mais 5 ans au plus à courir",
+			nl: "Totaal der schulden met een resterende looptijd van meer dan één jaar doch hoogstens 5 jaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16864,6 +23236,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8813",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16879,6 +23257,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8813",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16895,6 +23279,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8813",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16911,6 +23301,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8813",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16926,6 +23322,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8823",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16942,6 +23344,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8823",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16958,6 +23366,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8823",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16973,6 +23387,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8833",
 		label: "Leasing and other similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and other similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -16989,6 +23409,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8833",
 		label: "Leasing and other similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and other similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17005,6 +23431,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8833",
 		label: "Leasing and other similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and other similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17020,6 +23452,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8843",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17036,6 +23474,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8843",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17052,6 +23496,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8843",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17067,6 +23517,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8853",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17082,6 +23538,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8853",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17098,6 +23560,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8853",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17114,6 +23582,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8853",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17128,6 +23602,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8803",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17143,6 +23623,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8803",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17158,6 +23644,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8803",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17173,6 +23665,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8873",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17189,6 +23687,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8873",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17205,6 +23709,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8873",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17220,6 +23730,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8883",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17236,6 +23752,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8883",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17252,6 +23774,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8883",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17266,6 +23794,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8863",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17281,6 +23815,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8863",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17296,6 +23836,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8863",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17310,6 +23856,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8893",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17324,6 +23876,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8893",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17339,6 +23897,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8893",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17354,6 +23918,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8893",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17368,6 +23938,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8903",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17383,6 +23959,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8903",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17398,6 +23980,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8903",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17411,6 +23999,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8913",
 		label: "Total amounts payable with a remaining term of more than five years",
+		labels: {
+			de: "Summe der Verbindlichkeiten mit einer Restlaufzeit von mehr als 5 Jahren",
+			en: "Total amounts payable with a remaining term of more than five years",
+			fr: "Total des dettes ayant plus de 5 ans à courir",
+			nl: "Totaal der schulden met een resterende looptijd van meer dan 5 jaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17425,6 +24019,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8913",
 		label: "Total amounts payable with a remaining term of more than five years",
+		labels: {
+			de: "Summe der Verbindlichkeiten mit einer Restlaufzeit von mehr als 5 Jahren",
+			en: "Total amounts payable with a remaining term of more than five years",
+			fr: "Total des dettes ayant plus de 5 ans à courir",
+			nl: "Totaal der schulden met een resterende looptijd van meer dan 5 jaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17439,6 +24039,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8913",
 		label: "Total amounts payable with a remaining term of more than five years",
+		labels: {
+			de: "Summe der Verbindlichkeiten mit einer Restlaufzeit von mehr als 5 Jahren",
+			en: "Total amounts payable with a remaining term of more than five years",
+			fr: "Total des dettes ayant plus de 5 ans à courir",
+			nl: "Totaal der schulden met een resterende looptijd van meer dan 5 jaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17453,6 +24059,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8931",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17468,6 +24080,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8931",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17483,6 +24101,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8931",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17499,6 +24123,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8931",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17515,6 +24145,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8931",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17529,6 +24165,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8941",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17544,6 +24186,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8941",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17560,6 +24208,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8941",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17576,6 +24230,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8941",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17590,6 +24250,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8951",
 		label: "Leasing and similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17605,6 +24271,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8951",
 		label: "Leasing and similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17621,6 +24293,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8951",
 		label: "Leasing and similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17637,6 +24315,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8951",
 		label: "Leasing and similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17651,6 +24335,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8961",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17666,6 +24356,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8961",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17682,6 +24378,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8961",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17698,6 +24400,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8961",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17712,6 +24420,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8971",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17727,6 +24441,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8971",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17742,6 +24462,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8971",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17758,6 +24484,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8971",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17774,6 +24506,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8971",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17787,6 +24525,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8921",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17801,6 +24545,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8921",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17816,6 +24566,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8921",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17831,6 +24587,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8921",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17845,6 +24607,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8991",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17860,6 +24628,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8991",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17876,6 +24650,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8991",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17892,6 +24672,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8991",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17906,6 +24692,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9001",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17921,6 +24713,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9001",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17937,6 +24735,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9001",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17953,6 +24757,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9001",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17966,6 +24776,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8981",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17980,6 +24796,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8981",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -17995,6 +24817,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8981",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18010,6 +24838,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8981",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18023,6 +24857,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9011",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18037,6 +24877,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9011",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18051,6 +24897,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9011",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18066,6 +24918,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9011",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18081,6 +24939,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9011",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18094,6 +24958,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9021",
 		label: "Remuneration and social security",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Arbeitsentgelten und Soziallasten",
+			en: "Remuneration and social security",
+			fr: "Dettes salariales et sociales",
+			nl: "Schulden met betrekking tot bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18108,6 +24978,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9021",
 		label: "Remuneration and social security",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Arbeitsentgelten und Soziallasten",
+			en: "Remuneration and social security",
+			fr: "Dettes salariales et sociales",
+			nl: "Schulden met betrekking tot bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18123,6 +24999,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9021",
 		label: "Remuneration and social security",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Arbeitsentgelten und Soziallasten",
+			en: "Remuneration and social security",
+			fr: "Dettes salariales et sociales",
+			nl: "Schulden met betrekking tot bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18138,6 +25020,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9021",
 		label: "Remuneration and social security",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Arbeitsentgelten und Soziallasten",
+			en: "Remuneration and social security",
+			fr: "Dettes salariales et sociales",
+			nl: "Schulden met betrekking tot bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18151,6 +25039,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9051",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18165,6 +25059,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9051",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18180,6 +25080,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9051",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18195,6 +25101,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9051",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18207,6 +25119,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9061",
 		label: "Total amounts payable guaranteed by Belgian public authorities",
+		labels: {
+			de: "Summe der durch die belgische öffentliche Hand besicherte Verbindlichkeiten",
+			en: "Total amounts payable guaranteed by Belgian public authorities",
+			fr: "Total des dettes garanties par les pouvoirs publics belges",
+			nl: "Totaal van de door Belgische overheidsinstellingen gewaarborgde schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18220,6 +25138,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9061",
 		label: "Total amounts payable guaranteed by Belgian public authorities",
+		labels: {
+			de: "Summe der durch die belgische öffentliche Hand besicherte Verbindlichkeiten",
+			en: "Total amounts payable guaranteed by Belgian public authorities",
+			fr: "Total des dettes garanties par les pouvoirs publics belges",
+			nl: "Totaal van de door Belgische overheidsinstellingen gewaarborgde schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18234,6 +25158,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9061",
 		label: "Total amounts payable guaranteed by Belgian public authorities",
+		labels: {
+			de: "Summe der durch die belgische öffentliche Hand besicherte Verbindlichkeiten",
+			en: "Total amounts payable guaranteed by Belgian public authorities",
+			fr: "Total des dettes garanties par les pouvoirs publics belges",
+			nl: "Totaal van de door Belgische overheidsinstellingen gewaarborgde schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18248,6 +25178,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9061",
 		label: "Total amounts payable guaranteed by Belgian public authorities",
+		labels: {
+			de: "Summe der durch die belgische öffentliche Hand besicherte Verbindlichkeiten",
+			en: "Total amounts payable guaranteed by Belgian public authorities",
+			fr: "Total des dettes garanties par les pouvoirs publics belges",
+			nl: "Totaal van de door Belgische overheidsinstellingen gewaarborgde schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18262,6 +25198,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8932",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18277,6 +25219,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8932",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18292,6 +25240,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8932",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18308,6 +25262,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8932",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18324,6 +25284,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8932",
 		label: "Subordinated loans",
+		labels: {
+			de: "Nachrangige Anleihen",
+			en: "Subordinated loans",
+			fr: "Emprunts subordonnés",
+			nl: "Achtergestelde leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18338,6 +25304,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8942",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18353,6 +25325,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8942",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18369,6 +25347,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8942",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18385,6 +25369,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8942",
 		label: "Unsubordinated debentures",
+		labels: {
+			de: "Nicht nachrangige Anleihen",
+			en: "Unsubordinated debentures",
+			fr: "Emprunts obligataires non subordonnés",
+			nl: "Niet-achtergestelde obligatieleningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18399,6 +25389,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8952",
 		label: "Leasing and similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18414,6 +25410,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8952",
 		label: "Leasing and similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18430,6 +25432,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8952",
 		label: "Leasing and similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18446,6 +25454,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8952",
 		label: "Leasing and similar obligations",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Leasing- und ähnlichen Verträgen",
+			en: "Leasing and similar obligations",
+			fr: "Dettes de location-financement et assimilées",
+			nl: "Leasingschulden en soortgelijke schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18460,6 +25474,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8962",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18475,6 +25495,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8962",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18491,6 +25517,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8962",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18507,6 +25539,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8962",
 		label: "Credit institutions",
+		labels: {
+			de: "Kreditinstitute",
+			en: "Credit institutions",
+			fr: "Etablissements de crédit",
+			nl: "Kredietinstellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18521,6 +25559,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8972",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18536,6 +25580,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8972",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18551,6 +25601,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8972",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18567,6 +25623,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8972",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18583,6 +25645,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8972",
 		label: "Other loans",
+		labels: {
+			de: "Sonstige Anleihen",
+			en: "Other loans",
+			fr: "Autres emprunts",
+			nl: "Overige leningen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18596,6 +25664,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8922",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18610,6 +25684,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8922",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18625,6 +25705,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8922",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18640,6 +25726,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8922",
 		label: "Financial debts",
+		labels: {
+			de: "Finanzverbindlichkeiten",
+			en: "Financial debts",
+			fr: "Dettes financières",
+			nl: "Financiële schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18654,6 +25746,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8992",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18669,6 +25767,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8992",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18685,6 +25789,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8992",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18701,6 +25811,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8992",
 		label: "Suppliers",
+		labels: {
+			de: "Lieferanten",
+			en: "Suppliers",
+			fr: "Fournisseurs",
+			nl: "Leveranciers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18715,6 +25831,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9002",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18730,6 +25852,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9002",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18746,6 +25874,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9002",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18762,6 +25896,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9002",
 		label: "Bills of exchange payable",
+		labels: {
+			de: "Verbindlichkeiten aus Wechseln",
+			en: "Bills of exchange payable",
+			fr: "Effets à payer",
+			nl: "Te betalen wissels",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18775,6 +25915,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8982",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18789,6 +25935,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8982",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18804,6 +25956,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8982",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18819,6 +25977,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "8982",
 		label: "Trade debts",
+		labels: {
+			de: "Verbindlichkeiten aus Lieferungen und Leistungen",
+			en: "Trade debts",
+			fr: "Dettes commerciales",
+			nl: "Handelsschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18832,6 +25996,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9012",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18846,6 +26016,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9012",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18860,6 +26036,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9012",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18875,6 +26057,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9012",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18890,6 +26078,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9012",
 		label: "Advance payments received on contracts in progress",
+		labels: {
+			de: "Anzahlungen auf Bestellungen",
+			en: "Advance payments received on contracts in progress",
+			fr: "Acomptes sur commandes",
+			nl: "Vooruitbetalingen op bestellingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18903,6 +26097,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9032",
 		label: "Taxes",
+		labels: {
+			de: "Steuern",
+			en: "Taxes",
+			fr: "Impôts",
+			nl: "Belastingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18917,6 +26117,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9032",
 		label: "Taxes",
+		labels: {
+			de: "Steuern",
+			en: "Taxes",
+			fr: "Impôts",
+			nl: "Belastingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18932,6 +26138,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9032",
 		label: "Taxes",
+		labels: {
+			de: "Steuern",
+			en: "Taxes",
+			fr: "Impôts",
+			nl: "Belastingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18947,6 +26159,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9032",
 		label: "Taxes",
+		labels: {
+			de: "Steuern",
+			en: "Taxes",
+			fr: "Impôts",
+			nl: "Belastingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18960,6 +26178,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9042",
 		label: "Remuneration and social security",
+		labels: {
+			de: "Arbeitsentgelte und Soziallasten",
+			en: "Remuneration and social security",
+			fr: "Rémunérations et charges sociales",
+			nl: "Bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18974,6 +26198,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9042",
 		label: "Remuneration and social security",
+		labels: {
+			de: "Arbeitsentgelte und Soziallasten",
+			en: "Remuneration and social security",
+			fr: "Rémunérations et charges sociales",
+			nl: "Bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -18989,6 +26219,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9042",
 		label: "Remuneration and social security",
+		labels: {
+			de: "Arbeitsentgelte und Soziallasten",
+			en: "Remuneration and social security",
+			fr: "Rémunérations et charges sociales",
+			nl: "Bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19004,6 +26240,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9042",
 		label: "Remuneration and social security",
+		labels: {
+			de: "Arbeitsentgelte und Soziallasten",
+			en: "Remuneration and social security",
+			fr: "Rémunérations et charges sociales",
+			nl: "Bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19017,6 +26259,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9022",
 		label: "Taxes, remuneration and social security",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Steuern, Arbeitsentgelten und Soziallasten",
+			en: "Taxes, remuneration and social security",
+			fr: "Dettes fiscales, salariales et sociales",
+			nl: "Schulden met betrekking tot belastingen, bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19031,6 +26279,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9022",
 		label: "Taxes, remuneration and social security",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Steuern, Arbeitsentgelten und Soziallasten",
+			en: "Taxes, remuneration and social security",
+			fr: "Dettes fiscales, salariales et sociales",
+			nl: "Schulden met betrekking tot belastingen, bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19046,6 +26300,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9022",
 		label: "Taxes, remuneration and social security",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Steuern, Arbeitsentgelten und Soziallasten",
+			en: "Taxes, remuneration and social security",
+			fr: "Dettes fiscales, salariales et sociales",
+			nl: "Schulden met betrekking tot belastingen, bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19061,6 +26321,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9022",
 		label: "Taxes, remuneration and social security",
+		labels: {
+			de: "Verbindlichkeiten aufgrund von Steuern, Arbeitsentgelten und Soziallasten",
+			en: "Taxes, remuneration and social security",
+			fr: "Dettes fiscales, salariales et sociales",
+			nl: "Schulden met betrekking tot belastingen, bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19074,6 +26340,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9052",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19088,6 +26360,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9052",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19103,6 +26381,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9052",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19118,6 +26402,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9052",
 		label: "Other amounts payable",
+		labels: {
+			de: "Sonstige Verbindlichkeiten",
+			en: "Other amounts payable",
+			fr: "Autres dettes",
+			nl: "Overige schulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19130,6 +26420,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9062",
 		label: "Amounts payable guaranteed by real securities or irrevocably promised by the association or the foundation on its own assets",
+		labels: {
+			de: "Summe der durch gestellte oder unwiderruflich zugesagte dingliche Sicherheiten an Aktiva der Vereinigung oder Stiftung besicherte Verbindlichkeiten",
+			en: "Amounts payable guaranteed by real securities or irrevocably promised by the association or the foundation on its own assets",
+			fr: "Total des dettes garanties par des sûretés réelles constituées ou irrévocablement promises sur les actifs de l'association ou de la fondation",
+			nl: "Totaal der schulden gewaarborgd door zakelijke zekerheden gesteld of onherroepelijk beloofd op activa van de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19143,6 +26439,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9062",
 		label: "Amounts payable guaranteed by real securities or irrevocably promised by the association or the foundation on its own assets",
+		labels: {
+			de: "Summe der durch gestellte oder unwiderruflich zugesagte dingliche Sicherheiten an Aktiva der Vereinigung oder Stiftung besicherte Verbindlichkeiten",
+			en: "Amounts payable guaranteed by real securities or irrevocably promised by the association or the foundation on its own assets",
+			fr: "Total des dettes garanties par des sûretés réelles constituées ou irrévocablement promises sur les actifs de l'association ou de la fondation",
+			nl: "Totaal der schulden gewaarborgd door zakelijke zekerheden gesteld of onherroepelijk beloofd op activa van de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19157,6 +26459,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9062",
 		label: "Amounts payable guaranteed by real securities or irrevocably promised by the association or the foundation on its own assets",
+		labels: {
+			de: "Summe der durch gestellte oder unwiderruflich zugesagte dingliche Sicherheiten an Aktiva der Vereinigung oder Stiftung besicherte Verbindlichkeiten",
+			en: "Amounts payable guaranteed by real securities or irrevocably promised by the association or the foundation on its own assets",
+			fr: "Total des dettes garanties par des sûretés réelles constituées ou irrévocablement promises sur les actifs de l'association ou de la fondation",
+			nl: "Totaal der schulden gewaarborgd door zakelijke zekerheden gesteld of onherroepelijk beloofd op activa van de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19171,6 +26479,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9062",
 		label: "Amounts payable guaranteed by real securities or irrevocably promised by the association or the foundation on its own assets",
+		labels: {
+			de: "Summe der durch gestellte oder unwiderruflich zugesagte dingliche Sicherheiten an Aktiva der Vereinigung oder Stiftung besicherte Verbindlichkeiten",
+			en: "Amounts payable guaranteed by real securities or irrevocably promised by the association or the foundation on its own assets",
+			fr: "Total des dettes garanties par des sûretés réelles constituées ou irrévocablement promises sur les actifs de l'association ou de la fondation",
+			nl: "Totaal der schulden gewaarborgd door zakelijke zekerheden gesteld of onherroepelijk beloofd op activa van de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19183,6 +26497,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9072",
 		label: "Outstanding tax debts",
+		labels: {
+			de: "Überfällige Steuerschulden",
+			en: "Outstanding tax debts",
+			fr: "Dettes fiscales échues",
+			nl: "Vervallen belastingschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19196,6 +26516,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9072",
 		label: "Outstanding tax debts",
+		labels: {
+			de: "Überfällige Steuerschulden",
+			en: "Outstanding tax debts",
+			fr: "Dettes fiscales échues",
+			nl: "Vervallen belastingschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19210,6 +26536,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9072",
 		label: "Outstanding tax debts",
+		labels: {
+			de: "Überfällige Steuerschulden",
+			en: "Outstanding tax debts",
+			fr: "Dettes fiscales échues",
+			nl: "Vervallen belastingschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19225,6 +26557,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9072",
 		label: "Outstanding tax debts",
+		labels: {
+			de: "Überfällige Steuerschulden",
+			en: "Outstanding tax debts",
+			fr: "Dettes fiscales échues",
+			nl: "Vervallen belastingschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19240,6 +26578,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9072",
 		label: "Outstanding tax debts",
+		labels: {
+			de: "Überfällige Steuerschulden",
+			en: "Outstanding tax debts",
+			fr: "Dettes fiscales échues",
+			nl: "Vervallen belastingschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19252,6 +26596,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9073",
 		label: "Accruing taxes payable",
+		labels: {
+			de: "Nicht fällige Steuerschulden",
+			en: "Accruing taxes payable",
+			fr: "Dettes fiscales non échues",
+			nl: "Niet-vervallen belastingschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19265,6 +26615,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9073",
 		label: "Accruing taxes payable",
+		labels: {
+			de: "Nicht fällige Steuerschulden",
+			en: "Accruing taxes payable",
+			fr: "Dettes fiscales non échues",
+			nl: "Niet-vervallen belastingschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19279,6 +26635,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9073",
 		label: "Accruing taxes payable",
+		labels: {
+			de: "Nicht fällige Steuerschulden",
+			en: "Accruing taxes payable",
+			fr: "Dettes fiscales non échues",
+			nl: "Niet-vervallen belastingschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19294,6 +26656,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9073",
 		label: "Accruing taxes payable",
+		labels: {
+			de: "Nicht fällige Steuerschulden",
+			en: "Accruing taxes payable",
+			fr: "Dettes fiscales non échues",
+			nl: "Niet-vervallen belastingschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19309,6 +26677,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9073",
 		label: "Accruing taxes payable",
+		labels: {
+			de: "Nicht fällige Steuerschulden",
+			en: "Accruing taxes payable",
+			fr: "Dettes fiscales non échues",
+			nl: "Niet-vervallen belastingschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19321,6 +26695,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "450",
 		label: "Estimated taxes payable",
+		labels: {
+			de: "Geschätzte Steuerschulden",
+			en: "Estimated taxes payable",
+			fr: "Dettes fiscales estimées",
+			nl: "Geraamde belastingschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19334,6 +26714,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "450",
 		label: "Estimated taxes payable",
+		labels: {
+			de: "Geschätzte Steuerschulden",
+			en: "Estimated taxes payable",
+			fr: "Dettes fiscales estimées",
+			nl: "Geraamde belastingschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19348,6 +26734,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "450",
 		label: "Estimated taxes payable",
+		labels: {
+			de: "Geschätzte Steuerschulden",
+			en: "Estimated taxes payable",
+			fr: "Dettes fiscales estimées",
+			nl: "Geraamde belastingschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19363,6 +26755,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "450",
 		label: "Estimated taxes payable",
+		labels: {
+			de: "Geschätzte Steuerschulden",
+			en: "Estimated taxes payable",
+			fr: "Dettes fiscales estimées",
+			nl: "Geraamde belastingschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19378,6 +26776,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "450",
 		label: "Estimated taxes payable",
+		labels: {
+			de: "Geschätzte Steuerschulden",
+			en: "Estimated taxes payable",
+			fr: "Dettes fiscales estimées",
+			nl: "Geraamde belastingschulden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19390,6 +26794,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9076",
 		label: "Amounts due to the National Social Security Office",
+		labels: {
+			de: "Überfällige Verbindlichkeiten gegenüber dem Landesamt für Soziale Sicherheit",
+			en: "Amounts due to the National Social Security Office",
+			fr: "Dettes échues envers l'Office National de Sécurité Sociale",
+			nl: "Vervallen schulden ten aanzien van de Rijksdienst voor Sociale Zekerheid",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19403,6 +26813,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9076",
 		label: "Amounts due to the National Social Security Office",
+		labels: {
+			de: "Überfällige Verbindlichkeiten gegenüber dem Landesamt für Soziale Sicherheit",
+			en: "Amounts due to the National Social Security Office",
+			fr: "Dettes échues envers l'Office National de Sécurité Sociale",
+			nl: "Vervallen schulden ten aanzien van de Rijksdienst voor Sociale Zekerheid",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19417,6 +26833,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9076",
 		label: "Amounts due to the National Social Security Office",
+		labels: {
+			de: "Überfällige Verbindlichkeiten gegenüber dem Landesamt für Soziale Sicherheit",
+			en: "Amounts due to the National Social Security Office",
+			fr: "Dettes échues envers l'Office National de Sécurité Sociale",
+			nl: "Vervallen schulden ten aanzien van de Rijksdienst voor Sociale Zekerheid",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19432,6 +26854,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9076",
 		label: "Amounts due to the National Social Security Office",
+		labels: {
+			de: "Überfällige Verbindlichkeiten gegenüber dem Landesamt für Soziale Sicherheit",
+			en: "Amounts due to the National Social Security Office",
+			fr: "Dettes échues envers l'Office National de Sécurité Sociale",
+			nl: "Vervallen schulden ten aanzien van de Rijksdienst voor Sociale Zekerheid",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19447,6 +26875,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9076",
 		label: "Amounts due to the National Social Security Office",
+		labels: {
+			de: "Überfällige Verbindlichkeiten gegenüber dem Landesamt für Soziale Sicherheit",
+			en: "Amounts due to the National Social Security Office",
+			fr: "Dettes échues envers l'Office National de Sécurité Sociale",
+			nl: "Vervallen schulden ten aanzien van de Rijksdienst voor Sociale Zekerheid",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19459,6 +26893,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9077",
 		label: "Other amounts payable in respect of remuneration and social security",
+		labels: {
+			de: "Sonstige Verbindlichkeiten aufgrund von Arbeitsentgelten und Soziallasten",
+			en: "Other amounts payable in respect of remuneration and social security",
+			fr: "Autres dettes salariales et sociales",
+			nl: "Andere schulden met betrekking tot bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19472,6 +26912,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9077",
 		label: "Other amounts payable in respect of remuneration and social security",
+		labels: {
+			de: "Sonstige Verbindlichkeiten aufgrund von Arbeitsentgelten und Soziallasten",
+			en: "Other amounts payable in respect of remuneration and social security",
+			fr: "Autres dettes salariales et sociales",
+			nl: "Andere schulden met betrekking tot bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19486,6 +26932,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9077",
 		label: "Other amounts payable in respect of remuneration and social security",
+		labels: {
+			de: "Sonstige Verbindlichkeiten aufgrund von Arbeitsentgelten und Soziallasten",
+			en: "Other amounts payable in respect of remuneration and social security",
+			fr: "Autres dettes salariales et sociales",
+			nl: "Andere schulden met betrekking tot bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19501,6 +26953,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9077",
 		label: "Other amounts payable in respect of remuneration and social security",
+		labels: {
+			de: "Sonstige Verbindlichkeiten aufgrund von Arbeitsentgelten und Soziallasten",
+			en: "Other amounts payable in respect of remuneration and social security",
+			fr: "Autres dettes salariales et sociales",
+			nl: "Andere schulden met betrekking tot bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19516,6 +26974,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9077",
 		label: "Other amounts payable in respect of remuneration and social security",
+		labels: {
+			de: "Sonstige Verbindlichkeiten aufgrund von Arbeitsentgelten und Soziallasten",
+			en: "Other amounts payable in respect of remuneration and social security",
+			fr: "Autres dettes salariales et sociales",
+			nl: "Andere schulden met betrekking tot bezoldigingen en sociale lasten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -19527,6 +26991,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "730",
 		label: "Contributions",
+		labels: {
+			de: "Beiträge",
+			en: "Contributions",
+			fr: "Cotisations",
+			nl: "Lidgelden",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -19537,6 +27007,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "730",
 		label: "Contributions",
+		labels: {
+			de: "Beiträge",
+			en: "Contributions",
+			fr: "Cotisations",
+			nl: "Lidgelden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19550,6 +27026,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "730",
 		label: "Contributions",
+		labels: {
+			de: "Beiträge",
+			en: "Contributions",
+			fr: "Cotisations",
+			nl: "Lidgelden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19562,6 +27044,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "731",
 		label: "Gifts",
+		labels: {
+			de: "Schenkungen",
+			en: "Gifts",
+			fr: "Dons",
+			nl: "Schenkingen",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -19572,6 +27060,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "731",
 		label: "Gifts",
+		labels: {
+			de: "Schenkungen",
+			en: "Gifts",
+			fr: "Dons",
+			nl: "Schenkingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19585,6 +27079,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "731",
 		label: "Gifts",
+		labels: {
+			de: "Schenkungen",
+			en: "Gifts",
+			fr: "Dons",
+			nl: "Schenkingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19597,6 +27097,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "732",
 		label: "Legacies",
+		labels: {
+			de: "Legate",
+			en: "Legacies",
+			fr: "Legs",
+			nl: "Legaten",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -19607,6 +27113,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "732",
 		label: "Legacies",
+		labels: {
+			de: "Legate",
+			en: "Legacies",
+			fr: "Legs",
+			nl: "Legaten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19620,6 +27132,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "732",
 		label: "Legacies",
+		labels: {
+			de: "Legate",
+			en: "Legacies",
+			fr: "Legs",
+			nl: "Legaten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19632,6 +27150,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "733",
 		label: "Grants",
+		labels: {
+			de: "Subventionen",
+			en: "Grants",
+			fr: "Subsides",
+			nl: "Subsidies",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -19642,6 +27166,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "733",
 		label: "Grants",
+		labels: {
+			de: "Subventionen",
+			en: "Grants",
+			fr: "Subsides",
+			nl: "Subsidies",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19655,6 +27185,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "733",
 		label: "Grants",
+		labels: {
+			de: "Subventionen",
+			en: "Grants",
+			fr: "Subsides",
+			nl: "Subsidies",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19669,6 +27205,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9086",
 		label: "Total number at the closing date",
+		labels: {
+			de: "Gesamtzahl am Bilanzstichtag",
+			en: "Total number at the closing date",
+			fr: "Nombre total à la date de clôture",
+			nl: "Totaal aantal op de afsluitingsdatum",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -19681,6 +27223,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9086",
 		label: "Total number at the closing date",
+		labels: {
+			de: "Gesamtzahl am Bilanzstichtag",
+			en: "Total number at the closing date",
+			fr: "Nombre total à la date de clôture",
+			nl: "Totaal aantal op de afsluitingsdatum",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19696,6 +27244,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9086",
 		label: "Total number at the closing date",
+		labels: {
+			de: "Gesamtzahl am Bilanzstichtag",
+			en: "Total number at the closing date",
+			fr: "Nombre total à la date de clôture",
+			nl: "Totaal aantal op de afsluitingsdatum",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19711,6 +27265,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9087",
 		label: "Average number of employees calculated in full-time equivalents",
+		labels: {
+			de: "Durchschnittlicher Personalbestand in Vollzeitäquivalenzen",
+			en: "Average number of employees calculated in full-time equivalents",
+			fr: "Effectif moyen du personnel calculé en équivalents temps plein",
+			nl: "Gemiddeld personeelsbestand berekend in voltijdse equivalenten",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -19724,6 +27284,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9087",
 		label: "Average number of employees calculated in full-time equivalents",
+		labels: {
+			de: "Durchschnittlicher Personalbestand in Vollzeitäquivalenzen",
+			en: "Average number of employees calculated in full-time equivalents",
+			fr: "Effectif moyen du personnel calculé en équivalents temps plein",
+			nl: "Gemiddeld personeelsbestand berekend in voltijdse equivalenten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19740,6 +27306,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9087",
 		label: "Average number of employees calculated in full-time equivalents",
+		labels: {
+			de: "Durchschnittlicher Personalbestand in Vollzeitäquivalenzen",
+			en: "Average number of employees calculated in full-time equivalents",
+			fr: "Effectif moyen du personnel calculé en équivalents temps plein",
+			nl: "Gemiddeld personeelsbestand berekend in voltijdse equivalenten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19753,6 +27325,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9088",
 		label: "Number of actual worked hours",
+		labels: {
+			de: "Tatsächlich geleistete Arbeitsstunden",
+			en: "Number of actual worked hours",
+			fr: "Nombre d'heures effectivement prestées",
+			nl: "Aantal daadwerkelijk gepresteerde uren",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -19764,6 +27342,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9088",
 		label: "Number of actual worked hours",
+		labels: {
+			de: "Tatsächlich geleistete Arbeitsstunden",
+			en: "Number of actual worked hours",
+			fr: "Nombre d'heures effectivement prestées",
+			nl: "Aantal daadwerkelijk gepresteerde uren",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19778,6 +27362,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9088",
 		label: "Number of actual worked hours",
+		labels: {
+			de: "Tatsächlich geleistete Arbeitsstunden",
+			en: "Number of actual worked hours",
+			fr: "Nombre d'heures effectivement prestées",
+			nl: "Aantal daadwerkelijk gepresteerde uren",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19792,6 +27382,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "620",
 		label: "Remuneration and direct social benefits",
+		labels: {
+			de: "Arbeitsentgelte und direkte soziale Vorteile",
+			en: "Remuneration and direct social benefits",
+			fr: "Rémunérations et avantages sociaux directs",
+			nl: "Bezoldigingen en rechtstreekse sociale voordelen",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -19804,6 +27400,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "620",
 		label: "Remuneration and direct social benefits",
+		labels: {
+			de: "Arbeitsentgelte und direkte soziale Vorteile",
+			en: "Remuneration and direct social benefits",
+			fr: "Rémunérations et avantages sociaux directs",
+			nl: "Bezoldigingen en rechtstreekse sociale voordelen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19819,6 +27421,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "620",
 		label: "Remuneration and direct social benefits",
+		labels: {
+			de: "Arbeitsentgelte und direkte soziale Vorteile",
+			en: "Remuneration and direct social benefits",
+			fr: "Rémunérations et avantages sociaux directs",
+			nl: "Bezoldigingen en rechtstreekse sociale voordelen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19833,6 +27441,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "621",
 		label: "Employers' contribution for social security",
+		labels: {
+			de: "Arbeitgeberbeiträge zur Sozialversicherung",
+			en: "Employers' contribution for social security",
+			fr: "Cotisations patronales d'assurances sociales",
+			nl: "Werkgeversbijdragen voor sociale verzekeringen",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -19845,6 +27459,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "621",
 		label: "Employers' contribution for social security",
+		labels: {
+			de: "Arbeitgeberbeiträge zur Sozialversicherung",
+			en: "Employers' contribution for social security",
+			fr: "Cotisations patronales d'assurances sociales",
+			nl: "Werkgeversbijdragen voor sociale verzekeringen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19860,6 +27480,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "621",
 		label: "Employers' contribution for social security",
+		labels: {
+			de: "Arbeitgeberbeiträge zur Sozialversicherung",
+			en: "Employers' contribution for social security",
+			fr: "Cotisations patronales d'assurances sociales",
+			nl: "Werkgeversbijdragen voor sociale verzekeringen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19874,6 +27500,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "622",
 		label: "Employers' premiums for extra statutory insurance",
+		labels: {
+			de: "Arbeitgeberprämien für außergesetzliche Versicherungen",
+			en: "Employers' premiums for extra statutory insurance",
+			fr: "Primes patronales pour assurances extralégales",
+			nl: "Werkgeverspremies voor bovenwettelijke verzekeringen",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -19886,6 +27518,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "622",
 		label: "Employers' premiums for extra statutory insurance",
+		labels: {
+			de: "Arbeitgeberprämien für außergesetzliche Versicherungen",
+			en: "Employers' premiums for extra statutory insurance",
+			fr: "Primes patronales pour assurances extralégales",
+			nl: "Werkgeverspremies voor bovenwettelijke verzekeringen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19901,6 +27539,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "622",
 		label: "Employers' premiums for extra statutory insurance",
+		labels: {
+			de: "Arbeitgeberprämien für außergesetzliche Versicherungen",
+			en: "Employers' premiums for extra statutory insurance",
+			fr: "Primes patronales pour assurances extralégales",
+			nl: "Werkgeverspremies voor bovenwettelijke verzekeringen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19915,6 +27559,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "623",
 		label: "Other personnel costs",
+		labels: {
+			de: "Sonstige Personalaufwendungen",
+			en: "Other personnel costs",
+			fr: "Autres frais de personnel",
+			nl: "Andere personeelskosten",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -19927,6 +27577,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "623",
 		label: "Other personnel costs",
+		labels: {
+			de: "Sonstige Personalaufwendungen",
+			en: "Other personnel costs",
+			fr: "Autres frais de personnel",
+			nl: "Andere personeelskosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19942,6 +27598,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "623",
 		label: "Other personnel costs",
+		labels: {
+			de: "Sonstige Personalaufwendungen",
+			en: "Other personnel costs",
+			fr: "Autres frais de personnel",
+			nl: "Andere personeelskosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19956,6 +27618,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "624",
 		label: "Retirement and survivors' pensions",
+		labels: {
+			de: "Ruhestands- und Hinterbliebenenpensionen",
+			en: "Retirement and survivors' pensions",
+			fr: "Pensions de retraite et de survie",
+			nl: "Ouderdoms- en overlevingspensioenen",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -19968,6 +27636,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "624",
 		label: "Retirement and survivors' pensions",
+		labels: {
+			de: "Ruhestands- und Hinterbliebenenpensionen",
+			en: "Retirement and survivors' pensions",
+			fr: "Pensions de retraite et de survie",
+			nl: "Ouderdoms- en overlevingspensioenen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19983,6 +27657,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "624",
 		label: "Retirement and survivors' pensions",
+		labels: {
+			de: "Ruhestands- und Hinterbliebenenpensionen",
+			en: "Retirement and survivors' pensions",
+			fr: "Pensions de retraite et de survie",
+			nl: "Ouderdoms- en overlevingspensioenen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -19997,6 +27677,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "635",
 		label: "Appropriations (uses and write-backs)",
+		labels: {
+			de: "Zuführungen (Verbrauch und Auflösungen)",
+			en: "Appropriations (uses and write-backs)",
+			fr: "Dotations (utilisations et reprises)",
+			nl: "Toevoegingen (bestedingen en terugnemingen)",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -20009,6 +27695,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "635",
 		label: "Appropriations (uses and write-backs)",
+		labels: {
+			de: "Zuführungen (Verbrauch und Auflösungen)",
+			en: "Appropriations (uses and write-backs)",
+			fr: "Dotations (utilisations et reprises)",
+			nl: "Toevoegingen (bestedingen en terugnemingen)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20024,6 +27716,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "635",
 		label: "Appropriations (uses and write-backs)",
+		labels: {
+			de: "Zuführungen (Verbrauch und Auflösungen)",
+			en: "Appropriations (uses and write-backs)",
+			fr: "Dotations (utilisations et reprises)",
+			nl: "Toevoegingen (bestedingen en terugnemingen)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20039,6 +27737,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9110",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -20052,6 +27756,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9110",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20068,6 +27778,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9110",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20083,6 +27799,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9111",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Reprises",
+			nl: "Teruggenomen",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -20096,6 +27818,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9111",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Reprises",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20112,6 +27840,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9111",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Reprises",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20127,6 +27861,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9112",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -20140,6 +27880,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9112",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20156,6 +27902,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9112",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20171,6 +27923,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9113",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Reprises",
+			nl: "Teruggenomen",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -20184,6 +27942,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9113",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Reprises",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20200,6 +27964,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9113",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Reprises",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20214,6 +27984,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9115",
 		label: "Additions",
+		labels: {
+			de: "Zuführungen",
+			en: "Additions",
+			fr: "Constitutions",
+			nl: "Toevoegingen",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -20226,6 +28002,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9115",
 		label: "Additions",
+		labels: {
+			de: "Zuführungen",
+			en: "Additions",
+			fr: "Constitutions",
+			nl: "Toevoegingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20241,6 +28023,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9115",
 		label: "Additions",
+		labels: {
+			de: "Zuführungen",
+			en: "Additions",
+			fr: "Constitutions",
+			nl: "Toevoegingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20255,6 +28043,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9116",
 		label: "Uses and write-backs",
+		labels: {
+			de: "Verbrauch und Auflösungen",
+			en: "Uses and write-backs",
+			fr: "Utilisations et reprises",
+			nl: "Bestedingen en terugnemingen",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -20267,6 +28061,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9116",
 		label: "Uses and write-backs",
+		labels: {
+			de: "Verbrauch und Auflösungen",
+			en: "Uses and write-backs",
+			fr: "Utilisations et reprises",
+			nl: "Bestedingen en terugnemingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20282,6 +28082,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9116",
 		label: "Uses and write-backs",
+		labels: {
+			de: "Verbrauch und Auflösungen",
+			en: "Uses and write-backs",
+			fr: "Utilisations et reprises",
+			nl: "Bestedingen en terugnemingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20297,6 +28103,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "640",
 		label: "Taxes related to operation",
+		labels: {
+			de: "Betriebliche Steuern und Abgaben",
+			en: "Taxes related to operation",
+			fr: "Impôts et taxes relatifs à l'exploitation",
+			nl: "Bedrijfsbelastingen en -taksen",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -20310,6 +28122,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "640",
 		label: "Taxes related to operation",
+		labels: {
+			de: "Betriebliche Steuern und Abgaben",
+			en: "Taxes related to operation",
+			fr: "Impôts et taxes relatifs à l'exploitation",
+			nl: "Bedrijfsbelastingen en -taksen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20326,6 +28144,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "640",
 		label: "Taxes related to operation",
+		labels: {
+			de: "Betriebliche Steuern und Abgaben",
+			en: "Taxes related to operation",
+			fr: "Impôts et taxes relatifs à l'exploitation",
+			nl: "Bedrijfsbelastingen en -taksen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20341,6 +28165,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "641/8",
 		label: "Other costs",
+		labels: {
+			de: "Sonstige Aufwendungen",
+			en: "Other costs",
+			fr: "Autres",
+			nl: "Andere",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -20354,6 +28184,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "641/8",
 		label: "Other costs",
+		labels: {
+			de: "Sonstige Aufwendungen",
+			en: "Other costs",
+			fr: "Autres",
+			nl: "Andere",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20370,6 +28206,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "641/8",
 		label: "Other costs",
+		labels: {
+			de: "Sonstige Aufwendungen",
+			en: "Other costs",
+			fr: "Autres",
+			nl: "Andere",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20384,6 +28226,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9096",
 		label: "Total number at the closing date",
+		labels: {
+			de: "Gesamtzahl am Bilanzstichtag",
+			en: "Total number at the closing date",
+			fr: "Nombre total à la date de clôture",
+			nl: "Totaal aantal op de afsluitingsdatum",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -20396,6 +28244,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9096",
 		label: "Total number at the closing date",
+		labels: {
+			de: "Gesamtzahl am Bilanzstichtag",
+			en: "Total number at the closing date",
+			fr: "Nombre total à la date de clôture",
+			nl: "Totaal aantal op de afsluitingsdatum",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20411,6 +28265,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9096",
 		label: "Total number at the closing date",
+		labels: {
+			de: "Gesamtzahl am Bilanzstichtag",
+			en: "Total number at the closing date",
+			fr: "Nombre total à la date de clôture",
+			nl: "Totaal aantal op de afsluitingsdatum",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20426,6 +28286,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9097",
 		label: "Average number calculated in full-time equivalents",
+		labels: {
+			de: "Durchschnittliche Anzahl in Vollzeitäquivalenzen",
+			en: "Average number calculated in full-time equivalents",
+			fr: "Nombre moyen calculé en équivalents temps plein",
+			nl: "Gemiddeld aantal berekend in voltijdse equivalenten",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -20439,6 +28305,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9097",
 		label: "Average number calculated in full-time equivalents",
+		labels: {
+			de: "Durchschnittliche Anzahl in Vollzeitäquivalenzen",
+			en: "Average number calculated in full-time equivalents",
+			fr: "Nombre moyen calculé en équivalents temps plein",
+			nl: "Gemiddeld aantal berekend in voltijdse equivalenten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20455,6 +28327,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9097",
 		label: "Average number calculated in full-time equivalents",
+		labels: {
+			de: "Durchschnittliche Anzahl in Vollzeitäquivalenzen",
+			en: "Average number calculated in full-time equivalents",
+			fr: "Nombre moyen calculé en équivalents temps plein",
+			nl: "Gemiddeld aantal berekend in voltijdse equivalenten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20469,6 +28347,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9098",
 		label: "Number of actual worked hours",
+		labels: {
+			de: "Tatsächlich geleistete Arbeitsstunden",
+			en: "Number of actual worked hours",
+			fr: "Nombre d'heures effectivement prestées",
+			nl: "Aantal daadwerkelijk gepresteerde uren",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -20481,6 +28365,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9098",
 		label: "Number of actual worked hours",
+		labels: {
+			de: "Tatsächlich geleistete Arbeitsstunden",
+			en: "Number of actual worked hours",
+			fr: "Nombre d'heures effectivement prestées",
+			nl: "Aantal daadwerkelijk gepresteerde uren",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20496,6 +28386,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9098",
 		label: "Number of actual worked hours",
+		labels: {
+			de: "Tatsächlich geleistete Arbeitsstunden",
+			en: "Number of actual worked hours",
+			fr: "Nombre d'heures effectivement prestées",
+			nl: "Aantal daadwerkelijk gepresteerde uren",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20509,6 +28405,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "617",
 		label: "Costs to the association or the foundation",
+		labels: {
+			de: "Aufwand für die Vereinigung oder Stiftung",
+			en: "Costs to the association or the foundation",
+			fr: "Frais pour l'association ou la fondation",
+			nl: "Kosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.09.0.g",
@@ -20520,6 +28422,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "617",
 		label: "Costs to the association or the foundation",
+		labels: {
+			de: "Aufwand für die Vereinigung oder Stiftung",
+			en: "Costs to the association or the foundation",
+			fr: "Frais pour l'association ou la fondation",
+			nl: "Kosten voor de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20534,6 +28442,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "617",
 		label: "Costs to the association or the foundation",
+		labels: {
+			de: "Aufwand für die Vereinigung oder Stiftung",
+			en: "Costs to the association or the foundation",
+			fr: "Frais pour l'association ou la fondation",
+			nl: "Kosten voor de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20550,6 +28464,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6501",
 		label: "Depreciation of loan issue expenses",
+		labels: {
+			de: "Abschreibungen auf Kosten der Emission von Anleihen",
+			en: "Depreciation of loan issue expenses",
+			fr: "Amortissement des frais d'émission d'emprunts",
+			nl: "Afschrijving van kosten bij uitgifte van leningen",
+		},
 	},
 	{
 		section: "s.06.10.0.g",
@@ -20564,6 +28484,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6501",
 		label: "Depreciation of loan issue expenses",
+		labels: {
+			de: "Abschreibungen auf Kosten der Emission von Anleihen",
+			en: "Depreciation of loan issue expenses",
+			fr: "Amortissement des frais d'émission d'emprunts",
+			nl: "Afschrijving van kosten bij uitgifte van leningen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20581,6 +28507,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6501",
 		label: "Depreciation of loan issue expenses",
+		labels: {
+			de: "Abschreibungen auf Kosten der Emission von Anleihen",
+			en: "Depreciation of loan issue expenses",
+			fr: "Amortissement des frais d'émission d'emprunts",
+			nl: "Afschrijving van kosten bij uitgifte van leningen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20597,6 +28529,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6501",
 		label: "Depreciation of loan issue expenses",
+		labels: {
+			de: "Abschreibungen auf Kosten der Emission von Anleihen",
+			en: "Depreciation of loan issue expenses",
+			fr: "Amortissement des frais d'émission d'emprunts",
+			nl: "Afschrijving van kosten bij uitgifte van leningen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20610,6 +28548,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6502",
 		label: "Capitalized Interests",
+		labels: {
+			de: "Aktivierte Zinsen",
+			en: "Capitalized Interests",
+			fr: "Intérêts portés à l'actif",
+			nl: "Geactiveerde interesten",
+		},
 	},
 	{
 		section: "s.06.10.0.g",
@@ -20621,6 +28565,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6502",
 		label: "Capitalized Interests",
+		labels: {
+			de: "Aktivierte Zinsen",
+			en: "Capitalized Interests",
+			fr: "Intérêts portés à l'actif",
+			nl: "Geactiveerde interesten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20635,6 +28585,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6502",
 		label: "Capitalized Interests",
+		labels: {
+			de: "Aktivierte Zinsen",
+			en: "Capitalized Interests",
+			fr: "Intérêts portés à l'actif",
+			nl: "Geactiveerde interesten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20648,6 +28604,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6502",
 		label: "Capitalized Interests",
+		labels: {
+			de: "Aktivierte Zinsen",
+			en: "Capitalized Interests",
+			fr: "Intérêts portés à l'actif",
+			nl: "Geactiveerde interesten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20665,6 +28627,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6510",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 	},
 	{
 		section: "s.06.10.0.g",
@@ -20680,6 +28648,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6510",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20698,6 +28672,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6510",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20715,6 +28695,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6510",
 		label: "Recorded",
+		labels: {
+			de: "Gebucht",
+			en: "Recorded",
+			fr: "Actées",
+			nl: "Geboekt",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20732,6 +28718,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6511",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Reprises",
+			nl: "Teruggenomen",
+		},
 	},
 	{
 		section: "s.06.10.0.g",
@@ -20747,6 +28739,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6511",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Reprises",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20765,6 +28763,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6511",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Reprises",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20782,6 +28786,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6511",
 		label: "Written back",
+		labels: {
+			de: "Zurückgenommen",
+			en: "Written back",
+			fr: "Reprises",
+			nl: "Teruggenomen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20794,6 +28804,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "653",
 		label: "Amount of the discount borne by the association or the foundation, as a result of negotiating amounts receivable",
+		labels: {
+			de: "Betrag des für die Vereinigung oder Stiftung bei der Umwandlung einer Forderung entstandenen Skontoaufwands",
+			en: "Amount of the discount borne by the association or the foundation, as a result of negotiating amounts receivable",
+			fr: "Montant de l'escompte à charge de l'association ou de la fondation sur la négociation de créances",
+			nl: "Bedrag van het disconto ten laste van de vereniging of stichting bij de verhandeling van vorderingen",
+		},
 	},
 	{
 		section: "s.06.10.0.g",
@@ -20804,6 +28820,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "653",
 		label: "Amount of the discount borne by the association or the foundation, as a result of negotiating amounts receivable",
+		labels: {
+			de: "Betrag des für die Vereinigung oder Stiftung bei der Umwandlung einer Forderung entstandenen Skontoaufwands",
+			en: "Amount of the discount borne by the association or the foundation, as a result of negotiating amounts receivable",
+			fr: "Montant de l'escompte à charge de l'association ou de la fondation sur la négociation de créances",
+			nl: "Bedrag van het disconto ten laste van de vereniging of stichting bij de verhandeling van vorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20817,6 +28839,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "653",
 		label: "Amount of the discount borne by the association or the foundation, as a result of negotiating amounts receivable",
+		labels: {
+			de: "Betrag des für die Vereinigung oder Stiftung bei der Umwandlung einer Forderung entstandenen Skontoaufwands",
+			en: "Amount of the discount borne by the association or the foundation, as a result of negotiating amounts receivable",
+			fr: "Montant de l'escompte à charge de l'association ou de la fondation sur la négociation de créances",
+			nl: "Bedrag van het disconto ten laste van de vereniging of stichting bij de verhandeling van vorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20829,6 +28857,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "653",
 		label: "Amount of the discount borne by the association or the foundation, as a result of negotiating amounts receivable",
+		labels: {
+			de: "Betrag des für die Vereinigung oder Stiftung bei der Umwandlung einer Forderung entstandenen Skontoaufwands",
+			en: "Amount of the discount borne by the association or the foundation, as a result of negotiating amounts receivable",
+			fr: "Montant de l'escompte à charge de l'association ou de la fondation sur la négociation de créances",
+			nl: "Bedrag van het disconto ten laste van de vereniging of stichting bij de verhandeling van vorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20844,6 +28878,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6560",
 		label: "Appropriations",
+		labels: {
+			de: "Zuführungen",
+			en: "Appropriations",
+			fr: "Dotations",
+			nl: "Toevoegingen",
+		},
 	},
 	{
 		section: "s.06.10.0.g",
@@ -20857,6 +28897,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6560",
 		label: "Appropriations",
+		labels: {
+			de: "Zuführungen",
+			en: "Appropriations",
+			fr: "Dotations",
+			nl: "Toevoegingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20873,6 +28919,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6560",
 		label: "Appropriations",
+		labels: {
+			de: "Zuführungen",
+			en: "Appropriations",
+			fr: "Dotations",
+			nl: "Toevoegingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20888,6 +28940,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6560",
 		label: "Appropriations",
+		labels: {
+			de: "Zuführungen",
+			en: "Appropriations",
+			fr: "Dotations",
+			nl: "Toevoegingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20903,6 +28961,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6561",
 		label: "Uses and write-backs",
+		labels: {
+			de: "Verbrauch und Auflösungen",
+			en: "Uses and write-backs",
+			fr: "Utilisations et reprises",
+			nl: "Bestedingen en terugnemingen",
+		},
 	},
 	{
 		section: "s.06.10.0.g",
@@ -20916,6 +28980,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6561",
 		label: "Uses and write-backs",
+		labels: {
+			de: "Verbrauch und Auflösungen",
+			en: "Uses and write-backs",
+			fr: "Utilisations et reprises",
+			nl: "Bestedingen en terugnemingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20932,6 +29002,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6561",
 		label: "Uses and write-backs",
+		labels: {
+			de: "Verbrauch und Auflösungen",
+			en: "Uses and write-backs",
+			fr: "Utilisations et reprises",
+			nl: "Bestedingen en terugnemingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20947,6 +29023,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "6561",
 		label: "Uses and write-backs",
+		labels: {
+			de: "Verbrauch und Auflösungen",
+			en: "Uses and write-backs",
+			fr: "Utilisations et reprises",
+			nl: "Bestedingen en terugnemingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20964,6 +29046,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "760",
 		label: "Write-back of depreciation and of amounts written off intangible and tangible fixed assets",
+		labels: {
+			de: "Rücknahme von Abschreibungen und Wertminderungen auf immaterielle und materielle Sachanlagen",
+			en: "Write-back of depreciation and of amounts written off intangible and tangible fixed assets",
+			fr: "Reprises d'amortissements et de réductions de valeur sur immobilisations incorporelles et corporelles",
+			nl: "Terugneming van afschrijvingen en van waardeverminderingen op immateriële en materiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20980,6 +29068,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "7620",
 		label: "Write-back of provisions for extraordinary operating liabilities and charges",
+		labels: {
+			de: "Rücknahme von Rückstellungen für nicht wiederkehrende Betriebsrisiken und Aufwendungen",
+			en: "Write-back of provisions for extraordinary operating liabilities and charges",
+			fr: "Reprises de provisions pour risques et charges d’exploitation non récurrents",
+			nl: "Terugneming van voorzieningen voor niet-recurrente bedrijfsrisico's en -kosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -20996,6 +29090,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "7630",
 		label: "Capital gains on disposal of intangible and tangible fixed asset",
+		labels: {
+			de: "Mehrwerte aus dem Abgang von Gegenständen der immateriellen und materiellen Sachanlagen",
+			en: "Capital gains on disposal of intangible and tangible fixed asset",
+			fr: "Plus-values sur réalisation d'immobilisations incorporelles et corporelles",
+			nl: "Meerwaarden bij de realisatie van immateriële en materiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21010,6 +29110,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "764/8",
 		label: "Other non-recurring operating income",
+		labels: {
+			de: "Sonstige nicht wiederkehrende betriebliche Erträge",
+			en: "Other non-recurring operating income",
+			fr: "Autres produits d'exploitation non récurrents",
+			nl: "Andere niet-recurrente bedrijfsopbrengsten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21024,6 +29130,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "(76A)",
 		label: "Non-recurring operating income",
+		labels: {
+			de: "Nicht wiederkehrende betriebliche Erträge",
+			en: "Non-recurring operating income",
+			fr: "Produits d'exploitation non récurrents",
+			nl: "Niet-recurrente bedrijfsopbrengsten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21041,6 +29153,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "761",
 		label: "Write-back of amounts written down financial fixed assets",
+		labels: {
+			de: "Rücknahme von Wertminderungen auf Finanzanlagen",
+			en: "Write-back of amounts written down financial fixed assets",
+			fr: "Reprises de réductions de valeur sur immobilisations financières",
+			nl: "Terugneming van waardeverminderingen op financiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21057,6 +29175,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "7621",
 		label: "Write-back of provisions for extraordinary financial liabilities and charges",
+		labels: {
+			de: "Rücknahme von Rückstellungen für nicht wiederkehrende finanzielle Risiken und Aufwendungen",
+			en: "Write-back of provisions for extraordinary financial liabilities and charges",
+			fr: "Reprises de provisions pour risques et charges financiers non récurrents",
+			nl: "Terugneming van voorzieningen voor niet-recurrente financiële risico's en kosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21073,6 +29197,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "7631",
 		label: "Capital gains on disposal of financial fixed assets",
+		labels: {
+			de: "Mehrwerte aus dem Abgang von Gegenständen der Finanzanlagen",
+			en: "Capital gains on disposal of financial fixed assets",
+			fr: "Plus-values sur réalisation d'immobilisations financières",
+			nl: "Meerwaarden bij de realisatie van financiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21087,6 +29217,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "769",
 		label: "Other non-recurring financial income",
+		labels: {
+			de: "Sonstige nicht wiederkehrende Finanzerträge",
+			en: "Other non-recurring financial income",
+			fr: "Autres produits financiers non récurrents",
+			nl: "Andere niet-recurrente financiële opbrengsten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21101,6 +29237,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "(76B)",
 		label: "Non-recurring financial income",
+		labels: {
+			de: "Nicht wiederkehrende Finanzerträge",
+			en: "Non-recurring financial income",
+			fr: "Produits financiers non récurrents",
+			nl: "Niet-recurrente financiële opbrengsten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21114,6 +29256,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "76",
 		label: "NON RECURRING INCOME",
+		labels: {
+			de: "NICHT WIEDERKEHRENDE ERTRÄGE",
+			en: "NON RECURRING INCOME",
+			fr: "PRODUITS NON RÉCURRENTS",
+			nl: "NIET-RECURRENTE OPBRENGSTEN",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21130,6 +29278,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "660",
 		label: "Non-recurring depreciation of and amounts written off formation expenses, intangible and tangible fixed assets",
+		labels: {
+			de: "Nicht wiederkehrende Abschreibungen und Wertminderungen auf Errichtungsaufwendungen, auf immaterielle und materielle Sachanlagen",
+			en: "Non-recurring depreciation of and amounts written off formation expenses, intangible and tangible fixed assets",
+			fr: "Amortissements et réductions de valeur non récurrents sur frais d'établissement, sur immobilisations incorporelles et corporelles",
+			nl: "Niet-recurrente afschrijvingen en waardeverminderingen op oprichtingskosten, op immateriële en materiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21146,6 +29300,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "6620",
 		label: "Provisions for extraordinary operating liabilities and charges: Appropriations (uses)",
+		labels: {
+			de: "Rückstellungen für nicht wiederkehrende Betriebsrisiken und Aufwendungen: Zuführungen (Rücknahmen)",
+			en: "Provisions for extraordinary operating liabilities and charges: Appropriations (uses)",
+			fr: "Provisions pour risques et charges d’exploitation non récurrents: dotations (utilisations)",
+			nl: "Voorzieningen voor niet-recurrente bedrijfsrisico's en -kosten: toevoegingen (bestedingen)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21162,6 +29322,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "6630",
 		label: "Capital losses on disposal of intangible and tangible fixed assets",
+		labels: {
+			de: "Minderwerte aus dem Abgang von Gegenständen der immateriellen und materiellen Sachanlagen",
+			en: "Capital losses on disposal of intangible and tangible fixed assets",
+			fr: "Moins-values sur réalisation d'immobilisations incorporelles et corporelles",
+			nl: "Minderwaarden bij de realisatie van immateriële en materiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21176,6 +29342,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "664/7",
 		label: "Other non-recurring operating charges",
+		labels: {
+			de: "Sonstige nicht wiederkehrende betriebliche Aufwendungen",
+			en: "Other non-recurring operating charges",
+			fr: "Autres charges d'exploitation non récurrentes",
+			nl: "Andere niet-recurrente bedrijfskosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21192,6 +29364,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "6690",
 		label: "Non-recurring operating charges carried to assets as restructuring costs",
+		labels: {
+			de: "Als Restrukturierungskosten ausgewiesene nicht wiederkehrende betriebliche Aufwendungen",
+			en: "Non-recurring operating charges carried to assets as restructuring costs",
+			fr: "Charges d'exploitation non récurrentes portées à l'actif au titre de frais de restructuration",
+			nl: "Als herstructureringskosten geactiveerde niet-recurrente bedrijfskosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21206,6 +29384,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "(66A)",
 		label: "Non-recurring operating charges",
+		labels: {
+			de: "Nicht wiederkehrende betriebliche Aufwendungen",
+			en: "Non-recurring operating charges",
+			fr: "Charges d'exploitation non récurrentes",
+			nl: "Niet-recurrente bedrijfskosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21223,6 +29407,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "661",
 		label: "Amounts written off financial fixed assets",
+		labels: {
+			de: "Wertminderungen auf Finanzanlagen",
+			en: "Amounts written off financial fixed assets",
+			fr: "Réductions de valeur sur immobilisations financières",
+			nl: "Waardeverminderingen op financiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21239,6 +29429,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "6621",
 		label: "Provisions for extraordinary financial liabilities and charges: appropriations (uses)",
+		labels: {
+			de: "Rückstellungen für nicht wiederkehrende finanzielle Risiken und Aufwendungen: Zuführungen (Rücknahmen)",
+			en: "Provisions for extraordinary financial liabilities and charges: appropriations (uses)",
+			fr: "Provisions pour risques et charges financiers non récurrents: dotations (utilisations)",
+			nl: "Voorzieningen voor niet-recurrente financiële risico's en kosten: toevoegingen (bestedingen)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21255,6 +29451,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "6631",
 		label: "Capital losses on disposal of financial fixed assets",
+		labels: {
+			de: "Minderwerte aus dem Abgang von Gegenständen der Finanzanlagen",
+			en: "Capital losses on disposal of financial fixed assets",
+			fr: "Moins-values sur réalisation d'immobilisations financières",
+			nl: "Minderwaarden bij de realisatie van financiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21269,6 +29471,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "668",
 		label: "Other non-recurring financial charges",
+		labels: {
+			de: "Sonstige nicht wiederkehrende Finanzaufwendungen",
+			en: "Other non-recurring financial charges",
+			fr: "Autres charges financières non récurrentes",
+			nl: "Andere niet-recurrente financiële kosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21285,6 +29493,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "6691",
 		label: "Non-recurring financial charges carried to assets as restructuring costs",
+		labels: {
+			de: "Als Restrukturierungskosten ausgewiesene nicht wiederkehrende Finanzaufwendungen",
+			en: "Non-recurring financial charges carried to assets as restructuring costs",
+			fr: "Charges financières non récurrentes portées à l'actif au titre de frais de restructuration",
+			nl: "Als herstructureringskosten geactiveerde niet-recurrente financiële kosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21299,6 +29513,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "(66B)",
 		label: "Non-recurring financial charges",
+		labels: {
+			de: "Nicht wiederkehrende Finanzaufwendungen",
+			en: "Non-recurring financial charges",
+			fr: "Charges financières non récurrentes",
+			nl: "Niet-recurrente financiële kosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21312,6 +29532,12 @@ const datapoints2: readonly Datapoint[] = [
 		},
 		code: "66",
 		label: "NON-RECURRING EXPENSES",
+		labels: {
+			de: "NICHT WIEDERKEHRENDE AUFWENDUNGEN",
+			en: "NON-RECURRING EXPENSES",
+			fr: "CHARGES NON RÉCURRENTES",
+			nl: "NIET-RECURRENTE KOSTEN",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -21327,6 +29553,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9135",
 		label: "Income taxes paid and withholding taxes due or paid",
+		labels: {
+			de: "Geschuldete oder gezahlte Steuern und Steuervorabzug",
+			en: "Income taxes paid and withholding taxes due or paid",
+			fr: "Impôts et précomptes dus ou versés",
+			nl: "Verschuldigde of betaalde belastingen en voorheffingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21340,6 +29572,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9135",
 		label: "Income taxes paid and withholding taxes due or paid",
+		labels: {
+			de: "Geschuldete oder gezahlte Steuern und Steuervorabzug",
+			en: "Income taxes paid and withholding taxes due or paid",
+			fr: "Impôts et précomptes dus ou versés",
+			nl: "Verschuldigde of betaalde belastingen en voorheffingen",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21352,6 +29590,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9135",
 		label: "Income taxes paid and withholding taxes due or paid",
+		labels: {
+			de: "Geschuldete oder gezahlte Steuern und Steuervorabzug",
+			en: "Income taxes paid and withholding taxes due or paid",
+			fr: "Impôts et précomptes dus ou versés",
+			nl: "Verschuldigde of betaalde belastingen en voorheffingen",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21365,6 +29609,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9135",
 		label: "Income taxes paid and withholding taxes due or paid",
+		labels: {
+			de: "Geschuldete oder gezahlte Steuern und Steuervorabzug",
+			en: "Income taxes paid and withholding taxes due or paid",
+			fr: "Impôts et précomptes dus ou versés",
+			nl: "Verschuldigde of betaalde belastingen en voorheffingen",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21377,6 +29627,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9135",
 		label: "Income taxes paid and withholding taxes due or paid",
+		labels: {
+			de: "Geschuldete oder gezahlte Steuern und Steuervorabzug",
+			en: "Income taxes paid and withholding taxes due or paid",
+			fr: "Impôts et précomptes dus ou versés",
+			nl: "Verschuldigde of betaalde belastingen en voorheffingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21391,6 +29647,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9135",
 		label: "Income taxes paid and withholding taxes due or paid",
+		labels: {
+			de: "Geschuldete oder gezahlte Steuern und Steuervorabzug",
+			en: "Income taxes paid and withholding taxes due or paid",
+			fr: "Impôts et précomptes dus ou versés",
+			nl: "Verschuldigde of betaalde belastingen en voorheffingen",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21404,6 +29666,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9136",
 		label: "Excess of income tax prepayments and withholding taxes paid recorded under assets",
+		labels: {
+			de: "Aktivierte Überschüsse von gezahlten Steuern und Steuervorabzügen",
+			en: "Excess of income tax prepayments and withholding taxes paid recorded under assets",
+			fr: "Excédent de versements d'impôts ou de précomptes porté à l'actif",
+			nl: "Geactiveerde overschotten van betaalde belastingen en voorheffingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21417,6 +29685,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9136",
 		label: "Excess of income tax prepayments and withholding taxes paid recorded under assets",
+		labels: {
+			de: "Aktivierte Überschüsse von gezahlten Steuern und Steuervorabzügen",
+			en: "Excess of income tax prepayments and withholding taxes paid recorded under assets",
+			fr: "Excédent de versements d'impôts ou de précomptes porté à l'actif",
+			nl: "Geactiveerde overschotten van betaalde belastingen en voorheffingen",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21429,6 +29703,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9136",
 		label: "Excess of income tax prepayments and withholding taxes paid recorded under assets",
+		labels: {
+			de: "Aktivierte Überschüsse von gezahlten Steuern und Steuervorabzügen",
+			en: "Excess of income tax prepayments and withholding taxes paid recorded under assets",
+			fr: "Excédent de versements d'impôts ou de précomptes porté à l'actif",
+			nl: "Geactiveerde overschotten van betaalde belastingen en voorheffingen",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21442,6 +29722,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9136",
 		label: "Excess of income tax prepayments and withholding taxes paid recorded under assets",
+		labels: {
+			de: "Aktivierte Überschüsse von gezahlten Steuern und Steuervorabzügen",
+			en: "Excess of income tax prepayments and withholding taxes paid recorded under assets",
+			fr: "Excédent de versements d'impôts ou de précomptes porté à l'actif",
+			nl: "Geactiveerde overschotten van betaalde belastingen en voorheffingen",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21454,6 +29740,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9136",
 		label: "Excess of income tax prepayments and withholding taxes paid recorded under assets",
+		labels: {
+			de: "Aktivierte Überschüsse von gezahlten Steuern und Steuervorabzügen",
+			en: "Excess of income tax prepayments and withholding taxes paid recorded under assets",
+			fr: "Excédent de versements d'impôts ou de précomptes porté à l'actif",
+			nl: "Geactiveerde overschotten van betaalde belastingen en voorheffingen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21468,6 +29760,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9136",
 		label: "Excess of income tax prepayments and withholding taxes paid recorded under assets",
+		labels: {
+			de: "Aktivierte Überschüsse von gezahlten Steuern und Steuervorabzügen",
+			en: "Excess of income tax prepayments and withholding taxes paid recorded under assets",
+			fr: "Excédent de versements d'impôts ou de précomptes porté à l'actif",
+			nl: "Geactiveerde overschotten van betaalde belastingen en voorheffingen",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21481,6 +29779,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9137",
 		label: "Estimated additional taxes",
+		labels: {
+			de: "Geschätzter Steuernachforderungen",
+			en: "Estimated additional taxes",
+			fr: "Suppléments d'impôts estimés",
+			nl: "Geraamde belastingsupplementen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21494,6 +29798,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9137",
 		label: "Estimated additional taxes",
+		labels: {
+			de: "Geschätzter Steuernachforderungen",
+			en: "Estimated additional taxes",
+			fr: "Suppléments d'impôts estimés",
+			nl: "Geraamde belastingsupplementen",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21506,6 +29816,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9137",
 		label: "Estimated additional taxes",
+		labels: {
+			de: "Geschätzter Steuernachforderungen",
+			en: "Estimated additional taxes",
+			fr: "Suppléments d'impôts estimés",
+			nl: "Geraamde belastingsupplementen",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21519,6 +29835,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9137",
 		label: "Estimated additional taxes",
+		labels: {
+			de: "Geschätzter Steuernachforderungen",
+			en: "Estimated additional taxes",
+			fr: "Suppléments d'impôts estimés",
+			nl: "Geraamde belastingsupplementen",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21531,6 +29853,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9137",
 		label: "Estimated additional taxes",
+		labels: {
+			de: "Geschätzter Steuernachforderungen",
+			en: "Estimated additional taxes",
+			fr: "Suppléments d'impôts estimés",
+			nl: "Geraamde belastingsupplementen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21545,6 +29873,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9137",
 		label: "Estimated additional taxes",
+		labels: {
+			de: "Geschätzter Steuernachforderungen",
+			en: "Estimated additional taxes",
+			fr: "Suppléments d'impôts estimés",
+			nl: "Geraamde belastingsupplementen",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21557,6 +29891,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9134",
 		label: "Income taxes on the result of the period",
+		labels: {
+			de: "Steuern auf das Ergebnis des Geschäftsjahres",
+			en: "Income taxes on the result of the period",
+			fr: "Impôts sur le résultat de l'exercice",
+			nl: "Belastingen op het resultaat van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21569,6 +29909,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9134",
 		label: "Income taxes on the result of the period",
+		labels: {
+			de: "Steuern auf das Ergebnis des Geschäftsjahres",
+			en: "Income taxes on the result of the period",
+			fr: "Impôts sur le résultat de l'exercice",
+			nl: "Belastingen op het resultaat van het boekjaar",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21580,6 +29926,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9134",
 		label: "Income taxes on the result of the period",
+		labels: {
+			de: "Steuern auf das Ergebnis des Geschäftsjahres",
+			en: "Income taxes on the result of the period",
+			fr: "Impôts sur le résultat de l'exercice",
+			nl: "Belastingen op het resultaat van het boekjaar",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21592,6 +29944,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9134",
 		label: "Income taxes on the result of the period",
+		labels: {
+			de: "Steuern auf das Ergebnis des Geschäftsjahres",
+			en: "Income taxes on the result of the period",
+			fr: "Impôts sur le résultat de l'exercice",
+			nl: "Belastingen op het resultaat van het boekjaar",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21603,6 +29961,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9134",
 		label: "Income taxes on the result of the period",
+		labels: {
+			de: "Steuern auf das Ergebnis des Geschäftsjahres",
+			en: "Income taxes on the result of the period",
+			fr: "Impôts sur le résultat de l'exercice",
+			nl: "Belastingen op het resultaat van het boekjaar",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21616,6 +29980,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9134",
 		label: "Income taxes on the result of the period",
+		labels: {
+			de: "Steuern auf das Ergebnis des Geschäftsjahres",
+			en: "Income taxes on the result of the period",
+			fr: "Impôts sur le résultat de l'exercice",
+			nl: "Belastingen op het resultaat van het boekjaar",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21629,6 +29999,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9139",
 		label: "Additional income taxes due or paid",
+		labels: {
+			de: "Geschuldete oder gezahlte Steuernachforderungen",
+			en: "Additional income taxes due or paid",
+			fr: "Suppléments d'impôts dus ou versés",
+			nl: "Verschuldigde of betaalde belastingsupplementen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21642,6 +30018,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9139",
 		label: "Additional income taxes due or paid",
+		labels: {
+			de: "Geschuldete oder gezahlte Steuernachforderungen",
+			en: "Additional income taxes due or paid",
+			fr: "Suppléments d'impôts dus ou versés",
+			nl: "Verschuldigde of betaalde belastingsupplementen",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21654,6 +30036,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9139",
 		label: "Additional income taxes due or paid",
+		labels: {
+			de: "Geschuldete oder gezahlte Steuernachforderungen",
+			en: "Additional income taxes due or paid",
+			fr: "Suppléments d'impôts dus ou versés",
+			nl: "Verschuldigde of betaalde belastingsupplementen",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21667,6 +30055,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9139",
 		label: "Additional income taxes due or paid",
+		labels: {
+			de: "Geschuldete oder gezahlte Steuernachforderungen",
+			en: "Additional income taxes due or paid",
+			fr: "Suppléments d'impôts dus ou versés",
+			nl: "Verschuldigde of betaalde belastingsupplementen",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21679,6 +30073,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9139",
 		label: "Additional income taxes due or paid",
+		labels: {
+			de: "Geschuldete oder gezahlte Steuernachforderungen",
+			en: "Additional income taxes due or paid",
+			fr: "Suppléments d'impôts dus ou versés",
+			nl: "Verschuldigde of betaalde belastingsupplementen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21693,6 +30093,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9139",
 		label: "Additional income taxes due or paid",
+		labels: {
+			de: "Geschuldete oder gezahlte Steuernachforderungen",
+			en: "Additional income taxes due or paid",
+			fr: "Suppléments d'impôts dus ou versés",
+			nl: "Verschuldigde of betaalde belastingsupplementen",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21706,6 +30112,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9140",
 		label: "Additional income taxes estimated or provided for",
+		labels: {
+			de: "Geschätzte Steuernachforderungen oder Steuernachforderungen, für die eine Rückstellung gebildet wurde",
+			en: "Additional income taxes estimated or provided for",
+			fr: "Suppléments d'impôts estimés ou provisionnés",
+			nl: "Geraamde belastingsupplementen of belastingen waarvoor een voorziening werd gevormd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21719,6 +30131,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9140",
 		label: "Additional income taxes estimated or provided for",
+		labels: {
+			de: "Geschätzte Steuernachforderungen oder Steuernachforderungen, für die eine Rückstellung gebildet wurde",
+			en: "Additional income taxes estimated or provided for",
+			fr: "Suppléments d'impôts estimés ou provisionnés",
+			nl: "Geraamde belastingsupplementen of belastingen waarvoor een voorziening werd gevormd",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21731,6 +30149,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9140",
 		label: "Additional income taxes estimated or provided for",
+		labels: {
+			de: "Geschätzte Steuernachforderungen oder Steuernachforderungen, für die eine Rückstellung gebildet wurde",
+			en: "Additional income taxes estimated or provided for",
+			fr: "Suppléments d'impôts estimés ou provisionnés",
+			nl: "Geraamde belastingsupplementen of belastingen waarvoor een voorziening werd gevormd",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21744,6 +30168,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9140",
 		label: "Additional income taxes estimated or provided for",
+		labels: {
+			de: "Geschätzte Steuernachforderungen oder Steuernachforderungen, für die eine Rückstellung gebildet wurde",
+			en: "Additional income taxes estimated or provided for",
+			fr: "Suppléments d'impôts estimés ou provisionnés",
+			nl: "Geraamde belastingsupplementen of belastingen waarvoor een voorziening werd gevormd",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21756,6 +30186,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9140",
 		label: "Additional income taxes estimated or provided for",
+		labels: {
+			de: "Geschätzte Steuernachforderungen oder Steuernachforderungen, für die eine Rückstellung gebildet wurde",
+			en: "Additional income taxes estimated or provided for",
+			fr: "Suppléments d'impôts estimés ou provisionnés",
+			nl: "Geraamde belastingsupplementen of belastingen waarvoor een voorziening werd gevormd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21770,6 +30206,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9140",
 		label: "Additional income taxes estimated or provided for",
+		labels: {
+			de: "Geschätzte Steuernachforderungen oder Steuernachforderungen, für die eine Rückstellung gebildet wurde",
+			en: "Additional income taxes estimated or provided for",
+			fr: "Suppléments d'impôts estimés ou provisionnés",
+			nl: "Geraamde belastingsupplementen of belastingen waarvoor een voorziening werd gevormd",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21782,6 +30224,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9138",
 		label: "Income taxes on the result of prior periods",
+		labels: {
+			de: "Steuern auf das Ergebnis vorhergehender Geschäftsjahre",
+			en: "Income taxes on the result of prior periods",
+			fr: "Impôts sur le résultat d'exercices antérieurs",
+			nl: "Belastingen op het resultaat van vorige boekjaren",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21794,6 +30242,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9138",
 		label: "Income taxes on the result of prior periods",
+		labels: {
+			de: "Steuern auf das Ergebnis vorhergehender Geschäftsjahre",
+			en: "Income taxes on the result of prior periods",
+			fr: "Impôts sur le résultat d'exercices antérieurs",
+			nl: "Belastingen op het resultaat van vorige boekjaren",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21805,6 +30259,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9138",
 		label: "Income taxes on the result of prior periods",
+		labels: {
+			de: "Steuern auf das Ergebnis vorhergehender Geschäftsjahre",
+			en: "Income taxes on the result of prior periods",
+			fr: "Impôts sur le résultat d'exercices antérieurs",
+			nl: "Belastingen op het resultaat van vorige boekjaren",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21817,6 +30277,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9138",
 		label: "Income taxes on the result of prior periods",
+		labels: {
+			de: "Steuern auf das Ergebnis vorhergehender Geschäftsjahre",
+			en: "Income taxes on the result of prior periods",
+			fr: "Impôts sur le résultat d'exercices antérieurs",
+			nl: "Belastingen op het resultaat van vorige boekjaren",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21828,6 +30294,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9138",
 		label: "Income taxes on the result of prior periods",
+		labels: {
+			de: "Steuern auf das Ergebnis vorhergehender Geschäftsjahre",
+			en: "Income taxes on the result of prior periods",
+			fr: "Impôts sur le résultat d'exercices antérieurs",
+			nl: "Belastingen op het resultaat van vorige boekjaren",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21841,6 +30313,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9138",
 		label: "Income taxes on the result of prior periods",
+		labels: {
+			de: "Steuern auf das Ergebnis vorhergehender Geschäftsjahre",
+			en: "Income taxes on the result of prior periods",
+			fr: "Impôts sur le résultat d'exercices antérieurs",
+			nl: "Belastingen op het resultaat van vorige boekjaren",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21855,6 +30333,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9142",
 		label: "Accumulated tax losses deductible from future taxable profits",
+		labels: {
+			de: "Kumulierte steuerliche Verlustvorträge die von später zu versteuernden Erträgen abzugsfähig sind",
+			en: "Accumulated tax losses deductible from future taxable profits",
+			fr: "Pertes fiscales cumulées, déductibles des bénéfices taxables ultérieurs",
+			nl: "Gecumuleerde fiscale verliezen die aftrekbaar zijn van latere belastbare winsten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21869,6 +30353,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9142",
 		label: "Accumulated tax losses deductible from future taxable profits",
+		labels: {
+			de: "Kumulierte steuerliche Verlustvorträge die von später zu versteuernden Erträgen abzugsfähig sind",
+			en: "Accumulated tax losses deductible from future taxable profits",
+			fr: "Pertes fiscales cumulées, déductibles des bénéfices taxables ultérieurs",
+			nl: "Gecumuleerde fiscale verliezen die aftrekbaar zijn van latere belastbare winsten",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21882,6 +30372,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9142",
 		label: "Accumulated tax losses deductible from future taxable profits",
+		labels: {
+			de: "Kumulierte steuerliche Verlustvorträge die von später zu versteuernden Erträgen abzugsfähig sind",
+			en: "Accumulated tax losses deductible from future taxable profits",
+			fr: "Pertes fiscales cumulées, déductibles des bénéfices taxables ultérieurs",
+			nl: "Gecumuleerde fiscale verliezen die aftrekbaar zijn van latere belastbare winsten",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21896,6 +30392,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9142",
 		label: "Accumulated tax losses deductible from future taxable profits",
+		labels: {
+			de: "Kumulierte steuerliche Verlustvorträge die von später zu versteuernden Erträgen abzugsfähig sind",
+			en: "Accumulated tax losses deductible from future taxable profits",
+			fr: "Pertes fiscales cumulées, déductibles des bénéfices taxables ultérieurs",
+			nl: "Gecumuleerde fiscale verliezen die aftrekbaar zijn van latere belastbare winsten",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21909,6 +30411,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9142",
 		label: "Accumulated tax losses deductible from future taxable profits",
+		labels: {
+			de: "Kumulierte steuerliche Verlustvorträge die von später zu versteuernden Erträgen abzugsfähig sind",
+			en: "Accumulated tax losses deductible from future taxable profits",
+			fr: "Pertes fiscales cumulées, déductibles des bénéfices taxables ultérieurs",
+			nl: "Gecumuleerde fiscale verliezen die aftrekbaar zijn van latere belastbare winsten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21924,6 +30432,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9142",
 		label: "Accumulated tax losses deductible from future taxable profits",
+		labels: {
+			de: "Kumulierte steuerliche Verlustvorträge die von später zu versteuernden Erträgen abzugsfähig sind",
+			en: "Accumulated tax losses deductible from future taxable profits",
+			fr: "Pertes fiscales cumulées, déductibles des bénéfices taxables ultérieurs",
+			nl: "Gecumuleerde fiscale verliezen die aftrekbaar zijn van latere belastbare winsten",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21936,6 +30450,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9141",
 		label: "Deferred taxes representing assets",
+		labels: {
+			de: "Aktive latente Steuern",
+			en: "Deferred taxes representing assets",
+			fr: "Latences actives",
+			nl: "Actieve latenties",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21948,6 +30468,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9141",
 		label: "Deferred taxes representing assets",
+		labels: {
+			de: "Aktive latente Steuern",
+			en: "Deferred taxes representing assets",
+			fr: "Latences actives",
+			nl: "Actieve latenties",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21959,6 +30485,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9141",
 		label: "Deferred taxes representing assets",
+		labels: {
+			de: "Aktive latente Steuern",
+			en: "Deferred taxes representing assets",
+			fr: "Latences actives",
+			nl: "Actieve latenties",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21971,6 +30503,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9141",
 		label: "Deferred taxes representing assets",
+		labels: {
+			de: "Aktive latente Steuern",
+			en: "Deferred taxes representing assets",
+			fr: "Latences actives",
+			nl: "Actieve latenties",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -21982,6 +30520,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9141",
 		label: "Deferred taxes representing assets",
+		labels: {
+			de: "Aktive latente Steuern",
+			en: "Deferred taxes representing assets",
+			fr: "Latences actives",
+			nl: "Actieve latenties",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -21995,6 +30539,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9141",
 		label: "Deferred taxes representing assets",
+		labels: {
+			de: "Aktive latente Steuern",
+			en: "Deferred taxes representing assets",
+			fr: "Latences actives",
+			nl: "Actieve latenties",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22007,6 +30557,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9144",
 		label: "Deferred taxes representing liabilities",
+		labels: {
+			de: "Passive latente Steuern",
+			en: "Deferred taxes representing liabilities",
+			fr: "Latences passives",
+			nl: "Passieve latenties",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -22021,6 +30577,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9144",
 		label: "Deferred taxes representing liabilities",
+		labels: {
+			de: "Passive latente Steuern",
+			en: "Deferred taxes representing liabilities",
+			fr: "Latences passives",
+			nl: "Passieve latenties",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22033,6 +30595,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9144",
 		label: "Deferred taxes representing liabilities",
+		labels: {
+			de: "Passive latente Steuern",
+			en: "Deferred taxes representing liabilities",
+			fr: "Latences passives",
+			nl: "Passieve latenties",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22046,6 +30614,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9144",
 		label: "Deferred taxes representing liabilities",
+		labels: {
+			de: "Passive latente Steuern",
+			en: "Deferred taxes representing liabilities",
+			fr: "Latences passives",
+			nl: "Passieve latenties",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22059,6 +30633,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9144",
 		label: "Deferred taxes representing liabilities",
+		labels: {
+			de: "Passive latente Steuern",
+			en: "Deferred taxes representing liabilities",
+			fr: "Latences passives",
+			nl: "Passieve latenties",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22072,6 +30652,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9145",
 		label: "To the association or the foundation(deductible)",
+		labels: {
+			de: "An die Vereinigung oder Stiftung (abzugsfähig)",
+			en: "To the association or the foundation(deductible)",
+			fr: "A l'association ou à la fondation (déductibles)",
+			nl: "Aan de vereniging of stichting (aftrekbaar)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -22087,6 +30673,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9145",
 		label: "To the association or the foundation(deductible)",
+		labels: {
+			de: "An die Vereinigung oder Stiftung (abzugsfähig)",
+			en: "To the association or the foundation(deductible)",
+			fr: "A l'association ou à la fondation (déductibles)",
+			nl: "Aan de vereniging of stichting (aftrekbaar)",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22100,6 +30692,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9145",
 		label: "To the association or the foundation(deductible)",
+		labels: {
+			de: "An die Vereinigung oder Stiftung (abzugsfähig)",
+			en: "To the association or the foundation(deductible)",
+			fr: "A l'association ou à la fondation (déductibles)",
+			nl: "Aan de vereniging of stichting (aftrekbaar)",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22114,6 +30712,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9145",
 		label: "To the association or the foundation(deductible)",
+		labels: {
+			de: "An die Vereinigung oder Stiftung (abzugsfähig)",
+			en: "To the association or the foundation(deductible)",
+			fr: "A l'association ou à la fondation (déductibles)",
+			nl: "Aan de vereniging of stichting (aftrekbaar)",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22128,6 +30732,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9145",
 		label: "To the association or the foundation(deductible)",
+		labels: {
+			de: "An die Vereinigung oder Stiftung (abzugsfähig)",
+			en: "To the association or the foundation(deductible)",
+			fr: "A l'association ou à la fondation (déductibles)",
+			nl: "Aan de vereniging of stichting (aftrekbaar)",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22141,6 +30751,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9146",
 		label: "By the association or the foundation",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung",
+			en: "By the association or the foundation",
+			fr: "Par l'association ou la fondation",
+			nl: "Door de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -22156,6 +30772,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9146",
 		label: "By the association or the foundation",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung",
+			en: "By the association or the foundation",
+			fr: "Par l'association ou la fondation",
+			nl: "Door de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22169,6 +30791,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9146",
 		label: "By the association or the foundation",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung",
+			en: "By the association or the foundation",
+			fr: "Par l'association ou la fondation",
+			nl: "Door de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22183,6 +30811,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9146",
 		label: "By the association or the foundation",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung",
+			en: "By the association or the foundation",
+			fr: "Par l'association ou la fondation",
+			nl: "Door de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22197,6 +30831,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9146",
 		label: "By the association or the foundation",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung",
+			en: "By the association or the foundation",
+			fr: "Par l'association ou la fondation",
+			nl: "Door de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22208,6 +30848,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9147",
 		label: "For payroll withholding taxes",
+		labels: {
+			de: "Lohnsteuer",
+			en: "For payroll withholding taxes",
+			fr: "Précompte professionnel",
+			nl: "Bedrijfsvoorheffing",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -22221,6 +30867,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9147",
 		label: "For payroll withholding taxes",
+		labels: {
+			de: "Lohnsteuer",
+			en: "For payroll withholding taxes",
+			fr: "Précompte professionnel",
+			nl: "Bedrijfsvoorheffing",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22232,6 +30884,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9147",
 		label: "For payroll withholding taxes",
+		labels: {
+			de: "Lohnsteuer",
+			en: "For payroll withholding taxes",
+			fr: "Précompte professionnel",
+			nl: "Bedrijfsvoorheffing",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22244,6 +30902,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9147",
 		label: "For payroll withholding taxes",
+		labels: {
+			de: "Lohnsteuer",
+			en: "For payroll withholding taxes",
+			fr: "Précompte professionnel",
+			nl: "Bedrijfsvoorheffing",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22256,6 +30920,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9147",
 		label: "For payroll withholding taxes",
+		labels: {
+			de: "Lohnsteuer",
+			en: "For payroll withholding taxes",
+			fr: "Précompte professionnel",
+			nl: "Bedrijfsvoorheffing",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22267,6 +30937,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9148",
 		label: "For withholding taxes on investment income",
+		labels: {
+			de: "Kapitalertragsteuer",
+			en: "For withholding taxes on investment income",
+			fr: "Précompte mobilier",
+			nl: "Roerende voorheffing",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -22280,6 +30956,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9148",
 		label: "For withholding taxes on investment income",
+		labels: {
+			de: "Kapitalertragsteuer",
+			en: "For withholding taxes on investment income",
+			fr: "Précompte mobilier",
+			nl: "Roerende voorheffing",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22291,6 +30973,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9148",
 		label: "For withholding taxes on investment income",
+		labels: {
+			de: "Kapitalertragsteuer",
+			en: "For withholding taxes on investment income",
+			fr: "Précompte mobilier",
+			nl: "Roerende voorheffing",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22303,6 +30991,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9148",
 		label: "For withholding taxes on investment income",
+		labels: {
+			de: "Kapitalertragsteuer",
+			en: "For withholding taxes on investment income",
+			fr: "Précompte mobilier",
+			nl: "Roerende voorheffing",
+		},
 	},
 	{
 		section: "s.06.12.0.g",
@@ -22315,6 +31009,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9148",
 		label: "For withholding taxes on investment income",
+		labels: {
+			de: "Kapitalertragsteuer",
+			en: "For withholding taxes on investment income",
+			fr: "Précompte mobilier",
+			nl: "Roerende voorheffing",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22330,6 +31030,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9150",
 		label: "Bills of exchange in circulation endorsed by the association or the foundation",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung indossierte, in Umlauf befindliche Handelswechsel",
+			en: "Bills of exchange in circulation endorsed by the association or the foundation",
+			fr: "Effets de commerce en circulation endossés par l'association ou la fondation",
+			nl: "Door de vereniging of stichting geëndosseerde handelseffecten in omloop",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22344,6 +31050,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9150",
 		label: "Bills of exchange in circulation endorsed by the association or the foundation",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung indossierte, in Umlauf befindliche Handelswechsel",
+			en: "Bills of exchange in circulation endorsed by the association or the foundation",
+			fr: "Effets de commerce en circulation endossés par l'association ou la fondation",
+			nl: "Door de vereniging of stichting geëndosseerde handelseffecten in omloop",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22356,6 +31068,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9150",
 		label: "Bills of exchange in circulation endorsed by the association or the foundation",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung indossierte, in Umlauf befindliche Handelswechsel",
+			en: "Bills of exchange in circulation endorsed by the association or the foundation",
+			fr: "Effets de commerce en circulation endossés par l'association ou la fondation",
+			nl: "Door de vereniging of stichting geëndosseerde handelseffecten in omloop",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22369,6 +31087,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9150",
 		label: "Bills of exchange in circulation endorsed by the association or the foundation",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung indossierte, in Umlauf befindliche Handelswechsel",
+			en: "Bills of exchange in circulation endorsed by the association or the foundation",
+			fr: "Effets de commerce en circulation endossés par l'association ou la fondation",
+			nl: "Door de vereniging of stichting geëndosseerde handelseffecten in omloop",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22381,6 +31105,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9150",
 		label: "Bills of exchange in circulation endorsed by the association or the foundation",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung indossierte, in Umlauf befindliche Handelswechsel",
+			en: "Bills of exchange in circulation endorsed by the association or the foundation",
+			fr: "Effets de commerce en circulation endossés par l'association ou la fondation",
+			nl: "Door de vereniging of stichting geëndosseerde handelseffecten in omloop",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22396,6 +31126,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9151",
 		label: "Bills of exchange in circulation drawn or guaranteed by the association or the foundation",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung ausgestellte oder avalierte, in Umlauf befindliche Handelswechsel",
+			en: "Bills of exchange in circulation drawn or guaranteed by the association or the foundation",
+			fr: "Effets de commerce en circulation tirés ou avalisés par l'association ou la fondation",
+			nl: "Door de vereniging of stichting getrokken of voor aval getekende handelseffecten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22410,6 +31146,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9151",
 		label: "Bills of exchange in circulation drawn or guaranteed by the association or the foundation",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung ausgestellte oder avalierte, in Umlauf befindliche Handelswechsel",
+			en: "Bills of exchange in circulation drawn or guaranteed by the association or the foundation",
+			fr: "Effets de commerce en circulation tirés ou avalisés par l'association ou la fondation",
+			nl: "Door de vereniging of stichting getrokken of voor aval getekende handelseffecten",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22422,6 +31164,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9151",
 		label: "Bills of exchange in circulation drawn or guaranteed by the association or the foundation",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung ausgestellte oder avalierte, in Umlauf befindliche Handelswechsel",
+			en: "Bills of exchange in circulation drawn or guaranteed by the association or the foundation",
+			fr: "Effets de commerce en circulation tirés ou avalisés par l'association ou la fondation",
+			nl: "Door de vereniging of stichting getrokken of voor aval getekende handelseffecten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22435,6 +31183,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9151",
 		label: "Bills of exchange in circulation drawn or guaranteed by the association or the foundation",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung ausgestellte oder avalierte, in Umlauf befindliche Handelswechsel",
+			en: "Bills of exchange in circulation drawn or guaranteed by the association or the foundation",
+			fr: "Effets de commerce en circulation tirés ou avalisés par l'association ou la fondation",
+			nl: "Door de vereniging of stichting getrokken of voor aval getekende handelseffecten",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22447,6 +31201,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9151",
 		label: "Bills of exchange in circulation drawn or guaranteed by the association or the foundation",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung ausgestellte oder avalierte, in Umlauf befindliche Handelswechsel",
+			en: "Bills of exchange in circulation drawn or guaranteed by the association or the foundation",
+			fr: "Effets de commerce en circulation tirés ou avalisés par l'association ou la fondation",
+			nl: "Door de vereniging of stichting getrokken of voor aval getekende handelseffecten",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22462,6 +31222,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9153",
 		label: "Maximum amount for which other debts or commitments of third parties are guaranteed by the association or the foundation",
+		labels: {
+			de: "Höchstbetrag, bis zu dem übrige Verpflichtungen Dritter durch die Vereinigung oder Stiftung besichert sind",
+			en: "Maximum amount for which other debts or commitments of third parties are guaranteed by the association or the foundation",
+			fr: "Montant maximum à concurrence duquel d'autres engagements de tiers sont garantis par l'association ou la fondation",
+			nl: "Maximumbedrag ten belope waarvan andere verplichtingen van derden door de vereniging of stichting zijn gewaarborgd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22476,6 +31242,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9153",
 		label: "Maximum amount for which other debts or commitments of third parties are guaranteed by the association or the foundation",
+		labels: {
+			de: "Höchstbetrag, bis zu dem übrige Verpflichtungen Dritter durch die Vereinigung oder Stiftung besichert sind",
+			en: "Maximum amount for which other debts or commitments of third parties are guaranteed by the association or the foundation",
+			fr: "Montant maximum à concurrence duquel d'autres engagements de tiers sont garantis par l'association ou la fondation",
+			nl: "Maximumbedrag ten belope waarvan andere verplichtingen van derden door de vereniging of stichting zijn gewaarborgd",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22488,6 +31260,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9153",
 		label: "Maximum amount for which other debts or commitments of third parties are guaranteed by the association or the foundation",
+		labels: {
+			de: "Höchstbetrag, bis zu dem übrige Verpflichtungen Dritter durch die Vereinigung oder Stiftung besichert sind",
+			en: "Maximum amount for which other debts or commitments of third parties are guaranteed by the association or the foundation",
+			fr: "Montant maximum à concurrence duquel d'autres engagements de tiers sont garantis par l'association ou la fondation",
+			nl: "Maximumbedrag ten belope waarvan andere verplichtingen van derden door de vereniging of stichting zijn gewaarborgd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22501,6 +31279,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9153",
 		label: "Maximum amount for which other debts or commitments of third parties are guaranteed by the association or the foundation",
+		labels: {
+			de: "Höchstbetrag, bis zu dem übrige Verpflichtungen Dritter durch die Vereinigung oder Stiftung besichert sind",
+			en: "Maximum amount for which other debts or commitments of third parties are guaranteed by the association or the foundation",
+			fr: "Montant maximum à concurrence duquel d'autres engagements de tiers sont garantis par l'association ou la fondation",
+			nl: "Maximumbedrag ten belope waarvan andere verplichtingen van derden door de vereniging of stichting zijn gewaarborgd",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22513,6 +31297,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9153",
 		label: "Maximum amount for which other debts or commitments of third parties are guaranteed by the association or the foundation",
+		labels: {
+			de: "Höchstbetrag, bis zu dem übrige Verpflichtungen Dritter durch die Vereinigung oder Stiftung besichert sind",
+			en: "Maximum amount for which other debts or commitments of third parties are guaranteed by the association or the foundation",
+			fr: "Montant maximum à concurrence duquel d'autres engagements de tiers sont garantis par l'association ou la fondation",
+			nl: "Maximumbedrag ten belope waarvan andere verplichtingen van derden door de vereniging of stichting zijn gewaarborgd",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22527,6 +31317,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9149",
 		label: "PERSONAL GUARANTEES PROVIDED OR IRREVOCABLY PROMISED BY THE ASSOCIATION OR THE FOUNDATION AS SECURITY FOR DEBTS AND COMMITMENTS OF THIRD PARTIES",
+		labels: {
+			de: "PERSÖNLICHE SICHERHEITEN, DIE DURCH DIE VEREINIGUNG ODER STIFTUNG FÜR VERBINDLICHKEITEN ODER VERPFLICHTUNGEN DRITTER GESTELLT ODER UNWIDERRUFLICH ZUGESAGT WURDEN",
+			en: "PERSONAL GUARANTEES PROVIDED OR IRREVOCABLY PROMISED BY THE ASSOCIATION OR THE FOUNDATION AS SECURITY FOR DEBTS AND COMMITMENTS OF THIRD PARTIES",
+			fr: "GARANTIES PERSONNELLES CONSTITUÉES OU IRRÉVOCABLEMENT PROMISES PAR L'ASSOCIATION OU LA FONDATION POUR SÛRETÉ DE DETTES OU D'ENGAGEMENTS DE TIERS",
+			nl: "DOOR DE VERENIGING OF STICHTING GESTELDE OF ONHERROEPELIJK BELOOFDE PERSOONLIJKE ZEKERHEDEN ALS WAARBORG VOOR SCHULDEN OF VERPLICHTINGEN VAN DERDEN",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22540,6 +31336,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9149",
 		label: "PERSONAL GUARANTEES PROVIDED OR IRREVOCABLY PROMISED BY THE ASSOCIATION OR THE FOUNDATION AS SECURITY FOR DEBTS AND COMMITMENTS OF THIRD PARTIES",
+		labels: {
+			de: "PERSÖNLICHE SICHERHEITEN, DIE DURCH DIE VEREINIGUNG ODER STIFTUNG FÜR VERBINDLICHKEITEN ODER VERPFLICHTUNGEN DRITTER GESTELLT ODER UNWIDERRUFLICH ZUGESAGT WURDEN",
+			en: "PERSONAL GUARANTEES PROVIDED OR IRREVOCABLY PROMISED BY THE ASSOCIATION OR THE FOUNDATION AS SECURITY FOR DEBTS AND COMMITMENTS OF THIRD PARTIES",
+			fr: "GARANTIES PERSONNELLES CONSTITUÉES OU IRRÉVOCABLEMENT PROMISES PAR L'ASSOCIATION OU LA FONDATION POUR SÛRETÉ DE DETTES OU D'ENGAGEMENTS DE TIERS",
+			nl: "DOOR DE VERENIGING OF STICHTING GESTELDE OF ONHERROEPELIJK BELOOFDE PERSOONLIJKE ZEKERHEDEN ALS WAARBORG VOOR SCHULDEN OF VERPLICHTINGEN VAN DERDEN",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22551,6 +31353,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9149",
 		label: "PERSONAL GUARANTEES PROVIDED OR IRREVOCABLY PROMISED BY THE ASSOCIATION OR THE FOUNDATION AS SECURITY FOR DEBTS AND COMMITMENTS OF THIRD PARTIES",
+		labels: {
+			de: "PERSÖNLICHE SICHERHEITEN, DIE DURCH DIE VEREINIGUNG ODER STIFTUNG FÜR VERBINDLICHKEITEN ODER VERPFLICHTUNGEN DRITTER GESTELLT ODER UNWIDERRUFLICH ZUGESAGT WURDEN",
+			en: "PERSONAL GUARANTEES PROVIDED OR IRREVOCABLY PROMISED BY THE ASSOCIATION OR THE FOUNDATION AS SECURITY FOR DEBTS AND COMMITMENTS OF THIRD PARTIES",
+			fr: "GARANTIES PERSONNELLES CONSTITUÉES OU IRRÉVOCABLEMENT PROMISES PAR L'ASSOCIATION OU LA FONDATION POUR SÛRETÉ DE DETTES OU D'ENGAGEMENTS DE TIERS",
+			nl: "DOOR DE VERENIGING OF STICHTING GESTELDE OF ONHERROEPELIJK BELOOFDE PERSOONLIJKE ZEKERHEDEN ALS WAARBORG VOOR SCHULDEN OF VERPLICHTINGEN VAN DERDEN",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22563,6 +31371,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9149",
 		label: "PERSONAL GUARANTEES PROVIDED OR IRREVOCABLY PROMISED BY THE ASSOCIATION OR THE FOUNDATION AS SECURITY FOR DEBTS AND COMMITMENTS OF THIRD PARTIES",
+		labels: {
+			de: "PERSÖNLICHE SICHERHEITEN, DIE DURCH DIE VEREINIGUNG ODER STIFTUNG FÜR VERBINDLICHKEITEN ODER VERPFLICHTUNGEN DRITTER GESTELLT ODER UNWIDERRUFLICH ZUGESAGT WURDEN",
+			en: "PERSONAL GUARANTEES PROVIDED OR IRREVOCABLY PROMISED BY THE ASSOCIATION OR THE FOUNDATION AS SECURITY FOR DEBTS AND COMMITMENTS OF THIRD PARTIES",
+			fr: "GARANTIES PERSONNELLES CONSTITUÉES OU IRRÉVOCABLEMENT PROMISES PAR L'ASSOCIATION OU LA FONDATION POUR SÛRETÉ DE DETTES OU D'ENGAGEMENTS DE TIERS",
+			nl: "DOOR DE VERENIGING OF STICHTING GESTELDE OF ONHERROEPELIJK BELOOFDE PERSOONLIJKE ZEKERHEDEN ALS WAARBORG VOOR SCHULDEN OF VERPLICHTINGEN VAN DERDEN",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22574,6 +31388,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9149",
 		label: "PERSONAL GUARANTEES PROVIDED OR IRREVOCABLY PROMISED BY THE ASSOCIATION OR THE FOUNDATION AS SECURITY FOR DEBTS AND COMMITMENTS OF THIRD PARTIES",
+		labels: {
+			de: "PERSÖNLICHE SICHERHEITEN, DIE DURCH DIE VEREINIGUNG ODER STIFTUNG FÜR VERBINDLICHKEITEN ODER VERPFLICHTUNGEN DRITTER GESTELLT ODER UNWIDERRUFLICH ZUGESAGT WURDEN",
+			en: "PERSONAL GUARANTEES PROVIDED OR IRREVOCABLY PROMISED BY THE ASSOCIATION OR THE FOUNDATION AS SECURITY FOR DEBTS AND COMMITMENTS OF THIRD PARTIES",
+			fr: "GARANTIES PERSONNELLES CONSTITUÉES OU IRRÉVOCABLEMENT PROMISES PAR L'ASSOCIATION OU LA FONDATION POUR SÛRETÉ DE DETTES OU D'ENGAGEMENTS DE TIERS",
+			nl: "DOOR DE VERENIGING OF STICHTING GESTELDE OF ONHERROEPELIJK BELOOFDE PERSOONLIJKE ZEKERHEDEN ALS WAARBORG VOOR SCHULDEN OF VERPLICHTINGEN VAN DERDEN",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22591,6 +31411,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91611",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "Valeur comptable des immeubles grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22607,6 +31433,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91611",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "Valeur comptable des immeubles grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22621,6 +31453,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91611",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "Valeur comptable des immeubles grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22636,6 +31474,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91611",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "Valeur comptable des immeubles grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22650,6 +31494,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91611",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "Valeur comptable des immeubles grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22666,6 +31516,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91621",
 		label: "Amount of registration",
+		labels: {
+			de: "Betrag der Eintragung",
+			en: "Amount of registration",
+			fr: "Montant de l'inscription",
+			nl: "Bedrag van de inschrijving",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22681,6 +31537,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91621",
 		label: "Amount of registration",
+		labels: {
+			de: "Betrag der Eintragung",
+			en: "Amount of registration",
+			fr: "Montant de l'inscription",
+			nl: "Bedrag van de inschrijving",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22694,6 +31556,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91621",
 		label: "Amount of registration",
+		labels: {
+			de: "Betrag der Eintragung",
+			en: "Amount of registration",
+			fr: "Montant de l'inscription",
+			nl: "Bedrag van de inschrijving",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22708,6 +31576,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91621",
 		label: "Amount of registration",
+		labels: {
+			de: "Betrag der Eintragung",
+			en: "Amount of registration",
+			fr: "Montant de l'inscription",
+			nl: "Bedrag van de inschrijving",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22721,6 +31595,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91621",
 		label: "Amount of registration",
+		labels: {
+			de: "Betrag der Eintragung",
+			en: "Amount of registration",
+			fr: "Montant de l'inscription",
+			nl: "Bedrag van de inschrijving",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22737,6 +31617,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91631",
 		label: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+		labels: {
+			de: "Im Falle von unwiderruflichen Hypothekarmandaten: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+			fr: "Pour les mandats irrévocables d'hypothéquer, le montant pour lequel le mandataire est autorisé à prendre inscription en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot hypothekeren, het bedrag waarvoor de volmachthebber krachtens het mandaat inschrijving mag nemen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22752,6 +31638,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91631",
 		label: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+		labels: {
+			de: "Im Falle von unwiderruflichen Hypothekarmandaten: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+			fr: "Pour les mandats irrévocables d'hypothéquer, le montant pour lequel le mandataire est autorisé à prendre inscription en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot hypothekeren, het bedrag waarvoor de volmachthebber krachtens het mandaat inschrijving mag nemen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22765,6 +31657,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91631",
 		label: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+		labels: {
+			de: "Im Falle von unwiderruflichen Hypothekarmandaten: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+			fr: "Pour les mandats irrévocables d'hypothéquer, le montant pour lequel le mandataire est autorisé à prendre inscription en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot hypothekeren, het bedrag waarvoor de volmachthebber krachtens het mandaat inschrijving mag nemen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22779,6 +31677,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91631",
 		label: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+		labels: {
+			de: "Im Falle von unwiderruflichen Hypothekarmandaten: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+			fr: "Pour les mandats irrévocables d'hypothéquer, le montant pour lequel le mandataire est autorisé à prendre inscription en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot hypothekeren, het bedrag waarvoor de volmachthebber krachtens het mandaat inschrijving mag nemen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22792,6 +31696,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91631",
 		label: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+		labels: {
+			de: "Im Falle von unwiderruflichen Hypothekarmandaten: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+			fr: "Pour les mandats irrévocables d'hypothéquer, le montant pour lequel le mandataire est autorisé à prendre inscription en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot hypothekeren, het bedrag waarvoor de volmachthebber krachtens het mandaat inschrijving mag nemen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22808,6 +31718,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91711",
 		label: "Maximum amount up to which the debt is secured and which is the subject of registration",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung und der Eintragung",
+			en: "Maximum amount up to which the debt is secured and which is the subject of registration",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie et qui fait l'objet de l'enregistrement",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd en waarvoor registratie plaatsvindt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22823,6 +31739,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91711",
 		label: "Maximum amount up to which the debt is secured and which is the subject of registration",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung und der Eintragung",
+			en: "Maximum amount up to which the debt is secured and which is the subject of registration",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie et qui fait l'objet de l'enregistrement",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd en waarvoor registratie plaatsvindt",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22836,6 +31758,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91711",
 		label: "Maximum amount up to which the debt is secured and which is the subject of registration",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung und der Eintragung",
+			en: "Maximum amount up to which the debt is secured and which is the subject of registration",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie et qui fait l'objet de l'enregistrement",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd en waarvoor registratie plaatsvindt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22850,6 +31778,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91711",
 		label: "Maximum amount up to which the debt is secured and which is the subject of registration",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung und der Eintragung",
+			en: "Maximum amount up to which the debt is secured and which is the subject of registration",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie et qui fait l'objet de l'enregistrement",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd en waarvoor registratie plaatsvindt",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22863,6 +31797,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91711",
 		label: "Maximum amount up to which the debt is secured and which is the subject of registration",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung und der Eintragung",
+			en: "Maximum amount up to which the debt is secured and which is the subject of registration",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie et qui fait l'objet de l'enregistrement",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd en waarvoor registratie plaatsvindt",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22879,6 +31819,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91721",
 		label: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+		labels: {
+			de: "Im Falle von unwiderruflichen Mandaten zur Verpfändung des Firmenwertes: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+			fr: "Pour les mandats irrévocables de mise en gage du fonds de commerce, le montant pour lequel le mandataire est autorisé à procéder à l'enregistrement en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot verpanding van het handelsfonds, het bedrag waarvoor de volmachthebber krachtens het mandaat tot registratie mag overgaan",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22894,6 +31840,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91721",
 		label: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+		labels: {
+			de: "Im Falle von unwiderruflichen Mandaten zur Verpfändung des Firmenwertes: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+			fr: "Pour les mandats irrévocables de mise en gage du fonds de commerce, le montant pour lequel le mandataire est autorisé à procéder à l'enregistrement en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot verpanding van het handelsfonds, het bedrag waarvoor de volmachthebber krachtens het mandaat tot registratie mag overgaan",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22907,6 +31859,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91721",
 		label: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+		labels: {
+			de: "Im Falle von unwiderruflichen Mandaten zur Verpfändung des Firmenwertes: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+			fr: "Pour les mandats irrévocables de mise en gage du fonds de commerce, le montant pour lequel le mandataire est autorisé à procéder à l'enregistrement en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot verpanding van het handelsfonds, het bedrag waarvoor de volmachthebber krachtens het mandaat tot registratie mag overgaan",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22921,6 +31879,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91721",
 		label: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+		labels: {
+			de: "Im Falle von unwiderruflichen Mandaten zur Verpfändung des Firmenwertes: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+			fr: "Pour les mandats irrévocables de mise en gage du fonds de commerce, le montant pour lequel le mandataire est autorisé à procéder à l'enregistrement en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot verpanding van het handelsfonds, het bedrag waarvoor de volmachthebber krachtens het mandaat tot registratie mag overgaan",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22934,6 +31898,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91721",
 		label: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+		labels: {
+			de: "Im Falle von unwiderruflichen Mandaten zur Verpfändung des Firmenwertes: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+			fr: "Pour les mandats irrévocables de mise en gage du fonds de commerce, le montant pour lequel le mandataire est autorisé à procéder à l'enregistrement en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot verpanding van het handelsfonds, het bedrag waarvoor de volmachthebber krachtens het mandaat tot registratie mag overgaan",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22951,6 +31921,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91811",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "La valeur comptable des actifs grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22967,6 +31943,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91811",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "La valeur comptable des actifs grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -22981,6 +31963,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91811",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "La valeur comptable des actifs grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -22996,6 +31984,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91811",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "La valeur comptable des actifs grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23010,6 +32004,12 @@ const datapoints2: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91811",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "La valeur comptable des actifs grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 	},
 ];
 
@@ -23029,6 +32029,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91821",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23044,6 +32050,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91821",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23057,6 +32069,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91821",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23071,6 +32089,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91821",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23084,6 +32108,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91821",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23100,6 +32130,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91911",
 		label: "Amount of assets in question",
+		labels: {
+			de: "Betrag der betreffenden Aktiva",
+			en: "Amount of assets in question",
+			fr: "Le montant des actifs en cause",
+			nl: "Bedrag van de betrokken activa",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23115,6 +32151,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91911",
 		label: "Amount of assets in question",
+		labels: {
+			de: "Betrag der betreffenden Aktiva",
+			en: "Amount of assets in question",
+			fr: "Le montant des actifs en cause",
+			nl: "Bedrag van de betrokken activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23128,6 +32170,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91911",
 		label: "Amount of assets in question",
+		labels: {
+			de: "Betrag der betreffenden Aktiva",
+			en: "Amount of assets in question",
+			fr: "Le montant des actifs en cause",
+			nl: "Bedrag van de betrokken activa",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23142,6 +32190,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91911",
 		label: "Amount of assets in question",
+		labels: {
+			de: "Betrag der betreffenden Aktiva",
+			en: "Amount of assets in question",
+			fr: "Le montant des actifs en cause",
+			nl: "Bedrag van de betrokken activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23155,6 +32209,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91911",
 		label: "Amount of assets in question",
+		labels: {
+			de: "Betrag der betreffenden Aktiva",
+			en: "Amount of assets in question",
+			fr: "Le montant des actifs en cause",
+			nl: "Bedrag van de betrokken activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23171,6 +32231,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91921",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23186,6 +32252,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91921",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23199,6 +32271,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91921",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23213,6 +32291,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91921",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23226,6 +32310,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91921",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23243,6 +32333,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92011",
 		label: "Book value of sold goods",
+		labels: {
+			de: "Buchwert des verkauften Guts",
+			en: "Book value of sold goods",
+			fr: "La valeur comptable du bien vendu",
+			nl: "Boekwaarde van het verkochte goed",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23259,6 +32355,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92011",
 		label: "Book value of sold goods",
+		labels: {
+			de: "Buchwert des verkauften Guts",
+			en: "Book value of sold goods",
+			fr: "La valeur comptable du bien vendu",
+			nl: "Boekwaarde van het verkochte goed",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23273,6 +32375,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92011",
 		label: "Book value of sold goods",
+		labels: {
+			de: "Buchwert des verkauften Guts",
+			en: "Book value of sold goods",
+			fr: "La valeur comptable du bien vendu",
+			nl: "Boekwaarde van het verkochte goed",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23288,6 +32396,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92011",
 		label: "Book value of sold goods",
+		labels: {
+			de: "Buchwert des verkauften Guts",
+			en: "Book value of sold goods",
+			fr: "La valeur comptable du bien vendu",
+			nl: "Boekwaarde van het verkochte goed",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23302,6 +32416,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92011",
 		label: "Book value of sold goods",
+		labels: {
+			de: "Buchwert des verkauften Guts",
+			en: "Book value of sold goods",
+			fr: "La valeur comptable du bien vendu",
+			nl: "Boekwaarde van het verkochte goed",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23318,6 +32438,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92021",
 		label: "Amount of the unpaid price",
+		labels: {
+			de: "Betrag des unbezahlten Preises",
+			en: "Amount of the unpaid price",
+			fr: "Le montant du prix non payé",
+			nl: "Bedrag van de niet-betaalde prijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23333,6 +32459,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92021",
 		label: "Amount of the unpaid price",
+		labels: {
+			de: "Betrag des unbezahlten Preises",
+			en: "Amount of the unpaid price",
+			fr: "Le montant du prix non payé",
+			nl: "Bedrag van de niet-betaalde prijs",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23346,6 +32478,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92021",
 		label: "Amount of the unpaid price",
+		labels: {
+			de: "Betrag des unbezahlten Preises",
+			en: "Amount of the unpaid price",
+			fr: "Le montant du prix non payé",
+			nl: "Bedrag van de niet-betaalde prijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23360,6 +32498,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92021",
 		label: "Amount of the unpaid price",
+		labels: {
+			de: "Betrag des unbezahlten Preises",
+			en: "Amount of the unpaid price",
+			fr: "Le montant du prix non payé",
+			nl: "Bedrag van de niet-betaalde prijs",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23373,6 +32517,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92021",
 		label: "Amount of the unpaid price",
+		labels: {
+			de: "Betrag des unbezahlten Preises",
+			en: "Amount of the unpaid price",
+			fr: "Le montant du prix non payé",
+			nl: "Bedrag van de niet-betaalde prijs",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23390,6 +32540,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91612",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "Valeur comptable des immeubles grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23409,6 +32565,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91612",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "Valeur comptable des immeubles grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23426,6 +32588,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91612",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "Valeur comptable des immeubles grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23443,6 +32611,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91612",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "Valeur comptable des immeubles grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23459,6 +32633,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91622",
 		label: "Amount of registration",
+		labels: {
+			de: "Betrag der Eintragung",
+			en: "Amount of registration",
+			fr: "Montant de l'inscription",
+			nl: "Bedrag van de inschrijving",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23477,6 +32657,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91622",
 		label: "Amount of registration",
+		labels: {
+			de: "Betrag der Eintragung",
+			en: "Amount of registration",
+			fr: "Montant de l'inscription",
+			nl: "Bedrag van de inschrijving",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23493,6 +32679,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91622",
 		label: "Amount of registration",
+		labels: {
+			de: "Betrag der Eintragung",
+			en: "Amount of registration",
+			fr: "Montant de l'inscription",
+			nl: "Bedrag van de inschrijving",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23509,6 +32701,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91622",
 		label: "Amount of registration",
+		labels: {
+			de: "Betrag der Eintragung",
+			en: "Amount of registration",
+			fr: "Montant de l'inscription",
+			nl: "Bedrag van de inschrijving",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23525,6 +32723,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91632",
 		label: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+		labels: {
+			de: "Im Falle von unwiderruflichen Hypothekarmandaten: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+			fr: "Pour les mandats irrévocables d'hypothéquer, le montant pour lequel le mandataire est autorisé à prendre inscription en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot hypothekeren, het bedrag waarvoor de volmachthebber krachtens het mandaat inschrijving mag nemen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23543,6 +32747,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91632",
 		label: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+		labels: {
+			de: "Im Falle von unwiderruflichen Hypothekarmandaten: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+			fr: "Pour les mandats irrévocables d'hypothéquer, le montant pour lequel le mandataire est autorisé à prendre inscription en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot hypothekeren, het bedrag waarvoor de volmachthebber krachtens het mandaat inschrijving mag nemen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23559,6 +32769,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91632",
 		label: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+		labels: {
+			de: "Im Falle von unwiderruflichen Hypothekarmandaten: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+			fr: "Pour les mandats irrévocables d'hypothéquer, le montant pour lequel le mandataire est autorisé à prendre inscription en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot hypothekeren, het bedrag waarvoor de volmachthebber krachtens het mandaat inschrijving mag nemen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23575,6 +32791,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91632",
 		label: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+		labels: {
+			de: "Im Falle von unwiderruflichen Hypothekarmandaten: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mortgage mandates, the amount for which the agent can take registration",
+			fr: "Pour les mandats irrévocables d'hypothéquer, le montant pour lequel le mandataire est autorisé à prendre inscription en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot hypothekeren, het bedrag waarvoor de volmachthebber krachtens het mandaat inschrijving mag nemen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23591,6 +32813,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91712",
 		label: "Maximum amount up to which the debt is secured and which is the subject of registration",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung und der Eintragung",
+			en: "Maximum amount up to which the debt is secured and which is the subject of registration",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie et qui fait l'objet de l'enregistrement",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd en waarvoor registratie plaatsvindt",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23609,6 +32837,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91712",
 		label: "Maximum amount up to which the debt is secured and which is the subject of registration",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung und der Eintragung",
+			en: "Maximum amount up to which the debt is secured and which is the subject of registration",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie et qui fait l'objet de l'enregistrement",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd en waarvoor registratie plaatsvindt",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23625,6 +32859,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91712",
 		label: "Maximum amount up to which the debt is secured and which is the subject of registration",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung und der Eintragung",
+			en: "Maximum amount up to which the debt is secured and which is the subject of registration",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie et qui fait l'objet de l'enregistrement",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd en waarvoor registratie plaatsvindt",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23641,6 +32881,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91712",
 		label: "Maximum amount up to which the debt is secured and which is the subject of registration",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung und der Eintragung",
+			en: "Maximum amount up to which the debt is secured and which is the subject of registration",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie et qui fait l'objet de l'enregistrement",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd en waarvoor registratie plaatsvindt",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23657,6 +32903,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91722",
 		label: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+		labels: {
+			de: "Im Falle von unwiderruflichen Mandaten zur Verpfändung des Firmenwertes: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+			fr: "Pour les mandats irrévocables de mise en gage du fonds de commerce, le montant pour lequel le mandataire est autorisé à procéder à l'enregistrement en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot verpanding van het handelsfonds, het bedrag waarvoor de volmachthebber krachtens het mandaat tot registratie mag overgaan",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23675,6 +32927,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91722",
 		label: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+		labels: {
+			de: "Im Falle von unwiderruflichen Mandaten zur Verpfändung des Firmenwertes: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+			fr: "Pour les mandats irrévocables de mise en gage du fonds de commerce, le montant pour lequel le mandataire est autorisé à procéder à l'enregistrement en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot verpanding van het handelsfonds, het bedrag waarvoor de volmachthebber krachtens het mandaat tot registratie mag overgaan",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23691,6 +32949,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91722",
 		label: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+		labels: {
+			de: "Im Falle von unwiderruflichen Mandaten zur Verpfändung des Firmenwertes: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+			fr: "Pour les mandats irrévocables de mise en gage du fonds de commerce, le montant pour lequel le mandataire est autorisé à procéder à l'enregistrement en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot verpanding van het handelsfonds, het bedrag waarvoor de volmachthebber krachtens het mandaat tot registratie mag overgaan",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23707,6 +32971,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91722",
 		label: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+		labels: {
+			de: "Im Falle von unwiderruflichen Mandaten zur Verpfändung des Firmenwertes: der Betrag, den der Bevollmächtigte aufgrund des Mandats eintragen kann",
+			en: "For irrevocable mandates to pledge goodwill, the amount for which the agent can take the inscription",
+			fr: "Pour les mandats irrévocables de mise en gage du fonds de commerce, le montant pour lequel le mandataire est autorisé à procéder à l'enregistrement en vertu du mandat",
+			nl: "Voor de onherroepelijke mandaten tot verpanding van het handelsfonds, het bedrag waarvoor de volmachthebber krachtens het mandaat tot registratie mag overgaan",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23724,6 +32994,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91812",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "La valeur comptable des actifs grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23743,6 +33019,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91812",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "La valeur comptable des actifs grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23760,6 +33042,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91812",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "La valeur comptable des actifs grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23777,6 +33065,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91812",
 		label: "Book value of the immovable properties mortgaged",
+		labels: {
+			de: "Buchwert der belasteten Aktiva",
+			en: "Book value of the immovable properties mortgaged",
+			fr: "La valeur comptable des actifs grevés",
+			nl: "Boekwaarde van de bezwaarde activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23793,6 +33087,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91822",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23811,6 +33111,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91822",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23827,6 +33133,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91822",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23843,6 +33155,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91822",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23859,6 +33177,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91912",
 		label: "Amount of assets in question",
+		labels: {
+			de: "Betrag der betreffenden Aktiva",
+			en: "Amount of assets in question",
+			fr: "Le montant des actifs en cause",
+			nl: "Bedrag van de betrokken activa",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23877,6 +33201,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91912",
 		label: "Amount of assets in question",
+		labels: {
+			de: "Betrag der betreffenden Aktiva",
+			en: "Amount of assets in question",
+			fr: "Le montant des actifs en cause",
+			nl: "Bedrag van de betrokken activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23893,6 +33223,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91912",
 		label: "Amount of assets in question",
+		labels: {
+			de: "Betrag der betreffenden Aktiva",
+			en: "Amount of assets in question",
+			fr: "Le montant des actifs en cause",
+			nl: "Bedrag van de betrokken activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23909,6 +33245,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91912",
 		label: "Amount of assets in question",
+		labels: {
+			de: "Betrag der betreffenden Aktiva",
+			en: "Amount of assets in question",
+			fr: "Le montant des actifs en cause",
+			nl: "Bedrag van de betrokken activa",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23925,6 +33267,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91922",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -23943,6 +33291,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91922",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23959,6 +33313,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91922",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23975,6 +33335,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "91922",
 		label: "Maximum amount up to which the debt is secured",
+		labels: {
+			de: "Höchstbetrag der Schuldbesicherung",
+			en: "Maximum amount up to which the debt is secured",
+			fr: "Le montant maximum à concurrence duquel la dette est garantie",
+			nl: "Maximumbedrag waarvoor de schuld is gewaarborgd",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -23992,6 +33358,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92012",
 		label: "Book value of sold goods",
+		labels: {
+			de: "Buchwert des verkauften Guts",
+			en: "Book value of sold goods",
+			fr: "La valeur comptable du bien vendu",
+			nl: "Boekwaarde van het verkochte goed",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24011,6 +33383,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92012",
 		label: "Book value of sold goods",
+		labels: {
+			de: "Buchwert des verkauften Guts",
+			en: "Book value of sold goods",
+			fr: "La valeur comptable du bien vendu",
+			nl: "Boekwaarde van het verkochte goed",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24028,6 +33406,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92012",
 		label: "Book value of sold goods",
+		labels: {
+			de: "Buchwert des verkauften Guts",
+			en: "Book value of sold goods",
+			fr: "La valeur comptable du bien vendu",
+			nl: "Boekwaarde van het verkochte goed",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24045,6 +33429,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92012",
 		label: "Book value of sold goods",
+		labels: {
+			de: "Buchwert des verkauften Guts",
+			en: "Book value of sold goods",
+			fr: "La valeur comptable du bien vendu",
+			nl: "Boekwaarde van het verkochte goed",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24061,6 +33451,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92022",
 		label: "Amount of the unpaid price",
+		labels: {
+			de: "Betrag des unbezahlten Preises",
+			en: "Amount of the unpaid price",
+			fr: "Le montant du prix non payé",
+			nl: "Bedrag van de niet-betaalde prijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24079,6 +33475,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92022",
 		label: "Amount of the unpaid price",
+		labels: {
+			de: "Betrag des unbezahlten Preises",
+			en: "Amount of the unpaid price",
+			fr: "Le montant du prix non payé",
+			nl: "Bedrag van de niet-betaalde prijs",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24095,6 +33497,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92022",
 		label: "Amount of the unpaid price",
+		labels: {
+			de: "Betrag des unbezahlten Preises",
+			en: "Amount of the unpaid price",
+			fr: "Le montant du prix non payé",
+			nl: "Bedrag van de niet-betaalde prijs",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24111,6 +33519,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "92022",
 		label: "Amount of the unpaid price",
+		labels: {
+			de: "Betrag des unbezahlten Preises",
+			en: "Amount of the unpaid price",
+			fr: "Le montant du prix non payé",
+			nl: "Bedrag van de niet-betaalde prijs",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24124,6 +33538,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9213",
 		label: "Goods purchased (to be received)",
+		labels: {
+			de: "Gekaufte (zu erhaltende) Waren",
+			en: "Goods purchased (to be received)",
+			fr: "Marchandises achetées (à recevoir)",
+			nl: "Gekochte (te ontvangen) goederen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24137,6 +33557,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9213",
 		label: "Goods purchased (to be received)",
+		labels: {
+			de: "Gekaufte (zu erhaltende) Waren",
+			en: "Goods purchased (to be received)",
+			fr: "Marchandises achetées (à recevoir)",
+			nl: "Gekochte (te ontvangen) goederen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24151,6 +33577,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9213",
 		label: "Goods purchased (to be received)",
+		labels: {
+			de: "Gekaufte (zu erhaltende) Waren",
+			en: "Goods purchased (to be received)",
+			fr: "Marchandises achetées (à recevoir)",
+			nl: "Gekochte (te ontvangen) goederen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24163,6 +33595,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9213",
 		label: "Goods purchased (to be received)",
+		labels: {
+			de: "Gekaufte (zu erhaltende) Waren",
+			en: "Goods purchased (to be received)",
+			fr: "Marchandises achetées (à recevoir)",
+			nl: "Gekochte (te ontvangen) goederen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24175,6 +33613,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9213",
 		label: "Goods purchased (to be received)",
+		labels: {
+			de: "Gekaufte (zu erhaltende) Waren",
+			en: "Goods purchased (to be received)",
+			fr: "Marchandises achetées (à recevoir)",
+			nl: "Gekochte (te ontvangen) goederen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24188,6 +33632,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9214",
 		label: "Goods sold (to be delivered)",
+		labels: {
+			de: "Verkaufte (zu liefernde) Waren",
+			en: "Goods sold (to be delivered)",
+			fr: "Marchandises vendues (à livrer)",
+			nl: "Verkochte (te leveren) goederen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24201,6 +33651,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9214",
 		label: "Goods sold (to be delivered)",
+		labels: {
+			de: "Verkaufte (zu liefernde) Waren",
+			en: "Goods sold (to be delivered)",
+			fr: "Marchandises vendues (à livrer)",
+			nl: "Verkochte (te leveren) goederen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24215,6 +33671,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9214",
 		label: "Goods sold (to be delivered)",
+		labels: {
+			de: "Verkaufte (zu liefernde) Waren",
+			en: "Goods sold (to be delivered)",
+			fr: "Marchandises vendues (à livrer)",
+			nl: "Verkochte (te leveren) goederen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24227,6 +33689,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9214",
 		label: "Goods sold (to be delivered)",
+		labels: {
+			de: "Verkaufte (zu liefernde) Waren",
+			en: "Goods sold (to be delivered)",
+			fr: "Marchandises vendues (à livrer)",
+			nl: "Verkochte (te leveren) goederen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24239,6 +33707,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9214",
 		label: "Goods sold (to be delivered)",
+		labels: {
+			de: "Verkaufte (zu liefernde) Waren",
+			en: "Goods sold (to be delivered)",
+			fr: "Marchandises vendues (à livrer)",
+			nl: "Verkochte (te leveren) goederen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24251,6 +33725,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9215",
 		label: "Currencies purchased (to be received)",
+		labels: {
+			de: "Gekaufte (zu erhaltende) Devisen",
+			en: "Currencies purchased (to be received)",
+			fr: "Devises achetées (à recevoir)",
+			nl: "Gekochte (te ontvangen) deviezen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24265,6 +33745,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9215",
 		label: "Currencies purchased (to be received)",
+		labels: {
+			de: "Gekaufte (zu erhaltende) Devisen",
+			en: "Currencies purchased (to be received)",
+			fr: "Devises achetées (à recevoir)",
+			nl: "Gekochte (te ontvangen) deviezen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24277,6 +33763,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9215",
 		label: "Currencies purchased (to be received)",
+		labels: {
+			de: "Gekaufte (zu erhaltende) Devisen",
+			en: "Currencies purchased (to be received)",
+			fr: "Devises achetées (à recevoir)",
+			nl: "Gekochte (te ontvangen) deviezen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24289,6 +33781,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9215",
 		label: "Currencies purchased (to be received)",
+		labels: {
+			de: "Gekaufte (zu erhaltende) Devisen",
+			en: "Currencies purchased (to be received)",
+			fr: "Devises achetées (à recevoir)",
+			nl: "Gekochte (te ontvangen) deviezen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24301,6 +33799,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9216",
 		label: "Currencies sold (to be delivered)",
+		labels: {
+			de: "Verkaufte (zu liefernde) Devisen",
+			en: "Currencies sold (to be delivered)",
+			fr: "Devises vendues (à livrer)",
+			nl: "Verkochte (te leveren) deviezen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24315,6 +33819,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9216",
 		label: "Currencies sold (to be delivered)",
+		labels: {
+			de: "Verkaufte (zu liefernde) Devisen",
+			en: "Currencies sold (to be delivered)",
+			fr: "Devises vendues (à livrer)",
+			nl: "Verkochte (te leveren) deviezen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24327,6 +33837,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9216",
 		label: "Currencies sold (to be delivered)",
+		labels: {
+			de: "Verkaufte (zu liefernde) Devisen",
+			en: "Currencies sold (to be delivered)",
+			fr: "Devises vendues (à livrer)",
+			nl: "Verkochte (te leveren) deviezen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24339,6 +33855,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9216",
 		label: "Currencies sold (to be delivered)",
+		labels: {
+			de: "Verkaufte (zu liefernde) Devisen",
+			en: "Currencies sold (to be delivered)",
+			fr: "Devises vendues (à livrer)",
+			nl: "Verkochte (te leveren) deviezen",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24351,6 +33873,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Brief description",
+		labels: {
+			de: "Kurze Darstellung",
+			en: "Brief description",
+			fr: "Description succincte",
+			nl: "Beknopte beschrijving",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24363,6 +33891,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Brief description",
+		labels: {
+			de: "Kurze Darstellung",
+			en: "Brief description",
+			fr: "Description succincte",
+			nl: "Beknopte beschrijving",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24375,6 +33909,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Brief description",
+		labels: {
+			de: "Kurze Darstellung",
+			en: "Brief description",
+			fr: "Description succincte",
+			nl: "Beknopte beschrijving",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24387,6 +33927,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Brief description",
+		labels: {
+			de: "Kurze Darstellung",
+			en: "Brief description",
+			fr: "Description succincte",
+			nl: "Beknopte beschrijving",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24400,6 +33946,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Measures taken by the enterprise to cover the resulting charges",
+		labels: {
+			de: "Getroffene Maßnahmen zur Deckung der sich hieraus ergebenden Aufwendungen",
+			en: "Measures taken by the enterprise to cover the resulting charges",
+			fr: "Mesures prises pour en couvrir la charge",
+			nl: "Genomen maatregelen om de daaruit voortvloeiende kosten te dekken",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24413,6 +33965,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Measures taken by the enterprise to cover the resulting charges",
+		labels: {
+			de: "Getroffene Maßnahmen zur Deckung der sich hieraus ergebenden Aufwendungen",
+			en: "Measures taken by the enterprise to cover the resulting charges",
+			fr: "Mesures prises pour en couvrir la charge",
+			nl: "Genomen maatregelen om de daaruit voortvloeiende kosten te dekken",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24426,6 +33984,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Measures taken by the enterprise to cover the resulting charges",
+		labels: {
+			de: "Getroffene Maßnahmen zur Deckung der sich hieraus ergebenden Aufwendungen",
+			en: "Measures taken by the enterprise to cover the resulting charges",
+			fr: "Mesures prises pour en couvrir la charge",
+			nl: "Genomen maatregelen om de daaruit voortvloeiende kosten te dekken",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24439,6 +34003,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Measures taken by the enterprise to cover the resulting charges",
+		labels: {
+			de: "Getroffene Maßnahmen zur Deckung der sich hieraus ergebenden Aufwendungen",
+			en: "Measures taken by the enterprise to cover the resulting charges",
+			fr: "Mesures prises pour en couvrir la charge",
+			nl: "Genomen maatregelen om de daaruit voortvloeiende kosten te dekken",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24452,6 +34022,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9220",
 		label: "Estimated amount of the commitments resulting from past services",
+		labels: {
+			de: "Geschätzter Betrag für die sich aus schon geleisteter Arbeit ergebenden Verpflichtungen",
+			en: "Estimated amount of the commitments resulting from past services",
+			fr: "Montant estimé des engagements résultant de prestations déjà effectuées",
+			nl: "Geschat bedrag van de verplichtingen die voortvloeien uit reeds gepresteerd werk",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24465,6 +34041,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9220",
 		label: "Estimated amount of the commitments resulting from past services",
+		labels: {
+			de: "Geschätzter Betrag für die sich aus schon geleisteter Arbeit ergebenden Verpflichtungen",
+			en: "Estimated amount of the commitments resulting from past services",
+			fr: "Montant estimé des engagements résultant de prestations déjà effectuées",
+			nl: "Geschat bedrag van de verplichtingen die voortvloeien uit reeds gepresteerd werk",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24479,6 +34061,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9220",
 		label: "Estimated amount of the commitments resulting from past services",
+		labels: {
+			de: "Geschätzter Betrag für die sich aus schon geleisteter Arbeit ergebenden Verpflichtungen",
+			en: "Estimated amount of the commitments resulting from past services",
+			fr: "Montant estimé des engagements résultant de prestations déjà effectuées",
+			nl: "Geschat bedrag van de verplichtingen die voortvloeien uit reeds gepresteerd werk",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24491,6 +34079,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9220",
 		label: "Estimated amount of the commitments resulting from past services",
+		labels: {
+			de: "Geschätzter Betrag für die sich aus schon geleisteter Arbeit ergebenden Verpflichtungen",
+			en: "Estimated amount of the commitments resulting from past services",
+			fr: "Montant estimé des engagements résultant de prestations déjà effectuées",
+			nl: "Geschat bedrag van de verplichtingen die voortvloeien uit reeds gepresteerd werk",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24503,6 +34097,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9220",
 		label: "Estimated amount of the commitments resulting from past services",
+		labels: {
+			de: "Geschätzter Betrag für die sich aus schon geleisteter Arbeit ergebenden Verpflichtungen",
+			en: "Estimated amount of the commitments resulting from past services",
+			fr: "Montant estimé des engagements résultant de prestations déjà effectuées",
+			nl: "Geschat bedrag van de verplichtingen die voortvloeien uit reeds gepresteerd werk",
+		},
 	},
 	{
 		section: "s.06.13.0.g",
@@ -24516,6 +34116,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Methods of estimation",
+		labels: {
+			de: "Berechnungsgrundlage und -weise",
+			en: "Methods of estimation",
+			fr: "Bases et méthodes de cette estimation",
+			nl: "Basis en wijze waarop dit bedrag wordt berekend",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24529,6 +34135,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Methods of estimation",
+		labels: {
+			de: "Berechnungsgrundlage und -weise",
+			en: "Methods of estimation",
+			fr: "Bases et méthodes de cette estimation",
+			nl: "Basis en wijze waarop dit bedrag wordt berekend",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24542,6 +34154,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Methods of estimation",
+		labels: {
+			de: "Berechnungsgrundlage und -weise",
+			en: "Methods of estimation",
+			fr: "Bases et méthodes de cette estimation",
+			nl: "Basis en wijze waarop dit bedrag wordt berekend",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -24555,6 +34173,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Methods of estimation",
+		labels: {
+			de: "Berechnungsgrundlage und -weise",
+			en: "Methods of estimation",
+			fr: "Bases et méthodes de cette estimation",
+			nl: "Basis en wijze waarop dit bedrag wordt berekend",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -24569,6 +34193,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "(280)",
 		label: "Participating interests",
+		labels: {
+			de: "Beteiligungen",
+			en: "Participating interests",
+			fr: "Participations",
+			nl: "Deelnemingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -24586,6 +34216,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "(280)",
 		label: "Participating interests",
+		labels: {
+			de: "Beteiligungen",
+			en: "Participating interests",
+			fr: "Participations",
+			nl: "Deelnemingen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -24601,6 +34237,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9271",
 		label: "Subordinated amounts receivable",
+		labels: {
+			de: "Nachrangige Forderungen",
+			en: "Subordinated amounts receivable",
+			fr: "Créances subordonnées",
+			nl: "Achtergestelde vorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -24619,6 +34261,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9271",
 		label: "Subordinated amounts receivable",
+		labels: {
+			de: "Nachrangige Forderungen",
+			en: "Subordinated amounts receivable",
+			fr: "Créances subordonnées",
+			nl: "Achtergestelde vorderingen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -24634,6 +34282,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9281",
 		label: "Other amounts receivable",
+		labels: {
+			de: "Sonstige Forderungen",
+			en: "Other amounts receivable",
+			fr: "Autres créances",
+			nl: "Andere vorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -24652,6 +34306,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9281",
 		label: "Other amounts receivable",
+		labels: {
+			de: "Sonstige Forderungen",
+			en: "Other amounts receivable",
+			fr: "Autres créances",
+			nl: "Andere vorderingen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -24666,6 +34326,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "(280/1)",
 		label: "Financial fixed assets",
+		labels: {
+			de: "Finanzanlagen",
+			en: "Financial fixed assets",
+			fr: "Immobilisations financières",
+			nl: "Financiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -24683,6 +34349,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "(280/1)",
 		label: "Financial fixed assets",
+		labels: {
+			de: "Finanzanlagen",
+			en: "Financial fixed assets",
+			fr: "Immobilisations financières",
+			nl: "Financiële vaste activa",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -24697,6 +34369,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9301",
 		label: "Over one year",
+		labels: {
+			de: "Restlaufzeit von mehr als einem Jahr",
+			en: "Over one year",
+			fr: "A plus d'un an",
+			nl: "Op meer dan één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -24714,6 +34392,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9301",
 		label: "Over one year",
+		labels: {
+			de: "Restlaufzeit von mehr als einem Jahr",
+			en: "Over one year",
+			fr: "A plus d'un an",
+			nl: "Op meer dan één jaar",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -24728,6 +34412,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9311",
 		label: "Within one year",
+		labels: {
+			de: "Restlaufzeit bis zu einem Jahr",
+			en: "Within one year",
+			fr: "A un an au plus",
+			nl: "Op hoogstens één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -24745,6 +34435,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9311",
 		label: "Within one year",
+		labels: {
+			de: "Restlaufzeit bis zu einem Jahr",
+			en: "Within one year",
+			fr: "A un an au plus",
+			nl: "Op hoogstens één jaar",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -24758,6 +34454,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9291",
 		label: "Amounts receivable from affiliated entities",
+		labels: {
+			de: "Forderungen an verbundenen Körperschaften",
+			en: "Amounts receivable from affiliated entities",
+			fr: "Créances sur les entités liées",
+			nl: "Vorderingen op verbonden entiteiten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -24774,6 +34476,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9291",
 		label: "Amounts receivable from affiliated entities",
+		labels: {
+			de: "Forderungen an verbundenen Körperschaften",
+			en: "Amounts receivable from affiliated entities",
+			fr: "Créances sur les entités liées",
+			nl: "Vorderingen op verbonden entiteiten",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -24787,6 +34495,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9331",
 		label: "Shares",
+		labels: {
+			de: "Anteile",
+			en: "Shares",
+			fr: "Actions",
+			nl: "Aandelen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -24803,6 +34517,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9331",
 		label: "Shares",
+		labels: {
+			de: "Anteile",
+			en: "Shares",
+			fr: "Actions",
+			nl: "Aandelen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -24816,6 +34536,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9341",
 		label: "Amounts receivable",
+		labels: {
+			de: "Forderungen",
+			en: "Amounts receivable",
+			fr: "Créances",
+			nl: "Vorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -24832,6 +34558,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9341",
 		label: "Amounts receivable",
+		labels: {
+			de: "Forderungen",
+			en: "Amounts receivable",
+			fr: "Créances",
+			nl: "Vorderingen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -24845,6 +34577,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9321",
 		label: "Current investments",
+		labels: {
+			de: "Geldanlagen",
+			en: "Current investments",
+			fr: "Placements de trésorerie",
+			nl: "Geldbeleggingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -24861,6 +34599,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9321",
 		label: "Current investments",
+		labels: {
+			de: "Geldanlagen",
+			en: "Current investments",
+			fr: "Placements de trésorerie",
+			nl: "Geldbeleggingen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -24875,6 +34619,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9361",
 		label: "Over one year",
+		labels: {
+			de: "Restlaufzeit von mehr als einem Jahr",
+			en: "Over one year",
+			fr: "A plus d'un an",
+			nl: "Op meer dan één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -24892,6 +34642,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9361",
 		label: "Over one year",
+		labels: {
+			de: "Restlaufzeit von mehr als einem Jahr",
+			en: "Over one year",
+			fr: "A plus d'un an",
+			nl: "Op meer dan één jaar",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -24906,6 +34662,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9371",
 		label: "Within one year",
+		labels: {
+			de: "Restlaufzeit bis zu einem Jahr",
+			en: "Within one year",
+			fr: "A un an au plus",
+			nl: "Op hoogstens één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -24923,6 +34685,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9371",
 		label: "Within one year",
+		labels: {
+			de: "Restlaufzeit bis zu einem Jahr",
+			en: "Within one year",
+			fr: "A un an au plus",
+			nl: "Op hoogstens één jaar",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -24936,6 +34704,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9351",
 		label: "Amounts payable",
+		labels: {
+			de: "Verbindlichkeiten",
+			en: "Amounts payable",
+			fr: "Dettes",
+			nl: "Schulden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -24952,6 +34726,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9351",
 		label: "Amounts payable",
+		labels: {
+			de: "Verbindlichkeiten",
+			en: "Amounts payable",
+			fr: "Dettes",
+			nl: "Schulden",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -24968,6 +34748,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9381",
 		label: "Provided or irrevocably promised by the association or the foundation as security for debts or commitments of affiliated entities",
+		labels: {
+			de: "Von der Vereinigung oder Stiftung zur Besicherung von Verbindlichkeiten oder Verpflichtungen verbundener Körperschaften gestellt oder unwiderruflich zugesagt",
+			en: "Provided or irrevocably promised by the association or the foundation as security for debts or commitments of affiliated entities",
+			fr: "Constituées ou irrévocablement promises par l'association ou la fondation pour sûreté de dettes ou d'engagements d'entités liées",
+			nl: "Door de vereniging of stichting gesteld of onherroepelijk beloofd als waarborg voor schulden of verplichtingen van verbonden entiteiten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -24987,6 +34773,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9381",
 		label: "Provided or irrevocably promised by the association or the foundation as security for debts or commitments of affiliated entities",
+		labels: {
+			de: "Von der Vereinigung oder Stiftung zur Besicherung von Verbindlichkeiten oder Verpflichtungen verbundener Körperschaften gestellt oder unwiderruflich zugesagt",
+			en: "Provided or irrevocably promised by the association or the foundation as security for debts or commitments of affiliated entities",
+			fr: "Constituées ou irrévocablement promises par l'association ou la fondation pour sûreté de dettes ou d'engagements d'entités liées",
+			nl: "Door de vereniging of stichting gesteld of onherroepelijk beloofd als waarborg voor schulden of verplichtingen van verbonden entiteiten",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25003,6 +34795,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9391",
 		label: "Provided or irrevocably promised by affiliated entities as security for debts or commitments of the association or the foundation",
+		labels: {
+			de: "Von verbundenen Körperschaften zur Besicherung von Verbindlichkeiten oder Verpflichtungen der Vereinigung oder Stiftung gestellt oder unwiderruflich zugesagt",
+			en: "Provided or irrevocably promised by affiliated entities as security for debts or commitments of the association or the foundation",
+			fr: "Constituées ou irrévocablement promises par des entités liées pour sûreté de dettes ou d'engagements de l'association ou de la fondation",
+			nl: "Door verbonden entiteiten gesteld of onherroepelijk beloofd als waarborg voor schulden of verplichtingen van de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25022,6 +34820,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9391",
 		label: "Provided or irrevocably promised by affiliated entities as security for debts or commitments of the association or the foundation",
+		labels: {
+			de: "Von verbundenen Körperschaften zur Besicherung von Verbindlichkeiten oder Verpflichtungen der Vereinigung oder Stiftung gestellt oder unwiderruflich zugesagt",
+			en: "Provided or irrevocably promised by affiliated entities as security for debts or commitments of the association or the foundation",
+			fr: "Constituées ou irrévocablement promises par des entités liées pour sûreté de dettes ou d'engagements de l'association ou de la fondation",
+			nl: "Door verbonden entiteiten gesteld of onherroepelijk beloofd als waarborg voor schulden of verplichtingen van de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25038,6 +34842,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9401",
 		label: "Other significant financial commitments",
+		labels: {
+			de: "Sonstige wesentliche finanzielle Verpflichtungen",
+			en: "Other significant financial commitments",
+			fr: "Autres engagements financiers significatifs",
+			nl: "Andere betekenisvolle financiële verplichtingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25057,6 +34867,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9401",
 		label: "Other significant financial commitments",
+		labels: {
+			de: "Sonstige wesentliche finanzielle Verpflichtungen",
+			en: "Other significant financial commitments",
+			fr: "Autres engagements financiers significatifs",
+			nl: "Andere betekenisvolle financiële verplichtingen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25071,6 +34887,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9421",
 		label: "Income from financial fixed assets",
+		labels: {
+			de: "Erträge aus Finanzanlagen",
+			en: "Income from financial fixed assets",
+			fr: "Produits des immobilisations financières",
+			nl: "Opbrengsten uit financiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25088,6 +34910,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9421",
 		label: "Income from financial fixed assets",
+		labels: {
+			de: "Erträge aus Finanzanlagen",
+			en: "Income from financial fixed assets",
+			fr: "Produits des immobilisations financières",
+			nl: "Opbrengsten uit financiële vaste activa",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25102,6 +34930,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9431",
 		label: "Income from current assets",
+		labels: {
+			de: "Erträge aus Gegenständen des Umlaufvermögens",
+			en: "Income from current assets",
+			fr: "Produits des actifs circulants",
+			nl: "Opbrengsten uit vlottende activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25119,6 +34953,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9431",
 		label: "Income from current assets",
+		labels: {
+			de: "Erträge aus Gegenständen des Umlaufvermögens",
+			en: "Income from current assets",
+			fr: "Produits des actifs circulants",
+			nl: "Opbrengsten uit vlottende activa",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25134,6 +34974,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9441",
 		label: "Other financial income",
+		labels: {
+			de: "Sonstige Finanzerträge",
+			en: "Other financial income",
+			fr: "Autres produits financiers",
+			nl: "Andere financiële opbrengsten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25152,6 +34998,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9441",
 		label: "Other financial income",
+		labels: {
+			de: "Sonstige Finanzerträge",
+			en: "Other financial income",
+			fr: "Autres produits financiers",
+			nl: "Andere financiële opbrengsten",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25167,6 +35019,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9461",
 		label: "Debt charges",
+		labels: {
+			de: "Aufwendungen für Verbindlichkeiten",
+			en: "Debt charges",
+			fr: "Charges des dettes",
+			nl: "Kosten van schulden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25185,6 +35043,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9461",
 		label: "Debt charges",
+		labels: {
+			de: "Aufwendungen für Verbindlichkeiten",
+			en: "Debt charges",
+			fr: "Charges des dettes",
+			nl: "Kosten van schulden",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25200,6 +35064,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9471",
 		label: "Other financial charges",
+		labels: {
+			de: "Sonstige Finanzaufwendungen",
+			en: "Other financial charges",
+			fr: "Autres charges financières",
+			nl: "Andere financiële kosten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25218,6 +35088,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9471",
 		label: "Other financial charges",
+		labels: {
+			de: "Sonstige Finanzaufwendungen",
+			en: "Other financial charges",
+			fr: "Autres charges financières",
+			nl: "Andere financiële kosten",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25233,6 +35109,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9481",
 		label: "Capital gains obtained",
+		labels: {
+			de: "Erzielte Erträge",
+			en: "Capital gains obtained",
+			fr: "Plus-values réalisées",
+			nl: "Verwezenlijkte meerwaarden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25251,6 +35133,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9481",
 		label: "Capital gains obtained",
+		labels: {
+			de: "Erzielte Erträge",
+			en: "Capital gains obtained",
+			fr: "Plus-values réalisées",
+			nl: "Verwezenlijkte meerwaarden",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25266,6 +35154,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9491",
 		label: "Capital losses suffered",
+		labels: {
+			de: "Erlittene Verluste",
+			en: "Capital losses suffered",
+			fr: "Moins-values réalisées",
+			nl: "Verwezenlijkte minderwaarden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25284,6 +35178,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9491",
 		label: "Capital losses suffered",
+		labels: {
+			de: "Erlittene Verluste",
+			en: "Capital losses suffered",
+			fr: "Moins-values réalisées",
+			nl: "Verwezenlijkte minderwaarden",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25297,6 +35197,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9493",
 		label: "Turnover, contributions, gifts, legacies, grants and other operating income",
+		labels: {
+			de: "Umsatzerlöse, Beiträge, Schenkungen, Legaten und Subventionen sowie sonstige betriebliche Erträge",
+			en: "Turnover, contributions, gifts, legacies, grants and other operating income",
+			fr: "Chiffre d'affaires, cotisations, dons, legs, subsides et autres produits d'exploitation",
+			nl: "Omzet, lidgeld, schenkingen, legaten en subsidies alsook andere bedrijfsopbrengsten",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25313,6 +35219,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9493",
 		label: "Turnover, contributions, gifts, legacies, grants and other operating income",
+		labels: {
+			de: "Umsatzerlöse, Beiträge, Schenkungen, Legaten und Subventionen sowie sonstige betriebliche Erträge",
+			en: "Turnover, contributions, gifts, legacies, grants and other operating income",
+			fr: "Chiffre d'affaires, cotisations, dons, legs, subsides et autres produits d'exploitation",
+			nl: "Omzet, lidgeld, schenkingen, legaten en subsidies alsook andere bedrijfsopbrengsten",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25327,6 +35239,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9263",
 		label: "Participating interests",
+		labels: {
+			de: "Beteiligungen",
+			en: "Participating interests",
+			fr: "Participations",
+			nl: "Deelnemingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25344,6 +35262,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9263",
 		label: "Participating interests",
+		labels: {
+			de: "Beteiligungen",
+			en: "Participating interests",
+			fr: "Participations",
+			nl: "Deelnemingen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25359,6 +35283,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9273",
 		label: "Subordinated amounts receivable",
+		labels: {
+			de: "Nachrangige Forderungen",
+			en: "Subordinated amounts receivable",
+			fr: "Créances subordonnées",
+			nl: "Achtergestelde vorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25377,6 +35307,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9273",
 		label: "Subordinated amounts receivable",
+		labels: {
+			de: "Nachrangige Forderungen",
+			en: "Subordinated amounts receivable",
+			fr: "Créances subordonnées",
+			nl: "Achtergestelde vorderingen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25392,6 +35328,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9283",
 		label: "Other amounts receivable",
+		labels: {
+			de: "Sonstige Forderungen",
+			en: "Other amounts receivable",
+			fr: "Autres créances",
+			nl: "Andere vorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25410,6 +35352,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9283",
 		label: "Other amounts receivable",
+		labels: {
+			de: "Sonstige Forderungen",
+			en: "Other amounts receivable",
+			fr: "Autres créances",
+			nl: "Andere vorderingen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25424,6 +35372,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9253",
 		label: "Financial fixed assets",
+		labels: {
+			de: "Finanzanlagen",
+			en: "Financial fixed assets",
+			fr: "Immobilisations financières",
+			nl: "Financiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25441,6 +35395,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9253",
 		label: "Financial fixed assets",
+		labels: {
+			de: "Finanzanlagen",
+			en: "Financial fixed assets",
+			fr: "Immobilisations financières",
+			nl: "Financiële vaste activa",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25455,6 +35415,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9303",
 		label: "Over one year",
+		labels: {
+			de: "Restlaufzeit von mehr als einem Jahr",
+			en: "Over one year",
+			fr: "A plus d'un an",
+			nl: "Op meer dan één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25472,6 +35438,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9303",
 		label: "Over one year",
+		labels: {
+			de: "Restlaufzeit von mehr als einem Jahr",
+			en: "Over one year",
+			fr: "A plus d'un an",
+			nl: "Op meer dan één jaar",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25486,6 +35458,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9313",
 		label: "Within one year",
+		labels: {
+			de: "Restlaufzeit bis zu einem Jahr",
+			en: "Within one year",
+			fr: "A un an au plus",
+			nl: "Op hoogstens één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25503,6 +35481,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9313",
 		label: "Within one year",
+		labels: {
+			de: "Restlaufzeit bis zu einem Jahr",
+			en: "Within one year",
+			fr: "A un an au plus",
+			nl: "Op hoogstens één jaar",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25516,6 +35500,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9293",
 		label: "Amounts receivable",
+		labels: {
+			de: "Forderungen",
+			en: "Amounts receivable",
+			fr: "Créances",
+			nl: "Vorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25532,6 +35522,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9293",
 		label: "Amounts receivable",
+		labels: {
+			de: "Forderungen",
+			en: "Amounts receivable",
+			fr: "Créances",
+			nl: "Vorderingen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25546,6 +35542,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9363",
 		label: "Over one year",
+		labels: {
+			de: "Restlaufzeit von mehr als einem Jahr",
+			en: "Over one year",
+			fr: "A plus d'un an",
+			nl: "Op meer dan één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25563,6 +35565,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9363",
 		label: "Over one year",
+		labels: {
+			de: "Restlaufzeit von mehr als einem Jahr",
+			en: "Over one year",
+			fr: "A plus d'un an",
+			nl: "Op meer dan één jaar",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25577,6 +35585,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9373",
 		label: "Within one year",
+		labels: {
+			de: "Restlaufzeit bis zu einem Jahr",
+			en: "Within one year",
+			fr: "A un an au plus",
+			nl: "Op hoogstens één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25594,6 +35608,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9373",
 		label: "Within one year",
+		labels: {
+			de: "Restlaufzeit bis zu einem Jahr",
+			en: "Within one year",
+			fr: "A un an au plus",
+			nl: "Op hoogstens één jaar",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25607,6 +35627,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9353",
 		label: "Amounts payable",
+		labels: {
+			de: "Verbindlichkeiten",
+			en: "Amounts payable",
+			fr: "Dettes",
+			nl: "Schulden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25623,6 +35649,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9353",
 		label: "Amounts payable",
+		labels: {
+			de: "Verbindlichkeiten",
+			en: "Amounts payable",
+			fr: "Dettes",
+			nl: "Schulden",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25639,6 +35671,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9383",
 		label: "Provided or irrevocably promised by the association or foundation as security for debts or commitments of associated companies",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung zur Besicherung von Verbindlichkeiten oder Verpflichtungen assoziierter Gesellschaften gestellt oder unwiderruflich zugesagt",
+			en: "Provided or irrevocably promised by the association or foundation as security for debts or commitments of associated companies",
+			fr: "Constituées ou irrévocablement promises par l'association ou la fondation pour sûreté de dettes ou d'engagements de sociétés associées",
+			nl: "Door de vereniging of stichting gesteld of onherroepelijk beloofd als waarborg voor schulden of verplichtingen van geassocieerde vennootschappen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25658,6 +35696,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9383",
 		label: "Provided or irrevocably promised by the association or foundation as security for debts or commitments of associated companies",
+		labels: {
+			de: "Durch die Vereinigung oder Stiftung zur Besicherung von Verbindlichkeiten oder Verpflichtungen assoziierter Gesellschaften gestellt oder unwiderruflich zugesagt",
+			en: "Provided or irrevocably promised by the association or foundation as security for debts or commitments of associated companies",
+			fr: "Constituées ou irrévocablement promises par l'association ou la fondation pour sûreté de dettes ou d'engagements de sociétés associées",
+			nl: "Door de vereniging of stichting gesteld of onherroepelijk beloofd als waarborg voor schulden of verplichtingen van geassocieerde vennootschappen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25674,6 +35718,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9393",
 		label: "Provided or irrevocably promised by associated companies as security for debts or commitments of the association or foundation",
+		labels: {
+			de: "Durch assoziierte Gesellschaften zur Besicherung von Verbindlichkeiten oder Verpflichtungen der Vereinigung oder Stiftung gestellt oder unwiderruflich zugesagt",
+			en: "Provided or irrevocably promised by associated companies as security for debts or commitments of the association or foundation",
+			fr: "Constituées ou irrévocablement promises par des sociétés associées pour sûreté de dettes ou d'engagements de l'association ou de la fondation",
+			nl: "Door geassocieerde vennootschappen gesteld of onherroepelijk beloofd als waarborg voor schulden of verplichtingen van de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25693,6 +35743,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9393",
 		label: "Provided or irrevocably promised by associated companies as security for debts or commitments of the association or foundation",
+		labels: {
+			de: "Durch assoziierte Gesellschaften zur Besicherung von Verbindlichkeiten oder Verpflichtungen der Vereinigung oder Stiftung gestellt oder unwiderruflich zugesagt",
+			en: "Provided or irrevocably promised by associated companies as security for debts or commitments of the association or foundation",
+			fr: "Constituées ou irrévocablement promises par des sociétés associées pour sûreté de dettes ou d'engagements de l'association ou de la fondation",
+			nl: "Door geassocieerde vennootschappen gesteld of onherroepelijk beloofd als waarborg voor schulden of verplichtingen van de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25709,6 +35765,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9403",
 		label: "Other significant financial commitments",
+		labels: {
+			de: "Sonstige wesentliche finanzielle Verpflichtungen",
+			en: "Other significant financial commitments",
+			fr: "Autres engagements financiers significatifs",
+			nl: "Andere betekenisvolle financiële verplichtingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25728,6 +35790,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9403",
 		label: "Other significant financial commitments",
+		labels: {
+			de: "Sonstige wesentliche finanzielle Verpflichtungen",
+			en: "Other significant financial commitments",
+			fr: "Autres engagements financiers significatifs",
+			nl: "Andere betekenisvolle financiële verplichtingen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25742,6 +35810,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9262",
 		label: "Participating interests",
+		labels: {
+			de: "Beteiligungen",
+			en: "Participating interests",
+			fr: "Participations",
+			nl: "Deelnemingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25759,6 +35833,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9262",
 		label: "Participating interests",
+		labels: {
+			de: "Beteiligungen",
+			en: "Participating interests",
+			fr: "Participations",
+			nl: "Deelnemingen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25774,6 +35854,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9272",
 		label: "Subordinated amounts receivable",
+		labels: {
+			de: "Nachrangige Forderungen",
+			en: "Subordinated amounts receivable",
+			fr: "Créances subordonnées",
+			nl: "Achtergestelde vorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25792,6 +35878,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9272",
 		label: "Subordinated amounts receivable",
+		labels: {
+			de: "Nachrangige Forderungen",
+			en: "Subordinated amounts receivable",
+			fr: "Créances subordonnées",
+			nl: "Achtergestelde vorderingen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25807,6 +35899,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9282",
 		label: "Other amounts receivable",
+		labels: {
+			de: "Sonstige Forderungen",
+			en: "Other amounts receivable",
+			fr: "Autres créances",
+			nl: "Andere vorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25825,6 +35923,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9282",
 		label: "Other amounts receivable",
+		labels: {
+			de: "Sonstige Forderungen",
+			en: "Other amounts receivable",
+			fr: "Autres créances",
+			nl: "Andere vorderingen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25839,6 +35943,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9252",
 		label: "Financial fixed assets",
+		labels: {
+			de: "Finanzanlagen",
+			en: "Financial fixed assets",
+			fr: "Immobilisations financières",
+			nl: "Financiële vaste activa",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25856,6 +35966,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9252",
 		label: "Financial fixed assets",
+		labels: {
+			de: "Finanzanlagen",
+			en: "Financial fixed assets",
+			fr: "Immobilisations financières",
+			nl: "Financiële vaste activa",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25870,6 +35986,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9302",
 		label: "Over one year",
+		labels: {
+			de: "Restlaufzeit von mehr als einem Jahr",
+			en: "Over one year",
+			fr: "A plus d'un an",
+			nl: "Op meer dan één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25887,6 +36009,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9302",
 		label: "Over one year",
+		labels: {
+			de: "Restlaufzeit von mehr als einem Jahr",
+			en: "Over one year",
+			fr: "A plus d'un an",
+			nl: "Op meer dan één jaar",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25901,6 +36029,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9312",
 		label: "Within one year",
+		labels: {
+			de: "Restlaufzeit bis zu einem Jahr",
+			en: "Within one year",
+			fr: "A un an au plus",
+			nl: "Op hoogstens één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25918,6 +36052,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9312",
 		label: "Within one year",
+		labels: {
+			de: "Restlaufzeit bis zu einem Jahr",
+			en: "Within one year",
+			fr: "A un an au plus",
+			nl: "Op hoogstens één jaar",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25931,6 +36071,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9292",
 		label: "Amounts receivable",
+		labels: {
+			de: "Forderungen",
+			en: "Amounts receivable",
+			fr: "Créances",
+			nl: "Vorderingen",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25947,6 +36093,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9292",
 		label: "Amounts receivable",
+		labels: {
+			de: "Forderungen",
+			en: "Amounts receivable",
+			fr: "Créances",
+			nl: "Vorderingen",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25961,6 +36113,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9362",
 		label: "Over one year",
+		labels: {
+			de: "Restlaufzeit von mehr als einem Jahr",
+			en: "Over one year",
+			fr: "A plus d'un an",
+			nl: "Op meer dan één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -25978,6 +36136,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9362",
 		label: "Over one year",
+		labels: {
+			de: "Restlaufzeit von mehr als einem Jahr",
+			en: "Over one year",
+			fr: "A plus d'un an",
+			nl: "Op meer dan één jaar",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -25992,6 +36156,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9372",
 		label: "Within one year",
+		labels: {
+			de: "Restlaufzeit bis zu einem Jahr",
+			en: "Within one year",
+			fr: "A un an au plus",
+			nl: "Op hoogstens één jaar",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26009,6 +36179,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9372",
 		label: "Within one year",
+		labels: {
+			de: "Restlaufzeit bis zu einem Jahr",
+			en: "Within one year",
+			fr: "A un an au plus",
+			nl: "Op hoogstens één jaar",
+		},
 	},
 	{
 		section: "s.06.14.0.g",
@@ -26022,6 +36198,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9352",
 		label: "Amounts payable",
+		labels: {
+			de: "Verbindlichkeiten",
+			en: "Amounts payable",
+			fr: "Dettes",
+			nl: "Schulden",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26038,6 +36220,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "9352",
 		label: "Amounts payable",
+		labels: {
+			de: "Verbindlichkeiten",
+			en: "Amounts payable",
+			fr: "Dettes",
+			nl: "Schulden",
+		},
 	},
 	{
 		section: "s.06.15.0.g",
@@ -26051,6 +36239,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		code: "9500",
 		label: "Amounts receivable from these persons",
+		labels: {
+			de: "Forderungen an obengenannte Personen",
+			en: "Amounts receivable from these persons",
+			fr: "Créances sur les personnes précitées",
+			nl: "Uitstaande vorderingen op deze personen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26064,6 +36258,12 @@ const datapoints3: readonly Datapoint[] = [
 			"dim:spec": "spec:m74",
 		},
 		label: "Conditions on amounts receivable, rate, duration, possibly reimbursed amounts, canceled amounts or renounced amounts",
+		labels: {
+			de: "Wichtigste Bedingungen hinsichtlich Forderungen, Zinssatz, Laufzeit, gegebenenfalls abgelöste oder abgeschriebene Beträge oder Beträge auf die verzichtet wurde",
+			en: "Conditions on amounts receivable, rate, duration, possibly reimbursed amounts, canceled amounts or renounced amounts",
+			fr: "Conditions principales des créances, taux d'intérêt, durée, montants éventuellement remboursés, annulés ou auxquels il a été renoncé",
+			nl: "Voornaamste voorwaarden betreffende de vorderingen, interestvoet, looptijd, eventueel afgeloste of afgeschreven bedragen of bedragen waarvan werd afgezien",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26077,6 +36277,12 @@ const datapoints3: readonly Datapoint[] = [
 			"dim:spec": "spec:m74",
 		},
 		label: "Conditions on amounts receivable, rate, duration, possibly reimbursed amounts, canceled amounts or renounced amounts",
+		labels: {
+			de: "Wichtigste Bedingungen hinsichtlich Forderungen, Zinssatz, Laufzeit, gegebenenfalls abgelöste oder abgeschriebene Beträge oder Beträge auf die verzichtet wurde",
+			en: "Conditions on amounts receivable, rate, duration, possibly reimbursed amounts, canceled amounts or renounced amounts",
+			fr: "Conditions principales des créances, taux d'intérêt, durée, montants éventuellement remboursés, annulés ou auxquels il a été renoncé",
+			nl: "Voornaamste voorwaarden betreffende de vorderingen, interestvoet, looptijd, eventueel afgeloste of afgeschreven bedragen of bedragen waarvan werd afgezien",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26091,6 +36297,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		code: "9501",
 		label: "Guarantees provided in their favour",
+		labels: {
+			de: "Zu ihren Gunsten gestellte Sicherheiten",
+			en: "Guarantees provided in their favour",
+			fr: "Garanties constituées en leur faveur",
+			nl: "Waarborgen toegestaan in hun voordeel",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26107,6 +36319,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		code: "9502",
 		label: "Other significant commitments undertaken in their favour",
+		labels: {
+			de: "Sonstige wesentliche Verpflichtungen, die zu ihren Gunsten eingegangen wurden",
+			en: "Other significant commitments undertaken in their favour",
+			fr: "Autres engagements significatifs souscrits en leur faveur",
+			nl: "Andere betekenisvolle verplichtingen aangegaan in hun voordeel",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26119,6 +36337,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		code: "9503",
 		label: "To directors",
+		labels: {
+			de: "Für die Verwaltungsratsmitglieder",
+			en: "To directors",
+			fr: "Aux administrateurs",
+			nl: "Aan bestuurders",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26131,6 +36355,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		code: "9504",
 		label: "To former directors",
+		labels: {
+			de: "Für die ehemaligen Verwaltungsratsmitglieder",
+			en: "To former directors",
+			fr: "Aux anciens administrateurs",
+			nl: "Aan oud-bestuurders",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26143,6 +36373,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		code: "9505",
 		label: "Auditor's fees",
+		labels: {
+			de: "Entlohnung des Kommissars (der Kommissare)",
+			en: "Auditor's fees",
+			fr: "Emoluments du (des) commissaire(s)",
+			nl: "Bezoldiging van de commissaris(sen)",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26157,6 +36393,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		code: "95061",
 		label: "Other attestation missions",
+		labels: {
+			de: "Andere Prüfungsaufträge",
+			en: "Other attestation missions",
+			fr: "Autres missions d'attestation",
+			nl: "Andere controleopdrachten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26170,6 +36412,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		code: "95062",
 		label: "Tax consultancy",
+		labels: {
+			de: "Steuerberatungsaufträge",
+			en: "Tax consultancy",
+			fr: "Missions de conseils fiscaux",
+			nl: "Belastingadviesopdrachten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26184,6 +36432,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		code: "95063",
 		label: "Other missions external to the audit",
+		labels: {
+			de: "Andere Aufträge die keine Prüfungsaufträge sind",
+			en: "Other missions external to the audit",
+			fr: "Autres missions extérieures à la mission révisorale",
+			nl: "Andere opdrachten buiten de revisorale opdrachten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26198,6 +36452,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		code: "95081",
 		label: "Other attestation missions",
+		labels: {
+			de: "Andere Prüfungsaufträge",
+			en: "Other attestation missions",
+			fr: "Autres missions d'attestation",
+			nl: "Andere controleopdrachten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26211,6 +36471,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		code: "95082",
 		label: "Tax consultancy",
+		labels: {
+			de: "Steuerberatungsaufträge",
+			en: "Tax consultancy",
+			fr: "Missions de conseils fiscaux",
+			nl: "Belastingadviesopdrachten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26225,6 +36491,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		code: "95083",
 		label: "Other missions external to the audit",
+		labels: {
+			de: "Andere Aufträge die keine Prüfungsaufträge sind",
+			en: "Other missions external to the audit",
+			fr: "Autres missions extérieures à la mission révisorale",
+			nl: "Andere opdrachten buiten de revisorale opdrachten",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26236,6 +36508,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Reasons for not reducing the book value",
+		labels: {
+			de: "Grund weshalb der Buchwert nicht vermindert ist",
+			en: "Reasons for not reducing the book value",
+			fr: "Raisons pour lesquelles la valeur comptable n'a pas été réduite",
+			nl: "Redenen waarom de boekwaarde niet is verminderd",
+		},
 	},
 	{
 		section: "s.06.16.0.g",
@@ -26246,6 +36524,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Reasons for not reducing the book value",
+		labels: {
+			de: "Grund weshalb der Buchwert nicht vermindert ist",
+			en: "Reasons for not reducing the book value",
+			fr: "Raisons pour lesquelles la valeur comptable n'a pas été réduite",
+			nl: "Redenen waarom de boekwaarde niet is verminderd",
+		},
 	},
 	{
 		section: "s.06.16.0.g",
@@ -26257,6 +36541,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Reasons for not reducing the book value",
+		labels: {
+			de: "Grund weshalb der Buchwert nicht vermindert ist",
+			en: "Reasons for not reducing the book value",
+			fr: "Raisons pour lesquelles la valeur comptable n'a pas été réduite",
+			nl: "Redenen waarom de boekwaarde niet is verminderd",
+		},
 	},
 	{
 		section: "s.06.16.0.g",
@@ -26267,6 +36557,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Reasons for not reducing the book value",
+		labels: {
+			de: "Grund weshalb der Buchwert nicht vermindert ist",
+			en: "Reasons for not reducing the book value",
+			fr: "Raisons pour lesquelles la valeur comptable n'a pas été réduite",
+			nl: "Redenen waarom de boekwaarde niet is verminderd",
+		},
 	},
 	{
 		section: "s.06.16.0.g",
@@ -26277,6 +36573,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Reasons for not reducing the book value",
+		labels: {
+			de: "Grund weshalb der Buchwert nicht vermindert ist",
+			en: "Reasons for not reducing the book value",
+			fr: "Raisons pour lesquelles la valeur comptable n'a pas été réduite",
+			nl: "Redenen waarom de boekwaarde niet is verminderd",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26289,6 +36591,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Reasons for not reducing the book value",
+		labels: {
+			de: "Grund weshalb der Buchwert nicht vermindert ist",
+			en: "Reasons for not reducing the book value",
+			fr: "Raisons pour lesquelles la valeur comptable n'a pas été réduite",
+			nl: "Redenen waarom de boekwaarde niet is verminderd",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26301,6 +36609,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Reasons for not reducing the book value",
+		labels: {
+			de: "Grund weshalb der Buchwert nicht vermindert ist",
+			en: "Reasons for not reducing the book value",
+			fr: "Raisons pour lesquelles la valeur comptable n'a pas été réduite",
+			nl: "Redenen waarom de boekwaarde niet is verminderd",
+		},
 	},
 	{
 		section: "s.06.16.0.g",
@@ -26313,6 +36627,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Reasons for not reducing the book value",
+		labels: {
+			de: "Grund weshalb der Buchwert nicht vermindert ist",
+			en: "Reasons for not reducing the book value",
+			fr: "Raisons pour lesquelles la valeur comptable n'a pas été réduite",
+			nl: "Redenen waarom de boekwaarde niet is verminderd",
+		},
 	},
 	{
 		section: "s.06.16.0.g",
@@ -26323,6 +36643,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Informations that suggest than the book value will be recovered",
+		labels: {
+			de: "Elemente, die es zulassen, dass der Buchwert realisiert werden kann",
+			en: "Informations that suggest than the book value will be recovered",
+			fr: "Eléments qui permettent de supposer que la valeur comptable sera recouvrée",
+			nl: "Elementen die toelaten te veronderstellen dat de boekwaarde zal kunnen worden gerealiseerd",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26335,6 +36661,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Informations that suggest than the book value will be recovered",
+		labels: {
+			de: "Elemente, die es zulassen, dass der Buchwert realisiert werden kann",
+			en: "Informations that suggest than the book value will be recovered",
+			fr: "Eléments qui permettent de supposer que la valeur comptable sera recouvrée",
+			nl: "Elementen die toelaten te veronderstellen dat de boekwaarde zal kunnen worden gerealiseerd",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26349,6 +36681,12 @@ const datapoints3: readonly Datapoint[] = [
 		},
 		openDimensions: ["dim:open"],
 		label: "Informations that suggest than the book value will be recovered",
+		labels: {
+			de: "Elemente, die es zulassen, dass der Buchwert realisiert werden kann",
+			en: "Informations that suggest than the book value will be recovered",
+			fr: "Eléments qui permettent de supposer que la valeur comptable sera recouvrée",
+			nl: "Elementen die toelaten te veronderstellen dat de boekwaarde zal kunnen worden gerealiseerd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -26364,6 +36702,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1001-10011-10012",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26379,6 +36723,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1001-10011-10012",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26395,6 +36745,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1001-10011-10012",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26411,6 +36767,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1001-10011-10012",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26427,6 +36789,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1001-10011-10012",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26442,6 +36810,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1001-10011-10012",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26457,6 +36831,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1001-10011-10012",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26473,6 +36853,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1001-10011-10012",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26489,6 +36875,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1001-10011-10012",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26504,6 +36896,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1001-10011-10012",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26520,6 +36918,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1002-10021-10022",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26535,6 +36939,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1002-10021-10022",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26551,6 +36961,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1002-10021-10022",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26567,6 +36983,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1002-10021-10022",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26583,6 +37005,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1002-10021-10022",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26598,6 +37026,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1002-10021-10022",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26613,6 +37047,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1002-10021-10022",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26630,6 +37070,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1003-10031-10032",
 		label: "Total in full-time equivalents (FTE)",
+		labels: {
+			de: "Summe in Vollzeitäquivalenzen (VZÄ)",
+			en: "Total in full-time equivalents (FTE)",
+			fr: "Total en équivalents temps plein (ETP)",
+			nl: "Totaal in voltijdse equivalenten (VTE)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26647,6 +37093,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1003-10031-10032",
 		label: "Total in full-time equivalents (FTE)",
+		labels: {
+			de: "Summe in Vollzeitäquivalenzen (VZÄ)",
+			en: "Total in full-time equivalents (FTE)",
+			fr: "Total en équivalents temps plein (ETP)",
+			nl: "Totaal in voltijdse equivalenten (VTE)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26665,6 +37117,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1003-10031-10032",
 		label: "Total in full-time equivalents (FTE)",
+		labels: {
+			de: "Summe in Vollzeitäquivalenzen (VZÄ)",
+			en: "Total in full-time equivalents (FTE)",
+			fr: "Total en équivalents temps plein (ETP)",
+			nl: "Totaal in voltijdse equivalenten (VTE)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26683,6 +37141,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1003-10031-10032",
 		label: "Total in full-time equivalents (FTE)",
+		labels: {
+			de: "Summe in Vollzeitäquivalenzen (VZÄ)",
+			en: "Total in full-time equivalents (FTE)",
+			fr: "Total en équivalents temps plein (ETP)",
+			nl: "Totaal in voltijdse equivalenten (VTE)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26701,6 +37165,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1003-10031-10032",
 		label: "Total in full-time equivalents (FTE)",
+		labels: {
+			de: "Summe in Vollzeitäquivalenzen (VZÄ)",
+			en: "Total in full-time equivalents (FTE)",
+			fr: "Total en équivalents temps plein (ETP)",
+			nl: "Totaal in voltijdse equivalenten (VTE)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26718,6 +37188,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1003-10031-10032",
 		label: "Total in full-time equivalents (FTE)",
+		labels: {
+			de: "Summe in Vollzeitäquivalenzen (VZÄ)",
+			en: "Total in full-time equivalents (FTE)",
+			fr: "Total en équivalents temps plein (ETP)",
+			nl: "Totaal in voltijdse equivalenten (VTE)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26735,6 +37211,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1003-10031-10032",
 		label: "Total in full-time equivalents (FTE)",
+		labels: {
+			de: "Summe in Vollzeitäquivalenzen (VZÄ)",
+			en: "Total in full-time equivalents (FTE)",
+			fr: "Total en équivalents temps plein (ETP)",
+			nl: "Totaal in voltijdse equivalenten (VTE)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26752,6 +37234,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1003-10031-10032",
 		label: "Total in full-time equivalents (FTE)",
+		labels: {
+			de: "Summe in Vollzeitäquivalenzen (VZÄ)",
+			en: "Total in full-time equivalents (FTE)",
+			fr: "Total en équivalents temps plein (ETP)",
+			nl: "Totaal in voltijdse equivalenten (VTE)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26769,6 +37257,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1003-10031-10032",
 		label: "Total in full-time equivalents (FTE)",
+		labels: {
+			de: "Summe in Vollzeitäquivalenzen (VZÄ)",
+			en: "Total in full-time equivalents (FTE)",
+			fr: "Total en équivalents temps plein (ETP)",
+			nl: "Totaal in voltijdse equivalenten (VTE)",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26786,6 +37280,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1011-10111-10112",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26801,6 +37301,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1011-10111-10112",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26817,6 +37323,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1011-10111-10112",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26833,6 +37345,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1011-10111-10112",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26849,6 +37367,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1011-10111-10112",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26864,6 +37388,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1011-10111-10112",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26880,6 +37410,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1011-10111-10112",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26897,6 +37433,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1011-10111-10112",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -26913,6 +37455,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1011-10111-10112",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26928,6 +37476,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1011-10111-10112",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26944,6 +37498,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1012-10121-10122",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26959,6 +37519,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1012-10121-10122",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26975,6 +37541,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1012-10121-10122",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -26991,6 +37563,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1012-10121-10122",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27007,6 +37585,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1012-10121-10122",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27022,6 +37606,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1012-10121-10122",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27037,6 +37627,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1012-10121-10122",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27053,6 +37649,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1013-10131-10132",
 		label: "Total",
+		labels: {
+			de: "Summe",
+			en: "Total",
+			fr: "Total",
+			nl: "Totaal",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27069,6 +37671,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1013-10131-10132",
 		label: "Total",
+		labels: {
+			de: "Summe",
+			en: "Total",
+			fr: "Total",
+			nl: "Totaal",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27086,6 +37694,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1013-10131-10132",
 		label: "Total",
+		labels: {
+			de: "Summe",
+			en: "Total",
+			fr: "Total",
+			nl: "Totaal",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27103,6 +37717,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1013-10131-10132",
 		label: "Total",
+		labels: {
+			de: "Summe",
+			en: "Total",
+			fr: "Total",
+			nl: "Totaal",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27120,6 +37740,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1013-10131-10132",
 		label: "Total",
+		labels: {
+			de: "Summe",
+			en: "Total",
+			fr: "Total",
+			nl: "Totaal",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27136,6 +37762,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1013-10131-10132",
 		label: "Total",
+		labels: {
+			de: "Summe",
+			en: "Total",
+			fr: "Total",
+			nl: "Totaal",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27152,6 +37784,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1013-10131-10132",
 		label: "Total",
+		labels: {
+			de: "Summe",
+			en: "Total",
+			fr: "Total",
+			nl: "Totaal",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27169,6 +37807,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1021-10211-10212",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27184,6 +37828,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1021-10211-10212",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27200,6 +37850,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1021-10211-10212",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27216,6 +37872,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1021-10211-10212",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27232,6 +37894,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1021-10211-10212",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27247,6 +37915,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1021-10211-10212",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27263,6 +37937,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1021-10211-10212",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27280,6 +37960,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1021-10211-10212",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27296,6 +37982,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1021-10211-10212",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27311,6 +38003,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1021-10211-10212",
 		label: "Full-time",
+		labels: {
+			de: "Vollzeit",
+			en: "Full-time",
+			fr: "Temps plein",
+			nl: "Voltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27327,6 +38025,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1022-10221-10222",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27342,6 +38046,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1022-10221-10222",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27358,6 +38068,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1022-10221-10222",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27374,6 +38090,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1022-10221-10222",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27390,6 +38112,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1022-10221-10222",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27405,6 +38133,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1022-10221-10222",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27420,6 +38154,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1022-10221-10222",
 		label: "Part-time",
+		labels: {
+			de: "Teilzeit",
+			en: "Part-time",
+			fr: "Temps partiel",
+			nl: "Deeltijds",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27436,6 +38176,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1023-10231-10232",
 		label: "Total",
+		labels: {
+			de: "Summe",
+			en: "Total",
+			fr: "Total",
+			nl: "Totaal",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27452,6 +38198,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1023-10231-10232",
 		label: "Total",
+		labels: {
+			de: "Summe",
+			en: "Total",
+			fr: "Total",
+			nl: "Totaal",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27469,6 +38221,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1023-10231-10232",
 		label: "Total",
+		labels: {
+			de: "Summe",
+			en: "Total",
+			fr: "Total",
+			nl: "Totaal",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27486,6 +38244,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1023-10231-10232",
 		label: "Total",
+		labels: {
+			de: "Summe",
+			en: "Total",
+			fr: "Total",
+			nl: "Totaal",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27503,6 +38267,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1023-10231-10232",
 		label: "Total",
+		labels: {
+			de: "Summe",
+			en: "Total",
+			fr: "Total",
+			nl: "Totaal",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27519,6 +38289,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1023-10231-10232",
 		label: "Total",
+		labels: {
+			de: "Summe",
+			en: "Total",
+			fr: "Total",
+			nl: "Totaal",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27535,6 +38311,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1023-10231-10232",
 		label: "Total",
+		labels: {
+			de: "Summe",
+			en: "Total",
+			fr: "Total",
+			nl: "Totaal",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27551,6 +38333,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1033-10331-10332",
 		label: "Advantages in addition to wages",
+		labels: {
+			de: "Betrag der zusätzlich zum Gehalt erteilten Vorteile",
+			en: "Advantages in addition to wages",
+			fr: "Montant des avantages accordés en sus du salaire",
+			nl: "Bedrag van de voordelen bovenop het loon",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27566,6 +38354,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1033-10331-10332",
 		label: "Advantages in addition to wages",
+		labels: {
+			de: "Betrag der zusätzlich zum Gehalt erteilten Vorteile",
+			en: "Advantages in addition to wages",
+			fr: "Montant des avantages accordés en sus du salaire",
+			nl: "Bedrag van de voordelen bovenop het loon",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27582,6 +38376,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1033-10331-10332",
 		label: "Advantages in addition to wages",
+		labels: {
+			de: "Betrag der zusätzlich zum Gehalt erteilten Vorteile",
+			en: "Advantages in addition to wages",
+			fr: "Montant des avantages accordés en sus du salaire",
+			nl: "Bedrag van de voordelen bovenop het loon",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27598,6 +38398,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1033-10331-10332",
 		label: "Advantages in addition to wages",
+		labels: {
+			de: "Betrag der zusätzlich zum Gehalt erteilten Vorteile",
+			en: "Advantages in addition to wages",
+			fr: "Montant des avantages accordés en sus du salaire",
+			nl: "Bedrag van de voordelen bovenop het loon",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27614,6 +38420,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1033-10331-10332",
 		label: "Advantages in addition to wages",
+		labels: {
+			de: "Betrag der zusätzlich zum Gehalt erteilten Vorteile",
+			en: "Advantages in addition to wages",
+			fr: "Montant des avantages accordés en sus du salaire",
+			nl: "Bedrag van de voordelen bovenop het loon",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27629,6 +38441,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1033-10331-10332",
 		label: "Advantages in addition to wages",
+		labels: {
+			de: "Betrag der zusätzlich zum Gehalt erteilten Vorteile",
+			en: "Advantages in addition to wages",
+			fr: "Montant des avantages accordés en sus du salaire",
+			nl: "Bedrag van de voordelen bovenop het loon",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27644,6 +38462,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1033-10331-10332",
 		label: "Advantages in addition to wages",
+		labels: {
+			de: "Betrag der zusätzlich zum Gehalt erteilten Vorteile",
+			en: "Advantages in addition to wages",
+			fr: "Montant des avantages accordés en sus du salaire",
+			nl: "Bedrag van de voordelen bovenop het loon",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27660,6 +38484,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1033-10331-10332",
 		label: "Advantages in addition to wages",
+		labels: {
+			de: "Betrag der zusätzlich zum Gehalt erteilten Vorteile",
+			en: "Advantages in addition to wages",
+			fr: "Montant des avantages accordés en sus du salaire",
+			nl: "Bedrag van de voordelen bovenop het loon",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27675,6 +38505,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1033-10331-10332",
 		label: "Advantages in addition to wages",
+		labels: {
+			de: "Betrag der zusätzlich zum Gehalt erteilten Vorteile",
+			en: "Advantages in addition to wages",
+			fr: "Montant des avantages accordés en sus du salaire",
+			nl: "Bedrag van de voordelen bovenop het loon",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27690,6 +38526,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1033-10331-10332",
 		label: "Advantages in addition to wages",
+		labels: {
+			de: "Betrag der zusätzlich zum Gehalt erteilten Vorteile",
+			en: "Advantages in addition to wages",
+			fr: "Montant des avantages accordés en sus du salaire",
+			nl: "Bedrag van de voordelen bovenop het loon",
+		},
 		currentPeriod: "prd:m1",
 		previousPeriod: "prd:m2",
 	},
@@ -27706,6 +38548,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1051-1052-1053",
 		label: "Number of employees",
+		labels: {
+			de: "Anzahl der Arbeitnehmer",
+			en: "Number of employees",
+			fr: "Nombre de travailleurs",
+			nl: "Aantal werknemers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27720,6 +38568,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1051-1052-1053",
 		label: "Number of employees",
+		labels: {
+			de: "Anzahl der Arbeitnehmer",
+			en: "Number of employees",
+			fr: "Nombre de travailleurs",
+			nl: "Aantal werknemers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27735,6 +38589,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1051-1052-1053",
 		label: "Number of employees",
+		labels: {
+			de: "Anzahl der Arbeitnehmer",
+			en: "Number of employees",
+			fr: "Nombre de travailleurs",
+			nl: "Aantal werknemers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27750,6 +38610,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1051-1052-1053",
 		label: "Number of employees",
+		labels: {
+			de: "Anzahl der Arbeitnehmer",
+			en: "Number of employees",
+			fr: "Nombre de travailleurs",
+			nl: "Aantal werknemers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27766,6 +38632,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1051-1052-1053",
 		label: "Number of employees",
+		labels: {
+			de: "Anzahl der Arbeitnehmer",
+			en: "Number of employees",
+			fr: "Nombre de travailleurs",
+			nl: "Aantal werknemers",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27782,6 +38654,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1101-1102-1103",
 		label: "Contract for an indefinite period",
+		labels: {
+			de: "Unbefristeter Vertrag",
+			en: "Contract for an indefinite period",
+			fr: "Contrat à durée indéterminée",
+			nl: "Overeenkomst voor een onbepaalde tijd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27797,6 +38675,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1101-1102-1103",
 		label: "Contract for an indefinite period",
+		labels: {
+			de: "Unbefristeter Vertrag",
+			en: "Contract for an indefinite period",
+			fr: "Contrat à durée indéterminée",
+			nl: "Overeenkomst voor een onbepaalde tijd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27813,6 +38697,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1101-1102-1103",
 		label: "Contract for an indefinite period",
+		labels: {
+			de: "Unbefristeter Vertrag",
+			en: "Contract for an indefinite period",
+			fr: "Contrat à durée indéterminée",
+			nl: "Overeenkomst voor een onbepaalde tijd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27829,6 +38719,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1101-1102-1103",
 		label: "Contract for an indefinite period",
+		labels: {
+			de: "Unbefristeter Vertrag",
+			en: "Contract for an indefinite period",
+			fr: "Contrat à durée indéterminée",
+			nl: "Overeenkomst voor een onbepaalde tijd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27846,6 +38742,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1101-1102-1103",
 		label: "Contract for an indefinite period",
+		labels: {
+			de: "Unbefristeter Vertrag",
+			en: "Contract for an indefinite period",
+			fr: "Contrat à durée indéterminée",
+			nl: "Overeenkomst voor een onbepaalde tijd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27862,6 +38764,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1111-1112-1113",
 		label: "Contract for a definite period",
+		labels: {
+			de: "Befristeter Vertrag",
+			en: "Contract for a definite period",
+			fr: "Contrat à durée déterminée",
+			nl: "Overeenkomst voor een bepaalde tijd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27877,6 +38785,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1111-1112-1113",
 		label: "Contract for a definite period",
+		labels: {
+			de: "Befristeter Vertrag",
+			en: "Contract for a definite period",
+			fr: "Contrat à durée déterminée",
+			nl: "Overeenkomst voor een bepaalde tijd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27893,6 +38807,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1111-1112-1113",
 		label: "Contract for a definite period",
+		labels: {
+			de: "Befristeter Vertrag",
+			en: "Contract for a definite period",
+			fr: "Contrat à durée déterminée",
+			nl: "Overeenkomst voor een bepaalde tijd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27909,6 +38829,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1111-1112-1113",
 		label: "Contract for a definite period",
+		labels: {
+			de: "Befristeter Vertrag",
+			en: "Contract for a definite period",
+			fr: "Contrat à durée déterminée",
+			nl: "Overeenkomst voor een bepaalde tijd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27926,6 +38852,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1111-1112-1113",
 		label: "Contract for a definite period",
+		labels: {
+			de: "Befristeter Vertrag",
+			en: "Contract for a definite period",
+			fr: "Contrat à durée déterminée",
+			nl: "Overeenkomst voor een bepaalde tijd",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27942,6 +38874,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1121-1122-1123",
 		label: "Contract for the execution of a specifically assigned work",
+		labels: {
+			de: "Vertrag zur Durchführung einer genau bestimmten Arbeit",
+			en: "Contract for the execution of a specifically assigned work",
+			fr: "Contrat pour l'exécution d'un travail nettement défini",
+			nl: "Overeenkomst voor een duidelijk omschreven werk",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27957,6 +38895,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1121-1122-1123",
 		label: "Contract for the execution of a specifically assigned work",
+		labels: {
+			de: "Vertrag zur Durchführung einer genau bestimmten Arbeit",
+			en: "Contract for the execution of a specifically assigned work",
+			fr: "Contrat pour l'exécution d'un travail nettement défini",
+			nl: "Overeenkomst voor een duidelijk omschreven werk",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27973,6 +38917,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1121-1122-1123",
 		label: "Contract for the execution of a specifically assigned work",
+		labels: {
+			de: "Vertrag zur Durchführung einer genau bestimmten Arbeit",
+			en: "Contract for the execution of a specifically assigned work",
+			fr: "Contrat pour l'exécution d'un travail nettement défini",
+			nl: "Overeenkomst voor een duidelijk omschreven werk",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -27989,6 +38939,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1121-1122-1123",
 		label: "Contract for the execution of a specifically assigned work",
+		labels: {
+			de: "Vertrag zur Durchführung einer genau bestimmten Arbeit",
+			en: "Contract for the execution of a specifically assigned work",
+			fr: "Contrat pour l'exécution d'un travail nettement défini",
+			nl: "Overeenkomst voor een duidelijk omschreven werk",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28006,6 +38962,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1121-1122-1123",
 		label: "Contract for the execution of a specifically assigned work",
+		labels: {
+			de: "Vertrag zur Durchführung einer genau bestimmten Arbeit",
+			en: "Contract for the execution of a specifically assigned work",
+			fr: "Contrat pour l'exécution d'un travail nettement défini",
+			nl: "Overeenkomst voor een duidelijk omschreven werk",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28022,6 +38984,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1131-1132-1133",
 		label: "Replacement contract",
+		labels: {
+			de: "Vertretungsvertrag",
+			en: "Replacement contract",
+			fr: "Contrat de remplacement",
+			nl: "Vervangingsovereenkomst",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28037,6 +39005,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1131-1132-1133",
 		label: "Replacement contract",
+		labels: {
+			de: "Vertretungsvertrag",
+			en: "Replacement contract",
+			fr: "Contrat de remplacement",
+			nl: "Vervangingsovereenkomst",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28053,6 +39027,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1131-1132-1133",
 		label: "Replacement contract",
+		labels: {
+			de: "Vertretungsvertrag",
+			en: "Replacement contract",
+			fr: "Contrat de remplacement",
+			nl: "Vervangingsovereenkomst",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28069,6 +39049,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1131-1132-1133",
 		label: "Replacement contract",
+		labels: {
+			de: "Vertretungsvertrag",
+			en: "Replacement contract",
+			fr: "Contrat de remplacement",
+			nl: "Vervangingsovereenkomst",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28086,6 +39072,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1131-1132-1133",
 		label: "Replacement contract",
+		labels: {
+			de: "Vertretungsvertrag",
+			en: "Replacement contract",
+			fr: "Contrat de remplacement",
+			nl: "Vervangingsovereenkomst",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28103,6 +39095,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12001-12002-12003",
 		label: "primary education",
+		labels: {
+			de: "Primarschulunterricht",
+			en: "primary education",
+			fr: "de niveau primaire",
+			nl: "lager onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28119,6 +39117,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12001-12002-12003",
 		label: "primary education",
+		labels: {
+			de: "Primarschulunterricht",
+			en: "primary education",
+			fr: "de niveau primaire",
+			nl: "lager onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28136,6 +39140,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12001-12002-12003",
 		label: "primary education",
+		labels: {
+			de: "Primarschulunterricht",
+			en: "primary education",
+			fr: "de niveau primaire",
+			nl: "lager onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28153,6 +39163,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12001-12002-12003",
 		label: "primary education",
+		labels: {
+			de: "Primarschulunterricht",
+			en: "primary education",
+			fr: "de niveau primaire",
+			nl: "lager onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28171,6 +39187,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12001-12002-12003",
 		label: "primary education",
+		labels: {
+			de: "Primarschulunterricht",
+			en: "primary education",
+			fr: "de niveau primaire",
+			nl: "lager onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28188,6 +39210,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12011-12012-12013",
 		label: "secondary education",
+		labels: {
+			de: "Sekundarschulunterricht",
+			en: "secondary education",
+			fr: "de niveau secondaire",
+			nl: "secundair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28204,6 +39232,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12011-12012-12013",
 		label: "secondary education",
+		labels: {
+			de: "Sekundarschulunterricht",
+			en: "secondary education",
+			fr: "de niveau secondaire",
+			nl: "secundair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28221,6 +39255,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12011-12012-12013",
 		label: "secondary education",
+		labels: {
+			de: "Sekundarschulunterricht",
+			en: "secondary education",
+			fr: "de niveau secondaire",
+			nl: "secundair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28238,6 +39278,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12011-12012-12013",
 		label: "secondary education",
+		labels: {
+			de: "Sekundarschulunterricht",
+			en: "secondary education",
+			fr: "de niveau secondaire",
+			nl: "secundair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28256,6 +39302,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12011-12012-12013",
 		label: "secondary education",
+		labels: {
+			de: "Sekundarschulunterricht",
+			en: "secondary education",
+			fr: "de niveau secondaire",
+			nl: "secundair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28273,6 +39325,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12021-12022-12023",
 		label: "higher non-university education",
+		labels: {
+			de: "Nichtuniversitärer Hochschulunterricht",
+			en: "higher non-university education",
+			fr: "de niveau supérieur non universitaire",
+			nl: "hoger niet-universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28289,6 +39347,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12021-12022-12023",
 		label: "higher non-university education",
+		labels: {
+			de: "Nichtuniversitärer Hochschulunterricht",
+			en: "higher non-university education",
+			fr: "de niveau supérieur non universitaire",
+			nl: "hoger niet-universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28306,6 +39370,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12021-12022-12023",
 		label: "higher non-university education",
+		labels: {
+			de: "Nichtuniversitärer Hochschulunterricht",
+			en: "higher non-university education",
+			fr: "de niveau supérieur non universitaire",
+			nl: "hoger niet-universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28323,6 +39393,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12021-12022-12023",
 		label: "higher non-university education",
+		labels: {
+			de: "Nichtuniversitärer Hochschulunterricht",
+			en: "higher non-university education",
+			fr: "de niveau supérieur non universitaire",
+			nl: "hoger niet-universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28341,6 +39417,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12021-12022-12023",
 		label: "higher non-university education",
+		labels: {
+			de: "Nichtuniversitärer Hochschulunterricht",
+			en: "higher non-university education",
+			fr: "de niveau supérieur non universitaire",
+			nl: "hoger niet-universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28358,6 +39440,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12031-12032-12033",
 		label: "university education",
+		labels: {
+			de: "Universitätsunterricht",
+			en: "university education",
+			fr: "de niveau universitaire",
+			nl: "universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28374,6 +39462,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12031-12032-12033",
 		label: "university education",
+		labels: {
+			de: "Universitätsunterricht",
+			en: "university education",
+			fr: "de niveau universitaire",
+			nl: "universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28391,6 +39485,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12031-12032-12033",
 		label: "university education",
+		labels: {
+			de: "Universitätsunterricht",
+			en: "university education",
+			fr: "de niveau universitaire",
+			nl: "universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28408,6 +39508,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12031-12032-12033",
 		label: "university education",
+		labels: {
+			de: "Universitätsunterricht",
+			en: "university education",
+			fr: "de niveau universitaire",
+			nl: "universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28426,6 +39532,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12031-12032-12033",
 		label: "university education",
+		labels: {
+			de: "Universitätsunterricht",
+			en: "university education",
+			fr: "de niveau universitaire",
+			nl: "universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28442,6 +39554,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1201-1202-1203",
 		label: "Men",
+		labels: {
+			de: "Männer",
+			en: "Men",
+			fr: "Hommes",
+			nl: "Mannen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28457,6 +39575,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1201-1202-1203",
 		label: "Men",
+		labels: {
+			de: "Männer",
+			en: "Men",
+			fr: "Hommes",
+			nl: "Mannen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28473,6 +39597,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1201-1202-1203",
 		label: "Men",
+		labels: {
+			de: "Männer",
+			en: "Men",
+			fr: "Hommes",
+			nl: "Mannen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28489,6 +39619,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1201-1202-1203",
 		label: "Men",
+		labels: {
+			de: "Männer",
+			en: "Men",
+			fr: "Hommes",
+			nl: "Mannen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28506,6 +39642,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1201-1202-1203",
 		label: "Men",
+		labels: {
+			de: "Männer",
+			en: "Men",
+			fr: "Hommes",
+			nl: "Mannen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28523,6 +39665,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12101-12102-12103",
 		label: "primary education",
+		labels: {
+			de: "Primarschulunterricht",
+			en: "primary education",
+			fr: "de niveau primaire",
+			nl: "lager onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28539,6 +39687,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12101-12102-12103",
 		label: "primary education",
+		labels: {
+			de: "Primarschulunterricht",
+			en: "primary education",
+			fr: "de niveau primaire",
+			nl: "lager onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28556,6 +39710,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12101-12102-12103",
 		label: "primary education",
+		labels: {
+			de: "Primarschulunterricht",
+			en: "primary education",
+			fr: "de niveau primaire",
+			nl: "lager onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28573,6 +39733,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12101-12102-12103",
 		label: "primary education",
+		labels: {
+			de: "Primarschulunterricht",
+			en: "primary education",
+			fr: "de niveau primaire",
+			nl: "lager onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28591,6 +39757,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12101-12102-12103",
 		label: "primary education",
+		labels: {
+			de: "Primarschulunterricht",
+			en: "primary education",
+			fr: "de niveau primaire",
+			nl: "lager onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28608,6 +39780,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12111-12112-12113",
 		label: "secondary education",
+		labels: {
+			de: "Sekundarschulunterricht",
+			en: "secondary education",
+			fr: "de niveau secondaire",
+			nl: "secundair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28624,6 +39802,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12111-12112-12113",
 		label: "secondary education",
+		labels: {
+			de: "Sekundarschulunterricht",
+			en: "secondary education",
+			fr: "de niveau secondaire",
+			nl: "secundair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28641,6 +39825,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12111-12112-12113",
 		label: "secondary education",
+		labels: {
+			de: "Sekundarschulunterricht",
+			en: "secondary education",
+			fr: "de niveau secondaire",
+			nl: "secundair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28658,6 +39848,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12111-12112-12113",
 		label: "secondary education",
+		labels: {
+			de: "Sekundarschulunterricht",
+			en: "secondary education",
+			fr: "de niveau secondaire",
+			nl: "secundair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28676,6 +39872,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12111-12112-12113",
 		label: "secondary education",
+		labels: {
+			de: "Sekundarschulunterricht",
+			en: "secondary education",
+			fr: "de niveau secondaire",
+			nl: "secundair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28693,6 +39895,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12121-12122-12123",
 		label: "higher non-university education",
+		labels: {
+			de: "Nichtuniversitärer Hochschulunterricht",
+			en: "higher non-university education",
+			fr: "de niveau supérieur non universitaire",
+			nl: "hoger niet-universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28709,6 +39917,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12121-12122-12123",
 		label: "higher non-university education",
+		labels: {
+			de: "Nichtuniversitärer Hochschulunterricht",
+			en: "higher non-university education",
+			fr: "de niveau supérieur non universitaire",
+			nl: "hoger niet-universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28726,6 +39940,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12121-12122-12123",
 		label: "higher non-university education",
+		labels: {
+			de: "Nichtuniversitärer Hochschulunterricht",
+			en: "higher non-university education",
+			fr: "de niveau supérieur non universitaire",
+			nl: "hoger niet-universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28743,6 +39963,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12121-12122-12123",
 		label: "higher non-university education",
+		labels: {
+			de: "Nichtuniversitärer Hochschulunterricht",
+			en: "higher non-university education",
+			fr: "de niveau supérieur non universitaire",
+			nl: "hoger niet-universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28761,6 +39987,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12121-12122-12123",
 		label: "higher non-university education",
+		labels: {
+			de: "Nichtuniversitärer Hochschulunterricht",
+			en: "higher non-university education",
+			fr: "de niveau supérieur non universitaire",
+			nl: "hoger niet-universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28778,6 +40010,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12131-12132-12133",
 		label: "university education",
+		labels: {
+			de: "Universitätsunterricht",
+			en: "university education",
+			fr: "de niveau universitaire",
+			nl: "universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28794,6 +40032,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12131-12132-12133",
 		label: "university education",
+		labels: {
+			de: "Universitätsunterricht",
+			en: "university education",
+			fr: "de niveau universitaire",
+			nl: "universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28811,6 +40055,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12131-12132-12133",
 		label: "university education",
+		labels: {
+			de: "Universitätsunterricht",
+			en: "university education",
+			fr: "de niveau universitaire",
+			nl: "universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28828,6 +40078,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12131-12132-12133",
 		label: "university education",
+		labels: {
+			de: "Universitätsunterricht",
+			en: "university education",
+			fr: "de niveau universitaire",
+			nl: "universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28846,6 +40102,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "12131-12132-12133",
 		label: "university education",
+		labels: {
+			de: "Universitätsunterricht",
+			en: "university education",
+			fr: "de niveau universitaire",
+			nl: "universitair onderwijs",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28862,6 +40124,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1211-1212-1213",
 		label: "Women",
+		labels: {
+			de: "Frauen",
+			en: "Women",
+			fr: "Femmes",
+			nl: "Vrouwen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28877,6 +40145,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1211-1212-1213",
 		label: "Women",
+		labels: {
+			de: "Frauen",
+			en: "Women",
+			fr: "Femmes",
+			nl: "Vrouwen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28893,6 +40167,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1211-1212-1213",
 		label: "Women",
+		labels: {
+			de: "Frauen",
+			en: "Women",
+			fr: "Femmes",
+			nl: "Vrouwen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28909,6 +40189,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1211-1212-1213",
 		label: "Women",
+		labels: {
+			de: "Frauen",
+			en: "Women",
+			fr: "Femmes",
+			nl: "Vrouwen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28926,6 +40212,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1211-1212-1213",
 		label: "Women",
+		labels: {
+			de: "Frauen",
+			en: "Women",
+			fr: "Femmes",
+			nl: "Vrouwen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28942,6 +40234,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1301-1302-1303",
 		label: "Management staff",
+		labels: {
+			de: "Führungskräfte",
+			en: "Management staff",
+			fr: "Personnel de direction",
+			nl: "Directiepersoneel",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28957,6 +40255,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1301-1302-1303",
 		label: "Management staff",
+		labels: {
+			de: "Führungskräfte",
+			en: "Management staff",
+			fr: "Personnel de direction",
+			nl: "Directiepersoneel",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28973,6 +40277,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1301-1302-1303",
 		label: "Management staff",
+		labels: {
+			de: "Führungskräfte",
+			en: "Management staff",
+			fr: "Personnel de direction",
+			nl: "Directiepersoneel",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -28989,6 +40299,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1301-1302-1303",
 		label: "Management staff",
+		labels: {
+			de: "Führungskräfte",
+			en: "Management staff",
+			fr: "Personnel de direction",
+			nl: "Directiepersoneel",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29006,6 +40322,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1301-1302-1303",
 		label: "Management staff",
+		labels: {
+			de: "Führungskräfte",
+			en: "Management staff",
+			fr: "Personnel de direction",
+			nl: "Directiepersoneel",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29022,6 +40344,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1341-1342-1343",
 		label: "Employees",
+		labels: {
+			de: "Angestellte",
+			en: "Employees",
+			fr: "Employés",
+			nl: "Bedienden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29037,6 +40365,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1341-1342-1343",
 		label: "Employees",
+		labels: {
+			de: "Angestellte",
+			en: "Employees",
+			fr: "Employés",
+			nl: "Bedienden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29053,6 +40387,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1341-1342-1343",
 		label: "Employees",
+		labels: {
+			de: "Angestellte",
+			en: "Employees",
+			fr: "Employés",
+			nl: "Bedienden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29069,6 +40409,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1341-1342-1343",
 		label: "Employees",
+		labels: {
+			de: "Angestellte",
+			en: "Employees",
+			fr: "Employés",
+			nl: "Bedienden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29086,6 +40432,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1341-1342-1343",
 		label: "Employees",
+		labels: {
+			de: "Angestellte",
+			en: "Employees",
+			fr: "Employés",
+			nl: "Bedienden",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29102,6 +40454,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1321-1322-1323",
 		label: "Workers",
+		labels: {
+			de: "Arbeiter",
+			en: "Workers",
+			fr: "Ouvriers",
+			nl: "Arbeiders",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29117,6 +40475,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1321-1322-1323",
 		label: "Workers",
+		labels: {
+			de: "Arbeiter",
+			en: "Workers",
+			fr: "Ouvriers",
+			nl: "Arbeiders",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29133,6 +40497,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1321-1322-1323",
 		label: "Workers",
+		labels: {
+			de: "Arbeiter",
+			en: "Workers",
+			fr: "Ouvriers",
+			nl: "Arbeiders",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29149,6 +40519,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1321-1322-1323",
 		label: "Workers",
+		labels: {
+			de: "Arbeiter",
+			en: "Workers",
+			fr: "Ouvriers",
+			nl: "Arbeiders",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29166,6 +40542,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1321-1322-1323",
 		label: "Workers",
+		labels: {
+			de: "Arbeiter",
+			en: "Workers",
+			fr: "Ouvriers",
+			nl: "Arbeiders",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29182,6 +40564,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1331-1332-1333",
 		label: "Others",
+		labels: {
+			de: "Sonstige",
+			en: "Others",
+			fr: "Autres",
+			nl: "Andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29197,6 +40585,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1331-1332-1333",
 		label: "Others",
+		labels: {
+			de: "Sonstige",
+			en: "Others",
+			fr: "Autres",
+			nl: "Andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29213,6 +40607,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1331-1332-1333",
 		label: "Others",
+		labels: {
+			de: "Sonstige",
+			en: "Others",
+			fr: "Autres",
+			nl: "Andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29229,6 +40629,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1331-1332-1333",
 		label: "Others",
+		labels: {
+			de: "Sonstige",
+			en: "Others",
+			fr: "Autres",
+			nl: "Andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29246,6 +40652,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1331-1332-1333",
 		label: "Others",
+		labels: {
+			de: "Sonstige",
+			en: "Others",
+			fr: "Autres",
+			nl: "Andere",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29260,6 +40672,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1501-1502",
 		label: "Average number of persons employed",
+		labels: {
+			de: "Durchschnittliche Beschäftigtenzahl",
+			en: "Average number of persons employed",
+			fr: "Nombre moyen de personnes occupées",
+			nl: "Gemiddeld aantal tewerkgestelde personen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29273,6 +40691,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1501-1502",
 		label: "Average number of persons employed",
+		labels: {
+			de: "Durchschnittliche Beschäftigtenzahl",
+			en: "Average number of persons employed",
+			fr: "Nombre moyen de personnes occupées",
+			nl: "Gemiddeld aantal tewerkgestelde personen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29287,6 +40711,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1501-1502",
 		label: "Average number of persons employed",
+		labels: {
+			de: "Durchschnittliche Beschäftigtenzahl",
+			en: "Average number of persons employed",
+			fr: "Nombre moyen de personnes occupées",
+			nl: "Gemiddeld aantal tewerkgestelde personen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29301,6 +40731,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1501-1502",
 		label: "Average number of persons employed",
+		labels: {
+			de: "Durchschnittliche Beschäftigtenzahl",
+			en: "Average number of persons employed",
+			fr: "Nombre moyen de personnes occupées",
+			nl: "Gemiddeld aantal tewerkgestelde personen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29315,6 +40751,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1501-1502",
 		label: "Average number of persons employed",
+		labels: {
+			de: "Durchschnittliche Beschäftigtenzahl",
+			en: "Average number of persons employed",
+			fr: "Nombre moyen de personnes occupées",
+			nl: "Gemiddeld aantal tewerkgestelde personen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29329,6 +40771,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1501-1502",
 		label: "Average number of persons employed",
+		labels: {
+			de: "Durchschnittliche Beschäftigtenzahl",
+			en: "Average number of persons employed",
+			fr: "Nombre moyen de personnes occupées",
+			nl: "Gemiddeld aantal tewerkgestelde personen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29343,6 +40791,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1501-1502",
 		label: "Average number of persons employed",
+		labels: {
+			de: "Durchschnittliche Beschäftigtenzahl",
+			en: "Average number of persons employed",
+			fr: "Nombre moyen de personnes occupées",
+			nl: "Gemiddeld aantal tewerkgestelde personen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29358,6 +40812,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1501-1502",
 		label: "Average number of persons employed",
+		labels: {
+			de: "Durchschnittliche Beschäftigtenzahl",
+			en: "Average number of persons employed",
+			fr: "Nombre moyen de personnes occupées",
+			nl: "Gemiddeld aantal tewerkgestelde personen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29372,6 +40832,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1501-1502",
 		label: "Average number of persons employed",
+		labels: {
+			de: "Durchschnittliche Beschäftigtenzahl",
+			en: "Average number of persons employed",
+			fr: "Nombre moyen de personnes occupées",
+			nl: "Gemiddeld aantal tewerkgestelde personen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29386,6 +40852,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1501-1502",
 		label: "Average number of persons employed",
+		labels: {
+			de: "Durchschnittliche Beschäftigtenzahl",
+			en: "Average number of persons employed",
+			fr: "Nombre moyen de personnes occupées",
+			nl: "Gemiddeld aantal tewerkgestelde personen",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29400,6 +40872,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1511-1512",
 		label: "Number of hours actually worked",
+		labels: {
+			de: "Anzahl der tatsächlich geleisteten Arbeitsstunden",
+			en: "Number of hours actually worked",
+			fr: "Nombre d'heures effectivement prestées",
+			nl: "Aantal daadwerkelijk gepresteerde uren",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29413,6 +40891,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1511-1512",
 		label: "Number of hours actually worked",
+		labels: {
+			de: "Anzahl der tatsächlich geleisteten Arbeitsstunden",
+			en: "Number of hours actually worked",
+			fr: "Nombre d'heures effectivement prestées",
+			nl: "Aantal daadwerkelijk gepresteerde uren",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29427,6 +40911,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1511-1512",
 		label: "Number of hours actually worked",
+		labels: {
+			de: "Anzahl der tatsächlich geleisteten Arbeitsstunden",
+			en: "Number of hours actually worked",
+			fr: "Nombre d'heures effectivement prestées",
+			nl: "Aantal daadwerkelijk gepresteerde uren",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29441,6 +40931,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1511-1512",
 		label: "Number of hours actually worked",
+		labels: {
+			de: "Anzahl der tatsächlich geleisteten Arbeitsstunden",
+			en: "Number of hours actually worked",
+			fr: "Nombre d'heures effectivement prestées",
+			nl: "Aantal daadwerkelijk gepresteerde uren",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29455,6 +40951,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1511-1512",
 		label: "Number of hours actually worked",
+		labels: {
+			de: "Anzahl der tatsächlich geleisteten Arbeitsstunden",
+			en: "Number of hours actually worked",
+			fr: "Nombre d'heures effectivement prestées",
+			nl: "Aantal daadwerkelijk gepresteerde uren",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29469,6 +40971,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1511-1512",
 		label: "Number of hours actually worked",
+		labels: {
+			de: "Anzahl der tatsächlich geleisteten Arbeitsstunden",
+			en: "Number of hours actually worked",
+			fr: "Nombre d'heures effectivement prestées",
+			nl: "Aantal daadwerkelijk gepresteerde uren",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29483,6 +40991,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1511-1512",
 		label: "Number of hours actually worked",
+		labels: {
+			de: "Anzahl der tatsächlich geleisteten Arbeitsstunden",
+			en: "Number of hours actually worked",
+			fr: "Nombre d'heures effectivement prestées",
+			nl: "Aantal daadwerkelijk gepresteerde uren",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29498,6 +41012,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1511-1512",
 		label: "Number of hours actually worked",
+		labels: {
+			de: "Anzahl der tatsächlich geleisteten Arbeitsstunden",
+			en: "Number of hours actually worked",
+			fr: "Nombre d'heures effectivement prestées",
+			nl: "Aantal daadwerkelijk gepresteerde uren",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29512,6 +41032,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1511-1512",
 		label: "Number of hours actually worked",
+		labels: {
+			de: "Anzahl der tatsächlich geleisteten Arbeitsstunden",
+			en: "Number of hours actually worked",
+			fr: "Nombre d'heures effectivement prestées",
+			nl: "Aantal daadwerkelijk gepresteerde uren",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29526,6 +41052,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1511-1512",
 		label: "Number of hours actually worked",
+		labels: {
+			de: "Anzahl der tatsächlich geleisteten Arbeitsstunden",
+			en: "Number of hours actually worked",
+			fr: "Nombre d'heures effectivement prestées",
+			nl: "Aantal daadwerkelijk gepresteerde uren",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29539,6 +41071,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1521-1522",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Aufwand für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Frais pour l'association ou la fondation",
+			nl: "Kosten voor de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29551,6 +41089,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1521-1522",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Aufwand für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Frais pour l'association ou la fondation",
+			nl: "Kosten voor de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29564,6 +41108,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1521-1522",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Aufwand für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Frais pour l'association ou la fondation",
+			nl: "Kosten voor de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29577,6 +41127,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1521-1522",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Aufwand für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Frais pour l'association ou la fondation",
+			nl: "Kosten voor de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29590,6 +41146,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1521-1522",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Aufwand für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Frais pour l'association ou la fondation",
+			nl: "Kosten voor de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29603,6 +41165,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1521-1522",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Aufwand für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Frais pour l'association ou la fondation",
+			nl: "Kosten voor de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29616,6 +41184,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1521-1522",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Aufwand für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Frais pour l'association ou la fondation",
+			nl: "Kosten voor de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29630,6 +41204,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1521-1522",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Aufwand für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Frais pour l'association ou la fondation",
+			nl: "Kosten voor de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29643,6 +41223,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1521-1522",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Aufwand für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Frais pour l'association ou la fondation",
+			nl: "Kosten voor de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29656,6 +41242,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "1521-1522",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Aufwand für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Frais pour l'association ou la fondation",
+			nl: "Kosten voor de vereniging of stichting",
+		},
 		currentPeriod: "prd:m1",
 	},
 	{
@@ -29671,6 +41263,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2051-2052-2053",
 		label: "Number of employees for whom the association or the foundation submitted a DIMONA declaration or who have been recorded in the general personnel register during the financial year",
+		labels: {
+			de: "Anzahl der Arbeitnehmer, für die die Vereinigung oder Stiftung eine DIMONA-Meldung eingereicht hat oder die im Laufe des Geschäftsjahres in das allgemeine Personalregister eingetragen wurden",
+			en: "Number of employees for whom the association or the foundation submitted a DIMONA declaration or who have been recorded in the general personnel register during the financial year",
+			fr: "Nombre de travailleurs pour lesquels l'association ou la fondation a introduit une déclaration DIMONA ou qui ont été inscrits au registre général du personnel au cours de l'exercice",
+			nl: "Aantal werknemers waarvoor de vereniging of stichting tijdens het boekjaar een DIMONA-verklaring heeft ingediend of die tijdens het boekjaar werden ingeschreven in het algemeen personeelsregister",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29684,6 +41282,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2051-2052-2053",
 		label: "Number of employees for whom the association or the foundation submitted a DIMONA declaration or who have been recorded in the general personnel register during the financial year",
+		labels: {
+			de: "Anzahl der Arbeitnehmer, für die die Vereinigung oder Stiftung eine DIMONA-Meldung eingereicht hat oder die im Laufe des Geschäftsjahres in das allgemeine Personalregister eingetragen wurden",
+			en: "Number of employees for whom the association or the foundation submitted a DIMONA declaration or who have been recorded in the general personnel register during the financial year",
+			fr: "Nombre de travailleurs pour lesquels l'association ou la fondation a introduit une déclaration DIMONA ou qui ont été inscrits au registre général du personnel au cours de l'exercice",
+			nl: "Aantal werknemers waarvoor de vereniging of stichting tijdens het boekjaar een DIMONA-verklaring heeft ingediend of die tijdens het boekjaar werden ingeschreven in het algemeen personeelsregister",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29698,6 +41302,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2051-2052-2053",
 		label: "Number of employees for whom the association or the foundation submitted a DIMONA declaration or who have been recorded in the general personnel register during the financial year",
+		labels: {
+			de: "Anzahl der Arbeitnehmer, für die die Vereinigung oder Stiftung eine DIMONA-Meldung eingereicht hat oder die im Laufe des Geschäftsjahres in das allgemeine Personalregister eingetragen wurden",
+			en: "Number of employees for whom the association or the foundation submitted a DIMONA declaration or who have been recorded in the general personnel register during the financial year",
+			fr: "Nombre de travailleurs pour lesquels l'association ou la fondation a introduit une déclaration DIMONA ou qui ont été inscrits au registre général du personnel au cours de l'exercice",
+			nl: "Aantal werknemers waarvoor de vereniging of stichting tijdens het boekjaar een DIMONA-verklaring heeft ingediend of die tijdens het boekjaar werden ingeschreven in het algemeen personeelsregister",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29712,6 +41322,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2051-2052-2053",
 		label: "Number of employees for whom the association or the foundation submitted a DIMONA declaration or who have been recorded in the general personnel register during the financial year",
+		labels: {
+			de: "Anzahl der Arbeitnehmer, für die die Vereinigung oder Stiftung eine DIMONA-Meldung eingereicht hat oder die im Laufe des Geschäftsjahres in das allgemeine Personalregister eingetragen wurden",
+			en: "Number of employees for whom the association or the foundation submitted a DIMONA declaration or who have been recorded in the general personnel register during the financial year",
+			fr: "Nombre de travailleurs pour lesquels l'association ou la fondation a introduit une déclaration DIMONA ou qui ont été inscrits au registre général du personnel au cours de l'exercice",
+			nl: "Aantal werknemers waarvoor de vereniging of stichting tijdens het boekjaar een DIMONA-verklaring heeft ingediend of die tijdens het boekjaar werden ingeschreven in het algemeen personeelsregister",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29727,6 +41343,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2051-2052-2053",
 		label: "Number of employees for whom the association or the foundation submitted a DIMONA declaration or who have been recorded in the general personnel register during the financial year",
+		labels: {
+			de: "Anzahl der Arbeitnehmer, für die die Vereinigung oder Stiftung eine DIMONA-Meldung eingereicht hat oder die im Laufe des Geschäftsjahres in das allgemeine Personalregister eingetragen wurden",
+			en: "Number of employees for whom the association or the foundation submitted a DIMONA declaration or who have been recorded in the general personnel register during the financial year",
+			fr: "Nombre de travailleurs pour lesquels l'association ou la fondation a introduit une déclaration DIMONA ou qui ont été inscrits au registre général du personnel au cours de l'exercice",
+			nl: "Aantal werknemers waarvoor de vereniging of stichting tijdens het boekjaar een DIMONA-verklaring heeft ingediend of die tijdens het boekjaar werden ingeschreven in het algemeen personeelsregister",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29742,6 +41364,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2101-2102-2103",
 		label: "Contract for an indefinite period",
+		labels: {
+			de: "Unbefristeter Vertrag",
+			en: "Contract for an indefinite period",
+			fr: "Contrat à durée indéterminée",
+			nl: "Overeenkomst voor een onbepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29756,6 +41384,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2101-2102-2103",
 		label: "Contract for an indefinite period",
+		labels: {
+			de: "Unbefristeter Vertrag",
+			en: "Contract for an indefinite period",
+			fr: "Contrat à durée indéterminée",
+			nl: "Overeenkomst voor een onbepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29771,6 +41405,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2101-2102-2103",
 		label: "Contract for an indefinite period",
+		labels: {
+			de: "Unbefristeter Vertrag",
+			en: "Contract for an indefinite period",
+			fr: "Contrat à durée indéterminée",
+			nl: "Overeenkomst voor een onbepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29786,6 +41426,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2101-2102-2103",
 		label: "Contract for an indefinite period",
+		labels: {
+			de: "Unbefristeter Vertrag",
+			en: "Contract for an indefinite period",
+			fr: "Contrat à durée indéterminée",
+			nl: "Overeenkomst voor een onbepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29802,6 +41448,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2101-2102-2103",
 		label: "Contract for an indefinite period",
+		labels: {
+			de: "Unbefristeter Vertrag",
+			en: "Contract for an indefinite period",
+			fr: "Contrat à durée indéterminée",
+			nl: "Overeenkomst voor een onbepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29817,6 +41469,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2111-2112-2113",
 		label: "Contract for a definite period",
+		labels: {
+			de: "Befristeter Vertrag",
+			en: "Contract for a definite period",
+			fr: "Contrat à durée déterminée",
+			nl: "Overeenkomst voor een bepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29831,6 +41489,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2111-2112-2113",
 		label: "Contract for a definite period",
+		labels: {
+			de: "Befristeter Vertrag",
+			en: "Contract for a definite period",
+			fr: "Contrat à durée déterminée",
+			nl: "Overeenkomst voor een bepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29846,6 +41510,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2111-2112-2113",
 		label: "Contract for a definite period",
+		labels: {
+			de: "Befristeter Vertrag",
+			en: "Contract for a definite period",
+			fr: "Contrat à durée déterminée",
+			nl: "Overeenkomst voor een bepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29861,6 +41531,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2111-2112-2113",
 		label: "Contract for a definite period",
+		labels: {
+			de: "Befristeter Vertrag",
+			en: "Contract for a definite period",
+			fr: "Contrat à durée déterminée",
+			nl: "Overeenkomst voor een bepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29877,6 +41553,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2111-2112-2113",
 		label: "Contract for a definite period",
+		labels: {
+			de: "Befristeter Vertrag",
+			en: "Contract for a definite period",
+			fr: "Contrat à durée déterminée",
+			nl: "Overeenkomst voor een bepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29892,6 +41574,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2121-2122-2123",
 		label: "Contract for the execution of a specifically assigned work",
+		labels: {
+			de: "Vertrag zur Durchführung einer genau bestimmten Arbeit",
+			en: "Contract for the execution of a specifically assigned work",
+			fr: "Contrat pour l'exécution d'un travail nettement défini",
+			nl: "Overeenkomst voor een duidelijk omschreven werk",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29906,6 +41594,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2121-2122-2123",
 		label: "Contract for the execution of a specifically assigned work",
+		labels: {
+			de: "Vertrag zur Durchführung einer genau bestimmten Arbeit",
+			en: "Contract for the execution of a specifically assigned work",
+			fr: "Contrat pour l'exécution d'un travail nettement défini",
+			nl: "Overeenkomst voor een duidelijk omschreven werk",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29921,6 +41615,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2121-2122-2123",
 		label: "Contract for the execution of a specifically assigned work",
+		labels: {
+			de: "Vertrag zur Durchführung einer genau bestimmten Arbeit",
+			en: "Contract for the execution of a specifically assigned work",
+			fr: "Contrat pour l'exécution d'un travail nettement défini",
+			nl: "Overeenkomst voor een duidelijk omschreven werk",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29936,6 +41636,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2121-2122-2123",
 		label: "Contract for the execution of a specifically assigned work",
+		labels: {
+			de: "Vertrag zur Durchführung einer genau bestimmten Arbeit",
+			en: "Contract for the execution of a specifically assigned work",
+			fr: "Contrat pour l'exécution d'un travail nettement défini",
+			nl: "Overeenkomst voor een duidelijk omschreven werk",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29952,6 +41658,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2121-2122-2123",
 		label: "Contract for the execution of a specifically assigned work",
+		labels: {
+			de: "Vertrag zur Durchführung einer genau bestimmten Arbeit",
+			en: "Contract for the execution of a specifically assigned work",
+			fr: "Contrat pour l'exécution d'un travail nettement défini",
+			nl: "Overeenkomst voor een duidelijk omschreven werk",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29967,6 +41679,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2131-2132-2133",
 		label: "Replacement contract",
+		labels: {
+			de: "Vertretungsvertrag",
+			en: "Replacement contract",
+			fr: "Contrat de remplacement",
+			nl: "Vervangingsovereenkomst",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29981,6 +41699,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2131-2132-2133",
 		label: "Replacement contract",
+		labels: {
+			de: "Vertretungsvertrag",
+			en: "Replacement contract",
+			fr: "Contrat de remplacement",
+			nl: "Vervangingsovereenkomst",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -29996,6 +41720,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2131-2132-2133",
 		label: "Replacement contract",
+		labels: {
+			de: "Vertretungsvertrag",
+			en: "Replacement contract",
+			fr: "Contrat de remplacement",
+			nl: "Vervangingsovereenkomst",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30011,6 +41741,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2131-2132-2133",
 		label: "Replacement contract",
+		labels: {
+			de: "Vertretungsvertrag",
+			en: "Replacement contract",
+			fr: "Contrat de remplacement",
+			nl: "Vervangingsovereenkomst",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30027,6 +41763,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "2131-2132-2133",
 		label: "Replacement contract",
+		labels: {
+			de: "Vertretungsvertrag",
+			en: "Replacement contract",
+			fr: "Contrat de remplacement",
+			nl: "Vervangingsovereenkomst",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30041,6 +41783,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3051-3052-3053",
 		label: "Number of employees whose contract-termination date has been entered in DIMONA declaration or in the general personnel register during the financial year",
+		labels: {
+			de: "Anzahl der Arbeitnehmer, bei denen das Datum der Beendigung des Arbeitsverhältnisses in einer DIMONA-Meldung steht oder im Laufe des Geschäftsjahres in das allgemeine Personalregister eingetragen wurde",
+			en: "Number of employees whose contract-termination date has been entered in DIMONA declaration or in the general personnel register during the financial year",
+			fr: "Nombre de travailleurs dont la date de fin de contrat a été inscrite dans une déclaration DIMONA ou au registre général du personnel au cours de l'exercice",
+			nl: "Aantal werknemers met een in de DIMONA-verklaring aangegeven of een in het algemeen personeelsregister opgetekende datum waarop hun overeenkomst tijdens het boekjaar een einde nam",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30054,6 +41802,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3051-3052-3053",
 		label: "Number of employees whose contract-termination date has been entered in DIMONA declaration or in the general personnel register during the financial year",
+		labels: {
+			de: "Anzahl der Arbeitnehmer, bei denen das Datum der Beendigung des Arbeitsverhältnisses in einer DIMONA-Meldung steht oder im Laufe des Geschäftsjahres in das allgemeine Personalregister eingetragen wurde",
+			en: "Number of employees whose contract-termination date has been entered in DIMONA declaration or in the general personnel register during the financial year",
+			fr: "Nombre de travailleurs dont la date de fin de contrat a été inscrite dans une déclaration DIMONA ou au registre général du personnel au cours de l'exercice",
+			nl: "Aantal werknemers met een in de DIMONA-verklaring aangegeven of een in het algemeen personeelsregister opgetekende datum waarop hun overeenkomst tijdens het boekjaar een einde nam",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30068,6 +41822,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3051-3052-3053",
 		label: "Number of employees whose contract-termination date has been entered in DIMONA declaration or in the general personnel register during the financial year",
+		labels: {
+			de: "Anzahl der Arbeitnehmer, bei denen das Datum der Beendigung des Arbeitsverhältnisses in einer DIMONA-Meldung steht oder im Laufe des Geschäftsjahres in das allgemeine Personalregister eingetragen wurde",
+			en: "Number of employees whose contract-termination date has been entered in DIMONA declaration or in the general personnel register during the financial year",
+			fr: "Nombre de travailleurs dont la date de fin de contrat a été inscrite dans une déclaration DIMONA ou au registre général du personnel au cours de l'exercice",
+			nl: "Aantal werknemers met een in de DIMONA-verklaring aangegeven of een in het algemeen personeelsregister opgetekende datum waarop hun overeenkomst tijdens het boekjaar een einde nam",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30082,6 +41842,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3051-3052-3053",
 		label: "Number of employees whose contract-termination date has been entered in DIMONA declaration or in the general personnel register during the financial year",
+		labels: {
+			de: "Anzahl der Arbeitnehmer, bei denen das Datum der Beendigung des Arbeitsverhältnisses in einer DIMONA-Meldung steht oder im Laufe des Geschäftsjahres in das allgemeine Personalregister eingetragen wurde",
+			en: "Number of employees whose contract-termination date has been entered in DIMONA declaration or in the general personnel register during the financial year",
+			fr: "Nombre de travailleurs dont la date de fin de contrat a été inscrite dans une déclaration DIMONA ou au registre général du personnel au cours de l'exercice",
+			nl: "Aantal werknemers met een in de DIMONA-verklaring aangegeven of een in het algemeen personeelsregister opgetekende datum waarop hun overeenkomst tijdens het boekjaar een einde nam",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30097,6 +41863,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3051-3052-3053",
 		label: "Number of employees whose contract-termination date has been entered in DIMONA declaration or in the general personnel register during the financial year",
+		labels: {
+			de: "Anzahl der Arbeitnehmer, bei denen das Datum der Beendigung des Arbeitsverhältnisses in einer DIMONA-Meldung steht oder im Laufe des Geschäftsjahres in das allgemeine Personalregister eingetragen wurde",
+			en: "Number of employees whose contract-termination date has been entered in DIMONA declaration or in the general personnel register during the financial year",
+			fr: "Nombre de travailleurs dont la date de fin de contrat a été inscrite dans une déclaration DIMONA ou au registre général du personnel au cours de l'exercice",
+			nl: "Aantal werknemers met een in de DIMONA-verklaring aangegeven of een in het algemeen personeelsregister opgetekende datum waarop hun overeenkomst tijdens het boekjaar een einde nam",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30112,6 +41884,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3101-3102-3103",
 		label: "Contract for an indefinite period",
+		labels: {
+			de: "Unbefristeter Vertrag",
+			en: "Contract for an indefinite period",
+			fr: "Contrat à durée indéterminée",
+			nl: "Overeenkomst voor een onbepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30126,6 +41904,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3101-3102-3103",
 		label: "Contract for an indefinite period",
+		labels: {
+			de: "Unbefristeter Vertrag",
+			en: "Contract for an indefinite period",
+			fr: "Contrat à durée indéterminée",
+			nl: "Overeenkomst voor een onbepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30141,6 +41925,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3101-3102-3103",
 		label: "Contract for an indefinite period",
+		labels: {
+			de: "Unbefristeter Vertrag",
+			en: "Contract for an indefinite period",
+			fr: "Contrat à durée indéterminée",
+			nl: "Overeenkomst voor een onbepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30156,6 +41946,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3101-3102-3103",
 		label: "Contract for an indefinite period",
+		labels: {
+			de: "Unbefristeter Vertrag",
+			en: "Contract for an indefinite period",
+			fr: "Contrat à durée indéterminée",
+			nl: "Overeenkomst voor een onbepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30172,6 +41968,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3101-3102-3103",
 		label: "Contract for an indefinite period",
+		labels: {
+			de: "Unbefristeter Vertrag",
+			en: "Contract for an indefinite period",
+			fr: "Contrat à durée indéterminée",
+			nl: "Overeenkomst voor een onbepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30187,6 +41989,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3111-3112-3113",
 		label: "Contract for a definite period",
+		labels: {
+			de: "Befristeter Vertrag",
+			en: "Contract for a definite period",
+			fr: "Contrat à durée déterminée",
+			nl: "Overeenkomst voor een bepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30201,6 +42009,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3111-3112-3113",
 		label: "Contract for a definite period",
+		labels: {
+			de: "Befristeter Vertrag",
+			en: "Contract for a definite period",
+			fr: "Contrat à durée déterminée",
+			nl: "Overeenkomst voor een bepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30216,6 +42030,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3111-3112-3113",
 		label: "Contract for a definite period",
+		labels: {
+			de: "Befristeter Vertrag",
+			en: "Contract for a definite period",
+			fr: "Contrat à durée déterminée",
+			nl: "Overeenkomst voor een bepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30231,6 +42051,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3111-3112-3113",
 		label: "Contract for a definite period",
+		labels: {
+			de: "Befristeter Vertrag",
+			en: "Contract for a definite period",
+			fr: "Contrat à durée déterminée",
+			nl: "Overeenkomst voor een bepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30247,6 +42073,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3111-3112-3113",
 		label: "Contract for a definite period",
+		labels: {
+			de: "Befristeter Vertrag",
+			en: "Contract for a definite period",
+			fr: "Contrat à durée déterminée",
+			nl: "Overeenkomst voor een bepaalde tijd",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30262,6 +42094,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3121-3122-3123",
 		label: "Contract for the execution of a specifically assigned work",
+		labels: {
+			de: "Vertrag zur Durchführung einer genau bestimmten Arbeit",
+			en: "Contract for the execution of a specifically assigned work",
+			fr: "Contrat pour l'exécution d'un travail nettement défini",
+			nl: "Overeenkomst voor een duidelijk omschreven werk",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30276,6 +42114,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3121-3122-3123",
 		label: "Contract for the execution of a specifically assigned work",
+		labels: {
+			de: "Vertrag zur Durchführung einer genau bestimmten Arbeit",
+			en: "Contract for the execution of a specifically assigned work",
+			fr: "Contrat pour l'exécution d'un travail nettement défini",
+			nl: "Overeenkomst voor een duidelijk omschreven werk",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30291,6 +42135,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3121-3122-3123",
 		label: "Contract for the execution of a specifically assigned work",
+		labels: {
+			de: "Vertrag zur Durchführung einer genau bestimmten Arbeit",
+			en: "Contract for the execution of a specifically assigned work",
+			fr: "Contrat pour l'exécution d'un travail nettement défini",
+			nl: "Overeenkomst voor een duidelijk omschreven werk",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30306,6 +42156,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3121-3122-3123",
 		label: "Contract for the execution of a specifically assigned work",
+		labels: {
+			de: "Vertrag zur Durchführung einer genau bestimmten Arbeit",
+			en: "Contract for the execution of a specifically assigned work",
+			fr: "Contrat pour l'exécution d'un travail nettement défini",
+			nl: "Overeenkomst voor een duidelijk omschreven werk",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30322,6 +42178,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3121-3122-3123",
 		label: "Contract for the execution of a specifically assigned work",
+		labels: {
+			de: "Vertrag zur Durchführung einer genau bestimmten Arbeit",
+			en: "Contract for the execution of a specifically assigned work",
+			fr: "Contrat pour l'exécution d'un travail nettement défini",
+			nl: "Overeenkomst voor een duidelijk omschreven werk",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30337,6 +42199,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3131-3132-3133",
 		label: "Replacement contract",
+		labels: {
+			de: "Vertretungsvertrag",
+			en: "Replacement contract",
+			fr: "Contrat de remplacement",
+			nl: "Vervangingsovereenkomst",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30351,6 +42219,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3131-3132-3133",
 		label: "Replacement contract",
+		labels: {
+			de: "Vertretungsvertrag",
+			en: "Replacement contract",
+			fr: "Contrat de remplacement",
+			nl: "Vervangingsovereenkomst",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30366,6 +42240,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3131-3132-3133",
 		label: "Replacement contract",
+		labels: {
+			de: "Vertretungsvertrag",
+			en: "Replacement contract",
+			fr: "Contrat de remplacement",
+			nl: "Vervangingsovereenkomst",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30381,6 +42261,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3131-3132-3133",
 		label: "Replacement contract",
+		labels: {
+			de: "Vertretungsvertrag",
+			en: "Replacement contract",
+			fr: "Contrat de remplacement",
+			nl: "Vervangingsovereenkomst",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30397,6 +42283,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3131-3132-3133",
 		label: "Replacement contract",
+		labels: {
+			de: "Vertretungsvertrag",
+			en: "Replacement contract",
+			fr: "Contrat de remplacement",
+			nl: "Vervangingsovereenkomst",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30412,6 +42304,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3401-3402-3403",
 		label: "Retirement",
+		labels: {
+			de: "Pension",
+			en: "Retirement",
+			fr: "Pension",
+			nl: "Pensioen",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30426,6 +42324,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3401-3402-3403",
 		label: "Retirement",
+		labels: {
+			de: "Pension",
+			en: "Retirement",
+			fr: "Pension",
+			nl: "Pensioen",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30441,6 +42345,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3401-3402-3403",
 		label: "Retirement",
+		labels: {
+			de: "Pension",
+			en: "Retirement",
+			fr: "Pension",
+			nl: "Pensioen",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30456,6 +42366,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3401-3402-3403",
 		label: "Retirement",
+		labels: {
+			de: "Pension",
+			en: "Retirement",
+			fr: "Pension",
+			nl: "Pensioen",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30472,6 +42388,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3401-3402-3403",
 		label: "Retirement",
+		labels: {
+			de: "Pension",
+			en: "Retirement",
+			fr: "Pension",
+			nl: "Pensioen",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30487,6 +42409,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3411-3412-3413",
 		label: "Unemployment with extra allowance from enterprise",
+		labels: {
+			de: "Arbeitslosigkeit mit Betriebszuschlag",
+			en: "Unemployment with extra allowance from enterprise",
+			fr: "Chômage avec complément d'entreprise",
+			nl: "Werkloosheid met bedrijfstoeslag",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30501,6 +42429,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3411-3412-3413",
 		label: "Unemployment with extra allowance from enterprise",
+		labels: {
+			de: "Arbeitslosigkeit mit Betriebszuschlag",
+			en: "Unemployment with extra allowance from enterprise",
+			fr: "Chômage avec complément d'entreprise",
+			nl: "Werkloosheid met bedrijfstoeslag",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30516,6 +42450,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3411-3412-3413",
 		label: "Unemployment with extra allowance from enterprise",
+		labels: {
+			de: "Arbeitslosigkeit mit Betriebszuschlag",
+			en: "Unemployment with extra allowance from enterprise",
+			fr: "Chômage avec complément d'entreprise",
+			nl: "Werkloosheid met bedrijfstoeslag",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30531,6 +42471,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3411-3412-3413",
 		label: "Unemployment with extra allowance from enterprise",
+		labels: {
+			de: "Arbeitslosigkeit mit Betriebszuschlag",
+			en: "Unemployment with extra allowance from enterprise",
+			fr: "Chômage avec complément d'entreprise",
+			nl: "Werkloosheid met bedrijfstoeslag",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30547,6 +42493,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3411-3412-3413",
 		label: "Unemployment with extra allowance from enterprise",
+		labels: {
+			de: "Arbeitslosigkeit mit Betriebszuschlag",
+			en: "Unemployment with extra allowance from enterprise",
+			fr: "Chômage avec complément d'entreprise",
+			nl: "Werkloosheid met bedrijfstoeslag",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30562,6 +42514,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3421-3422-3423",
 		label: "Dismissal",
+		labels: {
+			de: "Entlassung",
+			en: "Dismissal",
+			fr: "Licenciement",
+			nl: "Afdanking",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30576,6 +42534,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3421-3422-3423",
 		label: "Dismissal",
+		labels: {
+			de: "Entlassung",
+			en: "Dismissal",
+			fr: "Licenciement",
+			nl: "Afdanking",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30591,6 +42555,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3421-3422-3423",
 		label: "Dismissal",
+		labels: {
+			de: "Entlassung",
+			en: "Dismissal",
+			fr: "Licenciement",
+			nl: "Afdanking",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30606,6 +42576,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3421-3422-3423",
 		label: "Dismissal",
+		labels: {
+			de: "Entlassung",
+			en: "Dismissal",
+			fr: "Licenciement",
+			nl: "Afdanking",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30622,6 +42598,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3421-3422-3423",
 		label: "Dismissal",
+		labels: {
+			de: "Entlassung",
+			en: "Dismissal",
+			fr: "Licenciement",
+			nl: "Afdanking",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30638,6 +42620,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3501-3502-3503",
 		label: "Of which: the number of persons who continue to render services to the association or the foundation at least half-time on a self-employed basis",
+		labels: {
+			de: "Wovon: Anzahl der Personen, die als Selbständige weiterhin, zumindest halbtags, für die Vereinigung oder Stiftung arbeiten",
+			en: "Of which: the number of persons who continue to render services to the association or the foundation at least half-time on a self-employed basis",
+			fr: "Dont: le nombre de personnes qui continuent, au moins à mi-temps, à prester des services au profit de l'association ou de la fondation comme indépendants",
+			nl: "Waarvan: het aantal werknemers dat als zelfstandige ten minste op halftijdse basis diensten blijft verlenen aan de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30653,6 +42641,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3501-3502-3503",
 		label: "Of which: the number of persons who continue to render services to the association or the foundation at least half-time on a self-employed basis",
+		labels: {
+			de: "Wovon: Anzahl der Personen, die als Selbständige weiterhin, zumindest halbtags, für die Vereinigung oder Stiftung arbeiten",
+			en: "Of which: the number of persons who continue to render services to the association or the foundation at least half-time on a self-employed basis",
+			fr: "Dont: le nombre de personnes qui continuent, au moins à mi-temps, à prester des services au profit de l'association ou de la fondation comme indépendants",
+			nl: "Waarvan: het aantal werknemers dat als zelfstandige ten minste op halftijdse basis diensten blijft verlenen aan de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30669,6 +42663,12 @@ const datapoints3: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3501-3502-3503",
 		label: "Of which: the number of persons who continue to render services to the association or the foundation at least half-time on a self-employed basis",
+		labels: {
+			de: "Wovon: Anzahl der Personen, die als Selbständige weiterhin, zumindest halbtags, für die Vereinigung oder Stiftung arbeiten",
+			en: "Of which: the number of persons who continue to render services to the association or the foundation at least half-time on a self-employed basis",
+			fr: "Dont: le nombre de personnes qui continuent, au moins à mi-temps, à prester des services au profit de l'association ou de la fondation comme indépendants",
+			nl: "Waarvan: het aantal werknemers dat als zelfstandige ten minste op halftijdse basis diensten blijft verlenen aan de vereniging of stichting",
+		},
 	},
 ];
 
@@ -30688,6 +42688,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3501-3502-3503",
 		label: "Of which: the number of persons who continue to render services to the association or the foundation at least half-time on a self-employed basis",
+		labels: {
+			de: "Wovon: Anzahl der Personen, die als Selbständige weiterhin, zumindest halbtags, für die Vereinigung oder Stiftung arbeiten",
+			en: "Of which: the number of persons who continue to render services to the association or the foundation at least half-time on a self-employed basis",
+			fr: "Dont: le nombre de personnes qui continuent, au moins à mi-temps, à prester des services au profit de l'association ou de la fondation comme indépendants",
+			nl: "Waarvan: het aantal werknemers dat als zelfstandige ten minste op halftijdse basis diensten blijft verlenen aan de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30705,6 +42711,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3501-3502-3503",
 		label: "Of which: the number of persons who continue to render services to the association or the foundation at least half-time on a self-employed basis",
+		labels: {
+			de: "Wovon: Anzahl der Personen, die als Selbständige weiterhin, zumindest halbtags, für die Vereinigung oder Stiftung arbeiten",
+			en: "Of which: the number of persons who continue to render services to the association or the foundation at least half-time on a self-employed basis",
+			fr: "Dont: le nombre de personnes qui continuent, au moins à mi-temps, à prester des services au profit de l'association ou de la fondation comme indépendants",
+			nl: "Waarvan: het aantal werknemers dat als zelfstandige ten minste op halftijdse basis diensten blijft verlenen aan de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30720,6 +42732,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3431-3432-3433",
 		label: "Other reason",
+		labels: {
+			de: "Sonstiger Grund",
+			en: "Other reason",
+			fr: "Autre motif",
+			nl: "Andere reden",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30734,6 +42752,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3431-3432-3433",
 		label: "Other reason",
+		labels: {
+			de: "Sonstiger Grund",
+			en: "Other reason",
+			fr: "Autre motif",
+			nl: "Andere reden",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30749,6 +42773,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3431-3432-3433",
 		label: "Other reason",
+		labels: {
+			de: "Sonstiger Grund",
+			en: "Other reason",
+			fr: "Autre motif",
+			nl: "Andere reden",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30764,6 +42794,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3431-3432-3433",
 		label: "Other reason",
+		labels: {
+			de: "Sonstiger Grund",
+			en: "Other reason",
+			fr: "Autre motif",
+			nl: "Andere reden",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30780,6 +42816,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "3431-3432-3433",
 		label: "Other reason",
+		labels: {
+			de: "Sonstiger Grund",
+			en: "Other reason",
+			fr: "Autre motif",
+			nl: "Andere reden",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30794,6 +42836,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5801-5811",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30807,6 +42855,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5801-5811",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30821,6 +42875,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5801-5811",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30835,6 +42895,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5801-5811",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30849,6 +42915,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5801-5811",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30863,6 +42935,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5801-5811",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30877,6 +42955,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5801-5811",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30892,6 +42976,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5801-5811",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30905,6 +42995,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5801-5811",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30918,6 +43014,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5801-5811",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30933,6 +43035,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5802-5812",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30947,6 +43055,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5802-5812",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30962,6 +43076,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5802-5812",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30977,6 +43097,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5802-5812",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -30992,6 +43118,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5802-5812",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31007,6 +43139,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5802-5812",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31022,6 +43160,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5802-5812",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31038,6 +43182,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5802-5812",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31052,6 +43202,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5802-5812",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31066,6 +43222,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5802-5812",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31082,6 +43244,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58031-58131",
 		label: "of which gross costs directly linked to training",
+		labels: {
+			de: "wovon Bruttokosten die direkt mit der Weiterbildung verbunden sind",
+			en: "of which gross costs directly linked to training",
+			fr: "dont coût brut directement lié aux formations",
+			nl: "waarvan brutokosten rechtstreeks verbonden met de opleiding",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31097,6 +43265,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58031-58131",
 		label: "of which gross costs directly linked to training",
+		labels: {
+			de: "wovon Bruttokosten die direkt mit der Weiterbildung verbunden sind",
+			en: "of which gross costs directly linked to training",
+			fr: "dont coût brut directement lié aux formations",
+			nl: "waarvan brutokosten rechtstreeks verbonden met de opleiding",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31113,6 +43287,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58031-58131",
 		label: "of which gross costs directly linked to training",
+		labels: {
+			de: "wovon Bruttokosten die direkt mit der Weiterbildung verbunden sind",
+			en: "of which gross costs directly linked to training",
+			fr: "dont coût brut directement lié aux formations",
+			nl: "waarvan brutokosten rechtstreeks verbonden met de opleiding",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31129,6 +43309,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58031-58131",
 		label: "of which gross costs directly linked to training",
+		labels: {
+			de: "wovon Bruttokosten die direkt mit der Weiterbildung verbunden sind",
+			en: "of which gross costs directly linked to training",
+			fr: "dont coût brut directement lié aux formations",
+			nl: "waarvan brutokosten rechtstreeks verbonden met de opleiding",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31145,6 +43331,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58031-58131",
 		label: "of which gross costs directly linked to training",
+		labels: {
+			de: "wovon Bruttokosten die direkt mit der Weiterbildung verbunden sind",
+			en: "of which gross costs directly linked to training",
+			fr: "dont coût brut directement lié aux formations",
+			nl: "waarvan brutokosten rechtstreeks verbonden met de opleiding",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31161,6 +43353,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58031-58131",
 		label: "of which gross costs directly linked to training",
+		labels: {
+			de: "wovon Bruttokosten die direkt mit der Weiterbildung verbunden sind",
+			en: "of which gross costs directly linked to training",
+			fr: "dont coût brut directement lié aux formations",
+			nl: "waarvan brutokosten rechtstreeks verbonden met de opleiding",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31177,6 +43375,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58031-58131",
 		label: "of which gross costs directly linked to training",
+		labels: {
+			de: "wovon Bruttokosten die direkt mit der Weiterbildung verbunden sind",
+			en: "of which gross costs directly linked to training",
+			fr: "dont coût brut directement lié aux formations",
+			nl: "waarvan brutokosten rechtstreeks verbonden met de opleiding",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31194,6 +43398,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58031-58131",
 		label: "of which gross costs directly linked to training",
+		labels: {
+			de: "wovon Bruttokosten die direkt mit der Weiterbildung verbunden sind",
+			en: "of which gross costs directly linked to training",
+			fr: "dont coût brut directement lié aux formations",
+			nl: "waarvan brutokosten rechtstreeks verbonden met de opleiding",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31209,6 +43419,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58031-58131",
 		label: "of which gross costs directly linked to training",
+		labels: {
+			de: "wovon Bruttokosten die direkt mit der Weiterbildung verbunden sind",
+			en: "of which gross costs directly linked to training",
+			fr: "dont coût brut directement lié aux formations",
+			nl: "waarvan brutokosten rechtstreeks verbonden met de opleiding",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31224,6 +43440,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58031-58131",
 		label: "of which gross costs directly linked to training",
+		labels: {
+			de: "wovon Bruttokosten die direkt mit der Weiterbildung verbunden sind",
+			en: "of which gross costs directly linked to training",
+			fr: "dont coût brut directement lié aux formations",
+			nl: "waarvan brutokosten rechtstreeks verbonden met de opleiding",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31241,6 +43463,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58032-58132",
 		label: "of which fees paid and paiments to collective funds",
+		labels: {
+			de: "wovon gezahlte Beiträge und Einzahlungen an Kollektivfonds",
+			en: "of which fees paid and paiments to collective funds",
+			fr: "dont cotisations payées et versements à des fonds collectifs",
+			nl: "waarvan betaalde bijdragen en stortingen aan collectieve fondsen",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31257,6 +43485,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58032-58132",
 		label: "of which fees paid and paiments to collective funds",
+		labels: {
+			de: "wovon gezahlte Beiträge und Einzahlungen an Kollektivfonds",
+			en: "of which fees paid and paiments to collective funds",
+			fr: "dont cotisations payées et versements à des fonds collectifs",
+			nl: "waarvan betaalde bijdragen en stortingen aan collectieve fondsen",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31274,6 +43508,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58032-58132",
 		label: "of which fees paid and paiments to collective funds",
+		labels: {
+			de: "wovon gezahlte Beiträge und Einzahlungen an Kollektivfonds",
+			en: "of which fees paid and paiments to collective funds",
+			fr: "dont cotisations payées et versements à des fonds collectifs",
+			nl: "waarvan betaalde bijdragen en stortingen aan collectieve fondsen",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31291,6 +43531,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58032-58132",
 		label: "of which fees paid and paiments to collective funds",
+		labels: {
+			de: "wovon gezahlte Beiträge und Einzahlungen an Kollektivfonds",
+			en: "of which fees paid and paiments to collective funds",
+			fr: "dont cotisations payées et versements à des fonds collectifs",
+			nl: "waarvan betaalde bijdragen en stortingen aan collectieve fondsen",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31308,6 +43554,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58032-58132",
 		label: "of which fees paid and paiments to collective funds",
+		labels: {
+			de: "wovon gezahlte Beiträge und Einzahlungen an Kollektivfonds",
+			en: "of which fees paid and paiments to collective funds",
+			fr: "dont cotisations payées et versements à des fonds collectifs",
+			nl: "waarvan betaalde bijdragen en stortingen aan collectieve fondsen",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31325,6 +43577,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58032-58132",
 		label: "of which fees paid and paiments to collective funds",
+		labels: {
+			de: "wovon gezahlte Beiträge und Einzahlungen an Kollektivfonds",
+			en: "of which fees paid and paiments to collective funds",
+			fr: "dont cotisations payées et versements à des fonds collectifs",
+			nl: "waarvan betaalde bijdragen en stortingen aan collectieve fondsen",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31342,6 +43600,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58032-58132",
 		label: "of which fees paid and paiments to collective funds",
+		labels: {
+			de: "wovon gezahlte Beiträge und Einzahlungen an Kollektivfonds",
+			en: "of which fees paid and paiments to collective funds",
+			fr: "dont cotisations payées et versements à des fonds collectifs",
+			nl: "waarvan betaalde bijdragen en stortingen aan collectieve fondsen",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31360,6 +43624,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58032-58132",
 		label: "of which fees paid and paiments to collective funds",
+		labels: {
+			de: "wovon gezahlte Beiträge und Einzahlungen an Kollektivfonds",
+			en: "of which fees paid and paiments to collective funds",
+			fr: "dont cotisations payées et versements à des fonds collectifs",
+			nl: "waarvan betaalde bijdragen en stortingen aan collectieve fondsen",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31376,6 +43646,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58032-58132",
 		label: "of which fees paid and paiments to collective funds",
+		labels: {
+			de: "wovon gezahlte Beiträge und Einzahlungen an Kollektivfonds",
+			en: "of which fees paid and paiments to collective funds",
+			fr: "dont cotisations payées et versements à des fonds collectifs",
+			nl: "waarvan betaalde bijdragen en stortingen aan collectieve fondsen",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31392,6 +43668,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58032-58132",
 		label: "of which fees paid and paiments to collective funds",
+		labels: {
+			de: "wovon gezahlte Beiträge und Einzahlungen an Kollektivfonds",
+			en: "of which fees paid and paiments to collective funds",
+			fr: "dont cotisations payées et versements à des fonds collectifs",
+			nl: "waarvan betaalde bijdragen en stortingen aan collectieve fondsen",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31408,6 +43690,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58033-58133",
 		label: "of which grants and other financial advantages received (to deduct)",
+		labels: {
+			de: "wovon bewilligte Zuschüsse und andere finanzielle Vorteile (in Abzug)",
+			en: "of which grants and other financial advantages received (to deduct)",
+			fr: "dont subventions et autres avantages financiers reçus (à déduire)",
+			nl: "waarvan ontvangen tegemoetkomingen (in mindering)",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31423,6 +43711,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58033-58133",
 		label: "of which grants and other financial advantages received (to deduct)",
+		labels: {
+			de: "wovon bewilligte Zuschüsse und andere finanzielle Vorteile (in Abzug)",
+			en: "of which grants and other financial advantages received (to deduct)",
+			fr: "dont subventions et autres avantages financiers reçus (à déduire)",
+			nl: "waarvan ontvangen tegemoetkomingen (in mindering)",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31439,6 +43733,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58033-58133",
 		label: "of which grants and other financial advantages received (to deduct)",
+		labels: {
+			de: "wovon bewilligte Zuschüsse und andere finanzielle Vorteile (in Abzug)",
+			en: "of which grants and other financial advantages received (to deduct)",
+			fr: "dont subventions et autres avantages financiers reçus (à déduire)",
+			nl: "waarvan ontvangen tegemoetkomingen (in mindering)",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31455,6 +43755,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58033-58133",
 		label: "of which grants and other financial advantages received (to deduct)",
+		labels: {
+			de: "wovon bewilligte Zuschüsse und andere finanzielle Vorteile (in Abzug)",
+			en: "of which grants and other financial advantages received (to deduct)",
+			fr: "dont subventions et autres avantages financiers reçus (à déduire)",
+			nl: "waarvan ontvangen tegemoetkomingen (in mindering)",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31471,6 +43777,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58033-58133",
 		label: "of which grants and other financial advantages received (to deduct)",
+		labels: {
+			de: "wovon bewilligte Zuschüsse und andere finanzielle Vorteile (in Abzug)",
+			en: "of which grants and other financial advantages received (to deduct)",
+			fr: "dont subventions et autres avantages financiers reçus (à déduire)",
+			nl: "waarvan ontvangen tegemoetkomingen (in mindering)",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31487,6 +43799,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58033-58133",
 		label: "of which grants and other financial advantages received (to deduct)",
+		labels: {
+			de: "wovon bewilligte Zuschüsse und andere finanzielle Vorteile (in Abzug)",
+			en: "of which grants and other financial advantages received (to deduct)",
+			fr: "dont subventions et autres avantages financiers reçus (à déduire)",
+			nl: "waarvan ontvangen tegemoetkomingen (in mindering)",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31503,6 +43821,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58033-58133",
 		label: "of which grants and other financial advantages received (to deduct)",
+		labels: {
+			de: "wovon bewilligte Zuschüsse und andere finanzielle Vorteile (in Abzug)",
+			en: "of which grants and other financial advantages received (to deduct)",
+			fr: "dont subventions et autres avantages financiers reçus (à déduire)",
+			nl: "waarvan ontvangen tegemoetkomingen (in mindering)",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31520,6 +43844,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58033-58133",
 		label: "of which grants and other financial advantages received (to deduct)",
+		labels: {
+			de: "wovon bewilligte Zuschüsse und andere finanzielle Vorteile (in Abzug)",
+			en: "of which grants and other financial advantages received (to deduct)",
+			fr: "dont subventions et autres avantages financiers reçus (à déduire)",
+			nl: "waarvan ontvangen tegemoetkomingen (in mindering)",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31535,6 +43865,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58033-58133",
 		label: "of which grants and other financial advantages received (to deduct)",
+		labels: {
+			de: "wovon bewilligte Zuschüsse und andere finanzielle Vorteile (in Abzug)",
+			en: "of which grants and other financial advantages received (to deduct)",
+			fr: "dont subventions et autres avantages financiers reçus (à déduire)",
+			nl: "waarvan ontvangen tegemoetkomingen (in mindering)",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31550,6 +43886,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "58033-58133",
 		label: "of which grants and other financial advantages received (to deduct)",
+		labels: {
+			de: "wovon bewilligte Zuschüsse und andere finanzielle Vorteile (in Abzug)",
+			en: "of which grants and other financial advantages received (to deduct)",
+			fr: "dont subventions et autres avantages financiers reçus (à déduire)",
+			nl: "waarvan ontvangen tegemoetkomingen (in mindering)",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31565,6 +43907,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5803-5813",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31579,6 +43927,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5803-5813",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31594,6 +43948,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5803-5813",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31609,6 +43969,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5803-5813",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31624,6 +43990,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5803-5813",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31639,6 +44011,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5803-5813",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31654,6 +44032,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5803-5813",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31670,6 +44054,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5803-5813",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31684,6 +44074,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5803-5813",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31698,6 +44094,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5803-5813",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31712,6 +44114,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5821-5831",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31725,6 +44133,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5821-5831",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31739,6 +44153,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5821-5831",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31753,6 +44173,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5821-5831",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31767,6 +44193,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5821-5831",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31781,6 +44213,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5821-5831",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31795,6 +44233,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5821-5831",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31810,6 +44254,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5821-5831",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31823,6 +44273,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5821-5831",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31836,6 +44292,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5821-5831",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31851,6 +44313,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5822-5832",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31865,6 +44333,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5822-5832",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31880,6 +44354,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5822-5832",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31895,6 +44375,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5822-5832",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31910,6 +44396,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5822-5832",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31925,6 +44417,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5822-5832",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31940,6 +44438,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5822-5832",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31956,6 +44460,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5822-5832",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31970,6 +44480,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5822-5832",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31984,6 +44500,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5822-5832",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -31999,6 +44521,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5823-5833",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32013,6 +44541,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5823-5833",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32028,6 +44562,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5823-5833",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32043,6 +44583,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5823-5833",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32058,6 +44604,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5823-5833",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32073,6 +44625,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5823-5833",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32088,6 +44646,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5823-5833",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32104,6 +44668,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5823-5833",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32118,6 +44688,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5823-5833",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32132,6 +44708,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5823-5833",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32146,6 +44728,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5841-5851",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32159,6 +44747,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5841-5851",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32173,6 +44767,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5841-5851",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32187,6 +44787,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5841-5851",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32201,6 +44807,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5841-5851",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32215,6 +44827,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5841-5851",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32229,6 +44847,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5841-5851",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32244,6 +44868,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5841-5851",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32257,6 +44887,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5841-5851",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32270,6 +44906,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5841-5851",
 		label: "Number of employees involved",
+		labels: {
+			de: "Anzahl der betroffenen Arbeitnehmer",
+			en: "Number of employees involved",
+			fr: "Nombre de travailleurs concernés",
+			nl: "Aantal betrokken werknemers",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32285,6 +44927,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5842-5852",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32299,6 +44947,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5842-5852",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32314,6 +44968,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5842-5852",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32329,6 +44989,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5842-5852",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32344,6 +45010,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5842-5852",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32359,6 +45031,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5842-5852",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32374,6 +45052,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5842-5852",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32390,6 +45074,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5842-5852",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32404,6 +45094,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5842-5852",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32418,6 +45114,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5842-5852",
 		label: "Number of actual training hours",
+		labels: {
+			de: "Anzahl Stunden der besuchten Ausbildung",
+			en: "Number of actual training hours",
+			fr: "Nombre d'heures de formation suivies",
+			nl: "Aantal gevolgde opleidingsuren",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32433,6 +45135,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5843-5853",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32447,6 +45155,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5843-5853",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32462,6 +45176,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5843-5853",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32477,6 +45197,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5843-5853",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32492,6 +45218,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5843-5853",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32507,6 +45239,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5843-5853",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32522,6 +45260,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5843-5853",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32538,6 +45282,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5843-5853",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32552,6 +45302,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5843-5853",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.17.0.g",
@@ -32566,6 +45322,12 @@ const datapoints4: readonly Datapoint[] = [
 		openDimensions: ["dim:open"],
 		code: "5843-5853",
 		label: "Costs for the association or the foundation",
+		labels: {
+			de: "Nettokosten für die Vereinigung oder Stiftung",
+			en: "Costs for the association or the foundation",
+			fr: "Coût net pour l'association ou la fondation",
+			nl: "Nettokosten voor de vereniging of stichting",
+		},
 	},
 	{
 		section: "s.06.18.0.g",
@@ -32575,6 +45337,12 @@ const datapoints4: readonly Datapoint[] = [
 			"dim:part": "part:m6",
 		},
 		label: "Valuation Rules - Text",
+		labels: {
+			de: "Bewertungsvorschriften - Text",
+			en: "Valuation Rules - Text",
+			fr: "Règles d'évaluation - Texte",
+			nl: "Waarderingsregels - Tekst",
+		},
 	},
 	{
 		section: "s.06.18.0.g",
@@ -32584,6 +45352,12 @@ const datapoints4: readonly Datapoint[] = [
 			"dim:part": "part:m6",
 		},
 		label: "Valuation Rules - PDF",
+		labels: {
+			de: "Bewertungsvorschriften - PDF",
+			en: "Valuation Rules - PDF",
+			fr: "Règles d'évaluation - PDF",
+			nl: "Waarderingsregels - PDF",
+		},
 	},
 	{
 		section: "s.07.00.0.ghi",
@@ -32594,6 +45368,12 @@ const datapoints4: readonly Datapoint[] = [
 			"dim:typ": "typ:m29",
 		},
 		label: "Annual report - Text",
+		labels: {
+			de: "Geschäftsbericht - Text",
+			en: "Annual report - Text",
+			fr: "Rapport de gestion - Texte",
+			nl: "Jaarverslag - Tekst",
+		},
 	},
 	{
 		section: "s.07.00.0.ghi",
@@ -32604,6 +45384,12 @@ const datapoints4: readonly Datapoint[] = [
 			"dim:typ": "typ:m29",
 		},
 		label: "Annual report - PDF",
+		labels: {
+			de: "Geschäftsbericht - PDF",
+			en: "Annual report - PDF",
+			fr: "Rapport de gestion - PDF",
+			nl: "Jaarverslag - PDF",
+		},
 	},
 	{
 		section: "s.08.00.0.abghi",
@@ -32615,6 +45401,12 @@ const datapoints4: readonly Datapoint[] = [
 			"dim:psn": "psn:m8",
 		},
 		label: "Title",
+		labels: {
+			de: "Titel",
+			en: "Title",
+			fr: "Titre",
+			nl: "Titel",
+		},
 	},
 	{
 		section: "s.08.00.0.abghi",
@@ -32626,6 +45418,12 @@ const datapoints4: readonly Datapoint[] = [
 			"dim:psn": "psn:m8",
 		},
 		label: "Introduction",
+		labels: {
+			de: "Einleitung",
+			en: "Introduction",
+			fr: "Introduction",
+			nl: "Inleiding",
+		},
 	},
 	{
 		section: "s.08.00.0.abghi",
@@ -32638,6 +45436,12 @@ const datapoints4: readonly Datapoint[] = [
 			"dim:psn": "psn:m8",
 		},
 		label: "Opinion",
+		labels: {
+			de: "Testat",
+			en: "Opinion",
+			fr: "Opinion",
+			nl: "Oordeel",
+		},
 	},
 	{
 		section: "s.08.00.0.abghi",
@@ -32649,6 +45453,12 @@ const datapoints4: readonly Datapoint[] = [
 			"dim:psn": "psn:m8",
 		},
 		label: "Explanation",
+		labels: {
+			de: "Erklärung",
+			en: "Explanation",
+			fr: "Explication",
+			nl: "Uitleg",
+		},
 	},
 	{
 		section: "s.08.00.0.abghi",
@@ -32660,6 +45470,12 @@ const datapoints4: readonly Datapoint[] = [
 			"dim:psn": "psn:m8",
 		},
 		label: "Explanation",
+		labels: {
+			de: "Erklärung",
+			en: "Explanation",
+			fr: "Explication",
+			nl: "Uitleg",
+		},
 	},
 	{
 		section: "s.08.00.0.abghi",
@@ -32671,6 +45487,12 @@ const datapoints4: readonly Datapoint[] = [
 			"dim:psn": "psn:m8",
 		},
 		label: "Place",
+		labels: {
+			de: "Erstellungsort",
+			en: "Place",
+			fr: "Lieu",
+			nl: "Plaats",
+		},
 	},
 	{
 		section: "s.08.00.0.abghi",
@@ -32682,6 +45504,12 @@ const datapoints4: readonly Datapoint[] = [
 			"dim:psn": "psn:m8",
 		},
 		label: "Date",
+		labels: {
+			de: "Erstellungsdatum",
+			en: "Date",
+			fr: "Date",
+			nl: "Datum",
+		},
 	},
 	{
 		section: "s.08.00.0.abghi",
@@ -32692,6 +45520,12 @@ const datapoints4: readonly Datapoint[] = [
 			"dim:psn": "psn:m8",
 		},
 		label: "Auditors' report - PDF",
+		labels: {
+			de: "Bericht der Kommissare - PDF",
+			en: "Auditors' report - PDF",
+			fr: "Rapport des commissaires - PDF",
+			nl: "Verslag van de commissarissen - PDF",
+		},
 	},
 ];
 

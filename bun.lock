@@ -23,14 +23,14 @@
     },
     "packages/camt053": {
       "name": "@financica/camt053",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "dependencies": {
         "fast-xml-parser": "^5.11.0",
       },
     },
     "packages/coda": {
       "name": "@financica/coda",
-      "version": "0.2.0",
+      "version": "0.3.0",
     },
     "packages/ecb-client": {
       "name": "@financica/ecb-client",
@@ -83,7 +83,7 @@
     },
     "packages/nbb-cbso": {
       "name": "@financica/nbb-cbso",
-      "version": "0.6.1",
+      "version": "0.7.0",
       "dependencies": {
         "@financica/xbrl": "^0.2.0",
       },

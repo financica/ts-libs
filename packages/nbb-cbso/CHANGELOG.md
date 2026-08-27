@@ -1,14 +1,19 @@
 # Changelog
 
-## Unreleased
+## 0.7.0
+
+### Added
+
+- **Every datapoint carries its label in the four filing languages.** `Datapoint.labels` is keyed by the taxonomy's `xml:lang` (`de`, `en`, `fr`, `nl`); `label` stays the English entry. A finding can now be presented in the language the accounts are filed in rather than in English.
+- `NbbCbsoError` and `NbbBuildError` are exported.
 
 ### Changed
 
 - **`NbbCbsoError` is the base class of every error the package throws.** `ExpressionError` now extends it and sets `name`; `buildNbbFiling` throws `NbbBuildError` (also an `NbbCbsoError`) instead of a plain `Error` for an unknown rubric code or a contradicted figure.
 
-### Added
+### Fixed
 
-- `NbbCbsoError` and `NbbBuildError` are exported.
+- `scripts/generate-taxonomy.ts` ran again: a rename in the lint cleanup left one call to the old `key` helper.
 
 ## 0.6.1
 

@@ -275,8 +275,10 @@ function readTable(path: string): Axis[] {
 }
 
 /** Reads a section's generic labels, keyed by the id they are attached to. */
-function readLabels(path: string): Map<string, { rubric?: string; english?: string }> {
-	const result = new Map<string, { rubric?: string; english?: string }>();
+type SectionLabel = { rubric?: string; labels?: Record<string, string> };
+
+function readLabels(path: string): Map<string, SectionLabel> {
+	const result = new Map<string, SectionLabel>();
 	if (!existsSync(path)) return result;
 	const doc = readXml(path);
 
@@ -316,11 +318,9 @@ function readLabels(path: string): Map<string, { rubric?: string; english?: stri
 			const entry = result.get(target) ?? {};
 			if (resource.role === RUBRIC_LABEL_ROLE) {
 				entry.rubric = resource.value;
-			} else if (
-				resource.role === STANDARD_LABEL_ROLE &&
-				resource.lang === "en"
-			) {
-				entry.english ??= resource.value;
+			} else if (resource.role === STANDARD_LABEL_ROLE && resource.lang) {
+				entry.labels ??= {};
+				entry.labels[resource.lang] ??= resource.value;
 			}
 			result.set(target, entry);
 		}
@@ -645,7 +645,7 @@ function mergeBindings(
 	const anchored = new Set(Object.values(stated));
 	return inferred.filter(
 		(binding) =>
-			key(binding) === wanted ||
+			bindingKey(binding) === wanted ||
 			(Object.keys(binding).length === Object.keys(stated).length &&
 				Object.values(binding).every((code) => !anchored.has(code))),
 	);
@@ -772,7 +772,8 @@ function generateModule(options: Options, model: string, part: string) {
 						dimensions: merged,
 						...(openDimensions.length ? { openDimensions } : {}),
 						...(label?.rubric ? { code: label.rubric } : {}),
-						...(label?.english ? { label: label.english } : {}),
+						...(label?.labels?.["en"] ? { label: label.labels["en"] } : {}),
+						...(label?.labels ? { labels: sortedRecord(label.labels) } : {}),
 					} satisfies Datapoint);
 				if (!existing) datapoints.push(target);
 
@@ -1052,6 +1053,13 @@ function stripDefaultMembers(
 		if (!member.endsWith(":m0")) result[dimension] = member;
 	}
 	return result;
+}
+
+/** Keys in a fixed order, so a regenerate is byte-stable. */
+function sortedRecord(record: Record<string, string>): Record<string, string> {
+	return Object.fromEntries(
+		Object.entries(record).sort(([a], [b]) => a.localeCompare(b)),
+	);
 }
 
 function sameDimensions(a: Record<string, string>, b: Record<string, string>): boolean {

@@ -925,6 +925,26 @@ describe("check coverage", () => {
 	});
 });
 
+describe("datapoint labels", () => {
+	it("labels every rubric in all four filing languages, with `label` the English one", () => {
+		for (const datapoint of MICRO_FILING.taxonomy.datapoints) {
+			if (!datapoint.code) continue;
+			expect(
+				Object.keys(datapoint.labels ?? {}).sort(),
+				`rubric ${datapoint.code}`,
+			).toEqual(["de", "en", "fr", "nl"]);
+			expect(datapoint.label).toBe(datapoint.labels?.["en"]);
+		}
+		const equity = MICRO_FILING.taxonomy.datapoints.find((d) => d.code === "10/15");
+		expect(equity?.labels).toEqual({
+			de: "EIGENKAPITAL",
+			en: "EQUITY",
+			fr: "CAPITAUX PROPRES",
+			nl: "EIGEN VERMOGEN",
+		});
+	});
+});
+
 describe("ENUMERATIONS", () => {
 	it("carries the business courts a filer picks from, labelled per language", () => {
 		const courts = ENUMERATIONS["cct"] ?? [];

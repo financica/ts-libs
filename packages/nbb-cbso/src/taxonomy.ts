@@ -46,6 +46,12 @@ export interface Datapoint {
 	code?: string;
 	/** English label, for datapoints the model addresses by name rather than code. */
 	label?: string;
+	/**
+	 * The same label per language, keyed by the taxonomy's own `xml:lang`
+	 * (`fr`, `nl`, `de`, `en`). What a filer reads on the model; `label` is
+	 * its `en` entry.
+	 */
+	labels?: Readonly<Record<string, string>>;
 	/** Period dimension member for the current exercise, e.g. `"prd:m1"`. */
 	currentPeriod?: string;
 	/** Period dimension member for the preceding exercise, e.g. `"prd:m2"`. */
