@@ -1,6 +1,6 @@
 {
 	"name": "@financica/myminfin",
-	"version": "0.8.0",
+	"version": "0.9.0",
 	"description": "TypeScript client and document generators for the Belgian SPF Finances MyMinFin and Intervat APIs",
 	"homepage": "https://github.com/financica/ts-libs/tree/main/packages/myminfin#readme",
 	"bugs": "https://github.com/financica/ts-libs/issues",
