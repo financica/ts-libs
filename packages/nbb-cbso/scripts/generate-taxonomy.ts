@@ -773,7 +773,9 @@ function generateModule(options: Options, model: string, part: string) {
 						...(openDimensions.length ? { openDimensions } : {}),
 						...(label?.rubric ? { code: label.rubric } : {}),
 						...(label?.labels?.["en"] ? { label: label.labels["en"] } : {}),
-						...(label?.labels ? { labels: sortedRecord(label.labels) } : {}),
+						...(label?.labels
+							? { labels: sortedRecord(label.labels) }
+							: {}),
 					} satisfies Datapoint);
 				if (!existing) datapoints.push(target);
 

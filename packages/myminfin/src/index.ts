@@ -21,6 +21,17 @@ export type {
 	BuildBelgianVatReturnInput,
 	BuildBelgianVatReturnResult,
 } from "./vat-return";
+export {
+	evaluateProbabilityWarnings,
+	findUnjustifiedWarnings,
+	PROBABILITY_WARNING_CODES,
+} from "./probability-warnings";
+export type {
+	ProbabilityWarning,
+	ProbabilityWarningCode,
+	ProbabilityWarningLocale,
+	VatReturnJustification,
+} from "./probability-warnings";
 export { generateClientListingXml, MIN_TURNOVER_THRESHOLD } from "./client-listing";
 export type {
 	ClientListingDeclarant,

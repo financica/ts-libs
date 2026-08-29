@@ -23,6 +23,11 @@ import {
 	escapeXmlText,
 	formatAmount as formatSharedAmount,
 } from "./xml-escape";
+import {
+	findUnjustifiedWarnings,
+	type ProbabilityWarning,
+	type VatReturnJustification,
+} from "./probability-warnings";
 
 const VAT_NS = "http://www.minfin.fgov.be/VATConsignment";
 
@@ -87,6 +92,12 @@ export interface SerializeVatReturnOptions {
 	askPayment?: boolean;
 	/** UUID of a prior declaration this one replaces. */
 	replacedDeclaration?: string;
+	/**
+	 * Explanations for the plausibility rules this declaration trips. Intervat
+	 * REJECTS a return that trips a rule without one, so these are not optional
+	 * commentary — see `evaluateProbabilityWarnings`.
+	 */
+	justifications?: readonly VatReturnJustification[];
 }
 
 /**
@@ -181,6 +192,7 @@ export function serializeVatReturn(options: SerializeVatReturnOptions): string {
 		askRestitution = false,
 		askPayment = false,
 		replacedDeclaration,
+		justifications = [],
 	} = options;
 
 	assertSequenceNumber(sequenceNumber);
@@ -215,6 +227,14 @@ export function serializeVatReturn(options: SerializeVatReturnOptions): string {
 	lines.push(
 		`\t\t<ns2:Ask Restitution="${yesNo(askRestitution)}" Payment="${yesNo(askPayment)}" />`,
 	);
+	// After Ask, matching the order in Intervat's own example.
+	for (const justification of justifications) {
+		lines.push(
+			`\t\t<ns2:Justification Code="${escapeXmlAttr(justification.code)}">`,
+			`\t\t\t<Comment>${escapeXmlText(justification.comment)}</Comment>`,
+			`\t\t</ns2:Justification>`,
+		);
+	}
 	lines.push(`\t</ns2:VATDeclaration>`);
 	lines.push(`</ns2:VATConsignment>`);
 	return lines.join("\n");
@@ -491,12 +511,20 @@ export interface BuildBelgianVatReturnInput {
 	askRestitution?: boolean;
 	askPayment?: boolean;
 	replacedDeclaration?: string;
+	/** Explanations for the plausibility rules the grid trips. */
+	justifications?: readonly VatReturnJustification[];
 }
 
 export interface BuildBelgianVatReturnResult {
 	xml: string;
 	grid: VatReturnGrid;
 	warnings: string[];
+	/**
+	 * Plausibility rules this grid trips that carry no justification. Intervat
+	 * rejects the submission while this is non-empty, so a caller should collect
+	 * an explanation for each and build again rather than submit.
+	 */
+	unjustifiedWarnings: ProbabilityWarning[];
 }
 
 /**
@@ -514,5 +542,12 @@ export function buildBelgianVatReturn(
 		grid,
 		askRestitution: askRestitution ?? grid[72] !== undefined,
 	});
-	return { xml, grid, warnings };
+	return {
+		xml,
+		grid,
+		warnings,
+		unjustifiedWarnings: findUnjustifiedWarnings(grid, input.justifications, {
+			vatNumber: input.declarant.vatNumber,
+		}),
+	};
 }
