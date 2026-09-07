@@ -111,31 +111,65 @@ export interface DocumentSearchParams {
 	ownerIdentifier?: string;
 }
 
-export interface DocumentMetadata {
-	/** Unique document identifier */
-	uuid: string;
-	/** Document type */
-	type: string;
-	/** Document title */
-	title: string;
-	/** Publication date */
-	publishDate: string;
-	/** Related entities */
-	relatedTo: DocumentRelation[];
-	/** Raw metadata from the API */
-	[key: string]: unknown;
+/**
+ * A name in SPF's four languages. `en` is null on every document type seen so
+ * far; `fr` and `nl` are always filled.
+ */
+export interface LocalizedString {
+	nl: string | null;
+	fr: string | null;
+	de: string | null;
+	en: string | null;
 }
 
-export interface DocumentRelation {
-	/** Owner type */
-	ownerType: OwnerType;
-	/** Owner identifier */
-	ownerIdentifier: string;
+/** The entity a document belongs to, as the search reports it. */
+export interface DocumentOwner {
+	type: OwnerType;
+	/**
+	 * The CBE or SSIN number. CBE numbers come back *without* their leading
+	 * zero (`806154033` for enterprise 0806154033); pass the value straight back
+	 * as `ownerIdentifier` when downloading, the API accepts either form.
+	 */
+	identifier: string;
+}
+
+/** One `metadata` entry: a localized label with its values. */
+export interface DocumentMetadataEntry {
+	name: LocalizedString;
+	values: string[];
+}
+
+/** A document as the FineAPI search returns it (`DocumentInfos` + `content`). */
+export interface MyMinFinDocument {
+	uuid: string;
+	/** The download URL SPF advertise; `downloadDocument(uuid)` builds the same. */
+	contentUrl: string | null;
+	/** The document category, named in each language. There is no type code. */
+	docType: LocalizedString;
+	/**
+	 * Who the document belongs to: the connected enterprise itself, or a
+	 * mandator whose mandate makes it visible. A mandator's document must be
+	 * downloaded with its owner passed explicitly or the API answers 403.
+	 */
+	relatedTo: DocumentOwner[];
+	/** Raw metadata. The known labels are lifted into the fields below. */
+	metadata: DocumentMetadataEntry[];
+	/** Last modification date (YYYY-MM-dd); what `since`/`until` filter on. */
+	modifiedOn: string | null;
+	/** From metadata "Mimetype". SPF also emit `plain/text` (sic). */
+	mimeType: string | null;
+	/** From metadata "Publicatiedatum" / "Date de publication" (YYYY-MM-dd). */
+	publishedOn: string | null;
+	/** From metadata "Externe referentie" / "Référence externe", when present. */
+	externalReference: string | null;
 }
 
 export interface DocumentSearchResult {
-	/** List of document metadata */
-	documents: DocumentMetadata[];
+	documents: MyMinFinDocument[];
+	/** SPF's own count of matching documents, when the collection carries it. */
+	total: number | null;
+	/** When SPF last synchronized their cache; null if never or not reported. */
+	lastSyncDate: string | null;
 }
 
 export interface DocumentDownloadParams {
@@ -217,17 +251,25 @@ export class MyMinFinError extends Error {
 export class MyMinFinApiError extends MyMinFinError {
 	readonly status: number;
 	readonly problem: ProblemDetail | BusinessValidationError | undefined;
+	/**
+	 * Seconds to wait before calling again, from the `Retry-After` header of a
+	 * 429. SPF rate-limit per company (one document search every 10 minutes,
+	 * a handful of downloads a minute), so a caller should schedule around this
+	 * rather than retry blindly.
+	 */
+	readonly retryAfterSeconds: number | undefined;
 
 	constructor(
 		message: string,
 		status: number,
 		problem?: ProblemDetail | BusinessValidationError,
-		options?: { cause?: unknown },
+		options?: { cause?: unknown; retryAfterSeconds?: number | undefined },
 	) {
 		super(message, options);
 		this.name = "MyMinFinApiError";
 		this.status = status;
 		this.problem = problem;
+		this.retryAfterSeconds = options?.retryAfterSeconds;
 	}
 
 	/** The response body, when it was a problem detail. Same value as `problem`. */

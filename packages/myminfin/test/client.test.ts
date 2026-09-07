@@ -49,7 +49,7 @@ describe("MyMinFinClient", () => {
 
 	describe("searchDocuments", () => {
 		it("GETs the documents endpoint with the bearer token and search params", async () => {
-			fetchMock.mockResolvedValueOnce(json([]));
+			fetchMock.mockResolvedValueOnce(json({ items: [] }));
 
 			await client.searchDocuments({
 				since: "2024-10-03",
@@ -73,7 +73,7 @@ describe("MyMinFinClient", () => {
 		});
 
 		it("omits optional params that were not provided", async () => {
-			fetchMock.mockResolvedValueOnce(json([]));
+			fetchMock.mockResolvedValueOnce(json({ items: [] }));
 			await client.searchDocuments({ since: "2024-10-03" });
 			expect([...requestedUrl().searchParams.keys()]).toEqual(["since"]);
 		});
@@ -84,15 +84,147 @@ describe("MyMinFinClient", () => {
 			expect(result.documents).toEqual([]);
 		});
 
-		it("returns the documents from a JSON array response", async () => {
-			const docs = [
-				{ uuid: "abc-123", type: "test", title: "Doc 1" },
-				{ uuid: "def-456", type: "test", title: "Doc 2" },
-			];
-			fetchMock.mockResolvedValueOnce(json(docs));
+		it("sends a fresh Minfin-Ws-Correlation uuid on every request", async () => {
+			fetchMock.mockImplementation(async () => json({ items: [] }));
+			await client.searchDocuments({ since: "2024-10-03" });
+			await client.searchDocuments({ since: "2024-10-03" });
+			const correlation = (call: number) =>
+				new Headers(fetchMock.mock.calls[call]![1]!.headers).get(
+					"minfin-ws-correlation",
+				);
+			expect(correlation(0)).toMatch(/^[0-9a-f-]{36}$/);
+			expect(correlation(1)).not.toBe(correlation(0));
+		});
+
+		it("parses a DocumentCollection into documents with the known metadata lifted out", async () => {
+			// Captured from the acceptance environment, 2026-09-07.
+			fetchMock.mockResolvedValueOnce(
+				json({
+					items: [
+						{
+							content:
+								"https://wsapi-a.minfin.be:443/FineAPI/Generic/OAU/v2/documents/43240d22-9e1c-4d70-afe1-e4c4e3389577/content",
+							uuid: "43240d22-9e1c-4d70-afe1-e4c4e3389577",
+							docType: {
+								name: {
+									nl: "Woonplaatsattest - ondernemingen - 276CONV",
+									fr: "Attestation de résidence - entreprises - 276CONV",
+									de: "Bescheinigung des steuerlichen Wohnsitzes - Unternehmen - 276CONV",
+									en: null,
+								},
+							},
+							relatedTo: [{ type: "CBE", identifier: "463541422" }],
+							metadata: [
+								{
+									name: {
+										nl: "Mimetype",
+										fr: "Mimetype",
+										de: "Mimetype",
+										en: null,
+									},
+									values: ["application/pdf"],
+								},
+								{
+									name: {
+										nl: "Externe referentie",
+										fr: "Référence externe",
+										de: "Externe Referenz",
+										en: null,
+									},
+									values: [
+										"10-DE-2424-0463541422-20260807FISC276SISC775619-BELFIUSBANKSANV",
+									],
+								},
+								{
+									name: {
+										nl: "Publicatiedatum",
+										fr: "Date de publication",
+										de: "Datum der Veröffentlichung",
+										en: null,
+									},
+									values: ["2026-08-07"],
+								},
+							],
+							modifiedOn: "2026-08-07",
+						},
+						{
+							uuid: "1a56c353-ef23-4101-8b67-0fa4635f5097",
+							docType: {
+								name: {
+									nl: "Betaalbericht",
+									fr: " Avis de paiement",
+									de: "Zahlungsaufforderung",
+									en: null,
+								},
+							},
+							relatedTo: [{ type: "CBE", identifier: "806154033" }],
+							metadata: [],
+							modifiedOn: "2026-08-28",
+						},
+						{ notADocument: true },
+					],
+					total: 2,
+					lastSyncDate: "2026-09-07T03:00:00Z",
+				}),
+			);
 
 			const result = await client.searchDocuments({ since: "2024-10-03" });
+			expect(result.total).toBe(2);
+			expect(result.lastSyncDate).toBe("2026-09-07T03:00:00Z");
+			expect(result.documents).toHaveLength(2);
+			expect(result.documents[0]).toMatchObject({
+				uuid: "43240d22-9e1c-4d70-afe1-e4c4e3389577",
+				docType: {
+					fr: "Attestation de résidence - entreprises - 276CONV",
+					en: null,
+				},
+				relatedTo: [{ type: "CBE", identifier: "463541422" }],
+				modifiedOn: "2026-08-07",
+				mimeType: "application/pdf",
+				publishedOn: "2026-08-07",
+				externalReference:
+					"10-DE-2424-0463541422-20260807FISC276SISC775619-BELFIUSBANKSANV",
+			});
+			expect(result.documents[0]!.contentUrl).toContain(
+				"/documents/43240d22-9e1c-4d70-afe1-e4c4e3389577/content",
+			);
+			// A label with a stray leading space is trimmed; absent metadata is null.
+			expect(result.documents[1]).toMatchObject({
+				docType: { fr: "Avis de paiement" },
+				contentUrl: null,
+				mimeType: null,
+				publishedOn: null,
+				externalReference: null,
+			});
+		});
+
+		it("still accepts a bare array of documents", async () => {
+			fetchMock.mockResolvedValueOnce(
+				json([{ uuid: "abc-123" }, { uuid: "def-456" }]),
+			);
+			const result = await client.searchDocuments({ since: "2024-10-03" });
 			expect(result.documents.map((d) => d.uuid)).toEqual(["abc-123", "def-456"]);
+			expect(result.total).toBe(2);
+		});
+
+		it("surfaces Retry-After on a 429 as seconds", async () => {
+			fetchMock.mockResolvedValueOnce(
+				json(
+					{
+						type: "urn:problem-type:spff:fineapi:tooManyRequests",
+						title: "Too Many Requests",
+						status: 429,
+						detail: "Too Many Requests",
+					},
+					{ status: 429, headers: { "retry-after": "437" } },
+				),
+			);
+			const err = await client
+				.searchDocuments({ since: "2024-10-03" })
+				.catch((e: unknown) => e);
+			expect(err).toBeInstanceOf(MyMinFinApiError);
+			expect((err as MyMinFinApiError).status).toBe(429);
+			expect((err as MyMinFinApiError).retryAfterSeconds).toBe(437);
 		});
 
 		it("throws MyMinFinApiError carrying the RFC 7807 problem detail on a non-OK response", async () => {

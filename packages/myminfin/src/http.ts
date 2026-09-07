@@ -78,5 +78,15 @@ export async function assertOk(
 		problem?.detail ??
 		problem?.title ??
 		`HTTP ${res.status} ${res.statusText}`;
-	throw new MyMinFinApiError(message, res.status, problem);
+	throw new MyMinFinApiError(message, res.status, problem, {
+		// Optional chaining: a caller's stubbed Response may carry no headers.
+		retryAfterSeconds: parseRetryAfter(res.headers?.get("retry-after") ?? null),
+	});
+}
+
+/** `Retry-After` as seconds; SPF send the delay form, never an HTTP date. */
+function parseRetryAfter(header: string | null): number | undefined {
+	if (!header) return undefined;
+	const seconds = Number(header);
+	return Number.isFinite(seconds) && seconds >= 0 ? seconds : undefined;
 }

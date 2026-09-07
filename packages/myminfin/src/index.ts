@@ -1,5 +1,9 @@
 export { MyMinFinAuth } from "./auth";
-export { MyMinFinClient } from "./client";
+export {
+	MyMinFinClient,
+	parseDocumentCollection,
+	parseMyMinFinDocument,
+} from "./client";
 export { IntervatClient } from "./intervat";
 export {
 	serializeVatReturn,
@@ -63,8 +67,10 @@ export type {
 	OwnerType,
 	DocumentSearchParams,
 	DocumentSearchResult,
-	DocumentMetadata,
-	DocumentRelation,
+	LocalizedString,
+	DocumentOwner,
+	DocumentMetadataEntry,
+	MyMinFinDocument,
 	DocumentDownloadParams,
 	VatSubmissionResult,
 	ProblemDetail,

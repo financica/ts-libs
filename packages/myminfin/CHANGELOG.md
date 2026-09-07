@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.10.0
+
+### Changed
+
+- **`searchDocuments` parses what FineAPI actually returns.** The response is a `DocumentCollection` (`items`, `total`, `lastSyncDate`) whose documents carry a localized `docType.name`, `relatedTo` owners as `{ type, identifier }`, a `metadata` list and `modifiedOn` — not the flat `type`/`title`/`publishDate` shape the client assumed, which no environment has ever produced. `DocumentMetadata` and `DocumentRelation` are replaced by `MyMinFinDocument`, `DocumentOwner`, `DocumentMetadataEntry` and `LocalizedString`; the known metadata labels are lifted into `mimeType`, `publishedOn` and `externalReference`. `DocumentSearchResult` gains `total` and `lastSyncDate`. A bare array is still accepted.
+- **Every document request carries `Minfin-Ws-Correlation`.** The API declares the header required; a fresh UUID is generated per request.
+
+### Added
+
+- `MyMinFinApiError.retryAfterSeconds`, from the `Retry-After` header of a 429, so a caller can schedule around SPF's per-company rate limits instead of retrying blindly.
+- `parseDocumentCollection` and `parseMyMinFinDocument` are exported, for callers that keep the raw JSON.
+
 ## 0.9.1
 
 ### Fixed
