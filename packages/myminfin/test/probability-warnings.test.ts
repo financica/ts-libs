@@ -79,14 +79,27 @@ describe("evaluateProbabilityWarnings", () => {
 		).toContain("W_TVA_GRID_55_INCORRECT_VALUE_3");
 	});
 
-	it("flags deduction in 59 far above 21% of the purchase bases", () => {
-		// 21% of 100000 = 21000; a deduction of 130000 exceeds it by 109000.
+	it("flags deduction in 59 above 21% of the purchase bases, on either branch", () => {
+		// 21% of 100000 = 21000; a deduction of 130000 exceeds it by 109000, past
+		// the absolute threshold on its own.
 		expect(
 			evaluateProbabilityWarnings({ 82: 100000, 59: 130000 }).map((w) => w.code),
 		).toContain("W_TVA_GRID_59_INCORRECT_VALUE");
+		// The proportional branch: 21% of 100000 = 21000, and a deduction of 26000
+		// is 5000 over — past 3.000,00 and 5% of the base. The threshold here was
+		// published as 300000 until the 2026-07-14 revision called it a typo, so
+		// this case is exactly what the correction changed.
 		expect(
-			evaluateProbabilityWarnings({ 82: 100000, 59: 25000 }).map((w) => w.code),
+			evaluateProbabilityWarnings({ 82: 100000, 59: 26000 }).map((w) => w.code),
+		).toContain("W_TVA_GRID_59_INCORRECT_VALUE");
+		// 23000 is only 2000 over: under 3.000,00, and under 5%.
+		expect(
+			evaluateProbabilityWarnings({ 82: 100000, 59: 23000 }).map((w) => w.code),
 		).not.toContain("W_TVA_GRID_59_INCORRECT_VALUE");
+		// A big deduction against no base at all is the case the ratio asks about.
+		expect(evaluateProbabilityWarnings({ 59: 5000 }).map((w) => w.code)).toContain(
+			"W_TVA_GRID_59_INCORRECT_VALUE",
+		);
 	});
 
 	it("flags grid 64 above 21% of grid 49", () => {

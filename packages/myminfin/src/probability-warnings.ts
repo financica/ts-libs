@@ -14,8 +14,8 @@
 // explaining it. So a filer must evaluate these before submitting and collect
 // an explanation for each, or the return bounces.
 //
-// The rules and their wording come from the annex of SPF Finances' Intervat API
-// documentation. Everything here is deliberately faithful to that source,
+// The rules and their wording come from annex 1 of SPF Finances' Intervat API
+// documentation (V20260714). Everything here is deliberately faithful to that source,
 // including the messages, so a user reads the authority's own words rather than
 // our paraphrase.
 // ---------------------------------------------------------------------------
@@ -75,9 +75,8 @@ const RULES: RuleDefinition[] = [
 	{
 		code: "W_TVA_GRID_54O_INCORRECT_VALUE",
 		grids: [1, 2, 3, 54],
-		// Si G54 contient une valeur et que (((G1*0,06)+(G2*0,12)+(G3*0,21))-54) > 62
-		// (the source omits a `+` before (G3*0,21); the sum of the three rates is
-		// plainly what is meant, and the message says exactly that).
+		// IF G54 IS NOT NULL
+		//    AND { [ (G1 * 0,06) + (G2 * 0,12) + (G3 * 0,21) ] - G54 } > 62,00
 		trips: (g) =>
 			present(g, 54) &&
 			v(g, 1) * 0.06 + v(g, 2) * 0.12 + v(g, 3) * 0.21 - v(g, 54) > 62,
@@ -91,9 +90,8 @@ const RULES: RuleDefinition[] = [
 	{
 		code: "W_TVA_GRID_5657_INCORRECT_VALUE",
 		grids: [56, 57, 87],
-		// Si G87 différent de 0 et G56 = 0 et G57 = 0 et G87 > 250
-		trips: (g) =>
-			v(g, 87) !== 0 && v(g, 56) === 0 && v(g, 57) === 0 && v(g, 87) > 250,
+		// IF G87 > 250,00 AND G56 = 0,00 AND G57 = 0,00
+		trips: (g) => v(g, 87) > 250 && v(g, 56) === 0 && v(g, 57) === 0,
 		messages: {
 			fr: "Vous avez introduit un montant dans la grille 87 (montant hors TVA). Vous devez en principe indiquez la TVA due dans les grilles 56 et/ou 57. Merci de justifier ou de compléter au moins une de ces deux grilles (déclarant {0}).",
 			nl: "U heeft een bedrag ingevuld in rooster 87 (bedrag exclusief BTW). In principe moet u de verschuldigde BTW in de roosters 56 en/of 57 invoeren. Gelieve minstens één van deze twee rasters te verantwoorden of in te vullen (BTW nr {0}).",
@@ -104,7 +102,7 @@ const RULES: RuleDefinition[] = [
 	{
 		code: "W_TVA_GRID_5657_INCORRECT_VALUE_2",
 		grids: [56, 57, 85, 87],
-		// Si (G56+G57)-((G85+G87)*0,21) > 150
+		// IF (G56 + G57) - [ (G85 + G87) * 0,21 ] > 150,00
 		trips: (g) => v(g, 56) + v(g, 57) - (v(g, 85) + v(g, 87)) * 0.21 > 150,
 		messages: {
 			fr: "Le montant des grilles 56 et/ou 57 (TVA due à l'Etat) est supérieur à 21% de la somme introduite dans les grilles 85 et/ou 87 (montant hors TVA). Merci de corriger ou de justifier votre calcul (déclarant {0}).",
@@ -116,10 +114,10 @@ const RULES: RuleDefinition[] = [
 	{
 		code: "W_TVA_GRID_55_INCORRECT_VALUE",
 		grids: [55, 86, 88],
-		// Si G55 = null et (G86 différent de null ou G88 différent de null) et (G86+G88) > 250
+		// IF G55 IS NULL AND (G86 > 0,00 OR G88 > 0,00) AND (G86 + G88) > 250,00
 		trips: (g) =>
 			!present(g, 55) &&
-			(present(g, 86) || present(g, 88)) &&
+			(v(g, 86) > 0 || v(g, 88) > 0) &&
 			v(g, 86) + v(g, 88) > 250,
 		messages: {
 			fr: "Vous avez introduit un montant dans la grille 86 et/ou 88 (montant hors TVA). Vous devez en principe indiquez la TVA due dans la grille 55. Merci de justifier ou de compléter cette grille (déclarant {0}).",
@@ -131,19 +129,21 @@ const RULES: RuleDefinition[] = [
 	{
 		code: "W_TVA_GRID_59_INCORRECT_VALUE",
 		grids: [59, 81, 82, 83, 84, 85],
-		// Si G59-((G81+G82+G83+G84+G85)*0,21) >= 100000 OU (le même >= 300000 et
-		// le rapport à la base >= 0,05).
+		// BASE_AMOUNT = G81 + G82 + G83 + G84 + G85
+		// TEST_AMOUNT = G59 - (BASE_AMOUNT * 0,21)
+		// IF TEST_AMOUNT >= 100.000,00
+		//    OR (TEST_AMOUNT >= 3.000,00 AND TEST_AMOUNT / BASE_AMOUNT >= 0,05)
 		//
-		// As published, the second branch is subsumed by the first (any excess
-		// >= 300000 is already >= 100000), so the rule reduces to the first
-		// threshold. Kept in both halves rather than "simplified" away: the
-		// source is what SPF validate against, and if the thresholds are a
-		// transcription slip the shape here is the one to correct.
+		// The 2026-07-14 revision corrected the second threshold from 300000 to
+		// 3.000,00, calling it a long-standing typo in the published rule rather
+		// than a change: Intervat always validated at 3.000,00.
 		trips: (g) => {
 			const base = v(g, 81) + v(g, 82) + v(g, 83) + v(g, 84) + v(g, 85);
-			const excess = v(g, 59) - base * 0.21;
-			if (excess >= 100000) return true;
-			return excess >= 300000 && base !== 0 && excess / base >= 0.05;
+			const test = v(g, 59) - base * 0.21;
+			if (test >= 100000) return true;
+			// A deduction against no base at all divides to Infinity, which is the
+			// right answer: it is exactly the case the ratio is asking about.
+			return test >= 3000 && test / base >= 0.05;
 		},
 		messages: {
 			fr: "Le montant de la grille 59 (TVA déductible) est supérieur à 21% du montant total des grilles 81 à 85 (base imposable). Merci de corriger ou de justifier votre calcul (déclarant {0}).",
@@ -155,7 +155,7 @@ const RULES: RuleDefinition[] = [
 	{
 		code: "W_TVA_GRID_64_INCORRECT_VALUE",
 		grids: [49, 64],
-		// Si G64 contient une donnée et (G64-(G49*0,21)) > 62
+		// IF G64 IS NOT NULL AND [ G64 - (G49 * 0,21) ] > 62,00
 		trips: (g) => present(g, 64) && v(g, 64) - v(g, 49) * 0.21 > 62,
 		messages: {
 			fr: "Le montant de la grille 64 (TVA déductible) est supérieur à 21% du montant introduit dans la grille 49 (base imposable). Merci de corriger ou de justifier votre calcul (déclarant {0}).",
@@ -167,7 +167,7 @@ const RULES: RuleDefinition[] = [
 	{
 		code: "W_TVA_GRID_55_INCORRECT_VALUE_3",
 		grids: [55, 86, 88],
-		// Si (((G86+G88)*0,06)-G55) > 150
+		// IF { [ (G86 + G88) * 0,06 ] - G55 } > 150,00
 		trips: (g) => (v(g, 86) + v(g, 88)) * 0.06 - v(g, 55) > 150,
 		messages: {
 			fr: "Le montant de la grille 55 (TVA due) est inférieur à 6% du montant total des grilles 86 et 88 (base imposable). Merci de corriger ou de justifier votre calcul (déclarant {0}).",
@@ -179,7 +179,7 @@ const RULES: RuleDefinition[] = [
 	{
 		code: "W_TVA_GRID_5657_INCORRECT_VALUE_3",
 		grids: [56, 57, 87],
-		// Si ((G87*0,06)-(G56+G57)) > 150
+		// IF [ (G87 * 0,06) - (G56 + G57) ] > 150,00
 		trips: (g) => v(g, 87) * 0.06 - (v(g, 56) + v(g, 57)) > 150,
 		messages: {
 			fr: "Le montant des grilles 56 et/ou 57 (TVA due à l'Etat) est inférieur à 6% de la somme introduite dans la grille 87 (montant hors TVA). Merci de corriger ou de justifier votre calcul (déclarant {0}).",
@@ -191,7 +191,7 @@ const RULES: RuleDefinition[] = [
 	{
 		code: "W_TVA_GRID_55_INCORRECT_VALUE_2",
 		grids: [55, 84, 86, 88],
-		// Si (G55-((G84+G86+G88)*0,21)) > 150
+		// IF { G55 - [ (G84 + G86 + G88) * 0,21 ] } > 150,00
 		trips: (g) => v(g, 55) - (v(g, 84) + v(g, 86) + v(g, 88)) * 0.21 > 150,
 		messages: {
 			fr: "Le montant de la grille 55 (TVA due) est supérieur à 21% du montant total des grilles 84, 86 et 88 (base imposable). Merci de corriger ou de justifier votre calcul (déclarant {0}).",

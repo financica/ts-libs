@@ -1,6 +1,16 @@
 # Changelog
 
-## Unreleased
+## 0.9.1
+
+### Fixed
+
+- **`W_TVA_GRID_59_INCORRECT_VALUE` used the wrong threshold.** Its proportional branch tested for an excess deduction of 300000 rather than 3.000,00, which SPF's 2026-07-14 revision identifies as a long-standing typo in the published rule: Intervat has always validated at 3.000,00. As written, the branch was unreachable (it sat above the rule's own absolute threshold), so a return between the two figures was submitted unjustified and rejected. Rules 2 and 4 are also restated in the revision's wording; their behaviour is unchanged.
+
+## 0.9.0
+
+### Added
+
+- **Justifications for the plausibility rules Intervat rejects on.** `evaluateProbabilityWarnings(grid)` reports which of the nine `W_TVA_GRID_*` rules a grid trips, each with the grids it concerns and Intervat's own explanation in fr/nl/de/en; `findUnjustifiedWarnings` narrows that to the ones still lacking a comment. `serializeVatReturn` and `buildBelgianVatReturn` take `justifications`, emitting `<ns2:Justification Code="…">` — without which Intervat refuses a return that trips a rule — and `buildBelgianVatReturn` returns `unjustifiedWarnings` so a caller can collect explanations before submitting.
 
 ### Changed
 
