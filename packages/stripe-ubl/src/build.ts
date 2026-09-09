@@ -20,7 +20,7 @@ import {
 	resolvePrepaidAmount,
 } from "./settlement";
 import { isoDateFromUnixSeconds, resolveInvoicePeriod } from "./period";
-import { normalizeString, stripeInvoiceNote, toNumber } from "./utils";
+import { normalizeString, toNumber } from "./utils";
 
 const validateCurrency = (currency: string): string => {
 	const upper = currency.toUpperCase();
@@ -127,7 +127,11 @@ export const buildUblInvoiceDocument = (params: BuildUblInvoiceParams): UblInvoi
 		dueDate:
 			isoDateFromUnixSeconds(invoice.due_date) ??
 			((monetaryTotal.payableAmount ?? 0) > 0 ? issueDate : undefined),
-		note: stripeInvoiceNote(invoice) ?? undefined,
+		// The memo is the sender's words to the buyer (BT-22). The footer is
+		// free boilerplate on Stripe; we treat it as the payment terms (BT-20),
+		// which is what a seller writing a UBL-bound invoice puts there.
+		note: normalizeString(invoice.description) ?? undefined,
+		paymentTermsNote: normalizeString(invoice.footer) ?? undefined,
 		currency: validateCurrency(invoice.currency),
 		buyerReference: normalizeString(params.buyerReference) ?? undefined,
 		// BT-73/BT-74. A subscription invoice that does not say what it bills

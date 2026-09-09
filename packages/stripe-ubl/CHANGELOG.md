@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.0
+
+### Changed
+
+- **BREAKING: the Stripe `footer` is the payment terms, not part of the note.** `buildUblInvoiceDocument` writes the memo (`description`) alone as the BT-22 `cbc:Note` and the `footer` as `cac:PaymentTerms/cbc:Note` (BT-20). The two were joined into one note before, which left a receiver no way to tell the terms from the memo. Stripe's footer is free text, so this is a convention: a footer carrying bank details or legal mentions now travels as the payment terms. `stripeInvoiceNote` is removed; consumers importing a Stripe invoice map the two fields the same way.
+
 ## 3.0.0
 
 ### Changed

@@ -136,19 +136,19 @@ describe("buildUblInvoiceDocument", () => {
 		});
 	});
 
-	it("joins the memo and footer into the BT-22 note", () => {
-		expect(
-			buildUblInvoiceDocument({
-				invoice: buildStripeInvoice({ footer: "Legal mentions" }),
-				supplier: buildSupplier(),
-			}).note,
-		).toBe("Test invoice\n\nLegal mentions");
-		expect(
-			buildUblInvoiceDocument({
-				invoice: buildStripeInvoice({ description: null, footer: null }),
-				supplier: buildSupplier(),
-			}).note,
-		).toBeUndefined();
+	it("carries the memo as the BT-22 note and the footer as the payment terms", () => {
+		const doc = buildUblInvoiceDocument({
+			invoice: buildStripeInvoice({ footer: "Payable within 30 days" }),
+			supplier: buildSupplier(),
+		});
+		expect(doc.note).toBe("Test invoice");
+		expect(doc.paymentTermsNote).toBe("Payable within 30 days");
+		const bare = buildUblInvoiceDocument({
+			invoice: buildStripeInvoice({ description: null, footer: "  " }),
+			supplier: buildSupplier(),
+		});
+		expect(bare.note).toBeUndefined();
+		expect(bare.paymentTermsNote).toBeUndefined();
 	});
 
 	it("converts amounts to a rate-derived VAT breakdown (BR-CO-17)", () => {

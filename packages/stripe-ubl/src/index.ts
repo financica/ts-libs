@@ -29,4 +29,3 @@ export {
 	getInvoiceLineDiscountAmountCents,
 	getInvoiceLineTaxAmounts,
 } from "./tax-amounts";
-export { stripeInvoiceNote } from "./utils";
