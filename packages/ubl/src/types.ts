@@ -60,6 +60,12 @@ export interface UblCompanyId {
 	scheme?: string | undefined;
 }
 
+/** An identifier with an optional `@schemeID`: BT-18, BT-71, BT-128, BT-157. */
+export interface UblSchemedId {
+	value: string;
+	scheme?: string | undefined;
+}
+
 /** `cac:PartyIdentification/cbc:ID` (BT-29/BT-46) with its `@schemeID`. */
 export interface UblPartyIdentification {
 	id: string;
@@ -120,6 +126,14 @@ export interface UblItemProperty {
 export interface UblLine {
 	/** `cbc:ID` (BT-126) — line identifier. */
 	id: string;
+	/** `cbc:Note` (BT-127). */
+	note?: string | undefined;
+	/** `cac:DocumentReference/cbc:ID` with `cbc:DocumentTypeCode` 130 (BT-128). */
+	objectIdentifier?: UblSchemedId | undefined;
+	/** `cac:OrderLineReference/cbc:LineID` (BT-132). */
+	orderLineReference?: string | undefined;
+	/** `cbc:AccountingCost` (BT-133). */
+	accountingCost?: string | undefined;
 	/** `cac:Item/cbc:Description` (BT-154). */
 	description?: string | undefined;
 	/** `cbc:InvoicedQuantity` / `cbc:CreditedQuantity` (BT-129). */
@@ -147,8 +161,14 @@ export interface UblLine {
 	taxAmount?: number | undefined;
 	/** Line-level `cac:TaxTotal/cac:TaxSubtotal` (not used by BIS Billing, seen in the wild). */
 	taxSubtotals?: UblTaxSubtotal[] | undefined;
+	/** Line-level allowances and charges (BG-27/BG-28); the price discount is `priceAllowance`. */
 	allowanceCharges?: UblAllowanceCharge[] | undefined;
-	/** Sum of line-level allowances (absolute). */
+	/**
+	 * `cac:Price/cac:AllowanceCharge` (BT-147/BT-148): the discount between
+	 * the gross unit price (`baseAmount`) and the net one (BT-146).
+	 */
+	priceAllowance?: UblPriceAllowance | undefined;
+	/** Sum of line-level allowances plus the price allowance (absolute). */
 	discountAmount?: number | undefined;
 	/** Sum of line-level charges (absolute). */
 	chargeAmount?: number | undefined;
@@ -158,9 +178,33 @@ export interface UblLine {
 	sellersItemId?: string | undefined;
 	/** `cac:Item/cac:BuyersItemIdentification/cbc:ID` (BT-156). */
 	buyersItemId?: string | undefined;
+	/** `cac:Item/cac:StandardItemIdentification/cbc:ID` (BT-157), `@schemeID` an ICD. */
+	standardItemId?: UblSchemedId | undefined;
+	/** `cac:Item/cac:CommodityClassification` (BT-158). */
+	commodityClassifications?: UblCommodityClassification[] | undefined;
+	/** `cac:Item/cac:OriginCountry/cbc:IdentificationCode` (BT-159). */
+	originCountryCode?: string | undefined;
 	additionalItemProperties?: UblItemProperty[] | undefined;
 	/** `cac:InvoicePeriod` (BT-134/BT-135) — the line's own service period. */
 	invoicePeriod?: UblInvoicePeriod | undefined;
+}
+
+export interface UblPriceAllowance {
+	/** `cbc:Amount` (BT-147) — the discount per BT-149 units. */
+	amount?: number | undefined;
+	/** `cbc:BaseAmount` (BT-148) — the gross price per BT-149 units. */
+	baseAmount?: number | undefined;
+	/** `cbc:AllowanceChargeReason`, read when a document states one; not part of BIS and not written. */
+	reason?: string | undefined;
+}
+
+/** `cac:CommodityClassification/cbc:ItemClassificationCode` (BT-158) and its list. */
+export interface UblCommodityClassification {
+	value: string;
+	/** `@listID` (BT-158-1), a UNTDID 7143 code. */
+	listId?: string | undefined;
+	/** `@listVersionID` (BT-158-2). */
+	listVersionId?: string | undefined;
 }
 
 export interface UblAllowanceCharge {
@@ -194,6 +238,8 @@ export interface UblTaxTotal {
 	taxAmount?: number | undefined;
 	/** `cac:TaxSubtotal` (BG-23) — the VAT breakdown. */
 	subtotals: UblTaxSubtotal[];
+	/** BT-111 — the VAT total in the VAT accounting currency (`UblInvoice.taxCurrency`). */
+	taxAmountInTaxCurrency?: number | undefined;
 }
 
 export interface UblMonetaryTotal {
@@ -236,6 +282,12 @@ export interface UblPaymentMeans {
 	accountName?: string | undefined;
 	/** `cac:PaymentMandate/cbc:ID` (BT-89). */
 	mandateId?: string | undefined;
+	/** `cac:PaymentMandate/cac:PayerFinancialAccount/cbc:ID` (BT-91). */
+	debitedAccount?: string | undefined;
+	/** `cac:CardAccount/cbc:PrimaryAccountNumberID` (BT-87). */
+	cardNumber?: string | undefined;
+	/** `cac:CardAccount/cbc:HolderName` (BT-88). */
+	cardHolder?: string | undefined;
 }
 
 /**
@@ -277,8 +329,12 @@ export interface UblDocumentReference {
 export interface UblDelivery {
 	/** `cbc:ActualDeliveryDate` (BT-72). */
 	actualDeliveryDate?: string | undefined;
+	/** `cac:DeliveryLocation/cbc:ID` (BT-71). */
+	locationId?: UblSchemedId | undefined;
 	/** `cac:DeliveryLocation/cac:Address` (BG-15). */
 	address?: UblAddress | undefined;
+	/** `cac:DeliveryParty/cac:PartyName/cbc:Name` (BT-70). */
+	partyName?: string | undefined;
 }
 
 /** `cac:BillingReference/cac:InvoiceDocumentReference` (BT-25/BT-26). */
@@ -305,6 +361,10 @@ export interface UblInvoice {
 	taxPointDate?: string | undefined;
 	/** Document currency (BT-5). */
 	currency: string;
+	/** `cbc:TaxCurrencyCode` (BT-6); requires `taxTotal.taxAmountInTaxCurrency` (BR-53). */
+	taxCurrency?: string | undefined;
+	/** `cbc:AccountingCost` (BT-19). */
+	accountingCost?: string | undefined;
 	/** Buyer reference (BT-10). */
 	buyerReference?: string | undefined;
 	/** `cac:OrderReference/cbc:ID` (BT-13). */
@@ -313,12 +373,28 @@ export interface UblInvoice {
 	salesOrderId?: string | undefined;
 	/** `cac:ContractDocumentReference/cbc:ID` (BT-12). */
 	contractReference?: string | undefined;
-	/** `cac:ProjectReference/cbc:ID` (BT-11). */
+	/**
+	 * BT-11. `cac:ProjectReference/cbc:ID` on an invoice; a credit note has no
+	 * such element, so there it is an additional document reference with
+	 * `cbc:DocumentTypeCode` 50.
+	 */
 	projectReference?: string | undefined;
+	/** `cac:ReceiptDocumentReference/cbc:ID` (BT-15). */
+	receivingAdviceReference?: string | undefined;
+	/** `cac:DespatchDocumentReference/cbc:ID` (BT-16). */
+	despatchReference?: string | undefined;
+	/** BT-17, an additional document reference with `cbc:DocumentTypeCode` 50. Invoices only. */
+	tenderReference?: string | undefined;
+	/** BT-18, an additional document reference with `cbc:DocumentTypeCode` 130. */
+	invoicedObjectId?: UblSchemedId | undefined;
 	/** For credit notes: the referenced original invoice (BT-25). */
 	billingReference?: UblBillingReference | undefined;
 	seller: UblParty;
 	buyer: UblParty;
+	/** `cac:PayeeParty` (BG-10): name, identification and legal entity id only. */
+	payee?: UblParty | undefined;
+	/** `cac:TaxRepresentativeParty` (BG-11): name, VAT id and address only. */
+	taxRepresentative?: UblParty | undefined;
 	delivery?: UblDelivery | undefined;
 	lines: UblLine[];
 	taxTotal: UblTaxTotal;

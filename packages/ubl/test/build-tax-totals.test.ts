@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+	allocateAcrossTaxCategories,
 	buildTaxTotals,
 	reconcileLinesToExclTotal,
 	type UblLine,
@@ -131,5 +132,172 @@ describe("reconcileLinesToExclTotal", () => {
 	it("is a no-op when the lines already sum to the total", () => {
 		const lines = [line({ lineExtensionAmount: 100 })];
 		expect(reconcileLinesToExclTotal(lines, 100)).toBe(lines);
+	});
+});
+
+describe("buildTaxTotals with document allowances and charges", () => {
+	const standard = { id: "S", percent: 21 };
+	const reduced = { id: "S", percent: 6 };
+
+	it("folds each item into its own category and derives BT-107/BT-108/BT-109", () => {
+		const { taxTotal, monetaryTotal } = buildTaxTotals(
+			[
+				line({ id: "1", lineExtensionAmount: 100, taxCategory: standard }),
+				line({ id: "2", lineExtensionAmount: 50, taxCategory: reduced }),
+			],
+			{
+				allowanceCharges: [
+					{
+						chargeIndicator: false,
+						amount: 10,
+						reason: "Discount",
+						taxCategory: standard,
+					},
+					{
+						chargeIndicator: true,
+						amount: 5,
+						reason: "Shipping",
+						taxCategory: reduced,
+					},
+				],
+			},
+		);
+		expect(taxTotal.subtotals).toEqual([
+			{ taxableAmount: 90, taxAmount: 18.9, category: standard },
+			{ taxableAmount: 55, taxAmount: 3.3, category: reduced },
+		]);
+		expect(taxTotal.taxAmount).toBe(22.2);
+		expect(monetaryTotal).toEqual({
+			lineExtensionAmount: 150,
+			taxExclusiveAmount: 145,
+			taxInclusiveAmount: 167.2,
+			allowanceTotalAmount: 10,
+			chargeTotalAmount: 5,
+			payableAmount: 167.2,
+		});
+	});
+
+	it("opens a VAT category the lines do not use when a charge carries one", () => {
+		const { taxTotal } = buildTaxTotals([line()], {
+			allowanceCharges: [
+				{
+					chargeIndicator: true,
+					amount: 5,
+					reason: "Fee",
+					taxCategory: reduced,
+				},
+			],
+		});
+		expect(taxTotal.subtotals.map((subtotal) => subtotal.taxableAmount)).toEqual([
+			100, 5,
+		]);
+	});
+
+	it("throws for an item without a VAT category", () => {
+		expect(() =>
+			buildTaxTotals([line()], {
+				allowanceCharges: [{ chargeIndicator: true, amount: 5, reason: "Fee" }],
+			}),
+		).toThrow(/allowanceCharges\[0\]/);
+	});
+});
+
+describe("allocateAcrossTaxCategories", () => {
+	const lines = [
+		line({
+			id: "1",
+			lineExtensionAmount: 100,
+			taxCategory: { id: "S", percent: 21 },
+		}),
+		line({
+			id: "2",
+			lineExtensionAmount: 50,
+			taxCategory: { id: "S", percent: 6 },
+		}),
+		line({
+			id: "3",
+			lineExtensionAmount: 50,
+			taxCategory: { id: "S", percent: 21 },
+		}),
+	];
+
+	it("splits pro rata by category and sums exactly to the amount", () => {
+		const parts = allocateAcrossTaxCategories(10, lines, {
+			chargeIndicator: true,
+			reason: "Shipping",
+			reasonCode: "FC",
+		});
+		expect(parts).toEqual([
+			{
+				chargeIndicator: true,
+				reason: "Shipping",
+				reasonCode: "FC",
+				amount: 7.5,
+				taxCategory: { id: "S", percent: 21 },
+			},
+			{
+				chargeIndicator: true,
+				reason: "Shipping",
+				reasonCode: "FC",
+				amount: 2.5,
+				taxCategory: { id: "S", percent: 6 },
+			},
+		]);
+	});
+
+	it("gives the cent remainder to the largest fractional share", () => {
+		const parts = allocateAcrossTaxCategories(0.11, lines, {
+			chargeIndicator: true,
+			reason: "x",
+		});
+		expect(parts.map((part) => part.amount)).toEqual([0.08, 0.03]);
+		expect(parts.reduce((sum, part) => sum + (part.amount ?? 0), 0)).toBeCloseTo(
+			0.11,
+			10,
+		);
+	});
+
+	it("omits categories that receive nothing and uses the first when no line has a positive net", () => {
+		expect(
+			allocateAcrossTaxCategories(0.01, lines, {
+				chargeIndicator: false,
+				reason: "x",
+			}).map((part) => part.taxCategory?.percent),
+		).toEqual([21]);
+		const zero = [
+			line({
+				id: "1",
+				lineExtensionAmount: 0,
+				taxCategory: { id: "S", percent: 21 },
+			}),
+		];
+		expect(
+			allocateAcrossTaxCategories(5, zero, {
+				chargeIndicator: true,
+				reason: "x",
+			}),
+		).toEqual([
+			{
+				chargeIndicator: true,
+				reason: "x",
+				amount: 5,
+				taxCategory: { id: "S", percent: 21 },
+			},
+		]);
+		expect(
+			allocateAcrossTaxCategories(0, lines, {
+				chargeIndicator: true,
+				reason: "x",
+			}),
+		).toEqual([]);
+	});
+
+	it("throws for a line without a VAT category", () => {
+		expect(() =>
+			allocateAcrossTaxCategories(1, [line({ taxCategory: undefined })], {
+				chargeIndicator: true,
+				reason: "x",
+			}),
+		).toThrow(/taxCategory/);
 	});
 });

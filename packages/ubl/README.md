@@ -150,6 +150,50 @@ const { taxTotal, monetaryTotal } = buildTaxTotals(doc.lines, { prepaidAmount: 1
 `taxInclusiveAmount - prepaidAmount + payableRoundingAmount` (BR-CO-16) and does
 not clamp it: an overpayment yields a negative `payableAmount`.
 
+Document-level allowances and charges (BG-20/BG-21) go through the same
+helper so each one lands in the VAT breakdown of its own category and feeds
+BT-107/BT-108. `allocateAcrossTaxCategories` splits one amount (a shipping
+charge, an invoice-wide discount) across the categories the lines use, pro
+rata, so a mixed-rate invoice stays right:
+
+```ts
+import { allocateAcrossTaxCategories, buildTaxTotals } from "@financica/ubl/build";
+
+const allowanceCharges = allocateAcrossTaxCategories(20, lines, {
+	chargeIndicator: true,
+	reason: "Shipping",
+	reasonCode: "FC",
+});
+const { taxTotal, monetaryTotal } = buildTaxTotals(lines, { allowanceCharges });
+const xml = serializeUblInvoice({
+	...doc,
+	allowanceCharges,
+	lines,
+	taxTotal,
+	monetaryTotal,
+});
+```
+
+### What the serializer writes
+
+Every EN 16931 business term the model holds, at its place in the UBL 2.1
+sequence: the header terms (BT-1 to BT-9, BT-19, BT-6 with BT-111), the
+references (BT-10 to BT-18, BT-25/BT-26), the seller and buyer with
+identifications, legal form and contacts, the payee (BG-10), the tax
+representative (BG-11), delivery (BG-13), payment means (BG-16 with credit
+transfer, direct debit and card details), payment terms, document and line
+allowances and charges (BG-20/21, BG-27/28), the price discount (BT-147/148),
+the VAT breakdown, the monetary totals, attachments and document references
+(BG-24), and lines with their note, references, item identifiers,
+classification, origin and attributes. Line-level tax totals are not written;
+BIS Billing 3.0 forbids them.
+
+Besides the mandatory fields, `serializeUblInvoice` checks the document's
+arithmetic before anything leaves: BR-CO-10 to BR-CO-13, BR-CO-15, BR-CO-16,
+the BR-S-08 family, BR-CO-3, BR-53 and Peppol's R040 and R120. A document
+that would be rejected by an access point throws `UblBuildError` naming the
+rule and the model path instead.
+
 The build subpath also exports
 helpers such as `buildSupplierParty`, `buildTaxTotals`, `buildCompanyId`,
 `buildPdfAttachment`, and Peppol identifier utilities (`resolveVatEndpoint`,
@@ -162,7 +206,9 @@ helpers such as `buildSupplierParty`, `buildTaxTotals`, `buildCompanyId`,
 
 ## Parsed fields
 
-Parties (seller/buyer), addresses, contacts, endpoint IDs, line items with quantities/prices/tax, allowance/charge at both header and line level, tax subtotals, monetary totals, payment means (including multiple), payment terms, invoice period, delivery information, order/contract/project references, notes, and embedded attachments.
+Everything the serializer writes (above), read back into the same model, plus
+what documents in the wild add: line-level tax totals (E-FFF), a second
+`cac:TaxTotal` in the accounting currency, and a reason on the price discount.
 
 ## Development
 

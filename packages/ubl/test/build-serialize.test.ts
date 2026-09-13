@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+	buildTaxTotals,
 	serializeUblDocument,
 	serializeUblInvoice,
 	UblBuildError,
@@ -166,6 +167,12 @@ describe("serializeUblDocument", () => {
 				taxTotal: {
 					taxAmount: 0,
 					subtotals: [{ taxableAmount: 100, taxAmount: 0, category }],
+				},
+				monetaryTotal: {
+					lineExtensionAmount: 100,
+					taxExclusiveAmount: 100,
+					taxInclusiveAmount: 100,
+					payableAmount: 100,
 				},
 			}),
 		);
@@ -405,6 +412,12 @@ describe("serializeUblInvoice validation", () => {
 						},
 					],
 				},
+				monetaryTotal: {
+					lineExtensionAmount: 100,
+					taxExclusiveAmount: 100,
+					taxInclusiveAmount: 100,
+					payableAmount: 100,
+				},
 			}),
 		);
 		expect(xml).toContain(
@@ -432,6 +445,32 @@ describe("invoice period", () => {
 		expect(xml.indexOf("cac:InvoicePeriod")).toBeLessThan(
 			xml.indexOf("cac:BillingReference"),
 		);
+	});
+
+	it("emits BT-13/BT-14 between InvoicePeriod and BillingReference", () => {
+		const xml = serializeUblDocument(
+			doc({
+				orderReference: "PO-4711",
+				salesOrderId: "SO-12",
+				billingReference: { invoiceId: "INV-000" },
+				invoicePeriod: { startDate: "2026-01-01" },
+			}),
+		);
+
+		expect(xml).toMatch(
+			/<cac:OrderReference>\s*<cbc:ID>PO-4711<\/cbc:ID>\s*<cbc:SalesOrderID>SO-12<\/cbc:SalesOrderID>\s*<\/cac:OrderReference>/,
+		);
+		expect(xml.indexOf("cac:InvoicePeriod")).toBeLessThan(
+			xml.indexOf("cac:OrderReference"),
+		);
+		expect(xml.indexOf("cac:OrderReference")).toBeLessThan(
+			xml.indexOf("cac:BillingReference"),
+		);
+	});
+
+	it("omits OrderReference when only the sales order id is known", () => {
+		const xml = serializeUblDocument(doc({ salesOrderId: "SO-12" }));
+		expect(xml).not.toContain("cac:OrderReference");
 	});
 
 	it("emits BT-20 payment terms between the customer party and TaxTotal", () => {
@@ -474,5 +513,623 @@ describe("invoice period", () => {
 	it("omits the element entirely when neither bound is set", () => {
 		const xml = serializeUblDocument(doc({ invoicePeriod: {} }));
 		expect(xml).not.toContain("cac:InvoicePeriod");
+	});
+});
+
+// ── 0.18.0: the rest of EN 16931 ───────────────────────────────────────
+
+const consistent = (
+	lines: UblLine[],
+	options?: Parameters<typeof buildTaxTotals>[1],
+): Partial<UblInvoice> => ({
+	lines,
+	...buildTaxTotals(lines, options),
+	allowanceCharges: options?.allowanceCharges,
+});
+
+const between = (xml: string, before: string, tag: string, after: string): void => {
+	expect(xml.indexOf(before)).toBeGreaterThan(-1);
+	expect(xml.indexOf(tag)).toBeGreaterThan(-1);
+	expect(xml.indexOf(after)).toBeGreaterThan(-1);
+	expect(xml.indexOf(before)).toBeLessThan(xml.indexOf(tag));
+	expect(xml.indexOf(tag)).toBeLessThan(xml.indexOf(after));
+};
+
+describe("header terms", () => {
+	it("puts BT-7 after the note on an invoice and before the type code on a credit note", () => {
+		const invoice = serializeUblInvoice(doc({ taxPointDate: "2026-04-15" }));
+		between(
+			invoice,
+			"<cbc:Note>",
+			"<cbc:TaxPointDate>",
+			"<cbc:DocumentCurrencyCode>",
+		);
+
+		const creditNote = serializeUblInvoice(
+			doc({ documentType: "CreditNote", taxPointDate: "2026-04-15" }),
+		);
+		between(
+			creditNote,
+			"<cbc:IssueDate>",
+			"<cbc:TaxPointDate>",
+			"<cbc:CreditNoteTypeCode>",
+		);
+	});
+
+	it("refuses a tax point date next to a tax point date code (BR-CO-3)", () => {
+		expect(() =>
+			serializeUblInvoice(
+				doc({
+					taxPointDate: "2026-04-15",
+					invoicePeriod: { startDate: "2026-04-01", descriptionCode: "35" },
+				}),
+			),
+		).toThrow(/BR-CO-3/);
+	});
+
+	it("writes the tax point date code on the document period", () => {
+		const xml = serializeUblInvoice(
+			doc({ invoicePeriod: { startDate: "2026-04-01", descriptionCode: "35" } }),
+		);
+		expect(xml).toMatch(
+			/<cac:InvoicePeriod>\s*<cbc:StartDate>2026-04-01<\/cbc:StartDate>\s*<cbc:DescriptionCode>35<\/cbc:DescriptionCode>\s*<\/cac:InvoicePeriod>/,
+		);
+	});
+
+	it("emits BT-6 and a second TaxTotal carrying BT-111, and requires the latter (BR-53)", () => {
+		const base = doc();
+		const xml = serializeUblInvoice({
+			...base,
+			buyerReference: "Dept 7",
+			taxCurrency: "SEK",
+			taxTotal: { ...base.taxTotal, taxAmountInTaxCurrency: 231.5 },
+		});
+		between(
+			xml,
+			"<cbc:DocumentCurrencyCode>",
+			"<cbc:TaxCurrencyCode>SEK</cbc:TaxCurrencyCode>",
+			"<cbc:BuyerReference>",
+		);
+		expect(xml.match(/<cac:TaxTotal>/g)).toHaveLength(2);
+		expect(xml).toMatch(
+			/<cac:TaxTotal>\s*<cbc:TaxAmount currencyID="SEK">231.50<\/cbc:TaxAmount>\s*<\/cac:TaxTotal>\s*<cac:LegalMonetaryTotal>/,
+		);
+		expect(() => serializeUblInvoice({ ...base, taxCurrency: "SEK" })).toThrow(
+			/BT-111/,
+		);
+	});
+
+	it("emits BT-19 between the currency codes and the buyer reference", () => {
+		const xml = serializeUblInvoice(
+			doc({ accountingCost: "4711:CC-12", buyerReference: "Dept 7" }),
+		);
+		between(
+			xml,
+			"<cbc:DocumentCurrencyCode>",
+			"<cbc:AccountingCost>4711:CC-12</cbc:AccountingCost>",
+			"<cbc:BuyerReference>",
+		);
+	});
+
+	it("emits the reference set (BT-11 to BT-18, BT-26) in sequence order", () => {
+		const xml = serializeUblInvoice(
+			doc({
+				buyerReference: "Dept 7",
+				invoicePeriod: { startDate: "2026-04-01" },
+				orderReference: "PO-1",
+				billingReference: {
+					invoiceId: "INV-000",
+					invoiceIssueDate: "2026-01-01",
+				},
+				despatchReference: "DESP-1",
+				receivingAdviceReference: "RCPT-1",
+				contractReference: "CTR-1",
+				projectReference: "PRJ-1",
+				tenderReference: "TND-1",
+				invoicedObjectId: { value: "OBJ-1", scheme: "ABZ" },
+				documentReferences: [{ id: "TERMS", description: "General terms" }],
+			}),
+		);
+		const order = [
+			"<cbc:BuyerReference>",
+			"<cac:InvoicePeriod>",
+			"<cac:OrderReference>",
+			"<cac:BillingReference>",
+			"<cac:DespatchDocumentReference>",
+			"<cac:ReceiptDocumentReference>",
+			"<cac:ContractDocumentReference>",
+			"<cac:AdditionalDocumentReference>",
+			"<cac:ProjectReference>",
+			"<cac:AccountingSupplierParty>",
+		];
+		const positions = order.map((tag) => xml.indexOf(tag));
+		expect(positions.every((position) => position > -1)).toBe(true);
+		expect([...positions].sort((a, b) => a - b)).toEqual(positions);
+		expect(xml).toMatch(
+			/<cac:InvoiceDocumentReference>\s*<cbc:ID>INV-000<\/cbc:ID>\s*<cbc:IssueDate>2026-01-01<\/cbc:IssueDate>/,
+		);
+		expect(xml).toMatch(
+			/<cac:AdditionalDocumentReference>\s*<cbc:ID>TERMS<\/cbc:ID>\s*<cbc:DocumentDescription>General terms<\/cbc:DocumentDescription>\s*<\/cac:AdditionalDocumentReference>/,
+		);
+		expect(xml).toMatch(
+			/<cbc:ID schemeID="ABZ">OBJ-1<\/cbc:ID>\s*<cbc:DocumentTypeCode>130<\/cbc:DocumentTypeCode>/,
+		);
+		expect(xml).toMatch(
+			/<cbc:ID>TND-1<\/cbc:ID>\s*<cbc:DocumentTypeCode>50<\/cbc:DocumentTypeCode>/,
+		);
+		expect(xml).toMatch(/<cac:ProjectReference>\s*<cbc:ID>PRJ-1<\/cbc:ID>/);
+	});
+
+	it("writes a credit note's project reference as document type 50 and drops its tender reference", () => {
+		const xml = serializeUblInvoice(
+			doc({
+				documentType: "CreditNote",
+				projectReference: "PRJ-1",
+				tenderReference: "TND-1",
+			}),
+		);
+		expect(xml).not.toContain("cac:ProjectReference");
+		expect(xml).not.toContain("TND-1");
+		expect(xml).toMatch(
+			/<cbc:ID>PRJ-1<\/cbc:ID>\s*<cbc:DocumentTypeCode>50<\/cbc:DocumentTypeCode>/,
+		);
+	});
+
+	it("writes the attachment description (BT-123) before the attachment", () => {
+		const xml = serializeUblInvoice(
+			doc({
+				attachments: [
+					{
+						filename: "a.pdf",
+						mimeCode: "application/pdf",
+						base64Content: "AAAA",
+						description: "Timesheet",
+					},
+				],
+			}),
+		);
+		expect(xml).toMatch(
+			/<cbc:ID>a.pdf<\/cbc:ID>\s*<cbc:DocumentDescription>Timesheet<\/cbc:DocumentDescription>\s*<cac:Attachment>/,
+		);
+	});
+});
+
+describe("parties", () => {
+	it("emits identifications, legal form and contact in the Party sequence", () => {
+		const xml = serializeUblInvoice(
+			doc({
+				seller: party({
+					partyIdentifications: [{ id: "0800279001", schemeId: "0208" }],
+					companyLegalForm: "BV",
+					contact: {
+						name: "Ann",
+						phone: "+32 2 000 00 00",
+						email: "ann@acme.be",
+					},
+				}),
+			}),
+		);
+		const supplier = xml.slice(
+			xml.indexOf("<cac:AccountingSupplierParty>"),
+			xml.indexOf("</cac:AccountingSupplierParty>"),
+		);
+		const order = [
+			"<cbc:EndpointID",
+			"<cac:PartyIdentification>",
+			"<cac:PartyName>",
+			"<cac:PostalAddress>",
+			"<cac:PartyTaxScheme>",
+			"<cac:PartyLegalEntity>",
+			"<cac:Contact>",
+		].map((tag) => supplier.indexOf(tag));
+		expect(order.every((position) => position > -1)).toBe(true);
+		expect([...order].sort((a, b) => a - b)).toEqual(order);
+		expect(supplier).toMatch(/<cbc:ID schemeID="0208">0800279001<\/cbc:ID>/);
+		expect(supplier).toMatch(
+			/<cbc:CompanyID schemeID="0208">0800279001<\/cbc:CompanyID>\s*<cbc:CompanyLegalForm>BV<\/cbc:CompanyLegalForm>/,
+		);
+		expect(supplier).toMatch(
+			/<cac:Contact>\s*<cbc:Name>Ann<\/cbc:Name>\s*<cbc:Telephone>\+32 2 000 00 00<\/cbc:Telephone>\s*<cbc:ElectronicMail>ann@acme.be<\/cbc:ElectronicMail>/,
+		);
+	});
+
+	it("emits the payee (BG-10) and tax representative (BG-11) after the customer", () => {
+		const xml = serializeUblInvoice(
+			doc({
+				payee: {
+					name: "Factor NV",
+					partyIdentifications: [{ id: "0999999999", schemeId: "0208" }],
+					companyId: { value: "0999999999", scheme: "0208" },
+				},
+				taxRepresentative: {
+					name: "Fiscal Rep SA",
+					vatId: "FR12345678901",
+					address: { city: "Lille", countryCode: "FR" },
+				},
+				delivery: { actualDeliveryDate: "2026-04-20" },
+			}),
+		);
+		between(
+			xml,
+			"</cac:AccountingCustomerParty>",
+			"<cac:PayeeParty>",
+			"<cac:TaxRepresentativeParty>",
+		);
+		between(
+			xml,
+			"<cac:TaxRepresentativeParty>",
+			"</cac:TaxRepresentativeParty>",
+			"<cac:Delivery>",
+		);
+		expect(xml).toMatch(
+			/<cac:PayeeParty>\s*<cac:PartyIdentification>\s*<cbc:ID schemeID="0208">0999999999<\/cbc:ID>\s*<\/cac:PartyIdentification>\s*<cac:PartyName>\s*<cbc:Name>Factor NV<\/cbc:Name>\s*<\/cac:PartyName>\s*<cac:PartyLegalEntity>\s*<cbc:CompanyID schemeID="0208">0999999999<\/cbc:CompanyID>/,
+		);
+		expect(xml).toMatch(
+			/<cac:TaxRepresentativeParty>\s*<cac:PartyName>\s*<cbc:Name>Fiscal Rep SA<\/cbc:Name>\s*<\/cac:PartyName>\s*<cac:PostalAddress>[\s\S]*?<\/cac:PostalAddress>\s*<cac:PartyTaxScheme>\s*<cbc:CompanyID>FR12345678901<\/cbc:CompanyID>/,
+		);
+	});
+
+	it("requires a payee name (BT-59) and the tax representative's name, VAT id and country", () => {
+		expect(() =>
+			serializeUblInvoice(doc({ payee: { companyId: { value: "1" } } })),
+		).toThrow(/BT-59/);
+		expect(() =>
+			serializeUblInvoice(
+				doc({
+					taxRepresentative: { name: "Rep", address: { countryCode: "FR" } },
+				}),
+			),
+		).toThrow(/BT-63/);
+		expect(() =>
+			serializeUblInvoice(
+				doc({ taxRepresentative: { name: "Rep", vatId: "FR1" } }),
+			),
+		).toThrow(/BT-69/);
+	});
+});
+
+describe("delivery", () => {
+	it("emits BG-13 between the parties and the payment means", () => {
+		const xml = serializeUblInvoice(
+			doc({
+				delivery: {
+					actualDeliveryDate: "2026-04-20",
+					locationId: { value: "5790000435951", scheme: "0088" },
+					address: {
+						street: "Kaai 1",
+						city: "Antwerp",
+						postalZone: "2000",
+						countryCode: "BE",
+					},
+					partyName: "Globex warehouse",
+				},
+				paymentMeansList: [{ code: "58", iban: "BE71096123456769" }],
+			}),
+		);
+		between(
+			xml,
+			"</cac:AccountingCustomerParty>",
+			"<cac:Delivery>",
+			"<cac:PaymentMeans>",
+		);
+		expect(xml).toMatch(
+			/<cac:Delivery>\s*<cbc:ActualDeliveryDate>2026-04-20<\/cbc:ActualDeliveryDate>\s*<cac:DeliveryLocation>\s*<cbc:ID schemeID="0088">5790000435951<\/cbc:ID>\s*<cac:Address>\s*<cbc:StreetName>Kaai 1<\/cbc:StreetName>[\s\S]*?<\/cac:Address>\s*<\/cac:DeliveryLocation>\s*<cac:DeliveryParty>\s*<cac:PartyName>\s*<cbc:Name>Globex warehouse<\/cbc:Name>/,
+		);
+	});
+});
+
+describe("payment means", () => {
+	it("emits a credit transfer with its account, name and BIC before the payment terms", () => {
+		const xml = serializeUblInvoice(
+			doc({
+				paymentMeansList: [
+					{
+						code: "58",
+						codeName: "SEPA credit transfer",
+						paymentId: "+++090/9337/55023+++",
+						iban: "BE71096123456769",
+						accountName: "Acme BV",
+						bic: "GKCCBEBB",
+					},
+				],
+				paymentTermsNote: "30 days",
+			}),
+		);
+		between(
+			xml,
+			"</cac:AccountingCustomerParty>",
+			"<cac:PaymentMeans>",
+			"<cac:PaymentTerms>",
+		);
+		expect(xml).toMatch(
+			/<cac:PaymentMeans>\s*<cbc:PaymentMeansCode name="SEPA credit transfer">58<\/cbc:PaymentMeansCode>\s*<cbc:PaymentID>\+\+\+090\/9337\/55023\+\+\+<\/cbc:PaymentID>\s*<cac:PayeeFinancialAccount>\s*<cbc:ID>BE71096123456769<\/cbc:ID>\s*<cbc:Name>Acme BV<\/cbc:Name>\s*<cac:FinancialInstitutionBranch>\s*<cbc:ID>GKCCBEBB<\/cbc:ID>/,
+		);
+	});
+
+	it("emits direct debit mandates and card accounts", () => {
+		const xml = serializeUblInvoice(
+			doc({
+				paymentMeansList: [
+					{
+						code: "59",
+						mandateId: "MANDATE-1",
+						debitedAccount: "BE71096123456769",
+					},
+					{ code: "48", cardNumber: "1234", cardHolder: "J. Doe" },
+				],
+			}),
+		);
+		expect(xml).toMatch(
+			/<cac:PaymentMandate>\s*<cbc:ID>MANDATE-1<\/cbc:ID>\s*<cac:PayerFinancialAccount>\s*<cbc:ID>BE71096123456769<\/cbc:ID>/,
+		);
+		expect(xml).toMatch(
+			/<cac:CardAccount>\s*<cbc:PrimaryAccountNumberID>1234<\/cbc:PrimaryAccountNumberID>\s*<cbc:NetworkID>NA<\/cbc:NetworkID>\s*<cbc:HolderName>J. Doe<\/cbc:HolderName>/,
+		);
+	});
+
+	it("puts a credit note's due date in the first payment means", () => {
+		const xml = serializeUblInvoice(
+			doc({
+				documentType: "CreditNote",
+				dueDate: "2026-05-30",
+				paymentMeansList: [
+					{ code: "58", iban: "BE71096123456769" },
+					{ code: "1" },
+				],
+			}),
+		);
+		expect(xml).not.toContain("<cbc:DueDate>");
+		expect(
+			xml.match(/<cbc:PaymentDueDate>2026-05-30<\/cbc:PaymentDueDate>/g),
+		).toHaveLength(1);
+		expect(xml).toMatch(
+			/<cbc:PaymentMeansCode>58<\/cbc:PaymentMeansCode>\s*<cbc:PaymentDueDate>/,
+		);
+	});
+
+	it("requires a code, an account for a credit transfer and a mandate for a direct debit", () => {
+		expect(() =>
+			serializeUblInvoice(doc({ paymentMeansList: [{ iban: "BE71" }] })),
+		).toThrow(/BT-81/);
+		expect(() =>
+			serializeUblInvoice(doc({ paymentMeansList: [{ code: "58" }] })),
+		).toThrow(/BT-84/);
+		expect(() =>
+			serializeUblInvoice(doc({ paymentMeansList: [{ code: "59" }] })),
+		).toThrow(/BT-89/);
+	});
+});
+
+describe("document allowances and charges", () => {
+	const shipping = {
+		chargeIndicator: true,
+		amount: 20,
+		reason: "Shipping",
+		reasonCode: "FC",
+		taxCategory: { id: "S", percent: 21 },
+	};
+	const discount = {
+		chargeIndicator: false,
+		amount: 10,
+		reason: "Volume discount",
+		baseAmount: 100,
+		multiplierFactorNumeric: 10,
+		taxCategory: { id: "S", percent: 21 },
+	};
+
+	it("emits BG-20/BG-21 between the payment terms and the tax total, with BT-107/BT-108", () => {
+		const xml = serializeUblInvoice(
+			doc({
+				paymentTermsNote: "30 days",
+				...consistent([line()], { allowanceCharges: [discount, shipping] }),
+			}),
+		);
+		between(xml, "</cac:PaymentTerms>", "<cac:AllowanceCharge>", "<cac:TaxTotal>");
+		expect(xml).toMatch(
+			/<cac:AllowanceCharge>\s*<cbc:ChargeIndicator>false<\/cbc:ChargeIndicator>\s*<cbc:AllowanceChargeReason>Volume discount<\/cbc:AllowanceChargeReason>\s*<cbc:MultiplierFactorNumeric>10.00<\/cbc:MultiplierFactorNumeric>\s*<cbc:Amount currencyID="EUR">10.00<\/cbc:Amount>\s*<cbc:BaseAmount currencyID="EUR">100.00<\/cbc:BaseAmount>\s*<cac:TaxCategory>\s*<cbc:ID>S<\/cbc:ID>\s*<cbc:Percent>21.00<\/cbc:Percent>/,
+		);
+		expect(xml).toMatch(
+			/<cbc:ChargeIndicator>true<\/cbc:ChargeIndicator>\s*<cbc:AllowanceChargeReasonCode>FC<\/cbc:AllowanceChargeReasonCode>\s*<cbc:AllowanceChargeReason>Shipping<\/cbc:AllowanceChargeReason>/,
+		);
+		expect(childOrder(xml, "cac:LegalMonetaryTotal")).toEqual([
+			"cbc:LineExtensionAmount",
+			"cbc:TaxExclusiveAmount",
+			"cbc:TaxInclusiveAmount",
+			"cbc:AllowanceTotalAmount",
+			"cbc:ChargeTotalAmount",
+			"cbc:PayableAmount",
+		]);
+		expect(xml).toContain(
+			'<cbc:TaxExclusiveAmount currencyID="EUR">110.00</cbc:TaxExclusiveAmount>',
+		);
+		expect(xml).toContain(
+			'<cbc:TaxableAmount currencyID="EUR">110.00</cbc:TaxableAmount>',
+		);
+	});
+
+	it("requires an amount, a reason and a VAT category, and checks the percentage (R040)", () => {
+		const base = doc();
+		const withItem = (item: Record<string, unknown>) =>
+			serializeUblInvoice({
+				...base,
+				allowanceCharges: [{ chargeIndicator: true, ...item }],
+			});
+		expect(() =>
+			withItem({ reason: "x", taxCategory: { id: "S", percent: 21 } }),
+		).toThrow(/BT-92\/BT-99/);
+		expect(() =>
+			withItem({ amount: 1, taxCategory: { id: "S", percent: 21 } }),
+		).toThrow(/BT-97\/BT-98/);
+		expect(() => withItem({ amount: 1, reason: "x" })).toThrow(/BT-151\/BT-118/);
+		expect(() =>
+			withItem({
+				amount: 5,
+				reason: "x",
+				baseAmount: 100,
+				multiplierFactorNumeric: 10,
+				taxCategory: { id: "S", percent: 21 },
+			}),
+		).toThrow(/R040/);
+	});
+});
+
+describe("lines", () => {
+	it("emits the line terms and item identifiers in sequence order", () => {
+		const full = line({
+			note: "Batch 7",
+			accountingCost: "CC-12",
+			orderLineReference: "3",
+			objectIdentifier: { value: "SUB-1", scheme: "ABZ" },
+			invoicePeriod: { startDate: "2026-04-01", endDate: "2026-04-30" },
+			itemName: "Widget",
+			buyersItemId: "B-1",
+			sellersItemId: "S-1",
+			standardItemId: { value: "5790000435951", scheme: "0160" },
+			originCountryCode: "DE",
+			commodityClassifications: [
+				{ value: "09348023", listId: "SRV", listVersionId: "1" },
+			],
+			additionalItemProperties: [{ name: "Colour", value: "Red" }],
+			lineExtensionAmount: 90,
+			allowanceCharges: [
+				{
+					chargeIndicator: false,
+					amount: 10,
+					reason: "Damaged box",
+					reasonCode: "95",
+				},
+			],
+			priceAllowance: { amount: 5, baseAmount: 55 },
+		});
+		const xml = serializeUblInvoice(doc(consistent([full])));
+		const body = xml.slice(xml.indexOf("<cac:InvoiceLine>"));
+		const order = [
+			"<cbc:ID>",
+			"<cbc:Note>",
+			"<cbc:InvoicedQuantity",
+			"<cbc:LineExtensionAmount",
+			"<cbc:AccountingCost>",
+			"<cac:InvoicePeriod>",
+			"<cac:OrderLineReference>",
+			"<cac:DocumentReference>",
+			"<cac:AllowanceCharge>",
+			"<cac:Item>",
+			"<cbc:Description>",
+			"<cbc:Name>",
+			"<cac:BuyersItemIdentification>",
+			"<cac:SellersItemIdentification>",
+			"<cac:StandardItemIdentification>",
+			"<cac:OriginCountry>",
+			"<cac:CommodityClassification>",
+			"<cac:ClassifiedTaxCategory>",
+			"<cac:AdditionalItemProperty>",
+			"<cac:Price>",
+		].map((tag) => body.indexOf(tag));
+		expect(order.every((position) => position > -1)).toBe(true);
+		expect([...order].sort((a, b) => a - b)).toEqual(order);
+		// A line allowance carries no VAT category; the line's applies.
+		const lineAllowance = body.slice(
+			body.indexOf("<cac:AllowanceCharge>"),
+			body.indexOf("</cac:AllowanceCharge>"),
+		);
+		expect(lineAllowance).not.toContain("cac:TaxCategory");
+		expect(lineAllowance).toMatch(
+			/<cbc:AllowanceChargeReasonCode>95<\/cbc:AllowanceChargeReasonCode>/,
+		);
+		expect(body).toMatch(/<cbc:ID schemeID="0160">5790000435951<\/cbc:ID>/);
+		expect(body).toMatch(
+			/<cbc:ItemClassificationCode listID="SRV" listVersionID="1">09348023<\/cbc:ItemClassificationCode>/,
+		);
+		expect(body).toMatch(
+			/<cbc:ID schemeID="ABZ">SUB-1<\/cbc:ID>\s*<cbc:DocumentTypeCode>130<\/cbc:DocumentTypeCode>/,
+		);
+		expect(body).toMatch(
+			/<cac:Price>\s*<cbc:PriceAmount currencyID="EUR">50.00<\/cbc:PriceAmount>\s*<cac:AllowanceCharge>\s*<cbc:ChargeIndicator>false<\/cbc:ChargeIndicator>\s*<cbc:Amount currencyID="EUR">5.00<\/cbc:Amount>\s*<cbc:BaseAmount currencyID="EUR">55.00<\/cbc:BaseAmount>/,
+		);
+	});
+
+	it("writes the exemption reason code before the reason text", () => {
+		const category = {
+			id: "E",
+			percent: 0,
+			exemptionReasonCode: "VATEX-EU-79-C",
+			exemptionReason: "Exempt",
+		};
+		const xml = serializeUblInvoice(
+			doc(consistent([line({ taxCategory: category })])),
+		);
+		expect(xml).toMatch(
+			/<cbc:TaxExemptionReasonCode>VATEX-EU-79-C<\/cbc:TaxExemptionReasonCode>\s*<cbc:TaxExemptionReason>Exempt<\/cbc:TaxExemptionReason>/,
+		);
+	});
+});
+
+describe("arithmetic rules", () => {
+	const base = doc();
+	const withTotal = (patch: Partial<UblInvoice["monetaryTotal"]>) =>
+		serializeUblInvoice({
+			...base,
+			monetaryTotal: { ...base.monetaryTotal, ...patch },
+		});
+
+	it("checks the line sum, totals and amount due (BR-CO-10/13/15/16)", () => {
+		expect(() => withTotal({ lineExtensionAmount: 99 })).toThrow(/BR-CO-10/);
+		expect(() => withTotal({ taxExclusiveAmount: 99 })).toThrow(/BR-CO-13/);
+		expect(() => withTotal({ taxInclusiveAmount: 120 })).toThrow(/BR-CO-15/);
+		expect(() => withTotal({ payableAmount: 120 })).toThrow(/BR-CO-16/);
+	});
+
+	it("checks each line's net against quantity, price and line allowances (R120)", () => {
+		expect(() =>
+			serializeUblInvoice(doc({ lines: [line({ unitPrice: 49 })] })),
+		).toThrow(/R120/);
+		// A line allowance explains the gap between quantity × price and the net.
+		expect(() =>
+			serializeUblInvoice(
+				doc(
+					consistent([
+						line({
+							lineExtensionAmount: 90,
+							allowanceCharges: [
+								{ chargeIndicator: false, amount: 10, reason: "x" },
+							],
+						}),
+					]),
+				),
+			),
+		).not.toThrow();
+	});
+
+	it("checks each VAT subtotal's taxable amount against its lines (BR-S-08)", () => {
+		expect(() =>
+			serializeUblInvoice({
+				...base,
+				taxTotal: {
+					taxAmount: 21,
+					subtotals: [
+						{
+							taxableAmount: 90,
+							taxAmount: 21,
+							category: { id: "S", percent: 21 },
+						},
+					],
+				},
+			}),
+		).toThrow(/BR-S-08/);
+		expect(() =>
+			serializeUblInvoice({
+				...base,
+				taxTotal: {
+					taxAmount: 21,
+					subtotals: [
+						{
+							taxableAmount: 100,
+							taxAmount: 21,
+							category: { id: "S", percent: 6 },
+						},
+					],
+				},
+			}),
+		).toThrow(/BR-S-08/);
 	});
 });

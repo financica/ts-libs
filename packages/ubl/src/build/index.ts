@@ -10,15 +10,25 @@ export { UblBuildError } from "../errors";
 export { serializeUblDocument, serializeUblInvoice } from "./ubl/serialize";
 export type {
 	UblAddress,
+	UblAllowanceCharge,
 	UblAttachment,
 	UblBillingReference,
+	UblCommodityClassification,
 	UblCompanyId,
+	UblContact,
+	UblDelivery,
+	UblDocumentReference,
 	UblEndpoint,
 	UblInvoice,
 	UblInvoicePeriod,
+	UblItemProperty,
 	UblLine,
 	UblMonetaryTotal,
 	UblParty,
+	UblPartyIdentification,
+	UblPaymentMeans,
+	UblPriceAllowance,
+	UblSchemedId,
 	UblTaxCategory,
 	UblTaxSubtotal,
 	UblTaxTotal,
@@ -69,6 +79,7 @@ export {
 	taxCategoryFromReasonOrRate,
 } from "./tax-category";
 export {
+	allocateAcrossTaxCategories,
 	type BuildTaxTotalsOptions,
 	type BuildTaxTotalsResult,
 	buildTaxTotals,

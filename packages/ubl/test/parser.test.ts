@@ -170,9 +170,8 @@ describe("parseUblInvoice", () => {
 		const xml = readFixture("ubl-invoice-price-discount.xml");
 		const invoice = parseUblInvoice(xml)!;
 
-		expect(invoice.lines[0]!.allowanceCharges).toHaveLength(1);
-		expect(invoice.lines[0]!.allowanceCharges![0]).toMatchObject({
-			chargeIndicator: false,
+		expect(invoice.lines[0]!.allowanceCharges).toBeUndefined();
+		expect(invoice.lines[0]!.priceAllowance).toEqual({
 			amount: 2388,
 			baseAmount: 2388,
 			reason: "100% discount",

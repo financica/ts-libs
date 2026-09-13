@@ -4,6 +4,7 @@ import type {
 	UblAllowanceCharge,
 	UblAttachment,
 	UblBillingReference,
+	UblCommodityClassification,
 	UblContact,
 	UblDelivery,
 	UblDocumentReference,
@@ -15,6 +16,7 @@ import type {
 	UblParty,
 	UblPartyIdentification,
 	UblPaymentMeans,
+	UblSchemedId,
 	UblTaxCategory,
 	UblTaxSubtotal,
 	UblTaxTotal,
@@ -88,6 +90,15 @@ function cbcDirectNumber(parent: Element, tag: string): number | undefined {
 const attribute = (el: Element | null | undefined, name: string): string | undefined =>
 	trimmed(el?.getAttribute(name));
 
+/** A direct `cbc:<tag>` child with its `@schemeID`. */
+function cbcDirectSchemedId(parent: Element, tag: string): UblSchemedId | undefined {
+	const element = childElementsByTagNs(parent, CBC_NS, tag)[0];
+	const value = trimmed(element?.textContent);
+	return value !== undefined
+		? { value, scheme: attribute(element, "schemeID") }
+		: undefined;
+}
+
 function cacDirectElement(parent: Element, tag: string): Element | null {
 	return childElementsByTagNs(parent, CAC_NS, tag)[0] ?? null;
 }
@@ -151,10 +162,25 @@ function parsePartyIdentifications(party: Element): UblPartyIdentification[] {
 }
 
 function parseParty(root: Element, role: string): UblParty {
-	const wrapper = cacElement(root, role);
+	const wrapper = cacDirectElement(root, role);
 	const party = wrapper ? cacElement(wrapper, "Party") : null;
-	if (!party) return {};
+	return party ? parsePartyElement(party) : {};
+}
 
+/**
+ * `cac:PayeeParty` (BG-10) and `cac:TaxRepresentativeParty` (BG-11) carry the
+ * party children directly, without a `cac:Party` wrapper.
+ */
+function parseUnwrappedParty(root: Element, tag: string): UblParty | undefined {
+	const party = cacDirectElement(root, tag);
+	if (!party) return undefined;
+	const parsed = parsePartyElement(party);
+	return Object.values(parsed).some((value) => value !== undefined)
+		? parsed
+		: undefined;
+}
+
+function parsePartyElement(party: Element): UblParty {
 	const partyName = cacElement(party, "PartyName");
 	const legalEntity = cacElement(party, "PartyLegalEntity");
 	const taxScheme = cacElement(party, "PartyTaxScheme");
@@ -246,9 +272,13 @@ function parseTaxSubtotalsFromTaxTotal(taxTotal: Element): UblTaxSubtotal[] {
 function parseTaxTotal(root: Element): UblTaxTotal {
 	const taxTotals = cacDirectElements(root, "TaxTotal");
 	const first = taxTotals[0];
+	const second = taxTotals[1];
 	return {
 		taxAmount: first ? cbcDirectNumber(first, "TaxAmount") : undefined,
 		subtotals: taxTotals.flatMap(parseTaxSubtotalsFromTaxTotal),
+		taxAmountInTaxCurrency: second
+			? cbcDirectNumber(second, "TaxAmount")
+			: undefined,
 	};
 }
 
@@ -321,14 +351,24 @@ function parseLines(root: Element, isCreditNote: boolean): UblLine[] {
 			taxPercent !== undefined && lineExtensionAmount !== undefined
 				? Number(((lineExtensionAmount * taxPercent) / 100).toFixed(2))
 				: undefined;
-		const lineAllowanceCharges = parseAllowanceCharges(line);
-		const priceAllowanceCharges = price ? parseAllowanceCharges(price) : [];
-		const allowanceCharges = [...lineAllowanceCharges, ...priceAllowanceCharges];
-		const discountAmount = allowanceCharges.reduce(
-			(sum, charge) =>
-				charge.chargeIndicator ? sum : sum + Math.abs(charge.amount ?? 0),
-			0,
-		);
+		const allowanceCharges = parseAllowanceCharges(line);
+		// BT-147/BT-148: the one allowance UBL permits under cac:Price.
+		const priceAllowanceElement = price
+			? parseAllowanceCharges(price).find((charge) => !charge.chargeIndicator)
+			: undefined;
+		const priceAllowance = priceAllowanceElement
+			? {
+					amount: priceAllowanceElement.amount,
+					baseAmount: priceAllowanceElement.baseAmount,
+					reason: priceAllowanceElement.reason,
+				}
+			: undefined;
+		const discountAmount =
+			allowanceCharges.reduce(
+				(sum, charge) =>
+					charge.chargeIndicator ? sum : sum + Math.abs(charge.amount ?? 0),
+				0,
+			) + Math.abs(priceAllowance?.amount ?? 0);
 		const chargeAmount = allowanceCharges.reduce(
 			(sum, charge) =>
 				charge.chargeIndicator ? sum + Math.abs(charge.amount ?? 0) : sum,
@@ -361,8 +401,42 @@ function parseLines(root: Element, isCreditNote: boolean): UblLine[] {
 				? priceAmount / priceBaseQuantity
 				: priceAmount;
 
+		const orderLineReference = cacDirectElement(line, "OrderLineReference");
+		const lineDocumentReference = cacDirectElements(line, "DocumentReference").find(
+			(reference) => cbcDirectText(reference, "DocumentTypeCode") === "130",
+		);
+		const standardId = item
+			? cacDirectElement(item, "StandardItemIdentification")
+			: null;
+		const originCountry = item ? cacDirectElement(item, "OriginCountry") : null;
+		const commodityClassifications: UblCommodityClassification[] = [];
+		for (const classification of item
+			? cacDirectElements(item, "CommodityClassification")
+			: []) {
+			const codeElement = childElementsByTagNs(
+				classification,
+				CBC_NS,
+				"ItemClassificationCode",
+			)[0];
+			const value = trimmed(codeElement?.textContent);
+			if (value === undefined) continue;
+			commodityClassifications.push({
+				value,
+				listId: attribute(codeElement, "listID"),
+				listVersionId: attribute(codeElement, "listVersionID"),
+			});
+		}
+
 		return {
 			id: requiredCbcText(line, "ID", `${lineTag} identifier`),
+			note: cbcDirectText(line, "Note"),
+			objectIdentifier: lineDocumentReference
+				? cbcDirectSchemedId(lineDocumentReference, "ID")
+				: undefined,
+			orderLineReference: orderLineReference
+				? cbcDirectText(orderLineReference, "LineID")
+				: undefined,
+			accountingCost: cbcDirectText(line, "AccountingCost"),
 			description: item ? cbcText(item, "Description") : undefined,
 			quantity: cbcNumber(line, qtyTag),
 			unitCode: attribute(qtyEl, "unitCode"),
@@ -378,11 +452,22 @@ function parseLines(root: Element, isCreditNote: boolean): UblLine[] {
 			taxSubtotals: lineTaxSubtotals.length > 0 ? lineTaxSubtotals : undefined,
 			allowanceCharges:
 				allowanceCharges.length > 0 ? allowanceCharges : undefined,
+			priceAllowance,
 			discountAmount: discountAmount > 0 ? discountAmount : undefined,
 			chargeAmount: chargeAmount > 0 ? chargeAmount : undefined,
 			itemName: item ? cbcText(item, "Name") : undefined,
 			sellersItemId: sellersId ? cbcText(sellersId, "ID") : undefined,
 			buyersItemId: buyersId ? cbcText(buyersId, "ID") : undefined,
+			standardItemId: standardId
+				? cbcDirectSchemedId(standardId, "ID")
+				: undefined,
+			commodityClassifications:
+				commodityClassifications.length > 0
+					? commodityClassifications
+					: undefined,
+			originCountryCode: originCountry
+				? cbcDirectText(originCountry, "IdentificationCode")
+				: undefined,
 			additionalItemProperties:
 				additionalItemProperties.length > 0
 					? additionalItemProperties
@@ -412,6 +497,10 @@ function parsePaymentMeansElement(pm: Element): UblPaymentMeans {
 	const branch = account ? cacElement(account, "FinancialInstitutionBranch") : null;
 	const paymentMeansCodeEl = pm.getElementsByTagNameNS(CBC_NS, "PaymentMeansCode")[0];
 	const mandate = cacElement(pm, "PaymentMandate");
+	const debitedAccount = mandate
+		? cacElement(mandate, "PayerFinancialAccount")
+		: null;
+	const card = cacElement(pm, "CardAccount");
 
 	return {
 		code: cbcText(pm, "PaymentMeansCode"),
@@ -420,7 +509,10 @@ function parsePaymentMeansElement(pm: Element): UblPaymentMeans {
 		iban: account ? cbcText(account, "ID") : undefined,
 		bic: branch ? cbcText(branch, "ID") : undefined,
 		accountName: account ? cbcText(account, "Name") : undefined,
-		mandateId: mandate ? cbcText(mandate, "ID") : undefined,
+		mandateId: mandate ? cbcDirectText(mandate, "ID") : undefined,
+		debitedAccount: debitedAccount ? cbcText(debitedAccount, "ID") : undefined,
+		cardNumber: card ? cbcText(card, "PrimaryAccountNumberID") : undefined,
+		cardHolder: card ? cbcText(card, "HolderName") : undefined,
 	};
 }
 
@@ -454,13 +546,20 @@ function parseDelivery(root: Element): UblDelivery | undefined {
 	if (!delivery) return undefined;
 	const actualDeliveryDate = cbcText(delivery, "ActualDeliveryDate");
 	const deliveryLocation = cacElement(delivery, "DeliveryLocation");
+	const locationId = deliveryLocation
+		? cbcDirectSchemedId(deliveryLocation, "ID")
+		: undefined;
 	const address = parseAddressFromElement(
 		deliveryLocation ? cacElement(deliveryLocation, "Address") : null,
 	);
-	if (!actualDeliveryDate && !address) return undefined;
+	const deliveryParty = cacElement(delivery, "DeliveryParty");
+	const partyName = deliveryParty ? cbcText(deliveryParty, "Name") : undefined;
+	if (!actualDeliveryDate && !locationId && !address && !partyName) return undefined;
 	return {
 		actualDeliveryDate,
+		locationId,
 		address,
+		partyName,
 	};
 }
 
@@ -484,18 +583,38 @@ function parseNotes(root: Element): string | undefined {
 	return notes.length > 0 ? notes.join("\n") : undefined;
 }
 
+/**
+ * `cac:AdditionalDocumentReference` (BG-24), plus the two references EN 16931
+ * types by `cbc:DocumentTypeCode`: 130 is the invoiced object (BT-18) and 50
+ * is the tender or lot (BT-17), which on a credit note stands in for the
+ * project reference (BT-11) UBL's CreditNote has no element for.
+ */
 function parseAttachments(root: Element): {
 	attachments: UblAttachment[] | undefined;
 	documentReferences: UblDocumentReference[] | undefined;
+	invoicedObjectId: UblSchemedId | undefined;
+	typeCode50Reference: string | undefined;
 } {
-	const refs = cacElements(root, "AdditionalDocumentReference");
+	const refs = cacDirectElements(root, "AdditionalDocumentReference");
 	const attachments: UblAttachment[] = [];
 	const documentReferences: UblDocumentReference[] = [];
+	let invoicedObjectId: UblSchemedId | undefined;
+	let typeCode50Reference: string | undefined;
 
 	for (const ref of refs) {
 		const attachment = cacElement(ref, "Attachment");
 		const refId = cbcText(ref, "ID");
 		const description = cbcText(ref, "DocumentDescription");
+		const typeCode = cbcDirectText(ref, "DocumentTypeCode");
+
+		if (typeCode === "130" && !attachment) {
+			invoicedObjectId ??= cbcDirectSchemedId(ref, "ID");
+			continue;
+		}
+		if (typeCode === "50" && !attachment) {
+			typeCode50Reference ??= refId;
+			continue;
+		}
 
 		if (!attachment) {
 			// Text-only document reference (e.g. terms & conditions, notices)
@@ -538,6 +657,8 @@ function parseAttachments(root: Element): {
 		attachments: attachments.length > 0 ? attachments : undefined,
 		documentReferences:
 			documentReferences.length > 0 ? documentReferences : undefined,
+		invoicedObjectId,
+		typeCode50Reference,
 	};
 }
 
@@ -606,9 +727,17 @@ export function parseUblInvoice(xml: string): UblInvoice | null {
 	const currency = requiredCbcText(root, "DocumentCurrencyCode", "currency code");
 	const paymentMeansList = parsePaymentMeansList(root);
 	const orderReference = cacElement(root, "OrderReference");
-	const contractReference = cacElement(root, "ContractDocumentReference");
-	const projectReference = cacElement(root, "ProjectReference");
-	const { attachments, documentReferences } = parseAttachments(root);
+	const contractReference = cacDirectElement(root, "ContractDocumentReference");
+	const projectReference = cacDirectElement(root, "ProjectReference");
+	const despatchReference = cacDirectElement(root, "DespatchDocumentReference");
+	const receiptReference = cacDirectElement(root, "ReceiptDocumentReference");
+	const { attachments, documentReferences, invoicedObjectId, typeCode50Reference } =
+		parseAttachments(root);
+	// A credit note has no cbc:DueDate; BT-9 travels in the first PaymentMeans.
+	const paymentDueDate = (() => {
+		const first = cacDirectElements(root, "PaymentMeans")[0];
+		return first ? cbcDirectText(first, "PaymentDueDate") : undefined;
+	})();
 
 	return omitUndefined<UblInvoice>({
 		documentType,
@@ -618,9 +747,11 @@ export function parseUblInvoice(xml: string): UblInvoice | null {
 		invoiceTypeCode:
 			cbcText(root, "InvoiceTypeCode") ?? cbcText(root, "CreditNoteTypeCode"),
 		issueDate,
-		dueDate: cbcText(root, "DueDate"),
-		taxPointDate: cbcText(root, "TaxPointDate"),
+		dueDate: cbcDirectText(root, "DueDate") ?? paymentDueDate,
+		taxPointDate: cbcDirectText(root, "TaxPointDate"),
 		currency,
+		taxCurrency: cbcDirectText(root, "TaxCurrencyCode"),
+		accountingCost: cbcDirectText(root, "AccountingCost"),
 		buyerReference: cbcText(root, "BuyerReference"),
 		orderReference: orderReference ? cbcText(orderReference, "ID") : undefined,
 		salesOrderId: orderReference
@@ -631,10 +762,22 @@ export function parseUblInvoice(xml: string): UblInvoice | null {
 			: undefined,
 		projectReference: projectReference
 			? cbcText(projectReference, "ID")
+			: isCreditNote
+				? typeCode50Reference
+				: undefined,
+		receivingAdviceReference: receiptReference
+			? cbcDirectText(receiptReference, "ID")
 			: undefined,
+		despatchReference: despatchReference
+			? cbcDirectText(despatchReference, "ID")
+			: undefined,
+		tenderReference: isCreditNote ? undefined : typeCode50Reference,
+		invoicedObjectId,
 		billingReference: parseBillingReference(root),
 		seller: parseParty(root, "AccountingSupplierParty"),
 		buyer: parseParty(root, "AccountingCustomerParty"),
+		payee: parseUnwrappedParty(root, "PayeeParty"),
+		taxRepresentative: parseUnwrappedParty(root, "TaxRepresentativeParty"),
 		delivery: parseDelivery(root),
 		lines: parseLines(root, isCreditNote),
 		taxTotal: parseTaxTotal(root),

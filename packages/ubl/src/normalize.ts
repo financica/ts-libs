@@ -232,7 +232,12 @@ export const normalizeUblResponse = (
 			tax_category_id: normalizeText(line.taxCategory?.id),
 			tax_scheme_id: normalizeText(line.taxCategory?.schemeId),
 			tax_subtotals: line.taxSubtotals ?? [],
-			allowance_charges: sanitizeAllowanceCharges(line.allowanceCharges),
+			allowance_charges: sanitizeAllowanceCharges([
+				...(line.allowanceCharges ?? []),
+				...(line.priceAllowance
+					? [{ chargeIndicator: false, ...line.priceAllowance }]
+					: []),
+			]),
 			charge_amount: toNumberOrNull(line.chargeAmount),
 			metadata: line.additionalItemProperties
 				? Object.fromEntries(
