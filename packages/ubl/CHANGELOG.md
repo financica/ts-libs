@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.18.1
+
+### Fixed
+
+- **`reconcileLinesToExclTotal` never leaves a negative price.** When the adjustment pushes the largest line's net below zero, the sign now goes on the quantity and the price stays positive, as BR-27 requires. It re-derived the price from the signed net before, emitting a negative `cbc:PriceAmount` that the access point rejects.
+- **The serializer checks BR-27.** A line with a negative `unitPrice` throws `UblBuildError` instead of leaving to be rejected at validation.
+
 ## 0.18.0
 
 ### Added

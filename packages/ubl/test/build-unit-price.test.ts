@@ -117,6 +117,24 @@ describe("reconcileLinesToExclTotal", () => {
 		expect(adjusted?.unitPrice).toBe(4);
 		expect(adjusted?.baseQuantity).toBeUndefined();
 	});
+
+	it("puts a net pushed below zero on the quantity, never on the price (BR-27)", () => {
+		const [adjusted] = reconcileLinesToExclTotal(
+			[
+				line({
+					quantity: 35,
+					lineExtensionAmount: 671.34,
+					unitPrice: 671.34 / 35,
+				}),
+			],
+			-491.83,
+		);
+
+		expect(adjusted?.lineExtensionAmount).toBe(-491.83);
+		expect(adjusted?.quantity).toBe(-35);
+		expect(adjusted?.unitPrice).toBeGreaterThan(0);
+		expect(r120Residual(adjusted as UblLine)).toBeLessThan(NEGLIGIBLE);
+	});
 });
 
 const party = (overrides: Partial<UblParty> = {}): UblParty => ({

@@ -159,3 +159,70 @@ describe("R120 line pricing", () => {
 		expectR120(lines);
 	});
 });
+
+describe("negative lines (BR-27)", () => {
+	it("keeps proration credits as negative quantities at a positive price", () => {
+		// SCRIBE-9389, rejected by Scrada under BR-27: the credits were clamped to
+		// 0.00 and reconciliation pushed their -1163.17 onto the largest line,
+		// leaving it at a negative price.
+		const lines = buildInvoiceLines(
+			invoiceWithLines(
+				[
+					{
+						description: "Unused time on 35 × plan",
+						amount: -49183,
+						quantity: 35,
+					},
+					{
+						description: "Remaining time on 36 × plan",
+						amount: 55741,
+						quantity: 36,
+					},
+					{
+						description: "Unused time on 34 × plan",
+						amount: -67134,
+						quantity: 34,
+					},
+					{
+						description: "Remaining time on 35 × plan",
+						amount: 67134,
+						quantity: 35,
+					},
+				].map((line) => ({ ...line, tax_amounts: [], discount_amounts: [] })),
+				{ subtotal: 6558, total: 6558, total_excluding_tax: 6558 },
+			),
+		);
+
+		expect(lines.map((line) => line.lineExtensionAmount)).toEqual([
+			-491.83, 557.41, -671.34, 671.34,
+		]);
+		expect(lines.map((line) => line.quantity)).toEqual([-35, 36, -34, 35]);
+		for (const line of lines) expect(line.unitPrice).toBeGreaterThan(0);
+		expectR120(lines);
+	});
+
+	it("does the same on a credit note line", () => {
+		const [line] = buildCreditNoteLines(
+			creditNoteWithLines(
+				[
+					{
+						id: "cnli_neg",
+						object: "credit_note_line_item",
+						description: "Adjustment",
+						amount: -1200,
+						discount_amount: 0,
+						quantity: 3,
+						taxes: [],
+						type: "custom_line_item",
+					},
+				],
+				{ subtotal: -1200, total: -1200, total_excluding_tax: -1200 },
+			),
+			"Credit note",
+		);
+
+		expect(line?.quantity).toBe(-3);
+		expect(line?.unitPrice).toBe(4);
+		expect(line?.lineExtensionAmount).toBe(-12);
+	});
+});

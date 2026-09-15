@@ -44,12 +44,14 @@ export const reconcileLinesToExclTotal = (
 		// nudging the net without re-deriving BT-146/BT-149 to match is exactly
 		// what PEPPOL-EN16931-R120 rejects. Assign `baseQuantity` unconditionally
 		// so a line that no longer needs one doesn't keep a stale value.
-		const { unitPrice, baseQuantity } = deriveUnitPrice(
-			adjusted,
-			line.quantity ?? 0,
-		);
+		// The price may never be negative (BR-27): a net that ends up below zero
+		// carries its sign on the quantity instead.
+		const units = Math.abs(line.quantity ?? 0);
+		const { unitPrice, baseQuantity } = deriveUnitPrice(Math.abs(adjusted), units);
 		return compact({
 			...line,
+			quantity:
+				line.quantity === undefined ? undefined : adjusted < 0 ? -units : units,
 			lineExtensionAmount: adjusted,
 			unitPrice,
 			baseQuantity,

@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.0.1
+
+### Fixed
+
+- **Negative Stripe lines keep their amount.** A line whose net is below zero, such as a proration credit ("Unused time on …"), was clamped to 0.00, and reconciliation then moved the missing amount onto the largest line, giving it a negative price that Peppol rejects under BR-27. Such a line is now a negative quantity at a positive price with its real net, on invoices and credit notes alike.
+
+### Changed
+
+- Requires `@financica/ubl` `^0.18.1`.
+
 ## 4.0.0
 
 ### Changed

@@ -71,6 +71,14 @@ const deriveVatPercentage = (
 };
 
 /**
+ * A negative line (a proration credit, "Unused time on …") keeps its net and
+ * carries the sign on the quantity: EN 16931 forbids a negative item price
+ * (BR-27), while the quantity and the line net may be negative.
+ */
+const signedQuantity = (quantity: number, netCents: number): number =>
+	netCents < 0 ? -quantity : quantity;
+
+/**
  * Convert `Stripe.Invoice` line items into {@link UblLine}s.
  *
  * When the invoice has no line items (e.g. an out-of-band invoice), falls back
@@ -107,17 +115,17 @@ export const buildInvoiceLines = (invoice: Stripe.Invoice): UblLine[] => {
 		// of 21%) and a net total that won't reconcile with the header total.
 		const discountCents = getInvoiceLineDiscountAmountCents(line);
 		const grossCents = line.amount;
-		const netCents = Math.max(grossCents - discountCents, 0);
+		const netCents = grossCents - discountCents;
 		const netTotal = centsToDecimal(netCents);
 		const taxAmounts = getInvoiceLineTaxAmounts(line);
-		const price = deriveUnitPrice(netTotal, quantity);
+		const price = deriveUnitPrice(Math.abs(netTotal), quantity);
 
 		const vatPercentage = deriveVatPercentage(taxAmounts, netCents);
 
 		return {
 			id: String(index + 1),
 			description: normalizeString(line.description) ?? `Line ${index + 1}`,
-			quantity,
+			quantity: signedQuantity(quantity, netCents),
 			unitCode: DEFAULT_UNIT_CODE,
 			lineExtensionAmount: netTotal,
 			unitPrice: price.unitPrice,
@@ -156,16 +164,16 @@ export const buildCreditNoteLines = (
 		const quantity = Math.max(1, toNumber(line.quantity));
 		const grossCents = line.amount;
 		const discountCents = line.discount_amount ?? 0;
-		const netCents = Math.max(grossCents - discountCents, 0);
+		const netCents = grossCents - discountCents;
 		const netTotal = centsToDecimal(netCents);
 		const taxAmounts = getCreditNoteLineTaxAmounts(line);
-		const price = deriveUnitPrice(netTotal, quantity);
+		const price = deriveUnitPrice(Math.abs(netTotal), quantity);
 		const vatPercentage = deriveVatPercentage(taxAmounts, netCents);
 
 		return {
 			id: String(index + 1),
 			description: normalizeString(line.description) ?? `Line ${index + 1}`,
-			quantity,
+			quantity: signedQuantity(quantity, netCents),
 			unitCode: DEFAULT_UNIT_CODE,
 			lineExtensionAmount: netTotal,
 			unitPrice: price.unitPrice,

@@ -125,6 +125,12 @@ const validateLine = (line: UblLine, index: number): void => {
 		"line net amount (BT-131)",
 		`${path}.lineExtensionAmount`,
 	);
+	// A negative line carries its sign on the quantity, never on the price.
+	if (unitPrice < 0) {
+		throw new UblBuildError(
+			`BR-27: ${path}.unitPrice is ${unitPrice}, the item net price shall not be negative`,
+		);
+	}
 	validateTaxCategory(line.taxCategory, `${path}.taxCategory`);
 	(line.allowanceCharges ?? []).forEach((item, itemIndex) =>
 		validateAllowanceCharge(item, `${path}.allowanceCharges[${itemIndex}]`, "line"),
