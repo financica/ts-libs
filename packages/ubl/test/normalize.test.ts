@@ -171,6 +171,20 @@ describe("normalizeUblResponse", () => {
 		);
 	});
 
+	it("unwraps a Peppol StandardBusinessDocument envelope", () => {
+		const bare = normalizeUblResponse(readFixture("ubl-credit-note.xml"), "doc");
+		const wrapped = normalizeUblResponse(
+			readFixture("ubl-credit-note-sbdh.xml"),
+			"doc",
+		);
+		expect(wrapped.extracted).toEqual(bare.extracted);
+	});
+
+	it("rejects an envelope whose payload is not a UBL invoice", () => {
+		const xml = `<sh:StandardBusinessDocument xmlns:sh="http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader"><sh:StandardBusinessDocumentHeader/><Order xmlns="urn:oasis:names:specification:ubl:schema:xsd:Order-2"/></sh:StandardBusinessDocument>`;
+		expect(() => normalizeUblResponse(xml, "doc")).toThrow(UblParseError);
+	});
+
 	it("maps UBL attachments without persisting raw base64 in metadata", () => {
 		const xml = readFixture("ubl-invoice-with-attachment.xml");
 		const { extracted, rawPayload } = normalizeUblResponse(xml, "doc-ubl-embedded");

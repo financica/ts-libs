@@ -396,6 +396,7 @@ describe("fixture → parse → serialize → parse", () => {
 	 */
 	const dropped: Record<string, string[]> = {
 		"ubl-credit-note.xml": ["dueDate"],
+		"ubl-credit-note-sbdh.xml": ["dueDate"],
 		"ubl-invoice-efff.xml": ["lines.*.taxSubtotals"],
 	};
 

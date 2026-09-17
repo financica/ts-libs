@@ -695,31 +695,57 @@ function omitUndefined<T>(value: T): T {
 
 const INVOICE_NS = "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2";
 const CREDIT_NOTE_NS = "urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2";
+const SBDH_NS = "http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader";
+
+const ublDocumentType = (el: Element): "Invoice" | "CreditNote" | null => {
+	if (el.localName === "Invoice" && el.namespaceURI === INVOICE_NS) return "Invoice";
+	if (el.localName === "CreditNote" && el.namespaceURI === CREDIT_NOTE_NS) {
+		return "CreditNote";
+	}
+	return null;
+};
 
 /**
- * Parse a UBL 2.1 Invoice or CreditNote.
+ * The UBL document element: the root itself, or, when the root is a Peppol
+ * `StandardBusinessDocument` envelope (as an access point delivers it), its
+ * Invoice/CreditNote child.
+ */
+const findUblRoot = (
+	root: Element,
+): { root: Element; documentType: "Invoice" | "CreditNote" } | null => {
+	const rootType = ublDocumentType(root);
+	if (rootType) return { root, documentType: rootType };
+	if (
+		root.localName !== "StandardBusinessDocument" ||
+		root.namespaceURI !== SBDH_NS
+	) {
+		return null;
+	}
+	for (let i = 0; i < root.childNodes.length; i++) {
+		const child = root.childNodes[i];
+		if (!child || child.nodeType !== 1) continue;
+		const el = child as Element;
+		const documentType = ublDocumentType(el);
+		if (documentType) return { root: el, documentType };
+	}
+	return null;
+};
+
+/**
+ * Parse a UBL 2.1 Invoice or CreditNote, bare or wrapped in a Peppol
+ * `StandardBusinessDocument` envelope.
  *
- * Returns `null` when the XML is well-formed but its root is not a UBL
- * `Invoice`/`CreditNote`. Throws {@link UblParseError} when the XML is
- * malformed or the document lacks an element EN 16931 makes mandatory
- * (document id, issue date, currency, line id).
+ * Returns `null` when the XML is well-formed but neither its root nor the
+ * envelope's payload is a UBL `Invoice`/`CreditNote`. Throws
+ * {@link UblParseError} when the XML is malformed or the document lacks an
+ * element EN 16931 makes mandatory (document id, issue date, currency, line id).
  */
 export function parseUblInvoice(xml: string): UblInvoice | null {
 	const doc = parseXmlDocument(xml);
-	const root = doc.documentElement;
-	if (!root) return null;
-
-	let documentType: "Invoice" | "CreditNote";
-	if (root.localName === "Invoice" && root.namespaceURI === INVOICE_NS) {
-		documentType = "Invoice";
-	} else if (
-		root.localName === "CreditNote" &&
-		root.namespaceURI === CREDIT_NOTE_NS
-	) {
-		documentType = "CreditNote";
-	} else {
-		return null;
-	}
+	if (!doc.documentElement) return null;
+	const found = findUblRoot(doc.documentElement);
+	if (!found) return null;
+	const { root, documentType } = found;
 
 	const isCreditNote = documentType === "CreditNote";
 	const id = requiredCbcText(root, "ID", "document identifier");

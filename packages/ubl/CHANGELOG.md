@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.18.2
+
+### Fixed
+
+- **The parser unwraps a Peppol `StandardBusinessDocument` envelope.** `parseUblInvoice`, `normalizeUblResponse` and `extractUblEmbeddedAttachments` now read the Invoice/CreditNote inside an SBDH root, the form an access point delivers and its portal exports. They returned "not a UBL Invoice or CreditNote" before.
+
 ## 0.18.1
 
 ### Fixed

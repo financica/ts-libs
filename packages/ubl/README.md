@@ -27,6 +27,7 @@ const xml = `<?xml version="1.0"?>
 </Invoice>`;
 
 const invoice = parseUblInvoice(xml);
+// Accepts a bare document or one wrapped in a Peppol StandardBusinessDocument envelope.
 // invoice.id => "INV-001"
 // invoice.seller.name => "Acme BV"
 // invoice.lines[0].description => "Consulting services"
