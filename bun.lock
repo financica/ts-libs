@@ -14,6 +14,16 @@
         "vitest": "^4.1.10",
       },
     },
+    "packages/be-biztax": {
+      "name": "@financica/be-biztax",
+      "version": "0.1.0",
+      "dependencies": {
+        "@financica/xbrl": "^0.2.0",
+      },
+      "devDependencies": {
+        "fast-xml-parser": "^5.11.0",
+      },
+    },
     "packages/be-vat-account": {
       "name": "@financica/be-vat-account",
       "version": "0.3.0",
@@ -152,7 +162,7 @@
     },
     "packages/ubl": {
       "name": "@financica/ubl",
-      "version": "0.18.1",
+      "version": "0.18.2",
       "dependencies": {
         "@financica/peppol": ">=0.8.0 <1.0.0",
         "@xmldom/xmldom": "^0.9.11",
@@ -236,6 +246,8 @@
     "@esbuild/win32-ia32": ["@esbuild/win32-ia32@0.28.1", "", { "os": "win32", "cpu": "ia32" }, "sha512-zvb/mB2bSCoJOpoCBgYKKpX6YM6mJBlBUVUtVj41DlZJVEB6/0CKlRYxP5wWl1C1ILiCoAU5wZZ4q1P3qeS6Eg=="],
 
     "@esbuild/win32-x64": ["@esbuild/win32-x64@0.28.1", "", { "os": "win32", "cpu": "x64" }, "sha512-bm4Mowrv+GXMlpWX++EcXw/iLyd1o3+bJkC2DkWXYVvgZCqD/bSj9ctZeAMC3cIxgjRVR2Dufaiu4YPxr5gW1A=="],
+
+    "@financica/be-biztax": ["@financica/be-biztax@workspace:packages/be-biztax"],
 
     "@financica/be-vat-account": ["@financica/be-vat-account@workspace:packages/be-vat-account"],
 

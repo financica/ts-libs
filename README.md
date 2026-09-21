@@ -8,6 +8,7 @@ npm independently.
 
 | Package                                                                | Version | Description                                                                                           |
 | ---------------------------------------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------- |
+| [`@financica/be-biztax`](packages/be-biztax)                           | 0.1.0   | Belgian corporate income tax returns for Biztax: build the be-tax XBRL instance and the `.biztax` file |
 | [`@financica/be-vat-account`](packages/be-vat-account)                 | 0.3.0   | Belgian VAT current-account statement (Extrait de compte TVA) PDF parser                              |
 | [`@financica/camt053`](packages/camt053)                               | 0.3.0   | ISO 20022 CAMT.053 (Bank-to-Customer Statement) XML parser                                            |
 | [`@financica/coda`](packages/coda)                                     | 0.2.0   | Belgian CODA (coded statement of account) bank file parser                                            |

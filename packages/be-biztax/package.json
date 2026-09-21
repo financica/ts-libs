@@ -1,0 +1,77 @@
+{
+	"name": "@financica/be-biztax",
+	"version": "0.1.0",
+	"description": "Belgian corporate income tax returns for Biztax (FPS Finance): build and validate be-tax XBRL instance documents and wrap them in a .biztax upload file.",
+	"keywords": [
+		"accounting",
+		"belgium",
+		"biztax",
+		"corporate-tax",
+		"fps-finance",
+		"isoc",
+		"typescript",
+		"venb",
+		"xbrl"
+	],
+	"homepage": "https://github.com/financica/ts-libs/tree/main/packages/be-biztax#readme",
+	"bugs": "https://github.com/financica/ts-libs/issues",
+	"license": "MIT",
+	"author": "Financica",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/financica/ts-libs.git",
+		"directory": "packages/be-biztax"
+	},
+	"files": [
+		"dist",
+		"src",
+		"!src/**/*.test.ts",
+		"!src/**/*.test.tsx",
+		"!src/**/__tests__/**",
+		"CHANGELOG.md",
+		"LICENSE",
+		"README.md"
+	],
+	"type": "module",
+	"sideEffects": false,
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./taxonomies/*": {
+			"types": "./dist/taxonomies/*.d.ts",
+			"import": "./dist/taxonomies/*.js"
+		},
+		"./package.json": "./package.json"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "tsdown",
+		"clean": "rm -rf dist",
+		"typecheck": "tsc --noEmit",
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check",
+		"generate": "bun run scripts/generate-taxonomy.ts",
+		"test": "vitest run --root ../.. --project @financica/be-biztax",
+		"test:watch": "vitest --root ../.. --project @financica/be-biztax",
+		"test:coverage": "vitest --root ../.. --project @financica/be-biztax run --coverage",
+		"ci": "bun run lint && bun run format:check && bun run build && bun run typecheck && bun run test",
+		"prepack": "bun run build"
+	},
+	"dependencies": {
+		"@financica/xbrl": "^0.2.0"
+	},
+	"devDependencies": {
+		"fast-xml-parser": "^5.11.0"
+	},
+	"engines": {
+		"node": ">=24"
+	}
+}
