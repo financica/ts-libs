@@ -18,42 +18,7 @@ import {
 } from "../src/index.js";
 import ay2026 from "../src/taxonomies/ay2026-rcorp.js";
 
-const PDF = new TextEncoder().encode("%PDF-1.7\n%%EOF\n");
-
-/** A small SRL: reserves that grew, two disallowed lines, a dividend, prepayments. */
-const FACTS: readonly FactInput[] = [
-	{ concept: "LegalReserve", at: "start", value: 1860 },
-	{ concept: "LegalReserve", at: "end", value: 1860 },
-	{ concept: "AccumulatedProfitsLosses", at: "start", value: 12_400.5 },
-	{ concept: "AccumulatedProfitsLosses", at: "end", value: 31_900.75 },
-	{
-		concept: "OtherReserves",
-		at: "end",
-		value: 5000,
-		dimensions: { "d-ty:DescriptionTypedDimension": "Réserve de liquidation" },
-	},
-	{ concept: "NonDeductibleRestaurantExpenses", value: 418.5 },
-	{ concept: "NonDeductibleFinesConfiscationsPenaltiesAllKind", value: 116 },
-	{ concept: "OrdinaryDividends", value: 10_000 },
-	{ concept: "FirstBracketReducedRate2000", value: true },
-	{ concept: "Prepayments", value: 4000 },
-	{ concept: "StatutoryAccounts", value: PDF },
-];
-
-const input = (overrides: Partial<BiztaxReturnInput> = {}): BiztaxReturnInput => ({
-	taxonomy: ay2026,
-	language: "fr",
-	entity: {
-		enterpriseNumber: "0766.280.697",
-		name: "EXEMPLE SRL",
-		legalForm: "610",
-		address: { street: "Rue Haute", houseNumber: "16", postalCode: "1000" },
-	},
-	period: { startDate: "2025-01-01", endDate: "2025-12-31" },
-	contact: { name: "Dupont", firstName: "Anne", email: "anne@example.be" },
-	facts: FACTS,
-	...overrides,
-});
+import { FACTS, srl2025Return as input } from "./fixtures/srl-2025-return.js";
 
 const items = (facts: readonly XbrlFact[], localName: string): XbrlItem[] =>
 	facts.filter(
@@ -158,7 +123,7 @@ describe("renderBiztaxReturn", () => {
 		expect(context?.scenario?.[0]).toMatchObject({
 			dimension: { localName: "DescriptionTypedDimension" },
 			typedElement: { localName: "DescriptionTypedID" },
-			typedValue: "Réserve de liquidation",
+			typedValue: "Réserve de liquidation 2025",
 		});
 	});
 
@@ -185,6 +150,42 @@ describe("renderBiztaxReturn", () => {
 		]);
 		expect(items(instance.facts, "TaxReturnType")[0]?.value).toBe("ISoc");
 		expect(items(instance.facts, "AssessmentYear")[0]?.value).toBe("2026");
+	});
+
+	it("states every subtotal the taxonomy's rules recompute, and they hold", () => {
+		const amount = (localName: string, contextRef = "D"): number => {
+			const fact = items(instance.facts, localName).find(
+				(candidate) => candidate.contextRef === contextRef,
+			);
+			if (!fact?.value) throw new Error(`no ${localName} in ${contextRef}`);
+			return Number(fact.value);
+		};
+		const reservesStart = amount("TaxableReserves", "I-Start");
+		const reservesEnd = amount("TaxableReserves", "I-End");
+		expect(reservesStart).toBe(
+			amount("LegalReserve", "I-Start") +
+				amount("AccumulatedProfitsLosses", "I-Start"),
+		);
+		expect(amount("TaxableReservesAfterAdjustments", "I-Start")).toBe(
+			reservesStart,
+		);
+		expect(amount("TaxableReservedProfit")).toBe(reservesEnd - reservesStart);
+		expect(amount("DisallowedExpenses")).toBe(
+			amount("NonDeductibleTaxes") + amount("NonDeductibleRestaurantExpenses"),
+		);
+		expect(amount("TaxableDividendsPaid")).toBe(amount("OrdinaryDividends"));
+		const fiscalResult = amount("FiscalResult");
+		expect(fiscalResult).toBe(
+			amount("TaxableReservedProfit") +
+				amount("DisallowedExpenses") +
+				amount("TaxableDividendsPaid"),
+		);
+		expect(amount("RemainingFiscalResultBeforeOriginDistribution")).toBe(
+			fiscalResult,
+		);
+		expect(amount("BasicTaxableAmountCommonRateCITRN")).toBe(
+			fiscalResult - amount("CompensatedTaxLossesIncludingTaxTreaty"),
+		);
 	});
 
 	it("embeds an annex as base64", () => {

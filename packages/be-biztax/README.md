@@ -68,6 +68,20 @@ Worth knowing before mapping a ledger onto it; the taxonomy's rules enforce all 
 - **Always required** for a company: the three "size of the company" lines (average workforce, turnover, balance sheet total, zero included), the general meeting minutes as a PDF annex, and, when a dividend is reported, the withholding tax acknowledgement.
 - **Amounts** are EUR with two decimals and `decimals="INF"`; positive is the default sign of every line.
 
+## The mandatory chain
+
+`test/fixtures/srl-2025-return.ts` is a small SRL's return that passes every formula assertion of the release in Arelle. It is the contract of what a mapping from a ledger has to state, because the rules recompute each subtotal and refuse the file when one is missing (a missing line reads as zero):
+
+1. **Reserves**, opening and closing: the components (`LegalReserve`, `AccumulatedProfitsLosses`, typed `OtherReserves` rows, ...), their sum `TaxableReserves` at both moments, `TaxableReservesAfterAdjustments` at the opening, and their movement `TaxableReservedProfit`.
+2. **Disallowed expenses**: each named line, `NonDeductibleTaxes` for the booked income tax, and their sum `DisallowedExpenses`.
+3. **Dividends**: `OrdinaryDividends`, their sum `TaxableDividendsPaid`, and `MandatoryWithholdingTaxReturn` acknowledged.
+4. **Fiscal result**: `FiscalResult` = 1 + 2 + 3, restated as `ShippingResultNotTonnageBased`, `RemainingFiscalResultAfterDeductionLimit` and `RemainingFiscalResultBeforeOriginDistribution` when nothing is carved out.
+5. **By origin** (`d-origin:BelgiumMember` for a purely Belgian company): `RemainingFiscalResultCITRN`, `CorrectedRemainingFiscalResultCITRN`, `BasketCalculationBasisCITRN`, the deductions taken (`CompensatedTaxLossesCITRN`), and `RemainingFiscalProfitCommonRateCITRN`, which is also stated without a dimension.
+6. **Taxable base**: `BasicTaxableAmountCommonRateCITRN`.
+7. **Losses**: `CompensableTaxLosses` (non-positive), `CompensatedTaxLossesIncludingTaxTreaty`, `CarryOverTaxLosses`.
+8. **Rate, prepayments, size**: `FirstBracketReducedRate2000`, `Prepayments`, `AssociatedCompanyCorporationCodeCurrentTaxPeriod` and the three size lines.
+9. **Documents**: `StatutoryAccounts` and `GeneralMeetingMinutesDecisions`.
+
 ## What is checked
 
 `validateBiztaxReturn` checks what needs no formula processor: datatype ranges and lengths, typed members, the period against the assessment year's window, the enterprise number and its check digits, and the annexes (real PDFs, 5 MB each, 15 MB per instance).
