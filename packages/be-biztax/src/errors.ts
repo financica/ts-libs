@@ -28,3 +28,11 @@ export class BiztaxEnvelopeError extends BiztaxError {
 		this.name = "BiztaxEnvelopeError";
 	}
 }
+
+/** `parseBiztaxFile` was handed a `.biztax` file it cannot read: malformed XML, or a return under an unknown taxonomy. */
+export class BiztaxParseError extends BiztaxError {
+	constructor(message: string, options?: { cause?: unknown }) {
+		super(message, options);
+		this.name = "BiztaxParseError";
+	}
+}

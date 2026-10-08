@@ -1,6 +1,6 @@
 {
 	"name": "@financica/be-biztax",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "Belgian corporate income tax returns for Biztax (FPS Finance): build and validate be-tax XBRL instance documents and wrap them in a .biztax upload file.",
 	"keywords": [
 		"accounting",

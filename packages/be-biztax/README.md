@@ -82,6 +82,21 @@ Worth knowing before mapping a ledger onto it; the taxonomy's rules enforce all 
 8. **Rate, prepayments, size**: `FirstBracketReducedRate2000`, `Prepayments`, `AssociatedCompanyCorporationCodeCurrentTaxPeriod` and the three size lines.
 9. **Documents**: `StatutoryAccounts` and `GeneralMeetingMinutesDecisions`.
 
+## Reading a file back
+
+`parseBiztaxFile` turns a `.biztax` file (or a bare instance) back into its returns, each fact named from the taxonomy it points at: the form code (`1872`), the label in every language, the period and the dimensions, with code lists decoded (legal form `610` is an SRL) and the PDF annexes set apart.
+
+```typescript
+import { parseBiztaxFile } from "@financica/be-biztax";
+import rcorp from "@financica/be-biztax/taxonomies/ay2026-rcorp";
+import rle from "@financica/be-biztax/taxonomies/ay2026-rle";
+
+const returns = parseBiztaxFile(text, [rcorp, rle]); // null when it is not a return
+for (const item of returns?.[0]?.items ?? []) {
+	console.log(item.code, item.labels.fr, item.value);
+}
+```
+
 ## What is checked
 
 `validateBiztaxReturn` checks what needs no formula processor: datatype ranges and lengths, typed members, the period against the assessment year's window, the enterprise number and its check digits, and the annexes (real PDFs, 5 MB each, 15 MB per instance).

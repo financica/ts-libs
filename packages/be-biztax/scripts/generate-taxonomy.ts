@@ -66,6 +66,8 @@ const ARC = {
 
 const LABEL_ROLE = "http://www.xbrl.org/2003/role/label";
 const VERBOSE_LABEL_ROLE = "http://www.xbrl.org/2003/role/verboseLabel";
+/** The role FPS Finance puts a concept's form code under, in English. */
+const DOCUMENTATION_ROLE = "http://www.xbrl.org/2003/role/documentation";
 
 /** The XBRL item types the taxonomy uses without restricting them. */
 const BUILT_IN_TYPES: Readonly<Record<string, DataType>> = {
@@ -356,8 +358,12 @@ function presented(root: string, dts: Dts): Set<string> {
 function readLabels(
 	root: string,
 	dts: Dts,
-): Map<string, Partial<Record<LabelLanguage, string>>> {
+): {
+	labels: Map<string, Partial<Record<LabelLanguage, string>>>;
+	codes: Map<string, string>;
+} {
 	const chosen = new Map<string, Partial<Record<LabelLanguage, string>>>();
+	const codes = new Map<string, string>();
 	const verbose = new Set<string>();
 	for (const file of dts.linkbases.label) {
 		for (const link of list(readLinkbase(root, file)["labelLink"])) {
@@ -376,6 +382,10 @@ function readLabels(
 				const text = label["#text"];
 				if (!concept || !lang || !LANGUAGES.has(lang)) continue;
 				if (typeof text !== "string" || text === "") continue;
+				if (role === DOCUMENTATION_ROLE && lang === "en") {
+					codes.set(concept, text.trim());
+					continue;
+				}
 				if (role !== LABEL_ROLE && role !== VERBOSE_LABEL_ROLE) continue;
 				// The standard label of a detail line is a bare "Explanation";
 				// the verbose one says what it explains, so it wins.
@@ -387,7 +397,7 @@ function readLabels(
 			}
 		}
 	}
-	return chosen;
+	return { labels: chosen, codes };
 }
 
 interface DefinitionArc {
@@ -475,7 +485,7 @@ function generate(
 	const release = /(\d{4}-\d{2}-\d{2})\.xsd$/.exec(entry)![1]!;
 
 	const dts = readDts(root, entry);
-	const labels = readLabels(root, dts);
+	const { labels, codes } = readLabels(root, dts);
 	const arcsByRole = readDefinitionArcs(root, dts);
 
 	// Cubes, and which concepts sit in each.
@@ -545,6 +555,7 @@ function generate(
 				name,
 				model: element.tuple.model,
 				children: element.tuple.children,
+				...(codes.has(name) ? { code: codes.get(name)! } : {}),
 				labels: labels.get(name) ?? {},
 			};
 			continue;
@@ -564,6 +575,17 @@ function generate(
 							.map((member) => [member.fixed!, member.name] as const)
 							.sort(([a], [b]) => a.localeCompare(b)),
 					),
+					labels: Object.fromEntries(
+						members
+							.map(
+								(member) =>
+									[
+										member.fixed!,
+										labels.get(member.name) ?? {},
+									] as const,
+							)
+							.sort(([a], [b]) => a.localeCompare(b)),
+					),
 				};
 			}
 			continue;
@@ -581,6 +603,7 @@ function generate(
 			periodType: element.periodType,
 			dataType: element.type,
 			...(inCubes ? { cubes: [...new Set(inCubes)].sort((a, b) => a - b) } : {}),
+			...(codes.has(name) ? { code: codes.get(name)! } : {}),
 			labels: labels.get(name) ?? {},
 		};
 	}
@@ -605,9 +628,13 @@ function generate(
 			}
 			dimensions[name] = { name, typed: { element: typed.name, type } };
 		} else {
+			const members = [...(dimensionMembers.get(name) ?? [])].sort();
 			dimensions[name] = {
 				name,
-				members: [...(dimensionMembers.get(name) ?? [])].sort(),
+				members,
+				memberLabels: Object.fromEntries(
+					members.map((member) => [member, labels.get(member) ?? {}]),
+				),
 			};
 		}
 	}

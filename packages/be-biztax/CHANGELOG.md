@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0
+
+- `parseBiztaxFile`: a `.biztax` file read back into its returns, every fact with its form code, labels, period and dimensions, code lists decoded and the annexes apart. Throws `BiztaxParseError` on malformed XML or an unknown taxonomy.
+- The taxonomy modules carry each concept's form `code` (`1872`, `1437.1`), the labels of every code (`CodeList.labels`) and of every explicit dimension member (`Dimension.memberLabels`).
+
 ## 0.2.0
 
 - `@financica/be-biztax/taxonomies/ay2026-rle`: the `rle` entry point of be-tax 2026-04-30 v1.0.2, the legal entities tax return (IPM / RPB, form 276.5) of an ASBL, an AISBL or a foundation. A return with no line stated passes every formula assertion of the release in Arelle.

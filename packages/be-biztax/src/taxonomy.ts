@@ -39,6 +39,8 @@ export interface ItemConcept {
 	 * in none, which means it is reported without dimensions.
 	 */
 	cubes?: readonly number[];
+	/** The code the form prints the line under, like `1872` or `1437.1`. */
+	code?: string;
 	labels: Partial<Record<LabelLanguage, string>>;
 }
 
@@ -49,6 +51,8 @@ export interface TupleConcept {
 	/** `sequence` fills the slots in order; `choice` fills exactly one. */
 	model: "sequence" | "choice";
 	children: readonly TupleChild[];
+	/** The code the form prints the section under, when it has one. */
+	code?: string;
 	labels: Partial<Record<LabelLanguage, string>>;
 }
 
@@ -84,6 +88,10 @@ export interface Dimension {
 	typed?: { element: QualifiedName; type: DataType };
 	/** For an explicit dimension, the members the taxonomy defines. */
 	members?: readonly QualifiedName[];
+	/** What each member is called, like Belgium for `d-origin:BelgiumMember`. */
+	memberLabels?: Readonly<
+		Record<QualifiedName, Partial<Record<LabelLanguage, string>>>
+	>;
 }
 
 /**
@@ -104,6 +112,8 @@ export interface CodeList {
 	head: QualifiedName;
 	/** Code to the element that reports it. */
 	codes: Readonly<Record<string, QualifiedName>>;
+	/** What each code means, like an SRL for legal form `610`. */
+	labels: Readonly<Record<string, Partial<Record<LabelLanguage, string>>>>;
 }
 
 export interface TaxonomyModule {

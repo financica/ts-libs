@@ -1,5 +1,11 @@
 export { buildBiztaxReturn, biztaxItems, normalizeEnterpriseNumber } from "./build.js";
-export { BiztaxBuildError, BiztaxEnvelopeError, BiztaxError } from "./errors.js";
+export {
+	BiztaxBuildError,
+	BiztaxEnvelopeError,
+	BiztaxError,
+	BiztaxParseError,
+} from "./errors.js";
+export { parseBiztaxFile } from "./read.js";
 export { renderBiztaxReturn, ENTERPRISE_NUMBER_SCHEME } from "./render.js";
 export { wrapBiztax, biztaxFileName, MAX_RETURNS_PER_FILE } from "./envelope.js";
 export {
@@ -15,6 +21,14 @@ export type {
 	BiztaxTuple,
 	FactMoment,
 } from "./build.js";
+export type {
+	BiztaxReadAnnex,
+	BiztaxReadCode,
+	BiztaxReadItem,
+	BiztaxReadMember,
+	BiztaxReadReturn,
+	BiztaxReadTuple,
+} from "./read.js";
 export type { BiztaxValidationResult } from "./validate.js";
 export type {
 	CodeList,
