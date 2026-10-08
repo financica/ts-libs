@@ -42,8 +42,12 @@ export interface BiztaxReturn {
 	facts: readonly BiztaxNode[];
 }
 
-/** How the return names itself, by filing language (rule `f-rcorp-2011`). */
-const RETURN_NAME = { fr: "ISoc", nl: "VenB", de: "GSt" } as const;
+/** How each return names itself, by filing language (rules `f-*-2011`). */
+const RETURN_NAME = {
+	rcorp: { fr: "ISoc", nl: "VenB", de: "GSt" },
+	nrcorp: { fr: "INR/soc", nl: "BNI/ven", de: "StGF/G" },
+	rle: { fr: "IPM", nl: "RPB", de: "StjP" },
+} as const;
 
 /** What the identifier is called in the identification block, by language. */
 const IDENTIFIER_NAME = {
@@ -295,7 +299,7 @@ export function buildBiztaxReturn(input: BiztaxReturnInput): BiztaxReturn {
 	const documentInformation = tuple("pfs-gcd:DocumentInformation", {
 		"pfs-gcd:DocumentIdentifier": text(
 			"pfs-gcd:DocumentIdentifier",
-			`${RETURN_NAME[input.language]} ${module.assessmentYear}`,
+			`${RETURN_NAME[module.returnType][input.language]} ${module.assessmentYear}`,
 		),
 		"pfs-gcd:DocumentLanguage": tuple("pfs-gcd:DocumentLanguage", {
 			"pfs-vl:LanguageCodeHead": coded(
@@ -344,7 +348,10 @@ export function buildBiztaxReturn(input: BiztaxReturnInput): BiztaxReturn {
 		}),
 		item({ concept: "PeriodEndDate", value: input.period.endDate, at: "end" }),
 		item({ concept: "AssessmentYear", value: String(module.assessmentYear) }),
-		item({ concept: "TaxReturnType", value: RETURN_NAME[input.language] }),
+		item({
+			concept: "TaxReturnType",
+			value: RETURN_NAME[module.returnType][input.language],
+		}),
 		documentInformation,
 	].filter((node) => node !== undefined);
 

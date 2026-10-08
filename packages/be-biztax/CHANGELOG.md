@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.0
+
+- `@financica/be-biztax/taxonomies/ay2026-rle`: the `rle` entry point of be-tax 2026-04-30 v1.0.2, the legal entities tax return (IPM / RPB, form 276.5) of an ASBL, an AISBL or a foundation. A return with no line stated passes every formula assertion of the release in Arelle.
+- The return names itself by entry point: rule `f-rle-2011` wants `IPM`, `RPB` or `StjP` where the company return wants `ISoc`, `VenB` or `GSt`. The `nrcorp` names are set from rule `f-nrcorp-2011`.
+
 ## 0.1.0
 
 First release.

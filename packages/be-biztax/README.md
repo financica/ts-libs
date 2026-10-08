@@ -10,7 +10,7 @@ Belgian tax knowledge lives here. The generic XBRL 2.1 reading and writing lives
 
 ## Scope
 
-- Taxonomy **be-tax 2026-04-30** (assessment year 2026), entry point **`rcorp`**: the resident corporate tax return, form 275.1. The non-resident (`nrcorp`) and legal entities (`rle`) returns are a generator run away and untested.
+- Taxonomy **be-tax 2026-04-30** (assessment year 2026), entry points **`rcorp`** (the resident corporate tax return, form 275.1) and **`rle`** (the legal entities tax return of an ASBL or a foundation, form 276.5). The non-resident (`nrcorp`) return is a generator run away and untested.
 - Every concept of the entry point can be reported, dimensional ones included. The identification block (the NBB's `pfs-gcd` tuples) is built from the entity and the period.
 
 ## Usage
@@ -113,7 +113,7 @@ It holds the reportable concepts with their period type, datatype, labels (nl, f
 - One return per instance, `.xbrl`; up to 25 instances per `.biztax` file.
 - File names take unaccented letters, digits, spaces and `. - _`.
 - The entity identifier is `BE` and the ten digits of the KBO/BCE number, under the scheme `http://www.fgov.be`.
-- The return names itself by language: `ISoc`, `VenB` or `GSt`.
+- The return names itself by language and entry point: `ISoc`, `VenB` or `GSt` for `rcorp`; `IPM`, `RPB` or `StjP` for `rle`.
 
 ## Development
 
