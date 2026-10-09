@@ -183,11 +183,14 @@ export interface DocumentDownloadParams {
 // Intervat API — VAT Returns
 // ---------------------------------------------------------------------------
 
+/**
+ * What Intervat answers a successful submission with (`DocumentReferenceDTO`):
+ * the references of the proof of submission, published as PDF and XML on
+ * MyMinFin the following day.
+ */
 export interface VatSubmissionResult {
-	/** UUID of the submission proof */
-	uuid: string;
-	/** Raw response body */
-	[key: string]: unknown;
+	pdfReference: string;
+	xmlReference: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -210,8 +213,10 @@ export interface ProblemDetail {
 }
 
 export interface BusinessRuleError {
-	vatNumber: string;
-	sequenceNumber: number;
+	/** Absent on a rule about the declaration as a whole, e.g. its declarant's e-mail. */
+	vatNumber?: string;
+	/** Absent on a rule about the declaration as a whole. */
+	sequenceNumber?: number;
 	type: "ERROR" | "WARNING";
 	errorIdentifier: string;
 	descriptions: {

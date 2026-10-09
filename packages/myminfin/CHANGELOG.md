@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.12.0
+
+### Changed
+
+- **`VatSubmissionResult` is `{ pdfReference, xmlReference }`.** That is what Intervat's `DocumentReferenceDTO` carries (confirmed against the live OpenAPI 2.0.0 spec and an acceptance submission); the `uuid` field the type promised was never part of the response, so callers that read it got `undefined`.
+- **`BusinessRuleError.vatNumber` and `.sequenceNumber` are optional.** A rule about the declaration as a whole (`E_STIR_EMAIL_MANDATORY_RULVAL`, the declarant's e-mail) arrives without either.
+
 ## 0.11.0
 
 ### Changed

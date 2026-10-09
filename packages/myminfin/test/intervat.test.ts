@@ -32,7 +32,8 @@ describe("IntervatClient", () => {
 			mockFetch.mockResolvedValueOnce({
 				ok: true,
 				status: 200,
-				json: () => Promise.resolve({ uuid: "result-uuid-123" }),
+				json: () =>
+					Promise.resolve({ pdfReference: "pdf-1", xmlReference: "xml-1" }),
 			});
 
 			await client.submitVatReturn("0806153934", sampleXml);
@@ -50,15 +51,22 @@ describe("IntervatClient", () => {
 			);
 		});
 
-		it("returns submission result with UUID", async () => {
+		it("returns the proof references", async () => {
 			mockFetch.mockResolvedValueOnce({
 				ok: true,
 				status: 200,
-				json: () => Promise.resolve({ uuid: "proof-uuid-abc" }),
+				json: () =>
+					Promise.resolve({
+						pdfReference: "pdf-abc",
+						xmlReference: "xml-abc",
+					}),
 			});
 
 			const result = await client.submitVatReturn("0806153934", sampleXml);
-			expect(result.uuid).toBe("proof-uuid-abc");
+			expect(result).toEqual({
+				pdfReference: "pdf-abc",
+				xmlReference: "xml-abc",
+			});
 		});
 
 		it("throws on business validation error", async () => {
@@ -111,7 +119,8 @@ describe("IntervatClient", () => {
 			mockFetch.mockResolvedValueOnce({
 				ok: true,
 				status: 200,
-				json: () => Promise.resolve({ uuid: "lc-uuid" }),
+				json: () =>
+					Promise.resolve({ pdfReference: "pdf", xmlReference: "xml" }),
 			});
 
 			await client.submitDeclaration("lc", "0806153934", "<xml/>");
@@ -127,7 +136,8 @@ describe("IntervatClient", () => {
 			mockFetch.mockResolvedValueOnce({
 				ok: true,
 				status: 200,
-				json: () => Promise.resolve({ uuid: "zip-uuid" }),
+				json: () =>
+					Promise.resolve({ pdfReference: "pdf", xmlReference: "xml" }),
 			});
 
 			await client.submitDeclarationArchive("tva", "0806153934", archive);
@@ -155,7 +165,8 @@ describe("IntervatClient", () => {
 			mockFetch.mockResolvedValueOnce({
 				ok: true,
 				status: 200,
-				json: () => Promise.resolve({ uuid: "prod-uuid" }),
+				json: () =>
+					Promise.resolve({ pdfReference: "pdf", xmlReference: "xml" }),
 			});
 
 			await prodClient.submitVatReturn("0806153934", "<xml/>");

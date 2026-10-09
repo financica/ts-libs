@@ -155,7 +155,8 @@ const intervat = new IntervatClient({
 // Submit XML string
 const xml = readFileSync("vat-return.xml", "utf-8");
 const result = await intervat.submitVatReturn("0806153934", xml);
-console.log("Submission proof UUID:", result.uuid);
+// The proof of submission, published on MyMinFin the next day
+console.log(result.pdfReference, result.xmlReference);
 
 // Another declaration type, e.g. the annual client listing
 const listing = await intervat.submitDeclaration("lc", "0806153934", listingXml);
