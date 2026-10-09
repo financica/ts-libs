@@ -1,15 +1,18 @@
-import { intervatOpenApiUrl, intervatVatUrl } from "./endpoints";
+import {
+	type DeclarationType,
+	intervatDeclarationUrl,
+	intervatOpenApiUrl,
+} from "./endpoints";
 import { assertOk, authorizedFetch, resolveFetch } from "./http";
 import type { ClientConfig, Environment, VatSubmissionResult } from "./types";
-
-/** MIME types Intervat accepts for an uploaded declaration. */
-type IntervatContentType = "application/xml" | "application/zip";
+import { zipSingleFile } from "./zip";
 
 /**
- * Client for the Intervat VAT return submission API.
+ * Client for the Intervat declaration submission API.
  *
- * Allows submitting VAT returns in XML format. Requires a valid OAuth2
- * access token obtained via {@link MyMinFinAuth}.
+ * Intervat takes a declaration as a ZIP holding one XML file (annexes may ride
+ * along); a bare `application/xml` body is refused with a 415. Requires a valid
+ * OAuth2 access token obtained via {@link MyMinFinAuth}.
  */
 export class IntervatClient {
 	private readonly accessToken: string;
@@ -23,10 +26,10 @@ export class IntervatClient {
 	}
 
 	/**
-	 * Submit a VAT return for a given VAT number.
+	 * Submit a VAT return, zipped for you.
 	 *
-	 * @param vatNumber - The VAT number (10 digits, no dots)
-	 * @param xml - The VAT return XML content (conforming to the Intervat XSD)
+	 * @param vatNumber - The declarant's VAT number (10 digits, no dots)
+	 * @param xml - The `VATConsignment` XML (conforming to the Intervat XSD)
 	 * @returns Submission result including the proof UUID
 	 */
 	submitVatReturn(
@@ -34,23 +37,41 @@ export class IntervatClient {
 		xml: string,
 		options?: { signal?: AbortSignal },
 	): Promise<VatSubmissionResult> {
-		return this.submit(vatNumber, xml, "application/xml", options?.signal);
+		return this.submitDeclaration("tva", vatNumber, xml, options);
 	}
 
 	/**
-	 * Submit a VAT return from a file (XML or renamed ZIP with annexes).
+	 * Submit any declaration Intervat takes (VAT return, client listing, EC
+	 * sales list, ...), zipping the XML for you.
 	 *
-	 * @param vatNumber - The VAT number (10 digits, no dots)
-	 * @param file - File content as a Buffer or Uint8Array
-	 * @param contentType - MIME type ("application/xml" or "application/zip")
+	 * @param declarationType - Which declaration, e.g. `"tva"` or `"lc"`
+	 * @param ownerIdentifier - The declarant's VAT number (10 digits, no dots)
+	 * @param xml - The consignment XML (conforming to its XSD)
 	 */
-	submitVatReturnFile(
-		vatNumber: string,
-		file: Buffer | Uint8Array,
-		contentType: IntervatContentType = "application/xml",
+	submitDeclaration(
+		declarationType: DeclarationType,
+		ownerIdentifier: string,
+		xml: string,
 		options?: { signal?: AbortSignal },
 	): Promise<VatSubmissionResult> {
-		return this.submit(vatNumber, Buffer.from(file), contentType, options?.signal);
+		return this.submitDeclarationArchive(
+			declarationType,
+			ownerIdentifier,
+			zipSingleFile("declaration.xml", xml),
+			options,
+		);
+	}
+
+	/**
+	 * Submit a ready-made ZIP, for a declaration that carries annexes.
+	 */
+	submitDeclarationArchive(
+		declarationType: DeclarationType,
+		ownerIdentifier: string,
+		archive: Uint8Array,
+		options?: { signal?: AbortSignal },
+	): Promise<VatSubmissionResult> {
+		return this.submit(declarationType, ownerIdentifier, archive, options?.signal);
 	}
 
 	/**
@@ -71,22 +92,22 @@ export class IntervatClient {
 	}
 
 	private async submit(
-		vatNumber: string,
-		body: BodyInit,
-		contentType: IntervatContentType,
+		declarationType: DeclarationType,
+		ownerIdentifier: string,
+		archive: Uint8Array,
 		signal?: AbortSignal,
 	): Promise<VatSubmissionResult> {
 		const res = await authorizedFetch(
 			this.fetchImpl,
-			intervatVatUrl(this.environment, vatNumber),
+			intervatDeclarationUrl(this.environment, declarationType, ownerIdentifier),
 			this.accessToken,
 			{
 				method: "POST",
 				headers: {
-					"Content-Type": contentType,
+					"Content-Type": "application/zip",
 					Accept: "application/json",
 				},
-				body,
+				body: Buffer.from(archive),
 				signal,
 			},
 		);

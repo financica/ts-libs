@@ -51,9 +51,10 @@ export {
 	discoveryUrl,
 	issuerUrl,
 	myminfinDocumentsUrl,
-	intervatVatUrl,
+	intervatDeclarationUrl,
 	intervatOpenApiUrl,
 } from "./endpoints";
+export type { DeclarationType } from "./endpoints";
 export type {
 	Environment,
 	AuthConfig,

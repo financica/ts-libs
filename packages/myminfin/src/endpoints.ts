@@ -43,8 +43,33 @@ export function myminfinDocumentsUrl(env: Environment): string {
 	return `${apiBase(env)}/FineAPI/Generic/OAU/v2/documents`;
 }
 
-export function intervatVatUrl(env: Environment, vatNumber: string): string {
-	return `${apiBase(env)}/Intervat/api/OAU/v1/declaration/vat/${vatNumber}`;
+/**
+ * What an Intervat submission is: the path's `{declarationType}` segment.
+ * Case sensitive, and the only documents the API takes (the OSS and SME
+ * declarations are not among them).
+ */
+export type DeclarationType =
+	| "tva"
+	| "lc"
+	| "ico"
+	| "vr"
+	| "prorata"
+	| "mtn"
+	| "special_629"
+	| "curator"
+	| "cds";
+
+/**
+ * Where a declaration is submitted: `declaration/{declarationType}/{ownerIdentifier}`,
+ * the owner being the declarant's VAT number. Replaces `declaration/vat/{n}`,
+ * which SPF keep serving until 2027-12-31.
+ */
+export function intervatDeclarationUrl(
+	env: Environment,
+	declarationType: DeclarationType,
+	ownerIdentifier: string,
+): string {
+	return `${apiBase(env)}/Intervat/api/OAU/v1/declaration/${declarationType}/${ownerIdentifier}`;
 }
 
 export function intervatOpenApiUrl(env: Environment): string {

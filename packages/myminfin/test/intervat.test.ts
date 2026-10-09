@@ -1,5 +1,6 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { IntervatClient } from "../src/intervat";
+import { zipSingleFile } from "../src/zip";
 import { MyMinFinApiError } from "../src/types";
 
 describe("IntervatClient", () => {
@@ -27,7 +28,7 @@ describe("IntervatClient", () => {
   </ns2:VATDeclaration>
 </ns2:VATConsignment>`;
 
-		it("sends XML to the correct URL", async () => {
+		it("sends the XML zipped to the declaration URL", async () => {
 			mockFetch.mockResolvedValueOnce({
 				ok: true,
 				status: 200,
@@ -37,14 +38,14 @@ describe("IntervatClient", () => {
 			await client.submitVatReturn("0806153934", sampleXml);
 
 			expect(mockFetch).toHaveBeenCalledWith(
-				"https://wsapi-a.minfin.be/Intervat/api/OAU/v1/declaration/vat/0806153934",
+				"https://wsapi-a.minfin.be/Intervat/api/OAU/v1/declaration/tva/0806153934",
 				expect.objectContaining({
 					method: "POST",
 					headers: expect.objectContaining({
 						Authorization: "Bearer test-token-xyz",
-						"Content-Type": "application/xml",
+						"Content-Type": "application/zip",
 					}),
-					body: sampleXml,
+					body: Buffer.from(zipSingleFile("declaration.xml", sampleXml)),
 				}),
 			);
 		});
@@ -105,32 +106,23 @@ describe("IntervatClient", () => {
 		});
 	});
 
-	describe("submitVatReturnFile", () => {
-		it("sends binary content with correct content type", async () => {
-			const fileContent = Buffer.from("<xml>test</xml>");
-
+	describe("submitDeclaration", () => {
+		it("posts a client listing to its own declaration type", async () => {
 			mockFetch.mockResolvedValueOnce({
 				ok: true,
 				status: 200,
-				json: () => Promise.resolve({ uuid: "file-uuid" }),
+				json: () => Promise.resolve({ uuid: "lc-uuid" }),
 			});
 
-			await client.submitVatReturnFile("0806153934", fileContent);
+			await client.submitDeclaration("lc", "0806153934", "<xml/>");
 
-			expect(mockFetch).toHaveBeenCalledWith(
-				expect.any(String),
-				expect.objectContaining({
-					method: "POST",
-					headers: expect.objectContaining({
-						"Content-Type": "application/xml",
-					}),
-					body: fileContent,
-				}),
+			expect(String(mockFetch.mock.calls[0]![0])).toBe(
+				"https://wsapi-a.minfin.be/Intervat/api/OAU/v1/declaration/lc/0806153934",
 			);
 		});
 
-		it("supports zip content type", async () => {
-			const zipContent = Buffer.from([0x50, 0x4b, 0x03, 0x04]);
+		it("sends a ready-made archive untouched", async () => {
+			const archive = zipSingleFile("return.xml", "<xml/>");
 
 			mockFetch.mockResolvedValueOnce({
 				ok: true,
@@ -138,11 +130,7 @@ describe("IntervatClient", () => {
 				json: () => Promise.resolve({ uuid: "zip-uuid" }),
 			});
 
-			await client.submitVatReturnFile(
-				"0806153934",
-				zipContent,
-				"application/zip",
-			);
+			await client.submitDeclarationArchive("tva", "0806153934", archive);
 
 			expect(mockFetch).toHaveBeenCalledWith(
 				expect.any(String),
@@ -150,6 +138,7 @@ describe("IntervatClient", () => {
 					headers: expect.objectContaining({
 						"Content-Type": "application/zip",
 					}),
+					body: Buffer.from(archive),
 				}),
 			);
 		});
@@ -174,7 +163,7 @@ describe("IntervatClient", () => {
 			const url = String(mockFetch.mock.calls[0]![0]);
 			expect(
 				url.startsWith(
-					"https://wsapi.minfin.fgov.be/Intervat/api/OAU/v1/declaration/vat/",
+					"https://wsapi.minfin.fgov.be/Intervat/api/OAU/v1/declaration/tva/",
 				),
 			).toBe(true);
 		});

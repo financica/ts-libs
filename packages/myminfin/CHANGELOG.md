@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.11.0
+
+### Changed
+
+- **Intervat submissions are zipped.** The API answers a bare `application/xml` body with `415 Unsupported Media Type`; the current manual (14/07/2026) takes only a ZIP holding the XML. `submitVatReturn` now zips the XML (`declaration.xml`) and posts `application/zip`, with a dependency-free stored-ZIP writer.
+- **The declaration URL is `declaration/{declarationType}/{ownerIdentifier}`**, the scheme SPF announced from September 2026 (the old `declaration/vat/{n}` is served until 2027-12-31). `intervatVatUrl` is replaced by `intervatDeclarationUrl(env, declarationType, ownerIdentifier)`; a VAT return is `tva`.
+
+### Added
+
+- `submitDeclaration(declarationType, ownerIdentifier, xml)` for every declaration Intervat takes (`tva`, `lc`, `ico`, `vr`, `prorata`, `mtn`, `special_629`, `curator`, `cds`), and `submitDeclarationArchive` for a ready-made ZIP with annexes. The `DeclarationType` union is exported.
+
+### Removed
+
+- `submitVatReturnFile` and `intervatVatUrl`.
+
 ## 0.10.0
 
 ### Changed

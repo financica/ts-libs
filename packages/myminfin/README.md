@@ -139,9 +139,9 @@ const { content } = await client.downloadDocument(
 );
 ```
 
-## Intervat API — VAT Return Submission
+## Intervat API — Declaration Submission
 
-Submit VAT returns in XML format conforming to the Intervat XSD.
+Submit a VAT return (or any other declaration Intervat takes) as XML conforming to its XSD. Intervat only accepts a ZIP holding the XML; the client zips it for you.
 
 ```ts
 import { IntervatClient } from "@financica/myminfin";
@@ -157,13 +157,12 @@ const xml = readFileSync("vat-return.xml", "utf-8");
 const result = await intervat.submitVatReturn("0806153934", xml);
 console.log("Submission proof UUID:", result.uuid);
 
-// Submit a file (XML or ZIP with annexes)
-const file = readFileSync("vat-return.zip");
-const zipResult = await intervat.submitVatReturnFile(
-	"0806153934",
-	file,
-	"application/zip",
-);
+// Another declaration type, e.g. the annual client listing
+const listing = await intervat.submitDeclaration("lc", "0806153934", listingXml);
+
+// A ready-made ZIP, for a declaration with annexes
+const archive = readFileSync("vat-return.zip");
+const zipResult = await intervat.submitDeclarationArchive("tva", "0806153934", archive);
 ```
 
 ### Retrieve submission receipts
@@ -243,7 +242,7 @@ import {
 	discoveryUrl,
 	issuerUrl,
 	myminfinDocumentsUrl,
-	intervatVatUrl,
+	intervatDeclarationUrl,
 } from "@financica/myminfin";
 
 console.log(discoveryUrl("test"));
@@ -269,11 +268,12 @@ console.log(discoveryUrl("test"));
 
 ### `IntervatClient`
 
-| Method                                               | Parameters                               | Returns                        |
-| ---------------------------------------------------- | ---------------------------------------- | ------------------------------ |
-| `submitVatReturn(vatNumber, xml)`                    | VAT number, XML string                   | `Promise<VatSubmissionResult>` |
-| `submitVatReturnFile(vatNumber, file, contentType?)` | VAT number, Buffer/Uint8Array, MIME type | `Promise<VatSubmissionResult>` |
-| `getOpenApiSpec()`                                   | —                                        | `Promise<string>`              |
+| Method                                                            | Parameters                                | Returns                        |
+| ----------------------------------------------------------------- | ----------------------------------------- | ------------------------------ |
+| `submitVatReturn(vatNumber, xml)`                                 | VAT number, XML string                    | `Promise<VatSubmissionResult>` |
+| `submitDeclaration(declarationType, ownerIdentifier, xml)`        | `DeclarationType`, VAT number, XML string | `Promise<VatSubmissionResult>` |
+| `submitDeclarationArchive(declarationType, ownerIdentifier, zip)` | `DeclarationType`, VAT number, ZIP bytes  | `Promise<VatSubmissionResult>` |
+| `getOpenApiSpec()`                                                | —                                         | `Promise<string>`              |
 
 ### `TokenSet`
 

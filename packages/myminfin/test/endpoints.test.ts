@@ -4,7 +4,7 @@ import {
 	authorizeUrl,
 	discoveryUrl,
 	intervatOpenApiUrl,
-	intervatVatUrl,
+	intervatDeclarationUrl,
 	issuerUrl,
 	jwksUrl,
 	myminfinDocumentsUrl,
@@ -44,7 +44,7 @@ describe("endpoints", () => {
 			for (const fn of [myminfinDocumentsUrl, intervatOpenApiUrl]) {
 				expect(fn(env).startsWith(`${apiBase(env)}/`)).toBe(true);
 			}
-			const vatUrl = intervatVatUrl(env, "0806153934");
+			const vatUrl = intervatDeclarationUrl(env, "tva", "0806153934");
 			expect(vatUrl.startsWith(`${apiBase(env)}/`)).toBe(true);
 			expect(vatUrl.endsWith("/0806153934")).toBe(true);
 			// OIDC endpoints are children of the issuer (OpenID Connect Discovery 1.0 §4).
