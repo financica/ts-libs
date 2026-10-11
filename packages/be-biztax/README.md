@@ -10,7 +10,7 @@ Belgian tax knowledge lives here. The generic XBRL 2.1 reading and writing lives
 
 ## Scope
 
-- Taxonomy **be-tax 2026-04-30** (assessment year 2026), entry points **`rcorp`** (the resident corporate tax return, form 275.1) and **`rle`** (the legal entities tax return of an ASBL or a foundation, form 276.5). The non-resident (`nrcorp`) return is a generator run away and untested.
+- Taxonomies **be-tax 2026-04-30** (assessment year 2026, periods ending from 31 December 2025) and **be-tax 2025-04-30** (assessment year 2025, periods ending from 31 December 2024), entry points **`rcorp`** (the resident corporate tax return, form 275.1) and **`rle`** (the legal entities tax return of an ASBL or a foundation, form 276.5). Each is its own module, `taxonomies/ay2026-rcorp`, `taxonomies/ay2025-rle` and so on. The non-resident (`nrcorp`) return is a generator run away and untested.
 - Every concept of the entry point can be reported, dimensional ones included. The identification block (the NBB's `pfs-gcd` tuples) is built from the entity and the period.
 
 ## Usage

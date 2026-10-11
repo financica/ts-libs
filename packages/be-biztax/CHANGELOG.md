@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0
+
+- `@financica/be-biztax/taxonomies/ay2025-rcorp` and `ay2025-rle`: the `rcorp` and `rle` entry points of be-tax 2025-04-30 v1.0.2, for periods ending from 31 December 2024 to 30 December 2025. A 2024 company return with the mandatory chain of the 2025 sample, and a nil legal entities return, pass every formula assertion of the release in Arelle.
+
 ## 0.3.0
 
 - `parseBiztaxFile`: a `.biztax` file read back into its returns, every fact with its form code, labels, period and dimensions, code lists decoded and the annexes apart. Throws `BiztaxParseError` on malformed XML or an unknown taxonomy.
