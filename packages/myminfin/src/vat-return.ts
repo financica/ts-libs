@@ -227,13 +227,18 @@ export function serializeVatReturn(options: SerializeVatReturnOptions): string {
 	lines.push(
 		`\t\t<ns2:Ask Restitution="${yesNo(askRestitution)}" Payment="${yesNo(askPayment)}" />`,
 	);
-	// After Ask, matching the order in Intervat's own example.
+	// After Ask, matching the order in Intervat's own example. Intervat raises
+	// each rule twice, per declaration and as its `_RULVAL` twin for the
+	// consignment, and accepts the return only when both are justified
+	// (confirmed in acceptance); the comment is the same for both.
 	for (const justification of justifications) {
-		lines.push(
-			`\t\t<ns2:Justification Code="${escapeXmlAttr(justification.code)}">`,
-			`\t\t\t<Comment>${escapeXmlText(justification.comment)}</Comment>`,
-			`\t\t</ns2:Justification>`,
-		);
+		for (const code of [justification.code, `${justification.code}_RULVAL`]) {
+			lines.push(
+				`\t\t<ns2:Justification Code="${escapeXmlAttr(code)}">`,
+				`\t\t\t<Comment>${escapeXmlText(justification.comment)}</Comment>`,
+				`\t\t</ns2:Justification>`,
+			);
+		}
 	}
 	lines.push(`\t</ns2:VATDeclaration>`);
 	lines.push(`</ns2:VATConsignment>`);

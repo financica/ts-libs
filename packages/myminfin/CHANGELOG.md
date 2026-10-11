@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.1
+
+### Fixed
+
+- **A justification is written for the rule and for its `_RULVAL` twin.** Intervat raises every probability warning twice, for the declaration and for the consignment (`W_TVA_GRID_54O_INCORRECT_VALUE` and `W_TVA_GRID_54O_INCORRECT_VALUE_RULVAL`), and rejects the return unless both carry a `Justification`. With only the first, a justified return was still refused; confirmed in acceptance, where the pair is accepted.
+
 ## 0.12.0
 
 ### Changed

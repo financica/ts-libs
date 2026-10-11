@@ -166,12 +166,16 @@ describe("justifications in the XML", () => {
 				},
 			],
 		});
-		expect(xml).toContain(
-			'<ns2:Justification Code="W_TVA_GRID_54O_INCORRECT_VALUE">',
-		);
-		expect(xml).toContain(
-			"<Comment>Ventes à 6% &amp; 21% &lt;mélangées&gt;</Comment>",
-		);
+		// Intervat wants the rule and its consignment-level `_RULVAL` twin.
+		expect(
+			[...xml.matchAll(/<ns2:Justification Code="([^"]+)">/g)].map((m) => m[1]),
+		).toEqual([
+			"W_TVA_GRID_54O_INCORRECT_VALUE",
+			"W_TVA_GRID_54O_INCORRECT_VALUE_RULVAL",
+		]);
+		expect(
+			xml.split("<Comment>Ventes à 6% &amp; 21% &lt;mélangées&gt;</Comment>"),
+		).toHaveLength(3);
 		expect(xml.indexOf("<ns2:Ask")).toBeLessThan(xml.indexOf("<ns2:Justification"));
 	});
 
