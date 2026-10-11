@@ -10,7 +10,7 @@ Belgian knowledge lives here. The generic XBRL 2.1 reading and writing lives in 
 
 ## Scope
 
-- Taxonomy **NBB-CBSO-26.0.15**, in use since 2 January 2026. Each release and model is its own module, so older and future releases sit alongside rather than replace.
+- Taxonomy releases **NBB-CBSO-26.0.15** (fiscal years closing from 1 January 2025) and **NBB-CBSO-25.0.11** (closing in 2024). The filing application validates a deposit against the release valid for its closing date and refuses any other, so a late filing for an older year needs that year's release. Each release and model is its own module.
 - The nine annual-accounts models are full, abbreviated and micro, for companies with capital (`m02`, `m01`, `m07`), companies without capital (`m82`, `m81`, `m87`) and associations and foundations (`m05`, `m04`, `m08`). Since the CSA abolished company capital, a Belgian SRL/BV files a _without capital_ model — `m87` for a micro SRL. Generated: **`m87-f`, `m04-f`, `m05-f` and `m08-f`**; the other five are a generator run away (see [Taxonomy modules](#taxonomy-modules)).
 - The statutory arithmetic and logical checks published in the Moniteur belge, which are disqualifying; the complementary checks from Annex 1.2 of the filing protocol, which are not; and the social balance sheet checks from Annex 1.3.
 
@@ -20,7 +20,7 @@ The full contract is in [`src/types.ts`](src/types.ts) and is the authority; thi
 
 ```typescript
 import type { NbbFilingInput } from "@financica/nbb-cbso";
-import m87f from "@financica/nbb-cbso/taxonomies/m87-f";
+import m87f from "@financica/nbb-cbso/taxonomies/26.0/m87-f";
 
 const filing: NbbFilingInput = {
 	taxonomy: m87f,
@@ -48,7 +48,7 @@ const filing: NbbFilingInput = {
 
 ### The taxonomy is a module you import
 
-The model, filing part and release are not named by string: `taxonomy` takes the module for the entry point you file against, `@financica/nbb-cbso/taxonomies/<model>-<part>`. The module carries `model`, `part` and `version` itself. Each is a separate file — `m05-f` alone is close to 3 MB of datapoints and checks — and the main entry imports none of them, so a bundler ships only the models a caller imports and a caller that files for one kind of entity pays for one.
+The model, filing part and release are not named by string: `taxonomy` takes the module for the entry point you file against, `@financica/nbb-cbso/taxonomies/<release>/<model>-<part>`. The module carries `model`, `part` and `version` itself. Each is a separate file — `m05-f` alone is close to 3 MB of datapoints and checks — and the main entry imports none of them, so a bundler ships only the models a caller imports and a caller that files for one kind of entity pays for one.
 
 An association or foundation (`m04`, `m05`, `m08`) files only the `-f` part; the NBB publishes no `-a` or `-o` entry point for those models, so there is no module to import.
 
@@ -80,7 +80,7 @@ import {
 	validateNbbFiling,
 	renderNbbFiling,
 } from "@financica/nbb-cbso";
-import m04f from "@financica/nbb-cbso/taxonomies/m04-f";
+import m04f from "@financica/nbb-cbso/taxonomies/26.0/m04-f";
 
 const filing = buildNbbFiling({ ...input, taxonomy: m04f });
 const { errors, warnings, skipped } = validateNbbFiling(filing);
@@ -139,7 +139,7 @@ Package-specific: `bun run generate <taxonomy-dir> <version> <model-part>...` re
 
 ### Taxonomy modules
 
-`src/taxonomies/*.ts` and `src/generated/enumerations.ts` are generated, never edited. To add a model or take a new January release:
+`src/taxonomies/<release>/*.ts` and `src/generated/enumerations.ts` are generated, never edited. To add a model or take a new January release:
 
 ```bash
 curl -O https://www.nbb.be/doc/ba/xbrl/taxo2026/nbb-cbso-26.0.15.zip
@@ -147,7 +147,7 @@ unzip -q nbb-cbso-26.0.15.zip -d taxo
 bun run generate taxo/nbb-cbso-26.0.15 26.0.15 m87-f m04-f m05-f m08-f
 ```
 
-Each `<model>-<part>` becomes `src/taxonomies/<model>-<part>.ts`, which tsdown builds to its own entry under `dist/taxonomies/`, published through the `./taxonomies/*` export pattern — no `package.json` change per model. The generator formats what it writes, so a re-run against the same release is a no-op in git. Pass every model you want in one run or in several; each file stands alone and there is no index to keep in step.
+Each `<model>-<part>` becomes `src/taxonomies/<release>/<model>-<part>.ts` (the release is the version's first two parts, `26.0`), which tsdown builds to its own entry under `dist/taxonomies/`, published through the `./taxonomies/*` export pattern — no `package.json` change per model. The generator formats what it writes, so a re-run against the same release is a no-op in git. Pass every model you want in one run or in several; each file stands alone and there is no index to keep in step.
 
 ### Test fixture
 

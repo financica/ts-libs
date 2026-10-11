@@ -209,10 +209,11 @@ export interface ApplicationProducer {
 export interface NbbFilingInput {
 	/**
 	 * The model and taxonomy release to file against, imported from
-	 * `@financica/nbb-cbso/taxonomies/<model>-<part>`:
+	 * `@financica/nbb-cbso/taxonomies/<release>/<model>-<part>`. The filing
+	 * application validates against the release valid for the closing date:
 	 *
 	 * ```typescript
-	 * import m04f from "@financica/nbb-cbso/taxonomies/m04-f";
+	 * import m04f from "@financica/nbb-cbso/taxonomies/26.0/m04-f";
 	 * ```
 	 *
 	 * The module carries its own {@link TaxonomyModule.model | model},

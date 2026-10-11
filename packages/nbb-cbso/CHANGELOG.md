@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.8.0
+
+Breaking: taxonomy modules are published per release, at
+`@financica/nbb-cbso/taxonomies/<release>/<model>-<part>`
+(`taxonomies/26.0/m87-f`). The filing application validates a deposit against
+the release valid for its closing date and refuses any other, so a late filing
+for a 2024 year cannot be built against 26.0.
+
+### Added
+
+- Release **25.0.11** (`taxonomies/25.0/*`) for fiscal years closing in 2024,
+  beside 26.0.15. The models carry the same datapoints and checks; only the
+  version and schema reference differ.
+
+### Changed
+
+- The generator generates the release its version argument names rather than
+  the newest framework in the package, writes it to its own folder, and
+  leaves the enumerations to the newest release.
+
 ## 0.7.0
 
 ### Added

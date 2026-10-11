@@ -1,6 +1,6 @@
 import type { NbbFilingInput, RubricAmounts } from "../src/index.js";
-import m04f from "../src/taxonomies/m04-f.js";
-import m87f from "../src/taxonomies/m87-f.js";
+import m04f from "../src/taxonomies/26.0/m04-f.js";
+import m87f from "../src/taxonomies/26.0/m87-f.js";
 
 /**
  * A complete micro filing for a company without capital, used as the starting

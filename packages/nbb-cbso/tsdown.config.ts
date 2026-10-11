@@ -3,7 +3,7 @@ import { defineConfig } from "tsdown";
 export default defineConfig({
 	// One entry per taxonomy module, so that each model is its own file under
 	// `dist/taxonomies/` and a consumer bundles only the ones it imports.
-	entry: ["src/index.ts", "src/taxonomies/*.ts"],
+	entry: ["src/index.ts", "src/taxonomies/*/*.ts"],
 	format: ["esm"],
 	dts: true,
 	sourcemap: true,

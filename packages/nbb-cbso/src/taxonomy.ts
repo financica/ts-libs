@@ -2,7 +2,8 @@
  * Shapes of the data generated from an NBB/CBSO taxonomy package.
  *
  * Nothing in here is hand-maintained. `scripts/generate-taxonomy.ts` reads a
- * taxonomy release and emits one module per model under `src/taxonomies/`,
+ * taxonomy release and emits one module per model under
+ * `src/taxonomies/<release>/`,
  * conforming to these types, which is what keeps a new January release a data
  * change rather than a code change.
  */
