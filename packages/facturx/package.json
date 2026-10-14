@@ -1,7 +1,7 @@
 {
 	"name": "@financica/facturx",
 	"version": "0.2.0",
-	"description": "Factur-X / ZUGFeRD (EN 16931 CII) hybrid e-invoice toolkit for TypeScript: parse, generate, and embed structured invoices in PDF/A-3.",
+	"description": "Factur-X / ZUGFeRD (EN 16931 CII) hybrid e-invoices in TypeScript: parse and generate structured invoices and embed them in PDF/A-3.",
 	"keywords": [
 		"accounting",
 		"cii",

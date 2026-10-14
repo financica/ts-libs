@@ -1,7 +1,7 @@
 {
 	"name": "@financica/stripe-hosted-invoices",
 	"version": "0.1.0",
-	"description": "Read a Stripe invoice, credit note or receipt from its public hosted URL — no API key, using the same ephemeral-key protocol the hosted invoice page uses itself.",
+	"description": "Read a Stripe invoice, credit note or receipt from its public hosted URL without an API key, using the ephemeral-key protocol of Stripe's hosted invoice page.",
 	"keywords": [
 		"accounting",
 		"credit-note",

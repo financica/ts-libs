@@ -1,7 +1,7 @@
 {
 	"name": "@financica/gst-einvoice-qr",
 	"version": "0.1.0",
-	"description": "Decode, cryptographically verify and reconcile the signed QR code printed on Indian GST e-invoices (IRP / IRN). Zero dependencies.",
+	"description": "Decode the signed QR code on Indian GST e-invoices (IRP / IRN), verify its signature, and reconcile it against your own extraction of the invoice. Zero-dependency.",
 	"keywords": [
 		"accounting",
 		"e-invoicing",

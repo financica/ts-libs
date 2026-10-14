@@ -1,7 +1,7 @@
 {
 	"name": "@financica/edavki",
 	"version": "0.1.0",
-	"description": "TypeScript toolkit for Slovenian eDavki (FURS) tax documents: build and serialize the DDV-O VAT return as schema-faithful EDP XML.",
+	"description": "Build the Slovenian eDavki (FURS) DDV-O VAT return and serialize it as EDP XML for import into the eDavki portal.",
 	"homepage": "https://github.com/financica/ts-libs/tree/main/packages/edavki#readme",
 	"bugs": "https://github.com/financica/ts-libs/issues",
 	"license": "MIT",

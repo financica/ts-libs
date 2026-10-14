@@ -1,7 +1,7 @@
 {
 	"name": "@financica/stripe-tax-invoices",
 	"version": "0.1.0",
-	"description": "Parser for the Stripe tax invoice PDF — the monthly invoice for Stripe's own fees, which the Dashboard is the only place to get.",
+	"description": "Parser for the monthly PDF tax invoice Stripe issues for its own fees, which is only available from the Dashboard.",
 	"keywords": [
 		"accounting",
 		"fees",

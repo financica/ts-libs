@@ -1,7 +1,7 @@
 {
 	"name": "@financica/pcmn",
 	"version": "0.4.0",
-	"description": "Zero-dependency Belgian PCMN (Plan Comptable Minimum Normalisé): the class taxonomy that maps account classes to economic categories, plus the statutory charts for enterprises and for associations in all four languages the CNC publishes them in.",
+	"description": "Zero-dependency Belgian PCMN (Plan Comptable Minimum Normalisé): the class taxonomy mapping account classes to economic categories, and the statutory charts of accounts for enterprises and associations in the four languages the CNC publishes.",
 	"keywords": [
 		"accounting",
 		"belgian",
