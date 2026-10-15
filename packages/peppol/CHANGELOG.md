@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.0
+
+### Fixed
+
+- **No country resolves to a VAT scheme withdrawn from the EAS code list.** Sweden's profile carried SE:VAT `9955` and Finland's FI:VAT `0213`; both are gone from the code list, and a document with an EndpointID under either fails BR-CL-25. A Swedish sender addressed as `9955:SE…` had every invoice rejected by the access point. Both profiles now have no VAT scheme (`vatIdentifierScheme: null`), `PEPPOL_COUNTRY_SCHEMES` addresses Sweden by organisationsnummer (`0007`) and Finland by OVT (`0216`), and `getVatParticipantScheme` returns null for both. The two codes stay known to `normalizeParticipantValue`, so a value already written under one still normalizes.
+
 ## 0.8.0
 
 ### Added

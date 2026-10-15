@@ -4,8 +4,10 @@
  *
  * Scheme choice rule: use the country's VAT-based EAS scheme by default (the
  * identifier most cross-border senders address by), and fall back to the
- * national registry scheme only where there is no separate VAT EAS in common
- * Peppol use — Norway (org.nr `0192`) and Denmark (CVR `0184`).
+ * national registry scheme where there is no separate VAT EAS in common
+ * Peppol use — Norway (org.nr `0192`) and Denmark (CVR `0184`) — or where the
+ * code list has withdrawn the VAT one: Sweden (organisationsnummer `0007`,
+ * SE:VAT `9955` withdrawn) and Finland (OVT `0216`, FI:VAT `0213` withdrawn).
  *
  * Codes verified against the Peppol BIS Billing 3.0 EAS code list
  * (https://docs.peppol.eu/poacc/billing/3.0/codelist/eas/). `example` is an
@@ -33,7 +35,7 @@ export const PEPPOL_COUNTRY_SCHEMES: PeppolCountryScheme[] = [
 	{ country: "DK", scheme: "0184", example: "12345678" },
 	{ country: "EE", scheme: "9931", example: "EE123456789" },
 	{ country: "ES", scheme: "9920", example: "ESA12345678" },
-	{ country: "FI", scheme: "0213", example: "FI12345678" },
+	{ country: "FI", scheme: "0216", example: "003712345678" },
 	{ country: "FR", scheme: "9957", example: "FR40303265045" },
 	{ country: "GB", scheme: "9932", example: "GB123456789" },
 	{ country: "GR", scheme: "9933", example: "EL123456789" },
@@ -49,7 +51,7 @@ export const PEPPOL_COUNTRY_SCHEMES: PeppolCountryScheme[] = [
 	{ country: "PL", scheme: "9945", example: "PL1234567890" },
 	{ country: "PT", scheme: "9946", example: "PT123456789" },
 	{ country: "RO", scheme: "9947", example: "RO1234567890" },
-	{ country: "SE", scheme: "9955", example: "SE556123456701" },
+	{ country: "SE", scheme: "0007", example: "5561234567" },
 	{ country: "SI", scheme: "9949", example: "SI12345678" },
 	{ country: "SK", scheme: "9950", example: "SK1234567890" },
 	{ country: "CH", scheme: "9927", example: "CHE123456789" },

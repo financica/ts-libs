@@ -4,6 +4,7 @@ import {
 	getCountryEInvoicingProfile,
 	getPeppolIdentifierSchemes,
 } from "../src/countries";
+import { getVatParticipantScheme } from "../src/identifiers";
 import { getPeppolCountryScheme } from "../src/schemes";
 
 describe("getCountryEInvoicingProfile", () => {
@@ -79,6 +80,20 @@ describe("getPeppolIdentifierSchemes", () => {
 			companyIdentifierScheme: "0184",
 			vatIdentifierScheme: null,
 		});
+	});
+
+	it("never resolves a country to a VAT scheme withdrawn from the EAS list", () => {
+		// 9955 (SE:VAT) and 0213 (FI:VAT) fail BR-CL-25 wherever they appear.
+		expect(getPeppolIdentifierSchemes("SE")).toEqual({
+			companyIdentifierScheme: "0007",
+			vatIdentifierScheme: null,
+		});
+		expect(getPeppolIdentifierSchemes("FI")).toEqual({
+			companyIdentifierScheme: "0216",
+			vatIdentifierScheme: null,
+		});
+		expect(getVatParticipantScheme("SE")).toBeNull();
+		expect(getVatParticipantScheme("FI")).toBeNull();
 	});
 
 	it("falls back to the country's own VAT-based addressing scheme when unprofiled", () => {

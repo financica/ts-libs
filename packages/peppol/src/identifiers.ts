@@ -56,7 +56,8 @@ export interface PeppolParticipantScheme {
  * is a country prefix plus alphanumerics with no separator anywhere in the EU —
  * the code list leaves `structure` empty for most of them, so the rule is stated
  * here rather than copied. `0213` (FI:VAT) and `9955` (SE:VAT) were removed from
- * the code list but are still mapped by `PEPPOL_COUNTRY_SCHEMES`.
+ * the code list; they are kept so values under them still normalize, and
+ * {@link WITHDRAWN_VAT_SCHEMES} stops any country resolving to them.
  */
 const VAT_SCHEMES: Record<string, string> = {
 	"0213": "FI:VAT",
@@ -225,11 +226,17 @@ export const countryFromVatNumber = (vatNumber: string): string | null => {
 	return VAT_PREFIX_TO_COUNTRY[prefix] ?? prefix;
 };
 
+/**
+ * VAT schemes withdrawn from the EAS code list. They stay in {@link VAT_SCHEMES}
+ * so an identifier already written under one still normalizes, but no country
+ * resolves to them: BR-CL-25 rejects a document addressed under either.
+ */
+const WITHDRAWN_VAT_SCHEMES = new Set(["0213", "9955"]);
+
 const VAT_SCHEME_BY_COUNTRY: Record<string, string> = Object.fromEntries(
-	Object.entries(VAT_SCHEMES).map(([scheme, schemeId]) => [
-		schemeId.slice(0, 2),
-		scheme,
-	]),
+	Object.entries(VAT_SCHEMES)
+		.filter(([scheme]) => !WITHDRAWN_VAT_SCHEMES.has(scheme))
+		.map(([scheme, schemeId]) => [schemeId.slice(0, 2), scheme]),
 );
 
 /**

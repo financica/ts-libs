@@ -104,7 +104,9 @@ const EINVOICING_PROFILES: Record<string, CountryEInvoicingProfile> = {
 		network: "finvoice",
 		peppolReachesFullMarket: false, // operator/bank networks reach the rest
 		companyIdentifierScheme: "0216", // OVT (State Treasury-preferred)
-		vatIdentifierScheme: "0213", // Finnish VAT / ALV
+		// FI:VAT (`0213`) is withdrawn from the EAS code list; OVT under 0216
+		// is the identifier.
+		vatIdentifierScheme: null,
 		vatRegistrySource: "vies",
 		archivalYears: 6,
 		companyNumberLength: 8, // Y-tunnus
@@ -114,7 +116,10 @@ const EINVOICING_PROFILES: Record<string, CountryEInvoicingProfile> = {
 		network: "peppol",
 		peppolReachesFullMarket: true,
 		companyIdentifierScheme: "0007", // Organisationsnummer
-		vatIdentifierScheme: "9955", // Swedish VAT
+		// SE:VAT (`9955`) is withdrawn from the EAS code list, so validation
+		// rejects it (BR-CL-25); the organisationsnummer under 0007 is the
+		// identifier, and a Swedish VAT number is that number + `01`.
+		vatIdentifierScheme: null,
 		vatRegistrySource: "vies",
 		archivalYears: 7,
 		companyNumberLength: 10, // Organisationsnummer
