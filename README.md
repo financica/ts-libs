@@ -87,14 +87,14 @@ reaches it.
 
 ## Releasing
 
-Packages are released by hand, one at a time, from the package directory:
+A package is released by pushing a tag; the `Release` workflow publishes it
+through npm trusted publishing (OIDC, provenance attached, no token):
 
 1. Bump `version` in `package.json` and add the entry to the package's `CHANGELOG.md`.
 2. Update the version in the [Packages](#packages) table above.
-3. Commit, then `npm publish --access public`; `prepack` runs the build.
-4. Tag the commit `<name>@<version>` (for example `nbb-cbso@0.6.0`) and push the tag.
-
-CI does not publish.
+3. Commit and push, then tag the commit `<name>@<version>` (for example
+   `nbb-cbso@0.6.0`) and push the tag. The workflow refuses a tag whose version
+   differs from the package's `package.json`.
 
 ## Documentation
 
