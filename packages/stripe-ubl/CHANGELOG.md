@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.1.0
+
+### Changed
+
+- **Built on `@financica/ubl` 0.19.0.** A Swedish customer's VAT number now yields the receiver candidate `0007:<organisationsnummer>` instead of `9955:SE…`, a scheme withdrawn from the EAS code list that no participant can be found under.
+
 ## 4.0.1
 
 ### Fixed

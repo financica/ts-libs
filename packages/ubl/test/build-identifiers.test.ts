@@ -152,11 +152,10 @@ describe("resolveVatEndpoint", () => {
 		expect(resolveVatEndpoint({ vatNumber: "NO999999999MVA" })).toBeUndefined();
 	});
 
-	it("uses @financica/peppol's country resolution (Sweden 9955, Italy 0211)", () => {
-		expect(resolveVatEndpoint({ vatNumber: "SE556677889901" })).toEqual({
-			scheme: "9955",
-			value: "SE556677889901",
-		});
+	it("uses @financica/peppol's country resolution (no Swedish VAT scheme, Italy 0211)", () => {
+		// SE:VAT 9955 is withdrawn from the EAS list: a Swedish VAT number is no
+		// participant identifier.
+		expect(resolveVatEndpoint({ vatNumber: "SE556677889901" })).toBeUndefined();
 		expect(resolveVatEndpoint({ vatNumber: "IT12345678901" })?.scheme).toBe("0211");
 	});
 
@@ -193,6 +192,12 @@ describe("listPeppolReceiverIdentifierCandidates", () => {
 				vatNumber: "BE0206582284",
 			}),
 		).toEqual(["0208:0206582284", "9925:BE0206582284"]);
+	});
+
+	it("reaches a Swedish VAT number through its organisationsnummer under 0007", () => {
+		expect(
+			listPeppolReceiverIdentifierCandidates({ vatNumber: "SE 502014-6865 01" }),
+		).toEqual(["0007:5020146865"]);
 	});
 
 	it("maps a GLN to EAS 0088", () => {

@@ -207,6 +207,8 @@ export const extractCustomerTaxIdentifiers = (
  *      {@link resolveVatEndpoint});
  *   4. for Belgium, the enterprise number (VAT digits without the `BE` prefix)
  *      under EAS `0208` — many Belgian entities register only under that;
+ *      for Sweden, the organisationsnummer inside the VAT number under `0007`,
+ *      Sweden's only scheme since SE:VAT (`9955`) was withdrawn;
  *   5. a generic tax/registration number under its country's company-ID scheme.
  *
  * `countryCode` (the customer's country, when known) disambiguates schemes for
@@ -243,6 +245,13 @@ export const listPeppolReceiverIdentifierCandidates = (
 			}),
 		);
 	}
+
+	// 4b. Sweden has no VAT scheme left (SE:VAT 9955 is withdrawn); a Swedish VAT
+	// number is the organisationsnummer + `01`, registered under EAS 0007.
+	const swedishOrgNumber = /^SE(\d{10})01$/.exec(
+		(customer.vatNumber ?? "").replace(/[^A-Za-z0-9]/g, "").toUpperCase(),
+	)?.[1];
+	if (swedishOrgNumber) add({ scheme: "0007", value: swedishOrgNumber });
 
 	// 5. A generic tax/registration number → its country's company-ID scheme.
 	const tax = normalizeString(customer.taxNumber);

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.19.0
+
+### Changed
+
+- **Requires `@financica/peppol` 0.9.0, so a Swedish VAT number is no longer a participant identifier.** `resolveVatEndpoint` returns `undefined` for it instead of `9955:SE…`, a scheme withdrawn from the EAS code list.
+
+### Added
+
+- **`listPeppolReceiverIdentifierCandidates` reaches a Swedish customer by organisationsnummer.** A Swedish VAT number is the organisationsnummer plus `01`, so it now yields `0007:<orgnr>`, Sweden's registration scheme, the way a Belgian one yields `0208:<enterprise number>`.
+
 ## 0.18.2
 
 ### Fixed
