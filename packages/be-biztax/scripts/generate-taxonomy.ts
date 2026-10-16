@@ -644,7 +644,7 @@ function generate(
 		assessmentYear: Number(release.slice(0, 4)),
 		release,
 		version,
-		schemaRef: `be-tax-${release}/DTS/${entry}`,
+		schemaRef: entry,
 		namespaces: Object.fromEntries(
 			Object.entries(dts.namespaces).sort(([a], [b]) => a.localeCompare(b)),
 		),

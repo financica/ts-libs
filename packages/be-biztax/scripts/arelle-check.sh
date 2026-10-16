@@ -29,11 +29,9 @@ connectivity=online
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
 
-release=$(basename "$(ls "$taxonomy"/be-tax-inc-rcorp-*.xsd)" .xsd)
-release=${release#be-tax-inc-rcorp-}
-dts="$work/be-tax-$release/DTS"
-mkdir -p "$(dirname "$dts")"
-cp -r "$taxonomy" "$dts"
+# The instance names its entry point by file name, so the taxonomy sits next to it.
+dts="$work"
+cp -r "$taxonomy"/. "$dts"
 sed -i 's#schemaLocation="xbrl-instance-2003-12-31.xsd"#schemaLocation="http://www.xbrl.org/2003/xbrl-instance-2003-12-31.xsd"#' "$dts"/*.xsd
 sed -i '/be-tax-f-idtc-536[89]-/d' "$dts"/*.xsd
 cp "$instance" "$work/instance.xbrl"

@@ -108,7 +108,10 @@ function readReturn(
 		throw new BiztaxParseError(`return ${index + 1} is not an XBRL instance`);
 	}
 	const schemaRef = instance.schemaRefs[0]?.href;
-	const taxonomy = taxonomies.find((module) => module.schemaRef === schemaRef);
+	// By file name: returns written before 0.4.1 name the entry point under a
+	// folder that FPS Finance's packages do not have.
+	const entryPoint = schemaRef?.replace(/^.*\//, "");
+	const taxonomy = taxonomies.find((module) => module.schemaRef === entryPoint);
 	if (!taxonomy) {
 		throw new BiztaxParseError(
 			`return ${index + 1} uses the taxonomy ${schemaRef ?? "(none)"}, which is not loaded`,

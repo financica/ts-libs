@@ -94,6 +94,15 @@ describe("parseBiztaxFile", () => {
 		).toBe(false);
 	});
 
+	it("still reads a return that names its entry point under the old folder", () => {
+		const old = file().replace(
+			'xlink:href="be-tax-inc-rcorp-2026-04-30.xsd"',
+			'xlink:href="be-tax-2026-04-30/DTS/be-tax-inc-rcorp-2026-04-30.xsd"',
+		);
+		expect(old).toContain("DTS/");
+		expect(parseBiztaxFile(old, [ay2026])?.[0]?.taxonomy).toBe(ay2026);
+	});
+
 	it("returns null for a document that is not a return", () => {
 		expect(parseBiztaxFile("<Invoice/>", [ay2026])).toBeNull();
 	});

@@ -8,7 +8,7 @@ const taxonomy: TaxonomyModule = {
 	assessmentYear: 2025,
 	release: "2025-04-30",
 	version: "1.0.2",
-	schemaRef: "be-tax-2025-04-30/DTS/be-tax-inc-rcorp-2025-04-30.xsd",
+	schemaRef: "be-tax-inc-rcorp-2025-04-30.xsd",
 	namespaces: {
 		"d-asst": "http://www.minfin.fgov.be/be/tax/d/asst/2025-04-30",
 		"d-br": "http://www.minfin.fgov.be/be/tax/d/br/2025-04-30",

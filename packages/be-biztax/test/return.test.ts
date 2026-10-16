@@ -16,7 +16,10 @@ import {
 	type BiztaxReturnInput,
 	type FactInput,
 } from "../src/index.js";
+import ay2025Rcorp from "../src/taxonomies/ay2025-rcorp.js";
+import ay2025Rle from "../src/taxonomies/ay2025-rle.js";
 import ay2026 from "../src/taxonomies/ay2026-rcorp.js";
+import ay2026Rle from "../src/taxonomies/ay2026-rle.js";
 
 import { FACTS, srl2025Return as input } from "./fixtures/srl-2025-return.js";
 
@@ -34,6 +37,19 @@ const tupleNamed = (facts: readonly XbrlFact[], localName: string): XbrlTuple =>
 	if (!found) throw new Error(`no tuple ${localName}`);
 	return found;
 };
+
+describe("the entry point every module names", () => {
+	// FPS Finance's packages are one flat folder, and Biztax rejects an upload
+	// whose schemaRef is anything but the entry point's file name.
+	it.each([ay2026, ay2025Rcorp, ay2026Rle, ay2025Rle])(
+		"is the bare file name of the $returnType entry point of $release",
+		(module) => {
+			expect(module.schemaRef).toBe(
+				`be-tax-inc-${module.returnType}-${module.release}.xsd`,
+			);
+		},
+	);
+});
 
 describe("generated ay2026-rcorp module", () => {
 	it("resolves every tuple slot and every cube dimension it names", () => {
@@ -72,7 +88,7 @@ describe("renderBiztaxReturn", () => {
 
 	it("points at the rcorp entry point of the release", () => {
 		expect(instance.schemaRefs.map((ref) => ref.href)).toEqual([
-			"be-tax-2026-04-30/DTS/be-tax-inc-rcorp-2026-04-30.xsd",
+			"be-tax-inc-rcorp-2026-04-30.xsd",
 		]);
 	});
 

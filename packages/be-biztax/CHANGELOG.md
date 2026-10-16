@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.1
+
+- A return names its entry point by file name, `be-tax-inc-rcorp-2026-04-30.xsd`, as FPS Finance's packages lay it out (one flat folder). It named it `be-tax-2026-04-30/DTS/…`, a folder that exists in no package, and Biztax refused the upload: "la référence href n'est pas correcte". `TaxonomyModule.schemaRef` is that file name.
+- `parseBiztaxFile` finds the taxonomy by that file name, so a return written by an earlier version still reads.
+- `scripts/arelle-check.sh` lays the taxonomy next to the instance, as the new reference needs.
+
 ## 0.4.0
 
 - `@financica/be-biztax/taxonomies/ay2025-rcorp` and `ay2025-rle`: the `rcorp` and `rle` entry points of be-tax 2025-04-30 v1.0.2, for periods ending from 31 December 2024 to 30 December 2025. A 2024 company return with the mandatory chain of the 2025 sample, and a nil legal entities return, pass every formula assertion of the release in Arelle.

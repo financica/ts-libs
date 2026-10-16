@@ -60,7 +60,7 @@ describe("a 2024 return under ay2025-rcorp", () => {
 		const filing = buildBiztaxReturn(fy2024());
 		const instance = parseXbrl(renderBiztaxReturn(filing));
 		expect(instance?.schemaRefs.map((ref) => ref.href)).toEqual([
-			"be-tax-2025-04-30/DTS/be-tax-inc-rcorp-2025-04-30.xsd",
+			"be-tax-inc-rcorp-2025-04-30.xsd",
 		]);
 		expect(validateBiztaxReturn(filing)).toEqual({ valid: true, findings: [] });
 	});
