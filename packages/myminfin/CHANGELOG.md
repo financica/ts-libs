@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.0
+
+### Added
+
+- **`generateIntraListingXml`** renders the intra-community listing (`IntraConsignment`, `NewICO-in_v0_9.xsd`): per-customer goods, services and triangular amounts for a month or quarter, with an optional replaced listing and per-line correcting period.
+
 ## 0.12.1
 
 ### Fixed

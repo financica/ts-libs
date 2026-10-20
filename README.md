@@ -18,7 +18,7 @@ its own.
 | [`@financica/facturx`](packages/facturx)                               | 0.2.0   | Factur-X / ZUGFeRD (EN 16931 CII) hybrid e-invoices: parse, generate, embed in PDF/A-3                                            |
 | [`@financica/gst-einvoice-qr`](packages/gst-einvoice-qr)               | 0.1.0   | Decode, verify and reconcile the signed QR code on Indian GST e-invoices (IRP / IRN)                                              |
 | [`@financica/iso4217`](packages/iso4217)                               | 0.2.0   | ISO 4217 currency codes, numeric codes, minor units and entities                                                                  |
-| [`@financica/myminfin`](packages/myminfin)                             | 0.12.1  | Client and document generators for the Belgian SPF Finances MyMinFin and Intervat APIs                                            |
+| [`@financica/myminfin`](packages/myminfin)                             | 0.13.0  | Client and document generators for the Belgian SPF Finances MyMinFin and Intervat APIs                                            |
 | [`@financica/nace-codes`](packages/nace-codes)                         | 3.1.0   | NACE and NACEBEL economic activity classification codes                                                                           |
 | [`@financica/nbb-cbso`](packages/nbb-cbso)                             | 0.8.0   | Belgian annual-accounts filing for the NBB/BNB Central Balance Sheet Office                                                       |
 | [`@financica/pcmn`](packages/pcmn)                                     | 0.4.0   | Belgian PCMN class taxonomy and the statutory charts of accounts (`/charts`)                                                      |

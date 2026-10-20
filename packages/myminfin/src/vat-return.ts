@@ -122,7 +122,7 @@ const el = (name: string, text: string) => `<${name}>${escapeXmlText(text)}</${n
 /** Intervat spells its booleans out. */
 const yesNo = (value: boolean) => (value ? "YES" : "NO");
 
-function declarantChildren(declarant: VatReturnDeclarant): string[] {
+export function declarantChildren(declarant: VatReturnDeclarant): string[] {
 	// Order and namespace (unprefixed = InputCommon) follow Declarant_Type.
 	const children: string[] = [
 		el("VATNumber", normalizeBelgianVatNumber(declarant.vatNumber)),
@@ -139,7 +139,7 @@ function declarantChildren(declarant: VatReturnDeclarant): string[] {
 	return children;
 }
 
-function periodChildren(period: VatReturnPeriod): string[] {
+export function periodChildren(period: VatReturnPeriod): string[] {
 	const { year } = period;
 	if (!Number.isInteger(year) || year < 1000 || year > 9999) {
 		throw new Error(`VAT period year must be a 4-digit year, received ${year}`);

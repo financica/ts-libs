@@ -36,6 +36,12 @@ export type {
 	ProbabilityWarningLocale,
 	VatReturnJustification,
 } from "./probability-warnings";
+export { generateIntraListingXml } from "./intra-listing";
+export type {
+	IntraListingClient,
+	IntraListingCode,
+	IntraListingInput,
+} from "./intra-listing";
 export { generateClientListingXml, MIN_TURNOVER_THRESHOLD } from "./client-listing";
 export type {
 	ClientListingDeclarant,

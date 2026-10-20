@@ -341,6 +341,29 @@ const xml = generateClientListingXml({
 });
 ```
 
+### Intra-community listing
+
+Due for every period whose return fills grid 44, 46 or 48: one line per EU
+customer VAT number and code (`L` goods, `S` services, `T` triangular), with a
+signed amount in EUR (credit notes issued make it negative). The VAT number goes
+without its country prefix, and Greece is `EL`. A goods or triangular line can
+correct an earlier listing with `correctingPeriod`; a services correction is
+netted into the current period, as the schema allows no other. Output validates
+against SPF's `NewICO-in_v0_9.xsd`.
+
+```ts
+import { generateIntraListingXml } from "@financica/myminfin";
+
+const xml = generateIntraListingXml({
+	declarant: { vatNumber: "0806153934", name: "Acme BV", countryCode: "BE" },
+	period: { year: 2026, quarter: 3 },
+	clients: [
+		{ vatNumber: "72879981983", countryCode: "FR", code: "S", amount: 10000 },
+		{ vatNumber: "862488084B01", countryCode: "NL", code: "L", amount: 25000 },
+	],
+});
+```
+
 ## Reference material
 
 - [`convention.md`](./convention.md) — SPF Finances API usage convention (French, third-party text).
