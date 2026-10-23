@@ -1,0 +1,126 @@
+[
+	{
+		"ReferenceNumber": "2025-00410222",
+		"DepositDate": "2025-08-27",
+		"ExerciseDates": {
+			"startDate": "2024-01-01",
+			"endDate": "2024-12-31"
+		},
+		"ModelType": "m87-f",
+		"DepositType": "Initial",
+		"Language": "FR",
+		"Currency": "EUR",
+		"EnterpriseNumber": "0766280697",
+		"EnterpriseName": "Ingram Technologies",
+		"Address": {
+			"Box": null,
+			"City": "Bruxelles",
+			"CountryCode": "BE",
+			"Number": "51A",
+			"PostalCode": "1000",
+			"Street": "Rue du Poin\u00e7on"
+		},
+		"LegalForm": "610",
+		"LegalSituation": "000",
+		"FullFillLegalValidation": true,
+		"ActivityCode": "62020",
+		"GeneralAssemblyDate": "2025-06-02",
+		"AccountingDataURL": "https://ws.cbso.nbb.be/authentic/deposit/2025-00410222/accountingData",
+		"DataVersion": "Authentic",
+		"ImprovementDate": null,
+		"CorrectedData": null
+	},
+	{
+		"ReferenceNumber": "2023-00328370",
+		"DepositDate": "2023-08-13",
+		"ExerciseDates": {
+			"startDate": "2022-01-01",
+			"endDate": "2022-12-31"
+		},
+		"ModelType": "m87-f",
+		"DepositType": "Initial",
+		"Language": "FR",
+		"Currency": "EUR",
+		"EnterpriseNumber": "0766280697",
+		"EnterpriseName": "GOVENI",
+		"Address": {
+			"Box": null,
+			"City": "Bruxelles",
+			"CountryCode": "BE",
+			"Number": "51A",
+			"PostalCode": "1000",
+			"Street": "Rue du Poin\u00e7on"
+		},
+		"LegalForm": "610",
+		"LegalSituation": "000",
+		"FullFillLegalValidation": true,
+		"ActivityCode": "62020",
+		"GeneralAssemblyDate": "2023-06-30",
+		"AccountingDataURL": "https://ws.cbso.nbb.be/authentic/deposit/2023-00328370/accountingData",
+		"DataVersion": "Authentic",
+		"ImprovementDate": null,
+		"CorrectedData": null
+	},
+	{
+		"ReferenceNumber": "2022-20299822",
+		"DepositDate": "2022-08-21",
+		"ExerciseDates": {
+			"startDate": "2021-01-01",
+			"endDate": "2021-12-31"
+		},
+		"ModelType": "m87-f",
+		"DepositType": "Initial",
+		"Language": "FR",
+		"Currency": "EUR",
+		"EnterpriseNumber": "0766280697",
+		"EnterpriseName": "GOVENI",
+		"Address": {
+			"Box": null,
+			"City": "Bruxelles",
+			"CountryCode": "BE",
+			"Number": "51A",
+			"PostalCode": "1000",
+			"Street": "Rue du Poin\u00e7on"
+		},
+		"LegalForm": "610",
+		"LegalSituation": "000",
+		"FullFillLegalValidation": true,
+		"ActivityCode": "62020",
+		"GeneralAssemblyDate": "2022-06-24",
+		"AccountingDataURL": "https://ws.cbso.nbb.be/authentic/deposit/2022-20299822/accountingData",
+		"DataVersion": "Authentic",
+		"ImprovementDate": null,
+		"CorrectedData": null
+	},
+	{
+		"ReferenceNumber": "2024-00347046",
+		"DepositDate": "2024-08-16",
+		"ExerciseDates": {
+			"startDate": "2023-01-01",
+			"endDate": "2023-12-31"
+		},
+		"ModelType": "m87-f",
+		"DepositType": "Initial",
+		"Language": "FR",
+		"Currency": "EUR",
+		"EnterpriseNumber": "0766280697",
+		"EnterpriseName": "GOVENI",
+		"Address": {
+			"Box": null,
+			"City": "Bruxelles",
+			"CountryCode": "BE",
+			"Number": "51A",
+			"PostalCode": "1000",
+			"Street": "Rue du Poin\u00e7on"
+		},
+		"LegalForm": "610",
+		"LegalSituation": "000",
+		"FullFillLegalValidation": true,
+		"ActivityCode": "62020",
+		"GeneralAssemblyDate": "2024-06-01",
+		"AccountingDataURL": "https://ws.cbso.nbb.be/authentic/deposit/2024-00347046/accountingData",
+		"DataVersion": "Authentic",
+		"ImprovementDate": null,
+		"CorrectedData": null
+	}
+]

@@ -2,7 +2,7 @@
 
 Belgian annual-accounts filing for the National Bank of Belgium's Central Balance Sheet Office (Centrale des bilans / Balanscentrale).
 
-This package builds, validates and renders the `.xbrl` instance document a filer uploads to the NBB Filing application. There is no submission API on the NBB side: the deliverable is a file.
+This package builds, validates and renders the `.xbrl` instance document a filer uploads to the NBB Filing application. There is no submission API on the NBB side: the deliverable is a file. The `/ws` subpath reads the other direction: the filings the NBB has published, through its web services (see [Reading filed accounts](#reading-filed-accounts-ws)).
 
 Belgian knowledge lives here. The generic XBRL 2.1 reading and writing lives in [`@financica/xbrl`](../xbrl), which this package builds on.
 
@@ -98,6 +98,25 @@ if (errors.length === 0) {
 ### Errors
 
 Everything this package throws is an `NbbCbsoError`: `NbbBuildError` from `buildNbbFiling` (unknown rubric code, or one figure given two different values under two of its names) and `ExpressionError` from `evaluateExpression` (syntax outside the supported subset, or a variable without a value). Every class sets `name` to its class name; `validateNbbFiling` does not throw for a failing check — it reports it.
+
+## Reading filed accounts (`/ws`)
+
+`@financica/nbb-cbso/ws` is a client for the CBSO's **Authentic Data Query** web service: every filing a legal entity has deposited, and each filing's PDF, XBRL or JSON representation.
+
+```ts
+import { NbbCbsoClient } from "@financica/nbb-cbso/ws";
+
+const nbb = new NbbCbsoClient({ subscriptionKey: process.env.NBB_CBSO_AUTHENTIC_KEY });
+const [latest] = await nbb.listDeposits("0766.280.697", { year: 2024 });
+const pdf = latest && (await nbb.getPdf(latest.referenceNumber));
+```
+
+- `listDeposits(enterpriseNumber, { year? })` returns `DepositReference[]`, newest exercise first. `year` is the calendar year the exercise **closes** in. The enterprise number may carry a `BE` prefix, dots or spaces, or omit the leading zero.
+- `getDeposit(reference)`, `getPdf(reference)` (`Uint8Array`), `getXbrl(reference)` (the instance as deposited) and `getJson(reference)` (the NBB's rendering of an XBRL filing: rubrics, administrators, shareholders, participating interests; untyped `Record<string, unknown>`).
+- **A 404 is an answer.** The service answers 404 both for an unknown enterprise and for a year without a filing, so either lists as `[]`. A representation the NBB does not hold is `null`: no XBRL or JSON for a PDF filing (model suffix `-p`, `pdfFiling: true`), no JSON before 4 April 2022, no document at all for filings before 1999.
+- Any other non-2xx throws `NbbCbsoApiError` (`status`, `details` = the body); a network failure or timeout throws `NbbCbsoError` with `cause`. Every request carries a fresh `X-Request-Id`, which the service requires (it answers 500 without one) and logs for support requests.
+
+Access is free but contractual: an order form to the NBB yields a client number, then a key per product from [developer.cbso.nbb.be](https://developer.cbso.nbb.be). A subscription covers one calendar year and is not renewed tacitly. The test environment is `https://ws.uat2.cbso.nbb.be` (`baseUrl`). The Daily Extracts and Archive products (bulk zips per publication date) are not covered.
 
 ## Check coverage
 

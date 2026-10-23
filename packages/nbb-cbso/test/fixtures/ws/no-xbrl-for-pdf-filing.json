@@ -1,0 +1,13 @@
+{
+	"title": "WebService Problem",
+	"status": 404,
+	"path": "/deposit/2024-00069721/accountingData",
+	"timestamp": "23-10-2026 16:16:12",
+	"violations": [
+		{
+			"field": "pdf model has no published xbrl",
+			"messageKey": "reference.number.not.found.xbrl",
+			"defaultMessage": "pdf model has no published xbrl"
+		}
+	]
+}

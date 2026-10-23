@@ -1,0 +1,13 @@
+{
+	"title": "WebService Problem",
+	"status": 404,
+	"path": "/legalEntity/0766280697/references",
+	"timestamp": "23-10-2026 16:16:12",
+	"violations": [
+		{
+			"field": "LegalEntity not found",
+			"messageKey": "legal.entity.not.found",
+			"defaultMessage": "LegalEntity not found"
+		}
+	]
+}

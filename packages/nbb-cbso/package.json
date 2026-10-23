@@ -1,6 +1,6 @@
 {
 	"name": "@financica/nbb-cbso",
-	"version": "0.8.0",
+	"version": "0.9.0",
 	"description": "Belgian annual-accounts filing for the NBB/BNB Central Balance Sheet Office: build, validate and render NBB-CBSO XBRL instance documents.",
 	"keywords": [
 		"accounting",
@@ -40,6 +40,10 @@
 		".": {
 			"types": "./dist/index.d.ts",
 			"import": "./dist/index.js"
+		},
+		"./ws": {
+			"types": "./dist/ws/index.d.ts",
+			"import": "./dist/ws/index.js"
 		},
 		"./taxonomies/*": {
 			"types": "./dist/taxonomies/*.d.ts",

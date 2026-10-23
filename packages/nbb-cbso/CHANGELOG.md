@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.0
+
+### Added
+
+- **`@financica/nbb-cbso/ws`: a client for the CBSO's Authentic Data Query web service.** `NbbCbsoClient` lists a legal entity's published filings (`listDeposits`, optionally for the year an exercise closes) and fetches a filing's reference, PDF, XBRL or JSON. A 404 is mapped to `[]` or `null`, since the service uses it both for "no such entity" and for "no such representation"; other failures throw the new `NbbCbsoApiError` (`status`, `details`).
+
 ## 0.8.0
 
 Breaking: taxonomy modules are published per release, at
