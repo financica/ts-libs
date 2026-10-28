@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.1.1
+
+### Fixed
+
+- **Tax-inclusive lines carry their real net and rate.** Stripe's line `amount` includes the VAT under a tax-inclusive rate, on invoice and credit-note lines alike, but it was read as the net. The rate came out as tax over gross (a 25% inclusive line was sent as 20%), the line net included the VAT, and reconciliation against `total_excluding_tax` moved the difference onto the largest line, so the document understated the VAT and the amount payable. The net is now the amount less discount less inclusive tax (`tax_behavior: "inclusive"`, or the legacy `tax_amounts[].inclusive`), which is Stripe's own `taxable_amount`.
+
 ## 4.1.0
 
 ### Changed

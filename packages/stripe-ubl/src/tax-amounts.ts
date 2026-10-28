@@ -15,6 +15,7 @@ type StripeTaxRateRef = string | Pick<Stripe.TaxRate, "percentage"> | null | und
  */
 interface StripeLegacyTaxAmount {
 	amount: number | string;
+	inclusive?: boolean | null;
 	taxability_reason?: string | null;
 	tax_rate?: StripeTaxRateRef;
 }
@@ -112,6 +113,51 @@ export const getCreditNoteLineTaxAmounts = (
 		tax_rate_percentage: readExpandedTaxRatePercentage(tax),
 	}));
 };
+
+/**
+ * The part of a line's `amount` that is tax: the sum of its tax-inclusive
+ * taxes. Stripe's line `amount` is the price as entered, so under a
+ * tax-inclusive rate (`tax_behavior: "inclusive"`, legacy `inclusive: true`)
+ * it already contains the VAT, on invoice and credit-note lines alike
+ * (observed: a 307.00 NOK line at 25% inclusive carries 61.40 tax with a
+ * 245.60 `taxable_amount`). Exclusive taxes sit on top and contribute 0.
+ */
+const sumInclusiveTaxCents = (
+	taxes: { amount: number | string; inclusive: boolean }[],
+): number =>
+	taxes.reduce((sum, tax) => sum + (tax.inclusive ? toNumber(tax.amount) : 0), 0);
+
+/** {@link sumInclusiveTaxCents} for an invoice line, from whichever tax field it carries. */
+export const getInvoiceLineInclusiveTaxCents = (
+	line: Stripe.InvoiceLineItem,
+): number => {
+	const rawTaxAmounts = (line as InvoiceLineItemWithLegacyFields).tax_amounts;
+	if (Array.isArray(rawTaxAmounts) && rawTaxAmounts.length > 0) {
+		return sumInclusiveTaxCents(
+			rawTaxAmounts.map((ta) => ({
+				amount: ta.amount,
+				inclusive: ta.inclusive === true,
+			})),
+		);
+	}
+	return sumInclusiveTaxCents(
+		(line.taxes ?? []).map((tax) => ({
+			amount: tax.amount,
+			inclusive: tax.tax_behavior === "inclusive",
+		})),
+	);
+};
+
+/** {@link sumInclusiveTaxCents} for a credit-note line. */
+export const getCreditNoteLineInclusiveTaxCents = (
+	line: Stripe.CreditNoteLineItem,
+): number =>
+	sumInclusiveTaxCents(
+		(line.taxes ?? []).map((tax) => ({
+			amount: tax.amount,
+			inclusive: tax.tax_behavior === "inclusive",
+		})),
+	);
 
 /**
  * Read invoice-line-level discount amounts as cents.

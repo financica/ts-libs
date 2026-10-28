@@ -8,8 +8,10 @@ import {
 } from "@financica/ubl/build";
 import type Stripe from "stripe";
 import {
+	getCreditNoteLineInclusiveTaxCents,
 	getCreditNoteLineTaxAmounts,
 	getInvoiceLineDiscountAmountCents,
+	getInvoiceLineInclusiveTaxCents,
 	getInvoiceLineTaxAmounts,
 } from "./tax-amounts";
 import { toUblPeriod } from "./period";
@@ -107,15 +109,18 @@ export const buildInvoiceLines = (invoice: Stripe.Invoice): UblLine[] => {
 
 	return stripeLines.map((line, index) => {
 		const quantity = Math.max(1, toNumber(line.quantity));
-		// Stripe's `line.amount` is the GROSS (pre-discount) amount — it sums to
-		// `invoice.subtotal`. The taxable base is `line.amount - discount_amounts`,
-		// and Stripe computes the line's tax on that net base. So both the VAT rate
-		// and the line's net total must be derived from the net, not the gross —
+		// Stripe's `line.amount` is the GROSS amount — pre-discount, and including
+		// the VAT under a tax-inclusive rate — and it sums to `invoice.subtotal`.
+		// The taxable base is `line.amount - discount_amounts - inclusive tax`, and
+		// Stripe computes the line's tax on that net base. So both the VAT rate and
+		// the line's net total must be derived from the net, not the gross —
 		// otherwise a discounted line reports the wrong rate (e.g. 14.70% instead
-		// of 21%) and a net total that won't reconcile with the header total.
+		// of 21%), an inclusive 25% line reports 20%, and the net total won't
+		// reconcile with the header total.
 		const discountCents = getInvoiceLineDiscountAmountCents(line);
 		const grossCents = line.amount;
-		const netCents = grossCents - discountCents;
+		const netCents =
+			grossCents - discountCents - getInvoiceLineInclusiveTaxCents(line);
 		const netTotal = centsToDecimal(netCents);
 		const taxAmounts = getInvoiceLineTaxAmounts(line);
 		const price = deriveUnitPrice(Math.abs(netTotal), quantity);
@@ -162,9 +167,11 @@ export const buildCreditNoteLines = (
 
 	return stripeLines.map((line, index) => {
 		const quantity = Math.max(1, toNumber(line.quantity));
+		// Same base as an invoice line: gross, less discount, less inclusive tax.
 		const grossCents = line.amount;
 		const discountCents = line.discount_amount ?? 0;
-		const netCents = grossCents - discountCents;
+		const netCents =
+			grossCents - discountCents - getCreditNoteLineInclusiveTaxCents(line);
 		const netTotal = centsToDecimal(netCents);
 		const taxAmounts = getCreditNoteLineTaxAmounts(line);
 		const price = deriveUnitPrice(Math.abs(netTotal), quantity);

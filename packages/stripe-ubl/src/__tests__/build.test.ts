@@ -357,6 +357,77 @@ describe("buildUblInvoiceDocument", () => {
 		expect(doc.monetaryTotal.taxInclusiveAmount).toBe(101.64);
 	});
 
+	it("takes the VAT out of a tax-inclusive line before deriving its net and rate", () => {
+		// A real NO invoice (INV-11209): both lines 25% inclusive. Treating
+		// `line.amount` as the net sent it as 20% VAT, payable 12068.16 NOK
+		// instead of 12571.00.
+		const inclusive25 = (amount: number, taxableAmount: number) => ({
+			amount,
+			taxable_amount: taxableAmount,
+			tax_behavior: "inclusive",
+			taxability_reason: "standard_rated",
+			tax_rate_details: { tax_rate: { percentage: 25 } },
+		});
+		const doc = buildUblInvoiceDocument({
+			invoice: buildStripeInvoice({
+				currency: "nok",
+				subtotal: 1257100,
+				total: 1257100,
+				total_excluding_tax: 1005680,
+				amount_due: 1257100,
+				lines: linesData([
+					{
+						description: "Frakt",
+						amount: 30700,
+						quantity: 1,
+						taxes: [inclusive25(6140, 24560)],
+					},
+					{
+						description: "3D print",
+						amount: 1226400,
+						quantity: 1,
+						taxes: [inclusive25(245280, 981120)],
+					},
+				]),
+			}),
+			supplier: buildSupplier(),
+		});
+
+		expect(
+			doc.lines.map((l) => [l.lineExtensionAmount, l.taxCategory?.percent]),
+		).toEqual([
+			[245.6, 25],
+			[9811.2, 25],
+		]);
+		expect(doc.taxTotal.taxAmount).toBe(2514.2);
+		expect(doc.monetaryTotal.taxExclusiveAmount).toBe(10056.8);
+		expect(doc.monetaryTotal.payableAmount).toBe(12571);
+	});
+
+	it("reads an inclusive tax off the legacy tax_amounts shape too", () => {
+		const doc = buildUblInvoiceDocument({
+			invoice: buildStripeInvoice({
+				subtotal: 12100,
+				total: 12100,
+				total_excluding_tax: 10000,
+				lines: linesData([
+					{
+						description: "Widget",
+						amount: 12100,
+						quantity: 1,
+						tax_amounts: [{ amount: 2100, inclusive: true }],
+						discount_amounts: [],
+					},
+				]),
+			}),
+			supplier: buildSupplier(),
+		});
+
+		expect(doc.lines[0]?.lineExtensionAmount).toBe(100);
+		expect(doc.lines[0]?.taxCategory?.percent).toBe(21);
+		expect(doc.monetaryTotal.payableAmount).toBe(121);
+	});
+
 	it("preserves the VAT rate for fully-discounted lines via expanded tax_rate", () => {
 		const doc = buildUblInvoiceDocument({
 			invoice: buildStripeInvoice({
@@ -489,6 +560,48 @@ describe("buildUblCreditNoteDocument", () => {
 			supplier: buildSupplier(),
 		});
 		expect(doc.issueDate).toBe("2024-05-01");
+	});
+
+	it("takes the VAT out of a tax-inclusive, discounted line", () => {
+		// Observed on a Stripe test credit note: a 100.00 line at 25% inclusive
+		// with 10.00 off carries 18.00 tax on a 72.00 taxable amount.
+		const doc = buildUblCreditNoteDocument({
+			creditNote: buildStripeCreditNote({
+				subtotal: 10000,
+				total: 9000,
+				total_excluding_tax: 7200,
+				lines: linesData(
+					[
+						{
+							id: "cnli_inclusive",
+							object: "credit_note_line_item",
+							amount: 10000,
+							description: "Discounted",
+							discount_amount: 1000,
+							quantity: 1,
+							taxes: [
+								{
+									amount: 1800,
+									taxable_amount: 7200,
+									tax_behavior: "inclusive",
+									taxability_reason: "standard_rated",
+									tax_rate_details: { tax_rate: { percentage: 25 } },
+								},
+							],
+							type: "invoice_line_item",
+						},
+					],
+					"/v1/credit_notes/cn_test_123/lines",
+				),
+			}),
+			invoice: buildStripeInvoice(),
+			supplier: buildSupplier(),
+		});
+
+		expect(doc.lines[0]?.lineExtensionAmount).toBe(72);
+		expect(doc.lines[0]?.taxCategory?.percent).toBe(25);
+		expect(doc.taxTotal.taxAmount).toBe(18);
+		expect(doc.monetaryTotal.payableAmount).toBe(90);
 	});
 
 	it("reads the rate from tax_rate_details.tax_rate (real Stripe shape)", () => {
