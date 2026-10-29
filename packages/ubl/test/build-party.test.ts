@@ -81,4 +81,32 @@ describe("buildCustomerParty", () => {
 		expect(party.companyId).toEqual({ scheme: "0208", value: "1006119434" });
 		expect(party.registrationName).toBe("Seven Camp");
 	});
+
+	it("prefixes a VAT number stored without its country (BR-CO-09)", () => {
+		// Stripe's `no_vat` value: a real NO buyer's invoice was rejected on it.
+		const party = buildCustomerParty({
+			name: "Formheim AS",
+			address: addressIn("NO"),
+			countryCode: "NO",
+			vatNumber: "937612311MVA",
+		});
+		expect(party.vatId).toBe("NO937612311MVA");
+		expect(
+			buildCustomerParty({
+				name: "x",
+				address: addressIn("GR"),
+				vatNumber: "123456789",
+			}).vatId,
+		).toBe("EL123456789");
+	});
+
+	it("leaves a VAT number that already carries a prefix alone", () => {
+		const party = buildCustomerParty({
+			name: "Acme",
+			address: addressIn("CH"),
+			countryCode: "CH",
+			vatNumber: "CHE123456789MWST",
+		});
+		expect(party.vatId).toBe("CHE123456789MWST");
+	});
 });

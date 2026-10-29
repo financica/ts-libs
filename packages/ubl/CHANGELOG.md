@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.19.2
+
+### Fixed
+
+- **A VAT identifier stored without its country prefix gets one (BR-CO-09).** `buildCustomerParty` and `buildSupplierParty` wrote the VAT number as given, and Stripe's `no_vat` type stores a Norwegian VAT number as `123456789MVA`, so every invoice to a Norwegian buyer identified by its Stripe VAT ID failed validation. A VAT number that starts with a digit now takes the party's country as its prefix (`EL` for Greece); one that already starts with letters is unchanged.
+
 ## 0.19.1
 
 ### Added

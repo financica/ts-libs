@@ -45,6 +45,24 @@ export interface UblSupplier {
 	peppolID?: string | null;
 }
 
+/**
+ * A VAT identifier (BT-31 / BT-48) with its country prefix, which BR-CO-09
+ * requires. Some stores keep it without one: Stripe's `no_vat` is
+ * `123456789MVA`, so a Norwegian buyer's VAT number failed validation on
+ * every invoice. A value that starts with a digit gets the party's own
+ * country (Greece writes `EL`); a value that already has letters in front is
+ * left as it is.
+ */
+const prefixedVatId = (
+	vatNumber: string | null | undefined,
+	countryCode: string | null | undefined,
+): string | undefined => {
+	const vat = normalizeString(vatNumber);
+	const country = normalizeString(countryCode)?.toUpperCase();
+	if (!vat || !country || !/^\d/.test(vat)) return vat;
+	return `${country === "GR" ? "EL" : country}${vat}`;
+};
+
 /** Convert a {@link UblSupplier} into the seller party (`cac:AccountingSupplierParty`). */
 export const buildSupplierParty = (supplier: UblSupplier): UblParty => {
 	const address = normalizeAddress(supplier.address, supplier.countryCode);
@@ -53,7 +71,7 @@ export const buildSupplierParty = (supplier: UblSupplier): UblParty => {
 		name: supplier.name,
 		registrationName: supplier.name,
 		address,
-		vatId: normalizeString(supplier.vatNumber),
+		vatId: prefixedVatId(supplier.vatNumber, supplier.countryCode),
 		companyId: buildCompanyId({
 			countryCode: supplier.countryCode,
 			companyNumber: supplier.companyNumber ?? null,
@@ -120,7 +138,7 @@ export const buildCustomerParty = (
 		name: customer.name,
 		registrationName: customer.name,
 		address: customer.address,
-		vatId: normalizeString(customer.vatNumber),
+		vatId: prefixedVatId(customer.vatNumber, countryCode),
 		companyId: buildCompanyId({
 			countryCode,
 			companyNumber: customer.taxNumber ?? null,
