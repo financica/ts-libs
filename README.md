@@ -28,7 +28,7 @@ its own.
 | [`@financica/stripe-hosted-invoices`](packages/stripe-hosted-invoices) | 0.1.0   | Read a Stripe invoice, credit note or receipt from its public hosted URL, without an API key                                      |
 | [`@financica/stripe-tax-invoices`](packages/stripe-tax-invoices)       | 0.1.0   | PDF parser for Stripe's monthly tax invoice for its own fees                                                                      |
 | [`@financica/stripe-ubl`](packages/stripe-ubl)                         | 4.1.1   | Convert Stripe invoices and credit notes into Peppol BIS Billing 3.0 UBL                                                          |
-| [`@financica/ubl`](packages/ubl)                                       | 0.19.0  | UBL invoices: parse, build and serialize Peppol BIS Billing 3.0                                                                   |
+| [`@financica/ubl`](packages/ubl)                                       | 0.19.1  | UBL invoices: parse, build and serialize Peppol BIS Billing 3.0                                                                   |
 | [`@financica/xbrl`](packages/xbrl)                                     | 0.2.0   | XBRL 2.1 instance document parser and serializer                                                                                  |
 
 ## Getting started

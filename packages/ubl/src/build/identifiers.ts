@@ -207,8 +207,8 @@ export const extractCustomerTaxIdentifiers = (
  *      {@link resolveVatEndpoint});
  *   4. for Belgium, the enterprise number (VAT digits without the `BE` prefix)
  *      under EAS `0208` — many Belgian entities register only under that;
- *      for Sweden, the organisationsnummer inside the VAT number under `0007`,
- *      Sweden's only scheme since SE:VAT (`9955`) was withdrawn;
+ *      for Sweden, Norway and Denmark, whose VAT schemes were withdrawn, the
+ *      company number inside the VAT number (`0007`, `0192`, `0184`);
  *   5. a generic tax/registration number under its country's company-ID scheme.
  *
  * `countryCode` (the customer's country, when known) disambiguates schemes for
@@ -248,10 +248,28 @@ export const listPeppolReceiverIdentifierCandidates = (
 
 	// 4b. Sweden has no VAT scheme left (SE:VAT 9955 is withdrawn); a Swedish VAT
 	// number is the organisationsnummer + `01`, registered under EAS 0007.
-	const swedishOrgNumber = /^SE(\d{10})01$/.exec(
-		(customer.vatNumber ?? "").replace(/[^A-Za-z0-9]/g, "").toUpperCase(),
-	)?.[1];
+	const compactVat = (customer.vatNumber ?? "")
+		.replace(/[^A-Za-z0-9]/g, "")
+		.toUpperCase();
+	const swedishOrgNumber = /^SE(\d{10})01$/.exec(compactVat)?.[1];
 	if (swedishOrgNumber) add({ scheme: "0007", value: swedishOrgNumber });
+
+	// 4c. Norway likewise (NO:VAT 9909 is withdrawn): a Norwegian VAT number is
+	// the organisasjonsnummer + `MVA`, registered under EAS 0192. Stripe's
+	// `no_vat` type stores it without the `NO` prefix (`123456789MVA`), so the
+	// prefix is optional, and a bare `…MVA` counts only for a Norwegian customer.
+	const norwegianOrgNumber = /^(NO)?(\d{9})MVA$/.exec(compactVat);
+	if (
+		norwegianOrgNumber?.[2] &&
+		(norwegianOrgNumber[1] || countryCode?.toUpperCase() === "NO")
+	) {
+		add({ scheme: "0192", value: norwegianOrgNumber[2] });
+	}
+
+	// 4d. Denmark (DK:VAT 9902 is withdrawn): the VAT number is `DK` + the CVR
+	// number, registered under EAS 0184.
+	const danishCvr = /^DK(\d{8})$/.exec(compactVat)?.[1];
+	if (danishCvr) add({ scheme: "0184", value: danishCvr });
 
 	// 5. A generic tax/registration number → its country's company-ID scheme.
 	const tax = normalizeString(customer.taxNumber);

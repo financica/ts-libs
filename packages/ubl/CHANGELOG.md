@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.19.1
+
+### Added
+
+- **`listPeppolReceiverIdentifierCandidates` reaches Norwegian and Danish customers.** Like Sweden, neither has a VAT scheme left on the EAS list, so their VAT numbers yielded no candidate and a customer identified only by VAT could not be addressed. A Norwegian VAT number (`NO` + organisasjonsnummer + `MVA`, or Stripe's `no_vat` form without the `NO` for a Norwegian customer) now yields `0192:<organisasjonsnummer>`, and a Danish one (`DK` + CVR) `0184:<CVR>`.
+
 ## 0.19.0
 
 ### Changed

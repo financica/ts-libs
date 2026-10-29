@@ -200,6 +200,29 @@ describe("listPeppolReceiverIdentifierCandidates", () => {
 		).toEqual(["0007:5020146865"]);
 	});
 
+	it("reaches a Norwegian VAT number through its organisasjonsnummer under 0192", () => {
+		// Stripe's `no_vat` value carries no `NO` prefix; a real NO customer's
+		// tax id produced no candidate at all, so the send was refused.
+		expect(
+			listPeppolReceiverIdentifierCandidates({ vatNumber: "932122995MVA" }, "NO"),
+		).toEqual(["0192:932122995"]);
+		expect(
+			listPeppolReceiverIdentifierCandidates({ vatNumber: "NO 932 122 995 MVA" }),
+		).toEqual(["0192:932122995"]);
+	});
+
+	it("does not read a bare ...MVA number as Norwegian outside Norway", () => {
+		expect(
+			listPeppolReceiverIdentifierCandidates({ vatNumber: "932122995MVA" }, "BE"),
+		).not.toContain("0192:932122995");
+	});
+
+	it("reaches a Danish VAT number through its CVR number under 0184", () => {
+		expect(
+			listPeppolReceiverIdentifierCandidates({ vatNumber: "DK13585628" }),
+		).toEqual(["0184:13585628"]);
+	});
+
 	it("maps a GLN to EAS 0088", () => {
 		expect(
 			listPeppolReceiverIdentifierCandidates({ glnNumber: "5400112000011" }),
