@@ -169,7 +169,7 @@ describe("computeBelgianVatGrid", () => {
 				{ rate: 6, base: 500, vat: 30 },
 				{ rate: 21, base: 200, vat: 42 },
 			],
-			purchaseBase: 0,
+			servicesPurchaseBase: 0,
 			deductibleVat: 0,
 		});
 		expect(grid[3]).toBe(1200); // 1000 + 200 at 21%
@@ -180,7 +180,7 @@ describe("computeBelgianVatGrid", () => {
 	it("puts purchases in box 82 / 59 and a payable balance in box 71", () => {
 		const { grid } = computeBelgianVatGrid({
 			standardRatedSales: [{ rate: 21, base: 1000, vat: 210 }],
-			purchaseBase: 400,
+			servicesPurchaseBase: 400,
 			deductibleVat: 84,
 		});
 		expect(grid[82]).toBe(400);
@@ -189,10 +189,23 @@ describe("computeBelgianVatGrid", () => {
 		expect(grid[72]).toBeUndefined();
 	});
 
+	it("reports purchases by nature in 81, 82 and 83, clamping each box on its own", () => {
+		const { grid, warnings } = computeBelgianVatGrid({
+			standardRatedSales: [],
+			tradeGoodsPurchaseBase: 1000,
+			servicesPurchaseBase: 250,
+			capitalGoodsPurchaseBase: -100,
+			deductibleVat: 262.5,
+		});
+		expect(grid).toMatchObject({ 81: 1000, 82: 250, 59: 262.5 });
+		expect(grid[83]).toBeUndefined();
+		expect(warnings).toHaveLength(1);
+	});
+
 	it("puts a refundable balance in box 72", () => {
 		const { grid } = computeBelgianVatGrid({
 			standardRatedSales: [{ rate: 21, base: 100, vat: 21 }],
-			purchaseBase: 1000,
+			servicesPurchaseBase: 1000,
 			deductibleVat: 210,
 		});
 		expect(grid[72]).toBe(189); // 210 - 21
@@ -202,7 +215,7 @@ describe("computeBelgianVatGrid", () => {
 	it("warns and omits a non-standard rate", () => {
 		const { grid, warnings } = computeBelgianVatGrid({
 			standardRatedSales: [{ rate: 9, base: 100, vat: 9 }],
-			purchaseBase: 0,
+			servicesPurchaseBase: 0,
 			deductibleVat: 0,
 		});
 		expect(grid[1]).toBeUndefined();
@@ -213,7 +226,7 @@ describe("computeBelgianVatGrid", () => {
 	it("clamps a net-negative base to zero with a warning", () => {
 		const { grid, warnings } = computeBelgianVatGrid({
 			standardRatedSales: [{ rate: 21, base: -50, vat: -10 }],
-			purchaseBase: 0,
+			servicesPurchaseBase: 0,
 			deductibleVat: 0,
 		});
 		expect(grid[3]).toBeUndefined();
@@ -223,7 +236,7 @@ describe("computeBelgianVatGrid", () => {
 	it("always emits box 71 for a nihil period", () => {
 		const { grid } = computeBelgianVatGrid({
 			standardRatedSales: [],
-			purchaseBase: 0,
+			servicesPurchaseBase: 0,
 			deductibleVat: 0,
 		});
 		expect(grid[71]).toBe(0);
@@ -237,7 +250,7 @@ describe("computeBelgianVatGrid", () => {
 			domesticReverseChargeSales: 300,
 			icGoodsSales: 400,
 			exportSales: 500,
-			purchaseBase: 0,
+			servicesPurchaseBase: 0,
 			deductibleVat: 0,
 		});
 		expect(warnings).toHaveLength(0);
@@ -253,7 +266,7 @@ describe("computeBelgianVatGrid", () => {
 	it("maps reverse-charge purchases to 86/88/87 with VAT in 55/56/57", () => {
 		const { grid, warnings } = computeBelgianVatGrid({
 			standardRatedSales: [],
-			purchaseBase: 600, // 100 + 200 + 300, also reported in 82
+			servicesPurchaseBase: 600, // 100 + 200 + 300, also reported in 82
 			deductibleVat: 126,
 			icGoodsPurchaseBase: 100,
 			icServicesPurchaseBase: 200,
@@ -278,7 +291,7 @@ describe("computeBelgianVatGrid", () => {
 	it("includes self-assessed VAT in the payable balance", () => {
 		const { grid } = computeBelgianVatGrid({
 			standardRatedSales: [{ rate: 21, base: 1000, vat: 210 }],
-			purchaseBase: 100,
+			servicesPurchaseBase: 100,
 			deductibleVat: 10, // partial deduction of the self-assessed VAT
 			icServicesPurchaseBase: 100,
 			icOutputVat: 21,
@@ -292,7 +305,7 @@ describe("computeBelgianVatGrid", () => {
 			icSalesCreditNoteBase: 150,
 			otherSalesCreditNoteBase: 300,
 			salesCreditNoteVat: 63,
-			purchaseBase: 400,
+			servicesPurchaseBase: 400,
 			deductibleVat: 84,
 			icPurchaseCreditNoteBase: 120,
 			otherPurchaseCreditNoteBase: 200,
@@ -312,7 +325,7 @@ describe("computeBelgianVatGrid", () => {
 	it("includes regularisations 61/62 in the balance", () => {
 		const { grid } = computeBelgianVatGrid({
 			standardRatedSales: [{ rate: 21, base: 1000, vat: 210 }],
-			purchaseBase: 0,
+			servicesPurchaseBase: 0,
 			deductibleVat: 0,
 			vatCorrectionsDue: 30,
 			vatCorrectionsRecoverable: 50,
@@ -327,7 +340,7 @@ describe("computeBelgianVatGrid", () => {
 			standardRatedSales: [],
 			otherSalesCreditNoteBase: 1000,
 			salesCreditNoteVat: 210,
-			purchaseBase: 0,
+			servicesPurchaseBase: 0,
 			deductibleVat: 0,
 		});
 		expect(grid[49]).toBe(1000);
@@ -339,7 +352,7 @@ describe("computeBelgianVatGrid", () => {
 	it("puts the December advance in box 91 without touching the balance", () => {
 		const { grid } = computeBelgianVatGrid({
 			standardRatedSales: [{ rate: 21, base: 1000, vat: 210 }],
-			purchaseBase: 0,
+			servicesPurchaseBase: 0,
 			deductibleVat: 0,
 			prepayment: 150.5,
 		});
@@ -350,7 +363,7 @@ describe("computeBelgianVatGrid", () => {
 	it("emits a zero grid 91 when the prepayment is set to 0", () => {
 		const { grid } = computeBelgianVatGrid({
 			standardRatedSales: [],
-			purchaseBase: 0,
+			servicesPurchaseBase: 0,
 			deductibleVat: 0,
 			prepayment: 0,
 		});
@@ -360,7 +373,7 @@ describe("computeBelgianVatGrid", () => {
 	it("omits grid 91 when no prepayment is set", () => {
 		const { grid } = computeBelgianVatGrid({
 			standardRatedSales: [],
-			purchaseBase: 0,
+			servicesPurchaseBase: 0,
 			deductibleVat: 0,
 		});
 		expect(grid[91]).toBeUndefined();
@@ -369,7 +382,7 @@ describe("computeBelgianVatGrid", () => {
 	it("clamps a negative prepayment to 0.00 with a warning", () => {
 		const { grid, warnings } = computeBelgianVatGrid({
 			standardRatedSales: [],
-			purchaseBase: 0,
+			servicesPurchaseBase: 0,
 			deductibleVat: 0,
 			prepayment: -10,
 		});
@@ -381,7 +394,7 @@ describe("computeBelgianVatGrid", () => {
 		const { grid, warnings } = computeBelgianVatGrid({
 			standardRatedSales: [],
 			icGoodsSales: -250,
-			purchaseBase: 0,
+			servicesPurchaseBase: 0,
 			deductibleVat: 0,
 		});
 		expect(grid[46]).toBeUndefined();
@@ -410,7 +423,7 @@ describe("buildBelgianVatReturn", () => {
 			period: { year: 2026, quarter: 2 },
 			figures: {
 				standardRatedSales: [{ rate: 21, base: 100, vat: 21 }],
-				purchaseBase: 1000,
+				servicesPurchaseBase: 1000,
 				deductibleVat: 210,
 			},
 		});
@@ -426,7 +439,7 @@ describe("buildBelgianVatReturn", () => {
 			period: { year: 2026, month: 12 },
 			figures: {
 				standardRatedSales: [],
-				purchaseBase: 0,
+				servicesPurchaseBase: 0,
 				deductibleVat: 0,
 				prepayment: 0,
 			},

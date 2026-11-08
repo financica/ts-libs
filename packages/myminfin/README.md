@@ -306,19 +306,18 @@ const { xml, grid, warnings } = buildBelgianVatReturn({
 	period: { year: 2026, quarter: 2 },
 	figures: {
 		standardRatedSales: [{ rate: 21, base: 1000, vat: 210 }],
-		purchaseBase: 400,
+		servicesPurchaseBase: 400,
 		deductibleVat: 84,
 	},
 });
 ```
 
 The mapping covers domestic standard-rated sales (boxes 00/01/02/03 + 54),
-deductible domestic purchases (boxes 82 + 59), intra-community supplies and
+purchases by nature (boxes 81/82/83 + 59), intra-community supplies and
 acquisitions, exports, domestic reverse charge and imports with postponed
 accounting (44/45/46/47, 86/87/88 + 55/56/57), credit-note corrections
-(48/49/84/85 with the VAT in 63/64) and miscellaneous regularisations (61/62).
-The goods/investment purchase split (81/83) and prepayments (91) are not
-modelled; `warnings` flags anything that could not be mapped. Use `serializeVatReturn` if
+(48/49/84/85 with the VAT in 63/64), miscellaneous regularisations (61/62) and
+the December advance (91); `warnings` flags anything that could not be mapped. Use `serializeVatReturn` if
 you already have explicit grid box amounts, or `computeBelgianVatGrid` for just
 the grid.
 

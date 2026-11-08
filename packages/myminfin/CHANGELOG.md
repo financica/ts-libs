@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.14.0
+
+### Changed
+
+- **Purchases are reported by nature in grids 81, 82 and 83.** `purchaseBase` is replaced by three optional figures: `tradeGoodsPurchaseBase` (81, trade goods, raw materials and consumables), `servicesPurchaseBase` (82, services and miscellaneous goods) and `capitalGoodsPurchaseBase` (83). Each is clamped at zero on its own: the SPF notice (no. 175) deducts credit notes received from these grids only "as far as possible".
+
 ## 0.13.0
 
 ### Added

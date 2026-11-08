@@ -192,7 +192,7 @@ describe("justifications in the XML", () => {
 		// 21% of 1000 is 210, so a declared 100 in grid 54 is well outside tolerance.
 		const figures = {
 			standardRatedSales: [{ rate: 21, base: 1000, vat: 100 }],
-			purchaseBase: 0,
+			servicesPurchaseBase: 0,
 			deductibleVat: 0,
 		};
 		const unjustified = buildBelgianVatReturn({ declarant, period, figures });

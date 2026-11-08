@@ -264,7 +264,6 @@ export interface BelgianStandardRatedSale {
  * acquisitions, exports, domestic reverse charge and imports with postponed
  * accounting, credit-note corrections (48/49/84/85 with the VAT in 63/64) and
  * miscellaneous VAT regularisations (61/62) and the December advance (91).
- * The goods/investment purchase split (81/83) is not modelled yet.
  */
 export interface BelgianVatReturnFigures {
 	/** Domestic standard-rated sales, one entry per rate (6/12/21). */
@@ -283,8 +282,16 @@ export interface BelgianVatReturnFigures {
 	icSalesCreditNoteBase?: number;
 	/** Net base of credit notes issued relating to the other frame II operations (grid 49). */
 	otherSalesCreditNoteBase?: number;
-	/** Total net base of purchases carrying deductible VAT. */
-	purchaseBase: number;
+	/**
+	 * Net base of purchases of trade goods, raw materials and consumables
+	 * (grid 81). Purchase bases include the non-deductible VAT; credit notes
+	 * received are deducted from them as far as possible (SPF notice no. 175).
+	 */
+	tradeGoodsPurchaseBase?: number;
+	/** Net base of purchases of services and miscellaneous goods (grid 82). */
+	servicesPurchaseBase?: number;
+	/** Net base of purchases of capital goods (grid 83). */
+	capitalGoodsPurchaseBase?: number;
 	/** Total deductible input VAT. */
 	deductibleVat: number;
 	/** Net base of intra-community acquisitions of goods (grid 86). */
@@ -342,8 +349,8 @@ function round2(value: number): number {
  *   Special sales regimes land in their own boxes: intra-community services in
  *   44, domestic reverse charge (co-contractor) in 45, intra-community goods in
  *   46, exports and other exempt sales in 47.
- * - Purchase base lands in box 82 (services & misc goods — the goods/investment
- *   split across 81/83 is not modelled) and deductible VAT in box 59.
+ * - Purchase bases land in boxes 81 (trade goods), 82 (services and
+ *   miscellaneous goods) and 83 (capital goods); deductible VAT in box 59.
  *   Reverse-charge purchase bases additionally land in 86 (IC goods), 88 (IC
  *   services) and 87 (imports + domestic reverse charge), with the self-assessed
  *   VAT in 55/56/57.
@@ -431,7 +438,13 @@ export function computeBelgianVatGrid(
 
 	const outputVat = setBox(54, standardOutputVat, "Output VAT (grid 54)");
 
-	setBox(82, figures.purchaseBase, "Purchase base (grid 82)");
+	setBox(81, figures.tradeGoodsPurchaseBase, "Trade goods purchases (grid 81)");
+	setBox(
+		82,
+		figures.servicesPurchaseBase,
+		"Services and miscellaneous goods (grid 82)",
+	);
+	setBox(83, figures.capitalGoodsPurchaseBase, "Capital goods purchases (grid 83)");
 	const deductibleVat = setBox(59, figures.deductibleVat, "Deductible VAT (grid 59)");
 
 	setBox(86, figures.icGoodsPurchaseBase, "IC goods acquisitions (grid 86)");
