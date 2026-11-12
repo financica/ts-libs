@@ -1,0 +1,16 @@
+{
+	"type": "urn:problem-type:belcotax:feedback",
+	"title": "Bulk feedback",
+	"status": 400,
+	"detail": "Des erreurs ont été rencontrées lors de la validation de lenvoi",
+	"issues": [
+		{
+			"type": "urn:problem-type:belcotax:issue:invalidFormat:invalidFormat",
+			"title": "InvalidFormat",
+			"detail": "Format invalide : 100.0",
+			"in": "body",
+			"name": "/$/2076",
+			"line": 4
+		}
+	]
+}

@@ -1,0 +1,25 @@
+{
+	"type": "urn:problem-type:belcotax:feedback",
+	"title": "Bulk feedback",
+	"status": 400,
+	"detail": "Des erreurs ont été rencontrées lors de la validation de lenvoi",
+	"issues": [
+		{
+			"type": "urn:problem-type:belcotax:issue:uNDEFINED:is2099Filled10",
+			"title": "is2099Filled10",
+			"detail": "Au moins un champ 2.099 (\"nature\") est obligatoire si la zone 2076 est remplie.",
+			"inputs": [
+				{
+					"in": "body",
+					"name": "/$/2076"
+				},
+				{
+					"in": "body",
+					"name": "/$/2099"
+				}
+			],
+			"key": "bc060677-b166-4db8-9fc2-41e7611d0e1e",
+			"line": 4
+		}
+	]
+}

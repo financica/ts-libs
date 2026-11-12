@@ -1,11 +1,12 @@
 # @financica/myminfin
 
-TypeScript client for the Belgian SPF Finances MyMinFin and Intervat APIs.
+TypeScript client for the Belgian SPF Finances MyMinFin, Intervat and Belcotax APIs.
 
 Provides typed access to:
 
 - **MyMinFin API** — Search and download documents from MyDoc / MyDocPro
 - **Intervat API** — Submit VAT returns via XML
+- **Belcotax API** — Submit 281.xx tax slips as a JSONL bulk (Belcotax-on-web 2.0)
 - **OIDC Authentication** — OAuth2 + PKCE with JWT client authentication
 
 ## Installation
@@ -177,6 +178,73 @@ const receiptDocs = await client.searchDocuments({
 	ownerIdentifier: "0806153934",
 });
 ```
+
+## Belcotax API — 281.xx Tax Slips
+
+Belcotax-on-web 2.0 (income 2026 onwards, opening February 2027) takes the
+281.xx fiches as a JSONL bulk: resources (persons, organisations, contacts)
+under your own keys, and fiches referring to them. Resending a key replaces
+it; deletion lines remove it.
+
+**Unconfirmed until SPF register the client for Belcotax:** the production
+URL (the published OpenAPI carries a placeholder, so `baseUrl` is required)
+and the OAuth scope name to request from `MyMinFinAuth`.
+
+```ts
+import {
+	BelcotaxClient,
+	BelcotaxFeedbackError,
+	serializeBelcotaxBulk,
+} from "@financica/myminfin";
+
+const bulk = serializeBelcotaxBulk(
+	[
+		{
+			type: "contact",
+			key: "C1",
+			email: "books@example.be",
+			preferredLanguage: "fr",
+		},
+		{
+			type: "organisation",
+			key: "PAYER",
+			ids: { enterpriseNumber: "0123456789" },
+			names: { fr: "Example" },
+		},
+		{
+			type: "person",
+			key: "P1",
+			ids: { ssin: "80010100107" },
+			firstNames: ["Jane"],
+			lastNames: ["Doe"],
+		},
+		{
+			type: "281.50",
+			key: "2026-P1",
+			beneficiary: "P1",
+			contact: "C1",
+			debtor: "PAYER",
+			fees: 1200,
+		},
+	],
+	{ incomeYear: 2026 },
+);
+
+const belcotax = new BelcotaxClient({ accessToken, environment: "test", baseUrl });
+try {
+	const { id } = await belcotax.submitBulk(bulk);
+	const validation = await belcotax.getLastValidation(id); // inProgress, accepted or rejected
+	if (validation.status === "rejected") {
+		const { issues } = await belcotax.getLastValidationFeedback(id);
+	}
+} catch (error) {
+	if (error instanceof BelcotaxFeedbackError) console.log(error.issues); // line, key, fields
+}
+```
+
+The serializer covers the 281.50 (named fields) and the 281.20 (zones by code,
+since the schema's labels only make sense next to the paper form), and checks
+what SPF's JSON schemas state. SPF's business rules come back as feedback.
 
 ## Error Handling
 

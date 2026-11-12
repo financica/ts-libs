@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.15.0
+
+### Added
+
+- **`BelcotaxClient`** for the Belcotax-on-web 2.0 bulks API (`bulks-api-external` 1.1.1, from February 2027): `submitBulk`, `getLastValidation`, `getLastValidationFeedback` and `checkHealth`. A refused bulk throws `BelcotaxFeedbackError` with SPF's issues (line, key and fields). `baseUrl` is required: SPF have not published the production URL, and the scope name is unconfirmed until registration.
+- **`serializeBelcotaxBulk`** renders the JSONL bulk for income 2026: person, organisation and contact resources, 281.50 and 281.20 fiches, and deletions, checked against SPF's JSON schemas and tested against SPF's own example lines.
+
 ## 0.14.0
 
 ### Changed

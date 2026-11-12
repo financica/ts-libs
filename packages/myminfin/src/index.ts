@@ -5,6 +5,34 @@ export {
 	parseMyMinFinDocument,
 } from "./client";
 export { IntervatClient } from "./intervat";
+export { BelcotaxClient, BelcotaxFeedbackError } from "./belcotax";
+export type {
+	BelcotaxClientConfig,
+	BelcotaxSubmission,
+	BelcotaxValidation,
+	BelcotaxValidationStatus,
+	BelcotaxLink,
+	BelcotaxFeedback,
+	BelcotaxIssue,
+	BelcotaxIssueInput,
+	BelcotaxHealth,
+} from "./belcotax";
+export { serializeBelcotaxBulk } from "./belcotax-bulk";
+export type {
+	BelcotaxLine,
+	BelcotaxLanguage,
+	BelcotaxAddress,
+	BelcotaxContact,
+	BelcotaxOrganisation,
+	BelcotaxPerson,
+	BelcotaxFiche28150,
+	BelcotaxFiche28120,
+	BelcotaxFiche28120Zones,
+	BelcotaxBenefitInKindCode,
+	BelcotaxDeleteFiche,
+	BelcotaxDeleteResource,
+	SerializeBelcotaxBulkOptions,
+} from "./belcotax-bulk";
 export {
 	serializeVatReturn,
 	computeBelgianVatGrid,
