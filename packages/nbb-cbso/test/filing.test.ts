@@ -693,6 +693,33 @@ describe("conformance with an accepted filing", () => {
 		expect(prdMembers(ours)).toEqual(prdMembers(example));
 	});
 
+	it("dates both exercises as the accepted filing does, by prd and no dcl", () => {
+		// The preceding exercise's dates are the exercise cells in the prd:m2
+		// column; the dcl:m1 cells beside them are not dimensionally valid.
+		const exerciseDates = (doc: XbrlInstance): string[] =>
+			doc.facts
+				.flatMap((fact) => {
+					if (fact.type !== "item" || fact.name.localName !== "dte1")
+						return [];
+					const scenario = doc.contexts[fact.contextRef]?.scenario ?? [];
+					const members = scenario.map(
+						(m) => `${m.dimension?.localName}=${m.member?.localName}`,
+					);
+					return members.some((m) => m.startsWith("mmt=")) &&
+						!members.includes("qlt=m1")
+						? [members.sort().join(",")]
+						: [];
+				})
+				.sort();
+		expect(exerciseDates(example)).toEqual([
+			"bas=m27,mmt=m1,part=m2,prd=m1",
+			"bas=m27,mmt=m1,part=m2,prd=m2",
+			"bas=m27,mmt=m2,part=m2,prd=m1",
+			"bas=m27,mmt=m2,part=m2,prd=m2",
+		]);
+		expect(exerciseDates(ours)).toEqual(exerciseDates(example));
+	});
+
 	it("reports money as the accepted filing does: one EUR unit, decimals INF", () => {
 		for (const doc of [example, ours]) {
 			expect(Object.keys(doc.units)).toEqual(["EUR"]);

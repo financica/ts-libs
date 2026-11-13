@@ -32,12 +32,9 @@ const IDENTIFICATION = {
 	houseNumber: "dim:bas=bas:m31,dim:ctc=ctc:m2,dim:part=part:m2,dim:psn=psn:m1",
 	postbox: "dim:bas=bas:m31,dim:ctc=ctc:m3,dim:part=part:m2,dim:psn=psn:m1",
 	generalMeetingDate: "dim:bas=bas:m27,dim:evt=evt:m1,dim:part=part:m2",
+	// Both exercises: the preceding one is the same cell in the `prd:m2` column.
 	exerciseStart: "dim:bas=bas:m27,dim:mmt=mmt:m1,dim:part=part:m2",
 	exerciseEnd: "dim:bas=bas:m27,dim:mmt=mmt:m2,dim:part=part:m2",
-	previousExerciseStart:
-		"dim:bas=bas:m27,dim:dcl=dcl:m1,dim:mmt=mmt:m1,dim:part=part:m2",
-	previousExerciseEnd:
-		"dim:bas=bas:m27,dim:dcl=dcl:m1,dim:mmt=mmt:m2,dim:part=part:m2",
 	previousPeriodDataUnchanged: "dim:bas=bas:m28,dim:dcl=dcl:m1,dim:part=part:m2",
 	isCorrection: "dim:bas=bas:m28,dim:dcl=dcl:m2,dim:part=part:m2",
 	inLiquidation: "dim:bas=bas:m28,dim:dcl=dcl:m39,dim:part=part:m2",
@@ -156,11 +153,12 @@ export function buildNbbFiling(input: NbbFilingInput): NbbFiling {
 	const identify = (
 		field: keyof typeof IDENTIFICATION,
 		value: string | undefined,
+		period?: NbbFact["period"],
 	): void => {
 		if (value === undefined) return;
 		const datapoint = bySignature.get(IDENTIFICATION[field]);
 		if (!datapoint) return;
-		facts.push({ datapoint, value });
+		facts.push({ datapoint, value, ...(period ? { period } : {}) });
 	};
 
 	identify("enterpriseNumber", input.entity.enterpriseNumber);
@@ -169,10 +167,14 @@ export function buildNbbFiling(input: NbbFilingInput): NbbFiling {
 	identify("houseNumber", input.entity.address.houseNumber);
 	identify("postbox", input.entity.address.postbox);
 	identify("generalMeetingDate", input.identification.generalMeetingDate);
-	identify("exerciseStart", input.identification.exercise.startDate);
-	identify("exerciseEnd", input.identification.exercise.endDate);
-	identify("previousExerciseStart", input.identification.previousExercise?.startDate);
-	identify("previousExerciseEnd", input.identification.previousExercise?.endDate);
+	identify("exerciseStart", input.identification.exercise.startDate, "current");
+	identify("exerciseEnd", input.identification.exercise.endDate, "current");
+	identify(
+		"exerciseStart",
+		input.identification.previousExercise?.startDate,
+		"previous",
+	);
+	identify("exerciseEnd", input.identification.previousExercise?.endDate, "previous");
 	identify(
 		"previousPeriodDataUnchanged",
 		String(input.identification.previousPeriodDataUnchanged),

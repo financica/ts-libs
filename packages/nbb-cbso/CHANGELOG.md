@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.1
+
+### Fixed
+
+- **The preceding exercise's dates are reported in the `prd:m2` column of the exercise cells**, as accepted filings do, instead of under `dcl:m1`. That combination is a cross-product artifact of the rendering table, not a cell the definition linkbase allows: the NBB rejected every filing with a `previousExercise` as "not dimensionally valid" (`xbrldie:PrimaryItemDimensionallyInvalidError`). Applies to every model and both releases.
+
 ## 0.9.0
 
 ### Added
