@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
 	apiBase,
 	authorizeUrl,
+	belcotaxBulksUrl,
 	discoveryUrl,
 	intervatOpenApiUrl,
 	intervatDeclarationUrl,
@@ -53,4 +54,11 @@ describe("endpoints", () => {
 			}
 		},
 	);
+
+	it("pins the Belcotax acceptance root SPF publish", () => {
+		// SPF's Belcotax API technical documentation (KB0004054, 03/04/2026).
+		expect(belcotaxBulksUrl("test")).toBe(
+			"https://wsapi-a.minfin.be/Belcotax/Bulk/OAU/v1",
+		);
+	});
 });

@@ -72,6 +72,16 @@ export function intervatDeclarationUrl(
 	return `${apiBase(env)}/Intervat/api/OAU/v1/declaration/${declarationType}/${ownerIdentifier}`;
 }
 
+/**
+ * The Belcotax bulks API root (`/bulks/submit` and the rest sit below it).
+ * Acceptance is SPF's own (Belcotax API technical documentation, 03/04/2026);
+ * production follows the same host pattern as Intervat and is unconfirmed
+ * until SPF register a client for it.
+ */
+export function belcotaxBulksUrl(env: Environment): string {
+	return `${apiBase(env)}/Belcotax/Bulk/OAU/v1`;
+}
+
 export function intervatOpenApiUrl(env: Environment): string {
 	return `${apiBase(env)}/Intervat/api/OAU/v1/doc/intervat-external-api.yaml`;
 }

@@ -87,6 +87,7 @@ export {
 	myminfinDocumentsUrl,
 	intervatDeclarationUrl,
 	intervatOpenApiUrl,
+	belcotaxBulksUrl,
 } from "./endpoints";
 export type { DeclarationType } from "./endpoints";
 export type {

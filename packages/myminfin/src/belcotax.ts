@@ -1,18 +1,15 @@
+import { belcotaxBulksUrl } from "./endpoints";
 import { assertOk, authorizedFetch, resolveFetch, wrapFetchError } from "./http";
 import type { ClientConfig, ProblemDetail } from "./types";
 import { MyMinFinApiError, MyMinFinError } from "./types";
 
 export interface BelcotaxClientConfig extends ClientConfig {
 	/**
-	 * The bulks API root, up to and including `/bulks/v1` (the paths below it
-	 * are `/bulks/submit`, `/bulks/{id}/validations/last`, `/health`).
-	 *
-	 * Required because SPF have not published it: the OpenAPI's server URL
-	 * (`https://server.minfin.be/external/api/bulks/v1`) is a placeholder they
-	 * replace before production. Confirm it with the helpdesk when the scope is
-	 * granted, then default it per environment here.
+	 * The bulks API root, overriding {@link belcotaxBulksUrl} for the
+	 * environment (the paths below it are `/bulks/submit`,
+	 * `/bulks/{id}/validations/last`, `/health`).
 	 */
-	baseUrl: string;
+	baseUrl?: string;
 }
 
 /** What a submission answers: the bulk's id and how many lines SPF counted. */
@@ -110,7 +107,10 @@ export class BelcotaxClient {
 
 	constructor(config: BelcotaxClientConfig) {
 		this.accessToken = config.accessToken;
-		this.baseUrl = config.baseUrl.replace(/\/+$/, "");
+		this.baseUrl = (config.baseUrl ?? belcotaxBulksUrl(config.environment)).replace(
+			/\/+$/,
+			"",
+		);
 		this.fetchImpl = resolveFetch(config.fetch);
 	}
 
@@ -152,7 +152,11 @@ export class BelcotaxClient {
 		return parseValidation(await readJson(res));
 	}
 
-	/** The issues found by the latest validation of a bulk. */
+	/**
+	 * The latest validation's feedback: for an accepted bulk its status and
+	 * counts, for a rejected one also the issues (SPF return at most 100).
+	 * Not available while the validation is in progress.
+	 */
 	async getLastValidationFeedback(
 		bulkId: string,
 		options?: { signal?: AbortSignal },

@@ -40,6 +40,21 @@ describe("BelcotaxClient", () => {
 		return { url: String(call[0]), init: call[1] ?? {} };
 	};
 
+	it("defaults to the environment's bulks root without a baseUrl", async () => {
+		const defaulted = new BelcotaxClient({
+			accessToken: "test-token-xyz",
+			environment: "test",
+			fetch: mockFetch,
+		});
+		mockFetch.mockResolvedValueOnce(jsonResponse(200, { id: "123", count: 1 }));
+
+		await defaulted.submitBulk("{}\n");
+
+		expect(lastCall().url).toBe(
+			"https://wsapi-a.minfin.be/Belcotax/Bulk/OAU/v1/bulks/submit",
+		);
+	});
+
 	describe("submitBulk", () => {
 		const jsonl = '{"$s":"urn:f:x:1","k":"F-1"}\n';
 

@@ -186,9 +186,13 @@ Belcotax-on-web 2.0 (income 2026 onwards, opening February 2027) takes the
 under your own keys, and fiches referring to them. Resending a key replaces
 it; deletion lines remove it.
 
-**Unconfirmed until SPF register the client for Belcotax:** the production
-URL (the published OpenAPI carries a placeholder, so `baseUrl` is required)
-and the OAuth scope name to request from `MyMinFinAuth`.
+The client defaults to `belcotaxBulksUrl(environment)`: acceptance is
+`https://wsapi-a.minfin.be/Belcotax/Bulk/OAU/v1` (SPF's Belcotax API
+technical documentation, 03/04/2026); production follows Intervat's host
+pattern and opens in February 2027. **Unconfirmed until SPF register the
+client for Belcotax:** the production URL and the OAuth scope name to request
+from `MyMinFinAuth`. SPF return no receipt through the API: an accepted bulk
+shows in Belcotax-on-web like any other.
 
 ```ts
 import {
@@ -230,7 +234,7 @@ const bulk = serializeBelcotaxBulk(
 	{ incomeYear: 2026 },
 );
 
-const belcotax = new BelcotaxClient({ accessToken, environment: "test", baseUrl });
+const belcotax = new BelcotaxClient({ accessToken, environment: "test" });
 try {
 	const { id } = await belcotax.submitBulk(bulk);
 	const validation = await belcotax.getLastValidation(id); // inProgress, accepted or rejected
