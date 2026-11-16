@@ -203,12 +203,13 @@ export const extractCustomerTaxIdentifiers = (
  *
  *   1. an explicit Peppol ID (already `scheme:value`) — passed through as-is;
  *   2. a GLN under EAS `0088`;
- *   3. the VAT number under its country's VAT EAS scheme (see
- *      {@link resolveVatEndpoint});
- *   4. for Belgium, the enterprise number (VAT digits without the `BE` prefix)
- *      under EAS `0208` — many Belgian entities register only under that;
- *      for Sweden, Norway and Denmark, whose VAT schemes were withdrawn, the
- *      company number inside the VAT number (`0007`, `0192`, `0184`);
+ *   3. for Belgium, the enterprise number (VAT digits without the `BE` prefix)
+ *      under EAS `0208`, ahead of the VAT scheme: Belgium mandates `0208`, and
+ *      a stale `9925` left at a previous access point must not win the lookup;
+ *   4. the VAT number under its country's VAT EAS scheme (see
+ *      {@link resolveVatEndpoint}); for Sweden, Norway and Denmark, whose VAT
+ *      schemes were withdrawn, the company number inside the VAT number
+ *      (`0007`, `0192`, `0184`);
  *   5. a generic tax/registration number under its country's company-ID scheme.
  *
  * `countryCode` (the customer's country, when known) disambiguates schemes for
@@ -231,12 +232,11 @@ export const listPeppolReceiverIdentifierCandidates = (
 	const gln = normalizeString(customer.glnNumber);
 	if (gln) add({ scheme: "0088", value: normalizeParticipantValue("0088", gln) });
 
-	// 3. VAT number → the country's VAT EAS scheme (e.g. BE → 9925).
+	// 3. Belgium: the enterprise number under EAS 0208 (the VAT digits without
+	// the `BE` prefix) comes first. It is the identifier Belgium mandates, so a
+	// party registered under both is addressed where it is required to be, and
+	// a 9925 left behind at a former access point cannot capture the document.
 	const vat = resolveVatEndpoint({ vatNumber: customer.vatNumber, countryCode });
-	add(vat);
-
-	// 4. Belgium also reaches parties by enterprise number under EAS 0208; it is
-	// the VAT digits without the `BE` prefix, and some entities register only so.
 	if (vat?.scheme === "9925") {
 		add(
 			buildCompanyId({
@@ -245,6 +245,10 @@ export const listPeppolReceiverIdentifierCandidates = (
 			}),
 		);
 	}
+
+	// 4. VAT number → the country's VAT EAS scheme (e.g. BE → 9925), the
+	// fallback for parties registered only under it.
+	add(vat);
 
 	// 4b. Sweden has no VAT scheme left (SE:VAT 9955 is withdrawn); a Swedish VAT
 	// number is the organisationsnummer + `01`, registered under EAS 0007.

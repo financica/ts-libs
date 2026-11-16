@@ -179,10 +179,10 @@ describe("resolveVatEndpoint", () => {
 });
 
 describe("listPeppolReceiverIdentifierCandidates", () => {
-	it("qualifies a Belgian VAT number and adds the 0208 enterprise-number fallback", () => {
+	it("qualifies a Belgian VAT number, the 0208 enterprise number first", () => {
 		expect(
 			listPeppolReceiverIdentifierCandidates({ vatNumber: "BE0206582284" }),
-		).toEqual(["9925:BE0206582284", "0208:0206582284"]);
+		).toEqual(["0208:0206582284", "9925:BE0206582284"]);
 	});
 
 	it("passes an explicit Peppol ID through, then de-duplicates the fallback", () => {

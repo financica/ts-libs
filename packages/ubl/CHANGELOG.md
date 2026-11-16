@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.19.3
+
+### Fixed
+
+- **`listPeppolReceiverIdentifierCandidates` puts a Belgian party's `0208` ahead of its `9925`.** Belgium mandates registration under the enterprise number (`0208`); the VAT scheme (`9925`) is voluntary. With `9925` first, a party that moved access point but left a `9925` registration behind at the old one had its documents delivered there. `9925` stays in the list as the fallback for parties registered only under it.
+
 ## 0.19.2
 
 ### Fixed
