@@ -5,6 +5,7 @@ import {
 	reconcileLinesToExclTotal,
 	coerceLinesForSupplierVatStatus,
 	serializeUblInvoice,
+	UblBuildError,
 	type UblAttachment,
 	type UblInvoice,
 	type UblEndpoint,
@@ -28,6 +29,23 @@ const validateCurrency = (currency: string): string => {
 		throw new Error(`Invalid currency code: ${String(currency)}`);
 	}
 	return upper;
+};
+
+/**
+ * The document number Stripe assigns at finalization (BT-1). A draft has
+ * none, and the Stripe id is not one: a document without it cannot be built.
+ */
+const requireDocumentNumber = (document: {
+	id: string;
+	number: string | null;
+}): string => {
+	const number = normalizeString(document.number);
+	if (!number) {
+		throw new UblBuildError(
+			`Stripe ${document.id} has no number: finalize it on Stripe before building its UBL`,
+		);
+	}
+	return number;
 };
 
 const authoritativeExclVat = (
@@ -68,7 +86,10 @@ export interface BuildUblInvoiceParams {
 	supplier: UblSupplier;
 	/** Optional embedded attachment (e.g. the rendered PDF). */
 	attachment?: UblAttachment;
-	/** Optional buyer reference (BT-10). */
+	/**
+	 * Buyer reference (BT-10). Defaults to the document number, since Peppol
+	 * requires a buyer or order reference (PEPPOL-EN16931-R003).
+	 */
 	buyerReference?: string | null;
 	/**
 	 * Override the customer Peppol `EndpointID` (BT-49). Set this to the
@@ -113,9 +134,10 @@ export const buildUblInvoiceDocument = (params: BuildUblInvoiceParams): UblInvoi
 		toNumber(invoice.total),
 	);
 
+	const id = requireDocumentNumber(invoice);
 	return {
 		documentType: "Invoice",
-		id: invoice.number ?? invoice.id,
+		id,
 		issueDate,
 		// BT-9. Peppol BR-CO-25 requires a payment due date (or payment terms)
 		// whenever a positive amount is payable. Stripe `charge_automatically`
@@ -133,7 +155,7 @@ export const buildUblInvoiceDocument = (params: BuildUblInvoiceParams): UblInvoi
 		note: normalizeString(invoice.description) ?? undefined,
 		paymentTermsNote: normalizeString(invoice.footer) ?? undefined,
 		currency: validateCurrency(invoice.currency),
-		buyerReference: normalizeString(params.buyerReference) ?? undefined,
+		buyerReference: normalizeString(params.buyerReference) ?? id,
 		// BT-73/BT-74. A subscription invoice that does not say what it bills
 		// for forces the receiver to infer it from the issue date, which is
 		// exactly what goes wrong across a year end.
@@ -159,6 +181,7 @@ export interface BuildUblCreditNoteParams {
 	invoice: Stripe.Invoice;
 	supplier: UblSupplier;
 	attachment?: UblAttachment;
+	/** See {@link BuildUblInvoiceParams.buyerReference}. */
 	buyerReference?: string | null;
 	/** See {@link BuildUblInvoiceParams.customerEndpoint}. */
 	customerEndpoint?: UblEndpoint | null;
@@ -207,9 +230,10 @@ export const buildUblCreditNoteDocument = (
 		toNumber(creditNote.total),
 	);
 
+	const id = requireDocumentNumber(creditNote);
 	return {
 		documentType: "CreditNote",
-		id: creditNote.number ?? creditNote.id,
+		id,
 		issueDate,
 		// The memo is the sender's own words. Without one, a Stripe credit
 		// reason travels as a BT-21 coded note (UNTDID 4451 `ACD` = Reason),
@@ -220,8 +244,8 @@ export const buildUblCreditNoteDocument = (
 			normalizeString(invoice.description) ??
 			"Credit note",
 		currency: validateCurrency(creditNote.currency),
-		buyerReference: normalizeString(params.buyerReference) ?? undefined,
-		billingReference: { invoiceId: invoice.number ?? invoice.id },
+		buyerReference: normalizeString(params.buyerReference) ?? id,
+		billingReference: { invoiceId: requireDocumentNumber(invoice) },
 		seller: buildSupplierParty(supplier),
 		buyer,
 		lines,

@@ -1,3 +1,4 @@
+import { UblBuildError } from "@financica/ubl/build";
 import type Stripe from "stripe";
 import { describe, expect, it } from "vitest";
 import {
@@ -237,6 +238,23 @@ describe("buildUblInvoiceDocument", () => {
 		});
 		expect(doc.monetaryTotal.payableAmount).toBe(0);
 		expect(doc.dueDate).toBe("2024-05-01");
+	});
+
+	it("defaults the buyer reference to the document number (PEPPOL-EN16931-R003)", () => {
+		const base = { invoice: buildStripeInvoice(), supplier: buildSupplier() };
+		expect(buildUblInvoiceDocument(base).buyerReference).toBe("INV-001");
+		expect(
+			buildUblInvoiceDocument({ ...base, buyerReference: "Dept 7" }).buyerReference,
+		).toBe("Dept 7");
+	});
+
+	it("refuses a draft without a number rather than using the Stripe id", () => {
+		expect(() =>
+			buildUblInvoiceDocument({
+				invoice: buildStripeInvoice({ number: null, status: "draft" }),
+				supplier: buildSupplier(),
+			}),
+		).toThrow(UblBuildError);
 	});
 
 	it("rejects an invalid currency", () => {

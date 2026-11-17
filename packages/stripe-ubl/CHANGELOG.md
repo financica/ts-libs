@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **BREAKING: a document needs its Stripe number.** `buildUblInvoiceDocument` and `buildUblCreditNoteDocument` (and the XML builders on top of them) throw `UblBuildError` when the invoice or credit note has no `number`, instead of using the Stripe id (`in_…`, `cn_…`) as the document number (BT-1) and the credit note's billing reference. A draft has no number until Stripe finalizes it, and its id is not a number a buyer can book.
+- **The buyer reference defaults to the document number.** Peppol requires a buyer or order reference (PEPPOL-EN16931-R003) and a Stripe invoice carries neither, so without a `buyerReference` the document now repeats its number as BT-10 instead of omitting it.
+
 ## 4.1.1
 
 ### Fixed
