@@ -189,9 +189,10 @@ it; deletion lines remove it.
 The client defaults to `belcotaxBulksUrl(environment)`: acceptance is
 `https://wsapi-a.minfin.be/Belcotax/Bulk/OAU/v1` (SPF's Belcotax API
 technical documentation, 03/04/2026); production follows Intervat's host
-pattern and opens in February 2027. **Unconfirmed until SPF register the
-client for Belcotax:** the production URL and the OAuth scope name to request
-from `MyMinFinAuth`. SPF return no receipt through the API: an accepted bulk
+pattern and opens in February 2027 (unconfirmed). Request the
+`belcotax-manage-api` scope from `MyMinFinAuth`, only in an environment where
+SPF have granted it to your client: an ungranted scope fails the whole
+authorization with `invalid_scope`. SPF return no receipt through the API: an accepted bulk
 shows in Belcotax-on-web like any other.
 
 ```ts
