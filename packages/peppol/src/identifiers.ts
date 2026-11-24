@@ -263,3 +263,43 @@ export const normalizeParticipantValue = (scheme: string, value: string): string
 /** Human participant id, e.g. `9925:BE0123456789`. */
 export const buildParticipantId = (scheme: string, value: string) =>
 	`${scheme.trim()}:${normalizeParticipantValue(scheme, value)}`;
+
+/** A participant id is `scheme:value`, the scheme a four-digit ISO 6523 ICD. */
+const PARTICIPANT_ID = /^\d{4}:\S+$/;
+
+/**
+ * Read a typed or pasted Peppol participant id (`0088:5488888007925`), or null
+ * when it is not one. Whitespace is dropped, so `0088: 5488 8880 07925` reads as
+ * the id it was meant to be; nothing else is rewritten.
+ */
+export const parsePeppolParticipantId = (input: unknown): string | null => {
+	const value = typeof input === "string" ? input.replace(/\s+/g, "") : "";
+	return PARTICIPANT_ID.test(value) ? value : null;
+};
+
+/** Metadata keys read as a participant id, compared with case and punctuation dropped. */
+const PARTICIPANT_ID_METADATA_KEYS = new Set([
+	"peppol",
+	"peppolid",
+	"peppolparticipantid",
+]);
+
+/**
+ * The participant id in a key-value metadata map (Stripe `metadata`, for one):
+ * the first `peppol` / `peppol_id` / `Peppol participant ID` entry holding a
+ * valid id, or null. A closed tax-id list (Stripe's has no Peppol type) leaves
+ * metadata as the place a user names a customer's id.
+ */
+export const peppolIdFromMetadata = (metadata: unknown): string | null => {
+	if (typeof metadata !== "object" || metadata === null) return null;
+	for (const [key, raw] of Object.entries(metadata)) {
+		if (
+			!PARTICIPANT_ID_METADATA_KEYS.has(key.toLowerCase().replace(/[^a-z]/g, ""))
+		) {
+			continue;
+		}
+		const value = parsePeppolParticipantId(raw);
+		if (value) return value;
+	}
+	return null;
+};

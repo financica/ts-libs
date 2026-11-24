@@ -3,6 +3,8 @@ import {
 	buildParticipantId,
 	normalizeParticipantValue,
 	PEPPOL_PARTICIPANT_SCHEMES,
+	parsePeppolParticipantId,
+	peppolIdFromMetadata,
 } from "../src/identifiers";
 
 /**
@@ -91,5 +93,42 @@ describe("PEPPOL_PARTICIPANT_SCHEMES", () => {
 		for (const scheme of ["0007", "0208", "9925", "0204", "0225", "0246"]) {
 			expect(codes.has(scheme)).toBe(true);
 		}
+	});
+});
+
+describe("parsePeppolParticipantId", () => {
+	it.each([
+		["0088:5488888007925", "0088:5488888007925"],
+		[" 0088: 5488 8880 07925 ", "0088:5488888007925"],
+		["9925:BE0793904121", "9925:BE0793904121"],
+	])("reads %j", (input, expected) => {
+		expect(parsePeppolParticipantId(input)).toBe(expected);
+	});
+
+	it.each(["5488888007925", "88:5488888007925", "0088:", "", null, 42])(
+		"rejects %j",
+		(input) => {
+			expect(parsePeppolParticipantId(input)).toBeNull();
+		},
+	);
+});
+
+describe("peppolIdFromMetadata", () => {
+	it.each([
+		[{ peppol: "0088:5488888007925" }],
+		[{ peppol_id: "0088:5488888007925" }],
+		[{ "Peppol participant ID": "0088:5488888007925" }],
+		[{ other: "x", PEPPOLID: "0088:5488888007925" }],
+	])("reads the id from %j", (metadata) => {
+		expect(peppolIdFromMetadata(metadata)).toBe("0088:5488888007925");
+	});
+
+	it.each([
+		[{ peppol: "BE0793904121" }],
+		[{ vat: "0088:5488888007925" }],
+		[null],
+		[{}],
+	])("finds none in %j", (metadata) => {
+		expect(peppolIdFromMetadata(metadata)).toBeNull();
 	});
 });

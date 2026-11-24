@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.0
+
+### Added
+
+- **`parsePeppolParticipantId(input)`** reads a typed or pasted participant id (`0088:5488888007925`, whitespace dropped) or returns null, and **`peppolIdFromMetadata(metadata)`** finds one under a `peppol` / `peppol_id` / `Peppol participant ID` key of a key-value map such as Stripe metadata. Both are at `@financica/peppol/identifiers`. They let an app route to a customer reachable by no VAT number (an EU institution's GLN, say) the same way across products.
+
 ## 0.9.0
 
 ### Fixed

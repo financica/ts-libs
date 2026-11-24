@@ -26,6 +26,8 @@ export {
 	getVatParticipantScheme,
 	normalizeParticipantValue,
 	buildParticipantId,
+	parsePeppolParticipantId,
+	peppolIdFromMetadata,
 	PEPPOL_PARTICIPANT_SCHEMES,
 	type PeppolParticipantScheme,
 } from "./identifiers";

@@ -22,7 +22,7 @@ its own.
 | [`@financica/nace-codes`](packages/nace-codes)                         | 3.1.0   | NACE and NACEBEL economic activity classification codes                                                                           |
 | [`@financica/nbb-cbso`](packages/nbb-cbso)                             | 0.9.0   | Belgian annual-accounts filing for the NBB/BNB Central Balance Sheet Office                                                       |
 | [`@financica/pcmn`](packages/pcmn)                                     | 0.4.0   | Belgian PCMN class taxonomy and the statutory charts of accounts (`/charts`)                                                      |
-| [`@financica/peppol`](packages/peppol)                                 | 0.9.0   | Peppol network: SML/SMP participant discovery, Directory lookups, EAS schemes                                                     |
+| [`@financica/peppol`](packages/peppol)                                 | 0.10.0  | Peppol network: SML/SMP participant discovery, Directory lookups, EAS schemes                                                     |
 | [`@financica/react-ubl-renderer`](packages/react-ubl-renderer)         | 0.4.0   | Render parsed UBL / Peppol BIS Billing 3.0 invoices as React or standalone HTML                                                   |
 | [`@financica/scrada-client`](packages/scrada-client)                   | 0.5.0   | HTTP client for the Scrada Peppol API                                                                                             |
 | [`@financica/stripe-hosted-invoices`](packages/stripe-hosted-invoices) | 0.1.0   | Read a Stripe invoice, credit note or receipt from its public hosted URL, without an API key                                      |
