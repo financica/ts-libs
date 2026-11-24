@@ -126,7 +126,7 @@ describe("peppolIdFromMetadata", () => {
 	it.each([
 		[{ peppol: "BE0793904121" }],
 		[{ vat: "0088:5488888007925" }],
-t	// A GLN under another tool's own key is not a Peppol id we were given.
+		// A GLN under another tool's own key is not a Peppol id we were given.
 		[{ "GLNnr (Inexchange)": "0088:7350097150274" }],
 		[null],
 		[{}],
