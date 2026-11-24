@@ -91,9 +91,7 @@ describe("serializeUblDocument", () => {
 		expect(xml).toContain(
 			'<cbc:EndpointID schemeID="0208">0800279001</cbc:EndpointID>',
 		);
-		expect(xml).toContain(
-			'<cbc:IdentificationCode>BE</cbc:IdentificationCode>',
-		);
+		expect(xml).toContain("<cbc:IdentificationCode>BE</cbc:IdentificationCode>");
 		expect(xml).toContain('<cbc:TaxAmount currencyID="EUR">21.00</cbc:TaxAmount>');
 		expect(xml).toContain(
 			'<cbc:PayableAmount currencyID="EUR">121.00</cbc:PayableAmount>',

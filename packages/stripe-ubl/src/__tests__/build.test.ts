@@ -244,7 +244,8 @@ describe("buildUblInvoiceDocument", () => {
 		const base = { invoice: buildStripeInvoice(), supplier: buildSupplier() };
 		expect(buildUblInvoiceDocument(base).buyerReference).toBe("INV-001");
 		expect(
-			buildUblInvoiceDocument({ ...base, buyerReference: "Dept 7" }).buyerReference,
+			buildUblInvoiceDocument({ ...base, buyerReference: "Dept 7" })
+				.buyerReference,
 		).toBe("Dept 7");
 	});
 
