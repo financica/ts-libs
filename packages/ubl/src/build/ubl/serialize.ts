@@ -16,7 +16,6 @@ import type {
 } from "../../types";
 import { el, serializeDocument, type XmlElement } from "../xml";
 import {
-	COUNTRY_CODE_LIST_ID,
 	CREDIT_NOTE_TYPE_CODE,
 	INVOICE_TYPE_CODE,
 	NS_CAC,
@@ -428,11 +427,8 @@ const addressChildren = (address: UblAddress): (XmlElement | null)[] => [
 	text("cbc:CountrySubentity", address.countrySubentity),
 	address.countryCode !== undefined
 		? el("cac:Country", null, [
-				el(
-					"cbc:IdentificationCode",
-					{ listID: COUNTRY_CODE_LIST_ID },
-					address.countryCode,
-				),
+				// No listID: EN 16931 fixes the list (UBL-CR-660).
+				text("cbc:IdentificationCode", address.countryCode),
 			])
 		: null,
 ];

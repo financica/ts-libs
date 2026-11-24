@@ -18,9 +18,6 @@ export const DEFAULT_UNIT_CODE = "C62";
 /** UNCL5153 — the VAT tax scheme identifier. */
 export const VAT_TAX_SCHEME_ID = "VAT";
 
-/** ISO 3166-1 alpha-2 list identifier for `cbc:IdentificationCode`. */
-export const COUNTRY_CODE_LIST_ID = "ISO3166-1:Alpha2";
-
 export const NS_INVOICE = "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2";
 export const NS_CREDIT_NOTE =
 	"urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2";
