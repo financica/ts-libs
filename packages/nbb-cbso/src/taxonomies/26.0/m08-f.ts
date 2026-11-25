@@ -5399,6 +5399,39 @@ const datapoints0: readonly Datapoint[] = [
 	},
 	{
 		section: "s.06.02.0.i",
+		metric: "str1",
+		dimensions: {
+			"dim:part": "part:m6",
+			"dim:dcl": "dcl:m16",
+			"dim:bas": "bas:m92",
+		},
+		label: "Brief description",
+		labels: {
+			de: "Kurze Darstellung",
+			en: "Brief description",
+			fr: "Description succincte",
+			nl: "Beknopte beschrijving",
+		},
+	},
+	{
+		section: "s.06.02.0.i",
+		metric: "str1",
+		dimensions: {
+			"dim:part": "part:m6",
+			"dim:dcl": "dcl:m16",
+			"dim:bas": "bas:m93",
+			"dim:spec": "spec:m72",
+		},
+		label: "Measures taken by the enterprise to cover the resulting charges",
+		labels: {
+			de: "Getroffene Maßnahmen zur Deckung der sich hieraus ergebenden Aufwendungen",
+			en: "Measures taken by the enterprise to cover the resulting charges",
+			fr: "Mesures prises pour en couvrir la charge",
+			nl: "Genomen maatregelen om de daaruit voortvloeiende kosten te dekken",
+		},
+	},
+	{
+		section: "s.06.02.0.i",
 		metric: "am1",
 		dimensions: {
 			"dim:bas": "bas:m94",
@@ -5414,6 +5447,23 @@ const datapoints0: readonly Datapoint[] = [
 			nl: "Geschat bedrag van de verplichtingen die voortvloeien uit reeds gepresteerd werk",
 		},
 		currentPeriod: "prd:m1",
+	},
+	{
+		section: "s.06.02.0.i",
+		metric: "str1",
+		dimensions: {
+			"dim:bas": "bas:m95",
+			"dim:part": "part:m6",
+			"dim:dcl": "dcl:m16",
+			"dim:spec": "spec:m97",
+		},
+		label: "Methods of estimation",
+		labels: {
+			de: "Berechnungsgrundlage und -weise",
+			en: "Methods of estimation",
+			fr: "Bases et méthodes de cette estimation",
+			nl: "Basis en wijze waarop dit bedrag wordt berekend",
+		},
 	},
 	{
 		section: "s.06.03.0.i",
@@ -7719,6 +7769,203 @@ const datapoints0: readonly Datapoint[] = [
 			fr: "Rapport des commissaires - PDF",
 			nl: "Verslag van de commissarissen - PDF",
 		},
+	},
+	{
+		section: "s.02.01.0.ghi",
+		metric: "list2",
+		metricPrefix: "fct-enum",
+		dimensions: {
+			"dim:bas": "bas:m115",
+			"dim:dcl": "dcl:m6",
+			"dim:part": "part:m2",
+			"dim:psn": "psn:m10",
+		},
+		openDimensions: ["dim:anlp", "dim:open"],
+	},
+	{
+		section: "s.02.01.0.ghi",
+		metric: "str2",
+		dimensions: {
+			"dim:bas": "bas:m115",
+			"dim:dcl": "dcl:m6",
+			"dim:part": "part:m2",
+			"dim:psn": "psn:m10",
+		},
+		openDimensions: ["dim:anlp", "dim:open"],
+	},
+	{
+		section: "s.02.01.0.ghi",
+		metric: "dte1",
+		dimensions: {
+			"dim:bas": "bas:m115",
+			"dim:mmt": "mmt:m1",
+			"dim:part": "part:m2",
+			"dim:psn": "psn:m10",
+		},
+		openDimensions: ["dim:anlp", "dim:open"],
+	},
+	{
+		section: "s.02.01.0.ghi",
+		metric: "dte1",
+		dimensions: {
+			"dim:bas": "bas:m115",
+			"dim:mmt": "mmt:m2",
+			"dim:part": "part:m2",
+			"dim:psn": "psn:m10",
+		},
+		openDimensions: ["dim:anlp", "dim:open"],
+	},
+	{
+		section: "s.02.01.0.ghi",
+		metric: "dte1",
+		dimensions: {
+			"dim:bas": "bas:m115",
+			"dim:mmt": "mmt:m1",
+			"dim:part": "part:m2",
+			"dim:psn": "psn:m12",
+		},
+		openDimensions: ["dim:afnp", "dim:annp", "dim:open"],
+	},
+	{
+		section: "s.02.01.0.ghi",
+		metric: "dte1",
+		dimensions: {
+			"dim:bas": "bas:m115",
+			"dim:mmt": "mmt:m2",
+			"dim:part": "part:m2",
+			"dim:psn": "psn:m12",
+		},
+		openDimensions: ["dim:afnp", "dim:annp", "dim:open"],
+	},
+	{
+		section: "s.02.01.0.ghi",
+		metric: "list2",
+		metricPrefix: "fct-enum",
+		dimensions: {
+			"dim:bas": "bas:m115",
+			"dim:dcl": "dcl:m6",
+			"dim:part": "part:m2",
+			"dim:psn": "psn:m13",
+		},
+		openDimensions: ["dim:aclp", "dim:open"],
+	},
+	{
+		section: "s.02.01.0.ghi",
+		metric: "str2",
+		dimensions: {
+			"dim:bas": "bas:m115",
+			"dim:dcl": "dcl:m6",
+			"dim:part": "part:m2",
+			"dim:psn": "psn:m13",
+		},
+		openDimensions: ["dim:aclp", "dim:open"],
+	},
+	{
+		section: "s.02.01.0.ghi",
+		metric: "dte1",
+		dimensions: {
+			"dim:bas": "bas:m115",
+			"dim:mmt": "mmt:m1",
+			"dim:part": "part:m2",
+			"dim:psn": "psn:m13",
+		},
+		openDimensions: ["dim:aclp", "dim:open"],
+	},
+	{
+		section: "s.02.01.0.ghi",
+		metric: "dte1",
+		dimensions: {
+			"dim:bas": "bas:m115",
+			"dim:mmt": "mmt:m2",
+			"dim:part": "part:m2",
+			"dim:psn": "psn:m13",
+		},
+		openDimensions: ["dim:aclp", "dim:open"],
+	},
+	{
+		section: "s.02.01.0.ghi",
+		metric: "dte1",
+		dimensions: {
+			"dim:bas": "bas:m115",
+			"dim:mmt": "mmt:m1",
+			"dim:part": "part:m2",
+			"dim:psn": "psn:m15",
+		},
+		openDimensions: ["dim:acfn", "dim:acnp", "dim:open"],
+	},
+	{
+		section: "s.02.01.0.ghi",
+		metric: "dte1",
+		dimensions: {
+			"dim:bas": "bas:m115",
+			"dim:mmt": "mmt:m2",
+			"dim:part": "part:m2",
+			"dim:psn": "psn:m15",
+		},
+		openDimensions: ["dim:acfn", "dim:acnp", "dim:open"],
+	},
+	{
+		section: "s.06.02.0.i",
+		metric: "str1",
+		dimensions: {
+			"dim:bas": "bas:m91",
+			"dim:dcl": "dcl:m16",
+			"dim:part": "part:m6",
+			"dim:sts": "sts:m20",
+		},
+		openDimensions: ["dim:open"],
+	},
+	{
+		section: "s.06.02.0.i",
+		metric: "am1",
+		dimensions: {
+			"dim:bas": "bas:m91",
+			"dim:part": "part:m6",
+			"dim:sts": "sts:m20",
+		},
+		openDimensions: ["dim:open"],
+		currentPeriod: "prd:m1",
+	},
+	{
+		section: "s.06.02.0.i",
+		metric: "str1",
+		dimensions: {
+			"dim:bas": "bas:m99",
+			"dim:dcl": "dcl:m16",
+			"dim:part": "part:m6",
+			"dim:typ": "typ:m2",
+		},
+		openDimensions: ["dim:open"],
+	},
+	{
+		section: "s.06.02.0.i",
+		metric: "am2",
+		dimensions: {
+			"dim:bas": "bas:m99",
+			"dim:part": "part:m6",
+			"dim:typ": "typ:m2",
+		},
+		openDimensions: ["dim:open"],
+		currentPeriod: "prd:m1",
+	},
+	{
+		section: "s.06.04.0.i",
+		metric: "list1",
+		metricPrefix: "jcc-enum",
+		dimensions: {
+			"dim:bas": "bas:m110",
+			"dim:part": "part:m8",
+		},
+		openDimensions: ["dim:open"],
+	},
+	{
+		section: "s.06.04.0.i",
+		metric: "str2",
+		dimensions: {
+			"dim:bas": "bas:m110",
+			"dim:part": "part:m8",
+		},
+		openDimensions: ["dim:open"],
 	},
 ];
 

@@ -1017,4 +1017,226 @@ export const ENUMERATIONS: Enumerations = {
 			},
 		},
 	],
+	fct: [
+		{
+			code: "m10",
+			labels: {
+				en: "Chairman of the board of directors",
+				fr: "Président du Conseil d'Administration",
+				nl: "Voorzitter van de Raad van Bestuur",
+				de: "Vorsitzender des Verwaltungsrats",
+			},
+		},
+		{
+			code: "m11",
+			labels: {
+				en: "Vice-chairman of the board of directors",
+				fr: "Vice-président du Conseil d'Administration",
+				nl: "Ondervoorzitter van de Raad van Bestuur",
+				de: "Stellv. Vorsitzender des Verwaltungsrats",
+			},
+		},
+		{
+			code: "m13",
+			labels: {
+				en: "Director",
+				fr: "Administrateur",
+				nl: "Bestuurder",
+				de: "Verwaltungsratsmitglied",
+			},
+		},
+		{
+			code: "m14",
+			labels: {
+				en: "Managing director",
+				fr: "Administrateur délégué",
+				nl: "Gedelegeerd bestuurder",
+				de: "Bevollmächtigtes Verwaltungsratsmitglied",
+			},
+		},
+		{
+			code: "m20",
+			labels: {
+				en: "Administrator - manager",
+				fr: "Administrateur gérant",
+				nl: "Bestuurder-zaakvoerder",
+				de: "Geschäftsführendes Verwaltungsratsmitglied",
+			},
+		},
+		{
+			code: "m30",
+			labels: {
+				en: "Manager",
+				fr: "Gérant",
+				nl: "Zaakvoerder",
+				de: "Geschäftsführer",
+			},
+		},
+		{
+			code: "m40",
+			labels: {
+				en: "Associate",
+				fr: "Associé",
+				nl: "Vennoot",
+				de: "Gesellschafter",
+			},
+		},
+		{
+			code: "m60",
+			labels: {
+				en: "Chair of statutory auditors",
+				fr: "Président du Collège des Commissaires",
+				nl: "Voorzitter van de Raad van Commissarissen",
+				de: "Vorsitzender des Kollegiums der Kommissare",
+			},
+		},
+		{
+			code: "m61",
+			labels: {
+				en: "Auditor",
+				fr: "Commissaire",
+				nl: "Commissaris",
+				de: "Kommissar",
+			},
+		},
+		{
+			code: "m63",
+			labels: {
+				en: "Government commissioner",
+				fr: "Commissaire du Gouvernement",
+				nl: "Regeringscommissaris",
+				de: "Regierungskommissar",
+			},
+		},
+		{
+			code: "m70",
+			labels: {
+				en: "External accountant",
+				fr: "Expert-comptable externe",
+				nl: "Externe accountant",
+				de: "Externer Abschlussprüfer",
+			},
+		},
+		{
+			code: "m71",
+			labels: {
+				en: "Registered auditor",
+				fr: "Réviseur d'entreprises",
+				nl: "Bedrijfsrevisor",
+				de: "Betriebsrevisor",
+			},
+		},
+		{
+			code: "m80",
+			labels: {
+				en: "Liquidator",
+				fr: "Liquidateur",
+				nl: "Vereffenaar",
+				de: "Liquidator",
+			},
+		},
+		{
+			code: "m81",
+			labels: {
+				en: "Trustee",
+				fr: "Curateur",
+				nl: "Curator",
+				de: "Kurator",
+			},
+		},
+		{
+			code: "m72",
+			labels: {
+				en: "Chartered accountant",
+				fr: "Comptable agréé",
+				nl: "Erkende boekhouder",
+				de: "Zugelassener Buchhalter",
+			},
+		},
+		{
+			code: "m73",
+			labels: {
+				en: "Registered tax expert",
+				fr: "Comptable-fiscaliste agréé",
+				nl: "Erkende boekhouder-fiscalist",
+				de: "Zugelassener Buchhalter-Fiskalist",
+			},
+		},
+	],
+	nmc: [
+		{
+			code: "mA",
+			labels: {
+				en: "Bookkeeping of the enterprise",
+				fr: "Tenue des comptes de l'entreprise",
+				nl: "Het voeren van de boekhouding van de onderneming",
+				de: "Buchführung des Unternehmens",
+			},
+		},
+		{
+			code: "mB",
+			labels: {
+				en: "Preparing the annual accounts",
+				fr: "Etablissement des comptes annuels",
+				nl: "Het opstellen van de jaarrekening",
+				de: "Aufstellung des Jahresabschlusses",
+			},
+		},
+		{
+			code: "mC",
+			labels: {
+				en: "Auditing the annual accounts",
+				fr: "Vérification des comptes annuels",
+				nl: "Het verifiëren van deze jaarrekening",
+				de: "Prüfung dieses Jahresabschlusses",
+			},
+		},
+		{
+			code: "mD",
+			labels: {
+				en: "Adjusting the annual accounts",
+				fr: "Redressement des comptes annuels",
+				nl: "Het corrigeren van deze jaarrekening",
+				de: "Berichtigung dieses Jahresabschlusses",
+			},
+		},
+	],
+	pub: [
+		{
+			code: "mA",
+			labels: {
+				en: "A. published trough filing to the National Bank of Belgium",
+				fr: "A. sont publiés par dépôt auprès de la BNB par l'entreprise elle-même",
+				nl: "A. door de onderneming zelf openbaar gemaakt door neerlegging bij de NBB",
+				de: "A. von diesem Unternehmen durch Hinterlegung bei der Nationalbank veröffentlicht",
+			},
+		},
+		{
+			code: "mB",
+			labels: {
+				en: "B. published in another member state",
+				fr: "B. sont publiés par l'entreprise elle-même dans un autre Etat membre de l'Union européenne",
+				nl: "B. door de onderneming zelf openbaar gemaakt in een andere EU-Lidstaat",
+				de: "B. von diesem Unternehmen in einem anderen Mitgliedstaat der E.U. veröffentlicht",
+			},
+		},
+		{
+			code: "mC",
+			labels: {
+				en: "C. integrated in the consolidated accounts",
+				fr: "C. sont intégrés dans les comptes consolidés de l'entreprise",
+				nl: "C. opgenomen in de geconsolideerde jaarrekening van de onderneming",
+				de: "C. in den konsolidierten Jahresabschluss des Unternehmens einbezogen",
+			},
+		},
+		{
+			code: "mD",
+			labels: {
+				en: "D. concern a limited partnership",
+				fr: "D. concernent une société simple",
+				nl: "D. betreft een maatschap",
+				de: "D. betrifft eine Gesellschaft des allgemeinen Rechts",
+			},
+		},
+	],
 };

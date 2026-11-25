@@ -420,16 +420,15 @@ function keepDeclaredCells(
 				...datapoint.dimensions,
 				...(period ? { "dim:prd": period } : {}),
 			});
-		const columns = [datapoint.currentPeriod, datapoint.previousPeriod].filter(
-			(period): period is string => period !== undefined,
-		);
 		const current = datapoint.currentPeriod
 			? cell(datapoint.currentPeriod)
 			: undefined;
 		const previous = datapoint.previousPeriod
 			? cell(datapoint.previousPeriod)
 			: undefined;
-		const bare = columns.length === 0 ? cell(undefined) : undefined;
+		// A text cell the table puts under a period column may be declared
+		// without one, as the 6.3 pension descriptions are.
+		const bare = !current && !previous ? cell(undefined) : undefined;
 		const cube = current ?? previous ?? bare;
 		if (!cube) continue;
 		// Copied rather than rebuilt, so the emitted key order stays stable.
@@ -441,6 +440,61 @@ function keepDeclaredCells(
 		kept.push(declared);
 	}
 	return kept;
+}
+
+/**
+ * Adds the cells of typed hypercubes that the rendering table never lays out.
+ *
+ * A repeatable block is drawn as one open row, and the table's breakdowns do
+ * not reach every cell its cube declares: a mandate's start and end dates, a
+ * legal person's mandate, an expert firm's missions, the lines of the 6.3
+ * narratives. Those cubes are small, so their cells are enumerated from the
+ * definition linkbase directly. Cubes without a typed dimension are left to
+ * the table, which is what numbers their cells as rubrics.
+ */
+function addTypedCells(
+	datapoints: Datapoint[],
+	cubesBySection: ReadonlyMap<string, readonly Hypercube[]>,
+): void {
+	for (const [section, cubes] of cubesBySection) {
+		for (const cube of cubes) {
+			if (cube.typed.length === 0) continue;
+			let combinations: Record<string, string>[] = [{}];
+			for (const [dimension, members] of cube.explicit) {
+				combinations = combinations.flatMap((combination) =>
+					[...members].sort().map((member) => ({
+						...combination,
+						[dimension]: member,
+					})),
+				);
+			}
+			for (const primary of [...cube.primaries].sort()) {
+				const [prefix, metric] = primary.split(":") as [string, string];
+				for (const combination of combinations) {
+					const { "dim:prd": period, ...dimensions } = combination;
+					let datapoint = datapoints.find(
+						(candidate) =>
+							candidate.section === section &&
+							candidate.metric === metric &&
+							(candidate.metricPrefix ?? "met") === prefix &&
+							sameDimensions(candidate.dimensions, dimensions),
+					);
+					if (!datapoint) {
+						datapoint = {
+							section,
+							metric,
+							...(prefix === "met" ? {} : { metricPrefix: prefix }),
+							dimensions: sortedRecord(dimensions),
+							openDimensions: cube.typed,
+						};
+						datapoints.push(datapoint);
+					}
+					if (period === "prd:m1") datapoint.currentPeriod = period;
+					else if (period === "prd:m2") datapoint.previousPeriod = period;
+				}
+			}
+		}
+	}
 }
 
 /** Reads a section's generic labels, keyed by the id they are attached to. */
@@ -962,6 +1016,7 @@ function generateModule(options: Options, model: string, part: string) {
 
 	dropOpeningBalanceArtifacts(datapoints);
 	datapoints = keepDeclaredCells(datapoints, cubesBySection);
+	addTypedCells(datapoints, cubesBySection);
 
 	const metrics = readMetrics(options);
 	const knownCodes = new Set(
@@ -1409,10 +1464,12 @@ function discoverEntryPoints(options: Options): string[] {
  * The closed lists a filer picks a member of, by dictionary prefix.
  *
  * Deliberately not every domain in `dict/dom`. Most are dimension domains that
- * address a datapoint and are never shown to anyone; these two are the ones a
- * human chooses from. An address determines `pcd` and `cty`, so they stay out.
+ * address a datapoint and are never shown to anyone; these are the ones a
+ * human chooses from: the business court and legal form, a mandate's function
+ * (`fct`), an accountant's mission (`nmc`) and a publication code (`pub`). An
+ * address determines `pcd` and `cty`, so they stay out.
  */
-const PICKABLE_ENUMERATIONS = ["cct", "lgf"] as const;
+const PICKABLE_ENUMERATIONS = ["cct", "lgf", "fct", "nmc", "pub"] as const;
 
 /**
  * Reads one domain's members and their labels.
