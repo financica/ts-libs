@@ -27792,6 +27792,7 @@ const checks0: readonly Check[] = [
 		kind: "nbb",
 		section: "06.02.0",
 		test: "$am1 != 0 and ($am12 != 0 or $am13 != 0)",
+		preconditions: ["$am1 != 0 or $am12 != 0 or $am13 != 0"],
 		variables: [
 			{
 				name: "am1",
@@ -28477,6 +28478,7 @@ const checks0: readonly Check[] = [
 		kind: "nbb",
 		section: "06.02.0",
 		test: "$am1 != 0 and ($am12 != 0 or $am13 != 0)",
+		preconditions: ["$am1 != 0 or $am12 != 0 or $am13 != 0"],
 		variables: [
 			{
 				name: "am1",
@@ -31830,6 +31832,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $am2",
+		preconditions: ["$dec1 != 0"],
 		variables: [
 			{
 				name: "dec1",
@@ -31908,6 +31911,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 gt 0 and $int4 gt 0 and $am2 gt 0 and $dec1 lt $int4",
+		preconditions: ["$dec1 gt 0 or $int4 gt 0 or $am2 gt 0"],
 		variables: [
 			{
 				name: "dec1",
@@ -31959,6 +31963,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec12 eq $dec13",
+		preconditions: ["not (exists($dec1))"],
 		variables: [
 			{
 				name: "dec1",
@@ -32017,6 +32022,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 gt 0 and $int4 gt 0 and $am2 gt 0 and $dec1 lt $int4",
+		preconditions: ["$dec1 gt 0 or $int4 gt 0 or $am2 gt 0"],
 		variables: [
 			{
 				name: "dec1",
@@ -32068,6 +32074,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec12 gt $dec13 and $dec12 lt $dec13 + $dec1",
+		preconditions: ["$dec1 gt 0"],
 		variables: [
 			{
 				name: "dec1",
@@ -32126,6 +32133,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $am2",
+		preconditions: ["$dec1 gt 1"],
 		variables: [
 			{
 				name: "dec1",
@@ -32162,6 +32170,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $am2",
+		preconditions: ["$dec1 gt 1"],
 		variables: [
 			{
 				name: "dec1",
@@ -32250,6 +32259,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 gt 0 and $int4 gt 0 and $am2 gt 0 and $dec1 lt $int4",
+		preconditions: ["$dec1 gt 0 or $int4 gt 0 or $am2 gt 0"],
 		variables: [
 			{
 				name: "dec1",
@@ -32301,6 +32311,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $am2",
+		preconditions: ["$dec1 gt 1"],
 		variables: [
 			{
 				name: "dec1",
@@ -32395,6 +32406,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 gt 0 and $int4 gt 0 and $am2 gt 0 and $dec1 lt $int4",
+		preconditions: ["$dec1 gt 0 or $int4 gt 0 or $am2 gt 0"],
 		variables: [
 			{
 				name: "dec1",
@@ -32446,6 +32458,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $am2",
+		preconditions: ["$dec1 gt 1"],
 		variables: [
 			{
 				name: "dec1",
@@ -32482,6 +32495,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -32587,6 +32601,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -32692,6 +32707,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -32730,6 +32746,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -32768,6 +32785,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -32806,6 +32824,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -32844,6 +32863,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -32882,6 +32902,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -32920,6 +32941,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -32958,6 +32980,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -32996,6 +33019,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -33058,6 +33082,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -33099,6 +33124,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -33140,6 +33166,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -33181,6 +33208,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -33222,6 +33250,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -33284,6 +33313,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -33325,6 +33355,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -33366,6 +33397,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -33407,6 +33439,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -33448,6 +33481,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -33510,6 +33544,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -33551,6 +33586,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -33592,6 +33628,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -33633,6 +33670,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -33674,6 +33712,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -33736,6 +33775,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -33777,6 +33817,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -33818,6 +33859,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -33859,6 +33901,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -33900,6 +33943,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -33938,6 +33982,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -33976,6 +34021,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -34014,6 +34060,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -34052,6 +34099,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -34090,6 +34138,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -34128,6 +34177,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -34166,6 +34216,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -35799,6 +35850,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -35836,6 +35888,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -35873,6 +35926,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 eq $int32",
+		preconditions: ["not (exists($int3))"],
 		variables: [
 			{
 				name: "int3",
@@ -35910,6 +35964,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$dec1 lt $int32 + $int3 and $dec1 gt $int32",
+		preconditions: ["$int3 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -35947,6 +36002,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$int3 gt 0 and $int4 gt 0 and $am1 gt 0 and $int3 lt $int4 and $int3 lt $am1",
+		preconditions: ["$int3 gt 0 or $int4 gt 0 or $am1 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -35987,6 +36043,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$int3 gt 0 and $int4 gt 0 and $am1 gt 0 and $int3 lt $int4 and $int3 lt $am1",
+		preconditions: ["$int3 gt 0 or $int4 gt 0 or $am1 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -36027,6 +36084,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$am1 + $am12 lt $am2",
+		preconditions: ["$am1 != 0 or $am12 != 0"],
 		variables: [
 			{
 				name: "am1",
@@ -36398,6 +36456,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$int3 gt 0 and $int4 gt 0 and $am1 gt 0 and $int3 lt $int4 and $int3 lt $am1",
+		preconditions: ["$int3 gt 0 or $int4 gt 0 or $am1 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -36438,6 +36497,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$int3 gt 0 and $int4 gt 0 and $am1 gt 0 and $int3 lt $int4 and $int3 lt $am1",
+		preconditions: ["$int3 gt 0 or $int4 gt 0 or $am1 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -36478,6 +36538,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$int3 gt 0 and $int4 gt 0 and $am1 gt 0 and $int3 lt $int4 and $int3 lt $am1",
+		preconditions: ["$int3 gt 0 or $int4 gt 0 or $am1 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -36518,6 +36579,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$int3 gt 0 and $int4 gt 0 and $am1 gt 0 and $int3 lt $int4 and $int3 lt $am1",
+		preconditions: ["$int3 gt 0 or $int4 gt 0 or $am1 gt 0"],
 		variables: [
 			{
 				name: "int3",
@@ -36558,6 +36620,9 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$int4 + $int42 + $int43 + $int44 + $int45 + $int46 lt $int47",
+		preconditions: [
+			"$int4 gt 0 or $int42 gt 0 or $int43 gt 0 or $int44 gt 0 or $int45 gt 0 or $int46 gt 0",
+		],
 		variables: [
 			{
 				name: "int4",
@@ -36826,6 +36891,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$am1 + $am12 lt $am2",
+		preconditions: ["$am1 != 0 or $am12 != 0"],
 		variables: [
 			{
 				name: "am1",
@@ -36896,6 +36962,7 @@ const checks0: readonly Check[] = [
 		kind: "social-balance",
 		section: "06.04.0",
 		test: "$am1 + $am12 lt $am2",
+		preconditions: ["$am1 != 0 or $am12 != 0"],
 		variables: [
 			{
 				name: "am1",

@@ -57,6 +57,8 @@ const RUBRIC_LABEL_ROLE = "http://www.nbb.be/fr/xbrl/rub";
 const STANDARD_LABEL_ROLE = "http://www.xbrl.org/2008/role/label";
 const ELEMENT_LABEL = "http://xbrl.org/arcrole/2008/element-label";
 const VARIABLE_SET = "http://xbrl.org/arcrole/2008/variable-set";
+const VARIABLE_SET_PRECONDITION =
+	"http://xbrl.org/arcrole/2008/variable-set-precondition";
 const VARIABLE_FILTER = "http://xbrl.org/arcrole/2008/variable-filter";
 const UNSATISFIED_MESSAGE =
 	"http://xbrl.org/arcrole/2010/assertion-unsatisfied-message";
@@ -556,6 +558,7 @@ function readLabels(path: string): Map<string, SectionLabel> {
 interface RawCheck {
 	id: string;
 	test: string;
+	preconditions: string[];
 	variables: {
 		name: string;
 		metric?: string;
@@ -662,6 +665,26 @@ function readFormulas(path: string, metrics: string[]): RawCheck[] {
 			if (dimension) variable.dimensions[dimension.dimension] = dimension.member;
 		}
 
+		// A precondition gates the assertion: `$am1 != 0` is the NBB's "if 9061
+		// is completed". Without it the check runs on every filing.
+		const preconditionTests = new Map<string, string>();
+		for (const node of children(link, "variable:precondition")) {
+			const label = attr(node, "xlink:label");
+			const test = attr(node, "test");
+			if (label && test) preconditionTests.set(label, test);
+		}
+		const assertionPreconditions = new Map<string, string[]>();
+		for (const arc of children(link, "gen:arc")) {
+			if (attr(arc, "xlink:arcrole") !== VARIABLE_SET_PRECONDITION) continue;
+			const from = attr(arc, "xlink:from");
+			const test = preconditionTests.get(attr(arc, "xlink:to") ?? "");
+			if (!from || !test) continue;
+			assertionPreconditions.set(from, [
+				...(assertionPreconditions.get(from) ?? []),
+				test,
+			]);
+		}
+
 		const assertionVariables = new Map<string, string[]>();
 		for (const arc of children(link, "variable:variableArc")) {
 			if (attr(arc, "xlink:arcrole") !== VARIABLE_SET) continue;
@@ -690,7 +713,12 @@ function readFormulas(path: string, metrics: string[]): RawCheck[] {
 					dimensions: v!.dimensions,
 					fallback: v!.fallback,
 				}));
-			checks.push({ id, test, variables: bound });
+			checks.push({
+				id,
+				test,
+				preconditions: assertionPreconditions.get(label) ?? [],
+				variables: bound,
+			});
 		}
 	}
 	return checks;
@@ -1081,6 +1109,9 @@ function generateModule(options: Options, model: string, part: string) {
 				kind,
 				section: sectionOfCheck(raw.id),
 				test: raw.test,
+				...(raw.preconditions.length
+					? { preconditions: raw.preconditions }
+					: {}),
 				variables,
 				...(equation ? { equation } : {}),
 				...(bindings ? { bindings } : {}),

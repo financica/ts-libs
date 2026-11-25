@@ -83,6 +83,26 @@ export function validateNbbFiling(filing: NbbFiling): NbbValidationResult {
 	return { errors, warnings, evaluated, skipped, notApplicable, unresolved };
 }
 
+/**
+ * Whether every precondition of the check holds. One outside the supported
+ * subset counts as not holding: the check is then not run, rather than run
+ * where the NBB would not run it.
+ */
+function preconditionsHold(
+	check: Check,
+	values: Readonly<Record<string, number>>,
+	bound: ReadonlySet<string>,
+): boolean {
+	return (check.preconditions ?? []).every((test) => {
+		try {
+			return evaluateExpression(test, values, bound) === true;
+		} catch (error) {
+			if (error instanceof ExpressionError) return false;
+			throw error;
+		}
+	});
+}
+
 /** Severity a check's failure carries. */
 function severityOf(kind: CheckKind): "error" | "warning" {
 	return kind === "legal" ? "error" : "warning";
@@ -110,6 +130,7 @@ function runCheck(filing: NbbFiling, check: Check): CheckOutcome {
 	let ran = false;
 	for (const binding of check.bindings ?? []) {
 		const values: Record<string, number> = {};
+		const bound = new Set<string>();
 		let reported = false;
 		let usable = true;
 
@@ -125,7 +146,10 @@ function runCheck(filing: NbbFiling, check: Check): CheckOutcome {
 					? "previous"
 					: "current";
 			const value = filingValue(filing, code, period);
-			if (value !== undefined) reported = true;
+			if (value !== undefined) {
+				reported = true;
+				bound.add(variable.name);
+			}
 			const resolved = value ?? fallbackOf(variable.fallback);
 			if (Number.isNaN(resolved)) {
 				usable = false;
@@ -137,6 +161,9 @@ function runCheck(filing: NbbFiling, check: Check): CheckOutcome {
 		// the model. Reporting a failure there would flag sections left out on
 		// purpose — a micro filing omits most of the annexes by right.
 		if (!usable || !reported) continue;
+		// The check applies only where its preconditions hold: "if 9061 is
+		// completed" is a precondition, not part of the test.
+		if (!preconditionsHold(check, values, bound)) continue;
 
 		let result: boolean;
 		try {

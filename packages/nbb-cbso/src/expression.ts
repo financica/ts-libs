@@ -4,8 +4,9 @@
  * The language is a small subset of XPath: variable references, numbers,
  * addition and subtraction, the comparison operators, `and`/`or`, and
  * parentheses. Every published check is of the form `$am1 eq $am12 + $am13`
- * or `$am1 le $am12`, so nothing more is implemented — an expression using
- * anything else is rejected rather than guessed at.
+ * or `$am1 le $am12`. Preconditions add `exists($am1)`, `not(...)` and
+ * `true()`. Nothing more is implemented: an expression using anything else is
+ * rejected rather than guessed at.
  */
 
 import { NbbCbsoError } from "./errors.js";
@@ -19,6 +20,7 @@ type Token =
 	| { kind: "number"; value: number }
 	| { kind: "variable"; name: string }
 	| { kind: "operator"; value: string }
+	| { kind: "function"; name: FunctionName }
 	| { kind: "paren"; value: "(" | ")" };
 
 const OPERATORS = new Set([
@@ -39,6 +41,11 @@ const OPERATORS = new Set([
 	"and",
 	"or",
 ]);
+
+const FUNCTION_NAMES = ["exists", "not", "true", "false"] as const;
+type FunctionName = (typeof FUNCTION_NAMES)[number];
+const isFunctionName = (word: string): word is FunctionName =>
+	(FUNCTION_NAMES as readonly string[]).includes(word);
 
 /** A check expression uses syntax outside the supported subset, or a variable has no value. */
 export class ExpressionError extends NbbCbsoError {
@@ -77,6 +84,11 @@ function tokenize(source: string): Token[] {
 			continue;
 		}
 		const word = /^[a-z]+/.exec(source.slice(index));
+		if (word && isFunctionName(word[0])) {
+			tokens.push({ kind: "function", name: word[0] });
+			index += word[0].length;
+			continue;
+		}
 		if (word && OPERATORS.has(word[0])) {
 			tokens.push({ kind: "operator", value: word[0] });
 			index += word[0].length;
@@ -100,12 +112,16 @@ function tokenize(source: string): Token[] {
 /**
  * Evaluates a check's test expression.
  *
+ * `reported` names the variables bound to a fact rather than a fallback, which
+ * is what `exists($v)` asks; without it `exists` is rejected.
+ *
  * @throws {ExpressionError} if the expression uses syntax outside the subset,
  * or refers to a variable that has no value.
  */
 export function evaluateExpression(
 	source: string,
 	variables: Readonly<Record<string, number>>,
+	reported?: ReadonlySet<string>,
 ): ExpressionValue {
 	const tokens = tokenize(source);
 	let position = 0;
@@ -136,6 +152,25 @@ export function evaluateExpression(
 		if (token.kind === "number") {
 			position++;
 			return token.value;
+		}
+		if (token.kind === "function") {
+			position++;
+			if (!eat("(")) throw new ExpressionError(`${token.name} without arguments`);
+			let value: ExpressionValue;
+			if (token.name === "true" || token.name === "false") {
+				value = token.name === "true";
+			} else if (token.name === "not") {
+				value = !asBoolean(logical());
+			} else {
+				const argument = peek();
+				if (argument?.kind !== "variable" || !reported) {
+					throw new ExpressionError("exists() takes one variable");
+				}
+				position++;
+				value = reported.has(argument.name);
+			}
+			if (!eat(")")) throw new ExpressionError("missing closing parenthesis");
+			return value;
 		}
 		if (token.kind === "variable") {
 			position++;

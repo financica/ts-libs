@@ -121,6 +121,12 @@ export interface Check {
 	 * Supports `+ - eq ne lt le gt ge and or` and parentheses.
 	 */
 	test: string;
+	/**
+	 * Tests that must all hold for the check to apply to a filing, in the same
+	 * notation: `$am1 != 0` is "if 9061 is completed". They may also ask
+	 * `exists($am1)`, whether a variable bound a reported fact.
+	 */
+	preconditions?: readonly string[];
 	variables: readonly CheckVariable[];
 	/**
 	 * The equation in rubric codes, as the taxonomy states it in the message it

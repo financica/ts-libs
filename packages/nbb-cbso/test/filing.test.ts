@@ -328,6 +328,29 @@ describe("statutory checks", () => {
  * company rubric fed into the association model is refused, and that the
  * association's own statutory identities are evaluated.
  */
+describe("preconditions", () => {
+	// ca_08.00.0_0001 reads "if 9061 is completed, then 9061 < 17 + 42/48":
+	// the formula's precondition is `$am1 != 0`, so a company with no debts
+	// and no guaranteed ones is not checked at all.
+	const ruleOf = (input: NbbFilingInput) => {
+		const result = validateNbbFiling(buildNbbFiling(input));
+		return [...result.errors, ...result.warnings].filter(
+			(finding) => finding.check === "ca_08.00.0_0001",
+		);
+	};
+	const noDebts = withBalanceSheet({ "42/48": { current: 0, previous: 0 } });
+
+	it("does not run a check whose precondition does not hold", () => {
+		expect(ruleOf(noDebts)).toEqual([]);
+	});
+
+	it("runs it once the precondition holds", () => {
+		expect(
+			ruleOf({ ...noDebts, notes: { "9061": { current: 100 } } }),
+		).toMatchObject([{ severity: "warning" }]);
+	});
+});
+
 describe("association filing (m04)", () => {
 	it("resolves the association passif spine and class 73 income", () => {
 		const filing = association();
@@ -790,7 +813,24 @@ describe("evaluateExpression", () => {
 		expect(evaluateExpression("$a lt $b", { a: 10, b: 10.02 })).toBe(true);
 	});
 
+	it("reads the precondition functions exists, not and true", () => {
+		const bound = new Set(["a"]);
+		expect(evaluateExpression("exists($a)", { a: 0, b: 0 }, bound)).toBe(true);
+		expect(evaluateExpression("not (exists($b))", { a: 0, b: 0 }, bound)).toBe(
+			true,
+		);
+		expect(
+			evaluateExpression("exists( $b ) or $a eq 0", { a: 0, b: 0 }, bound),
+		).toBe(true);
+		expect(evaluateExpression("true()", {}, bound)).toBe(true);
+	});
+
 	it.each([
+		{
+			what: "exists without the bound variables",
+			source: "exists($a)",
+			vars: { a: 1 },
+		},
 		{ what: "syntax outside the subset", source: "$a * 2", vars: { a: 1 } },
 		{ what: "a variable with no value", source: "$a eq $b", vars: { a: 1 } },
 		{ what: "trailing input", source: "$a eq 1 )", vars: { a: 1 } },
@@ -956,7 +996,9 @@ describe("check coverage", () => {
 	});
 
 	it("evaluates the arithmetic of every section the filing reports", () => {
-		expect(result.evaluated.length).toBeGreaterThanOrEqual(69);
+		// 68: `ca_08.00.0_0001` applies only once 9061 is filed, and this
+		// filing reports none.
+		expect(result.evaluated.length).toBeGreaterThanOrEqual(68);
 	});
 
 	it("accounts for every published check exactly once", () => {
