@@ -20,6 +20,8 @@ export interface UblAddress {
 	street?: string | undefined;
 	/** `cbc:AdditionalStreetName` (BT-36). */
 	additionalStreet?: string | undefined;
+	/** `cac:AddressLine/cbc:Line` (BT-163), a third address line. Parsed, never built. */
+	addressLine?: string | undefined;
 	/** `cbc:CityName` (BT-37). */
 	city?: string | undefined;
 	/** `cbc:PostalZone` (BT-38). */

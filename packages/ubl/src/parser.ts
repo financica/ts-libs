@@ -112,9 +112,11 @@ function cacDirectElements(parent: Element, tag: string): Element[] {
 function parseAddressFromElement(address: Element | null): UblAddress | undefined {
 	if (!address) return undefined;
 	const country = cacElement(address, "Country");
+	const addressLine = cacElement(address, "AddressLine");
 	return {
 		street: cbcText(address, "StreetName"),
 		additionalStreet: cbcText(address, "AdditionalStreetName"),
+		addressLine: addressLine ? cbcText(addressLine, "Line") : undefined,
 		city: cbcText(address, "CityName"),
 		postalZone: cbcText(address, "PostalZone"),
 		countrySubentity: cbcText(address, "CountrySubentity"),

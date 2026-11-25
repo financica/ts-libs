@@ -15,6 +15,7 @@ import {
 	type UblInvoice,
 	type UblLine,
 } from "../src/build/index.js";
+import { normalizeUblResponse } from "../src/normalize.js";
 
 const readFixture = (name: string): string =>
 	readFileSync(join(__dirname, "fixtures", name), "utf-8");
@@ -138,7 +139,12 @@ describe("build → serialize → parse", () => {
 		buyer: buildCustomerParty({
 			name: "Globex SA",
 			address: normalizeAddress(
-				{ line1: "Avenue Louise 50", city: "Brussels", postal_code: "1050" },
+				{
+					line1: "Avenue Louise 50",
+					line2: "Boîte 3",
+					city: "Brussels",
+					postal_code: "1050",
+				},
 				"BE",
 			),
 			countryCode: "BE",
@@ -160,6 +166,23 @@ describe("build → serialize → parse", () => {
 		const xml = serializeUblInvoice(built);
 		const parsed = parseUblInvoice(xml);
 		expect(parsed).toEqual(expectedAfterRoundTrip(built));
+	});
+
+	it("keeps the second address line as its own line through normalization", () => {
+		const { extracted } = normalizeUblResponse(serializeUblInvoice(built), "doc");
+		expect(extracted.invoice.extra).toMatchObject({
+			receiver_address_structured: {
+				line1: "Avenue Louise 50",
+				line2: "Boîte 3",
+				city: "Brussels",
+				postal_code: "1050",
+				country: "BE",
+			},
+			supplier_address_structured: { line1: "Rue de la Loi 16", line2: null },
+		});
+		expect(extracted.invoice.receiver.address).toBe(
+			"Avenue Louise 50\nBoîte 3\n1050 Brussels\nBE",
+		);
 	});
 
 	it("round-trips a credit note with its billing reference", () => {

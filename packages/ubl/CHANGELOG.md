@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.19.4
+
+### Fixed
+
+- **`normalizeUblResponse` keeps the second address line as `line2`.** The structured addresses (`supplier_address_structured`, `receiver_address_structured`, the delivery address) glued `AdditionalStreetName` (BT-36) onto `line1` with a space and always returned `line2: null`, so "Rue Haute 1" and "Bte 4" came back as "Rue Haute 1 Bte 4". BT-36 is now `line2`, and the text address puts it on its own line.
+- **`cac:AddressLine/cbc:Line` (BT-163) is parsed.** It was dropped entirely; it is now `UblAddress.addressLine` and joins `line2` after BT-36.
+
 ## 0.19.3
 
 ### Fixed

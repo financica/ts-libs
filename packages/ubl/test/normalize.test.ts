@@ -22,7 +22,52 @@ const invoiceXml = (monetaryTotal: string) => `<?xml version="1.0"?>
 	<cac:LegalMonetaryTotal>${monetaryTotal}</cac:LegalMonetaryTotal>
 </Invoice>`;
 
+const partyAddressXml = (address: string) => `<?xml version="1.0"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+<cbc:ID>INV-ADDR</cbc:ID>
+<cbc:IssueDate>2026-08-02</cbc:IssueDate>
+<cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+<cac:AccountingSupplierParty><cac:Party><cac:PostalAddress>${address}<cac:Country><cbc:IdentificationCode>BE</cbc:IdentificationCode></cac:Country></cac:PostalAddress><cac:PartyName><cbc:Name>Winkel</cbc:Name></cac:PartyName></cac:Party></cac:AccountingSupplierParty>
+<cac:AccountingCustomerParty><cac:Party><cac:PartyName><cbc:Name>Klant</cbc:Name></cac:PartyName></cac:Party></cac:AccountingCustomerParty>
+<cac:TaxTotal><cbc:TaxAmount currencyID="EUR">0</cbc:TaxAmount></cac:TaxTotal>
+<cac:LegalMonetaryTotal><cbc:PayableAmount currencyID="EUR">0</cbc:PayableAmount></cac:LegalMonetaryTotal>
+</Invoice>`;
+
 describe("normalizeUblResponse", () => {
+	it.each([
+		{
+			name: "AdditionalStreetName (BT-36) as line2",
+			xml: "<cbc:StreetName>Rue Haute 1</cbc:StreetName><cbc:AdditionalStreetName>Bte 4</cbc:AdditionalStreetName>",
+			line1: "Rue Haute 1",
+			line2: "Bte 4",
+		},
+		{
+			name: "AddressLine/Line (BT-163) after it",
+			xml: "<cbc:StreetName>Rue Haute 1</cbc:StreetName><cbc:AdditionalStreetName>Bte 4</cbc:AdditionalStreetName><cac:AddressLine><cbc:Line>Bâtiment C</cbc:Line></cac:AddressLine>",
+			line1: "Rue Haute 1",
+			line2: "Bte 4, Bâtiment C",
+		},
+		{
+			name: "no extra line as a null line2",
+			xml: "<cbc:StreetName>Rue Haute 1</cbc:StreetName>",
+			line1: "Rue Haute 1",
+			line2: null,
+		},
+		{
+			name: "a street-less address's first line as line1",
+			xml: "<cbc:AdditionalStreetName>Bte 4</cbc:AdditionalStreetName>",
+			line1: "Bte 4",
+			line2: null,
+		},
+	])("keeps $name", ({ xml, line1, line2 }) => {
+		const { extracted } = normalizeUblResponse(partyAddressXml(xml), "doc");
+		expect(extracted.invoice.extra).toMatchObject({
+			supplier_address_structured: { line1, line2, country: "BE" },
+		});
+	});
+
 	it("maps UBL XML fields into DTO", () => {
 		const xml = readFixture("ubl-invoice.xml");
 		const { extracted } = normalizeUblResponse(xml, "doc-ubl");
