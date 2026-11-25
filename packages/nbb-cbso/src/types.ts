@@ -115,7 +115,12 @@ export interface Entity {
 	address: Address;
 	/** Business court the entity is registered with. */
 	businessCourt?: string;
-	/** Date of the entity's articles of association. */
+	/**
+	 * Deposit date of the last deed: the articles of association, or their
+	 * latest amendment if they have been amended since. Mandatory in every
+	 * model (rule `oa_01.00.2_0008`); optional here only so that a missing one
+	 * is reported as a finding rather than a type error.
+	 */
 	statutesDate?: IsoDate;
 }
 

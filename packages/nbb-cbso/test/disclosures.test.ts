@@ -19,7 +19,12 @@ import m04f from "../src/taxonomies/26.0/m04-f.js";
 import m05f from "../src/taxonomies/26.0/m05-f.js";
 import m08f from "../src/taxonomies/26.0/m08-f.js";
 import m87f from "../src/taxonomies/26.0/m87-f.js";
-import { ASSOCIATION_FILING, MICRO_FILING } from "./filing.js";
+import {
+	ASSOCIATION_FILING,
+	FULL_MICRO_FILING,
+	INCOMPLETE_MICRO_FILING,
+	MICRO_FILING,
+} from "./filing.js";
 
 /**
  * One line per item fact: metric, scenario members (typed members as
@@ -43,17 +48,20 @@ function facts(doc: XbrlInstance, keep: (members: string[]) => boolean = () => t
 		.sort();
 }
 
+/** A complete Belgian address, for rows whose address is not under test. */
+const HOME = { street: "Rue Neuve", houseNumber: "1", postalCode: "1000" };
+
 const render = (input: NbbFilingInput) =>
 	parseXbrl(renderNbbFiling(buildNbbFiling(input)))!;
 
 const findings = (input: NbbFilingInput) =>
 	validateNbbFiling(buildNbbFiling(input)).errors.filter(
-		(f) => f.check === "disclosure",
+		(f) => f.field !== undefined,
 	);
 
 const warnings = (input: NbbFilingInput) =>
 	validateNbbFiling(buildNbbFiling(input)).warnings.filter(
-		(f) => f.check === "disclosure",
+		(f) => f.field !== undefined,
 	);
 
 /** The director and accountant of the accepted filing, through our API. */
@@ -133,6 +141,7 @@ describe("section 2.1", () => {
 					firstName: "Ana",
 					lastName: "Silva",
 					profession: "Engineer",
+					address: HOME,
 				},
 				mandates: [
 					{ function: "m30", start: "2021-03-01" },
@@ -220,6 +229,7 @@ describe("section 2.1", () => {
 		);
 		expect(postal).toEqual(
 			[
+				"list1|afnp~Ana,annp~Silva,bas=m31,ctc=m4,part=m2,psn=m12|m1000",
 				"list1|anlp~Holding BV,bas=m31,ctc=m4,part=m2,psn=m10|m2000",
 				"str2|acfn~Marie,acnp~Dubois,bas=m31,ctc=m4,part=m2,psn=m15|75001",
 			].sort(),
@@ -235,7 +245,12 @@ describe("section 2.1", () => {
 			name: "a function the model does not list",
 			directors: [
 				{
-					holder: { kind: "natural" as const, firstName: "A", lastName: "B" },
+					holder: {
+						kind: "natural" as const,
+						firstName: "A",
+						lastName: "B",
+						address: HOME,
+					},
 					mandates: [{ function: "m99" }],
 				},
 			],
@@ -245,7 +260,12 @@ describe("section 2.1", () => {
 			name: "a mandate ending before it starts",
 			directors: [
 				{
-					holder: { kind: "natural" as const, firstName: "A", lastName: "B" },
+					holder: {
+						kind: "natural" as const,
+						firstName: "A",
+						lastName: "B",
+						address: HOME,
+					},
 					mandates: [
 						{ function: "m13", start: "2024-01-01", end: "2023-01-01" },
 					],
@@ -262,6 +282,7 @@ describe("section 2.1", () => {
 						firstName: "A",
 						lastName: "B",
 						memberNumber: "1",
+						address: HOME,
 					},
 					mandates: [{ function: "m13" }],
 				},
@@ -272,11 +293,21 @@ describe("section 2.1", () => {
 			name: "the same person twice",
 			directors: [
 				{
-					holder: { kind: "natural" as const, firstName: "A", lastName: "B" },
+					holder: {
+						kind: "natural" as const,
+						firstName: "A",
+						lastName: "B",
+						address: HOME,
+					},
 					mandates: [{ function: "m13" }],
 				},
 				{
-					holder: { kind: "natural" as const, firstName: "A", lastName: "B" },
+					holder: {
+						kind: "natural" as const,
+						firstName: "A",
+						lastName: "B",
+						address: HOME,
+					},
 					mandates: [{ function: "m30" }],
 				},
 			],
@@ -290,6 +321,7 @@ describe("section 2.1", () => {
 						kind: "legal" as const,
 						name: "X",
 						enterpriseNumber: "0403170702",
+						address: HOME,
 					},
 					mandates: [{ function: "m13" }],
 				},
@@ -327,10 +359,20 @@ describe("section 2.2", () => {
 							firstName: "Eva",
 							lastName: "Claes",
 							memberNumber: "1",
+							address: HOME,
 						},
 						missions: ["A", "B"],
 					},
-					{ holder: { kind: "legal", name: "Fid SRL" }, missions: ["C"] },
+					{
+						holder: {
+							kind: "legal",
+							name: "Fid SRL",
+							enterpriseNumber: "0403170701",
+							memberNumber: "2",
+							address: HOME,
+						},
+						missions: ["C"],
+					},
 				],
 			},
 		};
@@ -350,7 +392,16 @@ describe("section 2.2", () => {
 			accountantDeclaration: {
 				missionEntrusted: true,
 				practitioners: [
-					{ holder: { kind: "legal", name: "Fid SRL" }, missions: ["A"] },
+					{
+						holder: {
+							kind: "legal",
+							name: "Fid SRL",
+							enterpriseNumber: "0403170701",
+							memberNumber: "2",
+							address: HOME,
+						},
+						missions: ["A"],
+					},
 				],
 			},
 		};
@@ -471,6 +522,7 @@ describe("sections 7.1 and 7.2", () => {
 					name: "Partners SNC",
 					enterpriseNumber: "0403170701",
 					legalForm: "m612",
+					address: HOME,
 				},
 			],
 		},
@@ -531,7 +583,21 @@ describe("sections 7.1 and 7.2", () => {
 					participations: [
 						{
 							name: "X",
+							legalFormOther: "Ltd",
+							address: {
+								street: "High St",
+								houseNumber: "1",
+								postalCode: "SW1A 1AA",
+								city: "London",
+								country: "GB",
+							},
 							rights: [{ nature: "Parts", percentageDirect: 60 }],
+							lastAccounts: {
+								closingDate: "2024-12-31",
+								currency: "GBP",
+								equity: 1,
+								netResult: 1,
+							},
 						},
 					],
 				},
@@ -581,5 +647,112 @@ describe("generated enumerations", () => {
 	it("label every mandate function the model lists", () => {
 		const codes = new Set(ENUMERATIONS["fct"]?.map((member) => member.code));
 		expect(MANDATE_FUNCTIONS.filter((code) => !codes.has(code))).toEqual([]);
+	});
+});
+
+/** NBB completeness-rule identifiers a filing's validation reports. */
+const ruleIds = (input: NbbFilingInput) => {
+	const result = validateNbbFiling(buildNbbFiling(input));
+	return [
+		...new Set(
+			[...result.errors, ...result.warnings]
+				.map((finding) => finding.check)
+				.filter((check) => check.startsWith("oa_")),
+		),
+	].sort();
+};
+
+/**
+ * The model's completeness rules (`m87-f-other-formula.xml`), which the NBB
+ * applies on upload. The expected identifiers are what Arelle reports for the
+ * same rendered instance against the 26.0.15 package; `arelle.test.ts`
+ * re-derives them in CI, so this list cannot drift from the NBB's.
+ */
+describe("completeness rules", () => {
+	it("reports none for a complete filing", () => {
+		expect(ruleIds(FULL_MICRO_FILING)).toEqual([]);
+	});
+
+	it("reports the rules Arelle reports for a filing broken once per row", () => {
+		expect(ruleIds(INCOMPLETE_MICRO_FILING)).toEqual(
+			[
+				"oa_01.00.1_0011",
+				"oa_01.00.2_0008",
+				"oa_02.01.0_0003",
+				"oa_02.01.0_0004",
+				"oa_02.01.0_0006",
+				"oa_02.01.0_0007",
+				"oa_02.01.0_0009",
+				"oa_02.01.0_0017",
+				"oa_02.01.0_0019",
+				"oa_02.01.0_0020",
+				"oa_02.01.0_0022",
+				"oa_02.01.0_0028",
+				"oa_02.01.0_0029",
+				"oa_02.01.0_0031",
+				"oa_02.01.0_0032",
+				"oa_02.01.0_0034",
+				"oa_02.01.0_0036",
+				"oa_02.01.0_0047",
+				"oa_02.01.0_0049",
+				"oa_02.01.0_0050",
+				"oa_02.01.0_0052",
+				"oa_02.01.0_0054",
+				"oa_02.01.0_0058",
+				"oa_02.01.0_0059",
+				"oa_02.01.0_0061",
+				"oa_02.01.0_0062",
+				"oa_02.02.0_0003",
+				"oa_02.02.0_0004",
+				"oa_02.02.0_0006",
+				"oa_02.02.0_0007",
+				"oa_02.02.0_0009",
+				"oa_02.02.0_0011",
+				"oa_02.02.0_0016",
+				"oa_02.02.0_0018",
+				"oa_02.02.0_0019",
+				"oa_02.02.0_0021",
+				"oa_02.02.0_0023",
+				"oa_02.02.0_0025",
+				"oa_02.02.0_0026",
+				"oa_07.01.0_0003",
+				"oa_07.01.0_0006",
+				"oa_07.01.0_0008",
+				"oa_07.01.0_0009",
+				"oa_07.01.0_0010",
+				"oa_07.01.0_0011",
+				"oa_07.01.0_0012",
+				"oa_07.01.0_0015",
+				"oa_07.01.0_0018",
+				"oa_07.02.0_0003",
+				"oa_07.02.0_0004",
+				"oa_07.02.0_0007",
+			].sort(),
+		);
+	});
+
+	it("reports a missing house number at the field, under the row's own rule", () => {
+		const director = FULL_MICRO_FILING.directors?.[0];
+		if (director?.holder.kind !== "natural" || !director.holder.address) {
+			throw new Error("fixture changed");
+		}
+		const filing: NbbFilingInput = {
+			...FULL_MICRO_FILING,
+			directors: [
+				{
+					...director,
+					holder: {
+						...director.holder,
+						address: { ...director.holder.address, houseNumber: " " },
+					},
+				},
+			],
+		};
+		const findings = validateNbbFiling(buildNbbFiling(filing)).errors.filter((f) =>
+			f.check.startsWith("oa_"),
+		);
+		expect(findings.map((f) => [f.check, f.field])).toEqual([
+			["oa_02.01.0_0020", "directors[0].holder.address.houseNumber"],
+		]);
 	});
 });

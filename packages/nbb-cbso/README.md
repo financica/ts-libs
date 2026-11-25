@@ -145,6 +145,8 @@ Six of the `m87-f` checks and three of the `m04-f` ones are pinned in tests to t
 
 Alongside the generated checks, these are asserted directly: the balance sheet balancing (`20/58 = 10/49`, stated too loosely in the taxonomy to resolve), DAT 26 date consistency, DAT 31 decimal places, the enterprise number's modulo-97 check digits, non-empty valuation rules, and the requirement that at least one balance sheet figure be reported for the exercise.
 
+Each model also carries completeness rules (`<model>-f-other-formula.xml`): mandatory cells, rows that must exist before their mandates, a Belgian entity's enterprise number. They are XPath over typed dimensions, which this package does not evaluate in general. The ones the input contract can break are asserted directly and reported under the NBB's own identifier (`oa_02.01.0_0017`, …): the deposit date of the last deed, a 12-month exercise, and the section 2 and 7 rules on addresses, membership numbers, enterprise numbers, legal forms, rights held and the investee's last accounts. CI checks with Arelle that they are exactly the rules the NBB reports; see [Arelle conformance](#arelle-conformance).
+
 ## Known gaps
 
 - The software producer is **not** written into the annual accounts instance. Its section belongs to the `m101-r` module, which is a separate filing and is not generated.
@@ -176,6 +178,18 @@ bun run generate taxo/nbb-cbso-26.0.15 26.0.15 m87-f m04-f m05-f m08-f
 ```
 
 Each `<model>-<part>` becomes `src/taxonomies/<release>/<model>-<part>.ts` (the release is the version's first two parts, `26.0`), which tsdown builds to its own entry under `dist/taxonomies/`, published through the `./taxonomies/*` export pattern — no `package.json` change per model. The generator formats what it writes, so a re-run against the same release is a no-op in git. Pass every model you want in one run or in several; each file stands alone and there is no index to keep in step.
+
+### Arelle conformance
+
+`test/arelle.test.ts` renders filings and validates them with [Arelle](https://arelle.org) against the NBB's taxonomy package: XBRL 2.1, XBRL Dimensions and every formula linkbase, which is what the Filing application runs on upload. It checks that the accepted fixture and a fully populated filing of each release pass, and that a filing broken once per row (`INCOMPLETE_MICRO_FILING`) draws exactly the completeness rules `validateNbbFiling` reports. The `nbb-cbso (Arelle)` workflow runs it whenever this package or `@financica/xbrl` changes. Locally:
+
+```bash
+python3 -m venv .arelle && .arelle/bin/pip install arelle-release==2.47.5
+curl -O https://www.nbb.be/doc/ba/xbrl/taxo2026/nbb-cbso-26.0.15.zip
+NBB_ARELLE=.arelle/bin/arelleCmdLine NBB_TAXONOMY_PACKAGE=$PWD/nbb-cbso-26.0.15.zip bun run test:arelle
+```
+
+Without those variables `bun run test` skips the suite; `test:arelle` requires them. Each run loads the full taxonomy, so expect about 90 seconds.
 
 ### Test fixture
 

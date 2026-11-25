@@ -72,7 +72,7 @@ export function validateNbbFiling(filing: NbbFiling): NbbValidationResult {
 	for (const finding of filing.disclosureFindings) {
 		(finding.severity === "error" ? errors : warnings).push({
 			severity: finding.severity,
-			check: "disclosure",
+			check: finding.check ?? "disclosure",
 			rule: finding.field,
 			codes: [],
 			field: finding.field,
@@ -197,6 +197,37 @@ function structuralFindings(filing: NbbFiling): Finding[] {
 				"error",
 				"mandatory-mention",
 				"the business court is a mandatory mention and is absent",
+			),
+		);
+	}
+
+	// The model's completeness rules on section 1 that the input can break
+	// (`*-other-formula.xml`; the same identifiers in every model).
+	if (!entity.statutesDate) {
+		findings.push(
+			finding(
+				"error",
+				"oa_01.00.2_0008",
+				"the deposit date of the last deed (the statutes or their latest amendment) is a mandatory value",
+			),
+		);
+	}
+	const [startYear, startMonth] = identification.exercise.startDate
+		.split("-")
+		.map(Number);
+	const [endYear, endMonth] = identification.exercise.endDate.split("-").map(Number);
+	if (
+		startYear !== undefined &&
+		startMonth !== undefined &&
+		endYear !== undefined &&
+		endMonth !== undefined &&
+		(endYear - startYear) * 12 + endMonth - startMonth + 1 !== 12
+	) {
+		findings.push(
+			finding(
+				"warning",
+				"oa_01.00.1_0011",
+				"the exercise does not span 12 months",
 			),
 		);
 	}

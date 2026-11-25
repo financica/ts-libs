@@ -3,6 +3,7 @@ import type { Datapoint, TaxonomyModule } from "./taxonomy.js";
 import type {
 	Address,
 	CommitmentLine,
+	InvesteeAccounts,
 	Director,
 	LegalPerson,
 	MissionNature,
@@ -33,8 +34,31 @@ import type {
 /** A disclosure the model cannot carry, or a value it cannot take. */
 export interface DisclosureFinding {
 	severity: "error" | "warning";
+	/**
+	 * The NBB's identifier for the rule, where the finding is one of the
+	 * model's completeness rules (`oa_02.01.0_0017`); absent for this
+	 * package's own checks on the input.
+	 */
+	check?: string;
 	field: string;
 	message: string;
+}
+
+/**
+ * Identifiers of the m87 completeness rules (`m87-f-other-formula.xml`) a
+ * person row can break, per block of section 2. The same in 25.0 and 26.0;
+ * the Arelle parity test is what keeps them honest.
+ */
+interface PersonRules {
+	/** No fact about the person at all: their mandates or missions dangle. */
+	created: string;
+	addressType: string;
+	street: string;
+	houseNumber: string;
+	country: string;
+	/** A legal person at a Belgian address without an enterprise number. */
+	belgianNumber?: string;
+	membership?: string;
 }
 
 /**
@@ -79,6 +103,86 @@ const PERSON_BLOCKS = {
 		natural: { psn: "psn:m19", typed: ["dim:sann", "dim:safn"] },
 		legal: { psn: "psn:m17", typed: ["dim:sanl"] },
 		representative: { psn: "psn:m18", typed: ["dim:sprn", "dim:sprf"] },
+	},
+} as const;
+
+const PERSON_RULES: Readonly<
+	Record<keyof typeof PERSON_BLOCKS, Record<"natural" | "legal", PersonRules>>
+> = {
+	director: {
+		natural: {
+			created: "oa_02.01.0_0059",
+			addressType: "oa_02.01.0_0017",
+			street: "oa_02.01.0_0019",
+			houseNumber: "oa_02.01.0_0020",
+			country: "oa_02.01.0_0022",
+		},
+		legal: {
+			created: "oa_02.01.0_0058",
+			belgianNumber: "oa_02.01.0_0003",
+			addressType: "oa_02.01.0_0004",
+			street: "oa_02.01.0_0006",
+			houseNumber: "oa_02.01.0_0007",
+			country: "oa_02.01.0_0009",
+		},
+	},
+	auditor: {
+		natural: {
+			created: "oa_02.01.0_0062",
+			addressType: "oa_02.01.0_0047",
+			street: "oa_02.01.0_0049",
+			houseNumber: "oa_02.01.0_0050",
+			country: "oa_02.01.0_0052",
+			membership: "oa_02.01.0_0054",
+		},
+		legal: {
+			created: "oa_02.01.0_0061",
+			belgianNumber: "oa_02.01.0_0028",
+			addressType: "oa_02.01.0_0029",
+			street: "oa_02.01.0_0031",
+			houseNumber: "oa_02.01.0_0032",
+			country: "oa_02.01.0_0034",
+			membership: "oa_02.01.0_0036",
+		},
+	},
+	practitioner: {
+		natural: {
+			created: "oa_02.02.0_0026",
+			addressType: "oa_02.02.0_0016",
+			street: "oa_02.02.0_0018",
+			houseNumber: "oa_02.02.0_0019",
+			country: "oa_02.02.0_0021",
+			membership: "oa_02.02.0_0023",
+		},
+		legal: {
+			created: "oa_02.02.0_0025",
+			belgianNumber: "oa_02.02.0_0003",
+			addressType: "oa_02.02.0_0004",
+			street: "oa_02.02.0_0006",
+			houseNumber: "oa_02.02.0_0007",
+			country: "oa_02.02.0_0009",
+			membership: "oa_02.02.0_0011",
+		},
+	},
+};
+
+/** The 7.1 and 7.2 completeness rules. */
+const ENTITY_RULES = {
+	participation: {
+		created: "oa_07.01.0_0018",
+		belgianNumber: "oa_07.01.0_0003",
+		country: "oa_07.01.0_0006",
+		ownNumber: "oa_07.01.0_0012",
+		heldDirectly: "oa_07.01.0_0015",
+		accountsDate: "oa_07.01.0_0008",
+		accountsEquity: "oa_07.01.0_0009",
+		accountsResult: "oa_07.01.0_0010",
+		accountsCurrency: "oa_07.01.0_0011",
+	},
+	unlimited: {
+		belgianNumber: "oa_07.02.0_0003",
+		legalForm: "oa_07.02.0_0004",
+		country: "oa_07.02.0_0007",
 	},
 } as const;
 
@@ -138,6 +242,16 @@ class Emitter {
 
 	warn(field: string, message: string): void {
 		this.findings.push({ severity: "warning", field, message });
+	}
+
+	/** A breach of one of the model's own completeness rules. */
+	rule(
+		check: string,
+		field: string,
+		message: string,
+		severity: "error" | "warning" = "error",
+	): void {
+		this.findings.push({ severity, check, field, message });
 	}
 
 	/**
@@ -228,9 +342,21 @@ function emitAddress(
 	base: Dims,
 	address: Address,
 	typed: Readonly<Record<string, string>>,
-	options: { addressType: boolean },
+	options: { addressType: boolean; rules?: PersonRules },
 ): void {
 	const at = (ctc: string) => ({ ...base, "dim:bas": "bas:m31", "dim:ctc": ctc });
+	// Street and number are mandatory where the model has a rule for them.
+	const rules = options.rules;
+	if (rules && address.street.trim() === "") {
+		out.rule(rules.street, `${field}.street`, "the street is required");
+	}
+	if (rules && address.houseNumber.trim() === "") {
+		out.rule(
+			rules.houseNumber,
+			`${field}.houseNumber`,
+			"the house number is required",
+		);
+	}
 	if (options.addressType) {
 		// Head office or domicile, which is what an accepted filing states.
 		out.emit(
@@ -241,14 +367,18 @@ function emitAddress(
 			{ typed },
 		);
 	}
-	out.text(`${field}.street`, "met:str2", at("ctc:m1"), address.street, typed);
-	out.text(
-		`${field}.houseNumber`,
-		"met:str2",
-		at("ctc:m2"),
-		address.houseNumber,
-		typed,
-	);
+	if (!rules || address.street.trim() !== "") {
+		out.text(`${field}.street`, "met:str2", at("ctc:m1"), address.street, typed);
+	}
+	if (!rules || address.houseNumber.trim() !== "") {
+		out.text(
+			`${field}.houseNumber`,
+			"met:str2",
+			at("ctc:m2"),
+			address.houseNumber,
+			typed,
+		);
+	}
 	out.text(`${field}.postbox`, "met:str2", at("ctc:m3"), address.postbox, typed);
 	out.text(`${field}.city`, "met:str2", at("ctc:m5"), address.city, typed);
 
@@ -344,7 +474,79 @@ function emitPerson(
 	holder: NaturalPerson | LegalPerson,
 ): Readonly<Record<string, string>> {
 	const blocks = PERSON_BLOCKS[block];
+	const rules = PERSON_RULES[block][holder.kind];
 	const membershipAllowed = block !== "director";
+	const before = out.facts.length;
+	const typed = emitHolder(out, field, blocks, rules, holder, membershipAllowed);
+	checkHolder(out, `${field}.holder`, rules, holder, out.facts.length > before);
+	if (holder.kind === "legal") {
+		emitRepresentatives(out, field, blocks, typed, holder, membershipAllowed);
+	}
+	return typed;
+}
+
+/**
+ * The model's completeness rules for a holder, as the NBB applies them. A
+ * holder with no fact of their own is reported once, as not created, which is
+ * what the NBB says instead of listing every missing cell; otherwise each
+ * missing mandatory cell is its own rule.
+ */
+function checkHolder(
+	out: Emitter,
+	field: string,
+	rules: PersonRules,
+	holder: NaturalPerson | LegalPerson,
+	created: boolean,
+): void {
+	if (!created) {
+		out.rule(
+			rules.created,
+			field,
+			"give the holder's address (and number or profession) so their row exists",
+		);
+		return;
+	}
+	if (!holder.address) {
+		out.rule(rules.addressType, `${field}.address`, "the address is required");
+		out.rule(rules.street, `${field}.address.street`, "the street is required");
+		out.rule(
+			rules.houseNumber,
+			`${field}.address.houseNumber`,
+			"the house number is required",
+		);
+		out.rule(rules.country, `${field}.address.country`, "the country is required");
+	}
+	if (
+		holder.kind === "legal" &&
+		rules.belgianNumber &&
+		holder.address &&
+		(holder.address.country ?? "BE").trim().toUpperCase() === "BE" &&
+		holder.enterpriseNumber === undefined
+	) {
+		out.rule(
+			rules.belgianNumber,
+			`${field}.enterpriseNumber`,
+			"a legal person at a Belgian address needs its enterprise number",
+		);
+	}
+	if (rules.membership && holder.memberNumber === undefined) {
+		out.rule(
+			rules.membership,
+			`${field}.memberNumber`,
+			"the membership number is required",
+		);
+	}
+}
+
+/** The holder's own cells. Returns the typed members that key their row. */
+function emitHolder(
+	out: Emitter,
+	field: string,
+	blocks: (typeof PERSON_BLOCKS)[Block],
+	rules: PersonRules,
+	holder: NaturalPerson | LegalPerson,
+	membershipAllowed: boolean,
+): Readonly<Record<string, string>> {
 	if (holder.kind === "natural") {
 		const {
 			psn,
@@ -381,6 +583,7 @@ function emitPerson(
 		if (holder.address) {
 			emitAddress(out, `${field}.holder.address`, base, holder.address, typed, {
 				addressType: true,
+				rules,
 			});
 		}
 		return typed;
@@ -417,8 +620,21 @@ function emitPerson(
 	if (holder.address) {
 		emitAddress(out, `${field}.holder.address`, base, holder.address, typed, {
 			addressType: true,
+			rules,
 		});
 	}
+	return typed;
+}
+
+/** A legal holder's permanent representatives, keyed under the holder's name. */
+function emitRepresentatives(
+	out: Emitter,
+	field: string,
+	blocks: (typeof PERSON_BLOCKS)[Block],
+	typed: Readonly<Record<string, string>>,
+	holder: LegalPerson,
+	membershipAllowed: boolean,
+): void {
 	const seen = new Set<string>();
 	(holder.representatives ?? []).forEach((representative: Representative, index) => {
 		const at = `${field}.holder.representatives[${index}]`;
@@ -481,7 +697,6 @@ function emitPerson(
 			);
 		}
 	});
-	return typed;
 }
 
 const personPsn = (block: Block, holder: NaturalPerson | LegalPerson) =>
@@ -820,7 +1035,9 @@ function emitParticipations(
 	participations: NonNullable<
 		NonNullable<NbbFilingInput["disclosures"]>["participations"]
 	>,
+	ownNumber: string | undefined,
 ): void {
+	const rules = ENTITY_RULES.participation;
 	const base = { "dim:psn": "psn:m1", "dim:rls": "rls:m7" };
 	const anchor = { ...base, "dim:bas": "bas:m117", "dim:dcl": "dcl:m7" };
 	if (
@@ -849,7 +1066,9 @@ function emitParticipations(
 			return;
 		}
 		seen.add(typed["dim:ptpn"]);
+		const entityStart = out.facts.length;
 		emitRelatedEntity(out, field, base, participation, typed);
+		let entityFacts = out.facts.length - entityStart;
 
 		if (participation.rights.length === 0)
 			out.error(`${field}.rights`, "at least one class of rights is required");
@@ -865,11 +1084,17 @@ function emitParticipations(
 				rowTyped,
 			);
 			if (rights.heldDirectly !== undefined) {
-				if (!Number.isInteger(rights.heldDirectly) || rights.heldDirectly < 0) {
-					out.error(
+				// Zero is a valid lexical value the NBB refuses by rule; it is
+				// reported and still rendered, like every other rule breach.
+				if (rights.heldDirectly === 0) {
+					out.rule(
+						rules.heldDirectly,
 						`${at}.heldDirectly`,
-						"must be a whole, non-negative number",
+						"the number held directly must be greater than 0; leave it out instead",
 					);
+				}
+				if (!Number.isInteger(rights.heldDirectly) || rights.heldDirectly < 0) {
+					out.error(`${at}.heldDirectly`, "must be a whole, positive number");
 				} else {
 					out.emit(
 						`${at}.heldDirectly`,
@@ -909,9 +1134,93 @@ function emitParticipations(
 			percentage("percentageThroughSubsidiaries", "spec:m32");
 		});
 
-		const accounts = participation.lastAccounts;
-		if (!accounts) return;
-		const at = `${field}.lastAccounts`;
+		const accountsStart = out.facts.length;
+		if (participation.lastAccounts) {
+			emitInvesteeAccounts(
+				out,
+				`${field}.lastAccounts`,
+				base,
+				participation.lastAccounts,
+				typed,
+			);
+		}
+		entityFacts += out.facts.length - accountsStart;
+
+		// The NBB's completeness rules for the investee itself. Without a
+		// single fact about it, its rights dangle, and that is all it reports.
+		if (entityFacts === 0) {
+			out.rule(
+				rules.created,
+				field,
+				"give the investee's address, number or legal form",
+			);
+			return;
+		}
+		if (!participation.address) {
+			out.rule(
+				rules.country,
+				`${field}.address.country`,
+				"the country is required",
+			);
+		} else if (
+			(participation.address.country ?? "BE").trim().toUpperCase() === "BE" &&
+			participation.enterpriseNumber === undefined
+		) {
+			out.rule(
+				rules.belgianNumber,
+				`${field}.enterpriseNumber`,
+				"an entity at a Belgian address needs its enterprise number",
+			);
+		}
+		if (
+			participation.enterpriseNumber !== undefined &&
+			participation.enterpriseNumber === ownNumber
+		) {
+			out.rule(
+				rules.ownNumber,
+				`${field}.enterpriseNumber`,
+				"the investee cannot be the filing company itself",
+			);
+		}
+		if (!participation.lastAccounts) {
+			const at = `${field}.lastAccounts`;
+			out.rule(
+				rules.accountsDate,
+				`${at}.closingDate`,
+				"the closing date of its last accounts should be given",
+				"warning",
+			);
+			out.rule(
+				rules.accountsEquity,
+				`${at}.equity`,
+				"its equity should be given",
+				"warning",
+			);
+			out.rule(
+				rules.accountsResult,
+				`${at}.netResult`,
+				"its net result should be given",
+				"warning",
+			);
+			out.rule(
+				rules.accountsCurrency,
+				`${at}.currency`,
+				"the currency of its accounts should be given",
+				"warning",
+			);
+		}
+	});
+}
+
+/** A 7.1 investee's last available accounts, in their own currency. */
+function emitInvesteeAccounts(
+	out: Emitter,
+	at: string,
+	base: Dims,
+	accounts: InvesteeAccounts,
+	typed: Readonly<Record<string, string>>,
+): void {
+	{
 		out.date(
 			`${at}.closingDate`,
 			{
@@ -955,7 +1264,7 @@ function emitParticipations(
 				unit: currency,
 			},
 		);
-	});
+	}
 }
 
 /** Section 7.2. */
@@ -995,6 +1304,30 @@ function emitUnlimitedLiability(
 		seen.add(typed["dim:curn"]);
 		const before = out.facts.length;
 		emitRelatedEntity(out, field, base, entity, typed);
+		const rules = ENTITY_RULES.unlimited;
+		if (entity.legalForm === undefined && entity.legalFormOther === undefined) {
+			out.rule(
+				rules.legalForm,
+				`${field}.legalForm`,
+				"the legal form is required",
+			);
+		}
+		if (!entity.address) {
+			out.rule(
+				rules.country,
+				`${field}.address.country`,
+				"the country is required",
+			);
+		} else if (
+			(entity.address.country ?? "BE").trim().toUpperCase() === "BE" &&
+			entity.enterpriseNumber === undefined
+		) {
+			out.rule(
+				rules.belgianNumber,
+				`${field}.enterpriseNumber`,
+				"an entity at a Belgian address needs its enterprise number",
+			);
+		}
 		if (entity.publicationCode === undefined) {
 			if (out.facts.length === before) {
 				out.error(
@@ -1035,7 +1368,8 @@ function emitUnlimitedLiability(
 type DisclosureInput = Pick<
 	NbbFilingInput,
 	"taxonomy" | "directors" | "accountantDeclaration" | "disclosures"
->;
+> &
+	Partial<Pick<NbbFilingInput, "entity">>;
 
 /** The facts and findings for every disclosure the input carries. */
 export function buildDisclosures(input: DisclosureInput): {
@@ -1053,7 +1387,11 @@ export function buildDisclosures(input: DisclosureInput): {
 	if (disclosures) {
 		emitAnnex(out, disclosures);
 		if (disclosures.participations && disclosures.participations.length > 0) {
-			emitParticipations(out, disclosures.participations);
+			emitParticipations(
+				out,
+				disclosures.participations,
+				input.entity?.enterpriseNumber,
+			);
 		}
 		if (
 			disclosures.unlimitedLiabilityEntities &&

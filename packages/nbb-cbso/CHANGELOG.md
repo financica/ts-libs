@@ -1,26 +1,34 @@
 # Changelog
 
-## 0.9.2
+## 0.10.0
 
-Breaking: `Director` and `AccountantDeclaration` are reshaped. Neither produced a fact before, so no filing changes.
+Breaking: `Director` and `AccountantDeclaration` are reshaped (neither produced a fact before, so no filing changes), and a filing without `entity.statutesDate` now fails validation.
 
 ### Added
 
 - **Sections 2.1 and 2.2 are filed.** `directors` takes natural and legal persons, their permanent representatives, the statutory auditors (`role: "auditor"`) and every mandate with its function and dates; `accountantDeclaration` takes the management body's answer and any number of practitioners, each with their missions (A–D). Rows are keyed by the typed name dimensions the taxonomy declares, mandates and missions by `dim:open`. Checked fact for fact, typed members included, against the people of an accepted m87 filing.
 - **`disclosures`: the non-rubric parts of 6.3, 6.4, 6.6, 7.1 and 7.2.** Litigation, commitments to affiliates and other off-balance lines (text and amount per line), the pension descriptions, the terms of receivables from directors, the other annex information, participations with their rights and the investee's last accounts in its own currency, and unlimited-liability entities with their publication code.
+- **The model's completeness rules the input can break are checked**, under the NBB's own identifiers: the deposit date of the last deed (`oa_01.00.2_0008`), a 12-month exercise (`oa_01.00.1_0011`, a warning), and in sections 2.1, 2.2, 7.1 and 7.2 the address, membership-number, enterprise-number, legal-form, rights-held and last-accounts rules. A row with nothing but its mandates or missions is reported once, as the NBB does, rather than field by field. Verified in CI against Arelle, which reports exactly the same rules on a filing broken once per row.
 - `disclosureCapabilities(module)`, `MANDATE_FUNCTIONS`, `isEnterpriseNumber`, and `fct`, `nmc` and `pub` in `ENUMERATIONS`.
-- `Finding.field`: a disclosure that cannot be filed is reported at its input path with `check: "disclosure"`, not thrown and not dropped.
+- `Finding.field`: a disclosure that cannot be filed is reported at its input path, not thrown and not dropped.
 - `Address.city`, and foreign addresses for people and entities (the postal code as text).
+- `test:arelle` and the `nbb-cbso (Arelle)` workflow: Arelle validation of rendered filings against the NBB taxonomy package.
+- The generator adds the cells of typed hypercubes that the rendering table never lays out (mandate dates, a legal person's mandates, an expert firm's missions, the 6.3 and 7.1 rows), and keeps a text cell its cube declares without a period (the 6.3 pension descriptions).
 
-### Fixed (rendering)
+### Changed
+
+- **A filing without `entity.statutesDate` now fails validation** (`oa_01.00.2_0008`). The NBB requires the deposit date of the last deed in every model; it was silently left out before.
+
+### Fixed
 
 - Share counts (`int1`, `int2`) carry a `shares` unit and counts, decimals and percentages a `pure` one. They carried none, which is invalid XBRL for any numeric item.
 - A missing identification cell throws instead of leaving the field out.
 
+## 0.9.2
+
 ### Fixed
 
-- **Datapoints are only the cells the definition linkbase declares.** The generator crossed every row of a rendering table with every column, which produced cells no hypercube allows: a text column against an amount row, a preceding-exercise column on a fixed-asset movement. Each cell is now checked against the section's closed hypercubes (dimension defaults included) and dropped, or loses the column, when none declares it. The same class of error as 0.9.1, at the source: rubric `9220` resolved to a `bas:m87 gtd:m3` cell the NBB would reject, and now resolves to `bas:m94 spec:m73`. No rubric code is lost from any model; every statutory check keeps its bindings.
-- The generator adds the cells of typed hypercubes that the rendering table never lays out (mandate dates, a legal person's mandates, an expert firm's missions, the 6.3 and 7.1 rows), and keeps a text cell the table puts under a period column when its cube declares it without one (the 6.3 pension descriptions).
+- **Datapoints are only the cells the definition linkbase declares.** The generator crossed every row of a rendering table with every column, which produced cells no hypercube allows: a text column against an amount row, a preceding-exercise column on a fixed-asset movement. Each cell is now checked against the section's closed hypercubes (dimension defaults included) and dropped, or loses the column, when none declares it. The same class of error as 0.9.1, at the source: rubric `9220` resolved to a `bas:m87 gtd:m3` cell the NBB would reject, and now resolves to `bas:m94 spec:m73`. No rubric code is lost from any model; every statutory check keeps its bindings, and the three m87 filings generated in production re-render fact for fact.
 - `Datapoint.openDimensions` lists the typed dimensions of the datapoint's own hypercube instead of the union over its section, so a cell says which typed members a fact in it must carry.
 - A preceding-exercise figure for a rubric with only a current column (`9072`, `9500`, …) throws `NbbBuildError` instead of being filed in the current column.
 
