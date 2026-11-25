@@ -202,6 +202,28 @@ describe("buildNbbFiling", () => {
 		expect(filingValue(filing, "8199P", "current")).toBe(30000);
 		expect(filingValue(filing, "8199P", "previous")).toBe(30000);
 	});
+
+	it("refuses a preceding-exercise figure for a rubric with only this year's column", () => {
+		// Section 8 reports overdue debts at this closing only.
+		expect(() =>
+			buildNbbFiling({ ...MICRO_FILING, notes: { "9072": { previous: 100 } } }),
+		).toThrow(/no preceding-exercise column/);
+	});
+
+	it("files a rubric in the cell its hypercube declares, not a crossed one", () => {
+		// The pension estimate is `am1` with bas:m94 and spec:m73 in the
+		// definition linkbase. Crossing the 6.3 rows with the guarantee
+		// columns once produced a `bas:m87 gtd:m3` cell that came first.
+		const fact = buildNbbFiling({
+			...MICRO_FILING,
+			notes: { "9220": { current: 1000 } },
+		}).facts.find((candidate) => candidate.code === "9220");
+		expect(fact?.datapoint.dimensions).toEqual({
+			"dim:part": "part:m6",
+			"dim:bas": "bas:m94",
+			"dim:spec": "spec:m73",
+		});
+	});
 });
 
 describe("validateNbbFiling", () => {

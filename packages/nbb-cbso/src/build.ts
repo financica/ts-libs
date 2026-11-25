@@ -113,16 +113,21 @@ function factKey(datapoint: Datapoint, period: string | undefined): string {
  * — `8199P` beside `8199` — and exists only in the preceding exercise's
  * column, being last year's close, so a caller reporting "the opening balance
  * for this year" is reporting that cell.
+ *
+ * The converse does not hold. A rubric with only a current cell, such as the
+ * overdue tax debts `9072`, has no preceding column at all, and a figure given
+ * for one has nowhere to go; it is refused rather than moved into this year's.
  */
 function columnOf(
 	variants: readonly Datapoint[],
 	asked: "current" | "previous",
-): [Datapoint, NbbFact["period"]] {
+): [Datapoint, NbbFact["period"]] | undefined {
 	const wanted = asked === "current" ? "currentPeriod" : "previousPeriod";
 	const exact = variants.find((variant) => variant[wanted]);
 	if (exact) return [exact, asked];
 	const only = variants[0]!;
 	if (only.previousPeriod) return [only, "previous"];
+	if (asked === "previous" && only.currentPeriod) return undefined;
 	return [only, only.currentPeriod ? "current" : undefined];
 }
 
@@ -215,7 +220,13 @@ export function buildNbbFiling(input: NbbFilingInput): NbbFiling {
 				throw new NbbBuildError(`unknown rubric code "${code}" in ${section}`);
 			}
 			const add = (asked: "current" | "previous", value: number): void => {
-				const [datapoint, period] = columnOf(variants, asked);
+				const column = columnOf(variants, asked);
+				if (!column) {
+					throw new NbbBuildError(
+						`"${code}" in ${section} has no preceding-exercise column in this model`,
+					);
+				}
+				const [datapoint, period] = column;
 				const fact: NbbFact = {
 					datapoint,
 					...(period ? { period } : {}),
@@ -279,7 +290,9 @@ export function filingValue(
 		(datapoint) => datapoint.code === code,
 	);
 	if (variants.length === 0) return undefined;
-	const [wanted, column] = columnOf(variants, period);
+	const resolved = columnOf(variants, period);
+	if (!resolved) return undefined;
+	const [wanted, column] = resolved;
 	const key = factKey(wanted, column);
 	const fact = filing.facts.find(
 		(candidate) => factKey(candidate.datapoint, candidate.period) === key,

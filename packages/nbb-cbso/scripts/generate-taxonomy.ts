@@ -278,6 +278,171 @@ function readTable(path: string): Axis[] {
 	return axes;
 }
 
+// ── Definition linkbase ───────────────────────────────────────────────
+
+/**
+ * One closed hypercube: the cells a set of primary items may be reported in.
+ *
+ * The table linkbase lays a section out as rows and columns, and crossing them
+ * yields cells the taxonomy never declares: a narrative column against an
+ * amount row, or a period on a text field. The definition linkbase is what
+ * decides which combinations exist, so every generated datapoint is checked
+ * against it.
+ */
+interface Hypercube {
+	/** Primary items, as `prefix:local` QNames (`met:am1`, `fct-enum:list1`). */
+	primaries: Set<string>;
+	/** Explicit dimensions and the members their domain allows. */
+	explicit: Map<string, Set<string>>;
+	/** Typed dimensions, which every fact in the cube must carry. */
+	typed: string[];
+}
+
+const ALL = "http://xbrl.org/int/dim/arcrole/all";
+const HYPERCUBE_DIMENSION = "http://xbrl.org/int/dim/arcrole/hypercube-dimension";
+const DIMENSION_DOMAIN = "http://xbrl.org/int/dim/arcrole/dimension-domain";
+const DOMAIN_MEMBER = "http://xbrl.org/int/dim/arcrole/domain-member";
+
+/** `met_am1` or `nmt-enum_list1`, as a locator names an element, to a QName. */
+function qnameOfId(id: string): string {
+	const underscore = id.indexOf("_");
+	return underscore === -1
+		? id
+		: `${id.slice(0, underscore)}:${id.slice(underscore + 1)}`;
+}
+
+/**
+ * Reads a section's definition linkbase into its hypercubes.
+ *
+ * The NBB publishes each hypercube in an extended link of its own, so a link is
+ * a cube. A primary item's domain-member children share its cube: an
+ * enumeration such as `pcd-enum:list1` has `met:str2` beneath it, which is how
+ * a foreign postal code is reported in the same cell as free text.
+ */
+function readHypercubes(path: string): Hypercube[] {
+	if (!existsSync(path)) return [];
+	const cubes: Hypercube[] = [];
+	for (const { tag, node: link } of walk(readXml(path))) {
+		if (local(tag) !== "definitionLink") continue;
+		const locators = new Map<string, string>();
+		for (const loc of byLocalName(link, "loc")) {
+			const label = attr(loc, "xlink:label");
+			const href = attr(loc, "xlink:href");
+			if (label && href)
+				locators.set(label, qnameOfId(href.slice(href.indexOf("#") + 1)));
+		}
+		const arcs = byLocalName(link, "definitionArc").map((arc) => ({
+			role: attr(arc, "xlink:arcrole"),
+			from: locators.get(attr(arc, "xlink:from") ?? "") ?? "",
+			to: locators.get(attr(arc, "xlink:to") ?? "") ?? "",
+		}));
+		const below = new Map<string, string[]>();
+		for (const arc of arcs) {
+			if (arc.role === DOMAIN_MEMBER || arc.role === DIMENSION_DOMAIN) {
+				below.set(arc.from, [...(below.get(arc.from) ?? []), arc.to]);
+			}
+		}
+		const descendants = (start: string): string[] => {
+			const found: string[] = [];
+			const stack = [...(below.get(start) ?? [])];
+			while (stack.length > 0) {
+				const next = stack.pop()!;
+				if (found.includes(next)) continue;
+				found.push(next);
+				stack.push(...(below.get(next) ?? []));
+			}
+			return found;
+		};
+
+		const primaries = new Set<string>();
+		for (const arc of arcs) {
+			if (arc.role !== ALL) continue;
+			primaries.add(arc.from);
+			for (const member of descendants(arc.from)) primaries.add(member);
+		}
+		const explicit = new Map<string, Set<string>>();
+		const typed: string[] = [];
+		for (const arc of arcs) {
+			if (arc.role !== HYPERCUBE_DIMENSION) continue;
+			const members = descendants(arc.to);
+			if (members.length === 0) typed.push(arc.to);
+			else explicit.set(arc.to, new Set(members));
+		}
+		if (primaries.size > 0)
+			cubes.push({ primaries, explicit, typed: typed.sort() });
+	}
+	return cubes;
+}
+
+/**
+ * The cube a cell is valid in, if any.
+ *
+ * A cube is closed: the cell must name a member of every explicit dimension
+ * the cube has, from that dimension's domain, and no dimension the cube does
+ * not have. A dimension the cell leaves out takes its default, `m0`, which no
+ * cube in this taxonomy lists, so leaving one out disqualifies the cube.
+ */
+function cubeFor(
+	cubes: readonly Hypercube[],
+	metric: string,
+	dimensions: Readonly<Record<string, string>>,
+): Hypercube | undefined {
+	const stated = Object.entries(dimensions).filter(
+		([, member]) => !member.endsWith(":m0"),
+	);
+	return cubes.find(
+		(cube) =>
+			cube.primaries.has(metric) &&
+			stated.length === cube.explicit.size &&
+			stated.every(([dimension, member]) =>
+				cube.explicit.get(dimension)?.has(member),
+			),
+	);
+}
+
+/**
+ * Keeps the datapoints, and the columns of each, that a cube declares.
+ *
+ * A datapoint whose current or preceding column is not a valid cell loses that
+ * column; one with no valid cell left is dropped. Each survivor records the
+ * typed dimensions of its own cube, which is what a fact in it must carry.
+ */
+function keepDeclaredCells(
+	datapoints: Datapoint[],
+	cubesBySection: ReadonlyMap<string, readonly Hypercube[]>,
+): Datapoint[] {
+	const kept: Datapoint[] = [];
+	for (const datapoint of datapoints) {
+		const cubes = cubesBySection.get(datapoint.section) ?? [];
+		const metric = `${datapoint.metricPrefix ?? "met"}:${datapoint.metric}`;
+		const cell = (period: string | undefined) =>
+			cubeFor(cubes, metric, {
+				...datapoint.dimensions,
+				...(period ? { "dim:prd": period } : {}),
+			});
+		const columns = [datapoint.currentPeriod, datapoint.previousPeriod].filter(
+			(period): period is string => period !== undefined,
+		);
+		const current = datapoint.currentPeriod
+			? cell(datapoint.currentPeriod)
+			: undefined;
+		const previous = datapoint.previousPeriod
+			? cell(datapoint.previousPeriod)
+			: undefined;
+		const bare = columns.length === 0 ? cell(undefined) : undefined;
+		const cube = current ?? previous ?? bare;
+		if (!cube) continue;
+		// Copied rather than rebuilt, so the emitted key order stays stable.
+		const declared: Datapoint = { ...datapoint };
+		if (cube.typed.length > 0) declared.openDimensions = cube.typed;
+		else delete declared.openDimensions;
+		if (!current) delete declared.currentPeriod;
+		if (!previous) delete declared.previousPeriod;
+		kept.push(declared);
+	}
+	return kept;
+}
+
 /** Reads a section's generic labels, keyed by the id they are attached to. */
 type SectionLabel = { rubric?: string; labels?: Record<string, string> };
 
@@ -724,13 +889,18 @@ function generateModule(options: Options, model: string, part: string) {
 	if (!existsSync(entryPoint)) throw new Error(`no entry point at ${entryPoint}`);
 
 	const sections = readSections(entryPoint);
-	const datapoints: Datapoint[] = [];
+	let datapoints: Datapoint[] = [];
+	const cubesBySection = new Map<string, Hypercube[]>();
 
 	for (const section of sections) {
 		const rend = join(options.fws, "sect", `${section}-rend.xml`);
 		if (!existsSync(rend)) continue;
 		const axes = readTable(rend);
 		const labels = readLabels(join(options.fws, "sect", `${section}-lab.xml`));
+		cubesBySection.set(
+			section,
+			readHypercubes(join(options.fws, "sect", `${section}-definition.xml`)),
+		);
 
 		const xAxes = axes.filter((a) => a.axis === "x");
 		const yAxes = axes.filter((a) => a.axis === "y");
@@ -791,6 +961,7 @@ function generateModule(options: Options, model: string, part: string) {
 	}
 
 	dropOpeningBalanceArtifacts(datapoints);
+	datapoints = keepDeclaredCells(datapoints, cubesBySection);
 
 	const metrics = readMetrics(options);
 	const knownCodes = new Set(

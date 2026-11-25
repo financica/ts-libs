@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.9.2
+
+### Fixed
+
+- **Datapoints are only the cells the definition linkbase declares.** The generator crossed every row of a rendering table with every column, which produced cells no hypercube allows: a text column against an amount row, a preceding-exercise column on a fixed-asset movement. Each cell is now checked against the section's closed hypercubes (dimension defaults included) and dropped, or loses the column, when none declares it. The same class of error as 0.9.1, at the source: rubric `9220` resolved to a `bas:m87 gtd:m3` cell the NBB would reject, and now resolves to `bas:m94 spec:m73`. No rubric code is lost from any model; every statutory check keeps its bindings.
+- `Datapoint.openDimensions` lists the typed dimensions of the datapoint's own hypercube instead of the union over its section, so a cell says which typed members a fact in it must carry.
+- A preceding-exercise figure for a rubric with only a current column (`9072`, `9500`, …) throws `NbbBuildError` instead of being filed in the current column.
+
+### Changed
+
+- Social-balance checks that were bound to undeclared cells, and the m05 checks `ca_04.00.0_0005` / `0006` (which bound `70/76A` to `9145`), are now reported as skipped or not applicable rather than evaluated against the wrong rubric.
+
 ## 0.9.1
 
 ### Fixed
