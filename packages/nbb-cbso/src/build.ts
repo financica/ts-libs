@@ -1,3 +1,4 @@
+import { buildDisclosures, type DisclosureFinding } from "./disclosures.js";
 import { NbbBuildError } from "./errors.js";
 import type { Datapoint, TaxonomyModule } from "./taxonomy.js";
 import type { NbbFilingInput, RubricAmounts } from "./types.js";
@@ -11,6 +12,13 @@ export interface NbbFact {
 	value: string;
 	/** Statutory rubric code, where the datapoint has one. */
 	code?: string;
+	/**
+	 * Typed dimension members, keyed by dimension QName: the name that keys a
+	 * director's row, or a line number under `dim:open`.
+	 */
+	typedMembers?: Readonly<Record<string, string>>;
+	/** ISO 4217 currency of a monetary fact, where it is not EUR. */
+	unit?: string;
 }
 
 /** A filing, resolved against a taxonomy and ready to validate or render. */
@@ -18,6 +26,11 @@ export interface NbbFiling {
 	input: NbbFilingInput;
 	module: TaxonomyModule;
 	facts: readonly NbbFact[];
+	/**
+	 * Disclosures the model cannot carry or values it cannot take, by input
+	 * field. Reported by {@link validateNbbFiling}; nothing here is rendered.
+	 */
+	disclosureFindings: readonly DisclosureFinding[];
 }
 
 /**
@@ -162,7 +175,13 @@ export function buildNbbFiling(input: NbbFilingInput): NbbFiling {
 	): void => {
 		if (value === undefined) return;
 		const datapoint = bySignature.get(IDENTIFICATION[field]);
-		if (!datapoint) return;
+		// Every model declares section 1; a missing cell is a generator fault,
+		// and filing without the field would be silently incomplete.
+		if (!datapoint) {
+			throw new NbbBuildError(
+				`identification field "${field}" has no cell in ${taxonomyModule.model}-${taxonomyModule.part}`,
+			);
+		}
 		facts.push({ datapoint, value, ...(period ? { period } : {}) });
 	};
 
@@ -263,7 +282,15 @@ export function buildNbbFiling(input: NbbFilingInput): NbbFiling {
 	addRubrics(input.appropriation, "appropriation");
 	addRubrics(input.notes, "notes");
 
-	return { input, module: taxonomyModule, facts };
+	const disclosures = buildDisclosures(input);
+	facts.push(...disclosures.facts);
+
+	return {
+		input,
+		module: taxonomyModule,
+		facts,
+		disclosureFindings: disclosures.findings,
+	};
 }
 
 /**

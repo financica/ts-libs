@@ -72,6 +72,14 @@ EUR, as plain numbers. Negative values take a minus sign. No thousands separator
 
 `generalMeetingDate`, both exercise date ranges, `previousPeriodDataUnchanged`, `pageCount` and `sectionsNotFiled` are all required by the model and are modelled explicitly for that reason.
 
+### People, rows and text
+
+Sections 2.1 (`directors`), 2.2 (`accountantDeclaration`) and the non-rubric parts of 6.3, 6.4, 6.6, 7.1 and 7.2 (`disclosures`) are rows and text rather than rubric amounts. The taxonomy keys each row on typed dimensions: a person on their name, a list inside a row (mandates, missions, commitment lines, classes of rights) on a line number from 1. A name therefore identifies a row, and two holders with the same name in the same role are refused. Amounts that have a rubric (`9149` … `9220`, `9500`–`9502`, `9072`, `9076`, `9061`, `9078`) stay in `notes`.
+
+These cells are resolved against the model's own datapoint table, so a disclosure the model does not have is refused, not filed into an undeclared cell. `disclosureCapabilities(module)` says which disclosures a model and release carry, worked out by building a fully populated probe of each through the same code: every one for `m87` (25.0 and 26.0), none for the association models, whose sections 2, 6 and 7 are laid out differently.
+
+A refused disclosure does not throw. It lands in `validateNbbFiling(...).errors` as a `Finding` with `check: "disclosure"` and `field` set to the input path (`"directors[0].mandates[1].function"`). Investee figures in 7.1 keep their currency and sign, share counts go out in `xbrli:shares`, percentages as fractions in `xbrli:pure`, and narrative text keeps its line breaks. A 7.2 entity with no publication code produces a warning: its accounts must accompany the filing, and this package does not embed documents.
+
 ## API
 
 ```typescript
@@ -93,7 +101,7 @@ if (errors.length === 0) {
 
 `validateNbbFiling` separates `errors` from `warnings` along the NBB's own line: statutory checks are disqualifying and land in `errors`, Annex 1.2 and social balance sheet checks are not and land in `warnings`. Each `Finding` carries the NBB's own check identifier, the rubric codes involved, and a message naming the figures that broke the rule. `skipped` lists checks that were not evaluated, which is deliberate — see below.
 
-`renderNbbFiling` produces the instance document, following the conventions of accepted filings: one instant context per fact at the closing date, the preceding exercise as a period dimension, `decimals="INF"`, a single EUR unit, no segments, and none of the prohibited `linkbaseRef` / `roleRef` / `arcroleRef` / `footnoteLink` elements. Output is byte-stable across runs.
+`renderNbbFiling` produces the instance document, following the conventions of accepted filings: one instant context per fact at the closing date, the preceding exercise as a period dimension, `decimals="INF"`, an EUR unit (plus a unit per investee currency, `shares` and `pure` where those facts occur), no segments, and none of the prohibited `linkbaseRef` / `roleRef` / `arcroleRef` / `footnoteLink` elements. Output is byte-stable across runs.
 
 ### Errors
 
@@ -141,7 +149,8 @@ Alongside the generated checks, these are asserted directly: the balance sheet b
 
 - The software producer is **not** written into the annual accounts instance. Its section belongs to the `m101-r` module, which is a separate filing and is not generated.
 - The company models with capital (`m01`, `m02`, `m07`), the full and abbreviated models without capital (`m81`, `m82`) and the split `-a` / `-o` parts are not generated. Nothing in the code is specific to the four that are; see [Taxonomy modules](#taxonomy-modules).
-- Directors (section 2.1) and the accountant declaration (section 2.2) are accepted by the contract but not rendered — they sit in open tables addressed by typed dimensions.
+- Sections 2, 6.3–6.6 and 7 of the association models (`m04`, `m05`, `m08`) are not mapped; `disclosureCapabilities` reports them unsupported.
+- Supporting documents (a 7.2 entity's accounts, the PDF forms of sections) are not embedded.
 - DAT 39, duplicate filing, cannot be checked locally: it depends on what the NBB already holds.
 
 ## Filing constraints

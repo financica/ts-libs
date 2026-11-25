@@ -1,6 +1,7 @@
 import { isMonetary, type Check, type CheckKind } from "./taxonomy.js";
 import type { Finding, ValidationResult } from "./types.js";
 import { filingValue, type NbbFiling } from "./build.js";
+import { isEnterpriseNumber } from "./disclosures.js";
 import {
 	describeExpression,
 	evaluateExpression,
@@ -65,6 +66,18 @@ export function validateNbbFiling(filing: NbbFiling): NbbValidationResult {
 
 	for (const finding of structuralFindings(filing)) {
 		(finding.severity === "error" ? errors : warnings).push(finding);
+	}
+
+	// Disclosures are refused at the field that cannot be filed, not dropped.
+	for (const finding of filing.disclosureFindings) {
+		(finding.severity === "error" ? errors : warnings).push({
+			severity: finding.severity,
+			check: "disclosure",
+			rule: finding.field,
+			codes: [],
+			field: finding.field,
+			message: finding.message,
+		});
 	}
 
 	return { errors, warnings, evaluated, skipped, notApplicable, unresolved };
@@ -276,10 +289,7 @@ function structuralFindings(filing: NbbFiling): Finding[] {
 				`"${entity.enterpriseNumber}" is not a ten-digit enterprise number starting 0 or 1`,
 			),
 		);
-	} else if (
-		97 - (Number(entity.enterpriseNumber.slice(0, 8)) % 97) !==
-		Number(entity.enterpriseNumber.slice(8))
-	) {
+	} else if (!isEnterpriseNumber(entity.enterpriseNumber)) {
 		findings.push(
 			finding(
 				"error",

@@ -78,13 +78,25 @@ export interface RubricAmount {
 /** Figures for a section of the model, keyed by statutory rubric code. */
 export type RubricAmounts = Record<RubricCode, RubricAmount>;
 
-/** A Belgian postal address as the taxonomy models it. */
+/**
+ * A postal address as the taxonomy models it.
+ *
+ * A Belgian postal code is reported as a member of the taxonomy's postal-code
+ * list; any other country's goes out as free text in the same cell. The
+ * filing entity's own address must be Belgian.
+ */
 export interface Address {
 	street: string;
 	houseNumber: string;
 	postbox?: string;
-	/** Belgian postal code, e.g. `"1000"`. */
+	/** Postal code, e.g. `"1000"`. */
 	postalCode: string;
+	/**
+	 * Municipality. The entity's own address has no cell for it (the postal
+	 * code determines it); a person's or investee's address does, and a
+	 * foreign one should carry it.
+	 */
+	city?: string;
 	/** ISO 3166-1 alpha-2 country code. Defaults to `"BE"`. */
 	country?: string;
 }
@@ -155,39 +167,209 @@ export interface Identification {
 	sectionsNotFiled?: readonly string[];
 }
 
-/** A director, manager or commissaire listed in section 2.1. */
-export interface Director {
-	/** A natural person's given name, or omitted for a legal person. */
-	firstName?: string;
-	/** A natural person's surname, or a legal person's name. */
+/**
+ * A natural person named in sections 2.1 or 2.2.
+ *
+ * The taxonomy keys every fact about a person on their name, as typed
+ * dimension members, so the name is what groups a person's facts into one
+ * row: two people with the same name in the same role cannot both be filed.
+ */
+export interface NaturalPerson {
+	kind: "natural";
+	firstName: string;
 	lastName: string;
-	/** Enterprise number, when the mandate holder is a legal person. */
-	enterpriseNumber?: string;
+	/** Profession, as printed. */
+	profession?: string;
+	/**
+	 * ITAA or IBR-IRE membership number, as printed (`"10.498.733"`). Only an
+	 * auditor or an external accountant has a cell for it.
+	 */
+	memberNumber?: string;
 	address?: Address;
-	/** Mandate code from the taxonomy's function enumeration. */
-	mandate: string;
-	/** Mandate start and end, where the model asks for them. */
-	mandateStart?: IsoDate;
-	mandateEnd?: IsoDate;
+}
+
+/** A legal person named in sections 2.1 or 2.2. */
+export interface LegalPerson {
+	kind: "legal";
+	name: string;
+	/** Enterprise number, ten digits, for a Belgian entity. */
+	enterpriseNumber?: string;
+	/** Membership number, for an auditing or accounting firm. */
+	memberNumber?: string;
+	address?: Address;
+	/** The natural persons who represent it in the mandate or mission. */
+	representatives?: readonly Representative[];
+}
+
+/** A legal person's permanent representative. */
+export interface Representative {
+	firstName: string;
+	lastName: string;
+	profession?: string;
+	memberNumber?: string;
+	address?: Address;
+}
+
+/** One mandate a section 2.1 holder exercised during the exercise. */
+export interface Mandate {
+	/**
+	 * Function code from the taxonomy's `fct` list, with or without the `m`:
+	 * `"m13"` director, `"m30"` manager, `"m61"` auditor. See
+	 * {@link MANDATE_FUNCTIONS}.
+	 */
+	function: string;
+	/** Start of the mandate, where the model prints it. */
+	start?: IsoDate;
+	/** End of the mandate. */
+	end?: IsoDate;
+}
+
+/** A director, manager or statutory auditor listed in section 2.1. */
+export interface Director {
+	/**
+	 * Which block of the section the holder belongs in. Directors and managers
+	 * are one block, statutory auditors another; the model has no membership
+	 * number for the first. Defaults to `"director"`.
+	 */
+	role?: "director" | "auditor";
+	holder: NaturalPerson | LegalPerson;
+	/** At least one. */
+	mandates: readonly Mandate[];
 }
 
 /**
- * The nature of an accountant's mission, as declared in section 2.2. A
- * declaration may carry more than one.
+ * The nature of an accountant's mission, as declared in section 2.2: A
+ * bookkeeping, B preparing the accounts, C verifying them, D correcting them.
  */
 export type MissionNature = "A" | "B" | "C" | "D";
 
+/** An external accountant or auditor listed in section 2.2. */
+export interface Practitioner {
+	holder: NaturalPerson | LegalPerson;
+	/** At least one. A firm with several assignments lists each. */
+	missions: readonly MissionNature[];
+}
+
 /** Section 2.2: declaration on verification or correction of the accounts. */
 export interface AccountantDeclaration {
-	/** Firm or practitioner name. */
+	/**
+	 * The management body's answer to whether a verification or correction
+	 * mission was entrusted to an external accountant or a registered auditor
+	 * who is not the statutory auditor.
+	 */
+	missionEntrusted: boolean;
+	/**
+	 * The practitioners, with their missions. A and B are optional mentions in
+	 * the micro and abbreviated models; C and D must be listed when entrusted.
+	 */
+	practitioners?: readonly Practitioner[];
+}
+
+/** One line of a section 6.3 list: a commitment described, with its amount. */
+export interface CommitmentLine {
+	description: string;
+	/** In EUR. Absent for a commitment that cannot be quantified. */
+	amount?: number;
+}
+
+/**
+ * The narrative parts of section 6.3, rights and commitments not on the
+ * balance sheet. Its amounts (`9149` … `9220`) are rubrics and go in
+ * {@link NbbFilingInput.notes}.
+ */
+export interface OffBalanceSheet {
+	/** Amount, nature and form of significant litigation and other commitments. */
+	litigationAndCommitments?: readonly CommitmentLine[];
+	/** Of those, the significant commitments to affiliated or associated enterprises. */
+	commitmentsToAffiliates?: readonly CommitmentLine[];
+	/** Supplementary retirement or survivors' pension plans: a short description. */
+	pensionPlans?: string;
+	/** The measures taken to cover their cost. */
+	pensionCoverage?: string;
+	/** Basis and method of the estimate reported in `9220`. */
+	pensionEstimateBasis?: string;
+	/**
+	 * Other rights and commitments not on the balance sheet, including those
+	 * that cannot be quantified. The amount is signed.
+	 */
+	other?: readonly CommitmentLine[];
+}
+
+/** One class of social rights held in a section 7.1 participation. */
+export interface ParticipationRights {
+	/** Nature of the rights, e.g. `"Parts"`, `"Actions"`. */
+	nature: string;
+	/** Number held directly. */
+	heldDirectly?: number;
+	/** Share held directly, as a fraction: 0.25 for 25 %. */
+	percentageDirect?: number;
+	/** Share held through subsidiaries, as a fraction. */
+	percentageThroughSubsidiaries?: number;
+}
+
+/**
+ * Figures from an investee's last available annual accounts, in the currency
+ * they were drawn up in.
+ */
+export interface InvesteeAccounts {
+	/** Closing date of those accounts. */
+	closingDate: IsoDate;
+	/** ISO 4217 code. */
+	currency: string;
+	/** Equity, signed, in units of {@link currency}. */
+	equity: number;
+	/** Net result, signed. */
+	netResult: number;
+}
+
+/** An entity identified in section 7.1 or 7.2. */
+export interface RelatedEntity {
+	/** Name, as registered. Also what groups the entity's facts into one row. */
 	name: string;
-	/** Their enterprise number. */
-	enterpriseNumber: string;
-	/** ITAA/ICE member number, as printed, e.g. `"10.498.733"`. */
-	memberNumber: string;
+	/** Enterprise number, for an entity under Belgian law. */
+	enterpriseNumber?: string;
+	/** Legal-form code from the taxonomy's `lgf` list. */
+	legalForm?: string;
+	/** Legal form as text, for a form the list does not have. */
+	legalFormOther?: string;
 	address?: Address;
-	/** Which missions were carried out. */
-	missions: readonly MissionNature[];
+}
+
+/** Section 7.1: an entity in which the company holds a participation. */
+export interface Participation extends RelatedEntity {
+	rights: readonly ParticipationRights[];
+	lastAccounts?: InvesteeAccounts;
+}
+
+/** Section 7.2: an entity for which the company is unlimitedly liable. */
+export interface UnlimitedLiabilityEntity extends RelatedEntity {
+	/**
+	 * How that entity's accounts are published: A filed with the NBB, B
+	 * published in another member state, D a limited partnership. Absent when
+	 * none applies, in which case its accounts must accompany this filing.
+	 */
+	publicationCode?: "A" | "B" | "D";
+}
+
+/**
+ * The annex and other statutory disclosures that are text or rows rather than
+ * rubric amounts. Amounts with a rubric (`9500`, `9072`, …) stay in
+ * {@link NbbFilingInput.notes}.
+ */
+export interface Disclosures {
+	/** Section 6.3. */
+	offBalanceSheet?: OffBalanceSheet;
+	/**
+	 * Section 6.4: the main conditions of receivables from directors and
+	 * managers (rate, term, amounts repaid, written off or waived).
+	 */
+	directorReceivableTerms?: string;
+	/** Section 6.6: other information the annex must give. */
+	otherInformation?: string;
+	/** Section 7.1. */
+	participations?: readonly Participation[];
+	/** Section 7.2. */
+	unlimitedLiabilityEntities?: readonly UnlimitedLiabilityEntity[];
 }
 
 /**
@@ -241,6 +423,8 @@ export interface NbbFilingInput {
 	appropriation: RubricAmounts;
 	/** Sections 6 through 8, keyed by rubric code. */
 	notes?: RubricAmounts;
+	/** Sections 6.3, 6.4, 6.6, 7.1 and 7.2: what is text or rows, not rubrics. */
+	disclosures?: Disclosures;
 
 	/** Section 6.5, mandatory free text. */
 	valuationRules: string;
@@ -269,6 +453,11 @@ export interface Finding {
 	expected?: number;
 	/** What the filing reports. */
 	actual?: number;
+	/**
+	 * Path of the input field the finding is about, for a disclosure, e.g.
+	 * `"directors[0].mandates[1].function"`.
+	 */
+	field?: string;
 	message: string;
 }
 
