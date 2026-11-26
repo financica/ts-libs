@@ -65,24 +65,42 @@ const present = (part: string | undefined): part is string => part !== undefined
 const extraStreetLines = (address: UblAddress): string[] =>
 	[address.additionalStreet, address.addressLine].filter(present);
 
+/** "76", "51A", "11/15", "17-19": a house number, not a line of its own. */
+const HOUSE_NUMBER = /^\d+[a-z]?(?:\s*[/-]\s*\d+[a-z]?)?$/i;
+
+/**
+ * The street lines, a bare house number put back on the line before it: some
+ * senders write the number into AdditionalStreetName.
+ */
+const streetLines = (address: UblAddress): string[] => {
+	const lines: string[] = [];
+	for (const line of [address.street, ...extraStreetLines(address)].filter(present)) {
+		const previous = lines.at(-1);
+		if (previous !== undefined && HOUSE_NUMBER.test(line.trim())) {
+			lines[lines.length - 1] = `${previous} ${line.trim()}`;
+		} else {
+			lines.push(line);
+		}
+	}
+	return lines;
+};
+
 const addressToString = (address?: UblAddress): string | null => {
 	if (!address) return null;
 	const cityLine = [address.postalZone, address.city].filter(present).join(" ");
 	const countryLine = [address.countrySubentity, address.countryCode]
 		.filter(present)
 		.join(" ");
-	const lines = [address.street, ...extraStreetLines(address), cityLine, countryLine]
-		.filter(present)
-		.filter((line) => line.length > 0);
+	const lines = [...streetLines(address), cityLine, countryLine].filter(
+		(line) => line.length > 0,
+	);
 	return lines.length > 0 ? lines.join("\n") : null;
 };
 
 const addressToStructured = (address?: UblAddress) => {
 	if (!address) return null;
 	// A street-less address still fills line1 first.
-	const [line1, ...rest] = [address.street, ...extraStreetLines(address)].filter(
-		present,
-	);
+	const [line1, ...rest] = streetLines(address);
 	const result = {
 		line1: normalizeText(line1),
 		line2: rest.length > 0 ? normalizeText(rest.join(", ")) : null,

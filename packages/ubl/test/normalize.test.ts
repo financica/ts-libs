@@ -61,6 +61,29 @@ describe("normalizeUblResponse", () => {
 			line1: "Bte 4",
 			line2: null,
 		},
+		...[
+			["76", "Rue du Midi 76"],
+			["11/15", "Rue du Midi 11/15"],
+			["51A", "Rue du Midi 51A"],
+			["17 - 19", "Rue du Midi 17 - 19"],
+		].map(([number, line1]) => ({
+			name: `a house number (${number}) written as AdditionalStreetName on the street`,
+			xml: `<cbc:StreetName>Rue du Midi</cbc:StreetName><cbc:AdditionalStreetName>${number}</cbc:AdditionalStreetName>`,
+			line1,
+			line2: null,
+		})),
+		{
+			name: "a house number before a real second line",
+			xml: "<cbc:StreetName>Rue du Midi</cbc:StreetName><cbc:AdditionalStreetName>76</cbc:AdditionalStreetName><cac:AddressLine><cbc:Line>Bte 4</cbc:Line></cac:AddressLine>",
+			line1: "Rue du Midi 76",
+			line2: "Bte 4",
+		},
+		{
+			name: "a box number as line2, not a house number",
+			xml: "<cbc:StreetName>Rue du Midi 76</cbc:StreetName><cbc:AdditionalStreetName>B9</cbc:AdditionalStreetName>",
+			line1: "Rue du Midi 76",
+			line2: "B9",
+		},
 	])("keeps $name", ({ xml, line1, line2 }) => {
 		const { extracted } = normalizeUblResponse(partyAddressXml(xml), "doc");
 		expect(extracted.invoice.extra).toMatchObject({

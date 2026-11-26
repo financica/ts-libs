@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.19.5
+
+### Fixed
+
+- **A house number written as `AdditionalStreetName` stays on the street.** Some senders put the number alone in BT-36 ("Rue du Midi" + "76"), which 0.19.4 turned into a `line2` of "76". A line that is only a house number ("76", "51A", "11/15", "17-19") now joins the line before it.
+
 ## 0.19.4
 
 ### Fixed
