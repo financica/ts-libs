@@ -7,8 +7,6 @@
 - **Checks honour their preconditions.** The formula linkbases gate many assertions with a precondition (`$am1 != 0` is "if 9061 is completed"), which the generator dropped, so the check ran on every filing. `ca_08.00.0_0001` warned on any company with no debts, about a rubric it never filed; Arelle, like the NBB, does not run it there. `Check.preconditions` now carries them, and `validateNbbFiling` runs a check only where they hold. 312 preconditions across the four models, most in the social balance.
 - The expression evaluator reads the preconditions' `exists($v)`, `not(...)`, `true()` and `false()`. `evaluateExpression` takes the variables bound to a reported fact as an optional third argument for `exists`.
 
-
-
 Breaking: `Director` and `AccountantDeclaration` are reshaped (neither produced a fact before, so no filing changes), and a filing without `entity.statutesDate` now fails validation.
 
 ### Added
