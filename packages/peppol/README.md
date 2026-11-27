@@ -95,6 +95,13 @@ exists) VAT participant EAS schemes, where the VAT/registration number is
 validated (VIES vs BRREG), statutory archival years, and the org-number length
 to gate onboarding inputs on.
 
+Profiled: BE, DK, FI, FR, DE, LU, NL, NO, SE. France and Germany also carry a
+`preferredAddress`, the address their authority designates, whose scheme is
+neither the company nor the VAT scheme but whose value is one of those numbers:
+France's reform address `0225` holds the SIREN, Germany's GEBA `0246` the
+USt-IdNr (KoSIT, Germany Identifier v1.3). Register it ahead of the other two.
+Germany has no company scheme and no single company-number length (`null`).
+
 ```ts
 import { getCountryEInvoicingProfile } from "@financica/peppol/countries";
 
@@ -112,8 +119,9 @@ otherwise, use `getPeppolIdentifierSchemes`:
 ```ts
 import { getPeppolIdentifierSchemes } from "@financica/peppol/countries";
 
-getPeppolIdentifierSchemes("BE"); // profiled → { companyIdentifierScheme: "0208", vatIdentifierScheme: "9925" }
-getPeppolIdentifierSchemes("DE"); // unprofiled → { companyIdentifierScheme: null, vatIdentifierScheme: "9930" }
+getPeppolIdentifierSchemes("BE"); // profiled → { companyIdentifierScheme: "0208", vatIdentifierScheme: "9925", preferredAddress: null }
+getPeppolIdentifierSchemes("DE"); // profiled → { companyIdentifierScheme: null, vatIdentifierScheme: "9930", preferredAddress: { scheme: "0246", valueFrom: "vatNumber" } }
+getPeppolIdentifierSchemes("AT"); // unprofiled → { companyIdentifierScheme: null, vatIdentifierScheme: "9914", preferredAddress: null }
 getPeppolIdentifierSchemes("CA"); // outside Peppol → null
 ```
 
@@ -122,8 +130,8 @@ country scheme instead of a provider's Belgian default.
 
 Either scheme can be null. Null means register nothing under that scheme;
 substituting a default would publish an identifier under another country's
-scheme. Norway and Denmark have no separate VAT scheme, and an unprofiled
-country has no known company scheme.
+scheme. Norway and Denmark have no separate VAT scheme; Germany and every
+unprofiled country have no known company scheme.
 
 ## Document type classification
 

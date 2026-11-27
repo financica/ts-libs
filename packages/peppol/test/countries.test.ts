@@ -4,7 +4,10 @@ import {
 	getCountryEInvoicingProfile,
 	getPeppolIdentifierSchemes,
 } from "../src/countries";
-import { getVatParticipantScheme } from "../src/identifiers";
+import {
+	getPeppolParticipantScheme,
+	getVatParticipantScheme,
+} from "../src/identifiers";
 import { getPeppolCountryScheme } from "../src/schemes";
 
 describe("getCountryEInvoicingProfile", () => {
@@ -59,6 +62,48 @@ describe("getCountryEInvoicingProfile", () => {
 		expect(lu?.companyNumberLength).toBe(11);
 		expect(lu?.archivalYears).toBe(10);
 	});
+
+	it("profiles France: reform address 0225 on the SIREN, SIRENE 0002, VAT 9957", () => {
+		expect(getCountryEInvoicingProfile("FR")).toMatchObject({
+			companyIdentifierScheme: "0002",
+			vatIdentifierScheme: "9957",
+			preferredAddress: { scheme: "0225", valueFrom: "companyNumber" },
+			peppolReachesFullMarket: false,
+			archivalYears: 10,
+			companyNumberLength: 9,
+		});
+	});
+
+	it("profiles Germany: GEBA 0246 on the USt-IdNr, no company scheme or length", () => {
+		expect(getCountryEInvoicingProfile("DE")).toMatchObject({
+			companyIdentifierScheme: null,
+			vatIdentifierScheme: "9930",
+			preferredAddress: { scheme: "0246", valueFrom: "vatNumber" },
+			peppolReachesFullMarket: false,
+			archivalYears: 8,
+			companyNumberLength: null,
+		});
+	});
+
+	it("gives every profile at least one addressable scheme", () => {
+		for (const country of EINVOICING_PROFILE_COUNTRIES) {
+			const profile = getCountryEInvoicingProfile(country);
+			expect(
+				profile?.preferredAddress?.scheme ??
+					profile?.companyIdentifierScheme ??
+					profile?.vatIdentifierScheme,
+			).toBeTruthy();
+		}
+	});
+
+	it("addresses only by a scheme on the EAS list whose value structure is catalogued", () => {
+		// 0225 and 0246 carry separators, so normalization must know them.
+		for (const country of EINVOICING_PROFILE_COUNTRIES) {
+			const scheme =
+				getCountryEInvoicingProfile(country)?.preferredAddress?.scheme;
+			if (scheme) expect(getPeppolParticipantScheme(scheme)).not.toBeNull();
+		}
+	});
 });
 
 describe("getPeppolIdentifierSchemes", () => {
@@ -68,6 +113,7 @@ describe("getPeppolIdentifierSchemes", () => {
 		expect(getPeppolIdentifierSchemes("BE")).toEqual({
 			companyIdentifierScheme: "0208",
 			vatIdentifierScheme: "9925",
+			preferredAddress: null,
 		});
 	});
 
@@ -75,10 +121,12 @@ describe("getPeppolIdentifierSchemes", () => {
 		expect(getPeppolIdentifierSchemes("NO")).toEqual({
 			companyIdentifierScheme: "0192",
 			vatIdentifierScheme: null,
+			preferredAddress: null,
 		});
 		expect(getPeppolIdentifierSchemes("DK")).toEqual({
 			companyIdentifierScheme: "0184",
 			vatIdentifierScheme: null,
+			preferredAddress: null,
 		});
 	});
 
@@ -87,20 +135,34 @@ describe("getPeppolIdentifierSchemes", () => {
 		expect(getPeppolIdentifierSchemes("SE")).toEqual({
 			companyIdentifierScheme: "0007",
 			vatIdentifierScheme: null,
+			preferredAddress: null,
 		});
 		expect(getPeppolIdentifierSchemes("FI")).toEqual({
 			companyIdentifierScheme: "0216",
 			vatIdentifierScheme: null,
+			preferredAddress: null,
 		});
 		expect(getVatParticipantScheme("SE")).toBeNull();
 		expect(getVatParticipantScheme("FI")).toBeNull();
 	});
 
+	it("carries the preferred address of a profiled country", () => {
+		expect(getPeppolIdentifierSchemes("fr")?.preferredAddress?.scheme).toBe("0225");
+		expect(getPeppolIdentifierSchemes("DE")).toEqual({
+			companyIdentifierScheme: null,
+			vatIdentifierScheme: "9930",
+			preferredAddress: { scheme: "0246", valueFrom: "vatNumber" },
+		});
+	});
+
 	it("falls back to the country's own VAT-based addressing scheme when unprofiled", () => {
 		// An unprofiled sender must still be addressed under its own scheme —
 		// never a provider's Belgian 9925 default.
-		expect(getPeppolIdentifierSchemes("DE")?.vatIdentifierScheme).toBe("9930");
-		expect(getPeppolIdentifierSchemes("fr")?.vatIdentifierScheme).toBe("9957");
+		expect(getPeppolIdentifierSchemes("AT")).toEqual({
+			companyIdentifierScheme: null,
+			vatIdentifierScheme: "9914",
+			preferredAddress: null,
+		});
 	});
 
 	it("returns null for a country Peppol does not reach", () => {

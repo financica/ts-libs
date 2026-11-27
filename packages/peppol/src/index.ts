@@ -5,6 +5,7 @@ export {
 	getCountryEInvoicingProfile,
 	getPeppolIdentifierSchemes,
 	type PeppolIdentifierSchemes,
+	type PreferredAddress,
 	type VatRegistrySource,
 } from "./countries";
 export {

@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.11.0
+
+### Added
+
+- **France and Germany profiles.** France: reform address `0225` (FRCTC, the Annuaire address, default value the SIREN), company scheme `0002` (SIRENE), VAT `9957`, 10-year archival, 9-digit SIREN. Germany: GEBA `0246` (recommended by KoSIT's Germany Identifier v1.3, value equal to the USt-IdNr), VAT `9930`, no company scheme, 8-year archival (§ 14b UStG). Both have `peppolReachesFullMarket: false`: French Plateformes Agréées must interoperate but need not be Peppol access points, and German law prescribes no channel.
+- **`preferredAddress`** on `CountryEInvoicingProfile` and `PeppolIdentifierSchemes`: `{ scheme, valueFrom: "companyNumber" | "vatNumber" } | null`, the address a country's authority designates when its scheme is neither the company nor the VAT scheme. Register it ahead of those two. Null for every other profile.
+
+### Changed
+
+- **`companyIdentifierScheme` and `companyNumberLength` are nullable on `CountryEInvoicingProfile`.** Germany has no register scheme on the EAS list and no single company-number format.
+- France's `0002` is now read from its profile; the registry-scheme fallback table it lived in is gone, so an unprofiled country always resolves `companyIdentifierScheme: null`.
+
 ## 0.10.0
 
 ### Added
